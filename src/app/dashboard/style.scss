@@ -1,0 +1,113 @@
+.fixi-ic {
+    border: 1px solid #E2E2E2;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: space-between;
+}
+img.fixi-boxx {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+i.fa.fa-chevron-right.awes {
+    background-color: #eeeef1;
+    padding: 9px 12px;
+    border-radius: 50%;
+    color: #b1b1b1;
+}
+
+i.fa.fa-circle.aas {
+    color: #64CCC1;
+}
+i.fa.fa-circle.blu{
+    color: #389CE5;
+}
+p.tebs-t {
+    color: #252849;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+}
+i.fa.fa-circle.pik{
+    color: #DB72D6;
+}
+i.fa.fa-circle.yell {
+    color: #F5A43D;
+}
+p.tives {
+    color: #252849;
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.dispost {
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    padding: 20px;
+    height: 100%;
+}
+p.colrs-blues {
+    font-family: Open Sans;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 0px;
+    color: #FF6363;}
+    p.revuh {
+        color: #000;
+        font-family: Open Sans;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        margin-bottom: 0px;
+    }
+p.colrs-blue {
+    color: #64CCC1;
+    font-family: Open Sans;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+p.week-last {
+    color: #000;
+    font-family: Open Sans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+h3.dollars-t {
+    color: #000;
+    font-family: Open Sans;
+    font-size: 15px;
+    font-style: normal;
+    margin-bottom: 0px;
+    font-weight: 700;
+}
+
+.dashboard_image{
+        height: 50px;
+}
+
+@media (max-width:1024px){
+    .pro-bar{
+        width:  150px;
+        height:150px ;
+        object-fit: cover;
+    }
+}
+
+@media (min-width:1025px) {
+    .pro-bar {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+}

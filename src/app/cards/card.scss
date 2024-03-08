@@ -1,0 +1,109 @@
+
+
+/* CSS for Credit Card Payment form */
+
+
+.payment_input_tab{
+    padding: 40px 0px;
+}
+
+.p-60{
+    padding: 60px 0px;
+}
+
+
+label.click_cards {
+    display: flex;
+    border: 2px solid #007ab79c;
+    width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.saved_payment_tab {
+    padding: 40px 0px;
+}
+
+
+.appdata_text {
+    padding: 20px;
+    background: #eaeaea;
+    border-left: 4px solid #46b8fe;
+    margin-bottom: 20px;
+}
+
+.appdata_text h5{
+    margin: 0px;
+    font-size: 18px;
+}
+
+label.click_cards:hover {
+    box-shadow: 1px 2px 5px #00bafa8a;
+}
+
+label.click_cards::focus {
+    box-shadow: 1px 2px 5px #00bafa8a;
+}
+
+
+.tabs_payment .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link {
+    color: #000 !important;
+    border-color: #dee2e6 #dee2e6 #dee2e6 !important;
+}
+
+.tabs_payment .tabs_payment .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color: #fff !important;
+    background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+    border-color: #dee2e6 #dee2e6 #dee2e6 !important;
+}
+
+.tabs_payment .nav-tabs {
+   border: none !important;
+}
+
+.cards_Add a{
+    color: #31a1e8;
+}
+
+.cards_Add a:hover {
+    color: #31a1e8 !important;
+    text-decoration: underline !important;
+}
+
+.prme_ount p {
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+}
+
+.tabs_payment ul {
+    width: 100% !important;
+}
+
+.tabs_payment ul li {
+    width: 50% !important;
+    padding: 10px 0px !important;
+}
+
+.tabs_payment ul li button {
+    width: 100% !important;
+}
+
+img.pageLoader {
+    max-width: 50px;
+    margin: 40%
+  }
+
+  img.pageLoader-card {
+    max-width: 50px;
+    margin-left: 200px;
+  }
+
+  .bank_img img{
+    width: 40px;
+    height: auto;
+    margin-right: 5px;
+  }

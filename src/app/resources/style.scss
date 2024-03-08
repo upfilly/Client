@@ -1,0 +1,40 @@
+.heighteual {
+    height: auto;
+    width: 100px;
+}
+
+.card_box {
+    border-radius: 7.588px;
+    background: #FFF;
+    box-shadow: 1.50808px 6.03233px 18.097px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+}
+
+
+.imgtag_card>* {
+    margin: 10px;
+    /* Adjust this value as needed */
+}
+
+.cpadd {
+    padding: 60px 0px;
+}
+
+.hover_box {
+    border-bottom: 7px solid transparent;
+    margin-bottom: 30px;
+}
+
+
+
+.hover_box:hover{
+    border-radius: 5.172px;
+        border-bottom: 7px solid #00BAFF;
+        background: #FFF;
+        box-shadow: 1.02786px 4.11142px 12.33426px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+.hover_box p {
+    font-size: 14px;
+}

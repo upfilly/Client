@@ -1,0 +1,447 @@
+.maininutcls i.fa.fa-times {
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    background: #ffffffcf;
+    border-radius: 29px;
+    width: 19px;
+    height: 18px;
+    display: none;
+    z-index: 9999;
+}
+
+.phoneInput {
+    display: flex;
+    justify-content: left !important;
+}
+
+input.form-control.overlap_mobile {
+    border: none;
+    background: white;
+    z-index: 9;
+    width: 206px;
+    margin-left: 32px;
+    padding: 15px 10px;
+    height: 0px;
+    margin-top: 1px;
+}
+
+.maininutcls:hover .fa.fa-times {
+    display: inline-block;
+}
+
+.maininutcls {
+    display: inline-block;
+    position: relative;
+
+}
+
+.maininutcls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+.profile_btn {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.star {
+    color: red;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #775DA626;
+    opacity: 1;
+}
+
+// i.fa.fa-search {
+//     display: none;
+// }
+
+// .headerSearch .Searchbar {
+//     background: #FFFFFF;
+//     border-radius: 100px;
+//     border: none;
+//     padding: 10px 35px;
+//     display: none;
+// }
+.inputFlex {
+    display: flex;
+    column-gap: 10px;
+
+    >label {
+        width: 200px;
+        font-weight: 500;
+        margin-bottom: 0px;
+    }
+
+    >div {
+        width: 100%;
+        font-weight: 300;
+    }
+
+}
+
+
+// changes
+
+@media only screen and (min-width:694px) and (max-width:730px) {
+    .profile_btn {
+        margin-top: 15px;
+    }
+
+    label.profileImageLabel {
+        margin-right: 15px;
+    }
+
+    label.btn.btn-primary.edit.ml-3 {
+        margin-left: 0rem !important;
+    }
+}
+
+@media only screen and (min-width:596px) and (max-width:693px) {
+
+    .profile_btn {
+        margin-top: 15px;
+    }
+
+    label.btn.btn-primary.edit.ml-3 {
+        margin-left: 0px !important;
+    }
+}
+
+@media only screen and (min-width:548px) and (max-width:595px) {
+
+    .profile_btn {
+        margin-top: 15px;
+    }
+
+    label.btn.btn-primary.edit.ml-3 {
+        margin-left: 0px !important;
+        margin-right: 15px !important;
+    }
+
+    label.btn.btn-primary.delete.ml-3 {
+        margin-left: 0px !important;
+    }
+
+    .inputFlex>label {
+        width: 150px;
+        font-weight: 500;
+    }
+
+    .ViewUser {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width:384px) and (max-width:547px) {
+    .profile_btn {
+        margin-top: 15px;
+    }
+
+    label.btn.btn-primary.edit.ml-3 {
+        margin-left: 0px !important;
+    }
+
+    label.btn.btn-primary.delete.ml-3 {
+        margin-left: 0px !important;
+    }
+
+    .inputFlex>label {
+        width: 150px;
+        font-weight: 500;
+    }
+
+    .ViewUser {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width:320px)and (max-width:383px) {
+    .profile_btn {
+        margin-top: 15px;
+    }
+
+    label.btn.btn-primary.edit.ml-3 {
+        margin-left: 0px !important;
+    }
+
+    label.btn.btn-primary.delete.ml-3 {
+        margin-left: 0px !important;
+    }
+
+    .inputFlex>label {
+        width: 100px;
+        font-weight: 500;
+    }
+
+    .ViewUser {
+        font-size: 20px;
+    }
+
+    .mainarea {
+        padding: 27px !important;
+    }
+}
+
+span.position-absolute.top-0.start-100.translate-middle.bg-danger.border.border-light.rounded-circle.span_close {
+    padding: 2px 6px;
+    font-size: 10px;
+}
+
+.location_address {
+    font-size: 12px;
+    margin-bottom: 1px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+// .star {
+//     color: red !important;
+// }
+
+
+.profile-card .tox .tox-statusbar {
+    border-top: 0 !important;
+}
+
+.profile-card .tox:not(.tox-tinymce-inline) .tox-editor-header {
+    border-bottom: 1px solid #e2e2e2;
+    box-shadow: none !important;
+}
+
+// New CSS
+.social-media-links i {
+    background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+    padding: 4px;
+    color: #fff;
+    border-radius: 50px;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-media-links {
+    border: 1px solid #e2e2e2;
+    display: unset;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    padding: 15px !important;
+    border-radius: 9px;
+    margin-top: 20px;
+}
+
+.social-media-links label {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: .54px;
+    font-weight: 600;
+}
+
+.social-media-links-inner {
+    margin: 8px 0 0 0;
+}
+
+.social-media-links label {
+    font-size: 16px;
+}
+
+.form-row label {
+    font-size: 14px;
+    letter-spacing: .54px;
+    font-weight: 600;
+}
+
+.profile-card {
+    min-width: 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #fff;
+    border-radius: 9px !important;
+    border: 0 !important;
+    padding: 37px !important;
+    margin: 80px auto !important;
+}
+
+.profile-card .col-md-12.inputFlexs label {
+    font-weight: 600;
+    letter-spacing: 0.44px;
+}
+
+.profile-card hr {
+    border-top: 1px solid rgba(0, 0, 0, .3);
+}
+
+.edit-btns .btn.btn-primary.edit {
+    padding: 12px 18px;
+    font-size: 16px;
+    width: 123px;
+    font-weight: 600;
+}
+
+.profile-card .tox-tinymce {
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+}
+
+input.form-control-file.over_input {
+    position: absolute;
+    opacity: 0;
+    width: 129px;
+    display: inline-block;
+    left: 0;
+    height: 100%;
+}
+
+.imagethumbWrapper .fa-times {
+    position: absolute;
+    right: 3px;
+    line-height: 20px;
+    text-align: center;
+    width: 20px;
+    top: 3px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.back-arrow-btn {
+    padding: 0 30px 0;
+}
+
+.videowrapper .fa-times {
+    right: 8px;
+    top: -7px;
+}
+
+.card.card-shadow {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+}
+
+.tox :not(svg):not(rect) {
+
+    z-index: 0;
+}
+
+
+
+.padding60 {
+    padding: 60px 0px;
+}
+
+.profileuserimg {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.samebtn_width {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.samebtn_width>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.samebtn_width label {
+    margin-right: 10px;
+    /* Adjust the spacing between the buttons if needed */
+}
+
+.samebtn_width label:last-child {
+    margin-right: 0;
+    /* Remove margin for the last button to avoid extra spacing */
+}
+
+.samebtn_width>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.samebtn_width label {
+    margin-right: 10px;
+    /* Adjust the spacing between the buttons if needed */
+}
+
+.samebtn_width label:last-child {
+    margin-right: 0;
+    /* Remove margin for the last button to avoid extra spacing */
+}
+
+.phoneInput.w-100 {
+    border: 1px solid #ccc !important;
+    border-radius: 50px !important;
+}
+
+.phoneInput .react-tel-input .flag-dropdown {
+    border: none !important;
+}
+
+.phoneInput .react-tel-input .flag-dropdown.open .selected-flag {
+    background: transparent !important;
+    border-radius: 3px 0 0 0;
+}
+
+.phoneInput.react-tel-input .selected-flag:hover,
+.phoneInput .react-tel-input .selected-flag:focus {
+    background: transparent !important;
+}
+
+.phoneInput .react-tel-input .selected-flag:hover,
+.phoneInput .react-tel-input .selected-flag:focus {
+    background-color: transparent !important;
+}
+
+.phoneInput input.form-control.overlap_mobile {
+    border: none;
+    background: white;
+    z-index: 9;
+    width: 206px;
+    margin-left: 5px;
+    padding: 15px 10px;
+    height: 0px;
+    margin-top: 3px;
+}
+
+.profile-edit-sec {
+    border-right: 2px dashed #e5e5e5;
+    height: 100%;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label.btn.bgdanger.btn-primary.text-white.delete {
+    background-color: #c02e2e !important;
+}
+
+.border-none {
+    border: none !important;
+}
+
+.ViewUser1 {
+    color: #202020;
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: 32px;
+}

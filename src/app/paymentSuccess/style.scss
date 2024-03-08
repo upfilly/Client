@@ -1,0 +1,52 @@
+     
+        .payment_body .card-title {
+            font-size: 30px;
+            font-weight: 600;
+            color: #038700;
+        }
+        
+        .payment_body .card-text {
+            color: #707070;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        
+        
+        .ul_payment .payment_div {
+            padding: 0px;
+            margin: 0;
+        }
+        .payment_div li:before {
+            content: '/';
+            position: absolute;
+            top: 0;
+            left: -6px;
+        }
+        
+        .payment_div li:first-child:before {
+            display: none;
+        }
+        
+         .payment_div li{
+            display: inline-block;
+            padding: 0px 15px;
+            position: relative;
+            font-size: 15px;
+            font-weight: 400;
+            color: #000;
+            opacity: 0.5;
+        }
+        .payment_active, .payment_div li:hover {
+            opacity: 1 !important;
+        }
+        .payment_section {
+            width: 100%;
+            max-width: 493px;
+            margin: 0px auto;
+        }
+         .done_btn , .done_btn :hover, .done_btn :focus {
+            background-color: #038700;
+            outline: unset !important;
+            border: 1px solid #038700;
+            box-shadow: unset !important;
+         }
