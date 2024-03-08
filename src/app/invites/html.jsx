@@ -188,12 +188,12 @@ const Html = ({
                     <img src="/assets/img/loader.gif" className="pageLoader" />
                 </div> : <></>}
 
-                <Modal show={show} onHide={handleClose}>
+                <Modal className='invite_modal'  show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Invite Modal</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicEmail">
+                        <Form.Group className='d-flex justify-content-between align-items-center width_label' controlId="formBasicEmail">
                             <Form.Label>E-mail</Form.Label>
                             <Form.Control
                                 type="email"
