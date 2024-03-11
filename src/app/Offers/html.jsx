@@ -38,7 +38,7 @@ const Html = ({
     };
 
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Offers" filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Add Offers" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center">
                     <SelectDropdown

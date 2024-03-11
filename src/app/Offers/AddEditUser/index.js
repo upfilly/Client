@@ -16,7 +16,6 @@ const AddEditUser = () => {
     const [form, setform] = useState({
         id: "",
         name: "",
-        quantity: "",
         description: "",
         image: [],
         price: '',

@@ -182,9 +182,9 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             intialValue={form?.placement}
                                             result={e => setform({ ...form, placement: e.value })}
                                             options={[{ name: "Website", id: "website" },
-                                            { name: "email", id: "email" },
-                                            { name: "social", id: "social" },
-                                            { name: "mobile", id: "mobile" }]}
+                                            { name: "Email", id: "email" },
+                                            { name: "Social", id: "social" },
+                                            { name: "Mobile", id: "mobile" }]}
                                             required
                                         />
                                     </div>

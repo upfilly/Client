@@ -34,6 +34,12 @@ const Users = () => {
     }, [role])
 
     useEffect(() => {
+        if (user?.role == 'affiliate' && !user?.account_id) {
+            history.push('/addAccount/detail')
+        }
+    }, [])
+
+    useEffect(() => {
         if (startDate && endDate) {
             setFilter({...filters, page: 1, start_date: formattedStartDate, end_date: formattedEndDate })
             getData({ ...filters, page: 1, start_date: formattedStartDate, end_date: formattedEndDate })

@@ -135,9 +135,10 @@ export default function Login() {
 
         if (!data1?.campaign_unique_id) {
           loader(false)
-          toast.success(res?.message)
-          let url = '/login'
-          history.push(url);
+          // toast.success(res?.message)
+          setShowPopup(true)
+          // let url = '/login'
+          // history.push(url);
         }
         
         if (data1?.campaign_unique_id) {

@@ -162,7 +162,6 @@ export const typeType={id:'',name:''}
 export const campaignType={
     id: "",
     name: "",
-    quantity: "",
     description: "",
     "category_id": "",
     "sub_category_id": "",

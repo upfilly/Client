@@ -113,8 +113,12 @@ export default function addAffiliateAccount() {
       return;
     }
 
+    if (name === "mobileNo" && value.length > 11) {
+     return;
+    }
+
     const fieldValue = type === 'checkbox' ? checked : value;
-    setFormData({ ...formData, [name]: fieldValue });
+    setFormData({ ...formData, [name]: fieldValue,});
   }
 
   const handleDateChange = (date) => {
@@ -228,7 +232,7 @@ export default function addAffiliateAccount() {
   const handleSave = () => {
    
     if (!formData?.mobileNo || !formData?.dialCode || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
-      formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob) {
+      formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob || formData?.mobileNo?.length < 11) {
       setSubmitted(true)
       return
     }
@@ -325,67 +329,72 @@ export default function addAffiliateAccount() {
                           <div className='row'>
                           <div className='col-12 col-md-4'>
                             <div className='form-group'>
-                              <p className='mb-0'><label className='label-set account_set '>Account Holder Name </label></p>
+                              <p className='mb-0'><label className='label-set account_set '>Account Holder Name<span className="star">*</span> </label></p>
                               <input
                                 value={formData?.accountholder_name}
                                 onChange={handleInputChange}
                                 name="accountholder_name"
                                 type="text"
-                                className="form-control "></input>
+                                className="form-control "
+                                placeholder="Enter Account Holder Name"></input>
                               {submitted && !formData?.accountholder_name ? <div className="invalid-feedback d-block">Account Holder Name is Required</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>
                             <div className='form-group'>
-                              <p className='mb-0'><label className='label-set account_set '>Company Name </label></p>
+                              <p className='mb-0'><label className='label-set account_set '>Company Name<span className="star">*</span> </label></p>
                               <input
                                 value={formData?.company_name}
                                 onChange={handleInputChange}
                                 name="company_name"
                                 type="text"
-                                className="form-control "></input>
+                                className="form-control "
+                                placeholder="Enter Company Name"></input>
                               {submitted && !formData?.company_name ? <div className="invalid-feedback d-block">Company Name is Required</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>
                             <div className='form-group'>
-                              <p className='mb-0'><label className='label-set account_set '>Account Number</label></p>
+                              <p className='mb-0'><label className='label-set account_set '>Account Number<span className="star">*</span></label></p>
                               <input
                                 value={formData?.account_number}
                                 onChange={handleInputChange}
                                 name="account_number"
                                 type="number"
-                                className="form-control "></input>
+                                className="form-control "
+                                placeholder="Enter Account Number"></input>
                               {submitted && formData?.account_number?.length < 12 ? <div className="invalid-feedback d-block">Account Number is must be 12 digit</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>
                             <div className='form-group'>
-                              <p className='mb-0'><label className='label-set account_set '>Routing Number </label></p>
+                              <p className='mb-0'><label className='label-set account_set '>Routing Number<span className="star">*</span> </label></p>
                               <input
                                 value={formData?.routing_number}
                                 onChange={handleInputChange}
                                 name="routing_number"
                                 type="number"
-                                className="form-control "></input>
+                                className="form-control "
+                                placeholder="Enter Routing Number"></input>
                               {submitted && formData?.routing_number?.length < 9 ? <div className="invalid-feedback d-block">Routing Number is must be 9 digit</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>
                             <div className='form-group'>
-                              <p className='mb-0'><label className='label-set account_set '>SSN Number </label></p>
+                              <p className='mb-0'><label className='label-set account_set '>SSN Number<span className="star">*</span> </label></p>
                               <input
                                 value={formData?.ssn_number}
                                 onChange={handleInputChange}
                                 name="ssn_number"
                                 type="number"
-                                className="form-control "></input>
+                                className="form-control "
+                                placeholder="Enter SSN Number"></input>
                               {submitted && formData?.ssn_number?.length < 9 ? <div className="invalid-feedback d-block">SSN Number is must be 9 digit</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>
                             <div class="form-group">
-                              <label className='label-set account_set ' >Mobile Number</label>
+                              <label className='label-set account_set ' >Mobile Number<span className="star">*</span></label>
                               <div className="phoneInput main-no">
                                 <div className='dailCode phn-code'>
                                   <PhoneInput
@@ -403,16 +412,24 @@ export default function addAffiliateAccount() {
                                     enableSearch
                                   />
                                 </div>
-                                <input type="number" className="form-control overlap_mobile"  id="exampleFormControlInput1" name="mobileNo"
-                                  value={formData?.mobileNo} autoComplete="off"
-                                  onChange={handleInputChange} />
+                                <input
+                                  type="number"
+                                  className="form-control overlap_mobile"
+                                  id="exampleFormControlInput1"
+                                  name="mobileNo"
+                                  value={formData?.mobileNo}
+                                  autoComplete="off"
+                                  onChange={handleInputChange}
+                                  placeholder="Enter a valid number"
+                                  required
+                                />
                               </div>
-
+                              {submitted && formData?.mobileNo?.length < 11 ? <div className="invalid-feedback d-block">Mobile Number is must be 11 digit</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>
                             <div className='form-group rect-cust-width'>
-                              <label className='label-set account_set '>Date of Birth:</label>
+                              <label className='label-set account_set '>Date of Birth:<span className="star">*</span></label>
                               <p>
                                 <DatePicker
                                   className='form-control w-100'
@@ -440,7 +457,7 @@ export default function addAffiliateAccount() {
                           </div> */}
 
                           <div className='col-12 col-md-4'>
-                            <label className='label-set account_set '>Front Doc <span className='text-sm'>(only image)</span></label>
+                            <label className='label-set account_set '>Front Doc <span className='text-sm'>(only image)</span><span className="star">*</span></label>
                             <div className="form-group drag_drop">
                               <div className='upload_file '>
                                 {!loaderr && !imgLoder && image.length == 0 ? <>
@@ -473,7 +490,7 @@ export default function addAffiliateAccount() {
                        
 
                           <div className='col-12 col-md-4'>
-                            <label className='label-set account_set '>Back Doc <span className='text-sm'>(only image)</span> </label>
+                            <label className='label-set account_set '>Back Doc <span className='text-sm'>(only image)</span><span className="star">*</span></label>
                             <div className="form-group drag_drop">
                               <div className='upload_file'>
                                 {!loadDocerr && !docLoder && doc.length == 0 && <>
@@ -513,37 +530,10 @@ export default function addAffiliateAccount() {
                           </div>
 
                         <div className='row'>
-                         
-                          <div className='col-12 col-md-4'>
-                            <div class="form-group">
-                              <label className='label-set account_set '>Country  </label>
-                              <input type="text" value={selectedLocation?.country} className="form-control " id="exampleFormControlInput1" disabled />
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-4'>
-                            <div class="form-group">
-                              <label className='label-set account_set '>State  </label>
-                              <input type="text" value={selectedLocation?.state} onChange={(e) => setSelectedLocation({ ...selectedLocation, state: e.target.value })} className="form-control " id="exampleFormControlInput1" />
-                              {submitted && !selectedLocation?.state ? <div className="invalid-feedback d-block">State is Required</div> : <></>}
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-4'>
-                            <div class="form-group">
-                              <label className='label-set account_set '>City  </label>
-                              <input type="text" value={selectedLocation?.city} onChange={(e) => setSelectedLocation({ ...selectedLocation, city: e.target.value })} className="form-control " id="exampleFormControlInput1" />
-                              {submitted && !selectedLocation?.city ? <div className="invalid-feedback d-block">City is Required</div> : <></>}
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-4'>
-                            <div class="form-group">
-                              <label className='label-set account_set '>Postal Code  </label>
-                              <input type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control " id="exampleFormControlInput1" />
-                              {submitted && !selectedLocation?.pincode ? <div className="invalid-feedback d-block">Pincode is Required</div> : <></>}
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-4'>
+
+                        <div className='col-12 col-md-4'>
                           <div className='form-group'>
-                            <label className='label-set account_set '>Address1</label>
+                            <label className='label-set account_set '>Address1<span className="star">*</span></label>
                             {!stateAutocomplete && <PlacesAutocomplete
                               value={address}
                               onChange={handleChange}
@@ -595,9 +585,38 @@ export default function addAffiliateAccount() {
                           <div className='col-12 col-md-4'>
                             <div class="form-group">
                               <label className='label-set account_set '>Address2  </label>
-                              <input type="text" className="form-control " value={address2} onChange={(e) => setAddress2(e.target.value)} lassName="form-control " id="exampleFormControlInput1" />
+                              <input type="text" className="form-control " placeholder="Enter Your Address" value={address2} onChange={(e) => setAddress2(e.target.value)} id="exampleFormControlInput1" />
                             </div>
                           </div>
+                         
+                          <div className='col-12 col-md-4'>
+                            <div class="form-group">
+                              <label className='label-set account_set '>Country<span className="star">*</span>  </label>
+                              <input type="text" value={selectedLocation?.country} className="form-control " id="exampleFormControlInput1" disabled />
+                            </div>
+                          </div>
+                          <div className='col-12 col-md-4'>
+                            <div class="form-group">
+                              <label className='label-set account_set '>State<span className="star">*</span>  </label>
+                              <input type="text" value={selectedLocation?.state} placeholder="Enter Your State" onChange={(e) => setSelectedLocation({ ...selectedLocation, state: e.target.value })} className="form-control " id="exampleFormControlInput1" />
+                              {submitted && !selectedLocation?.state ? <div className="invalid-feedback d-block">State is Required</div> : <></>}
+                            </div>
+                          </div>
+                          <div className='col-12 col-md-4'>
+                            <div class="form-group">
+                              <label className='label-set account_set '>City<span className="star">*</span>  </label>
+                              <input type="text" value={selectedLocation?.city} placeholder="Enter Your City" onChange={(e) => setSelectedLocation({ ...selectedLocation, city: e.target.value })} className="form-control " id="exampleFormControlInput1" />
+                              {submitted && !selectedLocation?.city ? <div className="invalid-feedback d-block">City is Required</div> : <></>}
+                            </div>
+                          </div>
+                          <div className='col-12 col-md-4'>
+                            <div class="form-group">
+                              <label className='label-set account_set '>Postal Code<span className="star">*</span>  </label>
+                              <input type="text" value={selectedLocation?.pincode} placeholder="Enter Your Postal Code " onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control " id="exampleFormControlInput1" />
+                              {submitted && !selectedLocation?.pincode ? <div className="invalid-feedback d-block">Pincode is Required</div> : <></>}
+                            </div>
+                          </div>
+                         
 
                         
 

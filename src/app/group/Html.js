@@ -74,7 +74,7 @@ const Html = ({
                                             <th scope="col" className='table_data' >Default</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('status')}>Status {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                            {/* <th scope="col" className='table_data ml-5' ></th> */}
+                                            <th scope="col" className='table_data ml-5' ></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -107,6 +107,16 @@ const Html = ({
                                                     </span>
                                                 </span></td>
                                                 <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
+                                                <td>
+                                                    <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+
+                                                        <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
+                                                    </a>
+
+                                                        <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
+                                                            <i className={`material-icons delete`} title='Delete'> delete</i>
+                                                        </a></div>
+                                                </td>
                                             </tr>
 
                                         })
