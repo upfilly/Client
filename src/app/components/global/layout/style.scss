@@ -1,0 +1,129 @@
+@import '../../../scss/mixins';
+
+.main-wrapper {
+  background-color: #eee;
+
+  main.main {
+    width: calc(100% - 250px);
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+.editLogo {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  >i {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.logocls {
+  width: 100%;
+  max-width: 185px !important;
+}
+
+img.greentik {
+  width: 160px;
+}
+
+.modal.d-block.bgBlur {
+  background: #201f1f9e;
+}
+
+a.closeIcon {
+  text-align: right;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  display: block;
+  margin-top: 8px;
+  position: relative;
+  right: 8px;
+}
+
+a.closeIcon:hover {
+  color: #000 !important;
+}
+
+.modal-dialog.dateModal div {
+  border-radius: 15px !important;
+}
+
+.dash-title {
+  position: relative;
+  background-color: #f6f8fb;
+  padding: 11px 19px;
+  font-size: 28px;
+  line-height: normal;
+  border-radius: 6px;
+  margin-bottom: 30px;
+
+  .total {
+    font-size: 14px;
+    float: right;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+}
+
+.main-sidebar {
+  position: relative;
+  background-color: #fff;
+  max-width: 250px;
+  min-width: 250px;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: -72px;
+  border-right: 1px solid #E8E8E8;
+
+  .sidebar-brand img {}
+}
+
+@media (max-width: 767px) {
+  .main-wrapper main.main {
+    width: 100%;
+  }
+}
+
+@media (max-width: 467px) {
+  .form-row.uploaded-image-row>div {
+    max-width: 50%;
+
+    .uploaded-image img {
+      height: 100px;
+    }
+  }
+}
+
+.sidebar_main {
+  display: flex;
+  width: 100%;
+}
+
+.left_sidebar {
+  width: 250px;
+  background: #fff;
+  height: 100vh;
+  padding: 20px 10px;
+}
+
+.layout_right {
+  width: calc(100% - 250px);
+}
+
+.btn .drpdown_new:hover {
+  border: none !important;
+  color: #fff !important;
+}
+
+.drpdown_new {
+  border: none !important;
+  color: #fff !important;
+}

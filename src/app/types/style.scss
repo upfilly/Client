@@ -1,0 +1,43 @@
+tr.deactive{
+    background-color: #ffd9dd;
+}
+
+.list_name{
+  min-width: 90px;  
+}
+
+.activedeactiveicon {
+    font-size: 18px;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.addDropdown {
+    .dropdown-menu {
+        left: initial !important;
+        right: 0 !important;
+        top: 110% !important;
+        transform: none !important;
+    }
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.phoneInput {
+    display: flex;
+    justify-content: space-between;
+
+    >*:first-child {
+        width: 60px;
+    }
+
+    & *:last-child {
+        width: calc(100% - 70px);
+    }
+}
+
+.modal-dialog-md {
+    max-width: 900px !important;
+}

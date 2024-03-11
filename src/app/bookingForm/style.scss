@@ -1,0 +1,223 @@
+button.genral-buttons {
+  background-color: #000000;
+  border: none;
+  border-radius: 50px;
+  padding: 7px 7px;
+  color: #FFF;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+span.rank {
+  background-color: white;
+  color: #000;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 5px 7px;
+  border-radius: 50px;
+}
+
+button.genral-button {
+  background-color: #ffffff;
+  border-radius: 50px;
+  padding: 7px 7px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 400;
+  border: 1px solid grey;
+}
+
+span.ranks {
+  background-color: black;
+  color: #fff;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 6px 7px;
+  border-radius: 50px;
+}
+
+img.sad-img {
+  width: 15px;
+  height: 15px;
+  object-fit: cover;
+}
+
+.checkbox-custom {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-radius: 2rem;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  cursor: pointer;
+  box-shadow: inset 0 0 5px rgb(0 0 0 / 50%);
+}
+
+.checkbox-custom::before {
+  content: "";
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  transition: 0.5s;
+}
+
+.checkbox-custom:checked::before {
+  transform: translateX(100%);
+  background: #fff;
+}
+
+.checkbox-custom:checked {
+  background: #fff;
+}
+
+p.togel-set {
+  color: #000;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.quick-radius {
+  border-radius: 50px !important;
+  background-color: white !important;
+
+  font-size: 13px;
+
+
+}
+
+label.label-set {
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.eye-icon-m {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.checked_tbn_after {
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: block;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.checked_tbn_after:hover {
+  background-color: #e4e4e5;
+}
+
+
+.checked_tbn {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 1rem !important;
+  border: 2px solid #00BAFF;
+  transition: all 0.2s ease-in-out;
+}
+
+.main-card {
+  border: 2px solid transparent;
+}
+
+
+.modal {
+  background: #151515e3;
+}
+
+// body {
+//   overflow: hidden;
+// }
+
+
+.eye-icon-m {
+  z-index: 9;
+  position: absolute;
+}
+
+p.textWrong {
+  text-decoration: line-through;
+  color: #cf2e2e;
+  margin: 0px;
+}
+
+.plan-featuress {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar by default */
+.plan-featuress::-webkit-scrollbar {
+  width: 0;
+  opacity: 0;
+  transition: width 0.3s, opacity 0.3s;
+}
+
+/* Show scrollbar on hover */
+.plan-featuress:hover::-webkit-scrollbar {
+  width: 12px;
+  /* Adjust the width as needed */
+  opacity: 1;
+}
+
+
+
+.heading_main_title h3 {
+  margin: 0px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+
+.heading_main_title p {
+  margin: 5px 0px 0px;
+  font-size: 15px;
+}
+
+
+.heading_main_title {
+  border-bottom: 1px solid rgb(218, 218, 218);
+  padding: 0px 0px;
+}
+
+input#currency {
+  background-color: #e9ecef !important;
+}
+
+.btn.btn-danger {
+  border-radius: 50px !important;
+  border: none !important;
+}

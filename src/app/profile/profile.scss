@@ -1,0 +1,124 @@
+.inputFlexs label {
+    margin: 0px;
+    font-size: 14px;
+}
+
+.col-md-12.inputFlexs {
+    margin-bottom: 10px;
+}
+
+// p.profile_data.name_space {
+//     min-width: 250px;
+// }
+.col-md-12.inputFlexs label {
+    margin-bottom: 0px;
+}
+
+// New CSS
+
+
+.social-media-links i {
+    background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+    padding: 0px;
+    color: #fff;
+    border-radius: 50px;
+    font-size: 15px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.d-flex.inputFlexs.social-media-links i img {
+    height: inherit;
+    width: 20px;
+    height: 20px;
+}
+
+
+.social-media-links {
+    border: 1px solid #e2e2e2;
+    display: unset;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    padding: 15px !important;
+    border-radius: 9px;
+    margin-top: 20px;
+}
+
+.social-media-links label {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: .54px;
+    font-weight: 600;
+}
+
+.social-media-links-inner {
+    margin: 8px 0 0 0;
+}
+
+.social-media-links label {
+    font-size: 16px;
+}
+
+.profile-card {
+    min-width: 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #fff;
+    border-radius: 9px !important;
+    border: 0 !important;
+    padding: 20px !important;
+    margin: 40px auto !important;
+}
+
+.profile-card .col-md-12.inputFlexs label {
+    font-weight: 600;
+    letter-spacing: 0.44px;
+}
+
+.profile-card hr {
+    border-top: 1px solid rgba(0, 0, 0, .3);
+}
+
+.card.card-shadow {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+}
+
+.profileImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.inputFlexs.width400 {
+
+    margin: 10px auto;
+}
+
+.inputFlexs.width400 label {
+    font-weight: 600;
+    margin-bottom: 1px;
+}
+
+
+p.profile_data {
+    margin-bottom: 0px !important;
+    font-size: 15px !important;
+    font-weight: 400;
+    color: #5A5A5A;
+}
+
+
+.main_title_head_bill {
+    padding: 15px 0px 10px;
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+.main_title_head_bill h3 {
+    font-size: 20px;
+}

@@ -1,0 +1,37 @@
+@import '../../../scss/mixins';
+.footer {
+  background: #F7F7F7;
+  padding: 3rem;
+  padding-bottom: 1rem !important;
+}
+li a:hover {
+  color: #2271b8 !important;
+}
+.btn.btn-outline-primary:hover {
+  background: transparent;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+}
+li a {
+  color: #000 !important;
+}
+.footer {
+  background: #E8E9ED;
+  padding: 20px 6rem;
+  margin: 0px 1rem;
+  border-radius: 20px;
+}
+ul.footer_list {
+  margin-left: 0px !important;
+  padding-left: 0px;
+}
+ul.footer_list li {
+  list-style: none;
+  line-height: 2;
+}
+.pointer{
+  cursor: pointer;
+}
+.right.d-flex a {
+  color: #000;
+}
