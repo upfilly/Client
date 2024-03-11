@@ -129,11 +129,20 @@ export default function Pricing() {
     }
   });
 
-  const sortedData = filteredPlans?.sort((a: any, b: any) => {
-    if (a.isUpcoming == b.isUpcoming) {
-      return b.amount - a.amount;
-    }
-    return a.isUpcoming ? -1 : 1;
+  console.log(filteredPlans,"fffffiiiiiiiilllll")
+
+  // const sortedData = filteredPlans?.sort((a: any, b: any) => {
+  //   if (a.isUpcoming == b.isUpcoming) {
+  //     return b.amount - a.amount;
+  //   }
+  //   return a.isUpcoming ? -1 : 1;
+  // })
+
+  const sortedData = filteredPlans.sort((a: any, b: any) => {
+    if (a.recommended === 'Y' && b.recommended === 'N') return -1;
+    if (a.recommended === 'N' && b.recommended === 'Y') return 1;
+
+    return b.amount - a.amount;
   })
 
   const ChangePlan=(id:any)=>{
