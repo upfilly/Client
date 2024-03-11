@@ -101,7 +101,7 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
         </ListItemLink>}
 
         {user && user?.role == "brand" && <ListItemLink to="/invites" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
-          <i className="material-icons mr-2" title="campaignManagement">email</i>
+          <i className="fa fa-envelope-o mr-2" title="campaignManagement"></i>
           <span className="side_head">Invites</span>
         </ListItemLink>}
 
