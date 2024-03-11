@@ -186,3 +186,14 @@ input.form-control-file.over_input {
 .bg_blue {
     border: 3px solid transparent;
 }
+
+
+.btn-secondary {
+    border-radius: 50px !important;
+}
+
+
+
+.btn.btn-secondary:hover {
+    border: 1px solid transparent !important;
+}
