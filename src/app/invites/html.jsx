@@ -197,7 +197,7 @@ const Html = ({
                             <Form.Label>E-mail</Form.Label>
                             <Form.Control
                                 type="email"
-                                placeholder="Enter name"
+                                placeholder="Enter Email"
                                 value={form?.email}
                                 onChange={(e) => setform({ ...form, email: e.target.value })}
                             />
