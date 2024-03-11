@@ -99,15 +99,15 @@ export default function Home() {
 
               <ul className='tool_list'>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
               </ul>
@@ -124,15 +124,15 @@ export default function Home() {
 
               <ul className='tool_list'>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
               </ul>
@@ -149,15 +149,15 @@ export default function Home() {
 
               <ul className='tool_list'>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
                 <li>
-                  <img src="/assets/img/checkmark.png" className='checkmark' alt="" />
+                  <img src="/assets/img/checkmark.png" className='chekmar' alt="" />
                   Lorem Ipsum is simply dummy
                 </li>
               </ul>
