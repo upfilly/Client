@@ -3394,3 +3394,16 @@ p.types_date {
 .btn-secondary{
   border-radius: 50px !important;
 }
+
+button.cancel_btns{
+  text-transform: capitalize;
+}
+
+.btn .btn-primary:hover{
+  color: #fff !important;
+} 
+
+.descmkt p {
+  min-height: 38px;
+  height: auto;
+}
