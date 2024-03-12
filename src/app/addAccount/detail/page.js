@@ -51,6 +51,7 @@ export default function addAffiliateAccount() {
   };
 
   useEffect(() => {
+    // setFormData({...formData,dialCode:'+1'})
     toast.error('Your Account is not added...')
     setTimeout(() => {
       setStateAutocomplete(false)
@@ -230,7 +231,7 @@ export default function addAffiliateAccount() {
 
   const handleSave = () => {
    
-    if (!formData?.mobileNo || !formData?.dialCode || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
+    if (!formData?.mobileNo || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
       formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob || formData?.mobileNo?.length < 10) {
       setSubmitted(true)
       return
@@ -298,11 +299,11 @@ export default function addAffiliateAccount() {
     })
   };
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("step3");
-    const parsedData = storedData ? JSON.parse(storedData) : null;
-    setFormData(parsedData)
-  }, [])
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem("step3");
+  //   const parsedData = storedData ? JSON.parse(storedData) : null;
+  //   setFormData(parsedData)
+  // }, [])
 
   const handleGoBack = () => {
     router.back();
