@@ -336,7 +336,7 @@ export default function MarketPlace() {
                               <div key={index}>
                                 <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}...` }}></p>
                                 {data?.description?.length > 100 && <span onClick={() => toggleDescription(index)}>
-                                  {showFullDescription[index] ? 'See Less' : 'See More'}
+                                  {showFullDescription[index] ? <div className="arrowpoint">See Less <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div> :<div className="arrowpoint"> See More <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div>}
                                 </span>}
                               </div>
 
