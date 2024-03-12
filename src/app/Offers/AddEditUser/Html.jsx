@@ -122,7 +122,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         monthsShown={2}
                                         shouldCloseOnSelect={true}
                                         selectsRange={true}
-                                        placeholderText="Select Date from to Date TO"
+                                        placeholderText="Select Date Range"
                                         startDate={startDate}
                                         endDate={endDate}
                                         onChange={(update) => {
