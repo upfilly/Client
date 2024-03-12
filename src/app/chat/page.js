@@ -52,6 +52,15 @@ export default function Chat() {
   const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
   const [submitGroup, setSummitGroup] = useState(false)
   const [filteredArray, setFilteredArray] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+  const filteredChatList = chatList.filter(itm => {
+    if (!itm?.isGroupChat) {
+      return itm?.room_members[0]?.user_name.toLowerCase().includes(searchText.toLowerCase());
+    } else {
+      return itm?.room_name.toLowerCase().includes(searchText.toLowerCase());
+    }
+  });
 
   useEffect(() => {
     ConnectSocket.connect()
@@ -591,13 +600,15 @@ export default function Chat() {
                         <div className="form-group position-relative">
                           <input
                             type="text"
-                            value={filters?.search}
+                            // value={filters?.search}
                             placeholder="Search"
                             className="from-control search_design"
                             id="searchright"
-                            onChange={(e) =>
-                              filter({ search: e.target.value })
-                            }
+                            value={searchText}
+                            onChange={e => setSearchText(e.target.value)}
+                            // onChange={(e) =>
+                            //   filter({ search: e.target.value })
+                            // }
                           />
                           <span className="mglass">
                             {" "}
@@ -612,16 +623,16 @@ export default function Chat() {
                       <div className="card-body p-0">
                         <ul className="persons-list">
                           {
-                            chatList?.length > 0
+                            filteredChatList?.length > 0
                               ?
-                              chatList?.map((itm, indx) => {
+                              filteredChatList?.map((itm, indx) => {
                                 return (<>
-                                  {/* {itm?.room_members?.map((data) => { */}
+                                 
                                   <li
                                     className={itm?.room_id == roomId ? "person-list-inner chat_active" : "person-list-inner"}
                                     key={indx}
                                     onClick={isImage ? "" : () => {
-                                      // setid(data?.user_id)
+                                    
                                       setActiveData(itm)
                                       localStorage.setItem("roomId", itm?.room_id)
                                       handleUserId(itm?.user_id)
@@ -629,7 +640,7 @@ export default function Chat() {
                                       setRoomId(itm?.room_id)
                                       joinRoom(itm?.room_id);
                                       getGroupListMember(itm?.room_id)
-                                      // // history.push('chat')
+                                  
                                     }}
                                   >
 
@@ -682,7 +693,7 @@ export default function Chat() {
                                     </div>
 
                                   </li>
-                                  {/* // })} */}
+                                  
                                 </>);
                               })
                               : <div className="text-center">
