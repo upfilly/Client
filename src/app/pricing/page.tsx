@@ -129,8 +129,6 @@ export default function Pricing() {
     }
   });
 
-  console.log(filteredPlans,"fffffiiiiiiiilllll")
-
   // const sortedData = filteredPlans?.sort((a: any, b: any) => {
   //   if (a.isUpcoming == b.isUpcoming) {
   //     return b.amount - a.amount;
