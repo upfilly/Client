@@ -157,7 +157,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                                     <span>{itm?.type == 'message' ? 
                                                     <p className='noti_text_msg'>You have a message from {itm?.addedBy_name?.slice(0,10)}...</p>  
                                                      : <p className='noti_text_chat'>{itm?.message?.slice(0,50)}</p> }</span>
-                                                    {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message} </p>}
+                                                    {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message?.slice(0,50)} </p>}
                                                 </div>
                                             </div>
                                         </div>))
