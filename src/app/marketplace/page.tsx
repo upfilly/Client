@@ -182,7 +182,7 @@ export default function MarketPlace() {
                                     <div className="checkmark"></div>
                                   </label>
                                   <div className="d-flex align-items-center justify-content-between w-100">
-                                    <p className="m-0">{data.name}</p>
+                                    <p className="m-0 fs14">{data.name}</p>
                                   </div>
                                 </div>
                               </div>

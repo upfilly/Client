@@ -3093,7 +3093,7 @@ p.ipsi {
   display: block;
   position: relative;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 15px;
   user-select: none;
   border-radius: 5px;
   // box-shadow: 2px 2px 0px rgb(183, 183, 183);
@@ -3143,8 +3143,8 @@ p.ipsi {
  .container_checks .checkmark:after {
   left: 0.45em;
   top: 0.1em;
-  width: 8px;
-  height: 15px;
+  width: 6px;
+  height: 12px;
   border: solid white;
   border-width: 0 0.15em 0.15em 0;
   transform: rotate(45deg);
@@ -3223,6 +3223,8 @@ p.types_date {
   font-size: 13px;
   color: #6a6565;
   margin: 0px;
+  min-height: 30px;
+  height: auto;
 }
 
 .leftshead h6 {
@@ -3411,4 +3413,7 @@ button.cancel_btns{
 .categories-container h5 {
   font-size: 15px;
   font-weight: 600;
+}
+.fs14{
+  font-size: 14px;
 }
