@@ -352,7 +352,7 @@ export default function MarketPlace() {
                               {user?.role == 'brand' && <div className="rightimg">
                                 <div className="btn_offers d-flex justify-content-end">
                                   {data?.isSubmitted ?
-                                    <button className="btn-cancel" disabled>Offer Send</button>
+                                    <button className="btn-cancel" disabled>Offer Sent</button>
                                     : 
                                     <button className="btn-cancel" onClick={() => {
                                       setModalIsOpen(true)
