@@ -70,7 +70,7 @@ const Users = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page+1})
+        getData({ ...p , page:filters?.page+1,addedBy:user?.id})
     }
 
     
@@ -133,7 +133,7 @@ const Users = () => {
             role:'',
             search:'',
              page: 1,
-             count:5, start_date:'', end_date: ''
+             count:5, start_date:'', end_date: '',addedBy:user?.id
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
