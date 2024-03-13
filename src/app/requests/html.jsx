@@ -5,6 +5,7 @@ import methodModel from '@/methods/methods';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import './style.scss';
+import SelectDropdown from '../components/common/SelectDropdown';
 
 const Html = ({
     view,
@@ -17,7 +18,7 @@ const Html = ({
     total,
     filter,
     sorting,
-    sendProposal,
+    ChangeStatus,
     setFilter,
     Tracklogin,
     user,
@@ -41,35 +42,36 @@ const Html = ({
                             </h3>
 
                             <article className="d-flex filterFlex phView">
-                                {/* <div className='searchInput'>
-                            <input
-                                type="text"
-                                value={filters.search}
-                                placeholder="Search"
-                                className="form-control"
-                                onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
-                                onKeyPress={handleKeyPress}
-                            />
-                            <i class="fa fa-search search_fa" onClick={() => {
-                                filter()
-                            }} aria-hidden="true"></i>
-                        </div> */}
+                                <div className='searchInput'>
+                                    <input
+                                        type="text"
+                                        value={filters.search}
+                                        placeholder="Search"
+                                        className="form-control"
+                                        onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
+                                        onKeyPress={handleKeyPress}
+                                    />
+                                    <i class="fa fa-search search_fa" onClick={() => {
+                                        filter()
+                                    }} aria-hidden="true"></i>
+                                </div>
 
-                                {/* <SelectDropdown
+                                <SelectDropdown
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All Status"
                                     intialValue={filters.status}
                                     result={e => { ChangeStatus(e.value) }}
                                     options={[
-                                        {id:'active',name:'Active'},
-                                        {id:'deactive',name:'Deactive'},
+                                        {id:'pending',name:'Pending'},
+                                        {id:'accepted',name:'Accepted'},
+                                        {id:'rejected',name:'Rejected'},
                                     ]}
                                 />
 
 
                   
-                    {!role ? <SelectDropdown
+                    {/* {!role ? <SelectDropdown
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All User"
@@ -79,11 +81,11 @@ const Html = ({
                                 />: <></>} */}
 
 
-                                {/* {filters.search ? <>
+                                {filters.search ? <>
                                     <a className="btn btn-primary" onClick={e => reset()}>
                                         Reset
                                     </a>
-                                </> : <></>} */}
+                                </> : <></>}
                             </article>
 
 

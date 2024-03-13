@@ -129,8 +129,6 @@ export default function Pricing() {
     }
   });
 
-  console.log(filteredPlans,"fffffiiiiiiiilllll")
-
   // const sortedData = filteredPlans?.sort((a: any, b: any) => {
   //   if (a.isUpcoming == b.isUpcoming) {
   //     return b.amount - a.amount;
@@ -141,6 +139,7 @@ export default function Pricing() {
   const sortedData = filteredPlans.sort((a: any, b: any) => {
     if (a.recommended === 'Y' && b.recommended === 'N') return -1;
     if (a.recommended === 'N' && b.recommended === 'Y') return 1;
+    console.log(a,b,"-------=====aaaa")
 
     return b.amount - a.amount;
   })

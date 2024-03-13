@@ -77,12 +77,8 @@ const Html = ({
                     />
 
                     <div className="d-flex filterFlex phView">
-                        {isAllow('addAdmins') ? <>
-                            <a className="btn btn-primary" onClick={e => add()}>
-                              <i className='fa fa-plus mr-1'></i>  Add Offers
-                            </a>
-                        </> : <></>}
-                        {/* <div className='searchInput'>
+                        
+                        <div className='searchInput'>
                             <input
                                 type="text"
                                 value={filters.search}
@@ -94,7 +90,7 @@ const Html = ({
                             <i class="fa fa-search search_fa" onClick={() => {
                                 filter()
                             }} aria-hidden="true"></i>
-                        </div> */}
+                        </div>
 
                         {/* {!role ? <SelectDropdown
                                     id="statusDropdown"
@@ -104,6 +100,12 @@ const Html = ({
                                     result={e => { ChangeRole(e.value) }}
                                     options={rolesModel.list}
                                 />: <></>} */}
+
+                            {isAllow('addAdmins') ? <>
+                                <a className="btn btn-primary" onClick={e => add()}>
+                                    <i className='fa fa-plus mr-1'></i>  Add Offers
+                                </a>
+                            </> : <></>}
 
 
                         {filters.status ? <>

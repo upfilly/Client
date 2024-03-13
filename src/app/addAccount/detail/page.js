@@ -51,7 +51,7 @@ export default function addAffiliateAccount() {
   };
 
   useEffect(() => {
-    setFormData({ ...formData, dialCode: '+1' })
+    // setFormData({...formData,dialCode:'+1'})
     toast.error('Your Account is not added...')
     setTimeout(() => {
       setStateAutocomplete(false)
@@ -231,8 +231,8 @@ export default function addAffiliateAccount() {
 
   const handleSave = () => {
    
-    if (!formData?.mobileNo || !formData?.dialCode || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
-      formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob || formData?.mobileNo?.length < 11) {
+    if (!formData?.mobileNo || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
+      formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob || formData?.mobileNo?.length < 10) {
       setSubmitted(true)
       return
     }
@@ -299,11 +299,11 @@ export default function addAffiliateAccount() {
     })
   };
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("step3");
-    const parsedData = storedData ? JSON.parse(storedData) : null;
-    setFormData(parsedData)
-  }, [])
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem("step3");
+  //   const parsedData = storedData ? JSON.parse(storedData) : null;
+  //   setFormData(parsedData)
+  // }, [])
 
   const handleGoBack = () => {
     router.back();
@@ -399,8 +399,7 @@ export default function addAffiliateAccount() {
                                 <div className='dailCode phn-code'>
                                   <PhoneInput
                                     international
-                                    country="us"
-                                    
+                                    country={"us"}
                                     inputProps={{
                                       disabled: true
                                     }}
@@ -424,7 +423,7 @@ export default function addAffiliateAccount() {
                                   required
                                 />
                               </div>
-                              {submitted && formData?.mobileNo?.length < 11 ? <div className="invalid-feedback d-block">Mobile Number is must be 11 digit</div> : <></>}
+                              {submitted && formData?.mobileNo?.length < 10 ? <div className="invalid-feedback d-block">Mobile Number is must be 10 digit</div> : <></>}
                             </div>
                           </div>
                           <div className='col-12 col-md-4'>

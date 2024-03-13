@@ -37,7 +37,7 @@ const Detail = (p) => {
                 <div className='card'>
                     <div className='card-header'>
                         <div className="main_title_head">
-                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>Product Detail</h3>
+                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>Offer Detail</h3>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.category_name}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_name)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.sub_category_name}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.sub_category_name)}</p>
                                             </div>
                                         </div>
                                     </div>

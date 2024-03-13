@@ -131,7 +131,7 @@ export default function StageSecStep() {
                   <button className='genral-buttons'><span className="rank mr-2">01</span>General</button>
                   <button className='genral-buttons ml-3'><span className="rank mr-2">02</span>Address</button>
                   {/* <button className='genral-button ml-3'><span className="ranks mr-2">03</span>Billing</button> */}
-                  <button className='genral-button ml-3'><span className="ranks mr-2">04</span>User</button>
+                  <button className='genral-button ml-3'><span className="ranks mr-2">03</span>User</button>
                 </div>
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function StageSecStep() {
                   <div className='row mx-0 '>
                     {/* { enableAddress &&    */}
                     <><div className='col-md-6'>
-                      <label className='label-set'>Address1</label>
+                      <label className='label-set'>Address1<span className="star">*</span></label>
 
                       <PlacesAutocomplete
                         value={address}
@@ -208,19 +208,19 @@ export default function StageSecStep() {
                       </div>
                       <div className='col-md-3'>
                         <div class="form-group">
-                          <label className='label-set'>State  </label>
+                          <label className='label-set'>State<span className="star">*</span>  </label>
                           <input type="text" value={selectedLocation?.state} onChange={(e) => setSelectedLocation({ ...selectedLocation, state: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                           {submitted && !selectedLocation?.state ? <div className="invalid-feedback d-block">State is Required</div> : <></>}
                         </div>
                       </div><div className='col-md-3'>
                         <div class="form-group">
-                          <label className='label-set'>City  </label>
+                          <label className='label-set'>City<span className="star">*</span>  </label>
                           <input type="text" value={selectedLocation?.city} onChange={(e) => setSelectedLocation({ ...selectedLocation, city: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                           {submitted && !selectedLocation?.city ? <div className="invalid-feedback d-block">City is Required</div> : <></>}
                         </div>
                       </div><div className='col-md-3'>
                         <div class="form-group">
-                          <label className='label-set'>Postal Code  </label>
+                          <label className='label-set'>Postal Code<span className="star">*</span>  </label>
                           <input type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                           {submitted && !selectedLocation?.pincode ? <div className="invalid-feedback d-block">Pincode is Required</div> : <></>}
                         </div>

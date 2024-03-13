@@ -40,6 +40,16 @@ const Html = ({
     const [submitted, setSubmitted] = useState(false)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [isValidEmail, setIsValidEmail] = useState(true);
+
+    const handleEmailChange = (e) => {
+        const email = e.target.value;
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValid = emailRegex.test(email);
+        setIsValidEmail(isValid);
+        setform({ ...form, email });
+    };
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -91,6 +101,19 @@ const Html = ({
                             // { id: 'rejected', name: 'Rejected' },
                         ]}
                     />
+                    <div className='searchInput'>
+                        <input
+                            type="text"
+                            value={filters.search}
+                            placeholder="Search"
+                            className="form-control"
+                            onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
+                            onKeyPress={handleKeyPress}
+                        />
+                        <i class="fa fa-search search_fa" onClick={() => {
+                            filter()
+                        }} aria-hidden="true"></i>
+                    </div>
 
                     <div className='d-flex gap-3 align-items-center'>
 
@@ -198,9 +221,13 @@ const Html = ({
                             <Form.Control
                                 type="email"
                                 placeholder="Enter Email"
-                                value={form?.email}
-                                onChange={(e) => setform({ ...form, email: e.target.value })}
+                                value={form.email}
+                                onChange={handleEmailChange}
+                                isInvalid={!isValidEmail}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Please enter a valid email address.
+                            </Form.Control.Feedback>
                             {submitted && !form?.email ? <div className="invalid-feedback d-block">email is Required</div> : <></>}
                         </Form.Group>
 

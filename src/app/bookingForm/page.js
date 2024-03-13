@@ -460,7 +460,7 @@ export default function BillingForm() {
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your first name'
+                                placeholder='Enter first name'
                                 id="firstName"
                                 name="firstName"
                                 value={formData.firstName}
@@ -474,7 +474,7 @@ export default function BillingForm() {
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your last name'
+                                placeholder='Enter last name'
                                 id="lastName"
                                 name="lastName"
                                 value={formData.lastName}
@@ -488,7 +488,7 @@ export default function BillingForm() {
                               <input
                                 type="email"
                                 className="form-control quick-radius"
-                                placeholder='Enter your email'
+                                placeholder='Enter email'
                                 id="email"
                                 name="email"
                                 value={formData.email}
@@ -560,7 +560,7 @@ export default function BillingForm() {
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your website'
+                                placeholder='Enter website'
                                 id="website"
                                 name="website"
                                 value={formData.website}
@@ -573,7 +573,7 @@ export default function BillingForm() {
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your currency'
+                                placeholder='Enter currency'
                                 id="currency"
                                 name="currency"
                                 value={formData.currency}
@@ -646,20 +646,20 @@ export default function BillingForm() {
                         <div className='col-12  col-md-6'>
                           <div class="form-group">
                             <label className='label-set'>Country </label>
-                            <input placeholder='Enter your country' type="text" value={selectedLocation?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
+                            <input placeholder='Enter country' type="text" value={selectedLocation?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                           </div>
                         </div>
 
                         <div className='col-md-6 pl-0'>
                           <div class="form-group">
                             <label className='label-set'>City </label>
-                            <input placeholder='Enter your city' type="text" value={selectedLocation?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
+                            <input placeholder='Enter city' type="text" value={selectedLocation?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                           </div>
                         </div>
                         <div className='col-md-12'>
                           <div class="form-group">
                             <label className='label-set'>Postal Code  </label>
-                            <input placeholder='Enter your postal code' type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
+                            <input placeholder='Enter postal code' type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
                           </div>
                         </div>
                       </div>
