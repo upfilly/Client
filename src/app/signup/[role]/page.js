@@ -24,6 +24,7 @@ export default function Login() {
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
   const referralCode = param.get("referral_code") || ''
+  const BrandId = param.get("b_id") || ''
   const history = useRouter()
   const user = crendentialModel.getUser()
 
@@ -101,7 +102,8 @@ export default function Login() {
         role: role,
         device_token:localStorage.getItem("device_token"),
         campaign_unique_id:code,
-        referral_code:referralCode
+        referral_code:referralCode,
+        createdByBrand:BrandId,
       };
     }else{
       data = {
@@ -109,7 +111,8 @@ export default function Login() {
         role: role,
         device_token:'',
         campaign_unique_id:code,
-        referral_code:referralCode
+        referral_code:referralCode,
+        createdByBrand:BrandId,
       };
     }
 

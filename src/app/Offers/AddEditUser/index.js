@@ -18,9 +18,9 @@ const AddEditUser = () => {
         name: "",
         description: "",
         image: [],
-        price: '',
+        payment_model:[],
         category_id: "",
-        sub_category_id: "",
+        sub_category_id: null,
         opportunity_type: [],
         placement: [],
         start_date: "",
@@ -75,7 +75,7 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!form?.description || !form?.name || !form?.price ) {
+        if (!form?.description || !form?.name || !form?.category_id || form?.opportunity_type?.length <= 0 || form?.payment_model?.length <= 0 || form?.placement?.length <= 0) {
             setSubmitted(true)
             return;
         }

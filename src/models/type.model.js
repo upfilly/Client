@@ -164,7 +164,7 @@ export const campaignType={
     name: "",
     description: "",
     "category_id": "",
-    "sub_category_id": "",
+    "sub_category_id": null,
     image: [],
     price: '',
     start_date: "",

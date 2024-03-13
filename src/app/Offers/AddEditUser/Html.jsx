@@ -78,7 +78,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     />
                                     {submitted && !form?.name ? <div className="invalid-feedback d-block">product name is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Price ($)<span className="star">*</span></label>
                                     <input
                                         className="form-control"
@@ -95,7 +95,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         }}
                                     />
                                     {submitted && !form?.price ? <div className="invalid-feedback d-block">Price is Required</div> : <></>}
-                                </div>
+                                </div> */}
                                 {/* <div className="col-md-6 mb-3">
                                     <label>Quantity<span className="star">*</span></label>
                                     <input
@@ -135,6 +135,28 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     />
                                 </div>
                                 <div className="select_drop col-md-6 mb-3">
+                                    <label>Payment Model<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <MultiSelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select category"
+                                            intialValue={form?.payment_model}
+                                            result={e => setform({ ...form, payment_model: e.value })}
+                                            options={[{ name: "Revenue Share", id: "Rev_share" },
+                                            { name: "Flat Fee", id: "Flat_fee" },
+                                            { name: "CPA +", id: "CPA +" },
+                                            { name: "CPC", id: "CPC" }]}
+                                            required
+                                        />
+                                    </div>
+                                    {submitted && !form?.category_id ? (
+                                        <div className="invalid-feedback d-block">Category is Required</div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
+                                <div className="select_drop col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
@@ -166,11 +188,11 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
-                                    {submitted && !form?.sub_category_id ? (
+                                    {/* {submitted && !form?.sub_category_id ? (
                                         <div className="invalid-feedback d-block">Sub Category is Required</div>
                                     ) : (
                                         <></>
-                                    )}
+                                    )} */}
                                 </div>}
                                 <div className="select_type select_drop col-md-12 mb-3">
                                     <label>Placement<span className="star">*</span></label>
@@ -188,7 +210,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
-                                    {submitted && !form?.placement ? (
+                                    {submitted && form?.placement?.length <= 0 ? (
                                         <div className="invalid-feedback d-block">Placement is Required</div>
                                     ) : (
                                         <></>
@@ -210,7 +232,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
-                                    {submitted && !form?.opportunity_type ? (
+                                    {submitted && !form?.opportunity_type?.length <= 0 ? (
                                         <div className="invalid-feedback d-block">Opportunity Type is Required</div>
                                     ) : (
                                         <></>

@@ -44,7 +44,7 @@ const Html = ({
 
     const handleEmailChange = (e) => {
         const email = e.target.value;
-        
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValid = emailRegex.test(email);
         setIsValidEmail(isValid);
@@ -80,7 +80,7 @@ const Html = ({
                     "email": "",
                 })
             }
-            getData({...filters,page:1})
+            getData({ ...filters, page: 1 })
             loader(false)
         })
     };
@@ -158,7 +158,7 @@ const Html = ({
                                         </div></td>
                                     <td className='table_dats'>   <div className={`user_hours`}>
                                         <span className={itm?.invite_status == "onboard" ? 'contract' : itm?.invite_status == "invited" ? 'pending_status' : 'inactive'}
-                                            // onClick={() => statusChange(itm)}
+                                        // onClick={() => statusChange(itm)}
                                         >
                                             {itm.invite_status}
                                         </span>
@@ -180,7 +180,6 @@ const Html = ({
                                             </> : <></>}
                                         </div>
                                     </td> */}
-
                                 </tr>
 
                             })
@@ -211,9 +210,9 @@ const Html = ({
                     <img src="/assets/img/loader.gif" className="pageLoader" />
                 </div> : <></>}
 
-                <Modal className='invite_modal'  show={show} onHide={handleClose}>
+                <Modal className='invite_modal' show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Invite Modal</Modal.Title>
+                        <Modal.Title>Invite</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Group className='d-flex justify-content-between align-items-center width_label' controlId="formBasicEmail">

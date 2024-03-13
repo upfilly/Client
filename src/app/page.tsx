@@ -3,12 +3,9 @@
 import { useEffect, useState } from 'react';
 import crendentialModel from '@/models/credential.model';
 import "./style.scss";
-import PageContainer from './components/main/PageContainer'
 import Layout from './components/global/layout';
-import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
-import { toast } from 'react-toastify';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 // import { message } from './firebase/function';
 
 export default function Home() {
