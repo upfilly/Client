@@ -287,7 +287,7 @@ export default function MarketPlace() {
               <div className="col-12 col-md-9">
                 <div className="lists_marketplace">
                   <div className="job-searchbar mb-6">
-                    <h4 className="mb-0">{total} products Results Found</h4>
+                    <h4 className="mb-0">{total} Results Found</h4>
                     <form>
                       <div className="row">
                         <div className="col-md-12">
