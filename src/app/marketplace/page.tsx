@@ -12,9 +12,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import MultiSelectDropdown from "../components/common/MultiSelectDropdown";
 import methodModel from "@/methods/methods";
 import crendentialModel from "@/models/credential.model";
+import { useRouter } from "next/navigation";
 
 export default function MarketPlace() {
   const user: any = crendentialModel.getUser()
+  const history = useRouter()
   const [filters, setFilter] = useState<any>({
     page: 0,
     count: 5,
@@ -311,33 +313,21 @@ export default function MarketPlace() {
                     </div>
 
                     <div className="row">
-                      {data.map((data: any, index: any) => <div className="col-12 col-md-6">
+                      {!loaging  && data.map((data: any, index: any) => <div className="col-12 col-md-6" >
                         <div className="showngmkt lists_mkt">
 
                           <div className="grid_lists_mkt ">
-                            <div className="subparttop d-flex align-items-center justify-content-between">
+                            <div className="subparttop d-flex align-items-center justify-content-between" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <div className="leftshead">
                                 <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
                                 <p className="types_date">Type:<span className="types_main"> {data?.opportunity_type?.map((itm: any) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p>
                               </div>
-
-                              {/* <div className="rightimg">
-                                qty:{data?.quantity}
-                              </div> */}
-
-
                             </div>
 
-                            <div className="showin_mkt mt-4 mb-4">
-                              {/* <h5>{data?.name}</h5> */}
+                            <div className="showin_mkt mt-4 mb-4" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <h5>Placements:{data?.placement?.map((itm: any) => itm).join(',\n') || ''}</h5>
-                              {/* <span className="links_ancor">file:///home/jc/Downloads/marketplace_document.pdf</span> */}
-
                               <div key={index}>
                                 <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}...` }}></p>
-                                {data?.description?.length > 100 && <span onClick={() => toggleDescription(index)}>
-                                  {showFullDescription[index] ? <div className="arrowpoint">See Less <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div> :<div className="arrowpoint"> See More <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div>}
-                                </span>}
                               </div>
 
                             </div>
@@ -345,7 +335,7 @@ export default function MarketPlace() {
 
                             <div className="d-flex align-items-center justify-content-between bordertop">
                               <div className="leftshead">
-                                <h6>${data?.price}</h6>
+                                {/* <h6>${data?.price}</h6> */}
                                 <p className="types_date"><span className="types_main">start:{datepipeModel.date(data?.start_date)}-end:{datepipeModel.date(data?.end_date)}</span></p>
                               </div>
 

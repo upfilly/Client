@@ -110,6 +110,11 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <span className="side_head">Sent Offers</span>
         </ListItemLink>}
 
+        {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+          <i className="material-icons mr-2" title="campaignManagement">business</i>
+          <span className="side_head">Generate Link</span>
+        </ListItemLink>}
+
         {/* {user && user?.role == "affiliate" && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons mr-2" title="campaignManagement">manage_accounts</i>
           <span className="side_head">Campaign Management</span>
