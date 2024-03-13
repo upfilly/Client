@@ -54,15 +54,10 @@ export default function MarketPlaceDetail() {
                             </div>
 
                             <div className="showin_mkt mt-4 mb-4">
-                                {/* <h5>{data?.name}</h5> */}
                                 <h5>Placements:{data?.placement?.map((itm) => itm).join(',\n') || ''}</h5>
-                                {/* <span className="links_ancor">file:///home/jc/Downloads/marketplace_document.pdf</span> */}
 
                                 <div>
                                     <p className="descmkt" dangerouslySetInnerHTML={{ __html:data?.description }}></p>
-                                    {/* {data?.description?.length > 100 && <span onClick={() => toggleDescription(index)}>
-                                        {showFullDescription[index] ? <div className="arrowpoint">See Less <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div> : <div className="arrowpoint"> See More <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div>}
-                                    </span>} */}
                                 </div>
 
                             </div>
@@ -70,7 +65,7 @@ export default function MarketPlaceDetail() {
 
                             <div className="d-flex align-items-center justify-content-between bordertop">
                                 <div className="leftshead">
-                                    <h6>${data?.price}</h6>
+                                    {/* <h6>${data?.price}</h6> */}
                                     <p className="types_date"><span className="types_main">start:{datepipeModel.date(data?.start_date)}-end:{datepipeModel.date(data?.end_date)}</span></p>
                                 </div>
 
