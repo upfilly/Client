@@ -52,7 +52,7 @@ export default function addAffiliateAccount() {
 
   useEffect(() => {
     // setFormData({...formData,dialCode:'+1'})
-    toast.error('Your Account is not added...')
+    toast.error('Please add your account first... ')
     setTimeout(() => {
       setStateAutocomplete(false)
     }, 2000);
