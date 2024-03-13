@@ -313,33 +313,21 @@ export default function MarketPlace() {
                     </div>
 
                     <div className="row">
-                      {data.map((data: any, index: any) => <div className="col-12 col-md-6" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
+                      {!loaging  && data.map((data: any, index: any) => <div className="col-12 col-md-6" >
                         <div className="showngmkt lists_mkt">
 
                           <div className="grid_lists_mkt ">
-                            <div className="subparttop d-flex align-items-center justify-content-between">
+                            <div className="subparttop d-flex align-items-center justify-content-between" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <div className="leftshead">
                                 <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
                                 <p className="types_date">Type:<span className="types_main"> {data?.opportunity_type?.map((itm: any) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p>
                               </div>
-
-                              {/* <div className="rightimg">
-                                qty:{data?.quantity}
-                              </div> */}
-
-
                             </div>
 
-                            <div className="showin_mkt mt-4 mb-4">
-                              {/* <h5>{data?.name}</h5> */}
+                            <div className="showin_mkt mt-4 mb-4" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <h5>Placements:{data?.placement?.map((itm: any) => itm).join(',\n') || ''}</h5>
-                              {/* <span className="links_ancor">file:///home/jc/Downloads/marketplace_document.pdf</span> */}
-
                               <div key={index}>
                                 <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}...` }}></p>
-                                {/* {data?.description?.length > 100 && <span onClick={() => toggleDescription(index)}>
-                                  {showFullDescription[index] ? <div className="arrowpoint">See Less <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div> :<div className="arrowpoint"> See More <span className="ml-1"><i className="fa fa-angle-down"></i></span> </div>}
-                                </span>} */}
                               </div>
 
                             </div>
