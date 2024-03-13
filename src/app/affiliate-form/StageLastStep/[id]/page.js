@@ -124,7 +124,7 @@ export default function StageLastStep() {
                   <button className='genral-buttons'><span className="rank mr-2">01</span>General</button>
                   <button className='genral-buttons ml-3'><span className="rank mr-2">02</span>Address</button>
                   {/* <button className='genral-buttons ml-3'><span className="rank mr-2">03</span>Billing</button> */}
-                  <button className='genral-buttons ml-3'><span className="rank mr-2">04</span>User</button>
+                  <button className='genral-buttons ml-3'><span className="rank mr-2">03</span>User</button>
                 </div>
               </div>
             </div>
@@ -151,7 +151,7 @@ export default function StageLastStep() {
                   <div className='row mx-0 mt-4'>
                     <div className='col-md-3'>
                       <div class="form-group">
-                        <label className='label-set' >First Name  </label>
+                        <label className='label-set' >First Name<span className="star">*</span>  </label>
                         <input type="text" className="form-control " id="exampleFormControlInput1" value={formData.firstName}
                           name="firstName" onChange={handleInputChange} />
                         {submitted && !formData?.firstName ? <div className="invalid-feedback d-block">FirstName is Required</div> : <></>}
@@ -159,7 +159,7 @@ export default function StageLastStep() {
                     </div>
                     <div className='col-md-3'>
                       <div class="form-group">
-                        <label className='label-set' >Last Name  </label>
+                        <label className='label-set' >Last Name<span className="star">*</span>  </label>
                         <input type="text" className="form-control " id="exampleFormControlInput1" name="lastName"
                           value={formData.lastName}
                           onChange={handleInputChange} />
@@ -196,7 +196,7 @@ export default function StageLastStep() {
 
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Title  </label>
+                        <label className='label-set' >Title<span className="star">*</span>  </label>
                         <input type="text" className="form-control " id="exampleFormControlInput1" name="title"
                           value={formData.title}
                           onChange={handleInputChange} />
@@ -273,7 +273,7 @@ export default function StageLastStep() {
                     </div>
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Language  </label>
+                        <label className='label-set' >Language<span className="star">*</span>  </label>
                         <SelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -320,7 +320,7 @@ export default function StageLastStep() {
 
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Instant Messaging  </label>
+                        <label className='label-set' >Instant Messaging<span className="star">*</span>  </label>
                         <SelectDropdown
                           id="statusDropdown"
                           displayValue="name"
