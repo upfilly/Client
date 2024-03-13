@@ -41,7 +41,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getContentData()
+    if (user) {
+      getContentData()
+    }
   }, [])
 
   return (
