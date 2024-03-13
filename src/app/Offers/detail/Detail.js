@@ -81,7 +81,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.category_name}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_name)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -94,7 +94,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.sub_category_name}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.sub_category_name)}</p>
                                             </div>
                                         </div>
                                     </div>
