@@ -39,8 +39,9 @@ export default function MarketPlaceDetail() {
 
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-            <>
-                <div className="col-12 col-md-6">
+            <div className="p-80">
+            <div className="container">
+                <div className="col-12 ">
                     <div className="showngmkt lists_mkt">
 
                         <div className="grid_lists_mkt ">
@@ -87,7 +88,8 @@ export default function MarketPlaceDetail() {
                     </div>
                 </div>
     <OfferFormModal getProductData={getDetail} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} id={id} affiliateName={affiliateName} />
-            </>
+            </div>
+            </div>
         </Layout>
     );
 }
