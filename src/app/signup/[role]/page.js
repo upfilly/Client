@@ -24,7 +24,7 @@ export default function Login() {
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
   const referralCode = param.get("referral_code") || ''
-  const BrandId = param.get("b_id") || ''
+  const BrandId = param.get("b_id") || null
   const history = useRouter()
   const user = crendentialModel.getUser()
 
