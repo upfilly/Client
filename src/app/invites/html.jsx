@@ -238,7 +238,7 @@ const Html = ({
                             Close
                         </Button>
                         <Button variant="primary" onClick={(e) => handleSubmit(e)}>
-                            Save Changes
+                           Send Invite
                         </Button>
                     </Modal.Footer>
                 </Modal>
