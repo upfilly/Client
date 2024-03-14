@@ -84,8 +84,8 @@ const Html = () => {
                                 <div className=''>
                                     <div class="d-flex align-items-center gap-3">
                                         <div className="dropdown">
-                                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                DYNAMIC PARAMETERS
+                                            <button className="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Dynamic Parameters
                                             </button>
                                             <div className="dropdown-menu width_menu" aria-labelledby="dropdownMenuButton">
                                                 {checkboxValues.map((checkbox, index) => (
