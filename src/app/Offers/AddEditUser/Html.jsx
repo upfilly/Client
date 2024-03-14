@@ -60,14 +60,17 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                 <div className="sidebar-left-content">
                     <div className=" pprofile1 card card-shadow p-4">
                         <div className="">
-                            <div className="main_title_head profile-card">
+                            <div className="main_title_head ">
 
-                                <h3 className='VieUser'>
+                                <h3 className='VieUser mb-4'>
                                     <a to="/product" onClick={e => back()}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
                                     {form && form.id ? 'Edit' : 'Add'} Offer</h3>
-                                <hr></hr>
+                                
                             </div>
-                            <div className="form-row">
+
+                            <div className="row ">
+                            <div className="col-sm-12 col-md-8">
+                            <div className="row">
                                 <div className="col-md-6 mb-3">
                                     <label>Title<span className="star">*</span></label>
                                     <input
@@ -194,7 +197,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         <></>
                                     )} */}
                                 </div>}
-                                <div className="select_type select_drop col-md-12 mb-3">
+                                <div className="select_type select_drop col-md-6 mb-3">
                                     <label>Placement<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectDropdown
@@ -216,7 +219,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         <></>
                                     )}
                                 </div>
-                                <div className="select_type select_drop col-md-12 mb-3">
+                                <div className="select_type select_drop col-md-6 mb-3">
                                     <label>Opportunity Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectDropdown
@@ -252,7 +255,11 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     />
                                     {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
-                                <div className='col-md-6'>
+                              
+                            </div>
+                            </div>
+                            <div className="col-sm-12 col-md-4">
+                            <div className='imagesshowing'>
                                     <label>Images (Max. Limit 10) </label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
@@ -276,6 +283,8 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     </div>
                                 </div>
                             </div>
+                             </div>
+
                             <div className="text-right edit-btns">
                                 <a className="btn btn-secondary mr-2" onClick={() => history.push('/product')}>Back</a>
                                 <button type="submit" className="btn btn-primary">Save</button>

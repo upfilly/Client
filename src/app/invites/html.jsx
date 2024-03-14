@@ -89,6 +89,7 @@ const Html = ({
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Invites" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center">
+                    <div className='d-flex align-items-center gap-2'>
                     <SelectDropdown
                         id="statusDropdown"
                         displayValue="name"
@@ -113,6 +114,7 @@ const Html = ({
                         <i class="fa fa-search search_fa" onClick={() => {
                             filter()
                         }} aria-hidden="true"></i>
+                    </div>
                     </div>
 
                     <div className='d-flex gap-3 align-items-center'>
