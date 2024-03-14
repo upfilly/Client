@@ -3418,7 +3418,7 @@ button.cancel_btns{
 }
 
 .links_width_menu {
-  width: 400px;
+  width: 300px;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
   padding: 10px;
@@ -3433,5 +3433,13 @@ button.cancel_btns{
   border-radius: 50px;
   border: 1px solid #e1e1e1;
   padding: 0px 10px;
-  width: 200px;
+  width: 150px;
+}
+
+.inpudesgn::placeholder{
+ font-size: 12px;
+}
+
+.br0{
+  border-radius: 0px !important;
 }
