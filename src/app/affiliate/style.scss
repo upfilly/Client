@@ -252,3 +252,22 @@ input.datepicker-field {
   align-items: center;
   // justify-content: center;
 }
+
+.newselectmulti{
+  border-radius: 50px !important;
+  text-align: left;
+  padding: 5px 5px;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  min-width: 300px;
+  width: 100% !important;
+  border: 1px solid #ccc;
+}
+
+.newselectmulti .checkbox-option-main span {
+  font-size: 12px;
+  background-color: rgb(235, 233, 233);
+  border-radius: 50px;
+  padding: 8px 8px;
+}

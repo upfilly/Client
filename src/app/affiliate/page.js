@@ -250,8 +250,26 @@ export default function affilate() {
                     />
                   </div>
 
+               
+
+                  <div class="mr-3">
+
+                    <DatePicker
+                      className="datepicker-field"
+                      selected={startDate}
+                      onChange={onChange}
+                      startDate={startDate}
+                      endDate={endDate}
+                      showIcon
+                      placeholderText=" Date Range"
+                      selectsRange
+
+                    // inline
+                    />
+                  </div>
+
                   <div className={`checkbox-inner checkbox-dropdown ${isOpen ? 'open' : ''} ml_3`}>
-                    <div className="dropdown-header position-relative" onClick={toggleDropdown}>
+                    <div className="newselectmulti position-relative" onClick={toggleDropdown}>
                       {selectedOptions.length === 0 ? "Select Groups " : (
                         <p className='checkbox-option-main'>
                           {selectedOptions.map((selectedOption) => (
@@ -279,21 +297,7 @@ export default function affilate() {
                     </div>
                   </div>
 
-                  <div class="ml-3">
-
-                    <DatePicker
-                      className="datepicker-field"
-                      selected={startDate}
-                      onChange={onChange}
-                      startDate={startDate}
-                      endDate={endDate}
-                      showIcon
-                      placeholderText=" Date Range"
-                      selectsRange
-
-                    // inline
-                    />
-                  </div>
+                  
 
 
                   {filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
