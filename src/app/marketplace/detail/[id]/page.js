@@ -79,7 +79,7 @@ export default function MarketPlaceDetail() {
                                                 setModalIsOpen(true)
                                                 setid(data?._id)
                                                 setAffiliateName(data?.addedBy_name)
-                                            }}> Make Offers</button>}
+                                            }}> Make Offer</button>}
                                     </div>
                                 </div>}
                             </div>

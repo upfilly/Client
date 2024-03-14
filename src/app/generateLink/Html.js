@@ -20,7 +20,6 @@ const Html = () => {
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
-            console.log("texttttttt")
             setCopied(true);
             setTimeout(() => {
                 setCopied(false);
@@ -52,15 +51,14 @@ const Html = () => {
         }));
     };
 
-    // useEffect(()=>{
-    //     ApiClient.get('get-link').then((res) => {
-    //         if (res?.success) {
-    //             setUrl(res?.data)
-    //             console.log(res?.data, "=======resssss")
-    //         }
-    //     loader(false)
-    //     })
-    // },[])
+    useEffect(()=>{
+        ApiClient.get('get-affilaite-link').then((res) => {
+            if (res?.success) {
+                setUrl(res?.data?.link)
+            }
+        loader(false)
+        })
+    },[])
 
     const handleSubmit = () => {
         const checkedParameters = {};
@@ -101,7 +99,7 @@ const Html = () => {
                                     <div className="d-flex align-items-center gap-3">
                                         <div className="position-relative">
                                             <button className="btn btn-primary btn-sm " onClick={()=>setSelectDropdown(!SelectDropdown)}>
-                                                Dynamic Parameters <i className='fa fa-angle-down'></i>
+                                                Add Dynamic Parameters <i className='fa fa-angle-down'></i>
                                             </button>
                                             {!SelectDropdown && <div className="links_width_menu" >
                                                 {checkboxValues.map((checkbox, index) => (

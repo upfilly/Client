@@ -184,7 +184,7 @@ export default function MarketPlace() {
                                     <div className="checkmark"></div>
                                   </label>
                                   <div className="d-flex align-items-center justify-content-between w-100">
-                                    <p className="m-0 fs14">{data.name}</p>
+                                    <p className="m-0 fs14">{methodModel.capitalizeFirstLetter(data.name)}</p>
                                   </div>
                                 </div>
                               </div>
@@ -207,7 +207,7 @@ export default function MarketPlace() {
 
                       <div className={Datefilter ? "show_checksbox mb-4" : "hide_checksbox mb-4"}>
                         <DatePicker
-                          //showIcon
+                          showIcon
                           className="dateselect"
                           monthsShown={2}
                           shouldCloseOnSelect={true}
@@ -242,9 +242,9 @@ export default function MarketPlace() {
                           intialValue={placement}
                           result={(e: any) => setPlacement(e.value)}
                           options={[{ name: "Website", id: "website" },
-                          { name: "email", id: "email" },
-                          { name: "social", id: "social" },
-                          { name: "mobile", id: "mobile" }]}
+                          { name: "Email", id: "email" },
+                          { name: "Social", id: "social" },
+                          { name: "Mobile", id: "mobile" }]}
 
                         />
 
@@ -344,7 +344,7 @@ export default function MarketPlace() {
                                       setModalIsOpen(true)
                                       setid(data?._id)
                                       setAffiliateName(data?.addedBy_name)
-                                    }}> Make Offers</button>}
+                                    }}> Make Offer</button>}
                                 </div>
                               </div>}
                             </div>
@@ -356,15 +356,15 @@ export default function MarketPlace() {
                     {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
 
                     <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                      <span>Show {data?.length} from {total} Users</span>
+                      <span>Show {data?.length} from {total} Offers</span>
                       <ReactPaginate
                         breakLabel="..."
-                        nextLabel="next >"
+                        nextLabel="Next >"
                         initialPage={filters?.page}
                         onPageChange={pageChange}
                         pageRangeDisplayed={6}
                         pageCount={Math.ceil(total / filters?.count)}
-                        previousLabel="< previous"
+                        previousLabel="< Previous"
                         renderOnZeroPageCount={null}
                         pageClassName={"pagination-item"}
                         activeClassName={"pagination-item-active"}

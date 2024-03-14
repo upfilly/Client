@@ -76,13 +76,13 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <div className={`collapse dropdown-btm ${tabclass('commisions') || tab == 'commisions' ? 'show' : ''}`}>
 
             {urlAllow('commisionplan') ? <>
-              <ListItemLink to="/commission/commisionplan" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage">
+              <ListItemLink to="/commission/commisionplan" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage Commissions">
                 <i className="fa fa-user-circle-o icon" aria-hidden="true"></i>
                 <span className="side_head">Manage</span>
               </ListItemLink>
             </> : <></>}
             {urlAllow('addcommision') ? <>
-              <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
+              <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
                 <i className="fa fa-user-circle-o icon" aria-hidden="true"></i>
                 <span className="side_head">Add Commision</span>
               </ListItemLink>
