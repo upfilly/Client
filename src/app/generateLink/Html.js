@@ -7,33 +7,47 @@ import loader from '@/methods/loader';
 const Html = () => {
     const [isChecked, setIsChecked] = useState({});
     const [parameters, setParameters] = useState({
-      product: '',
-      affiliate_id: '',
-      XYZ: '',
-      New_id: ''
+        product: '',
+        affiliate_id: '',
+        XYZ: '',
+        New_id: ''
     });
-    const[url,setUrl]=useState('')
-  
-    const checkboxValues = [
-      { key: "product", label: "Product" },
-      { key: "affiliate_id", label: "Affiliate ID" },
-      { key: "XYZ", label: "XYZ" },
-      { key: "New_id", label: "New ID" }
-    ];
-  
-    const handleCheckboxChange = (key) => {
-      setIsChecked(prevState => ({
-        ...prevState,
-        [key]: !prevState[key]
-      }));
+    const [url, setUrl] = useState('')
+    const [copied, setCopied] = useState(false);
+
+    const copyText = () => {
+        const textToCopy = document.getElementById("textToCopy").innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            console.log("texttttttt")
+            setCopied(true);
+            setTimeout(() => {
+                setCopied(false);
+            }, 1000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
     };
-  
+
+    const checkboxValues = [
+        { key: "product", label: "Product" },
+        { key: "affiliate_id", label: "Affiliate ID" },
+        { key: "XYZ", label: "XYZ" },
+        { key: "New_id", label: "New ID" }
+    ];
+
+    const handleCheckboxChange = (key) => {
+        setIsChecked(prevState => ({
+            ...prevState,
+            [key]: !prevState[key]
+        }));
+    };
+
     const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setParameters(prevParams => ({
-        ...prevParams,
-        [name]: value
-      }));
+        const { name, value } = e.target;
+        setParameters(prevParams => ({
+            ...prevParams,
+            [name]: value
+        }));
     };
 
     // useEffect(()=>{
@@ -45,7 +59,7 @@ const Html = () => {
     //     loader(false)
     //     })
     // },[])
-  
+
     const handleSubmit = () => {
         const checkedParameters = {};
         Object.keys(isChecked).forEach(key => {
@@ -54,12 +68,12 @@ const Html = () => {
             }
         });
         loader(true)
-        ApiClient.post('get-link', {"base_url":"https://upfilly.jcsoftwaresolution.in/", "parameters": checkedParameters }).then((res) => {
+        ApiClient.post('get-link', { "base_url": "https://upfilly.jcsoftwaresolution.in/", "parameters": checkedParameters }).then((res) => {
             if (res?.success) {
                 setUrl(res?.data)
                 console.log(res?.data, "=======resssss")
             }
-        loader(false)
+            loader(false)
         })
 
         const queryParams = Object.keys(checkedParameters)
@@ -74,10 +88,10 @@ const Html = () => {
             <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Generate Link" filters={''} >
                 <div className='sidebar-left-content'>
 
-                
-                <div class="card">
-                    <div className='card-header'>
-                        <div className='main_title_head d-flex justify-content-between align-items-center'>
+
+                    <div class="card">
+                        <div className='card-header'>
+                            <div className='main_title_head d-flex justify-content-between align-items-center'>
                                 <h3 class="link_default m-0"><i class="fa fa-bullhorn link_icon" aria-hidden="true"></i> Default Links
                                 </h3>
 
@@ -107,31 +121,34 @@ const Html = () => {
                                                 <button className="btn btn-primary mt-3" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
-                                    {/* <div className='select_one'>
+                                        {/* <div className='select_one'>
                                         <select className='selectwidth '>
                                             <option>One</option>
                                             <option>One</option>
                                             <option>One</option>
                                         </select>
                                     </div> */}
-                                </div>
-                                </div>
-                        </div>
-                  
-                    </div>
-                    <div className='card-body'>
-                    <h2 class="fiver_cpa">Fiverr CPA</h2>
-                        <div class="input-group mb-2">
-
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fa fa-clipboard copy_icon" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="form-control mb-0" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
+
                         </div>
+                        <div className='card-body'>
+                            <h2 class="fiver_cpa">Fiverr CPA</h2>
+                            <div class="input-group mb-2">
+
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" onClick={copyText}></i>
+                                    </div>
+                                </div>
+                                <p id="textToCopy" class="form-control mb-0" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
+                                
+                            </div>
+                           
+                        </div>
+                        {copied && <div className="">Copied!</div>}
                     </div>
-                   
-                </div>
                 </div>
             </Layout>
         </>
