@@ -97,28 +97,35 @@ const Html = () => {
 
                                 <div className=''>
                                     <div class="d-flex align-items-center gap-3">
-                                        <div className="dropdown">
-                                            <button className="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Dynamic Parameters
+                                        <div className="position-relative">
+                                            <button className="btn btn-primary btn-sm ">
+                                                Dynamic Parameters <i className='fa fa-angle-down'></i>
                                             </button>
-                                            <div className="dropdown-menu width_menu" aria-labelledby="dropdownMenuButton">
+                                            <div className="links_width_menu" >
                                                 {checkboxValues.map((checkbox, index) => (
-                                                    <div key={index} className="d-flex align-items-center gap-3 justify-content-between px-2 border-bottom">
-                                                        <div className="form-check">
-                                                            <input className="form-check-input" type="checkbox" id={`gridCheck${index}`} checked={isChecked[checkbox.key]} onChange={() => handleCheckboxChange(checkbox.key)} />
-                                                            <label className="form-check-label" htmlFor={`gridCheck${index}`}>
+                                                    <div key={index} className=" pb-2 mb-3 border-bottom">
+                                                        <div className='d-flex align-items-center gap-3 justify-content-between'>
+
+                                                       
+                                                        <div className="">
+                                                            <input className="mr-1" type="checkbox" id={`gridCheck${index}`} checked={isChecked[checkbox.key]} onChange={() => handleCheckboxChange(checkbox.key)} />
+                                                            <label className="mb-0" htmlFor={`gridCheck${index}`}>
                                                                 {checkbox.label}
                                                             </label>
                                                         </div>
                                                         {isChecked[checkbox.key] && (
-                                                            <div className="d-flex gap-3 align-items-center">
-                                                                <input type="text" className="form-control" name={checkbox.key} value={parameters[checkbox.key]} onChange={handleInputChange} placeholder={`Enter ${checkbox.label} Value`} />
+                                                            <div className="">
+                                                                <input type="text" className="inpudesgn mr-2" name={checkbox.key} value={parameters[checkbox.key]} onChange={handleInputChange} placeholder={`Enter ${checkbox.label} Value`} />
                                                                 <i className="fa fa-times class-bx" aria-hidden="true"></i>
                                                             </div>
+                                                          
                                                         )}
+                                                           </div>
                                                     </div>
                                                 ))}
-                                                <button className="btn btn-primary mt-3" onClick={handleSubmit}>Submit</button>
+                                               <div className='text-end'>
+                                               <button className="btn btn-primary mb-3" onClick={handleSubmit}>Submit</button>
+                                               </div>
                                             </div>
                                         </div>
                                         {/* <div className='select_one'>

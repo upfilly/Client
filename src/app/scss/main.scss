@@ -3416,3 +3416,22 @@ button.cancel_btns{
 .fs14{
   font-size: 14px;
 }
+
+.links_width_menu {
+  width: 400px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  z-index: 9;
+  top: 40px;
+}
+
+.inpudesgn{
+  border-radius: 50px;
+  border: 1px solid #e1e1e1;
+  padding: 0px 10px;
+  width: 200px;
+}
