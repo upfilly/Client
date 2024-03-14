@@ -120,7 +120,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                 <div className="col-md-6 mb-3">
                                     <label>Date<span className="star">*</span></label>
                                     <DatePicker
-                                        //    showIcon
+                                           showIcon
                                         className="form-control"
                                         monthsShown={2}
                                         shouldCloseOnSelect={true}

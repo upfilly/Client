@@ -41,43 +41,43 @@ const Html = ({
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Add Offers" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center">
-                    <SelectDropdown
-                        id="statusDropdown"
-                        displayValue="name"
-                        placeholder="All Status"
-                        intialValue={filters.status}
-                        result={e => { ChangeStatus(e.value) }}
-                        options={[
-                            { id: 'active', name: 'Active' },
-                            { id: 'deactive', name: 'Inactive' },
-                            // { id: 'rejected', name: 'Rejected' },
-                        ]}
-                    />
+                        <div className="d-flex gap-2 align-items-center">
+                            <SelectDropdown
+                                id="statusDropdown"
+                                displayValue="name"
+                                placeholder="All Status"
+                                intialValue={filters.status}
+                                result={e => { ChangeStatus(e.value) }}
+                                options={[
+                                    { id: 'active', name: 'Active' },
+                                    { id: 'deactive', name: 'Inactive' },
+                                    // { id: 'rejected', name: 'Rejected' },
+                                ]}
+                            />
 
-                    <div className='d-flex gap-3 align-items-center'>
+                    
 
-                   
-
-                       <DatePicker
-                        //    showIcon
-                        className="form-control"
-                        monthsShown={2}
-                        shouldCloseOnSelect={true}
-                        selectsRange={true}
-                        placeholderText="Select Date Range"
-                        startDate={startDate}
-                        endDate={endDate}
-                        onChange={(update) => {
-                            setDateRange([update[0], update[1]])
-                        }}
-                        isClearable
-                        // minDate={new Date()}
-                        withPortal
-                        dateFormat={"dd/MM/yyyy"}
-                    />
-
-                    <div className="d-flex filterFlex phView">
                         
+
+                            <DatePicker
+                                showIcon
+                                className="form-control"
+                                monthsShown={2}
+                                shouldCloseOnSelect={true}
+                                selectsRange={true}
+                                placeholderText="Select Date Range"
+                                startDate={startDate}
+                                endDate={endDate}
+                                onChange={(update) => {
+                                    setDateRange([update[0], update[1]])
+                                }}
+                                isClearable
+                                // minDate={new Date()}
+                                withPortal
+                                dateFormat={"dd/MM/yyyy"}
+                            />
+
+                               
                         <div className='searchInput'>
                             <input
                                 type="text"
@@ -92,20 +92,9 @@ const Html = ({
                             }} aria-hidden="true"></i>
                         </div>
 
-                        {/* {!role ? <SelectDropdown
-                                    id="statusDropdown"
-                                    displayValue="name"
-                                    placeholder="All User"
-                                    intialValue={filters.role}
-                                    result={e => { ChangeRole(e.value) }}
-                                    options={rolesModel.list}
-                                />: <></>} */}
+                        
 
-                            {isAllow('addAdmins') ? <>
-                                <a className="btn btn-primary" onClick={e => add()}>
-                                    <i className='fa fa-plus mr-1'></i>  Add Offers
-                                </a>
-                            </> : <></>}
+                          
 
 
                         {filters.status ? <>
@@ -113,9 +102,18 @@ const Html = ({
                                 Reset
                             </a>
                         </> : <></>}
-                    </div>
+                        </div>
+                   
+                     
 
-                    </div>
+                        {isAllow('addAdmins') ? <>
+                                <a className="btn btn-primary" onClick={e => add()}>
+                                    <i className='fa fa-plus mr-1'></i>  Add Offers
+                                </a>
+                            </> : <></>}
+                
+
+                  
                 </div>
 
                 <div className="table-responsive table_section">
