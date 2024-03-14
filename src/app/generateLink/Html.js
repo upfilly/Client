@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
 import loader from '@/methods/loader';
+import { Dropdown } from 'react-bootstrap';
 
 const Html = () => {
     const [isChecked, setIsChecked] = useState({});
@@ -14,6 +15,7 @@ const Html = () => {
     });
     const [url, setUrl] = useState('')
     const [copied, setCopied] = useState(false);
+    const [SelectDropdown,setSelectDropdown] = useState(true)
 
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
@@ -98,10 +100,10 @@ const Html = () => {
                                 <div className=''>
                                     <div class="d-flex align-items-center gap-3">
                                         <div className="position-relative">
-                                            <button className="btn btn-primary btn-sm ">
+                                            <button className="btn btn-primary btn-sm " onClick={()=>setSelectDropdown(!SelectDropdown)}>
                                                 Dynamic Parameters <i className='fa fa-angle-down'></i>
                                             </button>
-                                            <div className="links_width_menu" >
+                                            {!SelectDropdown && <div className="links_width_menu" >
                                                 {checkboxValues.map((checkbox, index) => (
                                                     <div key={index} className=" pb-2 mb-3 border-bottom">
                                                         <div className='d-flex align-items-center gap-3 justify-content-between'>
@@ -126,7 +128,7 @@ const Html = () => {
                                                <div className='text-end'>
                                                <button className="btn btn-primary mb-3" onClick={handleSubmit}>Submit</button>
                                                </div>
-                                            </div>
+                                            </div>}
                                         </div>
                                         {/* <div className='select_one'>
                                         <select className='selectwidth '>
