@@ -18,7 +18,7 @@ export default function Home() {
   const [deviceInfo, setDeviceInfo] = useState(null);
   const [location, setLocation] = useState(null);
   const param = useSearchParams()
-  const id = param.get("Affiliate_id")
+  const id = param.get("affiliate_id")
 
   const getIpData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
