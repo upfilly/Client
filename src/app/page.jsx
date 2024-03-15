@@ -117,7 +117,7 @@ export default function Home() {
   console.log(deviceInfo,location,IP,id,"========iiiiiidddddd")
 
   useEffect(() => {
-    if (id) {
+    if (id && IP) {
       console.log("innnnnn")
       const data1 = {
         "affiliate_id": id,
