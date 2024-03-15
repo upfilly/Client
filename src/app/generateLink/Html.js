@@ -18,7 +18,7 @@ const Html = () => {
     const [newKey, setNewKey] = useState('');
     const [newLabel, setNewLabel] = useState('');
     const [showNewKeyForm, setShowNewKeyForm] = useState(false);
-    const [checkboxValues,setCheckboxValues] = useState([
+    const [checkboxValues, setCheckboxValues] = useState([
         { key: "product", label: "Product" },
         // { key: "affiliate_id", label: "Affiliate ID" },
         { key: "XYZ", label: "XYZ" },
@@ -54,13 +54,13 @@ const Html = () => {
 
     const handleAddNew = () => {
         // if (newKey && newLabel) {
-            setCheckboxValues(prevValues => [
-                ...prevValues,
-                { key: newKey, label: newLabel }
-            ]);
-            setNewKey('');
-            setNewLabel('');
-            setShowNewKeyForm(false); // Close the form after adding the new key
+        setCheckboxValues(prevValues => [
+            ...prevValues,
+            { key: newKey, label: newLabel }
+        ]);
+        setNewKey('');
+        setNewLabel('');
+        setShowNewKeyForm(false); // Close the form after adding the new key
         // }
     };
 
@@ -136,59 +136,46 @@ const Html = () => {
                             <h5 className="fiver_cpa mb-3">Fiverr CPA</h5>
                             <div className="input-group mb-2">
                                 <div className="input-group-prepend">
-                                    <div className="input-group-text">
+                                    <div className="input-group-text" onClick={copyText}>
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
                                 <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
-                              
+
                             </div>
                             {copied && <div className="">Copied!</div>}
-                           
+
                         </div>
-                       
+
                     </div>
                 </div>
             </Layout>
             {showNewKeyForm && (
-                    <div class="modal d-block">
-                      <div class="modal-dialog  modal-dialog-centered dateModal" role="document">
+                <div class="modal d-block">
+                    <div class="modal-dialog  modal-dialog-centered dateModal" role="document">
                         <div class="modal-content ">
-                          <div class="modal-body">
-                            <div className='d-flex justify-content-between'>
-                                <h5 className='mb-3'>Add New Key</h5>
-                                <i className='fa fa-times' onClick={()=>setShowNewKeyForm(false)}></i>
-                            </div>
-                            <div className='form-group'>
-                                <p className='mb-2'>Key:</p>
-                                <input type="text" className='form-control' value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder="Enter Key" />
+                            <div class="modal-body">
+                                <div className='d-flex justify-content-between'>
+                                    <h5 className='mb-3'>Add New Key</h5>
+                                    <i className='fa fa-times' onClick={() => setShowNewKeyForm(false)}></i>
+                                </div>
+                                <div className='form-group'>
+                                    <p className='mb-2'>Key:</p>
+                                    <input type="text" className='form-control' value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder="Enter Key" />
+                                </div>
+
+                                <div className='form-group'>
+                                    <p className='mb-2'>Value:</p>
+                                    <input type="text" className='form-control' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />                            </div>
+
+                                <div className='text-end'>
+                                    <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleAddNew} >Add Key</button>
+                                </div>
                             </div>
 
-
-                            <div className='form-group'>
-                                <p className='mb-2'>Value:</p>
-                                <input type="text" className='form-control' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />                            </div>
-
-                        
-                        
-        
-                            <div className='text-end'>
-                              <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleAddNew} >Add Key</button>
-                            </div>
-                          </div>
-        
                         </div>
-                      </div>
                     </div>
-                // <div className="modal">
-                //     <div className="modal-content">
-                //         <span className="close" onClick={() => setShowNewKeyForm(false)}>&times;</span>
-                //         <h2>Add New Key</h2>
-                //         <input type="text" value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder="Enter Key" />
-                //         <input type="text" value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />
-                //         <button onClick={handleAddNew}>Add Key</button>
-                //     </div>
-                // </div>
+                </div>
             )}
         </>
     );

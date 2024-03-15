@@ -5,20 +5,134 @@ import crendentialModel from '@/models/credential.model';
 import "./style.scss";
 import Layout from './components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import axios from 'axios';
 // import { message } from './firebase/function';
 
 export default function Home() {
-  const user: any = crendentialModel.getUser()
-  const [FAQdata, setFAQData] = useState([])
-  const [contentData,setContentData] = useState<any>(null)
+  const user = crendentialModel.getUser()
   const history = useRouter()
+  const [FAQdata, setFAQData] = useState([])
+  const [contentData,setContentData] = useState(null)
+  const [IP,setIP] = useState('')
+  const [deviceInfo, setDeviceInfo] = useState(null);
+  const [location, setLocation] = useState(null);
+  const param = useSearchParams()
+  const id = param.get("Affiliate_id")
 
-//   useEffect(() => {
-//     if (user?.role == 'affiliate' && !user?.account_id) {
-//         history.push('/addAccount/detail')
-//     }
-// }, [])
+  const getIpData = async () => {
+    const res = await axios.get("https://api.ipify.org/?format=json");
+    console.log(res.data);
+    setIP(res.data.ip);
+  };
+
+  useEffect(() => {
+    getIpData();
+  }, []);
+
+  useEffect(() => {
+    const getDeviceInfo = () => {
+      const { userAgent, platform, language, vendor } = navigator;
+      setDeviceInfo({
+        userAgent,
+        platform,
+        language,
+        vendor,
+        browser: {
+          name: getBrowserName(),
+          version: getBrowserVersion()
+        },
+        deviceType: getDeviceType()
+      });
+    };
+
+    const getDeviceType = () => {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        return 'Mobile';
+      } else if (window.matchMedia('(max-width: 1024px)').matches) {
+        return 'Tablet';
+      } else {
+        return 'Desktop';
+      }
+    };
+
+    const getBrowserName = () => {
+      const userAgent = navigator.userAgent;
+      const browsers = {
+        Chrome: /Chrome/.test(userAgent) && /Google Inc/.test(navigator.vendor),
+        Firefox: /Firefox/.test(userAgent),
+        Safari: /Safari/.test(userAgent) && /Apple Computer/.test(navigator.vendor),
+        Edge: /Edge/.test(userAgent),
+        IE: /Trident/.test(userAgent)
+      };
+
+      for (const browser in browsers) {
+        if (browsers[browser]) return browser;
+      }
+
+      return 'Unknown';
+    };
+
+    const getBrowserVersion = () => {
+      const userAgent = navigator.userAgent;
+      const versionRegex = {
+        Chrome: /(?:Chrome|CriOS)\/([0-9.]+)/,
+        Firefox: /Firefox\/([0-9.]+)/,
+        Safari: /Version\/([0-9.]+)/,
+        Edge: /Edge\/([0-9.]+)/,
+        IE: /(?:MSIE |Trident\/.*; rv:)([0-9.]+)/
+      };
+
+      for (const browser in versionRegex) {
+        const match = userAgent.match(versionRegex[browser]);
+        if (match) return match[1];
+      }
+
+      return 'Unknown';
+    };
+
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            });
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser.');
+      }
+    };
+
+    getDeviceInfo();
+    getLocation();
+  }, []);
+
+  useEffect(() => {
+    if (deviceInfo && location && IP && id) {
+      const data1 = {
+        "affiliate_id": id,
+        "affiliate_link":window?.location?.href,
+        "ipAddress": IP,
+        "device": deviceInfo?.deviceType,
+        "browser": deviceInfo?.browser?.name,
+        "os": deviceInfo?.platform,
+        "lat": deviceInfo?.latitude,
+        "lng": deviceInfo?.longitude,
+      }
+      
+      ApiClient.post('saved-cookies', data1).then(res => {
+        if (res.success == true) {
+
+        }
+      })
+    }
+  }, [])
 
   const getContentData = (p = {}) => {
     let url = 'content'
@@ -30,7 +144,7 @@ export default function Home() {
     })
   }
 
-  const getData = (id:any) => {
+  const getData = (id) => {
     let url = 'faq/all'
     ApiClient.get(url,{content_id:id}).then(res => {
       if (res.success) {
@@ -336,7 +450,7 @@ export default function Home() {
           </div>
           <div className="accordion " id="accordionExample">
             <div className="row">
-              {FAQdata ? <>{FAQdata?.map((itm: any, index) => {
+              {FAQdata ? <>{FAQdata?.map((itm, index) => {
                 if (index <= 2) {
                   return <div key={itm?._id} className="col-md-6">
                     <div className="accordion-item mb-3">

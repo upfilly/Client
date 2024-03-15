@@ -243,7 +243,12 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                 </div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
-                                    <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
+                                    <textarea
+                                     type="text"
+                                     className="form-control"
+                                     value={form.description}
+                                     onChange={e => setform({ ...form, description: e.target.value })}/>
+                                    {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                                         onEditorChange={(newValue, editor) => {
                                             setform({ ...form, description: newValue })
                                         }}
@@ -252,7 +257,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             selector: 'textarea#autocompleter-cardmenuitem',
                                             height: 250,
                                         }}
-                                    />
+                                    /> */}
                                     {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
                               
