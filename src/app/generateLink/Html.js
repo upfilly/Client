@@ -140,8 +140,11 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                <p id="textToCopy" className="form-control br0 mb-0" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
+                                <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
+                              
                             </div>
+                            {copied && <div className="">Copied!</div>}
+                           
                         </div>
                        
                     </div>
