@@ -113,8 +113,10 @@ export default function Home() {
     getLocation();
   }, []);
 
+  console.log(deviceInfo,location,IP,id,"========iiiiiidddddd")
+
   useEffect(() => {
-    if (deviceInfo && location && IP && id) {
+    if (IP && id) {
       const data1 = {
         "affiliate_id": id,
         "affiliate_link":window?.location?.href,
@@ -128,7 +130,7 @@ export default function Home() {
       
       ApiClient.post('saved-cookies', data1).then(res => {
         if (res.success == true) {
-
+          console.log(res, "ressss--innnn")
         }
       })
     }

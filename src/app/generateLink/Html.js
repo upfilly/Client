@@ -3,8 +3,10 @@ import Layout from '../components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
 import loader from '@/methods/loader';
 import './style.scss'
+import crendentialModel from '@/models/credential.model';
 
 const Html = () => {
+    const user = crendentialModel.getUser()
     const [isChecked, setIsChecked] = useState({});
     const [parameters, setParameters] = useState({
         product: '',
@@ -81,7 +83,7 @@ const Html = () => {
             }
         });
         loader(true);
-        ApiClient.post('get-link', { "base_url": "https://upfilly.jcsoftwaresolution.in/", "parameters": checkedParameters }).then((res) => {
+        ApiClient.post('get-link', { "base_url": `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`, "parameters": checkedParameters }).then((res) => {
             if (res?.success) {
                 setUrl(res?.data);
             }
@@ -140,13 +142,10 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
-
+                                <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`}</p>
                             </div>
                             {copied && <div className="">Copied!</div>}
-
                         </div>
-
                     </div>
                 </div>
             </Layout>
