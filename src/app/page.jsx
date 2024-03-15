@@ -122,7 +122,7 @@ export default function Home() {
       const data1 = {
         "affiliate_id": id,
         "affiliate_link":window?.location?.href,
-        "ipAddress": IP,
+        "ip_address": IP,
         "device": deviceInfo?.deviceType,
         "browser": deviceInfo?.browser?.name,
         "os": deviceInfo?.platform,
