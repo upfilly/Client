@@ -198,7 +198,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         <></>
                                     )}
                                 </div>
-                                <div className="select_type select_drop col-md-6 mb-3">
+                                <div className="select_type select_drop col-md-12 mb-3">
                                     <label>Opportunity Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectDropdown
