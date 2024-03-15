@@ -3076,6 +3076,11 @@ p.ipsi {
   padding: 80px 0px;
 }
 
+.react-datepicker__input-container.react-datepicker__view-calendar-icon svg path {
+
+  fill: #007bb9;
+}
+
 // checked css
 
 /* Hide the default checkbox */
@@ -3107,7 +3112,7 @@ p.ipsi {
   width: 1.2em;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px rgb(206, 205, 205);
+  // box-shadow: 0px 0px 5px rgb(206, 205, 205);
  }
  
  /* When the checkbox is checked, add a blue background */
@@ -3115,7 +3120,7 @@ p.ipsi {
   // box-shadow: 3px 3px 0px rgb(183, 183, 183);
   transition: all 0.2s;
   opacity: 1;
-  background-image: linear-gradient(45deg, rgb(100, 61, 219) 0%, rgb(217, 21, 239) 100%);
+  // background-image: linear-gradient(45deg, rgb(100, 61, 219) 0%, rgb(217, 21, 239) 100%);
  }
  
  .container_checks input ~ .checkmark {
@@ -3144,19 +3149,35 @@ p.ipsi {
   top: 0.1em;
   width: 6px;
   height: 12px;
-  border: solid white;
+  border: solid #007bb9;
   border-width: 0 0.15em 0.15em 0;
   transform: rotate(45deg);
 }
 
 .filters_data_list {
-  background: #e0f7ff;
+  background: #007bb9;
   padding: 20px 20px;
   border-radius: 10px;
+  color: #fff;
+  
 }
 
+.multiSelectContainer ul {
+  color: #000 !important;
+  font-size: 12px;
+}
+.selectDropdown .searchBox::placeholder{
+  color: #fff !important;
+}
+
+.icon_down_dir {
+
+  filter: invert(1);
+}
+
+
 .names_checklist{
-  border-bottom: 2px solid #7371f3;
+  border-bottom: 1px solid #fff;
   margin-bottom: 20px;
   cursor: pointer;
 }

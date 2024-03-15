@@ -144,17 +144,18 @@ const Html = () => {
                             <h5 className="fiver_cpa mb-3">Fiverr CPA</h5>
                             <div className="input-group mb-2">
 
-                                <div className="input-group-prepend">
+                                <div className="input-group-prepend " onClick={copyText}>
                                     <div className="input-group-text">
-                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" onClick={copyText}></i>
+                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
                                 <p id="textToCopy" className="form-control br0 mb-0" >{url || 'https://upfilly.jcsoftwaresolution.in/'}</p>
-                                
+                              
                             </div>
+                            {copied && <div className="">Copied!</div>}
                            
                         </div>
-                        {copied && <div className="">Copied!</div>}
+                       
                     </div>
                 </div>
             </Layout>

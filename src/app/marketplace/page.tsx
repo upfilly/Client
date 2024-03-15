@@ -291,7 +291,7 @@ export default function MarketPlace() {
                         <div className="col-md-12">
                           <div className="d-flex jobs_child-flex">
                             <input value={filters.search} onKeyPress={handleKeyPress} onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })} className="form-control me-3" type="text" placeholder="Search Here" />
-                            <button className="btn-primary" onClick={(e) => filter(e)}> Search</button>
+                            <button className="btn-primary btn-sm" onClick={(e) => filter(e)}> Search</button>
                           </div>
                         </div>
                       </div>
@@ -323,7 +323,7 @@ export default function MarketPlace() {
                             <div className="showin_mkt mt-4 mb-4" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <h5>Placements:{data?.placement?.map((itm: any) => itm).join(',\n') || ''}</h5>
                               <div key={index}>
-                                <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}...` }}></p>
+                                <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}` }}></p>
                               </div>
 
                             </div>
