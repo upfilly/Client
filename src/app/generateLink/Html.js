@@ -55,7 +55,7 @@ const Html = () => {
     };
 
     const handleAddNew = () => {
-        // if (newKey && newLabel) {
+        if (newKey && newLabel) {
         setCheckboxValues(prevValues => [
             ...prevValues,
             { key: newKey, label: newLabel }
@@ -63,7 +63,7 @@ const Html = () => {
         setNewKey('');
         setNewLabel('');
         setShowNewKeyForm(false); // Close the form after adding the new key
-        // }
+        }
     };
 
     useEffect(() => {
@@ -86,6 +86,7 @@ const Html = () => {
         ApiClient.post('get-link', { "base_url": `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`, "parameters": checkedParameters }).then((res) => {
             if (res?.success) {
                 setUrl(res?.data);
+                setSelectDropdown(!SelectDropdown)
             }
             loader(false);
         });
