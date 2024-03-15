@@ -41,7 +41,7 @@ export default function MarketPlaceDetail() {
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
             <div className="p-80">
             <div className="container">
-                <div className="col-12 ">
+                <div className="col-sm-12 col-md-8 mx-auto ">
                     <div className="showngmkt lists_mkt">
 
                         <div className="grid_lists_mkt ">
@@ -55,7 +55,7 @@ export default function MarketPlaceDetail() {
                             </div>
 
                             <div className="showin_mkt mt-4 mb-4">
-                                <h5>Placements:{data?.placement?.map((itm) => itm).join(',\n') || ''}</h5>
+                                <h5>Placements: {data?.placement?.map((itm) => itm).join(',\n') || ''}</h5>
 
                                 <div>
                                     <p className="descmkt" dangerouslySetInnerHTML={{ __html:data?.description }}></p>
@@ -67,7 +67,7 @@ export default function MarketPlaceDetail() {
                             <div className="d-flex align-items-center justify-content-between bordertop">
                                 <div className="leftshead">
                                     {/* <h6>${data?.price}</h6> */}
-                                    <p className="types_date"><span className="types_main">start:{datepipeModel.date(data?.start_date)}-end:{datepipeModel.date(data?.end_date)}</span></p>
+                                    <p className="types_date"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>
                                 </div>
 
                                 {user?.role == 'brand' && <div className="rightimg">
