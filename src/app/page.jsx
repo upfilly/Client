@@ -22,12 +22,13 @@ export default function Home() {
 
   const getIpData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
-    console.log(res.data);
     setIP(res.data.ip);
   };
 
   useEffect(() => {
-    getIpData();
+    if(id){
+      getIpData();
+    }
   }, []);
 
   useEffect(() => {
@@ -117,6 +118,7 @@ export default function Home() {
 
   useEffect(() => {
     if (IP && id) {
+      console.log("innnnnn")
       const data1 = {
         "affiliate_id": id,
         "affiliate_link":window?.location?.href,
@@ -129,12 +131,12 @@ export default function Home() {
       }
       
       ApiClient.post('saved-cookies', data1).then(res => {
-        if (res.success == true) {
+        if (res.success) {
           console.log(res, "ressss--innnn")
         }
       })
     }
-  }, [])
+  }, [id])
 
   const getContentData = (p = {}) => {
     let url = 'content'
