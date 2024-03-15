@@ -214,11 +214,11 @@ const Html = ({
 
                 <Modal className='invite_modal' show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Invite</Modal.Title>
+                        <Modal.Title className='mb-0 fs14'>Send Invite</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Group className='d-flex justify-content-between align-items-center width_label' controlId="formBasicEmail">
-                            <Form.Label>E-mail</Form.Label>
+                          
                             <Form.Control
                                 type="email"
                                 placeholder="Enter Email"
@@ -238,7 +238,7 @@ const Html = ({
                             Close
                         </Button>
                         <Button variant="primary" onClick={(e) => handleSubmit(e)}>
-                           Send Invite
+                           Send 
                         </Button>
                     </Modal.Footer>
                 </Modal>
