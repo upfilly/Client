@@ -302,7 +302,7 @@ export default function MarketPlace() {
                   </div>
 
 
-                  <div className="mt-4">
+                  <div className="mt-5">
 
                     <div className="heading_lists">
                       <h4 className="filtes_herd">Opportunity Marketplace</h4>
@@ -332,7 +332,7 @@ export default function MarketPlace() {
                             <div className="d-flex align-items-center justify-content-between bordertop">
                               <div className="leftshead">
                                 {/* <h6>${data?.price}</h6> */}
-                                <p className="types_date"><span className="types_main">start:{datepipeModel.date(data?.start_date)}-end:{datepipeModel.date(data?.end_date)}</span></p>
+                                <p className="types_date mb-0"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>
                               </div>
 
                               {user?.role == 'brand' && <div className="rightimg">

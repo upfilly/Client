@@ -91,27 +91,27 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           </div></>}
 
         {user && user?.role == "affiliate" && <ListItemLink to={!user?.account_id ? "/addAccount/detail" :"/Offers"} data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer">
-          <i className="material-icons mr-2" title="Add Offer">add_shopping_cart</i>
+          <i className="material-icons mr-2" title="product">add_shopping_cart</i>
           <span className="side_head">Add Offer</span>
         </ListItemLink>}
 
         {user && user?.role == "affiliate" && <ListItemLink to={!user?.account_id ? "/addAccount/detail" :"/requests"} data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request">
-          <i className="material-icons mr-2" title="Offer Request">business_center</i>
+          <i className="material-icons mr-2" title="campaignManagement">business_center</i>
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
 
         {user && user?.role == "brand" && <ListItemLink to="/invites" data-bs-toggle="tooltip" data-bs-placement="top" title="Invites">
-          <i className="fa fa-envelope-o mr-2" title="Invites"></i>
+          <i className="fa fa-envelope-o mr-2" title="campaignManagement"></i>
           <span className="side_head">Invites</span>
         </ListItemLink>}
 
         {user && user?.role == "brand" && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Sent Offers">
-          <i className="material-icons mr-2" title="Sent Offers">business</i>
+          <i className="material-icons mr-2" title="campaignManagement">business</i>
           <span className="side_head">Sent Offers</span>
         </ListItemLink>}
 
         {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link">
-          <i className="material-icons mr-2" title="campaignManagement">Generate Link</i>
+          <i className="material-icons mr-2" title="campaignManagement">business</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
