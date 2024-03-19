@@ -4,6 +4,7 @@ import ApiClient from '@/methods/api/apiClient';
 import loader from '@/methods/loader';
 import './style.scss'
 import crendentialModel from '@/models/credential.model';
+import { toast } from 'react-toastify';
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -77,20 +78,36 @@ const Html = () => {
 
     const handleSubmit = () => {
         const checkedParameters = {};
+        let hasBlankInput = false;
+    
+        // Check for blank inputs in checked parameters
         Object.keys(isChecked).forEach(key => {
             if (isChecked[key]) {
+                if (!parameters[key]) {
+                    hasBlankInput = true;
+                    return;
+                }
                 checkedParameters[key] = parameters[key];
             }
         });
+    
+        if (hasBlankInput) {
+            toast.error("Please fill in all required fields.");
+            return;
+        }
+    
         loader(true);
         ApiClient.post('get-link', { "base_url": `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`, "parameters": checkedParameters }).then((res) => {
             if (res?.success) {
+                toast.success(res?.message)
                 setUrl(res?.data);
                 setSelectDropdown(!SelectDropdown)
+                setIsChecked({})
             }
             loader(false);
         });
     };
+    
 
     return (
         <>

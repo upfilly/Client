@@ -179,7 +179,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     )}
                                 </div>
                                 {form?.category_id &&  <div className="select_drop col-md-6 mb-3">
-                                    <label>Sub Category<span className="star">*</span></label>
+                                    <label>Sub Category</label>
                                     <div className="select_row">
                                         <SelectDropdown
                                             id="statusDropdown"
@@ -291,7 +291,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                              </div>
 
                             <div className="text-right edit-btns">
-                                <a className="btn btn-secondary mr-2" onClick={() => history.push('/product')}>Back</a>
+                                <a className="btn btn-secondary mr-2" onClick={() => history.push('/Offers')}>Back</a>
                                 <button type="submit" className="btn btn-primary">Save</button>
                             </div>
                         </div>

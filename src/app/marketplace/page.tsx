@@ -292,6 +292,7 @@ export default function MarketPlace() {
                           <div className="d-flex jobs_child-flex">
                             <input value={filters.search} onKeyPress={handleKeyPress} onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })} className="form-control me-3" type="text" placeholder="Search Here" />
                             <button className="btn-primary btn-sm" onClick={(e) => filter(e)}> Search</button>
+                           { filters?.search && <button className="btn-secondary btn-sm ml-3" onClick={(e) => reset()}> Reset</button>}
                           </div>
                         </div>
                       </div>
