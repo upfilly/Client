@@ -3239,6 +3239,7 @@ h4.filtes_herd {
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
+  height: 250px;
 }
 
 .showngmkt.lists_mkt:hover {
@@ -3246,6 +3247,10 @@ h4.filtes_herd {
 }
 .heauto{
   height: auto !important;
+}
+
+.plr-5{
+  padding: 0px 15px !important;
 }
 
 p.types_date {
@@ -3479,3 +3484,18 @@ button.cancel_btns{
   background: #78acff !important;
   color: #fff !important;
 }
+
+
+
+.selectmultiple .search-wrapper.searchWrapper {
+  display: flex;
+}
+
+.uploaddataimg{
+  height: 100px;
+  width: 100%;
+  background-color: rgb(248, 248, 248);
+  border: 1px dashed #000;
+  cursor: pointer;
+}
+

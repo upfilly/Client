@@ -147,28 +147,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         dateFormat={"dd/MM/yyyy"}
                                     />
                                 </div>
-                                <div className="select_drop col-md-6 mb-3">
-                                    <label>Payment Model<span className="star">*</span></label>
-                                    <div className="select_row">
-                                        <MultiSelectDropdown
-                                            id="statusDropdown"
-                                            displayValue="name"
-                                            placeholder="Select category"
-                                            intialValue={form?.payment_model}
-                                            result={e => setform({ ...form, payment_model: e.value })}
-                                            options={[{ name: "Revenue Share", id: "Rev_share" },
-                                            { name: "Flat Fee", id: "Flat_fee" },
-                                            { name: "CPA +", id: "CPA +" },
-                                            { name: "CPC", id: "CPC" }]}
-                                            required
-                                        />
-                                    </div>
-                                    {submitted && !form?.category_id ? (
-                                        <div className="invalid-feedback d-block">Category is Required</div>
-                                    ) : (
-                                        <></>
-                                    )}
-                                </div>
+                             
                                 <div className="select_drop col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
@@ -236,7 +215,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         <></>
                                     )}
                                 </div>
-                                <div className="select_type select_drop col-md-6 mb-3">
+                                <div className="select_type select_drop col-md-12 mb-3">
                                     <label>Opportunity Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectDropdown
@@ -265,6 +244,31 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         <></>
                                     )}
                                 </div>
+
+                                <div className="select_drop col-md-12 mb-3">
+                                    <label>Payment Model<span className="star">*</span></label>
+                                    <div className="select_row selectmultiple">
+                                        <MultiSelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select category"
+                                            intialValue={form?.payment_model}
+                                            result={e => setform({ ...form, payment_model: e.value })}
+                                            options={[{ name: "Revenue Share", id: "Rev_share" },
+                                            { name: "Flat Fee", id: "Flat_fee" },
+                                            { name: "CPA +", id: "CPA +" },
+                                            { name: "CPC", id: "CPC" }]}
+                                            required
+                                        />
+                                    </div>
+                                    {submitted && !form?.category_id ? (
+                                        <div className="invalid-feedback d-block">Category is Required</div>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
+
+
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
                                     <textarea
@@ -292,8 +296,8 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     <label>Images (Max. Limit 10) </label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
-                                            {form?.image.length <= 9 && <><button className="btn btn-primary upload_image">Upload Image</button>
-                                                <input type="file" className="form-control-file over_input" accept="image/*" multiple={true}
+                                            {form?.image.length <= 9 && <><button className="uploaddataimg upload_image "><i className="fa fa-upload"></i>  Upload Image</button>
+                                                <input type="file" className="form-control-file w-100 over_input pointer" accept="image/*" multiple={true}
                                                     // disabled={loader}
                                                     onChange={(e) => {
                                                         setImgLoder(true)

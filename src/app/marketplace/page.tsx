@@ -347,7 +347,7 @@ export default function MarketPlace() {
                             </div>
 
                             <div className="showin_mkt mt-4 mb-4" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
-                              <h5>Placements:{data?.placement?.map((itm: any) => itm).join(',\n') || ''}</h5>
+                              <h5 className="capital">Placements: {data?.placement?.map((itm: any) => itm).join(',\n') || ''}</h5>
                               <div key={index}>
                                 <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}` }}></p>
                               </div>
