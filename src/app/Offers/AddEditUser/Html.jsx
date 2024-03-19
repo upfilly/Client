@@ -54,6 +54,16 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
         setform({ ...form, image: filterImg })
     }
 
+    const handleRemove = (valueToRemove) => {
+        const updatedValues = form?.opportunity_type?.filter((value) => value !== valueToRemove);
+        setform({ ...form, opportunity_type: updatedValues });
+    };
+
+    const handlePlacementRemove = (valueToRemove) => {
+        const updatedValues = form?.placement?.filter((value) => value !== valueToRemove);
+        setform({ ...form, placement: updatedValues });
+    };
+
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
@@ -213,6 +223,13 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
+                                            {form?.placement?.length > 0 && <div>
+                                                Selected Values: {form?.placement.map((value, index) => (
+                                                    <span key={index}>
+                                                        {value} <button onClick={() => handlePlacementRemove(value)}>X</button>
+                                                    </span>
+                                                ))}
+                                            </div>}
                                     {submitted && form?.placement?.length <= 0 ? (
                                         <div className="invalid-feedback d-block">Placement is Required</div>
                                     ) : (
@@ -235,6 +252,13 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
+                                            {form?.opportunity_type?.length > 0 && <div>
+                                                Selected Values: {form?.opportunity_type.map((value, index) => (
+                                                    <span key={index}>
+                                                        {value} <button onClick={() => handleRemove(value)}>X</button>
+                                                    </span>
+                                                ))}
+                                            </div>}
                                     {submitted && !form?.opportunity_type?.length <= 0 ? (
                                         <div className="invalid-feedback d-block">Opportunity Type is Required</div>
                                     ) : (

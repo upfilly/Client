@@ -53,6 +53,16 @@ export default function MarketPlace() {
     setShowFullDescription(newShowFullDescription);
   };
 
+  const handleRemove = (valueToRemove:any) => {
+        const updatedValues = placement.filter((value:any) => value !== valueToRemove);
+        setPlacement(updatedValues);
+    };
+
+    const handleRemoveOpportunity = (valueToRemove:any) => {
+      const updatedValues = opportunity.filter((value:any) => value !== valueToRemove);
+      setOpportunity(updatedValues);
+  };
+
   const [startDate, endDate]: any = dateRange;
 
   const currentDate: any = startDate ? new Date(startDate) : null;
@@ -247,7 +257,13 @@ export default function MarketPlace() {
                           { name: "Mobile", id: "mobile" }]}
 
                         />
-
+                        {placement?.length > 0 && <div>
+                          Selected Values: {placement.map((value:any,index:any) => (
+                            <span key={index}>
+                              {value} <button onClick={() => handleRemove(value)}>X</button>
+                            </span>
+                          ))}
+                        </div>}
                       </div>
 
                     </div>
@@ -273,6 +289,15 @@ export default function MarketPlace() {
                           ]}
 
                         />
+
+                        {opportunity?.length > 0 && <div>
+                          Selected Values: {opportunity.map((value: any,index:any) =>{ 
+                            console.log(value,"dfhnjihnj")
+                            return<span key={index}>
+                              {value} <button onClick={() => handleRemoveOpportunity(value)}>X</button>
+                            </span>
+                          })}
+                        </div>}
 
                       </div>
 
