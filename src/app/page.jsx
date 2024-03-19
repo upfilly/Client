@@ -35,9 +35,16 @@ export default function Home() {
     }));
   }, []);
 
-  const getIpData = async () => {
-    const res = await axios.get("https://api.ipify.org/?format=json");
-    setIP(res.data.ip);
+  const getIpData =() => {
+    fetch("https://api.ipify.org?format=json")
+      .then((response) => response.json())
+      .then((res) => {
+        setIP(res.ip);
+        // getUserLocation(data.ip, slugData);
+      })
+      .catch((error) => console.log(error, "==Ip Address Error"));
+    // const res = await axios.get("https://api.ipify.org/?format=json");
+    // setIP(res.data.ip);
   };
 
   const setCookieValue = () => {
