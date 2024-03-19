@@ -257,10 +257,10 @@ export default function MarketPlace() {
                           { name: "Mobile", id: "mobile" }]}
 
                         />
-                        {placement?.length > 0 && <div>
-                          Selected Values: {placement.map((value:any,index:any) => (
+                        {placement?.length > 0 && <div className="selected_offrs_market">
+                          {placement.map((value:any,index:any) => (
                             <span key={index}>
-                              {value} <button onClick={() => handleRemove(value)}>X</button>
+                              {value} <i className="fa fa-times" onClick={() => handleRemove(value)}></i> 
                             </span>
                           ))}
                         </div>}
@@ -290,11 +290,11 @@ export default function MarketPlace() {
 
                         />
 
-                        {opportunity?.length > 0 && <div>
-                          Selected Values: {opportunity.map((value: any,index:any) =>{ 
+                        {opportunity?.length > 0 && <div className="selected_offrs_market">
+                           {opportunity.map((value: any,index:any) =>{ 
                             console.log(value,"dfhnjihnj")
                             return<span key={index}>
-                              {value} <button onClick={() => handleRemoveOpportunity(value)}>X</button>
+                              {value}<i className="fa fa-times" onClick={() => handleRemoveOpportunity(value)}></i> 
                             </span>
                           })}
                         </div>}

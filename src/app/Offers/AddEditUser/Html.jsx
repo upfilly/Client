@@ -64,6 +64,12 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
         setform({ ...form, placement: updatedValues });
     };
 
+    const     handlePaymentRemove = (valueToRemove) => {
+        const updatedValues = form?.payment_model?.filter((value) => value !== valueToRemove);
+        setform({ ...form, payment_model: updatedValues });
+    };
+
+
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
@@ -89,7 +95,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         value={form.name}
                                         onChange={e => setform({ ...form, name: e.target.value })}
                                     />
-                                    {submitted && !form?.name ? <div className="invalid-feedback d-block">product name is Required</div> : <></>}
+                                    {submitted && !form?.name ? <div className="invalid-feedback d-block">Title name is Required</div> : <></>}
                                 </div>
                                 {/* <div className="col-md-6 mb-3">
                                     <label>Price ($)<span className="star">*</span></label>
@@ -202,10 +208,10 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
-                                            {form?.placement?.length > 0 && <div>
-                                                Selected Values: {form?.placement.map((value, index) => (
+                                            {form?.placement?.length > 0 && <div className="selected_offrs">
+                                              {form?.placement.map((value, index) => (
                                                     <span key={index}>
-                                                        {value} <button onClick={() => handlePlacementRemove(value)}>X</button>
+                                                        {value} <i className="fa fa-times" onClick={() => handlePlacementRemove(value)}></i> 
                                                     </span>
                                                 ))}
                                             </div>}
@@ -231,10 +237,10 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
-                                            {form?.opportunity_type?.length > 0 && <div>
-                                                Selected Values: {form?.opportunity_type.map((value, index) => (
-                                                    <span key={index}>
-                                                        {value} <button onClick={() => handleRemove(value)}>X</button>
+                                            {form?.opportunity_type?.length > 0 && <div className="selected_offrs">
+                                                 {form?.opportunity_type.map((value, index) => (
+                                                    <span className="" key={index}>
+                                                        {value} <i className="fa fa-times" onClick={() => handleRemove(value)}></i> 
                                                     </span>
                                                 ))}
                                             </div>}
@@ -261,6 +267,13 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
+                                    {form?.payment_model?.length > 0 && <div className="selected_offrs">
+                                                {form?.payment_model.map((value, index) => (
+                                                    <span key={index}>
+                                                        {value} <i className="fa fa-times" onClick={() => handlePaymentRemove(value)}></i> 
+                                                    </span>
+                                                ))}
+                                            </div>}
                                     {submitted && !form?.category_id ? (
                                         <div className="invalid-feedback d-block">Category is Required</div>
                                     ) : (

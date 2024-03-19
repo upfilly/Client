@@ -91,9 +91,6 @@ const Html = ({
                                 filter()
                             }} aria-hidden="true"></i>
                         </div>
-
-                        
-
                           
 
 
@@ -142,7 +139,7 @@ const Html = ({
                                         </div></td>
                                     <td className='table_dats'>{itm?.price}</td>
                                     <td className='table_dats'>   <div className={`user_hours`}>
-                                        <span className={itm?.status == "active" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
+                                        <span className={itm?.status == "active" ? 'contract capital' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
                                             onClick={() => statusChange(itm)}
                                         >
                                             {itm.status}

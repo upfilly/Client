@@ -231,8 +231,8 @@ export default function affilate() {
         <div className='nmain-list  mb-3'>
           <div className='row mx-0'>
             <div className='col-md-12'>
-              <div className='d-flex justify-content-between'>
-                <div className='d-flex'>
+              <div className='d-flex align-items-center justify-content-between gap-2'>
+                <div className='d-flex flex-wrap gap-2 align-items-center'>
                   <div className='filter-opt'>
                     <button className='set-filter'><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
                   </div>
@@ -249,8 +249,6 @@ export default function affilate() {
                       ]}
                     />
                   </div>
-
-               
 
                   <div class="mr-3">
 
@@ -307,7 +305,7 @@ export default function affilate() {
                   </> : <></>}
                 </div>
 
-                <div onClick={handleCleanData}>
+                <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
                   <Link href="/affiliate-form/StageFirstStep" className='btn btn-primary d-flex align-items-center'><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i>
                     New Affilate</Link>
                 </div>
@@ -316,6 +314,8 @@ export default function affilate() {
           </div>
           <div className='row mx-0 mt-3'>
             <div className='col-md-12'>
+
+            <div className='table-responsive'>
               <table class="table table-striped ">
                 <thead class="thead-clr">
                   <tr >
@@ -369,7 +369,7 @@ export default function affilate() {
                 </tbody>
               </table>
 
-
+              </div>
             </div>
           </div>
 
