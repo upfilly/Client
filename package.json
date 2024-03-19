@@ -19,6 +19,7 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "firebase": "^9.23.0",
+    "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
     "multiselect-react-dropdown": "^2.0.25",
     "next": "13.4.19",

@@ -7,6 +7,7 @@ import Layout from './components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
 import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 // import { message } from './firebase/function';
 
 export default function Home() {
@@ -19,15 +20,34 @@ export default function Home() {
   const [location, setLocation] = useState(null);
   const param = useSearchParams()
   const id = param.get("affiliate_id")
+  const [payload, setPayload] = useState({
+    flag: false,
+  });
+
+  console.log(payload,"payloadpayload=========")
+
+  useEffect(() => {
+    const dataInCookies = Cookies.get('Upfilly_affiliate')
+
+    setPayload(prevPayload => ({
+      ...prevPayload,
+      flag: dataInCookies ? true : false,
+    }));
+  }, []);
 
   const getIpData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     setIP(res.data.ip);
   };
 
+  const setCookieValue = () => {
+    Cookies.set('Upfilly_affiliate', id)
+  };
+
   useEffect(() => {
     if(id){
       getIpData();
+      setCookieValue()
     }
   }, []);
 
