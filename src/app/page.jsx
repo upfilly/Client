@@ -21,7 +21,7 @@ export default function Home() {
   const param = useSearchParams()
   const id = param.get("affiliate_id")
   const [payload, setPayload] = useState({
-    flag: false,
+    isSet: false,
   });
 
   console.log(payload,"payloadpayload=========")
@@ -31,7 +31,7 @@ export default function Home() {
 
     setPayload(prevPayload => ({
       ...prevPayload,
-      flag: dataInCookies ? true : false,
+      isSet: dataInCookies ? true : false,
     }));
   }, []);
 
@@ -138,16 +138,16 @@ export default function Home() {
 
   useEffect(() => {
     if (id && IP) {
-      console.log("innnnnn")
       const data1 = {
         "affiliate_id": id,
-        "affiliate_link":window?.location?.href,
+        "affiliate_link": window?.location?.href,
         "ip_address": IP,
         "device": deviceInfo?.deviceType,
         "browser": deviceInfo?.browser?.name,
         "os": deviceInfo?.platform,
         "lat": deviceInfo?.latitude,
         "lng": deviceInfo?.longitude,
+        "isSet": payload?.isSet,
       }
       
       ApiClient.post('saved-cookies', data1).then(res => {
