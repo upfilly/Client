@@ -30,27 +30,35 @@ export default function Dashboard() {
 }, [])
 
   useEffect(()=>{
+    if(user){
     ApiClient.get('total-users').then((data)=>{
      setDashboardData(data)
     })
+  }
   },[])
   
   useEffect(()=>{
+    if(user){
     ApiClient.get('total-campaigns').then((data)=>{
      setCampaignData(data)
     })
+  }
   },[])
 
   useEffect(()=>{
+    if(user){
     ApiClient.get('campaign-request').then((data)=>{
      setCampaignRequest(data)
     })
+  }
   },[])
 
   useEffect(()=>{
+    if(user){
     ApiClient.get('recent-users').then((data)=>{
      setRecentUser(data?.data?.data)
     })
+  }
   },[])
 
   return (

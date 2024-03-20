@@ -71,10 +71,14 @@ const Html = ({settingData , setShowPopup, isOpen, toggle, isOpen2, toggle2, set
     }
   }, [eventType]);
 
-  const setIPaddress=async ()=>{
-    const res = await axios.get("https://api.ipify.org?format=json");
-    localStorage.setItem("ip_address", res?.data?.ip)
-  }
+  const setIPaddress =() => {
+    fetch("https://api.ipify.org?format=json")
+      .then((response) => response.json())
+      .then((res) => {
+        localStorage.setItem("ip_address", res.ip)
+      })
+      .catch((error) => console.log(error, "==Ip Address Error"));
+  };
 
   useEffect(()=>{
     if(!localStorage.getItem("ip_address")){

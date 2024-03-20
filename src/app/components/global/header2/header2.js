@@ -41,11 +41,12 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
     };
 
     const Notifications = () => {
+        if(user?.id){
         ApiClient.get('notification/all', { "send_to": user?.id }).then(res => {
             if (res.success == true) {
                 setNotification(res?.data?.data)
             }
-        })
+        })}
     };
 
     useEffect(() => {
@@ -70,7 +71,6 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
 
     const unreadCount = notifications.filter(item => item.status === 'unread').length;
     const unreadNotification = notifications.filter(item => item.status === 'unread')
-    console.log(unreadNotification, "unreadNotificationunreadNotification")
 
     useEffect(() => {
         Notifications()
