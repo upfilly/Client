@@ -17,6 +17,7 @@ const Html = ({
     sorting,
     setFilter,
     user,
+    view,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -90,7 +91,7 @@ const Html = ({
                                 <tbody>
                                     {!loaging && data && data.map((itm, i) => {
                                         return <tr className='data_row' key={i}>
-                                            <td className='table_dats'>
+                                            <td className='table_dats' onClick={()=>view(itm?.id)}>
                                                 <div className='user_detail'>
                                                     <div className='user_name'>
                                                         <h4 className='user'>

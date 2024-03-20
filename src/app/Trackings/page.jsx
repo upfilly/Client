@@ -197,7 +197,7 @@ const Requests = () => {
   }
 
   const view = (id) => {
-    history.push("/requests/detail/" + id)
+    history.push("/Trackings/detail/" + id)
   }
 
   const edit = (id) => {
