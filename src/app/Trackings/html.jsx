@@ -38,7 +38,7 @@ const Html = ({
                             </h3>
 
                             <article className="d-flex filterFlex phView">
-                                <div className='searchInput'>
+                                {/* <div className='searchInput'>
                                     <input
                                         type="text"
                                         value={filters.search}
@@ -50,7 +50,7 @@ const Html = ({
                                     <i class="fa fa-search search_fa" onClick={() => {
                                         filter()
                                     }} aria-hidden="true"></i>
-                                </div>
+                                </div> */}
 
                                 {/* <SelectDropdown
                                     id="statusDropdown"
@@ -66,11 +66,11 @@ const Html = ({
                                 /> */}
 
 
-                                {filters.search ? <>
+                                {/* {filters.search ? <>
                                     <a className="btn btn-primary" onClick={e => reset()}>
                                         Reset
                                     </a>
-                                </> : <></>}
+                                </> : <></>} */}
                             </article>
                         </div>
                     </div>
