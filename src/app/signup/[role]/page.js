@@ -25,6 +25,7 @@ export default function Login() {
   const eventType = param.get("event_type")
   const referralCode = param.get("referral_code") || ''
   const BrandId = param.get("b_id") || null
+  const invite_email = param.get("invite_email") || null
   const history = useRouter()
   const user = crendentialModel.getUser()
 
@@ -39,6 +40,7 @@ export default function Login() {
 
   useEffect(() => {
     getData();
+    setForm({...form,"email":invite_email})
   }, []);
 
   useEffect(() => {
