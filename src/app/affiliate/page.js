@@ -229,14 +229,14 @@ export default function affilate() {
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
         <div className='nmain-list  mb-3'>
-          <div className='row mx-0'>
-            <div className='col-md-12'>
-              <div className='d-flex align-items-center justify-content-between gap-2'>
-                <div className='d-flex flex-wrap gap-2 align-items-center'>
+          <div className='row align-items-center mx-0'>
+            <div className='col-12 col-md-10 col-lg-9'>
+              <div className=' '>
+                <div className='d-flex gap-2 align-items-center flex-wrap'>
                   <div className='filter-opt'>
                     <button className='set-filter'><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
                   </div>
-                  <div class="ml-3 mr-3">
+                  <div class="">
                     <SelectDropdown
                       id="statusDropdown"
                       displayValue="name"
@@ -250,7 +250,7 @@ export default function affilate() {
                     />
                   </div>
 
-                  <div class="mr-3">
+                  <div class="">
 
                     <DatePicker
                       className="datepicker-field"
@@ -295,9 +295,6 @@ export default function affilate() {
                     </div>
                   </div>
 
-                  
-
-
                   {filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
                     <a className="btn btn-primary ms-3  " onClick={e => reset()}>
                       Reset
@@ -305,11 +302,15 @@ export default function affilate() {
                   </> : <></>}
                 </div>
 
-                <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
+              
+              </div>
+            </div>
+
+            <div className='col-12 col-md-2 col-lg-3'>
+              <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
                   <Link href="/affiliate-form/StageFirstStep" className='btn btn-primary d-flex align-items-center'><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i>
                     New Affilate</Link>
                 </div>
-              </div>
             </div>
           </div>
           <div className='row mx-0 mt-3'>
@@ -381,12 +382,12 @@ export default function affilate() {
           <span>Show {data?.length} from {total} Users</span>
           <ReactPaginate
             breakLabel="..."
-            nextLabel="next >"
+            nextLabel="Next >"
             initialPage={filters?.page}
             onPageChange={pageChange}
             pageRangeDisplayed={6}
             pageCount={Math.ceil(total / filters?.count)}
-            previousLabel="< previous"
+            previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}
             activeClassName={"pagination-item-active"}

@@ -179,12 +179,12 @@ const Html = ({
                             <span>Show {data?.length} from {total} campaignManagement</span>
                             <ReactPaginate
                                 breakLabel="..."
-                                nextLabel="next >"
+                                nextLabel="Next >"
                                 initialPage={filters?.page}
                                 onPageChange={pageChange}
                                 pageRangeDisplayed={6}
                                 pageCount={Math.ceil(total / filters?.count)}
-                                previousLabel="< previous"
+                                previousLabel="< Previous"
                                 renderOnZeroPageCount={null}
                                 pageClassName={"pagination-item"}
                                 activeClassName={"pagination-item-active"}

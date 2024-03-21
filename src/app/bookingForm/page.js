@@ -465,7 +465,7 @@ export default function BillingForm() {
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleInputChange} />
-                              {summitted && !formData.firstName ? <div className="invalid-feedback d-block">FirstName is required</div> : <></>}
+                              {summitted && !formData.firstName ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
 
                             </div>
                           </div><div className='col-12 col-md-6'>
@@ -479,7 +479,7 @@ export default function BillingForm() {
                                 name="lastName"
                                 value={formData.lastName}
                                 onChange={handleInputChange} />
-                              {summitted && !formData.lastName ? <div className="invalid-feedback d-block">LastName is required</div> : <></>}
+                              {summitted && !formData.lastName ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
 
                             </div>
                           </div><div className='col-12 col-md-12 pr-0'>
@@ -513,7 +513,7 @@ export default function BillingForm() {
 
                           <div className='col-12 col-md-12'>
                             <div className="form-group">
-                              <label className='label-set'>Password <img className='sad-img' src='/assets/img/information-button.png' alt='' /></label>
+                              <label className='label-set'>Password </label>
                               <div className='input-group position-relative'>
                                 <input
                                   type={eyes.password ? 'text' : 'password'}
@@ -534,7 +534,7 @@ export default function BillingForm() {
 
                           </div><div className='col-12 col-md-12'>
                             <div className="form-group">
-                              <label className='label-set'>confirm Password <img className='sad-img' src='/assets/img/information-button.png' alt='' /></label>
+                              <label className='label-set'>confirm Password </label>
                               <div className='input-group position-relative'>
                                 <input
                                   type={eyes.confirmPassword ? 'text' : 'password'}
