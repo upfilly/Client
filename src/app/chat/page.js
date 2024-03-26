@@ -402,7 +402,6 @@ export default function Chat() {
   useEffect(() => {
     ConnectSocket.emit("user-online", { user_id: user?.id });
     ConnectSocket.on(`user-online`, (data) => {
-      console.log("user-online", data)
       const newdata = data?.data?.user_id;
       setIsOnline(true);
       setStatus(newdata);
