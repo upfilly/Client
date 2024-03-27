@@ -534,7 +534,6 @@ export default function Chat() {
     });
     loader(false)
     handleClose()
-
   }
 
 

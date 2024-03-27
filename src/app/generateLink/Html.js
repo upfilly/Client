@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Layout from '../components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
 import loader from '@/methods/loader';
@@ -27,6 +27,36 @@ const Html = () => {
         { key: "XYZ", label: "XYZ" },
         { key: "New_id", label: "New ID" }
     ])
+    const [brandData,setBrandData] = useState([])
+    const [selectedBrand,setSelectedBrand] = useState('')        
+
+    const getData = (p = {}) => {
+        // setLoader(true)
+        // const brand_id = user?.role == 'brand' ? user?.id : null
+        let filter = {status:'accepted'}
+        let url = 'make-offers'
+        ApiClient.get(url, filter).then(res => {
+          if (res.success) {
+            console.log(res?.data?.data,"dgfygduyfg")
+            setBrandData(res?.data?.data)
+            // setTotal(res?.data?.total_count)
+          }
+        //   setLoader(false)
+        })
+      }
+
+      const brands = Array.from(new Set(brandData.map(item => ({
+        id: item.brand_id,
+        name: item.brand_name
+      }))));
+
+      const handleBrandChange = event => {
+        setSelectedBrand(event.target.value);
+      };
+
+      useEffect(()=>{
+        getData()
+      },[])
 
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
@@ -97,12 +127,13 @@ const Html = () => {
         }
     
         loader(true);
-        ApiClient.post('get-link', { "base_url": `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`, "parameters": checkedParameters }).then((res) => {
+        ApiClient.post('get-link', { "base_url": `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`, "parameters": checkedParameters }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
                 setSelectDropdown(!SelectDropdown)
                 setIsChecked({})
+                setSelectedBrand('')
             }
             loader(false);
         });
@@ -124,7 +155,7 @@ const Html = () => {
                                             <button className="btn btn-primary btn-sm " onClick={() => setSelectDropdown(!SelectDropdown)}>
                                                 Add Dynamic Parameters <i className='fa fa-angle-down'></i>
                                             </button>
-                                            {!SelectDropdown && <div className="links_width_menu" >
+                                            {!SelectDropdown && <div className="links_width_menu">
                                                 {checkboxValues.map((checkbox, index) => (
                                                     <div key={index} className=" pb-2 mb-3 border-bottom">
                                                         <div className='d-flex align-items-center gap-3 justify-content-between'>
@@ -148,6 +179,15 @@ const Html = () => {
                                                 </div>
                                             </div>}
                                         </div>
+                                        <div>
+                                            <select id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                                <option value="">Select a Merchant</option>
+                                                {brands.map(brand => (
+                                                    <option key={brand.id} value={brand.id}>{brand.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                      { selectedBrand && <button className='btn btn-primary login ml-3' onClick={handleSubmit}>Save Change</button>}
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +201,8 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`}</p>
+                                {!selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`}</p>}
+                                {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                             </div>
                             {copied && <div className="">Copied!</div>}
                         </div>

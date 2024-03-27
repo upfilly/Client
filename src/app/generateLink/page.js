@@ -9,9 +9,7 @@ const user = crendentialModel.getUser()
 
 
     return <>
-
-        <Html
-            
+        <Html  
         />
     </>;
 };
