@@ -93,7 +93,7 @@ const Html = () => {
         ]);
         setNewKey('');
         setNewLabel('');
-        setShowNewKeyForm(false); // Close the form after adding the new key
+        setShowNewKeyForm(false); 
         }
     };
 
@@ -106,10 +106,11 @@ const Html = () => {
         });
     }, []);
 
+    console.log(isChecked,"isCheckedisChecked")
+
     const handleSubmit = () => {
         const checkedParameters = {};
         let hasBlankInput = false;
-    
         // Check for blank inputs in checked parameters
         Object.keys(isChecked).forEach(key => {
             if (isChecked[key]) {
@@ -131,7 +132,8 @@ const Html = () => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
-                setSelectDropdown(!SelectDropdown)
+                if(!SelectDropdown){
+                setSelectDropdown(!SelectDropdown)}
                 setIsChecked({})
                 setSelectedBrand('')
             }
