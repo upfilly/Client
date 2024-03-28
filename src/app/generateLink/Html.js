@@ -182,7 +182,7 @@ const Html = () => {
                                             </div>}
                                         </div>
                                         <div>
-                                            <select id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                            <select class="form-select" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
                                                 <option value="">Select a Merchant</option>
                                                 {brands.map(brand => (
                                                     <option key={brand.id} value={brand.id}>{brand.name}</option>
