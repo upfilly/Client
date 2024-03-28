@@ -115,8 +115,9 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link">
-          <i className="material-icons mr-2" title="tracking">business</i>
+        {user && user?.role == "affiliate" && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
+          <i className="material-icons mr-2" title="tracking">show_chart</i>
+  
           <span className="side_head">Trackings</span>
         </ListItemLink>}
 
