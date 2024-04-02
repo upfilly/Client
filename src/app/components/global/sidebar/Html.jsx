@@ -90,12 +90,12 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
 
           </div></>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to={!user?.account_id ? "/addAccount/detail" :"/Offers"} data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer">
+        {user && user?.role == "affiliate" && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id ? true : false}>
           <i className="material-icons mr-2" title="product">add_shopping_cart</i>
           <span className="side_head">Add Offer</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to={!user?.account_id ? "/addAccount/detail" :"/requests"} data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request">
+        {user && user?.role == "affiliate" && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={!user?.account_id ? true : false}>
           <i className="material-icons mr-2" title="campaignManagement">business_center</i>
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
@@ -110,16 +110,16 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <span className="side_head">Sent Offers</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link">
+        {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" disabled={!user?.account_id ? true : false}>
           <i className="material-icons mr-2" title="campaignManagement">business</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
+        {/* {user && user?.role == "affiliate" && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
           <i className="material-icons mr-2" title="tracking">show_chart</i>
   
           <span className="side_head">Trackings</span>
-        </ListItemLink>}
+        </ListItemLink>} */}
 
         {/* {user && user?.role == "affiliate" && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons mr-2" title="campaignManagement">manage_accounts</i>

@@ -31,17 +31,14 @@ const Html = () => {
     const [selectedBrand,setSelectedBrand] = useState('')        
 
     const getData = (p = {}) => {
-        // setLoader(true)
-        // const brand_id = user?.role == 'brand' ? user?.id : null
+
         let filter = {status:'accepted'}
         let url = 'make-offers'
         ApiClient.get(url, filter).then(res => {
           if (res.success) {
             console.log(res?.data?.data,"dgfygduyfg")
             setBrandData(res?.data?.data)
-            // setTotal(res?.data?.total_count)
           }
-        //   setLoader(false)
         })
       }
 
