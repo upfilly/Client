@@ -406,7 +406,7 @@ export default function Chat() {
 
   useEffect(() => {
     ConnectSocket.on(`delete-message`, (data) => {
-      userMessage(data?.data?.room_id)
+      userMessage(data?.data?.room_id,data?.data?.user_id)
       getChatList()
     });
   }, [])
@@ -480,10 +480,10 @@ export default function Chat() {
     setChatMsg("");
   };
 
-  const userMessage = (roomuid) => {
+  const userMessage = (roomuid,u_id) => {
     axios
       .get(
-        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${user?.id}&login_user_id=${user?.id}`
+        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${u_id}&login_user_id=${user?.id}`
       )
       .then((res) => {
         if (res?.data.success) {
@@ -505,7 +505,7 @@ export default function Chat() {
         if (res?.data?.success) {
           const data = res.data;
           setRoomId(res.data.data.room_id);
-          userMessage(data.data.room_id);
+          userMessage(data.data.room_id,data?.room_members[0]?.user_id);
           joinRoom(data.data.room_id);
           localStorage.setItem("roomId", data.data.room_id)
           // loader(false);
@@ -634,6 +634,7 @@ export default function Chat() {
                             filteredChatList?.length > 0
                               ?
                               filteredChatList?.map((itm, indx) => {
+                                console.log(itm,"itmmmmmm=====")
                                 return (<>
                                  
                                   <li
@@ -644,7 +645,7 @@ export default function Chat() {
                                       setActiveData(itm)
                                       localStorage.setItem("roomId", itm?.room_id)
                                       handleUserId(itm?.user_id)
-                                      userMessage(itm?.room_id);
+                                      userMessage(itm?.room_id,itm?.room_members[0]?.user_id);
                                       setRoomId(itm?.room_id)
                                       joinRoom(itm?.room_id);
                                       getGroupListMember(itm?.room_id)
