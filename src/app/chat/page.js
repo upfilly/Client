@@ -49,10 +49,22 @@ export default function Chat() {
       "role": "admin"
     }]
   });
+  const [onlineUserId, setOnlineUserId] = useState(null);
+  const [offlineUserId, setOfflineUserId] = useState(null);
   const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
   const [submitGroup, setSummitGroup] = useState(false)
   const [filteredArray, setFilteredArray] = useState([]);
   const [searchText, setSearchText] = useState('');
+  ConnectSocket.on('user-online', (data) => {
+    console.log(data,"daataaOnline")
+    setOnlineUserId(data?.data?.user_id);
+  });
+  ConnectSocket.on('user-offline', (data) => {
+    console.log(data,"daataaOffline")
+    setOfflineUserId(data?.data?.user_id);
+  });
+
+  console.log(user,"user-------000000")
 
   const filteredChatList = chatList.filter(itm => {
     if (!itm?.isGroupChat) {
@@ -574,8 +586,6 @@ export default function Chat() {
       <Header />
       <PageContainer title="Chat" description="Chat">
 
-
-
         <div className="container chat-bg-main">
           <div className="chat-bg">
             <div className="row">
@@ -668,7 +678,7 @@ export default function Chat() {
                                               height={50}
                                               width={50}
                                             />}
-                                        {!itm?.room_name && itm && itm?.room_members && itm?.room_members[0]?.isOnline ? <i
+                                        {!itm?.room_name && itm && itm?.room_members && itm?.room_members[0]?.isOnline == 'true' || itm?.room_members[0]?.user_id == onlineUserId ? <i
                                           className="fa fa-circle circle_icon"
                                           aria-hidden="true"
                                         /> : ""}
@@ -730,7 +740,7 @@ export default function Chat() {
                             {" "}
                             {activeData?.room_name ? methodModel?.capitalizeFirstLetter(activeData?.room_name) : methodModel?.capitalizeFirstLetter(activeUser?.[0]?.user_name)}
                           </h5>
-                          {!activeData?.room_name ? <span>{activeUser?.[0]?.isOnline ? "online" : "offline"}</span> :
+                          {!activeData?.room_name ? <span>{activeUser?.[0]?.isOnline == 'true' || activeUser?.[0]?.user_id == onlineUserId  ? "online" : "offline"}</span> :
                             <>{chatMembers?.length >= 2 && <span>{chatMembers?.length} members</span>}</>
                           }
                         </div>
