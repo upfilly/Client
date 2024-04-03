@@ -5,6 +5,7 @@ import loader from '@/methods/loader';
 import './style.scss'
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
+import MultiSelectValue from '../components/common/MultiSelectValue'
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -22,38 +23,45 @@ const Html = () => {
     const [newLabel, setNewLabel] = useState('');
     const [showNewKeyForm, setShowNewKeyForm] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState([
-        { key: "product", label: "Product" },
+        { id: "product", label: "Product" },
         // { key: "affiliate_id", label: "Affiliate ID" },
-        { key: "XYZ", label: "XYZ" },
-        { key: "New_id", label: "New ID" }
+        { id: "XYZ", label: "XYZ" },
+        { id: "New_id", label: "New ID" }
     ])
-    const [brandData,setBrandData] = useState([])
-    const [selectedBrand,setSelectedBrand] = useState('')        
+    const [brandData, setBrandData] = useState([])
+    const [selectedBrand, setSelectedBrand] = useState('')
+    const [selectedValues, setSelectedValues] = useState([]);
+    const [inputValues, setInputValues] = useState({});
+    const [DestinationUrl,setDestinationUrl]=useState('')
+  
+    const handleInputChange = (id, value) => {
+      setInputValues({ [id]: value });
+    };
 
     const getData = (p = {}) => {
 
-        let filter = {status:'accepted'}
+        let filter = { status: 'accepted' }
         let url = 'make-offers'
         ApiClient.get(url, filter).then(res => {
-          if (res.success) {
-            console.log(res?.data?.data,"dgfygduyfg")
-            setBrandData(res?.data?.data)
-          }
+            if (res.success) {
+                console.log(res?.data?.data, "dgfygduyfg")
+                setBrandData(res?.data?.data)
+            }
         })
-      }
+    }
 
-      const brands = Array.from(new Set(brandData.map(item => ({
+    const brands = Array.from(new Set(brandData.map(item => ({
         id: item.brand_id,
         name: item.brand_name
-      }))));
+    }))));
 
-      const handleBrandChange = event => {
+    const handleBrandChange = event => {
         setSelectedBrand(event.target.value);
-      };
+    };
 
-      useEffect(()=>{
+    useEffect(() => {
         getData()
-      },[])
+    }, [])
 
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
@@ -67,30 +75,15 @@ const Html = () => {
         });
     };
 
-    const handleCheckboxChange = (key) => {
-        setIsChecked(prevState => ({
-            ...prevState,
-            [key]: !prevState[key]
-        }));
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setParameters(prevParams => ({
-            ...prevParams,
-            [name]: value
-        }));
-    };
-
     const handleAddNew = () => {
         if (newKey && newLabel) {
-        setCheckboxValues(prevValues => [
-            ...prevValues,
-            { key: newKey, label: newLabel }
-        ]);
-        setNewKey('');
-        setNewLabel('');
-        setShowNewKeyForm(false); 
+            setCheckboxValues(prevValues => [
+                ...prevValues,
+                { key: newKey, label: newLabel }
+            ]);
+            setNewKey('');
+            setNewLabel('');
+            setShowNewKeyForm(false);
         }
     };
 
@@ -103,41 +96,35 @@ const Html = () => {
         });
     }, []);
 
-    console.log(isChecked,"isCheckedisChecked")
-
     const handleSubmit = () => {
-        const checkedParameters = {};
-        let hasBlankInput = false;
-        // Check for blank inputs in checked parameters
-        Object.keys(isChecked).forEach(key => {
-            if (isChecked[key]) {
-                if (!parameters[key]) {
-                    hasBlankInput = true;
-                    return;
-                }
-                checkedParameters[key] = parameters[key];
-            }
-        });
-    
-        if (hasBlankInput) {
-            toast.error("Please fill in all required fields.");
-            return;
+
+        // if (hasBlankInput) {
+        //     toast.error("Please fill in all required fields.");
+        //     return;
+        // }
+      let base_url=''
+        if(DestinationUrl && selectedBrand){
+           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${DestinationUrl}` 
+        }else if(selectedBrand){
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}` 
+        }else if(DestinationUrl){
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&url=${DestinationUrl}` 
         }
-    
-        loader(true);
-        ApiClient.post('get-link', { "base_url": `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`, "parameters": checkedParameters }).then((res) => {
+
+        // loader(true);
+        ApiClient.post('get-link', { "base_url":base_url, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
-                if(!SelectDropdown){
-                setSelectDropdown(!SelectDropdown)}
-                setIsChecked({})
-                setSelectedBrand('')
+                if (!SelectDropdown) {
+                    setSelectDropdown(!SelectDropdown)
+                }
+                // setSelectedBrand('')
             }
-            loader(false);
+            // loader(false);
         });
     };
-    
+
 
     return (
         <>
@@ -148,53 +135,53 @@ const Html = () => {
                             <div className='main_title_head d-flex justify-content-between align-items-center'>
                                 <h3 className="link_default m-0"><i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Default Links
                                 </h3>
-                                <div className=''>
-                                    <div className="d-flex align-items-center gap-3">
-                                        <div className="position-relative">
-                                            <button className="btn btn-primary btn-sm " onClick={() => setSelectDropdown(!SelectDropdown)}>
-                                                Add Dynamic Parameters <i className='fa fa-angle-down'></i>
-                                            </button>
-                                            {!SelectDropdown && <div className="links_width_menu">
-                                                {checkboxValues.map((checkbox, index) => (
-                                                    <div key={index} className=" pb-2 mb-3 border-bottom">
-                                                        <div className='d-flex align-items-center gap-3 justify-content-between'>
-                                                            <div className="">
-                                                                <input className="mr-1" type="checkbox" id={`gridCheck${index}`} checked={isChecked[checkbox.key]} onChange={() => handleCheckboxChange(checkbox.key)} />
-                                                                <label className="mb-0" htmlFor={`gridCheck${index}`}>
-                                                                    {checkbox.label}
-                                                                </label>
-                                                            </div>
-                                                            {isChecked[checkbox.key] && (
-                                                                <div className="">
-                                                                    <input type="text" className="inpudesgn mr-2" name={checkbox.key} value={parameters[checkbox.key]} onChange={handleInputChange} placeholder={`Enter ${checkbox.label} Value`} />
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                                <div className='text-end'>
-                                                    <button className="btn btn-secondary btn-sm mb-3 mr-2" onClick={() => setShowNewKeyForm(true)}>Add New</button>
-                                                    <button className="btn btn-primary btn-sm mb-3" onClick={handleSubmit}>Submit</button>
-                                                </div>
-                                            </div>}
-                                        </div>
-                                        <div>
-                                            <select class="form-select" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
-                                                <option value="">Select a Merchant</option>
-                                                {brands.map(brand => (
-                                                    <option key={brand.id} value={brand.id}>{brand.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                      { selectedBrand && <button className='btn btn-primary login ml-3' onClick={handleSubmit}>Save Change</button>}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div className='card-body'>
-                            {/* <h5 className="fiver_cpa mb-3">Fiverr CPA</h5> */}
-                            <div className="input-group mb-2">
 
+                            <div>
+                                <div>Select a Merchant</div>
+                                <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                    <option value="">Select a Merchant</option>
+                                    {brands.map(brand => (
+                                        <option key={brand.id} value={brand.id} >{brand.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div>
+                                <div>Destination URL</div>
+                                <input
+                                    type="text"
+                                    placeholder="Enter your Url"
+                                    value={DestinationUrl}
+                                    onChange={(e) => setDestinationUrl(e.target.value)} />
+                            </div>
+
+                            <MultiSelectValue
+                                id="statusDropdown"
+                                displayValue="label"
+                                intialValue={selectedValues}
+                                result={(e) => setSelectedValues(e.value)}
+                                options={checkboxValues}
+                            />
+
+                            {selectedValues.map((selected) => (
+                                <div key={selected.id}>
+                                    <label>{selected}:</label>
+                                    <input
+                                        type="text"
+                                        placeholder={`Input value for ${selected}`}
+                                        onChange={(e) => handleInputChange(selected, e.target.value)}
+                                    />
+                                </div>
+                            ))}
+
+                            <div className='text-end'>
+                                <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Add Data</button>
+                            </div>
+
+                            <div className="input-group mb-2 mt-3">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
                                     <div className="input-group-text">
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>

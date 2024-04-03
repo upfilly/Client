@@ -4,11 +4,12 @@ import './style.scss';
 import Link from 'next/link';
 import PhoneInput from 'react-phone-input-2'
 import PlacesAutocomplete from "react-places-autocomplete";
-import { Editor } from "@tinymce/tinymce-react";
 import 'react-phone-input-2/lib/style.css';
 import SelectDropdown from '../../common/SelectDropdown';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems, handleFeatureCheckbox, handleSubmit, setChangeSubCategory,
   handleChange, handleSelect, address, changeSubCategory,formData,setFormData,dob, setDOB,handleDateChange,
@@ -203,7 +204,7 @@ const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems,
 
                         <div className="col-12 form-group">
                           <label>Description</label>
-                          <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
+                          {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                             onEditorChange={(newValue, editor) => {
                               setForm({ ...form, description: newValue })
                             }}
@@ -212,7 +213,34 @@ const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems,
                               selector: 'textarea#autocompleter-cardmenuitem',
                               height: 200,
                             }}
-                          />
+                          /> */}
+                          <ReactQuill
+                                        theme="snow"
+                                        value={form?.description ? form?.description : ''}
+                                       
+                                        onChange={(newValue, editor) => {
+                                            setform({ ...form, description: newValue })
+                                        }}
+                                        className='tuncketcls'
+                                        modules={{
+                                            toolbar: [
+                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                                [{ size: [] }],
+                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                                { 'indent': '-1' }, { 'indent': '+1' }],
+                                                ['link', 'image', 'video'],
+                                                ['clean']
+                                            ],
+                                        }}
+                                        formats={[
+                                            'header', 'font', 'size',
+                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                            'list', 'bullet', 'indent',
+                                            'link', 'image', 'video'
+                                        ]}
+                                        bounds={'.app'}
+                                    />
                         </div>
 
                       </div>

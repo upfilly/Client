@@ -3,7 +3,8 @@ import ApiClient from '@/methods/api/apiClient';
 import Swal from "sweetalert2";
 import loader from '@/methods/loader';
 import Layout from "@/app/components/global/layout";
-import { Editor } from "@tinymce/tinymce-react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
 
 const Html = ({ submitted, form, handleSubmit, setform, back }) => {

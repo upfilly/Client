@@ -121,10 +121,10 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
 
-        {/* {user && user?.role == "affiliate" && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+        {user && user?.role == "affiliate" && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons mr-2" title="campaignManagement">manage_accounts</i>
           <span className="side_head">Campaign Management</span>
-        </ListItemLink>} */}
+        </ListItemLink>}
 
         { <ListItemLink to="/payments" data-bs-toggle="tooltip" data-bs-placement="top" title="Payments">
         <svg className="text_black" xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">

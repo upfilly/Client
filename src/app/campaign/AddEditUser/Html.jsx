@@ -3,10 +3,10 @@ import methodModel from "@/methods/methods";
 import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
-import { Editor } from "@tinymce/tinymce-react";
 import '../style.scss';
-import axios from "axios";
-import environment from "@/environment";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 
     const [loaderr, setLoader] = useState()
@@ -274,7 +274,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                 </div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
-                                    <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
+                                    {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                                         onEditorChange={(newValue, editor) => {
                                             setform({ ...form, description: newValue })
                                         }}
@@ -283,6 +283,33 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                             selector: 'textarea#autocompleter-cardmenuitem',
                                             height: 250,
                                         }}
+                                    /> */}
+                                    <ReactQuill
+                                        theme="snow"
+                                        value={form?.description ? form?.description : ''}
+                                       
+                                        onChange={(newValue, editor) => {
+                                            setform({ ...form, description: newValue })
+                                        }}
+                                        className='tuncketcls'
+                                        modules={{
+                                            toolbar: [
+                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                                [{ size: [] }],
+                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                                { 'indent': '-1' }, { 'indent': '+1' }],
+                                                ['link', 'image', 'video'],
+                                                ['clean']
+                                            ],
+                                        }}
+                                        formats={[
+                                            'header', 'font', 'size',
+                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                            'list', 'bullet', 'indent',
+                                            'link', 'image', 'video'
+                                        ]}
+                                        bounds={'.app'}
                                     />
                                     {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>

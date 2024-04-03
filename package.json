@@ -34,6 +34,7 @@
     "react-pagination-js": "^2.0.0",
     "react-phone-input-2": "^2.15.1",
     "react-places-autocomplete": "^7.3.0",
+    "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
     "react-single-image-viewer": "^1.0.1",
     "react-toastify": "^9.1.3",

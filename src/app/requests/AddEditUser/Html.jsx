@@ -5,7 +5,8 @@ import Layout from "@/app/components/global/layout";
 import rolesModel from "@/models/role.model";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
-import { Editor } from "@tinymce/tinymce-react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
 const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 
@@ -149,7 +150,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                         </div>
                         <div className="col-md-12 mb-3">
                             <label>Description<span className="star">*</span></label>
-                            <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
+                            {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                                 onEditorChange={(newValue, editor) => {
                                     setform({ ...form, description: newValue })
                                 }}
@@ -159,6 +160,34 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                                     height: 250,
                                 }}
                                 required
+                            /> */}
+
+                            <ReactQuill
+                                theme="snow"
+                                value={form?.description ? form?.description : ''}
+
+                                onChange={(newValue, editor) => {
+                                    setform({ ...form, description: newValue })
+                                }}
+                                className='tuncketcls'
+                                modules={{
+                                    toolbar: [
+                                        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                        [{ size: [] }],
+                                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                        [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                        { 'indent': '-1' }, { 'indent': '+1' }],
+                                        ['link', 'image', 'video'],
+                                        ['clean']
+                                    ],
+                                }}
+                                formats={[
+                                    'header', 'font', 'size',
+                                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                    'list', 'bullet', 'indent',
+                                    'link', 'image', 'video'
+                                ]}
+                                bounds={'.app'}
                             />
                         </div>
                         <div className='col-md-6'>
