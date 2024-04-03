@@ -8,8 +8,12 @@ import 'react-phone-input-2/lib/style.css';
 import SelectDropdown from '../../common/SelectDropdown';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+import dynamic from 'next/dynamic';
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems, handleFeatureCheckbox, handleSubmit, setChangeSubCategory,
   handleChange, handleSelect, address, changeSubCategory,formData,setFormData,dob, setDOB,handleDateChange,

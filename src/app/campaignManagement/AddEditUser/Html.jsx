@@ -6,8 +6,12 @@ import rolesModel from "@/models/role.model";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
 import '../style.scss';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+import dynamic from 'next/dynamic';
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 

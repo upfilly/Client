@@ -3,9 +3,12 @@ import ApiClient from '@/methods/api/apiClient';
 import Swal from "sweetalert2";
 import loader from '@/methods/loader';
 import Layout from "@/app/components/global/layout";
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
+import dynamic from 'next/dynamic';
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ submitted, form, handleSubmit, setform, back }) => {
 

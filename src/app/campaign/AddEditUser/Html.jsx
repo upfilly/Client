@@ -4,8 +4,12 @@ import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
 import '../style.scss';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+import dynamic from 'next/dynamic';
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 
@@ -284,7 +288,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                             height: 250,
                                         }}
                                     /> */}
-                                    <ReactQuill
+                                   {affiliateData && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
                                        
@@ -310,7 +314,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                             'link', 'image', 'video'
                                         ]}
                                         bounds={'.app'}
-                                    />
+                                    />}
                                     {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
                                 <div className='col-md-6'>

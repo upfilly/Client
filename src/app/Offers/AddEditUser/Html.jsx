@@ -3,13 +3,16 @@ import methodModel from "@/methods/methods";
 import Layout from "@/app/components/global/layout";
 import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
 import { useRouter } from "next/navigation";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import dynamic from 'next/dynamic';
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, submitted, back,category,setCategory,subCategory,setSubCategory}) => {
     const [loaderr, setLoader] = useState()
