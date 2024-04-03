@@ -33,6 +33,9 @@ const Html = () => {
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
     const [DestinationUrl,setDestinationUrl]=useState('')
+
+    console.log(selectedValues,"selectedValuesselectedValues===")
+    console.log(inputValues,"inputValuesinputValues")
   
    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -40,6 +43,17 @@ const Html = () => {
             [selected]: value
         }));
     };
+
+    const updateDictionary = () => {
+        const updatedDict = Object.fromEntries(
+          Object.entries(inputValues).filter(([key]) => selectedValues.includes(key))
+        );
+        setInputValues(updatedDict);
+      };
+
+    useEffect(() => {
+        updateDictionary();
+      }, [selectedValues]);
     
     const handleMultiSelectChange = (selectedOptions) => {
         setSelectedValues(selectedOptions);
@@ -180,6 +194,7 @@ const Html = () => {
                                             intialValue={selectedValues}
                                             result={(e) => handleMultiSelectChange(e.value)}
                                             setInputValues={setInputValues}
+                                            updateDictionary={updateDictionary}
                                             inputValues={inputValues}
                                             options={checkboxValues}
                                         />
