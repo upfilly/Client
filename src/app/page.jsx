@@ -8,7 +8,7 @@ import ApiClient from '@/methods/api/apiClient';
 import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-// import { message } from './firebase/function';
+import CookiesPopup from './cookiesModel'
 
 export default function Home() {
   const user = crendentialModel.getUser()
@@ -20,11 +20,10 @@ export default function Home() {
   const [location, setLocation] = useState(null);
   const param = useSearchParams()
   const id = param.get("affiliate_id")
+  const url = param.get("url")
   const [payload, setPayload] = useState({
     isSet: false,
   });
-
-  console.log(payload,"payloadpayload=========")
 
   useEffect(() => {
     const dataInCookies = Cookies.get('Upfilly_affiliate')
@@ -159,7 +158,7 @@ export default function Home() {
       
       ApiClient.post('saved-cookies', data1).then(res => {
         if (res.success) {
-          console.log(res, "ressss--innnn")
+          window.open(url)
         }
       })
     }
@@ -509,6 +508,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <CookiesPopup />
     </Layout>
   );
 }

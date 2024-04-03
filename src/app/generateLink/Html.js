@@ -23,20 +23,30 @@ const Html = () => {
     const [newLabel, setNewLabel] = useState('');
     const [showNewKeyForm, setShowNewKeyForm] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState([
-        { id: "product", label: "Product" },
+        { id: "param", label: "param" },
         // { key: "affiliate_id", label: "Affiliate ID" },
-        { id: "XYZ", label: "XYZ" },
-        { id: "New_id", label: "New ID" }
+        { id: "newparam", label: "newparam" },
+        { id: "newparam1", label: "newparam1" }
     ])
     const [brandData, setBrandData] = useState([])
     const [selectedBrand, setSelectedBrand] = useState('')
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
     const [DestinationUrl,setDestinationUrl]=useState('')
+
+    console.log(inputValues,"00000000000-------")
+    console.log(selectedValues,"selectedValues=====")
   
-    const handleInputChange = (id, value) => {
-      setInputValues({ [id]: value });
+   const handleInputChange = (selected, value) => {
+        setInputValues(prevState => ({
+            ...prevState,
+            [selected]: value
+        }));
     };
+    
+    const handleMultiSelectChange = (selectedOptions) => {
+        setSelectedValues(selectedOptions);
+      };
 
     const getData = (p = {}) => {
 
@@ -79,7 +89,7 @@ const Html = () => {
         if (newKey && newLabel) {
             setCheckboxValues(prevValues => [
                 ...prevValues,
-                { key: newKey, label: newLabel }
+                { id: newKey, label: newLabel }
             ]);
             setNewKey('');
             setNewLabel('');
@@ -139,45 +149,76 @@ const Html = () => {
                         </div>
                         <div className='card-body'>
 
-                            <div>
-                                <div>Select a Merchant</div>
-                                <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
-                                    <option value="">Select a Merchant</option>
-                                    {brands.map(brand => (
-                                        <option key={brand.id} value={brand.id} >{brand.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div>
-                                <div>Destination URL</div>
-                                <input
-                                    type="text"
-                                    placeholder="Enter your Url"
-                                    value={DestinationUrl}
-                                    onChange={(e) => setDestinationUrl(e.target.value)} />
-                            </div>
-
-                            <MultiSelectValue
-                                id="statusDropdown"
-                                displayValue="label"
-                                intialValue={selectedValues}
-                                result={(e) => setSelectedValues(e.value)}
-                                options={checkboxValues}
-                            />
-
-                            {selectedValues.map((selected) => (
-                                <div key={selected.id}>
-                                    <label>{selected}:</label>
-                                    <input
-                                        type="text"
-                                        placeholder={`Input value for ${selected}`}
-                                        onChange={(e) => handleInputChange(selected, e.target.value)}
-                                    />
+                            <div className='row'>
+                                <div className='col-12 col-md-6'>
+                                    <div>
+                                            <div>Select a Merchant</div>
+                                            <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                                <option value="">Select a Merchant</option>
+                                                {brands.map(brand => (
+                                                    <option key={brand.id} value={brand.id} >{brand.name}</option>
+                                                ))}
+                                            </select>
+                                    </div>
                                 </div>
-                            ))}
+                                <div className='col-12 col-md-6'>
+                                    <div>
+                                        <div>Destination URL</div>
+                                        <input
+                                            type="text"
+                                            className='form-control'
+                                            placeholder="Enter your Url"
+                                            value={DestinationUrl}
+                                            onChange={(e) => setDestinationUrl(e.target.value)} />
+                                    </div>
 
-                            <div className='text-end'>
+                                </div>
+
+                                <div className='col-12 col-md-12'>
+                                    <div>
+                                    <div>Add Parameters</div>
+                                        <MultiSelectValue
+                                            id="statusDropdown"
+                                            displayValue="label"
+                                            intialValue={selectedValues}
+                                            result={(e) => handleMultiSelectChange(e.value)}
+                                            setInputValues={setInputValues}
+                                            inputValues={inputValues}
+                                            options={checkboxValues}
+                                        />
+                                    </div>
+
+                                    <div className='addkey mt-3 mb-3 d-flex justify-content-end'>
+                                            <button className='btn btn-primary btn-sm' onClick={()=>setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
+                                    </div>
+
+                                </div>
+
+
+                                <div className='col-12 col-md-12 mt-2'>
+                                    <div className='row'>
+                                        {selectedValues.map((selected,index) => (
+                                            <div className='col-12 col-md-4' key={index}>
+                                                <p className='mb-0 labeltext'>{selected}:</p>
+                                                <input
+                                                    type="text"
+                                                    className='form-control'
+                                                    placeholder={`Input value for ${selected}`}
+                                                    onChange={(e) => handleInputChange(selected, e.target.value)}
+                                                />
+                                            </div>
+                                         ))}
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                          
+
+                        
+
+                            <div className='text-end mt-3'>
                                 <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Add Data</button>
                             </div>
 

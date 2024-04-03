@@ -3573,3 +3573,46 @@ p.checkbox-option-main {
 .ql-editor , .ql-blank {
   height: 150px !important;
 }
+
+.cookies-popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cookies-popup p {
+  margin: 0;
+}
+
+.cookies-popup button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cookies-popup button:hover {
+  background-color: #0056b3;
+}
+
+.cokkeimg{
+  width: auto;
+  height: 80px;
+
+}
+
+.cookies-popup{
+  z-index: 9;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
