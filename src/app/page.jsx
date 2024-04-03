@@ -158,7 +158,7 @@ export default function Home() {
       
       ApiClient.post('saved-cookies', data1).then(res => {
         if (res.success) {
-          window.open(url)
+          window.open(url,'_self')
         }
       })
     }
