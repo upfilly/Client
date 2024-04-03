@@ -33,9 +33,6 @@ const Html = () => {
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
     const [DestinationUrl,setDestinationUrl]=useState('')
-
-    console.log(inputValues,"00000000000-------")
-    console.log(selectedValues,"selectedValues=====")
   
    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -114,11 +111,11 @@ const Html = () => {
         // }
       let base_url=''
         if(DestinationUrl && selectedBrand){
-           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${DestinationUrl}` 
+           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}`}` 
         }else if(selectedBrand){
             base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}` 
         }else if(DestinationUrl){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&url=${DestinationUrl}` 
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}`}` 
         }
 
         // loader(true);
