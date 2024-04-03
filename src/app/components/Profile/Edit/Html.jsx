@@ -218,7 +218,7 @@ const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems,
                               height: 200,
                             }}
                           /> */}
-                          <ReactQuill
+                          <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
                                        

@@ -161,7 +161,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                                 required
                             /> */}
 
-<ReactQuill
+<DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
                                        

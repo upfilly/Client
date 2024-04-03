@@ -8,8 +8,6 @@ import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
 import dynamic from 'next/dynamic';
 
-const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
 const Html = ({ submitted, form, handleSubmit, setform, back }) => {
 
     const defaultAffiliateFunction = () => {
