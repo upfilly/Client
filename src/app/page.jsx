@@ -24,6 +24,16 @@ export default function Home() {
   const [payload, setPayload] = useState({
     isSet: false,
   });
+  const [queryParams, setQueryParams] = useState({});
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const params = {};
+    for (const [key, value] of urlParams.entries()) {
+      params[key] = value;
+    }
+    setQueryParams(params);
+  }, []);
 
   useEffect(() => {
     const dataInCookies = Cookies.get('Upfilly_affiliate')
@@ -158,7 +168,9 @@ export default function Home() {
       
       ApiClient.post('saved-cookies', data1).then(res => {
         if (res.success) {
-          window.open(url,'_self')
+          if (url) {
+            window.open(url, '_self')
+          }
         }
       })
     }
