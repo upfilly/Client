@@ -32,7 +32,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
             <ul className="footer_list">
               <li className="mb-3"><Link href="/company"><b>Company</b></Link></li>
               <li><Link href="/aboutus">About Us</Link></li>
-              <li><Link href="/partner">Partners</Link></li>
+              <li><Link href="/partners">Partners</Link></li>
               <li><Link href="/contactUs">Contact Us</Link></li>
             </ul>
           </div>

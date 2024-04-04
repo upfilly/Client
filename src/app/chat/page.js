@@ -505,7 +505,7 @@ export default function Chat() {
         if (res?.data?.success) {
           const data = res.data;
           setRoomId(res.data.data.room_id);
-          userMessage(data.data.room_id,data?.room_members[0]?.user_id);
+          userMessage(data.data.room_id,data?.room_members?.[0]?.user_id);
           joinRoom(data.data.room_id);
           localStorage.setItem("roomId", data.data.room_id)
           // loader(false);
