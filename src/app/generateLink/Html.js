@@ -9,13 +9,13 @@ import MultiSelectValue from '../components/common/MultiSelectValue'
 
 const Html = () => {
     const user = crendentialModel.getUser()
-    const [isChecked, setIsChecked] = useState({});
-    const [parameters, setParameters] = useState({
-        product: '',
-        affiliate_id: '',
-        XYZ: '',
-        New_id: ''
-    });
+    // const [isChecked, setIsChecked] = useState({});
+    // const [parameters, setParameters] = useState({
+    //     product: '',
+    //     affiliate_id: '',
+    //     XYZ: '',
+    //     New_id: ''
+    // });
     const [url, setUrl] = useState('');
     const [copied, setCopied] = useState(false);
     const [SelectDropdown, setSelectDropdown] = useState(true);
@@ -33,9 +33,6 @@ const Html = () => {
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
     const [DestinationUrl,setDestinationUrl]=useState('')
-
-    console.log(selectedValues,"selectedValuesselectedValues===")
-    console.log(inputValues,"inputValuesinputValues")
   
    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
