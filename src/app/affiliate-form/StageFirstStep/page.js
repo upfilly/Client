@@ -160,8 +160,8 @@ export default function StageFirstStep() {
                 <div className='d-flex align-items-center'>
                   <button className='genral-buttons'><span className="rank mr-2">01</span>General</button>
                   <button className='genral-button ml-3'><span className="ranks mr-2">02</span>Address</button>
-                  {/* <button className='genral-button ml-3'><span className="ranks mr-2">03</span>Billing</button> */}
-                  <button className='genral-button ml-3'><span className="ranks mr-2">03</span>User</button>
+                  <button className='genral-button ml-3'><span className="ranks mr-2">03</span> Tax Detail</button>
+                  <button className='genral-button ml-3'><span className="ranks mr-2">04</span>User</button>
                 </div>
               </div>
             </div>

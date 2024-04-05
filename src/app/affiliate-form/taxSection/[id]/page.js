@@ -17,7 +17,35 @@ const Publish = () => {
   const [imgLoder, setImgLoder] = useState()
   const currentDate = new Date().toISOString().split("T")[0];
 
-  console.log(form, "00000iiiiiiiii")
+  const handleSave = () => {
+    // setLoader(true)
+    const data = {
+  ...form
+    }
+    ApiClient.put('edit/profile', data).then(res => {
+
+      if (res.success == true) {
+        router.push(`/affiliate-form/StageLastStep/${id}`)
+      }
+      // setLoader(false)
+    })
+  }
+
+  const getDetail = () => {
+    // loader(true)
+    ApiClient.get(`user/detail?id=${id}`).then(res => {
+      if (res.success) {
+        setForm(res?.data)
+      }
+      // loader(false)
+    })
+  };
+
+  useEffect(() => {
+    if (id) {
+      getDetail()
+    }
+  }, [])
 
   const uploadImage = (e) => {
     setForm({ ...form, baseImg: e.target.value })
@@ -37,11 +65,11 @@ const Publish = () => {
   }
 
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
     
-    localStorage.setItem('tax_detail',form)
+  //   localStorage.setItem('tax_detail',form)
 
-  };
+  // };
 
   const back = () => {
     history.back();
@@ -520,7 +548,7 @@ const Publish = () => {
                 </div>
                 <div className='col-md-12 mt-4 mb-2'>
                   <button className='back-btns' onClick={() => back()}>Back</button>
-                  < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
+                  < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSave(e)}>Save & Continue</button>
                 </div>
               </div>
             </div>

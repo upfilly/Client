@@ -235,7 +235,7 @@ export default function StageLastStep() {
                 <div className='d-flex align-items-center'>
                   <button className='genral-buttons' onClick={()=> router.push(`/affiliate-form/StageFirstStep`)}><span className="rank mr-2">01</span>General</button>
                   <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/StageSecStep`)}><span className="rank mr-2">02</span>Address</button>
-                  {/* <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/StageThirdStep`)}><span className="rank mr-2">03</span>Billing</button> */}
+                  <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/taxSection`)}><span className="rank mr-2">03</span> Tax Detail</button>
                   <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/StageLastStep`)}><span className="rank mr-2">03</span>User</button>
                 </div>
               </div>
