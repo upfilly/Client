@@ -30,7 +30,7 @@ export default function Layout({ title, description, children , handleKeyPress, 
   const history: any = useRouter()
   const pathname = usePathname()
   const [showPopup, setShowPopup] = useState(false)
-  const isDashboard =pathname.includes('/generateLink') || pathname.includes('/Trackings') || pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') || pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') || 
+  const isDashboard =pathname.includes('/salesTracking') || pathname.includes('/generateLink') || pathname.includes('/Trackings') || pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') || pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') || 
                       pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') || pathname.includes('/group')|| pathname.includes('/commission') || pathname.includes('/payments') || pathname.includes('/chat')
   const isAuthenticate = pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') ||
                          pathname.includes('/profile') || pathname.includes('/payments') || pathname.includes('/proposals') || pathname.includes('/commission')

@@ -1,5 +1,5 @@
-import React from "react";
 import methodModel from "@/methods/methods";
+import React from "react";
 
 const Html = ({ inputElement, uploadImage, img, remove, loader, model, multiple, required ,err}) => {
     return <>
@@ -15,14 +15,14 @@ const Html = ({ inputElement, uploadImage, img, remove, loader, model, multiple,
                 {img && img.map((itm, i) => {
                     return <div className="imagethumbWrapper" key={i}>
                         <img src={methodModel.noImg(itm, model)} className="thumbnail" />
-                        <i className="fa fa-times" title="Remove" onClick={e => remove(i)}></i>
+                        <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
                     </div>
                 })}
             </div>
         </> : <>
             {img ? <div className="imagethumbWrapper">
-                <img src={methodModel.noImg(img, model)} className="thumbnail" />
-                <i className="fa fa-times" title="Remove" onClick={e => remove()}></i>
+                <img src={methodModel.noImg(img, model)} className="img-fluid" />
+                <i className="fa fa-times kliil" title="Remove" onClick={e => remove()}></i>
             </div> : <></>}
         </>}
 

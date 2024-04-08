@@ -1,5 +1,5 @@
-export let userType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:"",role:'',
-    instagram_username: "",
+export const userType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:'',
+instagram_username: "",
     instagram_profile_link: "",
     youtube_username: "",
     youtube_profile_link: "",
@@ -10,7 +10,7 @@ export let userType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', ema
     website:"",
     description:"",
     tags: [],
-    dialCode:'+1',
+    dialCode:'',
     pincode:"",
     social_media_platforms:[],
     category_name:"",
@@ -18,14 +18,7 @@ export let userType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', ema
     country:"",
     city:"",
     pincode:"",
-    affiliate_group:"",
-    address2:"",
-    // payment_method: '',
-    accountholder_name: "",
-    routing_number: "",
-    account_number: "",
-    ssn_number: '',
-    company_name: "",
+    affiliate_group:''
 }
 
 export let userDetailType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:[],role:'',

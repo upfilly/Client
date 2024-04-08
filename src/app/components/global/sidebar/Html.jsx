@@ -100,6 +100,17 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
 
+        {user && user?.role == "affiliate" && <ListItemLink to="/affiliateTeam" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id ? true : false}>
+          <i className="material-icons mr-2" title="product">groups_3</i>
+          <span className="side_head">Add Team</span>
+        </ListItemLink>}
+
+        {user && user?.role == "affiliate" && <ListItemLink to="/salesTracking" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id ? true : false}>
+          <i className="material-icons mr-2" title="untracked sales">
+            real_estate_agent</i>
+          <span className="side_head">Untracked Sales</span>
+        </ListItemLink>}
+
         {user && user?.role == "brand" && <ListItemLink to="/invites" data-bs-toggle="tooltip" data-bs-placement="top" title="Invites">
           <i className="fa fa-envelope-o mr-2" title="campaignManagement"></i>
           <span className="side_head">Invites</span>
