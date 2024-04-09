@@ -312,19 +312,29 @@ export default function addAffiliateAccount() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Add Account"} filters={undefined}>
-        <div className='main-affiliate mt-3 mb-5'>
+        <div className='main-affiliate mt-3 mb-5 pt-0'>
           <div className='container-fluid'>
             <div className='row'>
               <div className='col-lg-12'>
-
-                <div className='card'>
+              <ul class="nav accout_details nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link nb_link active" id="account_details" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account Detail</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link nb_link" id="text_details" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Text Detail</button>
+  </li>
+  
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="account_details" tabindex="0">
+  <div className='card'>
                   <div className='card-body account_body '>
 
              
                   <div className='row'>
                       <div className='col-12 col-md-12 '>
                         <div className='dtls_head'>
-                                <h3>Account Detail</h3>
+                                <h3>Account Detail  </h3>
                           </div>
                           <div className='row'>
                           <div className='col-12 col-md-4'>
@@ -634,6 +644,19 @@ export default function addAffiliateAccount() {
 
                   </div>
                 </div>
+  </div>
+  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="text_details" tabindex="0">
+
+  <div class="dtls_head"><h3>Text Detail  </h3></div>
+
+  </div>
+  
+</div>
+
+             
+
+
+
                 </div>
               </div>
             </div>
