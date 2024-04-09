@@ -3530,6 +3530,8 @@ button.cancel_btns{
 
 .selected_offrs {
   margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .selected_offrs span{
@@ -3538,6 +3540,7 @@ button.cancel_btns{
   padding: 5px 10px;
   border-radius: 50px;
   font-size: 12px;
+  margin-top: 10px;
 }
 
 .selected_offrs_market span{
@@ -3686,10 +3689,4 @@ p.checkbox-option-main {
   margin-top: 18px;
   background-color: #e0e0e02e;
 }
-.accout_details .nb_link.active, .accout_details .show>.nb_link {
-  color: #000000eb;
-  background-color: #e9e9e9 !important; 
-  font-weight: 500 !important;
-  border-radius: 6px !important;
-  padding: 6px 12px !important;
-}
+
