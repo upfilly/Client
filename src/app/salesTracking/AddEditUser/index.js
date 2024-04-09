@@ -11,10 +11,10 @@ import crendentialModel from "@/models/credential.model";
 const AddEditUser = () => {
     const { role, id } = useParams()
     const user = crendentialModel.getUser()
-    const [images, setImages] = useState({ image: ''});
-    const defaultvalue = campaignType
+    const [images, setImages] = useState('');
     const [form, setform] = useState({
         id:"",
+        brand_id:'',
         title:"",
         description:"",
         image:""
@@ -26,19 +26,31 @@ const AddEditUser = () => {
     const [emailLoader, setEmailLoader] = useState(false) 
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
-    
+
+    console.log(form,"---------111")
+    console.log(images,"imagesimages====")
+    console.log(id,"--------idddd")
     
     const getBrandData = (p = {}) => {
-
         let filter = { status: 'accepted' }
         let url = 'make-offers'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                console.log(res?.data?.data, "dgfygduyfg")
-                setBrandData(res?.data?.data)
+                const uniqueBrands = new Set();
+                const filteredData = res?.data?.data.reduce((acc, item) => {
+                    if (!uniqueBrands.has(item.brand_id)) {
+                        uniqueBrands.add(item.brand_id);
+                        acc.push({
+                            id: item.brand_id,
+                            brand_name: item.brand_name
+                        });
+                    }
+                    return acc;
+                }, []);
+                setBrandData(filteredData);
             }
-        })
-    }
+        });
+    }    
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
@@ -47,26 +59,17 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
        
-        if(!form?.affiliate_id || !form?.description || !form?.name || !form?.amount || !form?.event_type){
-            setSubmitted(true)
-            return;
-        }
-
         let method = 'post'
-        let url = 'campaign'
+        let url = 'addsales'
        
         let value = {
             ...form,
+            image:images
         }
         delete value.status
         if (value.id) {
             method = 'put'
-            url = 'campaign'
-            delete value.role
-            delete value.improvements
-            delete value.status
-            delete value.amount
-            delete value.event_type
+            url = 'updateSales'
         } else {
             delete value.id
         }
@@ -76,18 +79,17 @@ const AddEditUser = () => {
         ApiClient.allApi(url, value, method).then(res => {
             if (res.success) {
                 toast.success(res.message)
-                let url='/campaign'
-                if(role) url="/campaign/"+role
+                let url='/salesTracking'
+                if(role) url="/salesTracking/"+role
                 history.push(url)
             }
             loader(false)
         })
     }
 
-    const imageResult = (e, key) => {
-        images[key] = e.value
-        setImages(images)
-    }
+    const imageResult = (e) => {
+        setImages(e?.value)
+      }
 
     const addressResult = (e) => {
         setform({ ...form, address: e.value })
@@ -120,21 +122,28 @@ const AddEditUser = () => {
        
         if (id) {
             loader(true)
-            ApiClient.get("campaign", { id }).then(res => {
+            ApiClient.get("getTrackingById", { id }).then(res => {
                 if (res.success) {
                     let value=res.data
                     setDetail(value)
-                    let payload = { ...defaultvalue };
-                let oarr = Object.keys(defaultvalue);
+                    setform({
+                        id:value?.id || value?._id,
+                        brand_id:value?.brand_id,
+                        title:value?.title,
+                        description:value?.description,
+                        image:value?.image
+                    })
+                    setImages(value?.image)
+                //     let payload = { ...defaultvalue };
+                // let oarr = Object.keys(defaultvalue);
 
-                oarr.forEach((itm) => {
-                    if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
-                        payload[itm] = value[itm].id.toString();
-                    } else {
-                        payload[itm] = value[itm] || "";
-                    }
-                });
-                    setform({ ...payload })
+                // oarr.forEach((itm) => {
+                //     if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
+                //         payload[itm] = value[itm].id.toString();
+                //     } else {
+                //         payload[itm] = value[itm] || "";
+                //     }
+                // });
                 }
                 loader(false)
             })

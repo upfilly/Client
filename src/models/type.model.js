@@ -18,7 +18,8 @@ instagram_username: "",
     country:"",
     city:"",
     pincode:"",
-    affiliate_group:''
+    affiliate_group:'',
+    affiliate_type:''
 }
 
 export let userDetailType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:[],role:'',

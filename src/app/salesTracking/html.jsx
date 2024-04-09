@@ -4,7 +4,6 @@ import ReactPaginate from 'react-paginate';
 import './style.scss';
 import methodModel from '@/methods/methods';
 import datepipeModel from '@/models/datepipemodel';
-import rolesModel from "@/models/role.model";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
 
@@ -14,7 +13,7 @@ const Html = ({
     edit,
     reset,
     add,
-    ChangeRole,
+    user,
     ChangeStatus,
     sorting,
     pageChange,
@@ -22,42 +21,42 @@ const Html = ({
     filters,
     loaging,
     data,
-    role,
     isAllow,
     total,
     setFilter,
-    filter
+    filter,
+    statusChange,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
-     const handleKeyPress = (event) => {
+    const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-          filter();
+            filter();
         }
-      };
-    
+    };
+
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center">
-                     <SelectDropdown
-                            id="statusDropdown"
-                            displayValue="name"
-                            placeholder="All Status"
-                            intialValue={filters.status}
-                            result={e => { ChangeStatus(e.value) }}
-                            options={[
-                                { id: 'pending', name: 'Pending' },
-                                { id: 'accepted', name: 'Accepted' },
-                                { id: 'rejected', name: 'Rejected' },
-                            ]}
-                        />
+                    <SelectDropdown
+                        id="statusDropdown"
+                        displayValue="name"
+                        placeholder="All Status"
+                        intialValue={filters.status}
+                        result={e => { ChangeStatus(e.value) }}
+                        options={[
+                            { id: 'pending', name: 'Pending' },
+                            { id: 'accepted', name: 'Accepted' },
+                            { id: 'rejected', name: 'Rejected' },
+                        ]}
+                    />
 
                     <article className="d-flex filterFlex phView">
                         {isAllow('addAdmins') ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
-                                Raise a ticket 
+                                Raise a ticket
                             </a>
                         </> : <></>}
                         {/* <div className='searchInput'>
@@ -73,7 +72,7 @@ const Html = ({
                                 filter()
                             }} aria-hidden="true"></i>
                         </div> */}
-                       
+
 
 
 
@@ -102,12 +101,10 @@ const Html = ({
                     <table className="table table-striped table-width">
                         <thead className='table_head'>
                             <tr className='heading_row'>
-                                <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                <th scope="col" className='table_data'>Amount</th>
+                                <th scope="col" className='table_data' onClick={e => sorting('title')}>Title{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                <th scope="col" className='table_data' onClick={e => sorting('brand_id')}>{user?.role == "brand" ? "Affiliate" : "Brand"}{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                 <th scope="col" className='table_data'>Status</th>
                                 <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                 <th scope="col" className='table_data'>Action</th>
 
                             </tr>
@@ -115,12 +112,12 @@ const Html = ({
                         <tbody>
                             {!loaging && data && data.map((itm, i) => {
                                 return <tr className='data_row' key={i}>
-                                    <td className='table_dats' onClick={e => view(itm.id)}>
+                                    <td className='table_dats' onClick={e => view(itm.id || itm?._id)}>
 
                                         <div className='user_detail'>
                                             <div className='user_name'>
                                                 <h4 className='user'>
-                                                    {methodModel.capitalizeFirstLetter(itm.name)}
+                                                    {methodModel.capitalizeFirstLetter(itm.title)}
                                                 </h4>
                                             </div>
                                         </div></td>
@@ -129,44 +126,53 @@ const Html = ({
                                         <div className='user_detail'>
                                             <div className='user_name'>
                                                 <h4 className='user'>
-                                                    {methodModel.capitalizeFirstLetter(itm?.event_type)}
+                                                    {user?.role == "brand" ? methodModel.capitalizeFirstLetter(itm?.affiliate_fullName) : methodModel.capitalizeFirstLetter(itm?.brand_fullName)}
                                                 </h4>
                                             </div>
                                         </div></td>
-                                        <td className='table_dats'>{itm?.amount}</td>
                                     <td className='table_dats'>   <div className={`user_hours`}>
-                                        <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
+                                        <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
                                         >
                                             {itm.status}
-                                            {/* {itm.status == 'deactive' ? 'inactive' : 'active'} */}
                                         </span>
-                                        {/* <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
-                                        style={itm?.status=="accepted"?{color:'green'}:itm?.status=="pending"?{color:'orange'}:{color:'red'}}>
-                                            {itm.status}
-                                        </span> */}
                                     </div></td>
                                     <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                                    {/* <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td> */}
 
                                     {/* dropdown */}
                                     <td className='table_dats'>
                                         <div className="action_icons">
-                                            {isAllow('editAdmins') ? <>
-                                                <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
+                                            {user?.role == 'brand' && <>{itm?.status == 'pending' ? <div >
+                                                <button onClick={() => {
+                                                    statusChange("accepted", itm?.id)
+                                                }} className="btn btn-primary mr-2">
+                                                    <i className='fa fa-check'></i>
+                                                </button>
+                                                <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
+                                                    <i className='fa fa-times'></i>
+                                                </button>
+                                            </div> :
+                                                itm?.status == 'rejected' ?
+                                                    <div className="btn btn-primary">Rejected</div> :
+                                                    <div className="btn btn-primary">Accepted</div>
+                                            }</>}
+                                            {user?.role == 'affiliate' && <>{isAllow('editAdmins') ? <>
+                                                <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
                                                     <i className="material-icons edit" title="Edit">edit</i>
                                                 </a>
                                             </> : <></>}
 
-                                            {isAllow('deleteAdmins') ? <>
-                                                <a className='edit_icon edit-delete' onClick={itm?.status=="accepted" ? "" : () => deleteItem(itm.id)}>
-                                                    <i className={`material-icons ${itm?.status=="accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
-                                                </a>
-                                            </> : <></>}
+                                                {isAllow('deleteAdmins') ? <>
+                                                    <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
+                                                        <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                                                    </a>
+                                                </> : <></>}</>}
 
                                             <>
-                                                <a className='edit_icon action-btn' onClick={() =>{history.push(`/chat`)
-                                                                            localStorage.setItem("chatId",itm?.affiliate_id)}}>
-                                                   <i className='fa fa-comment-o text-white'></i>
+                                                <a className='edit_icon action-btn' onClick={() => {
+                                                    history.push(`/chat`)
+                                                    localStorage.setItem("chatId", user?.role == 'brand' ? itm?.affiliate_id : itm?.brand_id)
+                                                }}>
+                                                    <i className='fa fa-comment-o text-white'></i>
                                                 </a>
                                             </>
                                         </div>

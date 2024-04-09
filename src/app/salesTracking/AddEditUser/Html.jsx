@@ -14,129 +14,6 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 
-    const [loaderr, setLoader] = useState()
-    const [imgLoder, setImgLoder] = useState()
-    const [loadViderr, setVidLoader] = useState()
-    const [vidLoder, setvidLoder] = useState()
-    const [loadDocerr, setDocLoader] = useState()
-    const [docLoder, setDocLoder] = useState()
-
-    const uploadImage = async (e, key) => {
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
-
-        setLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/image?modelName=campaign'
-
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.fullpath
-                if (form?.images.length <= 9) {
-                    form?.images?.push({
-                        name: `images/campaign/${path}`,
-                        url: `images/campaign/${path}`
-                    })
-                }
-            }
-            i++
-        }
-        setLoader(false)
-        setImgLoder(false)
-    } 
-
-    const uploadVideos = async (e, key) => {
-        console.log('enter');
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
-
-        setVidLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/video/multiple?modelName=videos'
-
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.videoPath
-                let items = path?.map((itm) => {
-                    return itm
-                })
-                if (form?.videos.length <= 9) {
-                form?.videos?.push({
-                    name: `videos/${items}`,
-                    url: `videos/${items}`
-                })
-            }
-            }
-            i++
-        }
-        setVidLoader(false)
-        setvidLoder(false)
-        // setVdo(false)
-    }
-
-    const uploadDocument = async (e, key) => {
-        console.log('enter');
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
-
-        setDocLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/document'
-
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.imagePath
-                if (form?.documents?.length <= 9) {    
-                form?.documents?.push({
-                    name: `documents/${path}`,
-                    url: `documents/${path}`
-                })
-            }
-            }
-            i++
-        }
-        setDocLoader(false)
-        setDocLoder(false)
-        // setVdo(false)
-    }
-
-
-    const removeVideo = (index, key) => {
-        const filterVid = form?.videos?.length > 0 && form.videos.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, videos: filterVid })
-    }
-
-    const removeDocument = (index, key) => {
-        const filterVid = form?.documents?.length > 0 && form.documents.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, documents: filterVid })
-    }
-
-    const remove = (index, key) => {
-        const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, images: filterImg })
-    }
-
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
@@ -156,10 +33,10 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                     <input
                                         type="text"
                                         className="form-control"
-                                        value={form.name}
-                                        onChange={e => setform({ ...form, name: e.target.value })}
+                                        value={form.title}
+                                        onChange={e => setform({ ...form, title: e.target.value })}
                                     />
-                                    {submitted && !form?.name ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
+                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Select Brand<span className="star">*</span></label>
@@ -167,7 +44,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         <SelectDropdown
                                             id="statusDropdown"
                                             displayValue="brand_name"
-                                            placeholder="Select Affiliate"
+                                            placeholder="Select Brand"
                                             intialValue={form?.brand_id}
                                             // disabled={(form?.status == "rejected" || !id) ? false : true}
                                             result={e => {
@@ -212,7 +89,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
 
                                 <div className="col-md-6 mt-3">
                                     <label className='lablefontcls'>Image</label><br></br>
-                                    <ImageUpload model="users" result={e => imageResult(e, 'image')} value={form?.image} multiple={false} />
+                                    <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
                                 </div>
 
                             </div>

@@ -37,12 +37,12 @@ const EditProfile = () => {
     country:"",
     city:"",
     pincode:"",
-    // payment_method: '',
     accountholder_name: "",
     routing_number: "",
     account_number: "",
     ssn_number: '',
     company_name: "",
+    affiliate_type:'',
     // dob:''
   });
   const [picLoader,setPicLoader]=useState(false)
@@ -76,6 +76,8 @@ const EditProfile = () => {
     { key: 'dialCode', minLength:1 },
     { key: 'category_id', required:true },
   ]
+
+  console.log(form,"ffffffoooooo")
   
   useEffect(() => {
     if (!form?.dialCode) {
@@ -297,7 +299,7 @@ const EditProfile = () => {
         dob={dob}
         setDOB={setDOB}
         handleDateChange={handleDateChange}
-        // pageLoad={pageLoad}
+        user={user}
       />
     </>
   );

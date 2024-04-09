@@ -5,9 +5,6 @@ import ApiClient from '../../methods/api/apiClient';
 import './style.scss';
 import loader from '../../methods/loader';
 import Html from './html';
-import { userType } from '../../models/type.model';
-import axios from 'axios';
-import environment from '../../environment';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
@@ -38,8 +35,8 @@ const untrackedSales = () => {
         let url='getallSalesDetails'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                setData(res.data.data)
-                setTotal(res.data.total_count)
+                setData(res.data)
+                setTotal(res.total)
             }
             setLoader(false)
         })
@@ -50,6 +47,54 @@ const untrackedSales = () => {
         setFilter({ ...filters, search: '', page: 1 })
         getData({ search: '', page: 1 })
     }
+
+    const statusChange = (itm, id) => {
+        if (itm === 'accepted') {
+
+            loader(true);
+          ApiClient.put('campaign/change-status', { status: itm, id: id }).then((res) => {
+            if (res.success) {
+    
+              toast.success(res.message)
+              getData({ page: filters?.page + 1 });
+            }
+            loader(false);
+          });
+        } else {
+
+            Swal.fire({
+         
+            html: `
+             <h2 style="" class="modal-title-main pt-0">Deny Campaign</h2>
+                <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
+                  <textarea type="text" id="denialReason" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
+                `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Deny',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              const denialReason = document.getElementById('denialReason').value;
+    
+              if (denialReason.trim() === '') {
+                Swal.fire('Error', 'Please enter a reason for deny', 'error');
+                return;
+              }
+    
+              loader(true);
+              ApiClient.put('campaign/change-status', { status: itm, id: id, reason: denialReason }).then((res) => {
+                if (res.success) {
+                  toast.success(res.message)
+                  getData({ page: filters?.page + 1 });
+                }
+                loader(false);
+              });
+            }
+          });
+        }
+      };
 
     const deleteItem = (id) => {
 
@@ -64,7 +109,7 @@ const untrackedSales = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             // loader(true)
-            ApiClient.delete('campaign', {id: id }).then(res => {
+            ApiClient.delete('removeSales', {id: id }).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()
@@ -161,7 +206,8 @@ const untrackedSales = () => {
         total={total}
         sorting={sorting}
         setFilter={setFilter}
-        // statusChange={statusChange}
+        user={user}
+        statusChange={statusChange}
     />
     </>;
 };

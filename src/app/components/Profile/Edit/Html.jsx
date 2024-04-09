@@ -6,7 +6,6 @@ import PhoneInput from 'react-phone-input-2'
 import PlacesAutocomplete from "react-places-autocomplete";
 import 'react-phone-input-2/lib/style.css';
 import SelectDropdown from '../../common/SelectDropdown';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -15,7 +14,7 @@ import dynamic from 'next/dynamic';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems, handleFeatureCheckbox, handleSubmit, setChangeSubCategory,
+const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureCheckbox, handleSubmit, setChangeSubCategory,
   handleChange, handleSelect, address, changeSubCategory,formData,setFormData,dob, setDOB,handleDateChange,
   form, getError, uploadImage, submitted, category, pageLoad ,setForm }) => {
   const [inputFocused, setInputFocused] = useState(false)
@@ -223,7 +222,7 @@ const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems,
                                         value={form?.description ? form?.description : ''}
                                        
                                         onChange={(newValue, editor) => {
-                                            setform({ ...form, description: newValue })
+                                            setForm({ ...form, description: newValue })
                                         }}
                                         className='tuncketcls'
                                         modules={{
@@ -285,6 +284,26 @@ const Html = ({ setSelectedLocation, selectedLocation, picLoader, selectedItems,
                             </div>
                           </div>
                         </div>
+
+                        {user?.role == 'affiliate' && <div className='col-12 col-sm-12 col-md-6'>
+                          <div className='form-group'>
+                            <div className="select_drop ">
+                              <label>Type</label>
+                              <div className="select_row">
+                                <SelectDropdown
+                                  id="statusDropdown"
+                                  displayValue="name"
+                                  placeholder="Select Type"
+                                  intialValue={form?.affiliate_type}
+                                  result={e => setForm({ ...form, affiliate_type: e.value })}
+                                  options={[{name:'Business',id:'business'},{name:'Individual',id:'individual'}]}
+                                />
+                              </div>
+                              {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
+
+                            </div>
+                          </div>
+                        </div>}
 
 
 
