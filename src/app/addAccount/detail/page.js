@@ -680,7 +680,7 @@ export default function addAffiliateAccount() {
                   </div>
                   <div class={`tab-pane fade ${!taxDetailTabEnabled ? '' : 'show active'}`} id="pills-profile" role="tabpanel" aria-labelledby="text_details" tabindex="0">
 
-                    <div className='tx_detailsbx'>
+                    <div className='tx_detailsbx '>
                     <div class="dtls_head"><h3>Tax Detail  </h3></div>
 
 <div className="form_page b-none">
@@ -886,7 +886,7 @@ export default function addAffiliateAccount() {
 
       {/* new fields add end */}
 
-      <div className="mb-4">
+      <div className="mb-4  ">
         <label className="form-label certif_inst " >
           Tax Identity Information{" "}
 
@@ -1052,7 +1052,7 @@ export default function addAffiliateAccount() {
       </div>
 
       <div className="formwrapper p-0">
-      <div className="boxpublish certify_detials mb-3">
+      <div className="boxpublish certify_detials mb-4">
         <Label className='form-label certif_inst' >Under penalties of perjury, I certify that:</Label>
         <ol className='ul_listsbx'>
           <li className="no_list" >   The number shown on this form is my correct taxpayer

@@ -63,12 +63,15 @@ const Publish = () => {
               </div>
             </div>
           </div>
+          <div className="tx_detailsbx mt-4 mx-4">
+          <div class="dtls_head"><h3>Tax Detail  </h3></div>
           <div className="form_page b-none">
             <div className="container">
-
-              <div className="formwrapper">
-                <div className="mt-4">
-                  <label>
+         
+          <div className="row">
+          <div className='col-md-6'>
+          <div className="mb-4">  
+                  <label class="form-label certif_inst " >
                     Are you a U.S. citizen, U.S. permanent resident (green card
                     holder) <i class="fa fa-info-circle" aria-hidden="true"></i>
                   </label>
@@ -85,8 +88,10 @@ const Publish = () => {
                     <option value={false}>No</option>
                   </select>
                 </div>
-                <div className="mt-4">
-                  <label>
+             </div>
+          <div className='col-md-6'> 
+          <div className="mb-4">
+                  <label class="form-label certif_inst " >
                     What is your tax classification?{" "}
                   
                   </label>
@@ -136,14 +141,19 @@ const Publish = () => {
                     </div>
                   </div>
                 </div>
+          </div>
+               
+               <div className="col-md-12">
+                   {/* new fields add start */}
 
-                {/* new fields add start */}
-
-                {form?.tax_classification === "business" && (
-                  <div className="mt-4">
-                    <label>
+                   {form?.tax_classification === "business" && (
+                  <div className="mb-4">
+                    <label class="form-label certif_inst " >
                       Check appropriate box for federal tax classification of
-                      the person whose name is entered on line 1. Check only one
+                      the person whose name is entered on line 
+                    </label>
+                    <label class="form-label certif_inst " >
+                      1. Check only one
                       of the following seven boxes.
                     </label>
 
@@ -265,7 +275,7 @@ const Publish = () => {
 
                 {/* new fields add end */}
 
-                <div className="mt-4">
+                <div className="mb-4">
                   <label>
                     Tax Identity Information{" "}
                   
@@ -403,8 +413,11 @@ const Publish = () => {
                     )}
                   </div>
                 </div>
+               </div>
 
-                <div className="mt-4">
+             
+
+                <div className="mb-4">
                   <label>
                     I consent to sign my IRS Form W-9 electronically.{" "}
                   
@@ -522,6 +535,8 @@ const Publish = () => {
                   < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
                 </div>
               </div>
+          </div>
+         
             </div>
           </div>
         </div>
