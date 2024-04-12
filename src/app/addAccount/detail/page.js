@@ -285,6 +285,8 @@ export default function addAffiliateAccount() {
 
 
   const handleSave = () => {
+                // setTaxDetailTabEnabled(true)
+
     if (!formData?.mobileNo || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
       formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob || formData?.mobileNo?.length < 10) {
       setSubmitted(true)
@@ -333,7 +335,6 @@ export default function addAffiliateAccount() {
           if (res.success) {
             let uUser = { ...user, ...data1 }
             crendentialModel.setUser(uUser)
-            setTaxDetailTabEnabled(true)
             // history.push("/profile")
             toast.success('Account Added Sccessfully ...')
             // router.push(`/`)
@@ -506,8 +507,8 @@ export default function addAffiliateAccount() {
 
                               <div className='col-12 col-md-4'>
                                 <label className='label-set account_set '>Front Doc <span className='text-sm'>(only image)</span><span className="star">*</span></label>
-                                <div className="form-group drag_drop">
-                                  <div className='upload_file '>
+                                <div className="form-group drag_drop mb-0">
+                                  <div className='upload_file  set_upload_bx'>
                                     {!loaderr && !imgLoder && image.length == 0 ? <>
                                       <label className='label_btns_file pointer'>
                                         <input type="file" className="d-none pointer" accept="images/*" multiple={false}
@@ -524,7 +525,7 @@ export default function addAffiliateAccount() {
                                     </> : <></>}
                                     {submitted && !frontDoc ? <div className="invalid-feedback d-block">Front doc is Required</div> : <></>}
                                     {loaderr && imgLoder ? <div className="text-success text-center mt-2 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                    <div className="imagesRow  img-wrappper">
+                                    <div className="imagesRow  img-wrappper  ">
                                       {image && image?.map((itm, i) => {
                                         return <div className="imagethumbWrapper" key={i}>
                                           <img src={itm?.url?.length > 0 ? methodModel.noImg(itm?.url) : ''} alt={itm.name} className="thumbnail" />
@@ -540,7 +541,7 @@ export default function addAffiliateAccount() {
                               <div className='col-12 col-md-4'>
                                 <label className='label-set account_set '>Back Doc <span className='text-sm'>(only image)</span><span className="star">*</span></label>
                                 <div className="form-group drag_drop">
-                                  <div className='upload_file'>
+                                  <div className='upload_file set_upload_bx'>
                                     {!loadDocerr && !docLoder && doc.length == 0 && <>
                                       {/* <button className="btn btn-primary upload_image">Upload Document</button> */}
                                       <label className='label_btns_file pointer'>
@@ -679,469 +680,470 @@ export default function addAffiliateAccount() {
                   </div>
                   <div class={`tab-pane fade ${!taxDetailTabEnabled ? '' : 'show active'}`} id="pills-profile" role="tabpanel" aria-labelledby="text_details" tabindex="0">
 
+                    <div className='tx_detailsbx'>
                     <div class="dtls_head"><h3>Tax Detail  </h3></div>
 
-                    <div className="form_page b-none">
-                      <div className="container">
+<div className="form_page b-none">
+  <div className="container">
+<div className='row'>
+<div className='col-md-6'> 
+<div className="mb-4">
+        <label className='form-label certif_inst ' >
+          Are you a U.S. citizen, U.S. permanent resident (green card
+          holder) <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </label>
+     <div className='position-relative selectYes'>
+     <select
+          class="form-control  "
+          id="exampleFormControlSelect1"
+          value={form?.is_us_citizen}
+          onChange={(e) =>
+            setForm({ ...form, is_us_citizen: e.target.value })
+          }
+          required
+        >
+          <option value={true}>Yes</option>
+          <option value={false}>No</option>
+        </select>
+        <i class="fa fa-sort-desc down_arrow" aria-hidden="true"></i>
+     </div>
 
-                        <div className="formwrapper">
-                          <div className="mt-4">
-                            <label>
-                              Are you a U.S. citizen, U.S. permanent resident (green card
-                              holder) <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            </label>
-                            <select
-                              class="form-control select_width mt-2 width20"
-                              id="exampleFormControlSelect1"
-                              value={form?.is_us_citizen}
-                              onChange={(e) =>
-                                setForm({ ...form, is_us_citizen: e.target.value })
-                              }
-                              required
-                            >
-                              <option value={true}>Yes</option>
-                              <option value={false}>No</option>
-                            </select>
-                          </div>
-                          <div className="mt-4">
-                            <label>
-                              What is your tax classification?{" "}
+      </div>
+</div>
+<div className='col-md-6'> 
+<div className="mb-4">
+        <label className='form-label certif_inst' >
+          What is your tax classification?{" "}
 
-                            </label>
-                            <div className="row pl-4">
-                              <div className="col-md-3">
-                                <input
-                                  class="form-check-input"
-                                  type="radio"
-                                  checked={form?.tax_classification === "individual"}
-                                  name="flexRadioDefault"
-                                  id="flexRadioDefault1"
-                                  onChange={(e) =>
-                                    setForm({
-                                      ...form,
-                                      tax_classification: "individual",
-                                      federal_text_classification: "",
-                                      social_security_number: "",
-                                      trade_name: "",
-                                    })
-                                  }
-                                />
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                  {" "}
-                                  Individual
-                                </label>
-                              </div>
-                              <div className="col-md-3">
-                                <input
-                                  class="form-check-input"
-                                  type="radio"
-                                  name="flexRadioDefault"
-                                  id="flexRadioDefault1"
-                                  checked={form?.tax_classification === "business"}
-                                  onChange={(e) =>
-                                    setForm({
-                                      ...form,
-                                      tax_classification: "business",
-                                      tax_name: "",
-                                      ein: "",
-                                    })
-                                  }
-                                />
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                  {" "}
-                                  Business
-                                </label>
-                              </div>
-                            </div>
-                          </div>
+        </label>
+        <div className="row">
+          <div className="col-6">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              checked={form?.tax_classification === "individual"}
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  tax_classification: "individual",
+                  federal_text_classification: "",
+                  social_security_number: "",
+                  trade_name: "",
+                })
+              }
+            />
+            <label class="form-check-label" for="flexRadioDefault1">
+              {" "}
+              Individual
+            </label>
+            </div>
+            </div>
+            <div className="col-6">
+            <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              checked={form?.tax_classification === "business"}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  tax_classification: "business",
+                  tax_name: "",
+                  ein: "",
+                })
+              }
+            />
+            <label class="form-check-label" for="flexRadioDefault2">
+              {" "}
+              Business
+            </label>
+          </div>
 
-                          {/* new fields add start */}
+          </div>
+        </div>
+      </div>
+</div>
 
-                          {form?.tax_classification === "business" && (
-                            <div className="mt-4">
-                              <label>
-                                Check appropriate box for federal tax classification of
-                                the person whose name is entered on line 1. Check only one
-                                of the following seven boxes.
-                              </label>
+<div className='col-md-12'> 
 
-                              <div className="checkbox_publish mt-2">
-                                <div className="row">
-                                  <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                                    <div className="form-group">
-                                      <input
-                                        type="checkbox"
-                                        className="form-checkbox mr-2"
-                                        checked={
-                                          form?.federal_text_classification ===
-                                          "individual"
-                                        }
-                                        onClick={(e) =>
-                                          setForm({
-                                            ...form,
-                                            federal_text_classification: "individual",
-                                          })
-                                        }
-                                      />
-                                      <span>
-                                        individual/sole propriertor or single-member LLC
-                                      </span>
-                                    </div>
-                                  </div>
 
-                                  <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                                    <div className="form-group">
-                                      <input
-                                        type="checkbox"
-                                        className="form-checkbox mr-2"
-                                        checked={
-                                          form?.federal_text_classification ===
-                                          "c_corporation"
-                                        }
-                                        onClick={(e) =>
-                                          setForm({
-                                            ...form,
-                                            federal_text_classification: "c_corporation",
-                                          })
-                                        }
-                                      />
-                                      <span>C Corporation</span>
-                                    </div>
-                                  </div>
+      {/* new fields add start */}
 
-                                  <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                                    <div className="form-group">
-                                      <input
-                                        type="checkbox"
-                                        className="form-checkbox mr-2"
-                                        checked={
-                                          form?.federal_text_classification ===
-                                          "s_corporation"
-                                        }
-                                        onClick={(e) =>
-                                          setForm({
-                                            ...form,
-                                            federal_text_classification: "s_corporation",
-                                          })
-                                        }
-                                      />
-                                      <span>S Corporation</span>
-                                    </div>
-                                  </div>
+      {form?.tax_classification === "business" && (
+        <div className="mb-4">
+          <label className='form-label certif_inst ' >
+            Check appropriate box for federal tax classification of
+            the person whose name is entered on line
+          </label>
 
-                                  <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                                    <div className="form-group">
-                                      <input
-                                        type="checkbox"
-                                        className="form-checkbox mr-2"
-                                        checked={
-                                          form?.federal_text_classification ===
-                                          "patnership"
-                                        }
-                                        onClick={(e) =>
-                                          setForm({
-                                            ...form,
-                                            federal_text_classification: "patnership",
-                                          })
-                                        }
-                                      />
-                                      <span>Patnership</span>
-                                    </div>
-                                  </div>
+          <div className="checkbox_publish mt-2">
+<label className='certif_inst'>  1. Check only one of the following seven boxes. </label>
 
-                                  <div className="col-sm-12 ">
-                                    <div className="form-group">
-                                      <input
-                                        type="checkbox"
-                                        className="form-checkbox mr-2"
-                                        checked={
-                                          form?.federal_text_classification ===
-                                          "limited_liability"
-                                        }
-                                        onClick={(e) =>
-                                          setForm({
-                                            ...form,
-                                            federal_text_classification:
-                                              "limited_liability",
-                                          })
-                                        }
-                                      />
-                                      <span>
-                                        Limited liability company. Enter the tax
-                                        classification (C=C Corporation, S=S Corporation,
-                                        P Patnership,){" "}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                                {sumitted && !form?.federal_text_classification && (
-                                  <p className="text-danger">This field is required</p>
-                                )}
-                              </div>
-                            </div>
-                          )}
+          <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input mr-2"
+                    checked={
+                      form?.federal_text_classification ===
+                      "individual"
+                    }
+                    onClick={(e) =>
+                      setForm({
+                        ...form,
+                        federal_text_classification: "individual",
+                      })
+                    }
+                  />
+                  <label className="form-check-label" >
+                    individual/sole propriertor or single-member LLC
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input mr-2"
+                    checked={
+                      form?.federal_text_classification ===
+                      "c_corporation"
+                    }
+                    onClick={(e) =>
+                      setForm({
+                        ...form,
+                        federal_text_classification: "c_corporation",
+                      })
+                    }
+                  />
+                  <label className="form-check-label"  >C Corporation</label  >
+                </div>
+                <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input mr-2"
+                    checked={
+                      form?.federal_text_classification ===
+                      "s_corporation"
+                    }
+                    onClick={(e) =>
+                      setForm({
+                        ...form,
+                        federal_text_classification: "s_corporation",
+                      })
+                    }
+                  />
+                  <span>S Corporation</span>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input mr-2"
+                    checked={
+                      form?.federal_text_classification ===
+                      "patnership"
+                    }
+                    onClick={(e) =>
+                      setForm({
+                        ...form,
+                        federal_text_classification: "patnership",
+                      })
+                    }
+                  />
+                  
+                  <label className="form-check-label"  >Patnership</label  >
+                </div>
+                <div className="form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input  mr-2"
+                    checked={
+                      form?.federal_text_classification ===
+                      "limited_liability"
+                    }
+                    onClick={(e) =>
+                      setForm({
+                        ...form,
+                        federal_text_classification:
+                          "limited_liability",
+                      })
+                    }
+                  />
+                 
+                  <label className="form-check-label"  >Limited liability company. Enter the tax
+                    classification (C=C Corporation, S=S Corporation,
+                    P Patnership,){" "}</label  >
+                </div>
+         
+            {sumitted && !form?.federal_text_classification && (
+              <p className="text-danger">This field is required</p>
+            )}
+          </div>
+        </div>
+      )}
 
-                          {/* new fields add end */}
+      {/* new fields add end */}
 
-                          <div className="mt-4">
-                            <label>
-                              Tax Identity Information{" "}
+      <div className="mb-4">
+        <label className="form-label certif_inst " >
+          Tax Identity Information{" "}
 
-                            </label>
-                            {/* <p className='label_p'>This is themos important place to include keywords</p> */}
+        </label>
+        {/* <p className='label_p'>This is themos important place to include keywords</p> */}
 
-                            <div className="row">
-                              {form?.tax_classification === "individual" && (
-                                <div className="col-md-6 mt-3">
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    id="exampleFormControlInputss"
-                                    placeholder="Name"
-                                    value={form?.tax_name}
-                                    onChange={(e) =>
-                                      setForm({ ...form, tax_name: e.target.value })
-                                    }
-                                    required
-                                  />
-                                  {sumitted && !form?.tax_name && (
-                                    <p className="text-danger">This field is required</p>
-                                  )}
-                                </div>
-                              )}
+        <div className="row">
+        
+          {form?.tax_classification === "individual" && (
+            <div className="col-md-6 ">
+              <input
+                type="text"
+                className="form-control"
+                id="exampleFormControlInputss"
+                placeholder="Name"
+                value={form?.tax_name}
+                onChange={(e) =>
+                  setForm({ ...form, tax_name: e.target.value })
+                }
+                required
+              />
+              {sumitted && !form?.tax_name && (
+                <p className="text-danger">This field is required</p>
+              )}
+            </div>
+          )}
 
-                              {form?.tax_classification === "business" && (
-                                <>
-                                  <div className="col-md-6 mt-3">
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      id="exampleFormControlInput1"
-                                      placeholder="Doing business as “DBA” or trade name (optional)"
-                                      value={form?.trade_name}
-                                      onChange={(e) =>
-                                        setForm({ ...form, trade_name: e.target.value })
-                                      }
-                                    />
-                                    {sumitted && !form?.trade_name && (
-                                      <p className="text-danger">
-                                        This field is required
-                                      </p>
-                                    )}
-                                  </div>
+          {form?.tax_classification === "business" && (
+            <>
+              <div className="col-md-6 ">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="Doing business as “DBA” or trade name (optional)"
+                  value={form?.trade_name}
+                  onChange={(e) =>
+                    setForm({ ...form, trade_name: e.target.value })
+                  }
+                />
+                {sumitted && !form?.trade_name && (
+                  <p className="text-danger">
+                    This field is required
+                  </p>
+                )}
+              </div>
 
-                                  <div className="col-md-6 mt-3">
-                                    <input
-                                      type="text"
-                                      className="form-control phone_IN"
-                                      id="exampleFormControlInput1"
-                                      maxLength={10}
-                                      onKeyUp={function (e) {
-                                        var value = $(".phone_IN").val();
-                                        if (e.key.match(/[0-9]/) == null) {
-                                          value = value.replace(e.key, "");
-                                          setForm({
-                                            ...form,
-                                            ein: e.target.value,
-                                          });
-                                          return;
-                                        }
+              <div className="col-md-6 ">
+                <input
+                  type="text"
+                  className="form-control phone_IN"
+                  id="exampleFormControlInput1"
+                  maxLength={10}
+                  onKeyUp={function (e) {
+                    var value = $(".phone_IN").val();
+                    if (e.key.match(/[0-9]/) == null) {
+                      value = value.replace(e.key, "");
+                      setForm({
+                        ...form,
+                        ein: e.target.value,
+                      });
+                      return;
+                    }
 
-                                        if (value.length == 2) {
-                                          setForm({
-                                            ...form,
-                                            ein: e.target.value + "-",
-                                          });
-                                        }
-                                      }}
-                                      placeholder="EIN"
-                                      value={form?.ein}
-                                      onChange={(e) =>
-                                        setForm({ ...form, ein: e.target.value })
-                                      }
-                                      required
-                                    />
-                                    {sumitted && !form?.ein && (
-                                      <p className="text-danger">
-                                        This field is required
-                                      </p>
-                                    )}
-                                  </div>
-                                </>
-                              )}
+                    if (value.length == 2) {
+                      setForm({
+                        ...form,
+                        ein: e.target.value + "-",
+                      });
+                    }
+                  }}
+                  placeholder="EIN"
+                  value={form?.ein}
+                  onChange={(e) =>
+                    setForm({ ...form, ein: e.target.value })
+                  }
+                  required
+                />
+                {sumitted && !form?.ein && (
+                  <p className="text-danger">
+                    This field is required
+                  </p>
+                )}
+              </div>
+            </>
+          )}
 
-                              {form?.tax_classification === "individual" && (
-                                <div className="col-md-6 mt-3">
-                                  <input
-                                    type="text"
-                                    className="form-control phone_us"
-                                    id="exampleFormControlInput1"
-                                    placeholder="Social Security Number"
-                                    pattern="[A-Z]{2}-[A-Z0-9]{3}-[A-Z0-9]{3}"
-                                    maxlength="11"
-                                    onKeyUp={function (e) {
-                                      var value = $(".phone_us").val();
-                                      if (e.key.match(/[0-9]/) == null) {
-                                        value = value.replace(e.key, "");
-                                        setForm({
-                                          ...form,
-                                          social_security_number: e.target.value,
-                                        });
-                                        return;
-                                      }
+          {form?.tax_classification === "individual" && (
+            <div className="col-md-6 ">
+              <input
+                type="text"
+                className="form-control phone_us"
+                id="exampleFormControlInput1"
+                placeholder="Social Security Number"
+                pattern="[A-Z]{2}-[A-Z0-9]{3}-[A-Z0-9]{3}"
+                maxlength="11"
+                onKeyUp={function (e) {
+                  var value = $(".phone_us").val();
+                  if (e.key.match(/[0-9]/) == null) {
+                    value = value.replace(e.key, "");
+                    setForm({
+                      ...form,
+                      social_security_number: e.target.value,
+                    });
+                    return;
+                  }
 
-                                      if (value.length == 3) {
-                                        setForm({
-                                          ...form,
-                                          social_security_number: e.target.value + "-",
-                                        });
-                                      }
-                                      if (value.length == 6) {
-                                        setForm({
-                                          ...form,
-                                          social_security_number: e.target.value + "-",
-                                        });
-                                      }
-                                    }}
-                                    value={form?.social_security_number}
-                                    onChange={(e) => {
-                                      setForm({
-                                        ...form,
-                                        social_security_number: e.target.value,
-                                      });
-                                      console.log(
-                                        form?.social_security_number.replaceAll("-", "")
-                                      );
-                                    }}
-                                  />
-                                  {sumitted && !form?.social_security_number && (
-                                    <p className="text-danger font_fix">This field is required</p>
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          </div>
+                  if (value.length == 3) {
+                    setForm({
+                      ...form,
+                      social_security_number: e.target.value + "-",
+                    });
+                  }
+                  if (value.length == 6) {
+                    setForm({
+                      ...form,
+                      social_security_number: e.target.value + "-",
+                    });
+                  }
+                }}
+                value={form?.social_security_number}
+                onChange={(e) => {
+                  setForm({
+                    ...form,
+                    social_security_number: e.target.value,
+                  });
+                  console.log(
+                    form?.social_security_number.replaceAll("-", "")
+                  );
+                }}
+              />
+              {sumitted && !form?.social_security_number && (
+                <p className="text-danger font_fix">This field is required</p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
 
-                          <div className="mt-4">
-                            <label>
-                              I consent to sign my IRS Form W-9 electronically.{" "}
+</div>
 
-                            </label>
-                            <div className="d-flex ">
-                              <input
-                                className="mr5"
-                                type="checkbox"
-                                id="consent"
-                                checked={form?.consent_agreed}
-                                onChange={(e) =>
-                                  setForm({ ...form, consent_agreed: e.target.checked })
-                                }
-                              />
-                              <p className="label_p ml-3">
-                                If you provide an electronic signature, you will be able
-                                to submit your tax information immediately.
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+<div className='col-md-12'> 
+<div className="mb-4">
+        <label className='certif_inst'>
+          I consent to sign my IRS Form W-9 electronically.{" "}
 
-                        <div className="formwrapper p-0">
-                          <div className="boxpublish mt-3">
-                            <Label>Under penalties of perjury, I certify that:</Label>
-                            <div className="no_list">
-                              <span className="number_box">01</span>
-                              <p>
-                                The number shown on this form is my correct taxpayer
-                                identification number
-                                <br />
-                                (or I am waiting for a number to be issued to me), and
-                              </p>
-                            </div>
-                            <div className="no_list">
-                              <span className="number_box">02</span>
-                              <p>
-                                {" "}
-                                by the Internal Revenue Service (IRS) that I am subject to
-                                ackup withholding as a result of a failure to report all
-                                interest or{" "}
-                              </p>
-                            </div>
-                            <div className="no_list">
-                              <span className="number_box">03</span>
-                              <p>
-                                I am a U.S. citizen or other U.S. person (defined in the
-                                instructions), and{" "}
-                              </p>
-                            </div>
-                            <div className="no_list">
-                              <span className="number_box">04</span>
-                              <p>
-                                The FATCA code(s) entered on this form (if any) indicating
-                                that I am exempt from FATCA reporting is correct.{" "}
-                              </p>
-                            </div>
-                          </div>
+        </label>
+        <div className="form-check">
+          <input
+            className="mr5 form-check-input"
+            type="checkbox"
+            id="consent"
+            checked={form?.consent_agreed}
+            onChange={(e) =>
+              setForm({ ...form, consent_agreed: e.target.checked })
+            }
+          />
+          <label className="label_p form-check-label">
+            If you provide an electronic signature, you will be able
+            to submit your tax information immediately.
+          </label>
+        </div>
+      </div>
 
-                          <div className="text_git mx-4 mt-4">
-                            <label>
-                              Certification Instructions{" "}
+      <div className="formwrapper p-0">
+      <div className="boxpublish certify_detials mb-3">
+        <Label className='form-label certif_inst' >Under penalties of perjury, I certify that:</Label>
+        <ol className='ul_listsbx'>
+          <li className="no_list" >   The number shown on this form is my correct taxpayer
+            identification number  (or I am waiting for a number to be issued to me), and </li>
+          <li className="no_list" > {" "}
+            by the Internal Revenue Service (IRS) that I am subject to
+            ackup withholding as a result of a failure to report all
+            interest or{" "} </li>
+          <li className="no_list" >   I am a U.S. citizen or other U.S. person (defined in the
+            instructions), and{" "} </li>
+          <li className="no_list" > The FATCA code(s) entered on this form (if any) indicating
+            that I am exempt from FATCA reporting is correct.{" "} </li>
+         
+        </ol>
+      
+       
+        
+       
+      </div>
 
-                            </label>
-                            <p className="label_p">
-                              You must cross out item 2 above if you have been notified by
-                              the IRS that you are currently subject to backup
-                              withholding. You will need to print out your hard copy form
-                              at the end of the interview and cross out item 2 before
-                              signing and mailing to the address provided. The Internal
-                              Revenue Service does not require your consent to any
-                              provision of this document other than the certifications
-                              required to avoid backup withholding.
-                            </p>
-                          </div>
+      <div className="text_git ">
+        <h3 className='certif_inst'>
+          Certification Instructions{" "}
 
-                          <div className="d-flex justify-content-between mt-3 align-items-center">
-                            <div className="">
-                              <div className=''>
-                                {/* <label>Signature</label> */}
-                                <div className="form-group drag_drop">
-                                  <div className='upload_file'>
-                                    {!form?.signature && !imgLoder && <> <button className="btn btn-primary upload_image">Upload Signature</button>
-                                      <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
-                                        // disabled={loader}
-                                        onChange={(e) => {
-                                          setImgLoder(true)
-                                          uploadSignatureImage(e, 'images');
-                                        }} /></>}
-                                    {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                    {form?.signature && <div className="imagesRow position-relative mt-4">
-                                      <img className="signurimg" src={methodModel.noImg(form?.signature)} />
-                                      <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, signature: "" })}></i>
-                                    </div>}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="">
-                              <input
-                                type="date"
-                                className="form-control"
-                                min={currentDate}
-                                value={form?.signature_date || ""}
-                                onChange={(e) =>
-                                  setForm({ ...form, signature_date: e.target.value })
-                                }
-                              />
-                              {sumitted && !form?.signature_date && (
-                                <p className="text-danger font_fix">This field is required</p>
-                              )}
-                            </div>
-                          </div>
-                          <div className='col-md-12 mt-4 mb-2'>
-                            <button className='back-btns' onClick={() => back()}>Back</button>
-                            < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
-                          </div>
-                        </div>
-                      </div>
+        </h3>
+        <p className="label_pbx label_font">
+          You must cross out item 2 above if you have been notified by
+          the IRS that you are currently subject to backup
+          withholding. You will need to print out your hard copy form
+          at the end of the interview and cross out item 2 before
+          signing and mailing to the address provided. The Internal
+          Revenue Service does not require your consent to any
+          provision of this document other than the certifications
+          required to avoid backup withholding.
+        </p>
+      </div>
+
+      <div className="d-flex justify-content-between mt-3 align-items-center">
+        <div className="">
+          <div className=''>
+            {/* <label>Signature</label> */}
+            <div className="form-group drag_drop mb-0">
+              <div className='upload_file set_upload_bx position-relative'>
+                {!form?.signature && !imgLoder && <> <button className="btn btn-primary upload_image">Upload Signature</button>
+                  <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
+                    // disabled={loader}
+                    onChange={(e) => {
+                      setImgLoder(true)
+                      uploadSignatureImage(e, 'images');
+                    }} /></>}
+                {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
+                {form?.signature && <div className="imagesRow position-relative mt-4">
+                  <img className="signurimg" src={methodModel.noImg(form?.signature)} />
+                  <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, signature: "" })}></i>
+                </div>}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <input
+            type="date"
+            className="form-control"
+            min={currentDate}
+            value={form?.signature_date || ""}
+            onChange={(e) =>
+              setForm({ ...form, signature_date: e.target.value })
+            }
+          />
+          {sumitted && !form?.signature_date && (
+            <p className="text-danger font_fix">This field is required</p>
+          )}
+        </div>
+      </div>
+      <div className='col-md-12 '>
+        <div className='mb-4 mt-5 text-right '>
+        <button className='back-btns' onClick={() => back()}>Back</button>
+        < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+</div>
+  
+
+  
+  </div>
+</div>
                     </div>
 
                   </div>
