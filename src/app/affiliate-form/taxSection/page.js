@@ -439,130 +439,133 @@ const Publish = () => {
 
             
             </div>
-            <div className='col-md-12'> </div>
+            <div className='col-md-12'>
+              
             <div className="formwrapper">
               
                
 
                
-                <div className="mb-4">
-                  <label>
-                    I consent to sign my IRS Form W-9 electronically.{" "}
-                  
-                  </label>
-                  <div className="d-flex ">
-                    <input
-                      className="mr5"
-                      type="checkbox"
-                      id="consent"
-                      checked={form?.consent_agreed}
-                      onChange={(e) =>
-                        setForm({ ...form, consent_agreed: e.target.checked })
-                      }
-                    />
-                    <p className="label_p ml-3">
-                      If you provide an electronic signature, you will be able
-                      to submit your tax information immediately.
-                    </p>
-                  </div>
+              <div className="mb-4">
+              <label className='certif_inst'>
+                  I consent to sign my IRS Form W-9 electronically.{" "}
+                
+                </label>
+                <div className="form-check">
+                  <input
+                    className="mr5 form-check-input"
+                    type="checkbox"
+                    id="consent"
+                    checked={form?.consent_agreed}
+                    onChange={(e) =>
+                      setForm({ ...form, consent_agreed: e.target.checked })
+                    }
+                  /> 
+                  <p className="label_p ml-3">
+                    If you provide an electronic signature, you will be able
+                    to submit your tax information immediately.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="formwrapper">
+              <div className="boxpublish mt-3">
+                <Label>Under penalties of perjury, I certify that:</Label>
+                <div className="no_list">
+                  <span className="number_box">01</span>
+                  <p>
+                    The number shown on this form is my correct taxpayer
+                    identification number
+                    <br />
+                    (or I am waiting for a number to be issued to me), and
+                  </p>
+                </div>
+                <div className="no_list">
+                  <span className="number_box">02</span>
+                  <p>
+                    {" "}
+                    by the Internal Revenue Service (IRS) that I am subject to
+                    ackup withholding as a result of a failure to report all
+                    interest or{" "}
+                  </p>
+                </div>
+                <div className="no_list">
+                  <span className="number_box">03</span>
+                  <p>
+                    I am a U.S. citizen or other U.S. person (defined in the
+                    instructions), and{" "}
+                  </p>
+                </div>
+                <div className="no_list">
+                  <span className="number_box">04</span>
+                  <p>
+                    The FATCA code(s) entered on this form (if any) indicating
+                    that I am exempt from FATCA reporting is correct.{" "}
+                  </p>
                 </div>
               </div>
 
-              <div className="formwrapper">
-                <div className="boxpublish mt-3">
-                  <Label>Under penalties of perjury, I certify that:</Label>
-                  <div className="no_list">
-                    <span className="number_box">01</span>
-                    <p>
-                      The number shown on this form is my correct taxpayer
-                      identification number
-                      <br />
-                      (or I am waiting for a number to be issued to me), and
-                    </p>
-                  </div>
-                  <div className="no_list">
-                    <span className="number_box">02</span>
-                    <p>
-                      {" "}
-                      by the Internal Revenue Service (IRS) that I am subject to
-                      ackup withholding as a result of a failure to report all
-                      interest or{" "}
-                    </p>
-                  </div>
-                  <div className="no_list">
-                    <span className="number_box">03</span>
-                    <p>
-                      I am a U.S. citizen or other U.S. person (defined in the
-                      instructions), and{" "}
-                    </p>
-                  </div>
-                  <div className="no_list">
-                    <span className="number_box">04</span>
-                    <p>
-                      The FATCA code(s) entered on this form (if any) indicating
-                      that I am exempt from FATCA reporting is correct.{" "}
-                    </p>
-                  </div>
-                </div>
+              <div className="text_git mx-4 mb-4">
+                <label>
+                  Certification Instructions{" "}
+                
+                </label>
+                <p className="label_p">
+                  You must cross out item 2 above if you have been notified by
+                  the IRS that you are currently subject to backup
+                  withholding. You will need to print out your hard copy form
+                  at the end of the interview and cross out item 2 before
+                  signing and mailing to the address provided. The Internal
+                  Revenue Service does not require your consent to any
+                  provision of this document other than the certifications
+                  required to avoid backup withholding.
+                </p>
+              </div>
 
-                <div className="text_git mx-4 mb-4">
-                  <label>
-                    Certification Instructions{" "}
-                  
-                  </label>
-                  <p className="label_p">
-                    You must cross out item 2 above if you have been notified by
-                    the IRS that you are currently subject to backup
-                    withholding. You will need to print out your hard copy form
-                    at the end of the interview and cross out item 2 before
-                    signing and mailing to the address provided. The Internal
-                    Revenue Service does not require your consent to any
-                    provision of this document other than the certifications
-                    required to avoid backup withholding.
-                  </p>
-                </div>
-
-                <div className="d-flex justify-content-between mt-3 align-items-center">
-                  <div className="">
-                    <div className=''>
-                      {/* <label>Signature</label> */}
-                      <div className="form-group drag_drop">
-                        <div className='upload_file position-relative'>
-                        {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
-                          <input type="file" className="form-control-file over_input" accept="images/*" multiple={false}
-                            onChange={(e) => {
-                              setImgLoder(true)
-                              uploadImage(e, 'images');
-                            }} /></>}
-                          {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                         {form?.image && <div className="imagesRow position-relative mb-4">
-                                <img className="signurimg" src={methodModel.noImg(form?.image)} />
-                                <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, image: "" })}></i>
-                          </div>}
-                        </div>
+              <div className="d-flex justify-content-between mt-3 align-items-center">
+                <div className="">
+                  <div className=''>
+                    {/* <label>Signature</label> */}
+                    <div className="form-group drag_drop">
+                      <div className='upload_file position-relative'>
+                      {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
+                        <input type="file" className="form-control-file over_input" accept="images/*" multiple={false}
+                          onChange={(e) => {
+                            setImgLoder(true)
+                            uploadImage(e, 'images');
+                          }} /></>}
+                        {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
+                       {form?.image && <div className="imagesRow position-relative mb-4">
+                              <img className="signurimg" src={methodModel.noImg(form?.image)} />
+                              <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, image: "" })}></i>
+                        </div>}
                       </div>
                     </div>
                   </div>
-                  <div className="">
-                    <input
-                      type="date"
-                      className="form-control"
-                      min={currentDate}
-                      value={form?.day || ""}
-                      onChange={(e) =>
-                        setForm({ ...form, day: e.target.value })
-                      }
-                    />
-                    {sumitted && !form?.day && (
-                      <p className="text-danger font_fix">This field is required</p>
-                    )}
-                  </div>
                 </div>
-                <div className='col-md-12 mb-4 mb-2'>
-                  <button className='back-btns' onClick={() => back()}>Back</button>
-                  < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
+                <div className="">
+                  <input
+                    type="date"
+                    className="form-control"
+                    min={currentDate}
+                    value={form?.day || ""}
+                    onChange={(e) =>
+                      setForm({ ...form, day: e.target.value })
+                    }
+                  />
+                  {sumitted && !form?.day && (
+                    <p className="text-danger font_fix">This field is required</p>
+                  )}
                 </div>
               </div>
+              <div className='col-md-12 mb-4 mb-2'>
+                <button className='back-btns' onClick={() => back()}>Back</button>
+                < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
+              </div>
+            </div>
+               </div>
+            
               </div>
              
             </div>
