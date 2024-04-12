@@ -226,14 +226,14 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.tax_detail && <div className="col-md-6">
+                    {/* {data?.tax_detail && <div className="col-md-6">
                       <div className='inputFlexs width400' >
                         <label>Tax Detail</label>
                         <div>
                           <p className="profile_data">{data && data?.tax_detail}</p>
                         </div>
                       </div>
-                    </div>}
+                    </div>} */}
 
                     {data?.default_invoice_setting && <div className="col-md-6">
                       <div className='inputFlexs width400' >

@@ -39,8 +39,8 @@ const Publish = () => {
 
   const handleSubmit = (e) => {
     
-    localStorage.setItem('tax_detail',form)
-
+    localStorage.setItem('tax_detail',JSON.stringify(form))
+    history.push('/affiliate-form/StageLastStep')
   };
 
   const back = () => {
@@ -486,10 +486,9 @@ const Publish = () => {
                     <div className=''>
                       {/* <label>Signature</label> */}
                       <div className="form-group drag_drop">
-                        <div className='upload_file'>
-                        {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image">Upload Signature</button>
-                          <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
-                            // disabled={loader}
+                        <div className='upload_file position-relative'>
+                        {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
+                          <input type="file" className="form-control-file over_input" accept="images/*" multiple={false}
                             onChange={(e) => {
                               setImgLoder(true)
                               uploadImage(e, 'images');

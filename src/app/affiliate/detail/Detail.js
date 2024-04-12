@@ -150,7 +150,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.tax_detail)}</p>
+                                                {/* <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.tax_detail)}</p> */}
                                             </div>
                                         </div>
                                     </div>}
@@ -283,9 +283,103 @@ const Detail = (p) => {
                                         </div>
                                     </div>
                                 </div>}
+                            </div>
 
+                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                                <div className='billing_dtls'>
+                                    <h6>Tax Detail</h6>
+                                </div>
 
+                                {data?.tax_detail?.tax_name && <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Tax Name:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data?.tax_detail?.tax_name}</p>
+                                        </div>
+                                    </div>
+                                </div>}
 
+                                {data?.tax_detail?.tax_classification && <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Tax Classification:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data?.tax_detail?.tax_classification}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                               <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Us Citizen:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data && data?.tax_detail?.is_us_citizen ? 'Yes' : 'No'}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {data?.tax_detail?.federal_text_classification && <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Federal Text Classification:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data && data?.tax_detail?.federal_text_classification}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                                {data?.tax_detail?.trade_name && <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Trade Name:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data && data?.tax_detail?.trade_name}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                               {data?.tax_detail?.social_security_number && <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Social Security Number:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data && data?.tax_detail?.social_security_number}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                               {data?.tax_detail?.signature_date && <div className='row'>
+                                    <div className='col-3'>
+                                        <div className='userdata'>
+                                            <p className='headmain'>Signature Date:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='name-dtls'>
+                                            <p className='headsub'>{data && data?.tax_detail?.signature_date}</p>
+                                        </div>
+                                    </div>
+                                </div>}
                             </div>
 
                             <div className='col-sm-12 col-md-12'>

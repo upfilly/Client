@@ -1,31 +1,54 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Label } from "reactstrap";
-import ApiClient from "../../../methods/api/apiClient";
 import "./style.scss";
 import Layout from "@/app/components/global/layout";
 import methodModel from "@/methods/methods";
 import $ from 'jquery';
+import ApiClient from "@/methods/api/apiClient";
 
 const Publish = () => {
+  const { id } = useParams()
   const history = useRouter();
-  const [form, setForm] = useState({ social_security_number: null });
+  const [form, setForm] = useState({
+    is_us_citizen:'',
+    federal_text_classification:'',
+    tax_classification:'',
+    tax_name:'',
+    trade_name:'',
+    ein:'',
+    social_security_number:'',
+    consent_agreed:'',
+    signature:'',
+    signature_date:'',
+    social_security_number: null });
   const [sumitted, setSumitted] = useState(false);
   const [loaderr, setLoader] = useState()
   const [imgLoder, setImgLoder] = useState()
   const currentDate = new Date().toISOString().split("T")[0];
 
+  console.log(form,"formform-------")
+
   const handleSave = () => {
     // setLoader(true)
     const data = {
-  ...form
+      ...form
+    }
+    if (data?.tax_classification == 'business') {
+      delete data?.tax_name,
+        delete data?.social_security_number
+    }
+
+    if (data?.tax_classification == 'individual') {
+      delete data?.federal_text_classification
+      // delete data?.social_security_number
     }
     ApiClient.put('edit/profile', data).then(res => {
 
       if (res.success == true) {
-        router.push(`/affiliate-form/StageLastStep/${id}`)
+        history.push(`/affiliate-form/StageLastStep/${id}`)
       }
       // setLoader(false)
     })
@@ -35,7 +58,18 @@ const Publish = () => {
     // loader(true)
     ApiClient.get(`user/detail?id=${id}`).then(res => {
       if (res.success) {
-        setForm(res?.data)
+        console.log(res?.data,"0000000000")
+        setForm({ is_us_citizen:res?.data?.tax_detail?.is_us_citizen,
+        id:id,
+        federal_text_classification:res?.data?.tax_detail?.federal_text_classification,
+        tax_classification:res?.data?.tax_detail?.tax_classification,
+        tax_name:res?.data?.tax_detail?.tax_name,
+        trade_name:res?.data?.tax_detail?.trade_name,
+        ein:res?.data?.tax_detail?.ein,
+        social_security_number:res?.data?.tax_detail?.social_security_number,
+        consent_agreed:res?.data?.tax_detail?.consent_agreed,
+        signature:res?.data?.tax_detail?.signature,
+        signature_date:res?.data?.tax_detail?.signature_date})
       }
       // loader(false)
     })
@@ -57,7 +91,7 @@ const Publish = () => {
     ApiClient.postFormData('upload/image?modelName=users', { file: file, modelName: 'users' }).then(res => {
       if (res.data) {
         let image = res?.data?.fullpath
-        setForm({ ...form, image: `images/users/${image}` })
+        setForm({ ...form, signature: `images/users/${image}` })
       }
       setImgLoder(false)
       setLoader(false)
@@ -514,18 +548,18 @@ const Publish = () => {
                     <div className=''>
                       {/* <label>Signature</label> */}
                       <div className="form-group drag_drop">
-                        <div className='upload_file'>
-                        {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image">Upload Signature</button>
-                          <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
+                        <div className='upload_file position-relative '>
+                        {!form?.signature && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
+                          <input type="file" className="form-control-file over_input cursor-pointer" accept="images/*" multiple={true}
                             // disabled={loader}
                             onChange={(e) => {
                               setImgLoder(true)
-                              uploadImage(e, 'images');
+                              uploadImage(e, 'signature');
                             }} /></>}
                           {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                         {form?.image && <div className="imagesRow position-relative mt-4">
-                                <img className="signurimg" src={methodModel.noImg(form?.image)} />
-                                <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, image: "" })}></i>
+                         {form?.signature && <div className="imagesRow position-relative mt-4">
+                                <img className="signurimg" src={methodModel.noImg(form?.signature)} />
+                                <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, signature: "" })}></i>
                           </div>}
                         </div>
                       </div>
@@ -536,12 +570,12 @@ const Publish = () => {
                       type="date"
                       className="form-control"
                       min={currentDate}
-                      value={form?.day || ""}
+                      value={form?.signature_date || ""}
                       onChange={(e) =>
-                        setForm({ ...form, day: e.target.value })
+                        setForm({ ...form, signature_date: e.target.value })
                       }
                     />
-                    {sumitted && !form?.day && (
+                    {sumitted && !form?.signature_date && (
                       <p className="text-danger font_fix">This field is required</p>
                     )}
                   </div>

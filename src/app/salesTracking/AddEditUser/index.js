@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ApiClient from "../../../methods/api/apiClient";
 import loader from "../../../methods/loader";
 import methodModel from "../../../methods/methods";
-import { campaignType } from "../../../models/type.model";
 import Html from "./Html";
 import { toast } from "react-toastify";
 import { useRouter,useParams } from "next/navigation";
@@ -26,10 +25,6 @@ const AddEditUser = () => {
     const [emailLoader, setEmailLoader] = useState(false) 
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
-
-    console.log(form,"---------111")
-    console.log(images,"imagesimages====")
-    console.log(id,"--------idddd")
     
     const getBrandData = (p = {}) => {
         let filter = { status: 'accepted' }

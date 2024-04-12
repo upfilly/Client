@@ -40,6 +40,7 @@ export default function StageLastStep() {
   const [step1, setStep1] = useState(null)
   const [step2, setStep2] = useState(null)
   const [step3, setStep3] = useState(null)
+  const [taxDetail, settaxDetail] = useState(null)
   const [isLoader, setisLoader] = useState(false)
 
   const handleGoBack = () => {
@@ -62,9 +63,12 @@ export default function StageLastStep() {
     const parsedData2 = storedData2 ? JSON.parse(storedData2) : null;
     const storedData3 = localStorage.getItem("step3");
     const parsedData3 = storedData3 ? JSON.parse(storedData3) : null;
+    const taxDetailData = localStorage.getItem('tax_detail')
+    const tax_detail3 = taxDetailData ? JSON.parse(taxDetailData) : null;
     setStep1(parsedData1)
     setStep2(parsedData2)
     setStep3(parsedData3)
+    settaxDetail(tax_detail3)
   }, [])
 
   useEffect(() => {
@@ -145,10 +149,30 @@ export default function StageLastStep() {
         billing_frequency: step3?.billing_frequency,
         payment_method: step3?.payment_method,
         tax_detail: step3?.tax_detail,
-        device_token:device_token
+        device_token:device_token?.device_token,
+        is_us_citizen:taxDetail?.is_us_citizen,
+        federal_text_classification:taxDetail?.federal_text_classification,
+        tax_classification:taxDetail?.tax_classification,
+        tax_name:taxDetail?.tax_name,
+        trade_name:taxDetail?.trade_name,
+        ein:taxDetail?.ein,
+        social_security_number:taxDetail?.social_security_number,
+        consent_agreed:taxDetail?.consent_agreed,
+        signature:taxDetail?.image,
+        signature_date:taxDetail?.signature_date,
         // ...step3,
         // isSetPasswordManually: formData?.setPasswordManually ,
       }
+      if(data?.tax_classification == 'business'){
+        delete data?.tax_name,
+        delete data?.social_security_number
+      }
+
+      if(data?.tax_classification == 'individual'){
+        delete data?.federal_text_classification
+        // delete data?.social_security_number
+      }
+
       if (!step1?.affiliate_group) {
         delete data?.affiliate_group
       }

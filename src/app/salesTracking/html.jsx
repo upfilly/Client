@@ -143,17 +143,17 @@ const Html = ({
                                         <div className="action_icons">
                                             {user?.role == 'brand' && <>{itm?.status == 'pending' ? <div >
                                                 <button onClick={() => {
-                                                    statusChange("accepted", itm?.id)
+                                                    statusChange("accepted", itm?.id || itm?._id)
                                                 }} className="btn btn-primary mr-2">
                                                     <i className='fa fa-check'></i>
                                                 </button>
-                                                <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
+                                                <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2">
                                                     <i className='fa fa-times'></i>
                                                 </button>
                                             </div> :
                                                 itm?.status == 'rejected' ?
-                                                    <div className="btn btn-primary">Rejected</div> :
-                                                    <div className="btn btn-primary">Accepted</div>
+                                                    <div className="btn btn-primary mr-2">Rejected</div> :
+                                                    <div className="btn btn-primary mr-2">Accepted</div>
                                             }</>}
                                             {user?.role == 'affiliate' && <>{isAllow('editAdmins') ? <>
                                                 <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>

@@ -123,8 +123,8 @@ export default function StageLastStep() {
                 <div className='d-flex align-items-center'>
                   <button className='genral-buttons'><span className="rank mr-2">01</span>General</button>
                   <button className='genral-buttons ml-3'><span className="rank mr-2">02</span>Address</button>
-                  {/* <button className='genral-buttons ml-3'><span className="rank mr-2">03</span>Billing</button> */}
-                  <button className='genral-buttons ml-3'><span className="rank mr-2">03</span>User</button>
+                  <button className='genral-buttons ml-3'><span className="rank mr-2">03</span>Tax Detail</button>
+                  <button className='genral-buttons ml-3'><span className="rank mr-2">04</span>User</button>
                 </div>
               </div>
             </div>
@@ -310,10 +310,10 @@ export default function StageLastStep() {
                     </div> */}
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Currency  </label>
+                        <label className='label-set' >Currency</label>
                         <input type="text" name="currency"
                           className="form-control "
-                          value={formData?.currency}
+                          value={formData?.currency || 'usd'}
                           onChange={handleInputChange} disabled></input>
                       </div>
                     </div>
@@ -382,7 +382,6 @@ export default function StageLastStep() {
                         <div className="text-danger">{confirmPasswordError}</div>
                       )}
                     </div>}
-                    /affiliate-form/StageSecStep
                     <div className='col-md-12 mt-4 mb-2'>
                     <button className='back-btns' onClick={handleGoBack}>Back</button>
                     < button className='btn btn-primary login ' onClick={handleSave}>Save & Continue</button>

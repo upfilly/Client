@@ -185,6 +185,7 @@ const route=(route)=>{
 }
 
 function capitalizeFirstLetter(str) {
+    console.log(str,"ssssstttt")
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   }

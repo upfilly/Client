@@ -18,6 +18,7 @@ const Html = ({ options,selectedValues,handleChange,displayValue,id,setSelectedV
                 onSelect={e => handleChange(e, 'select')}
                 onRemove={e => handleChange(e, 'remove')}
                 displayValue={displayValue}
+                placeholder="Select.."
                 id={id}
                 showArrow
             />

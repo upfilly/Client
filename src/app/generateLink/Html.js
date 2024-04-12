@@ -62,8 +62,18 @@ const Html = () => {
         let url = 'make-offers'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                console.log(res?.data?.data, "dgfygduyfg")
-                setBrandData(res?.data?.data)
+                const uniqueBrands = new Set();
+                const filteredData = res?.data?.data.reduce((acc, item) => {
+                    if (!uniqueBrands.has(item.brand_id)) {
+                        uniqueBrands.add(item.brand_id);
+                        acc.push({
+                            id: item.brand_id,
+                            brand_name: item.brand_name
+                        });
+                    }
+                    return acc;
+                }, []);
+                setBrandData(filteredData);
             }
         })
     }
@@ -184,7 +194,7 @@ const Html = () => {
 
                                 <div className='col-12 col-md-12'>
                                     <div>
-                                    <div>Add Parameters</div>
+                                    <div>Select Custom Parameters</div>
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="label"

@@ -78,7 +78,6 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                     <div className=" pprofile1 card card-shadow p-4">
                         <div className="">
                             <div className="main_title_head ">
-
                                 <h3 className='VieUser mb-4'>
                                     <a to="/product" onClick={e => back()}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
                                     {form && form.id ? 'Edit' : 'Add'} Offer</h3>

@@ -52,7 +52,7 @@ const untrackedSales = () => {
         if (itm === 'accepted') {
 
             loader(true);
-          ApiClient.put('campaign/change-status', { status: itm, id: id }).then((res) => {
+          ApiClient.put('update/status', { status: itm, id: id }).then((res) => {
             if (res.success) {
     
               toast.success(res.message)
@@ -84,7 +84,7 @@ const untrackedSales = () => {
               }
     
               loader(true);
-              ApiClient.put('campaign/change-status', { status: itm, id: id, reason: denialReason }).then((res) => {
+              ApiClient.put('update/status', { status: itm, id: id, reason: denialReason }).then((res) => {
                 if (res.success) {
                   toast.success(res.message)
                   getData({ page: filters?.page + 1 });
