@@ -47,7 +47,7 @@ export default function addAffiliateAccount() {
   const [address2, setAddress2] = useState("")
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [stateAutocomplete, setStateAutocomplete] = useState(true)
-  const [form, setForm] = useState({user_id:user?.id || user ?._id ,social_security_number: '' });
+  const [form, setForm] = useState({user_id:user?.id || user ?._id ,social_security_number: '' ,is_us_citizen:true });
   const currentDate = new Date().toISOString().split("T")[0];
   const [sumitted, setSumitted] = useState(false);
   const [taxDetailTabEnabled, setTaxDetailTabEnabled] = useState(false);
@@ -77,7 +77,25 @@ export default function addAffiliateAccount() {
   }, [])
 
   const handleSubmit = (e) => {
-    // localStorage.setItem('tax_detail', form)
+
+    if(!form?.tax_classification){
+      setSubmitted(true)
+      return
+    }
+
+    if(form?.tax_classification == 'business'){
+      if( !form?.signature_date || !form?.consent_agreed || !form?.federal_text_classification){
+      setSubmitted(true)
+      return
+      }
+    }
+
+    if(form?.tax_classification == 'individual'){
+      if( !form?.signature_date || !form?.tax_name || !form?.ein || !form?.social_security_number){
+      setSubmitted(true)
+      return
+      }
+    }
 
     const payload = {
       ...form
@@ -94,7 +112,7 @@ export default function addAffiliateAccount() {
     }
     ApiClient.post('addTax', payload).then(res => {
       if (res.success) {
-        let uUser = { ...user, ...data1 }
+        let uUser = { ...user, tax_detail:{...payload} }
         crendentialModel.setUser(uUser)
         router.push("/profile")
         toast.success('Tax Detail Added Sccessfully ...')

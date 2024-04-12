@@ -55,6 +55,56 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                     </div>
                                     {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
                                 </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Amount<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.click_ref}
+                                        onChange={e => setform({ ...form, click_ref: e.target.value })}
+                                    />
+                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Amount<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.amount}
+                                        onChange={e => setform({ ...form, amount: e.target.value })}
+                                    />
+                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Commission<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.commission}
+                                        onChange={e => setform({ ...form, commission: e.target.value })}
+                                    />
+                                    {submitted && !form?.commission ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Customer Reference<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.customer_reference}
+                                        onChange={e => setform({ ...form, customer_reference: e.target.value })}
+                                    />
+                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Order Reference<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.order_reference}
+                                        onChange={e => setform({ ...form, order_reference: e.target.value })}
+                                    />
+                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                </div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
                                    {affiliateData && <DynamicReactQuill
