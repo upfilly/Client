@@ -63,18 +63,18 @@ const Publish = () => {
               </div>
             </div>
           </div>
-          <div className="tx_detailsbx mt-4 mx-4">
+          <div class="tx_detailsbx  mt-4 mx-4 ">
           <div class="dtls_head"><h3>Tax Detail  </h3></div>
           <div className="form_page b-none">
             <div className="container">
-         
-          <div className="row">
-          <div className='col-md-6'>
-          <div className="mb-4">  
-                  <label class="form-label certif_inst " >
+            <div class="row">  
+            <div className='col-md-6'> 
+            <div className="mb-4">
+                  <label className='form-label certif_inst ' >
                     Are you a U.S. citizen, U.S. permanent resident (green card
                     holder) <i class="fa fa-info-circle" aria-hidden="true"></i>
                   </label>
+                  <div className='position-relative selectYes'>
                   <select
                     class="form-control select_width mt-2 width20"
                     id="exampleFormControlSelect1"
@@ -87,16 +87,21 @@ const Publish = () => {
                     <option value={true}>Yes</option>
                     <option value={false}>No</option>
                   </select>
+                  <i class="fa fa-sort-desc down_arrow" aria-hidden="true"></i>
                 </div>
-             </div>
-          <div className='col-md-6'> 
-          <div className="mb-4">
-                  <label class="form-label certif_inst " >
+                </div>
+
+            </div>
+            <div className='col-md-6'> 
+            <div className="mb-4">
+                  <label className='form-label certif_inst' >
                     What is your tax classification?{" "}
                   
                   </label>
-                  <div className="row pl-4">
-                    <div className="col-md-3">
+                  <div className="row ">
+                    <div className="col-6">
+                    
+                      <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -117,8 +122,12 @@ const Publish = () => {
                         {" "}
                         Individual
                       </label>
+                      </div>
                     </div>
-                    <div className="col-md-3">
+
+                    <div className="col-6">
+                  
+                    <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -138,32 +147,34 @@ const Publish = () => {
                         {" "}
                         Business
                       </label>
+                      </div>
                     </div>
                   </div>
                 </div>
-          </div>
-               
-               <div className="col-md-12">
-                   {/* new fields add start */}
+            </div>
+            <div className='col-md-12'> 
+             {/* new fields add start */}
 
-                   {form?.tax_classification === "business" && (
+             {form?.tax_classification === "business" && (
                   <div className="mb-4">
-                    <label class="form-label certif_inst " >
+                    <label  className='form-label certif_inst ' >
                       Check appropriate box for federal tax classification of
                       the person whose name is entered on line 
                     </label>
-                    <label class="form-label certif_inst " >
-                      1. Check only one
+
+                   
+                    <div className="checkbox_publish mt-2">
+                    <label className='certif_inst'> 
+                     1. Check only one
                       of the following seven boxes.
                     </label>
 
-                    <div className="checkbox_publish mt-2">
                       <div className="row">
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                       
+                          <div className="form-check">
                             <input
                               type="checkbox"
-                              className="form-checkbox mr-2"
+                              className="form-check-input mr-2"
                               checked={
                                 form?.federal_text_classification ===
                                 "individual"
@@ -175,17 +186,18 @@ const Publish = () => {
                                 })
                               }
                             />
-                            <span>
-                              individual/sole propriertor or single-member LLC
-                            </span>
+                          
+                            <label className="form-check-label" >
+                    individual/sole propriertor or single-member LLC
+                  </label>
                           </div>
-                        </div>
+                     
 
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                       
+                        <div className="form-check">
                             <input
                               type="checkbox"
-                              className="form-checkbox mr-2"
+                              className="form-check-input mr-2"
                               checked={
                                 form?.federal_text_classification ===
                                 "c_corporation"
@@ -197,15 +209,18 @@ const Publish = () => {
                                 })
                               }
                             />
-                            <span>C Corporation</span>
+                          
+                            <label className="form-check-label" >
+                            C Corporation
+                  </label>
                           </div>
-                        </div>
+                        
 
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                       
+                        <div className="form-check">
                             <input
                               type="checkbox"
-                              className="form-checkbox mr-2"
+                              className="form-check-input mr-2"
                               checked={
                                 form?.federal_text_classification ===
                                 "s_corporation"
@@ -217,15 +232,18 @@ const Publish = () => {
                                 })
                               }
                             />
-                            <span>S Corporation</span>
+                           
+                            <label className="form-check-label" >
+                            S Corporation
+                  </label>
                           </div>
-                        </div>
+                        
 
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                      
+                        <div className="form-check">
                             <input
                               type="checkbox"
-                              className="form-checkbox mr-2"
+                              className="form-check-input mr-2"
                               checked={
                                 form?.federal_text_classification ===
                                 "patnership"
@@ -237,12 +255,15 @@ const Publish = () => {
                                 })
                               }
                             />
-                            <span>Patnership</span>
+                          
+                            <label className="form-check-label" >
+                            Patnership
+                  </label>
                           </div>
-                        </div>
+                       
 
-                        <div className="col-sm-12 ">
-                          <div className="form-group">
+                        
+                        <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-checkbox mr-2"
@@ -258,13 +279,15 @@ const Publish = () => {
                                 })
                               }
                             />
-                            <span>
-                              Limited liability company. Enter the tax
+                           
+                            
+                            <label className="form-check-label" >
+                            Limited liability company. Enter the tax
                               classification (C=C Corporation, S=S Corporation,
                               P Patnership,){" "}
-                            </span>
+                  </label>
                           </div>
-                        </div>
+                     
                       </div>
                       {sumitted && !form?.federal_text_classification && (
                         <p className="text-danger">This field is required</p>
@@ -276,10 +299,10 @@ const Publish = () => {
                 {/* new fields add end */}
 
                 <div className="mb-4">
-                  <label>
-                    Tax Identity Information{" "}
-                  
-                  </label>
+                <label className="form-label certif_inst " >
+          Tax Identity Information{" "}
+
+        </label>
                   {/* <p className='label_p'>This is themos important place to include keywords</p> */}
 
                   <div className="row">
@@ -413,10 +436,15 @@ const Publish = () => {
                     )}
                   </div>
                 </div>
-               </div>
 
-             
+            
+            </div>
+            <div className='col-md-12'> </div>
+            <div className="formwrapper">
+              
+               
 
+               
                 <div className="mb-4">
                   <label>
                     I consent to sign my IRS Form W-9 electronically.{" "}
@@ -440,7 +468,7 @@ const Publish = () => {
                 </div>
               </div>
 
-              <div className="formwrapper p-0">
+              <div className="formwrapper">
                 <div className="boxpublish mt-3">
                   <Label>Under penalties of perjury, I certify that:</Label>
                   <div className="no_list">
@@ -477,7 +505,7 @@ const Publish = () => {
                   </div>
                 </div>
 
-                <div className="text_git mx-4 mt-4">
+                <div className="text_git mx-4 mb-4">
                   <label>
                     Certification Instructions{" "}
                   
@@ -507,7 +535,7 @@ const Publish = () => {
                               uploadImage(e, 'images');
                             }} /></>}
                           {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                         {form?.image && <div className="imagesRow position-relative mt-4">
+                         {form?.image && <div className="imagesRow position-relative mb-4">
                                 <img className="signurimg" src={methodModel.noImg(form?.image)} />
                                 <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, image: "" })}></i>
                           </div>}
@@ -530,15 +558,17 @@ const Publish = () => {
                     )}
                   </div>
                 </div>
-                <div className='col-md-12 mt-4 mb-2'>
+                <div className='col-md-12 mb-4 mb-2'>
                   <button className='back-btns' onClick={() => back()}>Back</button>
                   < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
                 </div>
               </div>
-          </div>
-         
+              </div>
+             
             </div>
           </div>
+          </div>
+         
         </div>
       </Layout>
     </div>
