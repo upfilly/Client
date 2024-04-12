@@ -1075,12 +1075,15 @@ export default function addAffiliateAccount() {
         <ol className='ul_listsbx'>
           <li className="no_list" >   The number shown on this form is my correct taxpayer
             identification number  (or I am waiting for a number to be issued to me), and </li>
+
           <li className="no_list" > {" "}
             by the Internal Revenue Service (IRS) that I am subject to
             ackup withholding as a result of a failure to report all
             interest or{" "} </li>
+
           <li className="no_list" >   I am a U.S. citizen or other U.S. person (defined in the
             instructions), and{" "} </li>
+            
           <li className="no_list" > The FATCA code(s) entered on this form (if any) indicating
             that I am exempt from FATCA reporting is correct.{" "} </li>
          

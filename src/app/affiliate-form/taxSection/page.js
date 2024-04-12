@@ -461,17 +461,17 @@ const Publish = () => {
                       setForm({ ...form, consent_agreed: e.target.checked })
                     }
                   /> 
-                  <p className="label_p ml-3">
+                   <label className="label_p form-check-label">
                     If you provide an electronic signature, you will be able
                     to submit your tax information immediately.
-                  </p>
+                    </label>
                 </div>
               </div>
             </div>
 
             <div className="formwrapper">
-              <div className="boxpublish mt-3">
-                <Label>Under penalties of perjury, I certify that:</Label>
+            <div className="boxpublish certify_detials mb-4">
+               <Label className='form-label certif_inst' >Under penalties of perjury, I certify that:</Label>
                 <div className="no_list">
                   <span className="number_box">01</span>
                   <p>
@@ -504,6 +504,12 @@ const Publish = () => {
                     that I am exempt from FATCA reporting is correct.{" "}
                   </p>
                 </div>
+
+
+
+
+
+                
               </div>
 
               <div className="text_git mx-4 mb-4">
