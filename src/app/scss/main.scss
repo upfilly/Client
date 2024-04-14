@@ -3730,11 +3730,16 @@ p.checkbox-option-main {
  .set_upload_bx .signurimg {
   max-width: 200px;
   width: 100%;
+  border: 1px solid #c1c1c1;
   height: 120px;
   object-fit: contain;
   border-radius: 3px;
 
 
+}
+.imagesRow .kliil:hover {
+  background-color: #c1c1c1;
+  color: #fff;
 }
 .imagesRow .kliil {
   position: absolute;

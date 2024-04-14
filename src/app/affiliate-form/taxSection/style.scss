@@ -1,14 +1,4 @@
-.text_git {
-    background: #f3f3f3;
-    padding: 10px 10px;
-    margin: 0;
-    border-left: 5px solid #50cbb2;
-    border-radius: 5px;
-}
 
-.text_git label {
-    margin: 0px;
-}
 
 .formwrapper{
     padding: 0px 20px;
@@ -19,25 +9,7 @@
     padding: 20px 20px;
 }
 
-.boxpublish {
-    margin: 20px;
-}
 
-.text_git  p {
-    margin-top: 5px;
-    font-size: 12px;
-}
-
-.no_list {
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-}
-
-.no_list p {
-    font-size: 12px;
-    margin: 0;
-}
 
 button.genral-buttons {
     background-color: #000000;
@@ -177,10 +149,4 @@ input::-webkit-inner-spin-button {
 img.signurimg {
     width: auto;
     height: 90px;
-}
-
-i.fa.fa-times.kliil {
-    position: absolute;
-    right: 4px;
-    top: 5px;
 }

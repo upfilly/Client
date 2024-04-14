@@ -125,17 +125,20 @@ const Publish = () => {
               </div>
             </div>
           </div>
+          <div className=' '>
+                    <div class="dtls_head"><h3>Tax Detail  </h3></div>
           <div className="form_page b-none">
             <div className="container">
-
-              <div className="formwrapper">
-                <div className="mt-4">
-                  <label>
+            <div className="row">
+            <div className="col-md-7">
+            <div className="mb-4">
+                <label className='form-label certif_inst ' >
                     Are you a U.S. citizen, U.S. permanent resident (green card
                     holder) <i class="fa fa-info-circle" aria-hidden="true"></i>
                   </label>
+                  <div className='position-relative selectYes'>
                   <select
-                    class="form-control select_width mt-2 width20"
+                   class="form-control  "
                     id="exampleFormControlSelect1"
                     value={form?.is_us_citizen}
                     onChange={(e) =>
@@ -146,14 +149,20 @@ const Publish = () => {
                     <option value={true}>Yes</option>
                     <option value={false}>No</option>
                   </select>
+                  <i class="fa fa-sort-desc down_arrow" aria-hidden="true"></i>
+
                 </div>
-                <div className="mt-4">
-                  <label>
+                </div>
+            </div>
+            <div className="col-md-5">
+            <div className="mb-4">
+                <label className='form-label certif_inst ' >
                     What is your tax classification?{" "}
                   
                   </label>
-                  <div className="row pl-4">
-                    <div className="col-md-3">
+                  <div className="row">
+                    <div className="col-6">
+                    <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -170,12 +179,16 @@ const Publish = () => {
                           })
                         }
                       />
-                      <label class="form-check-label" for="flexRadioDefault1">
+                     
+                      <label class="form-check-label certif_inst " for="flexRadioDefault1">
                         {" "}
                         Individual
                       </label>
                     </div>
-                    <div className="col-md-3">
+                    </div>
+
+                    <div className="col-6">
+                    <div class="form-check">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -191,28 +204,37 @@ const Publish = () => {
                           })
                         }
                       />
-                      <label class="form-check-label" for="flexRadioDefault2">
+                      
+                      <label class="form-check-label certif_inst " for="flexRadioDefault2">
                         {" "}
                         Business
                       </label>
                     </div>
+                    </div>
+
                   </div>
                 </div>
 
+            </div>
+            <div className="col-md-12">
+
+
+               
                 {/* new fields add start */}
 
                 {form?.tax_classification === "business" && (
-                  <div className="mt-4">
-                    <label>
+                  <div className="mb-4">
+                     <label class="form-check-label certif_inst ">
                       Check appropriate box for federal tax classification of
-                      the person whose name is entered on line 1. Check only one
-                      of the following seven boxes.
+                      the person whose name is entered on line 
                     </label>
 
                     <div className="checkbox_publish mt-2">
-                      <div className="row">
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                    <label className='certif_inst'>  1. Check only one of the following seven boxes. </label>
+
+                    
+                       
+                        <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-checkbox mr-2"
@@ -231,10 +253,9 @@ const Publish = () => {
                               individual/sole propriertor or single-member LLC
                             </span>
                           </div>
-                        </div>
+                       
 
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                         <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-checkbox mr-2"
@@ -251,10 +272,10 @@ const Publish = () => {
                             />
                             <span>C Corporation</span>
                           </div>
-                        </div>
+                     
 
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                       
+                         <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-checkbox mr-2"
@@ -271,10 +292,10 @@ const Publish = () => {
                             />
                             <span>S Corporation</span>
                           </div>
-                        </div>
+                       
 
-                        <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                          <div className="form-group">
+                       
+                         <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-checkbox mr-2"
@@ -291,10 +312,9 @@ const Publish = () => {
                             />
                             <span>Patnership</span>
                           </div>
-                        </div>
-
-                        <div className="col-sm-12 ">
-                          <div className="form-group">
+                    
+                       
+                         <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-checkbox mr-2"
@@ -316,19 +336,19 @@ const Publish = () => {
                               P Patnership,){" "}
                             </span>
                           </div>
-                        </div>
+                        
                       </div>
                       {sumitted && !form?.federal_text_classification && (
                         <p className="text-danger">This field is required</p>
                       )}
                     </div>
-                  </div>
+                  
                 )}
 
                 {/* new fields add end */}
 
-                <div className="mt-4">
-                  <label>
+                <div className="mb-4">
+                <label className="form-label certif_inst " >
                     Tax Identity Information{" "}
                   
                   </label>
@@ -336,7 +356,7 @@ const Publish = () => {
 
                   <div className="row">
                     {form?.tax_classification === "individual" && (
-                      <div className="col-md-6 mt-3">
+                      <div className="col-md-6 ">
                         <input
                           type="text"
                           className="form-control"
@@ -356,7 +376,7 @@ const Publish = () => {
 
                     {form?.tax_classification === "business" && (
                       <>
-                        <div className="col-md-6 mt-3">
+                        <div className="col-md-6">
                           <input
                             type="text"
                             className="form-control"
@@ -374,7 +394,7 @@ const Publish = () => {
                           )}
                         </div>
 
-                        <div className="col-md-6 mt-3">
+                        <div className="col-md-6 ">
                           <input
                             type="text"
                             className="form-control phone_IN"
@@ -415,7 +435,7 @@ const Publish = () => {
                     )}
 
                     {form?.tax_classification === "individual" && (
-                      <div className="col-md-6 mt-3">
+                      <div className="col-md-6  ">
                         <input
                           type="text"
                           className="form-control phone_us"
@@ -466,14 +486,19 @@ const Publish = () => {
                   </div>
                 </div>
 
-                <div className="mt-4">
+                
+
+            </div>
+            <div className="col-md-12">
+              
+            <div className="mb-4">
                   <label>
                     I consent to sign my IRS Form W-9 electronically.{" "}
                   
                   </label>
-                  <div className="d-flex ">
+                  <div className="form-check">
                     <input
-                      className="mr5"
+                       className="mr5 form-check-input"
                       type="checkbox"
                       id="consent"
                       checked={form?.consent_agreed}
@@ -481,111 +506,21 @@ const Publish = () => {
                         setForm({ ...form, consent_agreed: e.target.checked })
                       }
                     />
-                    <p className="label_p ml-3">
+                   <label className="label_p form-check-label">
                       If you provide an electronic signature, you will be able
                       to submit your tax information immediately.
-                    </p>
+                    </label>
                   </div>
                 </div>
-              </div>
-
-              <div className="formwrapper p-0">
-                <div className="boxpublish mt-3">
-                  <Label>Under penalties of perjury, I certify that:</Label>
-                  <div className="no_list">
-                    <span className="number_box">01</span>
-                    <p>
-                      The number shown on this form is my correct taxpayer
-                      identification number
-                      <br />
-                      (or I am waiting for a number to be issued to me), and
-                    </p>
-                  </div>
-                  <div className="no_list">
-                    <span className="number_box">02</span>
-                    <p>
-                      {" "}
-                      by the Internal Revenue Service (IRS) that I am subject to
-                      ackup withholding as a result of a failure to report all
-                      interest or{" "}
-                    </p>
-                  </div>
-                  <div className="no_list">
-                    <span className="number_box">03</span>
-                    <p>
-                      I am a U.S. citizen or other U.S. person (defined in the
-                      instructions), and{" "}
-                    </p>
-                  </div>
-                  <div className="no_list">
-                    <span className="number_box">04</span>
-                    <p>
-                      The FATCA code(s) entered on this form (if any) indicating
-                      that I am exempt from FATCA reporting is correct.{" "}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text_git mx-4 mt-4">
-                  <label>
-                    Certification Instructions{" "}
-                  
-                  </label>
-                  <p className="label_p">
-                    You must cross out item 2 above if you have been notified by
-                    the IRS that you are currently subject to backup
-                    withholding. You will need to print out your hard copy form
-                    at the end of the interview and cross out item 2 before
-                    signing and mailing to the address provided. The Internal
-                    Revenue Service does not require your consent to any
-                    provision of this document other than the certifications
-                    required to avoid backup withholding.
-                  </p>
-                </div>
-
-                <div className="d-flex justify-content-between mt-3 align-items-center">
-                  <div className="">
-                    <div className=''>
-                      {/* <label>Signature</label> */}
-                      <div className="form-group drag_drop">
-                        <div className='upload_file position-relative '>
-                        {!form?.signature && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
-                          <input type="file" className="form-control-file over_input cursor-pointer" accept="images/*" multiple={true}
-                            // disabled={loader}
-                            onChange={(e) => {
-                              setImgLoder(true)
-                              uploadImage(e, 'signature');
-                            }} /></>}
-                          {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                         {form?.signature && <div className="imagesRow position-relative mt-4">
-                                <img className="signurimg" src={methodModel.noImg(form?.signature)} />
-                                <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, signature: "" })}></i>
-                          </div>}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="">
-                    <input
-                      type="date"
-                      className="form-control"
-                      min={currentDate}
-                      value={form?.signature_date || ""}
-                      onChange={(e) =>
-                        setForm({ ...form, signature_date: e.target.value })
-                      }
-                    />
-                    {sumitted && !form?.signature_date && (
-                      <p className="text-danger font_fix">This field is required</p>
-                    )}
-                  </div>
-                </div>
-                <div className='col-md-12 mt-4 mb-2'>
-                  <button className='back-btns' onClick={() => back()}>Back</button>
-                  < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSave(e)}>Save & Continue</button>
-                </div>
-              </div>
             </div>
+            </div>
+           
+
+             
+            </div>
+          </div>
+
+          
           </div>
         </div>
       </Layout>

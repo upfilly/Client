@@ -68,7 +68,7 @@ const Publish = () => {
           <div className="form_page b-none">
             <div className="container">
             <div class="row">  
-            <div className='col-md-6'> 
+            <div className='col-md-7'> 
             <div className="mb-4">
                   <label className='form-label certif_inst ' >
                     Are you a U.S. citizen, U.S. permanent resident (green card
@@ -92,7 +92,7 @@ const Publish = () => {
                 </div>
 
             </div>
-            <div className='col-md-6'> 
+            <div className='col-md-5'> 
             <div className="mb-4">
                   <label className='form-label certif_inst' >
                     What is your tax classification?{" "}
@@ -169,7 +169,7 @@ const Publish = () => {
                       of the following seven boxes.
                     </label>
 
-                      <div className="row">
+                      
                        
                           <div className="form-check">
                             <input
@@ -266,7 +266,7 @@ const Publish = () => {
                         <div className="form-check">
                             <input
                               type="checkbox"
-                              className="form-checkbox mr-2"
+                              className="form-check-input  mr-2"
                               checked={
                                 form?.federal_text_classification ===
                                 "limited_liability"
@@ -288,7 +288,6 @@ const Publish = () => {
                   </label>
                           </div>
                      
-                      </div>
                       {sumitted && !form?.federal_text_classification && (
                         <p className="text-danger">This field is required</p>
                       )}
@@ -441,11 +440,7 @@ const Publish = () => {
             </div>
             <div className='col-md-12'>
               
-            <div className="formwrapper">
-              
-               
-
-               
+            
               <div className="mb-4">
               <label className='certif_inst'>
                   I consent to sign my IRS Form W-9 electronically.{" "}
@@ -467,57 +462,36 @@ const Publish = () => {
                     </label>
                 </div>
               </div>
-            </div>
-
-            <div className="formwrapper">
+          
             <div className="boxpublish certify_detials mb-4">
                <Label className='form-label certif_inst' >Under penalties of perjury, I certify that:</Label>
-                <div className="no_list">
-                  <span className="number_box">01</span>
-                  <p>
-                    The number shown on this form is my correct taxpayer
-                    identification number
-                    <br />
-                    (or I am waiting for a number to be issued to me), and
-                  </p>
-                </div>
-                <div className="no_list">
-                  <span className="number_box">02</span>
-                  <p>
-                    {" "}
-                    by the Internal Revenue Service (IRS) that I am subject to
-                    ackup withholding as a result of a failure to report all
-                    interest or{" "}
-                  </p>
-                </div>
-                <div className="no_list">
-                  <span className="number_box">03</span>
-                  <p>
-                    I am a U.S. citizen or other U.S. person (defined in the
-                    instructions), and{" "}
-                  </p>
-                </div>
-                <div className="no_list">
-                  <span className="number_box">04</span>
-                  <p>
-                    The FATCA code(s) entered on this form (if any) indicating
-                    that I am exempt from FATCA reporting is correct.{" "}
-                  </p>
-                </div>
+              
+               <ol className='ul_listsbx'>
+          <li className="no_list" >   The number shown on this form is my correct taxpayer
+            identification number  (or I am waiting for a number to be issued to me), and </li>
 
+          <li className="no_list" > {" "}
+            by the Internal Revenue Service (IRS) that I am subject to
+            ackup withholding as a result of a failure to report all
+            interest or{" "} </li>
 
-
-
-
+          <li className="no_list" >   I am a U.S. citizen or other U.S. person (defined in the
+            instructions), and{" "} </li>
+            
+          <li className="no_list" > The FATCA code(s) entered on this form (if any) indicating
+            that I am exempt from FATCA reporting is correct.{" "} </li>
+         
+        </ol>
+              
                 
               </div>
 
-              <div className="text_git mx-4 mb-4">
-                <label>
+              <div className="text_git">
+              <h3 className='certif_inst'>
                   Certification Instructions{" "}
                 
-                </label>
-                <p className="label_p">
+                </h3>
+                <p className="label_pbx label_font">
                   You must cross out item 2 above if you have been notified by
                   the IRS that you are currently subject to backup
                   withholding. You will need to print out your hard copy form
@@ -533,8 +507,8 @@ const Publish = () => {
                 <div className="">
                   <div className=''>
                     {/* <label>Signature</label> */}
-                    <div className="form-group drag_drop">
-                      <div className='upload_file position-relative'>
+                    <div className="form-group drag_drop mb-0">
+                      <div className='upload_file set_upload_bx position-relative'>
                       {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
                         <input type="file" className="form-control-file over_input" accept="images/*" multiple={false}
                           onChange={(e) => {
@@ -565,11 +539,13 @@ const Publish = () => {
                   )}
                 </div>
               </div>
-              <div className='col-md-12 mb-4 mb-2'>
+              <div className='col-md-12'>
+              <div className='mb-4 mt-5 text-right '>
                 <button className='back-btns' onClick={() => back()}>Back</button>
                 < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
               </div>
-            </div>
+              </div>
+
                </div>
             
               </div>
