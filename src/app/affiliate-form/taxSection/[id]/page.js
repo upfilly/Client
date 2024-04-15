@@ -112,7 +112,7 @@ const Publish = () => {
   return (
     <div>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Affiliate"} filters={undefined}>
-        <div className='main-affiliate mt-3 mb-5'>
+        <div className='main-affiliate mt-3 mb-5 px-4'>
           <div className='container-fluid'>
             <div className='row mx-0'>
               <div className='col-md-12'>
@@ -125,7 +125,7 @@ const Publish = () => {
               </div>
             </div>
           </div>
-          <div className=' '>
+          <div className='mt-4 '>
                     <div class="dtls_head"><h3>Tax Detail  </h3></div>
           <div className="form_page b-none">
             <div className="container">
