@@ -16,7 +16,8 @@ const AddEditUser = () => {
         brand_id:'',
         title:"",
         description:"",
-        image:""
+        image:"",
+        order_date:''
     })
     const [affiliateData, setAffiliateData] = useState();
     const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
@@ -25,6 +26,8 @@ const AddEditUser = () => {
     const [emailLoader, setEmailLoader] = useState(false) 
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
+
+    console.log(form,"fshdjifdjifh")
     
     const getBrandData = (p = {}) => {
         let filter = { status: 'accepted' }
@@ -53,6 +56,12 @@ const AddEditUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if(!form?.title || !form?.brand_id || !form?.amount || !form?.commission || !form?.customer_reference
+            || !form?.order_date || !form?.type || !form?.title){
+               setSubmitted(true)
+               return;
+           }
        
         let method = 'post'
         let url = 'addsales'
@@ -121,12 +130,22 @@ const AddEditUser = () => {
                 if (res.success) {
                     let value=res.data
                     setDetail(value)
+                    console.log(value,"vvvvvvvvvqqqqq")
                     setform({
                         id:value?.id || value?._id,
                         brand_id:value?.brand_id,
                         title:value?.title,
                         description:value?.description,
-                        image:value?.image
+                        image:value?.image,
+                        "type":value?.type,
+                        "click_ref":value?.click_ref,
+                        "order_date":value?.order_date,
+                        "amount":value?.amount ,
+                        "commission": value?.commission,
+                        "order_reference":value?.order_reference ,
+                        "customer_reference":value?.customer_reference,
+                        "currency":value?.currency ,
+                        "timeZone":value?.timeZone 
                     })
                     setImages(value?.image)
                 //     let payload = { ...defaultvalue };

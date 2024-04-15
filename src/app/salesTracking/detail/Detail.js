@@ -6,6 +6,7 @@ import './style.scss';
 import methodModel from '@/methods/methods';
 import { useRouter, useParams } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
+import datepipeModel from '@/models/datepipemodel';
 
 const Detail = (p) => {
     const history = useRouter()
@@ -50,12 +51,76 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-3'>
                                             <div className='userdata'>
+                                                <p className='headmain'>Type:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.type)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
                                                 <p className='headmain'>Title:</p>
                                             </div>
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Order Reference:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && data?.order_reference}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Order Date:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && datepipeModel.date(data?.order_date)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Commission:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && data?.commission}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Customer Reference:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.customer_reference)}</p>
                                             </div>
                                         </div>
                                     </div>

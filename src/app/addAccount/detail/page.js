@@ -91,7 +91,7 @@ export default function addAffiliateAccount() {
     }
 
     if(form?.tax_classification == 'individual'){
-      if( !form?.signature_date || !form?.tax_name || !form?.ein || !form?.social_security_number){
+      if( !form?.signature_date || !form?.tax_name || !form?.social_security_number){
       setSubmitted(true)
       return
       }
@@ -353,6 +353,7 @@ export default function addAffiliateAccount() {
           if (res.success) {
             let uUser = { ...user, ...data1 }
             crendentialModel.setUser(uUser)
+            setTaxDetailTabEnabled(true)
             // history.push("/profile")
             toast.success('Account Added Sccessfully ...')
             // router.push(`/`)

@@ -24,8 +24,10 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    if ((user?.role == 'affiliate' && !user?.account_id) || (user?.role == 'affiliate' && !user?.tax_detail?.tax_classification)) {
+    if (user) {
+      if ((user?.role == 'affiliate' && !user?.account_id) || (user?.role == 'affiliate' && !user?.tax_detail?.tax_classification)) {
         history.push('/addAccount/detail')
+      }
     }
 }, [user])
 

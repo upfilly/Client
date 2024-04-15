@@ -53,17 +53,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                             options={BrandData}
                                         />
                                     </div>
-                                    {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Amount<span className="star">*</span></label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={form.click_ref}
-                                        onChange={e => setform({ ...form, click_ref: e.target.value })}
-                                    />
-                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                    {submitted && !form?.brand_id ? <div className="invalid-feedback d-block">Brand is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Amount<span className="star">*</span></label>
@@ -73,7 +63,26 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         value={form.amount}
                                         onChange={e => setform({ ...form, amount: e.target.value })}
                                     />
-                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                    {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Currency<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.currency}
+                                        onChange={e => setform({ ...form, currency: e.target.value })}
+                                    />
+                                    {submitted && !form?.currency ? <div className="invalid-feedback d-block">Currency is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Click Ref</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.click_ref}
+                                        onChange={e => setform({ ...form, click_ref: e.target.value })}
+                                    />
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Commission<span className="star">*</span></label>
@@ -83,7 +92,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         value={form.commission}
                                         onChange={e => setform({ ...form, commission: e.target.value })}
                                     />
-                                    {submitted && !form?.commission ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                    {submitted && !form?.commission ? <div className="invalid-feedback d-block">Commission is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Customer Reference<span className="star">*</span></label>
@@ -93,7 +102,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         value={form.customer_reference}
                                         onChange={e => setform({ ...form, customer_reference: e.target.value })}
                                     />
-                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                    {submitted && !form?.customer_reference ? <div className="invalid-feedback d-block">Customer Reference is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Order Reference<span className="star">*</span></label>
@@ -103,10 +112,62 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         value={form.order_reference}
                                         onChange={e => setform({ ...form, order_reference: e.target.value })}
                                     />
-                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                    {submitted && !form?.order_reference ? <div className="invalid-feedback d-block">Order Reference is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Order Date<span className="star">*</span></label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        value={form.order_date}
+                                        onChange={e => setform({ ...form, order_date: e.target.value })}
+                                    />
+                                    {submitted && !form?.order_date ? <div className="invalid-feedback d-block">Order Date is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Type</label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Type"
+                                            intialValue={form?.type}
+                                            result={e => {
+                                                setform({ ...form, type: e.value })
+                                            }}
+                                            options={[{
+                                                name:'unTracked',id:'unTracked'
+                                            },
+                                            {
+                                                name:'Incorrect',id:'Incorrect'
+                                            },
+                                            {
+                                                name:'Declined',id:'Declined'
+                                            }]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>TimeZone</label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select TimeZone"
+                                            intialValue={form?.timeZone}
+                                            // disabled={(form?.status == "rejected" || !id) ? false : true}
+                                            result={e => {
+                                                setform({ ...form, timeZone: e.value })
+                                            }}
+                                            options={[{
+                                                name:'Europe/Dublin',id:'Europe/Dublin'
+                                            },
+                                           ]}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="col-md-12 mb-3">
-                                    <label>Description<span className="star">*</span></label>
+                                    <label>Description</label>
                                    {affiliateData && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
@@ -134,7 +195,6 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         ]}
                                         bounds={'.app'}
                                     />}
-                                    {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
