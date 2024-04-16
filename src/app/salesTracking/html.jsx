@@ -155,9 +155,9 @@ const Html = ({
                                                     <div className="btn btn-primary mr-2">Accepted</div>
                                             }</>}
                                             {user?.role == 'affiliate' && <>{isAllow('editAdmins') ? <>
-                                                <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
+                                                {/* <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
                                                     <i className="material-icons edit" title="Edit">edit</i>
-                                                </a>
+                                                </a> */}
                                             </> : <></>}
 
                                                 {isAllow('deleteAdmins') ? <>

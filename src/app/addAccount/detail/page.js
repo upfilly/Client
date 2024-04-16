@@ -96,6 +96,7 @@ export default function addAffiliateAccount() {
       return
       }
     }
+    loader(true)
 
     const payload = {
       ...form
@@ -118,6 +119,7 @@ export default function addAffiliateAccount() {
         toast.success('Tax Detail Added Sccessfully ...')
         // router.push(`/`)
       }
+      loader(false)
     })
   };
 
@@ -126,7 +128,7 @@ export default function addAffiliateAccount() {
   };
 
   useEffect(() => {
-    toast.error('Please add your account first... ')
+    toast.error('Please add your account and tax detail first... ')
     setTimeout(() => {
       setStateAutocomplete(false)
     }, 2000);
