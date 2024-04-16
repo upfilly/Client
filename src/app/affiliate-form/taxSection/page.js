@@ -17,8 +17,6 @@ const Publish = () => {
   const [imgLoder, setImgLoder] = useState()
   const currentDate = new Date().toISOString().split("T")[0];
 
-  console.log(form, "00000iiiiiiiii")
-
   const uploadImage = (e) => {
     setForm({ ...form, baseImg: e.target.value })
     let files = e.target.files
@@ -36,8 +34,29 @@ const Publish = () => {
     })
   }
 
+  console.log(form,"=======1==1=11=1=1=1=1=")
+
 
   const handleSubmit = (e) => {
+
+    if(!form?.tax_classification){
+      setSumitted(true)
+      return
+    }
+
+    if(form?.tax_classification == 'business'){
+      if( !form?.day  || !form?.federal_text_classification){
+      setSumitted(true)
+      return
+      }
+    }
+
+    if(form?.tax_classification == 'individual'){
+      if( !form?.day || !form?.tax_name  || !form?.social_security_number || !form?.image){
+      setSumitted(true)
+      return
+      }
+    }
     
     localStorage.setItem('tax_detail',JSON.stringify(form))
     history.push('/affiliate-form/StageLastStep')

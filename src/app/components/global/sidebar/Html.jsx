@@ -90,6 +90,11 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
 
           </div></>}
 
+          {user && user?.role == "brand" && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+          <i className="material-icons mr-2" title="campaignManagement">recent_actors</i>
+          <span className="side_head">Add Campaign</span>
+        </ListItemLink>}
+
         {user && user?.role == "affiliate" && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id ? true : false}>
           <i className="material-icons mr-2" title="product">add_shopping_cart</i>
           <span className="side_head">Add Offer</span>
@@ -122,6 +127,11 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
         </ListItemLink>}
 
         {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" disabled={!user?.account_id ? true : false}>
+          <i className="material-icons mr-2" title="campaignManagement">business</i>
+          <span className="side_head">Generate Link</span>
+        </ListItemLink>}
+
+        {user && user?.role == "brand" && <ListItemLink to="/makeLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
           <i className="material-icons mr-2" title="campaignManagement">business</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}

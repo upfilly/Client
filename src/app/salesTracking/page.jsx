@@ -14,7 +14,7 @@ import Swal from 'sweetalert2'
 const untrackedSales = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:'',brand_id:user?.id,addedBy:user?.id})
+    const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
@@ -31,7 +31,13 @@ const untrackedSales = () => {
 
     const getData = (p = {}) => {
         setLoader(true)
-        let filter = { ...filters, ...p }
+        let filter;
+        if(user?.role == 'brand'){
+            filter = { ...filters, ...p ,brand_id:user?.id}
+        }else{
+            filter = { ...filters, ...p ,addedBy:user?.id}
+        }
+
         let url='getallSalesDetails'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {

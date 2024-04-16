@@ -9,13 +9,6 @@ import MultiSelectValue from '../components/common/MultiSelectValue'
 
 const Html = () => {
     const user = crendentialModel.getUser()
-    // const [isChecked, setIsChecked] = useState({});
-    // const [parameters, setParameters] = useState({
-    //     product: '',
-    //     affiliate_id: '',
-    //     XYZ: '',
-    //     New_id: ''
-    // });
     const [url, setUrl] = useState('');
     const [copied, setCopied] = useState(false);
     const [SelectDropdown, setSelectDropdown] = useState(true);
@@ -33,6 +26,8 @@ const Html = () => {
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
     const [DestinationUrl,setDestinationUrl]=useState('')
+    const [CampaignData,setCampaignData] = useState([])
+    const [SelectedCampaign,setSelectedCampaign] = useState('')
   
    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -58,38 +53,53 @@ const Html = () => {
 
     const getData = (p = {}) => {
 
-        let filter = { status: 'accepted' , addedBy:user?.id}
-        let url = 'make-offers'
+        let filter = { createBybrand_id:user?.id || user?._id ,role: "affiliate",isDeleted: false}
+        let url = 'users/list'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                const uniqueBrands = new Set();
-                const filteredData = res?.data?.data.reduce((acc, item) => {
-                    if (!uniqueBrands.has(item.brand_id)) {
-                        uniqueBrands.add(item.brand_id);
-                        acc.push({
-                            id: item.brand_id,
-                            brand_name: item.brand_name
-                        });
-                    }
-                    return acc;
-                }, []);
-                setBrandData(filteredData);
+                // const uniqueBrands = new Set();
+                // const filteredData = res?.data?.data.reduce((acc, item) => {
+                //     if (!uniqueBrands.has(item.brand_id)) {
+                //         uniqueBrands.add(item.brand_id);
+                //         acc.push({
+                //             id: item.brand_id,
+                //             brand_name: item.brand_name
+                //         });
+                //     }
+                //     return acc;
+                // }, []);
+                setBrandData(res?.data?.data);
             }
         })
     }
 
     const brands = Array.from(new Set(brandData.map(item => ({
-        id: item.brand_id,
-        name: item.brand_name
+        id: item.id || item?._id,
+        name: item.fullName
     }))));
 
     const handleBrandChange = event => {
         setSelectedBrand(event.target.value);
     };
 
+    const handleCampaignChange = event => {
+        setSelectedCampaign(event.target.value)
+    }
+
     useEffect(() => {
         getData()
+        getCampaignData()
     }, [])
+
+    const getCampaignData = (p = {}) => {
+        let filter = { search: '', isDeleted: false,status:'',brand_id:user?.id}
+        let url='campaign/all'
+        ApiClient.get(url, filter).then(res => {
+            if (res.success) {
+                setCampaignData(res.data.data)
+            }
+        })
+    }
 
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
@@ -131,12 +141,20 @@ const Html = () => {
         //     return;
         // }
       let base_url=''
-        if(DestinationUrl && selectedBrand){
-           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}`}` 
+        if(DestinationUrl && selectedBrand && SelectedCampaign){
+           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}`}` 
+        }else if(DestinationUrl && selectedBrand){
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}`}`
+        }else if(DestinationUrl && SelectedCampaign){
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}` 
+        }else if(SelectedCampaign && selectedBrand){
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`  
+        }else if(SelectedCampaign){
+            base_url = `https://upfilly.jcsoftwaresolution.in/?campaign=${SelectedCampaign}`  
         }else if(selectedBrand){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}` 
+            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}`  
         }else if(DestinationUrl){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}`}` 
+            base_url = `https://upfilly.jcsoftwaresolution.in/?url=${`https://${DestinationUrl}`}`  
         }
 
         // loader(true);
@@ -170,11 +188,22 @@ const Html = () => {
                             <div className='row'>
                                 <div className='col-12 col-md-6'>
                                     <div>
-                                            <div>Select a Merchant</div>
+                                            <div>Select a Affiliate</div>
                                             <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
-                                                <option value="">Select a Merchant</option>
+                                                <option value="">Select a Affiliate</option>
                                                 {brands.map(brand => (
                                                     <option key={brand.id} value={brand.id} >{brand.name}</option>
+                                                ))}
+                                            </select>
+                                    </div>
+                                </div>
+                                <div className='col-12 col-md-6'>
+                                    <div>
+                                            <div>Select a Campaign</div>
+                                            <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
+                                                <option value="">Select a Campaign</option>
+                                                {CampaignData.map(item => (
+                                                    <option key={item.id || item._id} value={item.id || item._id} >{item.name}</option>
                                                 ))}
                                             </select>
                                     </div>
@@ -247,8 +276,10 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                {!selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`}</p>}
-                                {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+                                { !selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in`}</p>}
+                                { SelectedCampaign && !selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?campaign=${SelectedCampaign}`}</p>}
+                                {selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}`}</p>}
+                                {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
                             </div>
                             {copied && <div className="">Copied!</div>}
                         </div>

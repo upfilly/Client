@@ -39,7 +39,7 @@ export default function StageLastStep() {
   const [loadera,setLoader]=useState(false)
 
   const handleGoBack = () => {
-    router.push(`/affiliate-form/StageSecStep/${id}`)
+    router.push(`/affiliate-form/taxSection/${id}`)
   };
 
   const handleInputChange = (e) => {

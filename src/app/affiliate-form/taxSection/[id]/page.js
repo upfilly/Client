@@ -8,6 +8,7 @@ import Layout from "@/app/components/global/layout";
 import methodModel from "@/methods/methods";
 import $ from 'jquery';
 import ApiClient from "@/methods/api/apiClient";
+import datepipeModel from "@/models/datepipemodel";
 
 const Publish = () => {
   const { id } = useParams()
@@ -69,7 +70,7 @@ const Publish = () => {
         social_security_number:res?.data?.tax_detail?.social_security_number,
         consent_agreed:res?.data?.tax_detail?.consent_agreed,
         signature:res?.data?.tax_detail?.signature,
-        signature_date:res?.data?.tax_detail?.signature_date})
+        signature_date:datepipeModel.datetostring(res?.data?.tax_detail?.signature_date)})
       }
       // loader(false)
     })
@@ -579,8 +580,8 @@ const Publish = () => {
                   <input
                     type="date"
                     className="form-control"
-                    min={currentDate}
-                    value={form?.signature_date || ""}
+                    // min={currentDate}
+                    value={form?.signature_date}
                     onChange={(e) =>
                       setForm({ ...form, signature_date: e.target.value })
                     }

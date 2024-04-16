@@ -7,7 +7,6 @@ import datepipeModel from '@/models/datepipemodel';
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
 
-
 const Html = ({
     view,
     edit,
@@ -37,7 +36,7 @@ const Html = ({
     };
 
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Untracked Sales" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center">
                     <SelectDropdown

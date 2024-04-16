@@ -43,11 +43,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
         setModalIsOpen(false)
         setform({
           "name": "",
-          "sent_to": "",
-          "sent_from": "",
-          "description": "",
           "comments": "",
-          "affiliate_id": ""
         })
       }
       getProductData()
