@@ -127,12 +127,12 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
         </ListItemLink>}
 
         {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" disabled={!user?.account_id ? true : false}>
-          <i className="material-icons mr-2" title="campaignManagement">business</i>
+          <i className="material-icons mr-2" title="campaignManagement">timeline</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
         {user && user?.role == "brand" && <ListItemLink to="/makeLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
-          <i className="material-icons mr-2" title="campaignManagement">business</i>
+          <i className="material-icons mr-2" title="campaignManagement">timeline</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
