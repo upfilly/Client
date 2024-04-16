@@ -489,30 +489,115 @@ const Publish = () => {
                 
 
             </div>
-            <div className="col-md-12">
+            <div className='col-md-12'>
               
-            <div className="mb-4">
-                  <label>
-                    I consent to sign my IRS Form W-9 electronically.{" "}
-                  
-                  </label>
-                  <div className="form-check">
-                    <input
-                       className="mr5 form-check-input"
-                      type="checkbox"
-                      id="consent"
-                      checked={form?.consent_agreed}
-                      onChange={(e) =>
-                        setForm({ ...form, consent_agreed: e.target.checked })
-                      }
-                    />
+            
+              <div className="mb-4">
+              <label className='certif_inst'>
+                  I consent to sign my IRS Form W-9 electronically.{" "}
+                
+                </label>
+                <div className="form-check">
+                  <input
+                    className="mr5 form-check-input"
+                    type="checkbox"
+                    id="consent"
+                    checked={form?.consent_agreed}
+                    onChange={(e) =>
+                      setForm({ ...form, consent_agreed: e.target.checked })
+                    }
+                  /> 
                    <label className="label_p form-check-label">
-                      If you provide an electronic signature, you will be able
-                      to submit your tax information immediately.
+                    If you provide an electronic signature, you will be able
+                    to submit your tax information immediately.
                     </label>
+                </div>
+              </div>
+          
+            <div className="boxpublish certify_detials mb-4">
+               <Label className='form-label certif_inst' >Under penalties of perjury, I certify that:</Label>
+              
+               <ol className='ul_listsbx'>
+          <li className="no_list" >   The number shown on this form is my correct taxpayer
+            identification number  (or I am waiting for a number to be issued to me), and </li>
+
+          <li className="no_list" > {" "}
+            by the Internal Revenue Service (IRS) that I am subject to
+            ackup withholding as a result of a failure to report all
+            interest or{" "} </li>
+
+          <li className="no_list" >   I am a U.S. citizen or other U.S. person (defined in the
+            instructions), and{" "} </li>
+            
+          <li className="no_list" > The FATCA code(s) entered on this form (if any) indicating
+            that I am exempt from FATCA reporting is correct.{" "} </li>
+         
+        </ol>
+              
+                
+              </div>
+
+              <div className="text_git">
+              <h3 className='certif_inst'>
+                  Certification Instructions{" "}
+                
+                </h3>
+                <p className="label_pbx label_font">
+                  You must cross out item 2 above if you have been notified by
+                  the IRS that you are currently subject to backup
+                  withholding. You will need to print out your hard copy form
+                  at the end of the interview and cross out item 2 before
+                  signing and mailing to the address provided. The Internal
+                  Revenue Service does not require your consent to any
+                  provision of this document other than the certifications
+                  required to avoid backup withholding.
+                </p>
+              </div>
+
+              <div className="d-flex justify-content-between mt-3 align-items-center">
+                <div className="">
+                  <div className=''>
+                    {/* <label>Signature</label> */}
+                    <div className="form-group drag_drop mb-0">
+                      <div className='upload_file set_upload_bx position-relative'>
+                      {!form?.signature && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
+                        <input type="file" className="form-control-file over_input" accept="images/*" multiple={false}
+                          onChange={(e) => {
+                            setImgLoder(true)
+                            uploadImage(e, 'images');
+                          }} /></>}
+                        {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
+                       {form?.signature && <div className="imagesRow position-relative mb-4">
+                              <img className="signurimg" src={methodModel.noImg(form?.signature)} />
+                              <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, signature: "" })}></i>
+                        </div>}
+                      </div>
+                    </div>
                   </div>
                 </div>
-            </div>
+                <div className="">
+                  <input
+                    type="date"
+                    className="form-control"
+                    min={currentDate}
+                    value={form?.signature_date || ""}
+                    onChange={(e) =>
+                      setForm({ ...form, signature_date: e.target.value })
+                    }
+                  />
+                  {sumitted && !form?.day && (
+                    <p className="text-danger font_fix">This field is required</p>
+                  )}
+                </div>
+              </div>
+              <div className='col-md-12'>
+              <div className='mb-4 mt-5 text-right '>
+                <button className='back-btns' onClick={() => back()}>Back</button>
+                < button className='btn btn-primary login ml-3 ' onClick={() => handleSave()}>Save & Continue</button>
+              </div>
+              </div>
+
+               </div>
             </div>
            
 

@@ -4,9 +4,7 @@ import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
 import '../style.scss';
-// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
 import dynamic from 'next/dynamic';
 import ImageUpload from "@/app/components/common/ImageUpload";
 

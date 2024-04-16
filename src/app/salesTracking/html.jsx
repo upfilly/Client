@@ -54,7 +54,7 @@ const Html = ({
                     />
 
                     <article className="d-flex filterFlex phView">
-                        {isAllow('addAdmins') ? <>
+                        {user?.role == 'affiliate' ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
                                 Raise a ticket
                             </a>
