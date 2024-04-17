@@ -47,129 +47,157 @@ const Detail = (p) => {
                         <div className="">
                             <div className='row'>
                                 <div className='main-view-pages '>
-
-                                    {data?.user_id?.fullName && <div className='row'>
-                                        <div className='col-3'>
+<div className='row'>
+                                    {data?.user_id?.fullName && 
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>User:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'>{data && data?.user_id?.fullName}  </p>
                                             </div>
+                                            </div>
+                                           
                                         </div>
-                                    </div>}
+                                    
+                                   }
 
-                                    {data?.user_id?.role && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.user_id?.role && 
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Role:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'>{data && data?.user_id?.role} </p>
                                             </div>
+                                            </div>
+                                           
                                         </div>
-                                    </div>}
+                                       
+                                   }
 
-                                    {data && data?.user_id?.email && <div className='row'>
-                                        <div className='col-3'>
+                                    {data && data?.user_id?.email &&  
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Email:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'>{data && data?.user_id?.email} </p>
                                             </div>
+                                            </div>
+                                           
                                         </div>
-                                    </div>}
+                                   }
 
 
-                                    {data && data?.amount && <div className='row'>
-                                        <div className='col-3'>
+                                    {data && data?.amount && 
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Price:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
+                                       
+                                      
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'>{data && data?.amount} </p>
                                             </div>
-                                        </div>
-                                    </div>}
+                                            </div>
+                                           
+                                            </div>
+                                    }
 
 
 
-                                    {data && data?.transaction_type && <div className='row'>
-                                        <div className='col-3'>
+                                    {data && data?.transaction_type && 
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction Type:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'>{data && data?.transaction_type} </p>
                                             </div>
+                                            </div>
+                                            
+                                      
                                         </div>
-                                    </div>}
+                                     
+                                            
+                                }
 
 
-                                    {data && data?.transaction_status && <div className='row'>
-                                        <div className='col-3'>
+                                    {data && data?.transaction_status && 
+                                       
+                                           
+                                      
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction Status:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'> {data && data?.transaction_status} </p>
                                             </div>
+                                            </div>
+                                            
                                         </div>
-                                    </div>}
+                                }
 
-                                    {data?.transaction_id && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.transaction_id && 
+                                        
+                                          
+                                        
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction ID:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'> {data && data?.transaction_id} </p>
                                             </div>
+                                            </div>
+                                             
                                         </div>
-                                    </div>}
+                                    }
 
 
-                                    {data?.currency && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.currency && 
+                                        
+                                           
+                                        
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Currency:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'> {data && data?.currency} </p>
                                             </div>
+                                            </div>
+                                            
                                         </div>
-                                    </div>}
+                                    }
 
-                                    {data?.subscription_plan_id && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.subscription_plan_id && 
+                                       
+                                          
+                                       
+                                        <div className='col-6 col-md-6 col-lg-4'>
+                                            <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Subscription Plan:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0'> {data && data?.subscription_plan_id?.name} </p>
                                             </div>
+                                            </div>
+                                             
                                         </div>
-                                    </div>}
-
+                                    }
+</div>
                                 </div>
 
                             </div>

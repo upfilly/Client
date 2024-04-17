@@ -119,76 +119,74 @@ const Detail = (p) => {
                                 <div className=" col-md-12">
 
                                     <div className='row'>
-                                        <div className='col-2'>
-                                            <div className='userdata'>
+                                        <div className='col-6'>
+                                           <div className='mb-3'>
+                                           <div className='userdata'>
                                                 <p className='headmain'>Name:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-2'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && data?.fullName}</p>
                                             </div>
+                                           </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-2'>
-                                            <div className='userdata'>
+                                        <div className='col-6'>
+                                       <div className='mb-3'>
+                                       <div className='userdata'>
                                                 <p className='headmain'>Email:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-2'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && data?.email}</p>
                                             </div>
+                                       </div>
                                         </div>
-                                    </div>
-                                    <div className='row'>
-                                         <div className='col-2'>
-                                            <div className='userdata'>
+                                  
+                                        <div className='col-6'>
+                                      <div className='mb-3'>
+                                      <div className='userdata'>
                                                 <p className='headmain'>Mobile Number:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-2'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>+{data?.dialCode}{data && data?.mobileNo}</p>
                                             </div>
-                                        </div></div>
-
-                                    <div className='row'>
-                                        <div className='col-2'>
-                                            <div className='userdata'>
+                                      </div>
+                                        </div>
+                                        <div className='col-6'>
+                                     <div className='mb-3'>
+                                     <div className='userdata'>
                                                 <p className='headmain'>Address:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-2'>
+                                        
+                                      
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && data?.address}</p>
                                             </div>
+                                     </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-2'>
-                                            <div className='userdata'>
+                                        <div className='col-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Creation Date:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-9'>
+                                      
+                                        
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{datepipeModel.date(data?.createdAt)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-2'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Status:</p>
-                                            </div>
                                         </div>
 
-                                        {data?.social_media_platforms?.length > 0 && <div className="col-md-6 ">
+                                        <div className='col-6'>
+                                      <div className='mb-3'>
+                                      <div className='userdata  d-flex gap-3'>
+                                                <p className='headmain'>Status:</p>
+                                                 <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.status)}</p>
+                                            </div> 
+                                            </div>
+
+                                      
+
+                                        {data?.social_media_platforms?.length > 0 && 
                                             <div className='inputFlexs width400'>
                                                 <label >Social Media</label>
                                                 <div className='d-flex wraps'>
@@ -198,12 +196,13 @@ const Detail = (p) => {
                                                     }
                                                 </div>
                                             </div>
-                                        </div>}
+                                       }
 
-                                        {data?.tags?.length > 0 && <div className="col-md-6">
+                                        {data?.tags?.length > 0 && 
                                             <div className='inputFlexs width400'>
-                                                <label >Tags:</label>
                                                 <div className='d-flex wraps'>
+                                                <label className='mr-2'>Tags:</label>
+                                                
                                                     {data?.tags?.map((item, index, array) =>
                                                         <div key={item} className="profile_data_wrapper">
                                                             <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
@@ -212,12 +211,26 @@ const Detail = (p) => {
                                                     }
                                                 </div>
                                             </div>
-                                        </div>}
+                                        }
+                                      </div>
+                                        </div>
+                                       
+                                    </div>
+                                   
+
+                               
+
+                                  
+                                      
+                                            
+                                   
+
+                                    <div className='row'>
+                                       
+                                           
 
                                         <div className='col-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.status)}</p>
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>

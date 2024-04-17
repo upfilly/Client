@@ -68,7 +68,7 @@ const Detail = (p) => {
 
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-12 mb-3'>
                                 <div className='affilate-detals'>
 
                                     <div className='billing_dtls'>
@@ -239,7 +239,7 @@ const Detail = (p) => {
                                 </div>
                             </div>
 
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-12 mb-3'>
                                 {<div className='billing_dtls'>
                                     <h6>Billing Detail</h6>
                                 </div>
@@ -285,7 +285,7 @@ const Detail = (p) => {
                                 </div>}
                             </div>
 
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-12 mb-3'>
                                 <div className='billing_dtls'>
                                     <h6>Tax Detail</h6>
                                 </div>

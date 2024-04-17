@@ -288,6 +288,7 @@ export default function Commissions() {
                               {/* <th>Email</th> */}
                               <th>Due</th>
                               <th>Count</th>
+                              <th>Ammout</th>
                               <th>Status</th>
 
                             </tr>
@@ -316,6 +317,8 @@ export default function Commissions() {
                               <td>{datepipeModel.date(itm.due_date)}</td>
 
                               <td>${itm?.amount}</td>
+                              <td></td>
+
 
                               <td><span class={itm?.status=="pending"?"pending_status":"contract"}>{itm?.status}</span></td>
                             </tr>

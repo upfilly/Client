@@ -40,7 +40,7 @@ const Html = ({
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Add Offers" filters={filters}>
             <div className='sidebar-left-content'>
-                <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex justify-content-between align-items-center gap-3">
                         <div className="d-flex gap-2 align-items-center">
                             <SelectDropdown
                                 id="statusDropdown"
@@ -78,7 +78,7 @@ const Html = ({
                             />
 
                                
-                        <div className='searchInput'>
+                        <div className='searchInput ml-0'>
                             <input
                                 type="text"
                                 value={filters.search}
