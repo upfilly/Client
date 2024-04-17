@@ -21,6 +21,8 @@ const Html = ({
     data,
     total,
     setFilter,
+    user,
+    history,
 }) => {
 
     const handleKeyPress = (event) => {
@@ -37,9 +39,9 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
                             <div className="d-flex filterFlex phView align-items-center   justify-content-end">
-                                <a className="btn btn-primary ms-2 " onClick={e => add()}>
+                               {user?.role != 'team' && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i> Add
-                                </a>
+                                </a></>}
                                 <SelectDropdown
                                     id="statusDropdown" className="mr-2 "
                                     displayValue="name"
@@ -102,14 +104,20 @@ const Html = ({
                                                 <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
                                                 <td>
-                                                    <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                                                   {user?.role != 'team'  && <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                     </a>
 
                                                         <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                                                             <i className={`material-icons delete`} title='Delete'> delete</i>
-                                                        </a></div>
+                                                        </a></div>}
+                                                    <a className='edit_icon action-btn' onClick={() => {
+                                                        history.push(`/chat`)
+                                                        localStorage.setItem("chatId", user?.role == 'affiliate' ? itm?._id || itm?.id : itm?.addedBy)
+                                                    }}>
+                                                        <i className='fa fa-comment-o text-white'></i>
+                                                    </a>
                                                 </td>
                                             </tr>
 

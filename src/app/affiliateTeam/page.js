@@ -199,6 +199,8 @@ const AffiliateTeam = () => {
             statusChange={statusChange}
             statusPopular={statusPopular}
             setFilter={setFilter}
+            user={user}
+            history={history}
         />
     </>;
 };
