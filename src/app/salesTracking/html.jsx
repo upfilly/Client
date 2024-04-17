@@ -140,11 +140,11 @@ const Html = ({
 
                                     {/* dropdown */}
                                     <td className='table_dats'>
-                                        <div className="action_icons">
+                                        <div className="action_icons gap-3 ">
                                             {user?.role == 'brand' && <>{itm?.status == 'pending' ? <div >
                                                 <button onClick={() => {
                                                     statusChange("accepted", itm?.id || itm?._id)
-                                                }} className="btn btn-primary mr-2">
+                                                }} className="btn btn-primary mr-2 ml-3">
                                                     <i className='fa fa-check'></i>
                                                 </button>
                                                 <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2">

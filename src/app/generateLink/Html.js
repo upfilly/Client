@@ -217,14 +217,16 @@ const Html = () => {
                                 <div className='col-12 col-md-12 mt-2'>
                                     <div className='row'>
                                         {selectedValues.map((selected,index) => (
-                                            <div className='col-12 col-md-4' key={index}>
-                                                <p className='mb-0 labeltext'>{selected}:</p>
+                                            <div className='col-12 col-md-4 ' key={index}>
+                                               <div className='mb-3'>
+                                               <p className='mb-0 labeltext'>{selected}:</p>
                                                 <input
                                                     type="text"
                                                     className='form-control'
                                                     placeholder={`Input value for ${selected}`}
                                                     onChange={(e) => handleInputChange(selected, e.target.value)}
                                                 />
+                                               </div>
                                             </div>
                                          ))}
                                     </div>

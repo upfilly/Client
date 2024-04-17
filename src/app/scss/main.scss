@@ -1751,7 +1751,10 @@ p.profile_data {
 }
 
 
-
+.multiSelectContainer li {
+  padding: 10px;
+  margin-bottom: 5px;
+}
 
 @media screen and (min-width:320px) and (max-width:767px) {
   .min-sidebar~div>.main-sidebar a.col_side:hover {
@@ -3052,10 +3055,14 @@ p.ipsi {
 
 
 .dailCode .react-tel-input .form-control {
-  width: 50px !important;
+  // width: 50px !important;
+  // outline: none;
+  // margin-left: 2px;
+  // margin-top: 1px !IMPORTANT;
+  padding-left: 42px;
   outline: none;
   margin-left: 2px;
-  margin-top: 1px !IMPORTANT;
+  margin-top: 1px !important;
 }
 
  input.overlap_mobile {
@@ -3370,7 +3377,7 @@ p.types_date {
 }
 
 .selectDropdown .searchBox  {
-  width: 100%;
+  // width: 100%;
   padding: 2px;
 }
 
