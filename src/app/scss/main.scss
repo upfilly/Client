@@ -256,7 +256,7 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
 
 .phoneInput {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 
   >*:first-child {
     width: 60px;
@@ -3768,5 +3768,27 @@ p.checkbox-option-main {
   width: unset !important;
 }
 .dailCode .react-tel-input.input_number input.form-control {
-  width: 100px;
+  max-width: 83px;
+  padding-right: 0px !important;
+  background-color: #fff;
+}
+
+.location_search {
+  font-size: 14px;
+  width: 100%;
+  max-height: 100px;
+  overflow-y: auto;
+}
+.location_search .location_address{
+margin-bottom: 10px;
+padding: 6px 12px;
+}
+.overlap_mobile {
+  padding-left: 0;
+}
+.react-tel-input{
+  padding-left: 6px;
+} 
+ .overlap_mobile {
+  border: 0px !important;
 }

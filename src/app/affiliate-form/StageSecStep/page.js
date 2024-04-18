@@ -167,8 +167,8 @@ export default function StageSecStep() {
                         onSelect={handleSelect}
                       >
                         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
-                            <input className="form-control "
+                          <div className='address_search'>
+                            <input className="form-control " 
 
                               {...getInputProps({
                                 placeholder: 'Enter an address...',
@@ -177,22 +177,28 @@ export default function StageSecStep() {
                                 // value:addressData
                               })} />
                             {/* {(inputFocused && address?.length > 0) && <div className='shadow p-3'> */}
+                             <div className='location_search'>
                             {loading && <div>Loading...</div>}
                             {suggestions?.map((suggestion) => {
                               const style = {
                                 backgroundColor: suggestion.active ? '#41b6e6' : '#fff',
 
                               };
+                             
                               return (
-                                <div className='location_address'
+                               
+                                  <div className='location_address'
                                   {...getSuggestionItemProps(suggestion, {
                                     style,
                                   })}
                                 >
                                   <i class="fa-solid fa-location-dot mr-1"></i>{suggestion.description}
                                 </div>
+                             
                               );
+                             
                             })}
+                             </div>
                             {/* </div>} */}
                           </div>
                         )}
