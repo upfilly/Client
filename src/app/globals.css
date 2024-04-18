@@ -143,3 +143,18 @@ a.demos-button {
   min-height: 330px;
 }
 /* //gourav css  */
+
+.text-danger{
+  font-size: 14px;
+}
+.btn_min .span_close {
+  width: 19px;
+  font-size: 11px;
+  height: 19px;
+}
+.label-set .sad-img {
+  width: 18px;
+}
+.svg_iconbx {
+  width: 31px !important;
+}

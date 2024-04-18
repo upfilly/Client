@@ -194,17 +194,22 @@ console.log(form?.mobileNo,"9999999999911111111--------")
             onClick={addTag}
         ><i className="fa fa-plus"></i></a>
     </div>
+  
     {form?.tags?.map((item, i) => {
         console.log({ item });
         return (
-            <button type="button" class="btn btn-primary position-relative mr-3 btn_min" key={i}>
+          
+ <button type="button" class="btn btn-primary position-relative mr-3 btn_min" key={i}>
                 {item}
-                <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle span_close">
+                <div class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle span_close">
                     <span style={{ width: '5px', height: '5px' }} onClick={() => cancele(item, 'tags')}>x</span>
-                </span>
+                </div>
             </button>
+          
+           
         )
     })}
+    
 </div>
 }
 
@@ -388,8 +393,9 @@ onChange={handleInputChange} />
     {data?.map((item) => (
         <div key={item?.id} className="col-md-3">
             <div className="card p-3 border">
-                <input
-                    className="form-check-input ml-0"
+             <div className="d-flex align-items-center ">
+             <input
+                    className="form-check-input ml-0 mt-0"
                     type="checkbox"
                     id={item}
                     onChange={() => handleFeatureCheckbox(item)}
@@ -398,6 +404,7 @@ onChange={handleInputChange} />
                 <label className="form-check-label ml-3 pl-1" for={item}>
                     {methodModel?.capitalizeFirstLetter(item)}
                 </label>
+             </div>
                 {selectedItems?.includes(item) && (
                     <div className="row">
                         <div className="col-md-12 mb-3 mt-4">

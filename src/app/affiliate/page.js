@@ -296,7 +296,7 @@ export default function affilate() {
                   </div>
 
                   {filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
-                    <a className="btn btn-primary ms-3  " onClick={e => reset()}>
+                    <a className="btn btn-primary   " onClick={e => reset()}>
                       Reset
                     </a>
                   </> : <></>}
