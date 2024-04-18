@@ -187,8 +187,8 @@ const Html = () => {
 
                             <div className='row'>
                                 <div className='col-12 col-md-6'>
-                                    <div>
-                                            <div>Select a Affiliate</div>
+                                    <div className='mb-3'>
+                                            <div className='mb-2' >Select a Affiliate</div>
                                             <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
                                                 <option value="">Select a Affiliate</option>
                                                 {brands.map(brand => (
@@ -198,8 +198,8 @@ const Html = () => {
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-6'>
-                                    <div>
-                                            <div>Select a Campaign</div>
+                                    <div className='mb-3' >
+                                            <div className='mb-2' >Select a Campaign</div>
                                             <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
                                                 <option value="">Select a Campaign</option>
                                                 {CampaignData.map(item => (
@@ -209,8 +209,8 @@ const Html = () => {
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-6'>
-                                    <div>
-                                        <div>Destination URL</div>
+                                    <div className='mb-3' >
+                                        <div className='mb-2' >Destination URL</div>
                                         <input
                                             type="text"
                                             className='form-control'
@@ -222,8 +222,8 @@ const Html = () => {
                                 </div>
 
                                 <div className='col-12 col-md-12'>
-                                    <div>
-                                    <div>Select Custom Parameters</div>
+                                    <div className='mb-3' >
+                                    <div className='mb-2'>Select Custom Parameters</div>
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="label"

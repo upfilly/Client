@@ -156,14 +156,14 @@ export default function StageSecStep() {
                     {/* { enableAddress &&    */}
                     <><div className='col-md-6'>
                       <label className='label-set'>Address1<span className="star">*</span></label>
-
+ 
                       <PlacesAutocomplete
                         value={address}
                         onChange={handleChange}
                         onSelect={handleSelect}
                       >
                         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
+                          <div className='address_search' >
                             <input className="form-control "
 
                               {...getInputProps({
@@ -173,6 +173,7 @@ export default function StageSecStep() {
                                 // value:addressData
                               })} />
                             {/* {(inputFocused && address?.length > 0) && <div className='shadow p-3'> */}
+                            <div className='location_search'>
                             {loading && <div>Loading...</div>}
                             {suggestions?.map((suggestion) => {
                               const style = {
@@ -189,6 +190,7 @@ export default function StageSecStep() {
                                 </div>
                               );
                             })}
+                                </div>
                             {/* </div>} */}
                           </div>
                         )}
