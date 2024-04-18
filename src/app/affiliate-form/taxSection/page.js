@@ -42,7 +42,7 @@ const Publish = () => {
     }
 
     if(form?.tax_classification == 'business'){
-      if( !form?.day  || !form?.federal_text_classification){
+      if( !form?.day  || !form?.federal_text_classification || !form?.signature){
       setSumitted(true)
       return
       }

@@ -30,8 +30,6 @@ const Publish = () => {
   const [imgLoder, setImgLoder] = useState()
   const currentDate = new Date().toISOString().split("T")[0];
 
-  console.log(form,"formform-------")
-
   const handleSave = () => {
     // setLoader(true)
     const data = {
