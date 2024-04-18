@@ -105,7 +105,12 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass,stab, 
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" || user?.role == "team" && <ListItemLink to="/affiliateTeam" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id && user?.role != 'team' ? true : false}>
+        {user && (user?.role == "affiliate")  && <ListItemLink to="/affiliateTeam" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id && user?.role != 'team' ? true : false}>
+          <i className="material-icons mr-2" title="product">groups_3</i>
+          <span className="side_head">Add Team</span>
+        </ListItemLink>}
+
+        {user && (user?.role == "team") && <ListItemLink to="/affiliateTeam" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id && user?.role != 'team' ? true : false}>
           <i className="material-icons mr-2" title="product">groups_3</i>
           <span className="side_head">Add Team</span>
         </ListItemLink>}
