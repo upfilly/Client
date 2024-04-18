@@ -3763,3 +3763,10 @@ p.checkbox-option-main {
   align-items: center;
   justify-content: center;
 }
+
+.phoneInput > *:first-child {
+  width: unset !important;
+}
+.dailCode .react-tel-input.input_number input.form-control {
+  width: 100px;
+}
