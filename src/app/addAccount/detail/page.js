@@ -70,8 +70,13 @@ export default function addAffiliateAccount() {
   }
 
   useEffect(() => {
-    if (user && user?.role == 'affiliate' && user?.account_id) {
-      console.log("ENTER.....")
+    if (user && user?.role == 'affiliate' && !user?.account_id && !user?.tax_detail) {
+      setTaxDetailTabEnabled(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (user && user?.role == 'affiliate' &&  !user?.tax_detail && user?.account_id) {
       setTaxDetailTabEnabled(true)
     }
   }, [])
@@ -79,20 +84,20 @@ export default function addAffiliateAccount() {
   const handleSubmit = (e) => {
 
     if(!form?.tax_classification){
-      setSubmitted(true)
+      setSumitted(true)
       return
     }
 
     if(form?.tax_classification == 'business'){
-      if( !form?.signature_date || !form?.consent_agreed || !form?.federal_text_classification){
-      setSubmitted(true)
+      if( !form?.signature_date || !form?.federal_text_classification){
+        setSumitted(true)
       return
       }
     }
 
     if(form?.tax_classification == 'individual'){
       if( !form?.signature_date || !form?.tax_name || !form?.social_security_number){
-      setSubmitted(true)
+        setSumitted(true)
       return
       }
     }
@@ -108,9 +113,10 @@ export default function addAffiliateAccount() {
     }
 
     if(payload?.tax_classification == 'individual'){
+      // delete payload?.federal_text_classification
       delete payload?.federal_text_classification
-      // delete data?.social_security_number
     }
+
     ApiClient.post('addTax', payload).then(res => {
       if (res.success) {
         let uUser = { ...user, tax_detail:{...payload} }
@@ -355,10 +361,12 @@ export default function addAffiliateAccount() {
           if (res.success) {
             let uUser = { ...user, ...data1 }
             crendentialModel.setUser(uUser)
-            setTaxDetailTabEnabled(true)
-            // history.push("/profile")
+            if (user?.tax_detail != '') {
+              router.push("/profile")
+            } else {
+              setTaxDetailTabEnabled(true)
+            }
             toast.success('Account Added Sccessfully ...')
-            // router.push(`/`)
           }
           // loader(false)
         })
@@ -788,6 +796,9 @@ export default function addAffiliateAccount() {
           </div>
         </div>
       </div>
+      {sumitted && !form?.tax_classification && (
+              <p className="text-danger">This field is required</p>
+            )}
 </div>
 
 <div className='col-md-12'> 
