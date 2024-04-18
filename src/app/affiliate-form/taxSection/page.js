@@ -27,15 +27,12 @@ const Publish = () => {
     ApiClient.postFormData('upload/image?modelName=users', { file: file, modelName: 'users' }).then(res => {
       if (res.data) {
         let image = res?.data?.fullpath
-        setForm({ ...form, image: `images/users/${image}` })
+        setForm({ ...form, signature: `images/users/${image}` })
       }
       setImgLoder(false)
       setLoader(false)
     })
   }
-
-  console.log(form,"=======1==1=11=1=1=1=1=")
-
 
   const handleSubmit = (e) => {
 
@@ -52,7 +49,7 @@ const Publish = () => {
     }
 
     if(form?.tax_classification == 'individual'){
-      if( !form?.day || !form?.tax_name  || !form?.social_security_number || !form?.image){
+      if( !form?.day || !form?.tax_name  || !form?.social_security_number || !form?.signature){
       setSumitted(true)
       return
       }
@@ -170,6 +167,9 @@ const Publish = () => {
                     </div>
                   </div>
                 </div>
+                {sumitted && !form?.tax_classification && (
+                        <p className="text-danger">This field is required</p>
+                      )}     
             </div>
             <div className='col-md-12'> 
              {/* new fields add start */}
@@ -528,16 +528,16 @@ const Publish = () => {
                     {/* <label>Signature</label> */}
                     <div className="form-group drag_drop mb-0">
                       <div className='upload_file set_upload_bx position-relative'>
-                      {!form?.image && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
+                      {!form?.signature && !imgLoder && <> <button className="btn btn-primary upload_image ">Upload Signature</button>
                         <input type="file" className="form-control-file over_input" accept="images/*" multiple={false}
                           onChange={(e) => {
                             setImgLoder(true)
                             uploadImage(e, 'images');
                           }} /></>}
                         {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                       {form?.image && <div className="imagesRow position-relative mb-4">
-                              <img className="signurimg" src={methodModel.noImg(form?.image)} />
-                              <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, image: "" })}></i>
+                       {form?.signature && <div className="imagesRow position-relative mb-4">
+                              <img className="signurimg" src={methodModel.noImg(form?.signature)} />
+                              <i className="fa fa-times kliil" title="Remove" onClick={e => setForm({ ...form, signature: "" })}></i>
                         </div>}
                       </div>
                     </div>
