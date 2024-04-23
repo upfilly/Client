@@ -237,7 +237,7 @@ export default function StageSecStep() {
                       </div></>
                     {/* } */}
 
-                    <div className='col-md-12 mt-4 mb-2'>
+                    <div className='col-md-12 mt-4 mb-2 text-right'>
                       <button className='back-btns' onClick={handleGoBack}>Back</button>
                       {enableAddress ? <button className='btn btn-primary login ml-3' onClick={handleSave}>Save & Continue</button> :
                         <button className='btn btn-primary login ml-3' onClick={handleEnableData}>Save & Continue</button>}

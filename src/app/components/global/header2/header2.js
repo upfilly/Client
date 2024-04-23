@@ -143,6 +143,8 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                             updateSingleNotifications(itm?.id)
                                             if (itm?.type == 'message') {
                                                 history.push("/chat")
+                                            } else if (itm?.type == 'make_offer') {
+                                                history.push("/requests")
                                             } else {
                                                 if (user?.role !== 'brand') {
                                                     history.push("/campaignManagement")
@@ -153,11 +155,12 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                         }}>
                                             <div className='messagetext'>
                                                 <div className='mb-3 bgblue'>
-                                                    <h3 className='noti_head'>{itm?.type == 'message'? "" : "Campaign"}</h3>
-                                                    <span>{itm?.type == 'message' ? 
-                                                    <p className='noti_text_msg'>You have a message from {itm?.addedBy_name?.slice(0,10)}...</p>  
-                                                     : <p className='noti_text_chat'>{itm?.message?.slice(0,50)}</p> }</span>
-                                                    {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message?.slice(0,50)} </p>}
+                                                    <h3 className='noti_head'>{itm?.type == 'message' ? itm?.type == 'make_offer' ? "Offer Request" : "" : "Campaign"}</h3>
+                                                    <span>{itm?.type == 'message' ?
+                                                        <p className='noti_text_msg'>You have a message from {itm?.addedBy_name?.slice(0, 10)}...</p>
+                                                        : <p className='noti_text_chat'>{itm?.message?.slice(0, 50)}</p>}</span>
+                                                    {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message?.slice(0, 50)} </p>}
+                                                    {itm?.type == 'make_offer' && <p className='noti_text_chat'>{itm?.message} </p>}
                                                 </div>
                                             </div>
                                         </div>))

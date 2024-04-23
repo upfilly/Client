@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import methodModel from "@/methods/methods";
 import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
-import ApiClient from "@/methods/api/apiClient";
 import '../style.scss';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
@@ -73,7 +71,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                     />
                                     {submitted && !form?.currency ? <div className="invalid-feedback d-block">Currency is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Click Ref</label>
                                     <input
                                         type="text"
@@ -81,7 +79,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         value={form.click_ref}
                                         onChange={e => setform({ ...form, click_ref: e.target.value })}
                                     />
-                                </div>
+                                </div> */}
                                 <div className="col-md-6 mb-3">
                                     <label>Commission<span className="star">*</span></label>
                                     <input

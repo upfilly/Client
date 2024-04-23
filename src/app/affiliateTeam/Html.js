@@ -77,7 +77,7 @@ const Html = ({
                                             {/* <th onClick={e => sorting('istrusted')} scope="col" className='table_data'>Trusted {filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                             <th onClick={e => sorting('createdAt')} scope="col" className='table_data'>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                             <th onClick={e => sorting('updatedAt')} scope="col" className='table_data'>Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -104,20 +104,24 @@ const Html = ({
                                                 <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
                                                 <td>
-                                                   {user?.role != 'team'  && <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                                                   {user?.role != 'team'  &&
+                                                    <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                     </a>
 
                                                         <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                                                             <i className={`material-icons delete`} title='Delete'> delete</i>
-                                                        </a></div>}
-                                                    <a className='edit_icon action-btn' onClick={() => {
+                                                        </a>
+                                                        <a className='edit_icon action-btn' onClick={() => {
                                                         history.push(`/chat`)
-                                                        localStorage.setItem("chatId", user?.role == 'affiliate' ? itm?._id || itm?.id : itm?.addedBy)
+                                                        localStorage.setItem("chatId", user?.role != 'affiliate' ? itm?._id || itm?.id : itm?.addedBy)
                                                     }}>
                                                         <i className='fa fa-comment-o text-white'></i>
                                                     </a>
+                                                        
+                                                        </div>}
+                                                    
                                                 </td>
                                             </tr>
 

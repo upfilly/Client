@@ -15,7 +15,7 @@ const AddEditUser = () => {
   const {id} = useParams()
   const [image, setImages] = useState('');
   const defaultvalue = userType
-  const [form, setform] = useState({ social_media_platforms: [], tags: [], category_id: null, dialCode: '', role: "affiliate",country:"",city:"",pincode:""})
+  const [form, setform] = useState({mobileNo:'', social_media_platforms: [], tags: [], category_id: null, dialCode: '', role: "affiliate",country:"",city:"",pincode:""})
   const [permissions, setPermissions] = useState({})
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false)
@@ -31,8 +31,8 @@ const AddEditUser = () => {
     { key: 'lastName', required: true },
     { key: 'email', required: true },
     { key: 'mobileNo', minLength: 10 },
-    { key: 'category_id', required:true },
-    { key: 'gender', required: true },
+    // { key: 'category_id', required:true },
+    // { key: 'gender', required: true },
     { key: 'ic_number', minLength: 6 },
     { key: 'password', minLength: 8 },
     { key: 'confirmPassword', minLength: 8, confirmMatch: ['confirmPassword', 'password'] },

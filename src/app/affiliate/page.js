@@ -296,7 +296,7 @@ export default function affilate() {
                   </div>
 
                   {filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
-                    <a className="btn btn-primary ms-3  " onClick={e => reset()}>
+                    <a className="btn btn-primary   " onClick={e => reset()}>
                       Reset
                     </a>
                   </> : <></>}
@@ -306,12 +306,12 @@ export default function affilate() {
               </div>
             </div>
 
-            <div className='col-12 col-md-2 col-lg-3'>
+            {/* <div className='col-12 col-md-2 col-lg-3'>
               <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
                   <Link href="/affiliate-form/StageFirstStep" className='btn btn-primary d-flex align-items-center'><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i>
                     New Affilate</Link>
                 </div>
-            </div>
+            </div> */}
           </div>
           <div className='row mx-0 mt-3'>
             <div className='col-md-12'>
@@ -356,10 +356,11 @@ export default function affilate() {
                     </span></td>
                    
                       <td>
-                      <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                      <div className='action_icons'> 
+                      {/* <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
-                      </a>
+                      </a> */}
                        
                           <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>

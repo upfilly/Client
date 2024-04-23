@@ -2383,7 +2383,7 @@ ul.sales-listing {
 }
 
 .item-name p {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .yellow-badge {
@@ -2551,7 +2551,7 @@ select.form-select {
 }
 
 .sidebar_main .nav-item .nav-link i {
-  font-size: 23px;
+  font-size: 20px;
   margin: 0 9px 0 0 !important;
 }
 
@@ -3791,4 +3791,7 @@ padding: 6px 12px;
 } 
  .overlap_mobile {
   border: 0px !important;
+}
+.edit_icon.action-btn {
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
 }

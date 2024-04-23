@@ -32,7 +32,7 @@ const Html = ({
         }
     };
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Send Offers" :"Offer Requests"} filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Send Offers" : "Offer Requests"} filters={filters}>
             <div className='sidebar-left-content'>
                 <div className='card'>
                     <div className='card-header'>
@@ -63,15 +63,15 @@ const Html = ({
                                     intialValue={filters.status}
                                     result={e => { ChangeStatus(e.value) }}
                                     options={[
-                                        {id:'pending',name:'Pending'},
-                                        {id:'accepted',name:'Accepted'},
-                                        {id:'rejected',name:'Rejected'},
+                                        { id: 'pending', name: 'Pending' },
+                                        { id: 'accepted', name: 'Accepted' },
+                                        { id: 'rejected', name: 'Rejected' },
                                     ]}
                                 />
 
 
-                  
-                    {/* {!role ? <SelectDropdown
+
+                                {/* {!role ? <SelectDropdown
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All User"
@@ -100,8 +100,8 @@ const Html = ({
                                 <thead className='table_head'>
                                     <tr className='heading_row'>
                                         <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affilite Name"}</th>
-                                       
                                         <th scope="col" className='table_data' >Title</th>
+                                        <th scope="col" className='table_data' >Comment</th>
                                         {user && user?.role == "brand" && <th scope="col" className='table_data' >Status</th>}
                                         <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                         <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
@@ -124,7 +124,8 @@ const Html = ({
                                                     </div>
                                                 </div></td>
                                             <td className='table_dats'>{itm?.product_name}</td>
-                                            {user && user?.role == "brand" &&<td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>}
+                                            <td className='table_dats'>{itm?.comments.slice(0, 40)}</td>
+                                            {user && user?.role == "brand" && <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>}
                                             <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                                             <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
 

@@ -4,92 +4,87 @@ import 'react-phone-input-2/lib/style.css';
 import ImageUpload from "@/app/components/common/ImageUpload";
 import SelectDropdown from "../../components/common/SelectDropdown"
 import Layout from '../../components/global/layout';
-import methodModel from "@/methods/methods";
-import PlacesAutocomplete from "react-places-autocomplete";
+// import methodModel from "@/methods/methods";
+// import PlacesAutocomplete from "react-places-autocomplete";
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ affiliateGroup, id, role, setForm, handleSelect, address, category, states, cities, setChangeSubCategory, changeSubCategory, form, handleSubmit, setform, submitted, images, imageResult, handleChange, location,
-    getError, handleFeatureCheckbox, selectedItems, setSelectedItems, setEyes, eyes, back, emailCheck, emailErr, emailLoader, setPermissions, permissions  }) => {
+    getError, handleFeatureCheckbox, selectedItems, setSelectedItems, setEyes, eyes, back, emailCheck, emailErr, emailLoader, setPermissions, permissions }) => {
 
-console.log(form?.mobileNo,"9999999999911111111--------")
+    // const data = [
+    //     "youtube",
+    //     "twitter",
+    //     "instagram",
+    //     "linkedin"
+    // ]
+    // const pattern = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
 
-        const data = [
-            "youtube",
-            "twitter",
-            "instagram",
-            "linkedin"
-        ]
-        const pattern = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
-    
-        const addTag = () => {
-            if (changeSubCategory) {
-                setForm({
-                    ...form,
-                    tags: [...form.tags, changeSubCategory],
-                });
-                setChangeSubCategory('');
-            }
-        };
-    
-        const handleKeyDown = (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                addTag();
-            }
-        };
-    
-        const cancele = (item, type) => {
-            const data1 = form?.[type]?.filter(data => data != item)
-            setform({
-                ...form,
-                [type]: data1
-            })
-            return data1
-        }
+    // const addTag = () => {
+    //     if (changeSubCategory) {
+    //         setForm({
+    //             ...form,
+    //             tags: [...form.tags, changeSubCategory],
+    //         });
+    //         setChangeSubCategory('');
+    //     }
+    // };
+
+    // const handleKeyDown = (e) => {
+    //     if (e.key === 'Enter') {
+    //         e.preventDefault();
+    //         addTag();
+    //     }
+    // };
+
+    // const cancele = (item, type) => {
+    //     const data1 = form?.[type]?.filter(data => data != item)
+    //     setform({
+    //         ...form,
+    //         [type]: data1
+    //     })
+    //     return data1
+    // }
 
     return <>
-    <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Affiliate Team" filters={''} >
-    <form onSubmit={handleSubmit}>
-          
-            <div className="pprofile1 mt-3">
-            <div className="d-flex align-items-center add_memeber_bx">
-                <a to="/users" onClick={e => back()}>  <i className="fa fa-arrow-left left_arrows" title='Back' aria-hidden="true"></i></a>
-                <h3 className='Profilehedding add_title'>{form && form?.id ? 'Edit' : 'Add'} {role ? rolesModel.name(role) : 'Team Member'}</h3>
-            </div>
+        <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Affiliate Team" filters={''} >
+            <form onSubmit={handleSubmit}>
 
-
-            
-            
-    <div className="  add_team_bx ">
-    <div className="form-row ">
-      <div className="col-md-6 mb-3">
-                        <label>First Name<span className="star">*</span></label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={form?.firstName}
-                            onChange={e => setform({ ...form, firstName: e.target.value })}
-
-                        />
-                        {submitted && !form?.firstName ? <div className="invalid-feedback d-block">FirstName is Required</div> : <></>}
+                <div className="pprofile1 mt-3">
+                    <div className="d-flex align-items-center add_memeber_bx">
+                        <a to="/users" onClick={e => back()}>  <i className="fa fa-arrow-left left_arrows" title='Back' aria-hidden="true"></i></a>
+                        <h3 className='Profilehedding add_title'>{form && form?.id ? 'Edit' : 'Add'} {role ? rolesModel.name(role) : 'Team Member'}</h3>
                     </div>
 
-                    <div className="col-md-6 mb-3">
-                        <label>Last Name<span className="star">*</span></label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={form?.lastName}
-                            onChange={e => setform({ ...form, lastName: e.target.value })}
+                    <div className="  add_team_bx ">
+                        <div className="form-row ">
+                            <div className="col-md-6 mb-3">
+                                <label>First Name<span className="star">*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={form?.firstName}
+                                    onChange={e => setform({ ...form, firstName: e.target.value })}
 
-                        />
-                        {submitted && !form?.lastName ? <div className="invalid-feedback d-block">LastName is Required</div> : <></>}
-                    </div>
+                                />
+                                {submitted && !form?.firstName ? <div className="invalid-feedback d-block">FirstName is Required</div> : <></>}
+                            </div>
 
-                    {/* {role ? <></> : <div className="col-md-6 mb-3">
+                            <div className="col-md-6 mb-3">
+                                <label>Last Name<span className="star">*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={form?.lastName}
+                                    onChange={e => setform({ ...form, lastName: e.target.value })}
+
+                                />
+                                {submitted && !form?.lastName ? <div className="invalid-feedback d-block">LastName is Required</div> : <></>}
+                            </div>
+
+                            {/* {role ? <></> : <div className="col-md-6 mb-3">
                         <label>Role<span className="star">*</span></label>
                         <div className="select_row">
                             <SelectDropdown
@@ -105,37 +100,37 @@ console.log(form?.mobileNo,"9999999999911111111--------")
                         {submitted && !form?.role ? <div className="invalid-feedback d-block">Role is Required</div> : <></>}
                     </div>} */}
 
-                        <div className="col-md-12 mb-3">
-                            <label>Description<span className="star">*</span></label>
-                            <DynamicReactQuill
-                                theme="snow"
-                                value={form?.description ? form?.description : ''}
+                            <div className="col-md-12 mb-3">
+                                <label>Description<span className="star">*</span></label>
+                                <DynamicReactQuill
+                                    theme="snow"
+                                    value={form?.description ? form?.description : ''}
 
-                                onChange={(newValue, editor) => {
-                                    setform({ ...form, description: newValue })
-                                }}
-                                className='tuncketcls'
-                                modules={{
-                                    toolbar: [
-                                        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                        [{ size: [] }],
-                                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                        [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                        { 'indent': '-1' }, { 'indent': '+1' }],
-                                        ['link', 'image', 'video'],
-                                        ['clean']
-                                    ],
-                                }}
-                                formats={[
-                                    'header', 'font', 'size',
-                                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                    'list', 'bullet', 'indent',
-                                    'link', 'image', 'video'
-                                ]}
-                                bounds={'.app'}
-                            />
-                        </div>
-                    {
+                                    onChange={(newValue, editor) => {
+                                        setform({ ...form, description: newValue })
+                                    }}
+                                    className='tuncketcls'
+                                    modules={{
+                                        toolbar: [
+                                            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                            [{ size: [] }],
+                                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                            [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                            { 'indent': '-1' }, { 'indent': '+1' }],
+                                            ['link', 'image', 'video'],
+                                            ['clean']
+                                        ],
+                                    }}
+                                    formats={[
+                                        'header', 'font', 'size',
+                                        'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                        'list', 'bullet', 'indent',
+                                        'link', 'image', 'video'
+                                    ]}
+                                    bounds={'.app'}
+                                />
+                            </div>
+                            {/* {
                         <div className="select_drop col-md-6 mb-3">
                             <label>Category</label>
                             <div className="select_row">
@@ -149,33 +144,32 @@ console.log(form?.mobileNo,"9999999999911111111--------")
                                 />
 {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>}
                             </div>
-                        </div>}
-<div className="dd">
+                        </div>} */}
+                            <div className="dd">
 
-</div>
-                      
+                            </div>
+
                             {
+                                <div className="select_drop col-md-6 mb-3">
+                                    <label>Affiliate Group</label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="group_name"
+                                            placeholder="Select Group"
+                                            intialValue={form?.affiliate_group}
+                                            result={e => setform({ ...form, affiliate_group: e.value })}
+                                            options={affiliateGroup}
 
-                            <div className="select_drop col-md-6 mb-3">
-                                <label>Affiliate Group</label>
-                                <div className="select_row">
-                                    <SelectDropdown
-                                        id="statusDropdown"
-                                        displayValue="group_name"
-                                        placeholder="Select Group"
-                                        intialValue={form?.affiliate_group}
-                                        result={e => setform({ ...form, affiliate_group: e.value })}
-                                        options={affiliateGroup}
-                                        
-                                    />
-                                </div>
-                            </div>}
-      </div>
-    </div>
+                                        />
+                                    </div>
+                                </div>}
+                        </div>
+                    </div>
 
-<div className="add_team_bx">
-<div className=" form-row">
-{
+                    <div className="add_team_bx">
+                        <div className=" form-row">
+                            {/* {
 
 <div className=" col-md-6 mb-3">
     <label> Tags</label>
@@ -194,21 +188,26 @@ console.log(form?.mobileNo,"9999999999911111111--------")
             onClick={addTag}
         ><i className="fa fa-plus"></i></a>
     </div>
+  
     {form?.tags?.map((item, i) => {
         console.log({ item });
         return (
-            <button type="button" class="btn btn-primary position-relative mr-3 btn_min" key={i}>
+          
+ <button type="button" class="btn btn-primary position-relative mr-3 btn_min" key={i}>
                 {item}
-                <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle span_close">
+                <div class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle span_close">
                     <span style={{ width: '5px', height: '5px' }} onClick={() => cancele(item, 'tags')}>x</span>
-                </span>
+                </div>
             </button>
+          
+           
         )
     })}
+    
 </div>
-}
+} */}
 
-{<> <div className="col-md-6 mb-3">
+                            {/* {<> <div className="col-md-6 mb-3">
 <label>Location</label>
 
 <div>
@@ -267,9 +266,9 @@ console.log(form?.mobileNo,"9999999999911111111--------")
         <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
     </div>
 </div></>
-}
+} */}
 
-<div className="col-md-6 mb-3">
+                            {/* <div className="col-md-6 mb-3">
 <label>Gender<span className="star">*</span></label>
 <div className="select_row">
     <SelectDropdown
@@ -286,9 +285,9 @@ console.log(form?.mobileNo,"9999999999911111111--------")
     />
 </div>
 {submitted && !form?.gender ? <div className="invalid-feedback d-block">Gender is Required</div> : <></>}
-</div>
+</div> */}
 
-{/* <div className='col-md-6'>
+                            {/* <div className='col-md-6'>
 <div class="form-group">
 <label className='label-set' >Title<span className="star">*</span>  </label>
 <input type="text" placeholder='Title' className="form-control " id="exampleFormControlInput1" name="title"
@@ -297,46 +296,46 @@ onChange={handleInputChange} />
 {submitted && !formData?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
 </div>
 </div> */}
-<div className='col-md-6'>
-<div class="form-group">
-<label className='label-set' >Mobile Number</label>
-<div className="phoneInput main-no">
-<div className='dailCode phn-code'>
-    <PhoneInput
-    international
-    country="US"
-    inputProps={{
-        disabled: true
-    }}
-    value={form?.dialCode}
-    className="input_number bg_none disable_white"
-    onChange={phone => setform({ ...form, dialCode: phone })}                             
-    readOnly={true}
-    placeholder="+1"
-    enableSearch
-    />
-</div>
-<input type="number" className="form-control overlap_mobile" id="exampleFormControlInput1" name="mobileNo"
-    value={form.mobileNo} autoComplete="off"
-    onChange={e => setform({ ...form, mobileNo: e.target.value })}
-    />
-</div>
+                            <div className='col-md-6'>
+                                <div class="form-group">
+                                    <label className='label-set' >Mobile Number</label>
+                                    <div className="phoneInput main-no">
+                                        <div className='dailCode phn-code'>
+                                            <PhoneInput
+                                                international
+                                                country="US"
+                                                inputProps={{
+                                                    disabled: true
+                                                }}
+                                                value={form?.dialCode}
+                                                className="input_number bg_none disable_white"
+                                                onChange={phone => setform({ ...form, dialCode: phone })}
+                                                readOnly={true}
+                                                placeholder="+1"
+                                                enableSearch
+                                            />
+                                        </div>
+                                        <input type="number" className="form-control overlap_mobile" id="exampleFormControlInput1" name="mobileNo"
+                                            value={form.mobileNo} autoComplete="off"
+                                            onChange={e => setform({ ...form, mobileNo: e.target.value })}
+                                        />
+                                    </div>
 
-</div>
-</div>
-<div className="col-md-6 mb-3">
-<label>Email <span className="star">*</span> {emailLoader ? <span><i className="fa fa-spinner fa-spin"></i></span> : <></>}</label>
-<input
-    type="email"
-    className="form-control"
-    value={form?.email}
-    disabled={form?.id ? true : false}
-    onChange={e => { setform({ ...form, email: e.target.value }); emailCheck(e.target.value) }}
-/>
-{emailErr ? <div className="invalid-feedback d-block">{emailErr}</div> : <></>}
-{submitted && !form?.email ? <div className="invalid-feedback d-block">Email is Required</div> : <></>}
-</div>
-{<div className="col-md-6 mb-3">
+                                </div>
+                            </div>
+                            <div className="col-md-6 mb-3">
+                                <label>Email <span className="star">*</span> {emailLoader ? <span><i className="fa fa-spinner fa-spin"></i></span> : <></>}</label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    value={form?.email}
+                                    disabled={form?.id ? true : false}
+                                    onChange={e => { setform({ ...form, email: e.target.value }); emailCheck(e.target.value) }}
+                                />
+                                {emailErr ? <div className="invalid-feedback d-block">{emailErr}</div> : <></>}
+                                {submitted && !form?.email ? <div className="invalid-feedback d-block">Email is Required</div> : <></>}
+                            </div>
+                            {/* {<div className="col-md-6 mb-3">
 <label>Website</label>
 <input
     type="text"
@@ -346,50 +345,51 @@ onChange={handleInputChange} />
     pattern={pattern}
     title="http://www.example.com"
 />
-</div>}
-{!id && <> <div className="col-md-6 mb-3">
-<label>Password<span className="star">*</span></label>
-<div className="inputWrapper quick-ic">
-    <input
-        type={eyes?.password ? 'text' : 'password'}
-        className="form-control"
-        value={form?.password}
-        onChange={e => setform({ ...form, password: e.target.value })}
+</div>} */}
+                            {!id && <> <div className="col-md-6 mb-3">
+                                <label>Password<span className="star">*</span></label>
+                                <div className="inputWrapper quick-ic">
+                                    <input
+                                        type={eyes?.password ? 'text' : 'password'}
+                                        className="form-control"
+                                        value={form?.password}
+                                        onChange={e => setform({ ...form, password: e.target.value })}
 
-    />
-    <i className={eyes?.password ? 'fa fa-eye fa-set' : 'fa fa-eye-slash fa-set'} onClick={() => setEyes({ ...eyes, password: !eyes?.password })}></i>
-</div>
-{submitted && getError('password').invalid ? <div className="invalid-feedback d-block">Password minimum length should be 8</div> : <></>}
-{submitted && !form?.password ? <div className="invalid-feedback d-block">Password is Required</div> : <></>}
-</div>
-<div className="col-md-6 mb-3">
-    <label>Confirm Password {form?.password ? <span className="star">*</span> : <></>}</label>
-    <div className="inputWrapper quick-ic">
-        <input
-            type={eyes?.confirmPassword ? 'text' : 'password'}
-            className="form-control"
-            value={form?.confirmPassword}
-            onChange={e => setform({ ...form, confirmPassword: e.target.value })}
-            required={form?.password ? true : false}
-        />
-        <i className={eyes?.confirmPassword ? 'fa fa-eye fa-set' : 'fa fa-eye-slash fa-set'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
-    </div>
-    {submitted && getError('confirmPassword').invalid ? <div className="invalid-feedback d-block">Comfirm Password is not matched with Password</div> : <></>}
-    {submitted && !form?.confirmPassword ? <div className="invalid-feedback d-block">ConfirmPassword is Required</div> : <></>}
-</div></>
-}
+                                    />
+                                    <i className={eyes?.password ? 'fa fa-eye fa-set' : 'fa fa-eye-slash fa-set'} onClick={() => setEyes({ ...eyes, password: !eyes?.password })}></i>
+                                </div>
+                                {submitted && getError('password').invalid ? <div className="invalid-feedback d-block">Password minimum length should be 8</div> : <></>}
+                                {submitted && !form?.password ? <div className="invalid-feedback d-block">Password is Required</div> : <></>}
+                            </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Confirm Password {form?.password ? <span className="star">*</span> : <></>}</label>
+                                    <div className="inputWrapper quick-ic">
+                                        <input
+                                            type={eyes?.confirmPassword ? 'text' : 'password'}
+                                            className="form-control"
+                                            value={form?.confirmPassword}
+                                            onChange={e => setform({ ...form, confirmPassword: e.target.value })}
+                                            required={form?.password ? true : false}
+                                        />
+                                        <i className={eyes?.confirmPassword ? 'fa fa-eye fa-set' : 'fa fa-eye-slash fa-set'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
+                                    </div>
+                                    {submitted && getError('confirmPassword').invalid ? <div className="invalid-feedback d-block">Comfirm Password is not matched with Password</div> : <></>}
+                                    {submitted && !form?.confirmPassword ? <div className="invalid-feedback d-block">ConfirmPassword is Required</div> : <></>}
+                                </div></>
+                            }
 
 
 
-{<div className="col-md-12 mb-3">
+                            {/* {<div className="col-md-12 mb-3">
 <label>Select Social media platforms :</label>
 <div className="row">
 
     {data?.map((item) => (
         <div key={item?.id} className="col-md-3">
             <div className="card p-3 border">
-                <input
-                    className="form-check-input ml-0"
+             <div className="d-flex align-items-center ">
+             <input
+                    className="form-check-input ml-0 mt-0"
                     type="checkbox"
                     id={item}
                     onChange={() => handleFeatureCheckbox(item)}
@@ -398,6 +398,7 @@ onChange={handleInputChange} />
                 <label className="form-check-label ml-3 pl-1" for={item}>
                     {methodModel?.capitalizeFirstLetter(item)}
                 </label>
+             </div>
                 {selectedItems?.includes(item) && (
                     <div className="row">
                         <div className="col-md-12 mb-3 mt-4">
@@ -438,28 +439,23 @@ onChange={handleInputChange} />
             </div>
         </div>
     ))}
-</div></div>}
+</div></div>} */}
 
-<div className="col-md-6 mt-3">
-<label className='lablefontcls'>Image</label><br></br>
-<ImageUpload model="users" result={e => imageResult(e, 'image')} value={images} multiple={false} />
-</div>
+                            <div className="col-md-6 mt-3">
+                                <label className='lablefontcls'>Image</label><br></br>
+                                <ImageUpload model="users" result={e => imageResult(e, 'image')} value={images} multiple={false} />
+                            </div>
 
-</div>
-</div>
-
-                                  
-
-               
-
+                        </div>
+                    </div>
 
                     <div className="set-buttons d-flex align-items-center justify-content-end mt-3">
                         <button type="button" className="btn btn-secondary  discard back-link mr-2" onClick={e => back()}>Cancel</button>
                         <button type="submit" className="btn btn-primary">Save</button>
                     </div>
-            </div>
+                </div>
 
-        </form>
+            </form>
         </Layout>
     </>
 }

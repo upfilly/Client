@@ -66,7 +66,7 @@ export default function Chat() {
 
   console.log(user,"user-------000000")
 
-  const filteredChatList = chatList.filter(itm => {
+  const filteredChatList = chatList?.filter(itm => {
     if (!itm?.isGroupChat) {
       return itm?.room_members[0]?.user_name.toLowerCase().includes(searchText.toLowerCase());
     } else {
@@ -483,7 +483,7 @@ export default function Chat() {
   const userMessage = (roomuid,u_id) => {
     axios
       .get(
-        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${u_id}&login_user_id=${user?.id}`
+        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${u_id || id}&login_user_id=${user?.id}`
       )
       .then((res) => {
         if (res?.data.success) {
@@ -504,6 +504,7 @@ export default function Chat() {
       axios.post(`${SocketURL}chat/user/join-group`, payload).then((res) => {
         if (res?.data?.success) {
           const data = res.data;
+          // console.log(res?.data,"=----------")
           setRoomId(res.data.data.room_id);
           userMessage(data.data.room_id,data?.room_members?.[0]?.user_id);
           joinRoom(data.data.room_id);
