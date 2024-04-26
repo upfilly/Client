@@ -25,7 +25,7 @@ export default function affilate() {
     count: 10,
     role: "affiliate",
     search: '',
-    createBybrand_id: user?.id,
+    // createBybrand_id: user?.id,
     isDeleted: false,
     status: '',
     end_date: '',
