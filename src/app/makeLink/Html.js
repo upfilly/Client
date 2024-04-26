@@ -29,6 +29,7 @@ const Html = () => {
     const [DestinationUrl,setDestinationUrl]=useState('')
     const [CampaignData,setCampaignData] = useState([])
     const [SelectedCampaign,setSelectedCampaign] = useState('')
+    const [shrtlnk,setshrtlnk] = useState('')
   
    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -318,7 +319,7 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                 <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{url}</p>
+                                 <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</p>
                             </div>
                             {/* {copied && <div className="">Copied!</div>} */}
                         </div>
