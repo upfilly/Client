@@ -6,6 +6,7 @@ import './style.scss'
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import MultiSelectValue from '../components/common/MultiSelectValue'
+import axios from 'axios';
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -33,6 +34,7 @@ const Html = () => {
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
     const [DestinationUrl,setDestinationUrl]=useState('')
+    const[shrtlnk,setshrtlnk] = useState('')
   
    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -89,10 +91,23 @@ const Html = () => {
 
     useEffect(() => {
         getData()
-    }, [])
+        generateShortLink(url)
+    }, [url])
 
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            setCopied(true);
+            setTimeout(() => {
+                setCopied(false);
+            }, 1000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    };
+
+    const copyShortText = () => {
+        const textToCopy = document.getElementById("textShortToCopy").innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
             setCopied(true);
             setTimeout(() => {
@@ -124,8 +139,21 @@ const Html = () => {
         });
     }, []);
 
-    const handleSubmit = () => {
+    const generateShortLink = async(urlData) => {
+        if(urlData || url){
+        const data = await axios.post('https://shrtlnk.dev/api/v2/link',{url:urlData || url}, {
+            headers: {
+                'api-key':'eyZ0tnBPL04QueUUCl4gcFcdvaSQgRa79t9gQbWpCTxP4',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+        setshrtlnk(data?.data?.shrtlnk)
+    }
+    }
 
+    const handleSubmit = () => {
         // if (hasBlankInput) {
         //     toast.error("Please fill in all required fields.");
         //     return;
@@ -144,6 +172,7 @@ const Html = () => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
+                generateShortLink(res?.data)
                 if (!SelectDropdown) {
                     setSelectDropdown(!SelectDropdown)
                 }
@@ -253,6 +282,16 @@ const Html = () => {
                                 {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                             </div>
                             {copied && <div className="">Copied!</div>}
+
+                           {shrtlnk && <div className="input-group mb-2 mt-3">
+                                <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
+                                    <div className="input-group-text">
+                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                    </div>
+                                </div>
+                                 <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</p>
+                            </div>}
+                            {/* {copied && <div className="">Copied!</div>} */}
                         </div>
                     </div>
                 </div>

@@ -133,7 +133,7 @@ const AddEditUser = () => {
     let url = 'add/user'
     let value = {
       ...form,
-      role: "team",
+      role:"users",
       image,
       permissions,
       social_media_platforms: selectedItems,
@@ -164,7 +164,7 @@ const AddEditUser = () => {
     ApiClient.allApi(url, value, method).then(res => {
       if (res.success) {
         toast.success(res.message)
-        let url = '/affiliateTeam'
+        let url = '/users'
         // if(role) url="/users/"+role
         history.push(url)
       }

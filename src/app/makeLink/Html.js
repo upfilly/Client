@@ -6,6 +6,7 @@ import './style.scss'
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import MultiSelectValue from '../components/common/MultiSelectValue'
+import axios from 'axios';
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -89,7 +90,8 @@ const Html = () => {
     useEffect(() => {
         getData()
         getCampaignData()
-    }, [])
+        generateShortLink(url)
+    }, [url])
 
     const getCampaignData = (p = {}) => {
         let filter = { search: '', isDeleted: false,status:'',brand_id:user?.id}
@@ -112,6 +114,34 @@ const Html = () => {
             console.error('Failed to copy: ', err);
         });
     };
+
+
+    const copyShortText = () => {
+        const textToCopy = document.getElementById("textShortToCopy").innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            setCopied(true);
+            setTimeout(() => {
+                setCopied(false);
+            }, 1000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    };
+
+
+    const generateShortLink = async(urlData) => {
+        if(urlData || url){
+        const data = await axios.post('https://shrtlnk.dev/api/v2/link',{url:urlData || url}, {
+            headers: {
+                'api-key':'eyZ0tnBPL04QueUUCl4gcFcdvaSQgRa79t9gQbWpCTxP4',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+        setshrtlnk(data?.data?.shrtlnk)
+    }
+    }
 
     const handleAddNew = () => {
         if (newKey && newLabel) {
@@ -162,6 +192,7 @@ const Html = () => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
+                generateShortLink(res?.data)
                 if (!SelectDropdown) {
                     setSelectDropdown(!SelectDropdown)
                 }
@@ -281,7 +312,15 @@ const Html = () => {
                                 {selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}`}</p>}
                                 {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
                             </div>
-                            {copied && <div className="">Copied!</div>}
+                            <div className="input-group mb-2 mt-3">
+                                <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
+                                    <div className="input-group-text">
+                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                    </div>
+                                </div>
+                                 <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{url}</p>
+                            </div>
+                            {/* {copied && <div className="">Copied!</div>} */}
                         </div>
                     </div>
                 </div>

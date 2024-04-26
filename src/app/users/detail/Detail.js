@@ -32,7 +32,7 @@ const Detail = (p) => {
     }
 
     const edit = (id) => {
-        let url = `/affiliateTeam/edit/${id}`
+        let url = `/users/edit/${id}`
         // if(role) url=`/users/${role}/edit/${id}`
         history.push(url)
     }
@@ -59,7 +59,7 @@ const Detail = (p) => {
                     if (res.success) {
                         toast.success(res.message)
                         // clear()
-                        history.push(`/affiliateTeam`)
+                        history.push(`/users`)
                     }
                     loader(false)
                 })
@@ -146,11 +146,11 @@ const Detail = (p) => {
                                                 <p className='headmain'>Mobile Number:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>+{data?.dialCode}{data && data?.mobileNo}</p>
+                                                <p className='headsub'>{data?.dialCode}{data && data?.mobileNo}</p>
                                             </div>
                                       </div>
                                         </div>
-                                        <div className='col-6'>
+                                        {/* <div className='col-6'>
                                      <div className='mb-3'>
                                      <div className='userdata'>
                                                 <p className='headmain'>Address:</p>
@@ -161,7 +161,7 @@ const Detail = (p) => {
                                                 <p className='headsub'>{data && data?.address}</p>
                                             </div>
                                      </div>
-                                        </div>
+                                        </div> */}
                                         <div className='col-6'>
                                         <div className='mb-3'>
                                         <div className='userdata'>

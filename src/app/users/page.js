@@ -13,7 +13,7 @@ const AffiliateTeam = () => {
 
     const user = crendentialModel.getUser()
     const [filters, setFilter] = useState({
-    addedBy:user?.id,page: 0, count: 10, search: '', isDeleted: false,status:'',role:'team' })
+    addedBy:user?.id,page: 0, count: 10, search: '', isDeleted: false,status:'',role:'users'})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
@@ -137,17 +137,17 @@ const AffiliateTeam = () => {
     }
 
     const view = (id) => {
-        history.push("/affiliateTeam/detail/" + id)
+        history.push("/users/detail/" + id)
     }
 
     const edit = (id) => {
-        let url = `/affiliateTeam/edit/${id}`
+        let url = `/users/edit/${id}`
         // if (role) url = `/subcategories/${role}/edit/${id}`
         history.push(url)
     }
 
     const add = () => {
-        let url = `/affiliateTeam/add`
+        let url = `/users/add`
         // if (role) url = `/subcategoriess/${role}/add`
         history.push(url)
     }
