@@ -280,7 +280,7 @@ export default function affilate() {
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
         <div className='nmain-list  mb-3'>
           <div className='row align-items-center mx-0'>
-            <div className='col-12 col-md-10 col-lg-9'>
+            <div className='col-12 col-md-12 col-lg-12'>
               <div className=' '>
                 <div className='d-flex gap-2 align-items-center flex-wrap'>
                   <div className='filter-opt'>
@@ -435,12 +435,12 @@ export default function affilate() {
           </div>
 
           <Modal show={show} onHide={handleClose} className="shadowboxmodal">
-            <Modal.Header closeButton>
-              <Modal.Title className='mb-0 fs14'>Send Invite</Modal.Title>
+            <Modal.Header className='align-items-center' closeButton>
+              <h5 className='modal-title'>Send Invite</h5>
             </Modal.Header>
           <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicEmail">
+            <Form.Group className='mb-3 d-flex flex-column justify-content-between width_label' controlId="formBasicEmail">
               <Form.Label>Invitation Message</Form.Label>
               <Form.Control
                 as="textarea"
@@ -455,7 +455,7 @@ export default function affilate() {
               {submitted && !form?.message ? <div className="invalid-feedback d-block">message is Required</div> : <></>}
             </Form.Group>
 
-                <Form.Group className='mb-3 d-flex justify-content-between width_label selectlabel' controlId="formBasicText">
+                <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select Commission</Form.Label>
                   <SelectDropdown
                     id="statusDropdown"
@@ -469,24 +469,27 @@ export default function affilate() {
                     options={Commission}
                   /></Form.Group>
 
-                <Form.Group className='mb-3 d-flex justify-content-between width_label selectlabel' controlId="formBasicText">
+                <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Tags</Form.Label>
-                  <div>
+                  <div className=' d-flex justify-content-between gap-3 input_adds' >
                     <Form.Control
                       type='text'
                       placeholder="Enter text"
                       value={tagInput}
                       onChange={handleTagInputChange}
                     />
-                    <Button variant="primary" onClick={handleAddTag}>Add</Button>
+                    <Button variant="primary" onClick={handleAddTag}> <i class="fa fa-plus mr-2 " aria-hidden="true"></i>
+ Add</Button>
                   </div>
                 </Form.Group>
-                <div>
+                <div className='d-flex align-items-center  text_adds gap-2 flex-wrap' >
                   {form.tags.map((tag, index) => (
-                    <div key={index} className="d-flex align-items-center mb-2">
-                      <div>{tag}</div>
-                      <Button variant="danger" size="sm" className="ms-2" onClick={() => handleDeleteTag(index)}>Delete</Button>
-                    </div>
+                    <ul key={index} className="d-flex align-items-center gap-3 mb-2">
+                      <li> <span>{tag}</span> <i class="fa fa-times-circle ml-2" onClick={() => handleDeleteTag(index)} aria-hidden="true"></i></li>
+                      
+
+                      {/* <Button variant="danger" size="sm" className="ms-2" >Delete</Button> */}
+                    </ul>
                   ))}
                 </div>
 
