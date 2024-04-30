@@ -103,6 +103,11 @@ const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass, stab,
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
 
+        {user && user?.role == "affiliate" && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={!user?.account_id ? true : false}>
+          <i className="material-icons mr-2 svg_iconbx " title="campaignManagement">transfer_within_a_station</i>
+          <span className="side_head">Invitations</span>
+        </ListItemLink>}
+
         {user && (user?.role != "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
           <i className="material-icons mr-2" title="product">groups_3</i>
           <span className="side_head">Add Users</span>

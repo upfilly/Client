@@ -92,9 +92,8 @@ export default function affilate() {
     }
     ApiClient.post(`addInvite`,payload).then(res => {
       if (res.success) {
-        
+        handleClose()
       }
-
     })
   }
 
