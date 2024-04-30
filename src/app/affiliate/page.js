@@ -28,6 +28,7 @@ export default function affilate() {
     // createBybrand_id: user?.id,
     isDeleted: false,
     status: '',
+    invite_status:'',
     end_date: '',
     start_date: '',
     affiliate_group_id: ''
@@ -162,13 +163,14 @@ export default function affilate() {
   }
 
   const ChangeStatus = (e) => {
-    setFilter({ ...filters, status: e })
-    getData({ status: e, page: 1 })
+    setFilter({ ...filters, invite_status: e })
+    getData({ invite_status: e, page: 1 })
   }
 
   const reset = () => {
     let filter = {
       status: '',
+      invite_status:'',
       role: '',
       search: '',
       role: 'affiliate',
@@ -291,11 +293,13 @@ export default function affilate() {
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="All Status"
-                      intialValue={filters.status}
+                      intialValue={filters.invite_status}
                       result={e => { ChangeStatus(e.value) }}
                       options={[
-                        { id: 'active', name: 'Active' },
-                        { id: 'deactive', name: 'Inactive' },
+                        { id: 'not_invited', name: 'Not Invited' },
+                        { id: 'accepted', name: 'Accepted' },
+                        { id: 'pending', name: 'Pending' },
+                        { id: 'rejected', name: 'rejected' },
                       ]}
                     />
                   </div>
@@ -379,7 +383,7 @@ export default function affilate() {
                       </th>
                       <th scope="col" onClick={e => sorting('createdAt')}>Join Date {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
                       </th>
-                      <th scope="col">Status</th>
+                      <th scope="col">Invitation Status</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -399,8 +403,8 @@ export default function affilate() {
                       <td className='table_dats'>   <span className={`active_btn${itm?.status}`} 
                       // onClick={() => statusChange(itm)}
                       >
-                        <span className={itm.status == 'deactive' ? 'inactive' : 'contract'}>
-                          {itm.status == 'deactive' ? 'Inactive' : 'Active'}
+                        <span className={itm.status}>
+                          {itm.invite_status == 'accepted' ? 'Accepted' : itm.invite_status == 'not_invited' ? "Not Invited" : "Pending"}
                         </span>
                       </span></td>
 
