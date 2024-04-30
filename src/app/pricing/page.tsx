@@ -156,7 +156,8 @@ export default function Pricing() {
       ApiClient.post('create/session', data1).then(res => {
         if (res.success == true) {
           loader(false)
-           window.open(res?.data?.url)
+          window.location.href = res?.data?.url
+          //  window.open(res?.data?.url)
   }})}
       
 

@@ -14,7 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
 import methodModel from '@/methods/methods';
-import Link from 'next/link';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 export default function affilate() {
@@ -32,6 +32,11 @@ export default function affilate() {
     start_date: '',
     affiliate_group_id: ''
   })
+  const [form, setform] = useState({
+    "message": "",
+    "tags": [],
+    "commission":"",
+  })
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -39,13 +44,59 @@ export default function affilate() {
   const [endDate, setEndDate] = useState(null);
   const [affiliategroup, setAffiliategroup] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [submitted,setSubmitted] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [tagInput, setTagInput] = useState('');
+  const [selectedAffiliteid,setselectedAffiliteid] = useState('');
+
+  const handleTagInputChange = (e) => {
+    setTagInput(e.target.value);
+  };
+
+  const handleAddTag = () => {
+    if (tagInput.trim() !== '') {
+      setform({ ...form, tags: [...form.tags, tagInput] });
+      setTagInput('');
+    }
+  };
+
+  const handleDeleteTag = (index) => {
+    const newTags = [...form.tags];
+    newTags.splice(index, 1);
+    setform({ ...form, tags: newTags });
+  };
+
+  const Commission = [
+    {id:"Program Standard Commission Rates" ,name:"Program Standard Commission Rates"},
+    {id:"Default 8% Commission" ,name:"Default 8% Commission"},
+    {id:"Padel/Sports Publisher" ,name:"Padel/Sports Publisher"},
+    {name:"2% Commission Increase (10%)"},
+    {id:"5% Commission Increase (13%)" ,name:"5% Commission Increase (13%)"},
+    {id:"2% Commission Increase (7%)" ,name:"2% Commission Increase (7%)"}
+  ]
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       filter();
     }
   };
+
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+   const payload={
+    affiliate_id:selectedAffiliteid,
+      ...form,
+    }
+    ApiClient.post(`addInvite`,payload).then(res => {
+      if (res.success) {
+        
+      }
+
+    })
+  }
 
   const selectedGroupId = selectedOptions.map((item) => {
     return item?.id
@@ -201,29 +252,29 @@ export default function affilate() {
   const clear = () => {
     setFilter({ ...filters, search: '', page: 0 })
     getData({ search: '', page: 1 })
-}
+  }
 
   const deleteItem = (id) => {
 
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-        if (result.isConfirmed) {
-            ApiClient.delete(`delete?model=users&id=${id}`).then(res => {
-                if (res.success) {
-                    toast.success(res.message)
-                    clear()
-                }
-            })
-        }
+      if (result.isConfirmed) {
+        ApiClient.delete(`delete?model=users&id=${id}`).then(res => {
+          if (res.success) {
+            toast.success(res.message)
+            clear()
+          }
+        })
+      }
     })
-}
+  }
 
   return (
     <>
@@ -302,7 +353,7 @@ export default function affilate() {
                   </> : <></>}
                 </div>
 
-              
+
               </div>
             </div>
 
@@ -316,64 +367,139 @@ export default function affilate() {
           <div className='row mx-0 mt-3'>
             <div className='col-md-12'>
 
-            <div className='table-responsive'>
-              <table class="table table-striped ">
-                <thead class="thead-clr">
-                  <tr >
-                    {/* <th></th> */}
-                    <th scope="col" onClick={e => sorting('fullName')}>Affiliate {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
-                    </th>
-                    <th scope="col" onClick={e => sorting('email')}>Email {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
-                    </th>
-                    <th scope="col" onClick={e => sorting('affiliate_group_name')}>Affilate Group {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
-                    </th>
-                    <th scope="col" onClick={e => sorting('createdAt')}>Join Date {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
-                    </th>
-                    <th scope="col">Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {!loaging && data?.data?.map((itm) => <tr className='table_row'>
-                    {/* <td>   <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                    </div> </td> */}
-                    <td onClick={e => view(itm.id)}><div className='d-flex align-items-center'>
-                      {itm?.image ?
-                        <img className='person-img' src={`http://endpoint.jcsoftwaresolution.com:6043/${itm?.image}`} alt=''></img>
-                        :
-                        <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
-                      }
-                      <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
-                    </div></td>
-                    <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
-                    <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name}</p></td>
-                    <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
-                    <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
-                      <span className= {itm.status == 'deactive' ? 'inactive' : 'contract'}>
-                        {itm.status == 'deactive' ? 'Inactive' : 'Active'}
-                      </span>
-                    </span></td>
-                   
-                      <td>
-                      <div className='action_icons'> 
-                      {/* <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+              <div className='table-responsive'>
+                <table class="table table-striped ">
+                  <thead class="thead-clr">
+                    <tr >
+                      {/* <th></th> */}
+                      <th scope="col" onClick={e => sorting('fullName')}>Affiliate {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      </th>
+                      <th scope="col" onClick={e => sorting('email')}>Email {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      </th>
+                      <th scope="col" onClick={e => sorting('affiliate_group_name')}>Affilate Group {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      </th>
+                      <th scope="col" onClick={e => sorting('createdAt')}>Join Date {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      </th>
+                      <th scope="col">Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {!loaging && data?.data?.map((itm) => <tr className='table_row'>
+                      <td onClick={e => view(itm.id)}><div className='d-flex align-items-center'>
+                        {itm?.image ?
+                          <img className='person-img' src={`http://endpoint.jcsoftwaresolution.com:6043/${itm?.image}`} alt=''></img>
+                          :
+                          <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
+                        }
+                        <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
+                      </div></td>
+                      <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
+                      <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name}</p></td>
+                      <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
+                      <td className='table_dats'>   <span className={`active_btn${itm?.status}`} 
+                      // onClick={() => statusChange(itm)}
+                      >
+                        <span className={itm.status == 'deactive' ? 'inactive' : 'contract'}>
+                          {itm.status == 'deactive' ? 'Inactive' : 'Active'}
+                        </span>
+                      </span></td>
 
+                      <td>
+                        <div className='action_icons'>
+                          {/* <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                       </a> */}
-                       
-                          <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
+
+                          {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
-                          </a></div>
+                          </a> */}
+                          <a className="btn btn-primary" onClick={()=>{handleShow();setselectedAffiliteid(itm?.id || itm?._id)}}>
+                            <i className='fa fa-plus'></i>
+                          </a>
+                          <span className='btn btn-primary ml-2'
+                            onClick={() => {
+                              history.push(`/chat`)
+                              localStorage.setItem("chatId", itm?._id || itm?.id)
+                            }}>
+                            <i className='fa fa-comment-o'></i>
+                          </span>
+                        </div>
                       </td>
-                    
-                  </tr>)}
-                </tbody>
-              </table>
+
+                    </tr>)}
+                  </tbody>
+                </table>
 
               </div>
             </div>
           </div>
+
+          <Modal show={show} onHide={handleClose} className="shadowboxmodal">
+            <Modal.Header closeButton>
+              <Modal.Title className='mb-0 fs14'>Send Invite</Modal.Title>
+            </Modal.Header>
+          <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicEmail">
+              <Form.Label>Invitation Message</Form.Label>
+              <Form.Control
+                as="textarea"
+                className='br0'
+                rows={3}
+                cols={6}
+                placeholder="Enter text"
+                value={form?.message }
+                onChange={(e) => setform({ ...form, message: e.target.value })}
+                required
+              />
+              {submitted && !form?.message ? <div className="invalid-feedback d-block">message is Required</div> : <></>}
+            </Form.Group>
+
+                <Form.Group className='mb-3 d-flex justify-content-between width_label selectlabel' controlId="formBasicText">
+                  <Form.Label>Select Commission</Form.Label>
+                  <SelectDropdown
+                    id="statusDropdown"
+                    className="w-100"
+                    displayValue="name"
+                    placeholder="Select Commission"
+                    intialValue={form?.commission}
+                    result={e => {
+                      setform({ ...form, commission: e.value })
+                    }}
+                    options={Commission}
+                  /></Form.Group>
+
+                <Form.Group className='mb-3 d-flex justify-content-between width_label selectlabel' controlId="formBasicText">
+                  <Form.Label>Tags</Form.Label>
+                  <div>
+                    <Form.Control
+                      type='text'
+                      placeholder="Enter text"
+                      value={tagInput}
+                      onChange={handleTagInputChange}
+                    />
+                    <Button variant="primary" onClick={handleAddTag}>Add</Button>
+                  </div>
+                </Form.Group>
+                <div>
+                  {form.tags.map((tag, index) => (
+                    <div key={index} className="d-flex align-items-center mb-2">
+                      <div>{tag}</div>
+                      <Button variant="danger" size="sm" className="ms-2" onClick={() => handleDeleteTag(index)}>Delete</Button>
+                    </div>
+                  ))}
+                </div>
+
+            <div className='d-flex align-items-center justify-content-end'>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+
+          </Modal>
 
         </div>
 

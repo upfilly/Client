@@ -236,7 +236,8 @@ export default function BillingForm() {
         ApiClient.post('create/session', data1).then(res => {
           if (res.success == true) {
             loader(false)
-            window.open(res?.data?.url)
+            window.location.href = res?.data?.url
+            // window.open(res?.data?.url)
             // toast.success(res.message)
             // const data2 = {
             //   "user_id": res?.data?.user_id,

@@ -59,7 +59,6 @@ const Html = () => {
       };
 
     const getData = (p = {}) => {
-
         let filter = { status: 'accepted' , addedBy:user?.id}
         let url = 'make-offers'
         ApiClient.get(url, filter).then(res => {
@@ -272,6 +271,8 @@ const Html = () => {
                                 <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Add Data</button>
                             </div>
 
+                            <h5 className="link_default m-0"> Your Link :</h5>
+
                             <div className="input-group mb-2 mt-3">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
                                     <div className="input-group-text">
@@ -282,6 +283,8 @@ const Html = () => {
                                 {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                             </div>
                             {copied && <div className="">Copied!</div>}
+
+                            <h5 className="link_default m-0"> Your Short Link : </h5>
 
                            {shrtlnk && <div className="input-group mb-2 mt-3">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>

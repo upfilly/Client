@@ -55,21 +55,10 @@ const Html = () => {
 
     const getData = (p = {}) => {
 
-        let filter = { createBybrand_id:user?.id || user?._id ,role: "affiliate",isDeleted: false}
+        let filter = {role: "affiliate",isDeleted: false}
         let url = 'users/list'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                // const uniqueBrands = new Set();
-                // const filteredData = res?.data?.data.reduce((acc, item) => {
-                //     if (!uniqueBrands.has(item.brand_id)) {
-                //         uniqueBrands.add(item.brand_id);
-                //         acc.push({
-                //             id: item.brand_id,
-                //             brand_name: item.brand_name
-                //         });
-                //     }
-                //     return acc;
-                // }, []);
                 setBrandData(res?.data?.data);
             }
         })
@@ -289,19 +278,14 @@ const Html = () => {
                                             </div>
                                          ))}
                                     </div>
-
                                 </div>
-
-
                             </div>
-                          
-
-                        
 
                             <div className='text-end mt-3'>
                                 <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Add Data</button>
                             </div>
 
+                            <h5 className="link_default m-0"> Your Link :</h5>
                             <div className="input-group mb-2 mt-3">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
                                     <div className="input-group-text">
@@ -313,6 +297,8 @@ const Html = () => {
                                 {selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}`}</p>}
                                 {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
                             </div>
+
+                            <h5 className="link_default m-0"> Your Short URL Link :</h5>
                             <div className="input-group mb-2 mt-3">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
                                     <div className="input-group-text">
@@ -321,7 +307,7 @@ const Html = () => {
                                 </div>
                                  <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</p>
                             </div>
-                            {/* {copied && <div className="">Copied!</div>} */}
+                            {copied && <div className="">Copied!</div>}
                         </div>
                     </div>
                 </div>
