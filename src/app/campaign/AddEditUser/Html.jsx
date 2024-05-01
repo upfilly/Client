@@ -254,7 +254,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                     <input
                                         type="text"
                                         className="form-control w-100"
-                                        value="https://upfilly.jcsoftwaresolution.in/"
+                                        value="https://upfilly.com/"
                                         disabled
                                     />
                                 </div>

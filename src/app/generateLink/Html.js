@@ -157,13 +157,13 @@ const Html = () => {
         //     toast.error("Please fill in all required fields.");
         //     return;
         // }
-      let base_url=''
+      let base_url='https://upfilly.com/'
         if(DestinationUrl && selectedBrand){
-           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}`}` 
+           base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}`}` 
         }else if(selectedBrand){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}` 
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}` 
         }else if(DestinationUrl){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}`}` 
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}`}` 
         }
 
         // loader(true);
@@ -279,8 +279,8 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                {!selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}`}</p>}
-                                {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+                                {!selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
+                                {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                             </div>
                             {copied && <div className="">Copied!</div>}
 

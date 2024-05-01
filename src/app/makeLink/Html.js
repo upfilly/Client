@@ -160,21 +160,23 @@ const Html = () => {
         //     toast.error("Please fill in all required fields.");
         //     return;
         // }
-      let base_url=''
+        
+
+      let base_url='https://upfilly.com/'
         if(DestinationUrl && selectedBrand && SelectedCampaign){
-           base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}`}` 
+           base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}`}` 
         }else if(DestinationUrl && selectedBrand){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}`}`
         }else if(DestinationUrl && SelectedCampaign){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}` 
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}` 
         }else if(SelectedCampaign && selectedBrand){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`  
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`  
         }else if(SelectedCampaign){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?campaign=${SelectedCampaign}`  
+            base_url = `https://upfilly.com/?campaign=${SelectedCampaign}`  
         }else if(selectedBrand){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}`  
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}`  
         }else if(DestinationUrl){
-            base_url = `https://upfilly.jcsoftwaresolution.in/?url=${`https://${DestinationUrl}`}`  
+            base_url = `https://upfilly.com/?url=${`https://${DestinationUrl}`}`  
         }
 
         // loader(true);
@@ -292,10 +294,10 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                { !selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in`}</p>}
-                                { SelectedCampaign && !selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?campaign=${SelectedCampaign}`}</p>}
-                                {selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}`}</p>}
-                                {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.jcsoftwaresolution.in/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
+                                { !selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com`}</p>}
+                                { SelectedCampaign && !selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?campaign=${SelectedCampaign}`}</p>}
+                                {selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}`}</p>}
+                                {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
                             </div>
 
                             <h5 className="link_default m-0"> Your Short URL Link :</h5>
