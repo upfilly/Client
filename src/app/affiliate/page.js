@@ -419,7 +419,7 @@ export default function affilate() {
                           {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
-                         {itm.invite_status != 'not_invited' && <a className="btn btn-primary" onClick={()=>{handleShow();setselectedAffiliteid(itm?.id || itm?._id)}}>
+                         {itm.invite_status == 'not_invited' && <a className="btn btn-primary" onClick={()=>{handleShow();setselectedAffiliteid(itm?.id || itm?._id)}}>
                             <i className='fa fa-plus'></i>
                           </a>}
                           <span className='btn btn-primary ml-2'
