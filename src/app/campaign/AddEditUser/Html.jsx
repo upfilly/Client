@@ -321,7 +321,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                     <label>Images (Max. Limit 10) </label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
-                                           {form?.images.length <= 9 && <><button className="btn btn-primary upload_image">Upload Image</button>
+                                           {form?.images?.length <= 9 && <><button className="btn btn-primary upload_image">Upload Image</button>
                                             <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
                                                 // disabled={loader}
                                                 onChange={(e) => {
@@ -330,9 +330,9 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                                 }} /></>}
                                             {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
                                             <div className="imagesRow mt-4 img-wrappper">
-                                                {form?.images && form?.images.map((itm, i) => {
+                                                {form?.images && form?.images?.map((itm, i) => {
                                                     return <div className="imagethumbWrapper" key={i}>
-                                                        <img src={methodModel.noImg(itm?.url)} className="thumbnail" />
+                                                        <img src={methodModel?.noImg(itm?.url)} className="thumbnail" />
                                                         <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
                                                     </div>
                                                 })}
