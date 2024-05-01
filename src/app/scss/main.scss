@@ -3795,3 +3795,10 @@ padding: 6px 12px;
 .edit_icon.action-btn {
   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
 }
+.table_row td {
+  padding: 6px 12px !important;
+}
+.table td, .table th{
+  border-top: unset !important;
+  border-bottom: unset !important;
+}
