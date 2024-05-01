@@ -136,7 +136,7 @@ const AddEditUser = () => {
 
     const getData = () => {
         let url = 'users/list'
-        ApiClient.get(url, {role:"affiliate", createBybrand_id: user?.id,}).then(res => {
+        ApiClient.get(url, {role:"affiliate"}).then(res => {
             if (res.success) {
                 const data1 = res.data.data.filter(item => item.status === "active");
                 setAffiliateData(data1)

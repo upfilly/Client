@@ -93,6 +93,7 @@ export default function affilate() {
     }
     ApiClient.post(`addInvite`,payload).then(res => {
       if (res.success) {
+        getData()
         toast.success("Invitation Send Successfully..")
         handleClose()
       }
@@ -418,9 +419,9 @@ export default function affilate() {
                           {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
-                          <a className="btn btn-primary" onClick={()=>{handleShow();setselectedAffiliteid(itm?.id || itm?._id)}}>
+                         {itm.invite_status != 'not_invited' && <a className="btn btn-primary" onClick={()=>{handleShow();setselectedAffiliteid(itm?.id || itm?._id)}}>
                             <i className='fa fa-plus'></i>
-                          </a>
+                          </a>}
                           <span className='btn btn-primary ml-2'
                             onClick={() => {
                               history.push(`/chat`)
