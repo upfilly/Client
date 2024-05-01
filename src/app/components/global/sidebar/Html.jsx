@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Html = ({ setstab, tabChange, tab, ListLink, ListItemLink, tabclass, stab, urlAllow, route, setActiveSidebar, activeSidebar, user }) => {
+const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSidebar, activeSidebar, user }) => {
 
   return (
     <div className="nav flex-column new-sidebar" component="siderbar">
