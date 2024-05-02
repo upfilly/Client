@@ -274,7 +274,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                             }
                                         }}
                                     />
-    {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
+                     {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>

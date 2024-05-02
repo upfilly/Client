@@ -93,19 +93,29 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Add Campaign</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={!user?.account_id ? true : false}>
+        {user && ((user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
           <i className="material-icons mr-2 svg_iconbx ListItemLink" title="product">add_shopping_cart</i>
           <span className="side_head ">Add Offer</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={!user?.account_id ? true : false}>
+        {user && ((user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
           <i className="material-icons mr-2 svg_iconbx " title="campaignManagement">business_center</i>
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={!user?.account_id ? true : false}>
+        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
           <i className="material-icons mr-2 svg_iconbx " title="campaignManagement">transfer_within_a_station</i>
           <span className="side_head">Invitations</span>
+        </ListItemLink>}
+
+        {user && user?.role == "affiliate" && <ListItemLink to="/inviteUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
+          <i className="material-icons mr-2 svg_iconbx " title="campaignManagement">group_add</i>
+          <span className="side_head">Invite Users</span>
+        </ListItemLink>}
+
+        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/invitedUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
+          <i className="material-icons mr-2 svg_iconbx " title="campaignManagement">group_add</i>
+          <span className="side_head">Invited Users</span>
         </ListItemLink>}
 
         {user && (user?.role != "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
@@ -140,7 +150,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Sent Offers</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" disabled={!user?.account_id ? true : false}>
+        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
           <i className="material-icons mr-2 svg_iconbx" title="campaignManagement">timeline</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
@@ -150,13 +160,13 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
-        {/* {user && user?.role == "affiliate" && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
+        {/* {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
           <i className="material-icons mr-2 svg_iconbx" title="tracking">show_chart</i>
   
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons mr-2 svg_iconbx" title="campaignManagement">manage_accounts</i>
           <span className="side_head">Campaign Management</span>
         </ListItemLink>}
