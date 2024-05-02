@@ -7,7 +7,7 @@ import crendentialModel from '@/models/credential.model';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { Navbar, Dropdown, Button, Form, Col, Row, Modal } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
 export default function Header2({ handleKeyPress, setFilter, reset, filter, name, filters, settingData }) {
     const user = crendentialModel.getUser()
