@@ -22,6 +22,8 @@ const Html = ({
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
+console.log(total,"ttttttttt")
+
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             filter();

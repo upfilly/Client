@@ -39,9 +39,9 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
                             <div className="d-flex filterFlex phView align-items-center   justify-content-end">
-                               {user?.role != 'team' && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
+                               {/* {user?.role != 'team' && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i> Add
-                                </a></>}
+                                </a></>} */}
                                 <SelectDropdown
                                     id="statusDropdown" className="mr-2 "
                                     displayValue="name"
@@ -95,7 +95,7 @@ const Html = ({
                                                             </p>
                                                         </div>
                                                     </div></td>
-                                                    <td>{methodModel?.capitalizeFirstLetter(itm?.role)}</td>
+                                                    <td>{itm?.role == 'affiliate' ?  "Super User"  : methodModel?.capitalizeFirstLetter(itm?.role)}</td>
                                                 <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
                                                     <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
                                                         {itm?.status == 'deactive' ? 'Inactive' : 'Active'}

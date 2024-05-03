@@ -43,7 +43,7 @@ const Invitations = () => {
     ApiClient.get(url, filter).then(res => {
       if (res.success) {
         setData(res?.data)
-        setTotal(res?.data?.total_count)
+        setTotal(res?.total)
       }
       setLoader(false)
     })
