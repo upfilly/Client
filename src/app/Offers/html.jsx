@@ -26,7 +26,7 @@ const Html = ({
     total,
     setFilter,
     filter,
-    statusChange,dateRange, setDateRange,startDate, endDate
+    statusChange,dateRange, setDateRange,startDate, endDate ,user
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -103,7 +103,7 @@ const Html = ({
                    
                      
 
-                        {isAllow('addAdmins') ? <>
+                        {user?.role == 'affiliate' ? <>
                                 <a className="btn btn-primary" onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i>  Add Offers
                                 </a>

@@ -9,9 +9,10 @@ import crendentialModel from '@/models/credential.model';
 import Link from 'next/link';
 import Layout from '../components/global/layout/index';
 import { userDetailType } from "@/models/type.model";
+import { useRouter } from 'next/navigation';
 
 const Profile = () => {
-
+  const history = useRouter()
   const user = crendentialModel.getUser()
   const [data, setData] = useState(userDetailType);
 
@@ -46,10 +47,18 @@ const Profile = () => {
                 <div className='main_title_head'>
                   <h3 className=''>Basic Information </h3>
                 </div>
-                <Link href="/profile/edit" className="btn btn-primary profiles">
+              <div className='d-flex gap-3 align-items-center' >
+              <Link href="/profile/edit" className="btn btn-primary profiles">
                   <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                   Edit Profile
                 </Link>
+                {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
+                  history.push(`/chat`)
+                  localStorage.setItem("chatId", user?.addedBy)
+                }}>
+                  <i className='fa fa-comment-o text-white'></i>
+                </a>}
+              </div>
               </div>
               <hr />
               <div className="form-row mx-auto row">

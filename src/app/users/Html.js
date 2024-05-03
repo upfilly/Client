@@ -39,8 +39,8 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
                             <div className="d-flex filterFlex phView align-items-center   justify-content-end">
-                               {user?.role != 'team' && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
-                                    <i className='fa fa-plus mr-1'></i> Add
+                               {user?.role == 'affiliate' && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
+                                    <i className='fa fa-plus mr-1'></i> Add user
                                 </a></>}
                                 <SelectDropdown
                                     id="statusDropdown" className="mr-2 "

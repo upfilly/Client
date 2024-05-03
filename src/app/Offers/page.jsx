@@ -209,6 +209,7 @@ const Users = () => {
         setDateRange={setDateRange}
         startDate={startDate}
         endDate={endDate}
+        user={user}
     />
     </>;
 };
