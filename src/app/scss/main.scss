@@ -3802,3 +3802,64 @@ padding: 6px 12px;
   border-top: unset !important;
   border-bottom: unset !important;
 }
+
+// .header css 
+
+.upfilly_logo {
+  width: 100%;
+  max-width: 170px;
+}
+@media (max-width: 768px) { 
+
+  .header-logo .upfilly_logo {
+    width: 100%;
+    max-width: 130px;
+}
+
+.header-right {
+    width: 100%;
+    gap: 10px;
+}
+
+.header-logo .page-name {
+    font-size: 16px;
+}
+
+.header-content 
+ svg.fonts15 {
+    width: 18px;
+    height: 18px;
+}
+
+.header-content {
+    align-items: center;
+}
+ }
+ @media (max-width: 576px) { 
+ 
+
+.dropdown.ml-auto {
+  top: 0px;
+  right: 0px;
+}
+.dropdown.ml-auto button{
+  margin-bottom: 0px !important;
+  margin-right: 0px !important;
+}
+
+.header-logo .page-name {
+  font-size: 12px;
+}
+.header-logo .upfilly_logo {
+  width: 100%;
+  max-width: 100px;
+}
+
+  }
+  @media  (max-width:470px) {
+    .header-right,  .header-logo,  .header-content  {
+      width: 100%;
+  }    
+  
+  
+  }

@@ -91,14 +91,14 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
         <>
             <div className='fixed-topbar sidebar-content-detail' >
 
-                <div className='d-flex justify-content-between header-right'>
-                    <div className='d-flex align-items-center header-logo'>
+                <div className='d-flex justify-content-between header-right flex-wrap'>
+                    <div className='d-flex align-items-center header-logo flex-wrap'>
                         <a href='/'>
-                            <img src="/assets/img/logo.png" className="logo w170" alt="" /></a>
+                            <img src="/assets/img/logo.png" className="upfilly_logo" alt="" /></a>
                         <span className="ml-2 page-name" > / {name}</span>
                     </div>
 
-                    <div className='d-flex justify-content-end header-content'>
+                    <div className='d-flex justify-content-end header-content flex-wrap'>
                         {isDashboard && <div className='searchInput'>
                             <input type="search"
                                 className='form-control quick-radius'
