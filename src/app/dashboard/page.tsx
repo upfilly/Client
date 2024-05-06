@@ -290,7 +290,7 @@ export default function Dashboard() {
                         <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
                     </div>
                     <ul className='sales-listing'>
-                      {recentUser.map((data:any)=><li>
+                      {recentUser?.map((data:any)=><li>
                         <div className='d-flex align-items-center item-name'>
                           {data?.image ? <img src={`${environment.api}${data?.image}`} className='dashboard_image'/>:
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
