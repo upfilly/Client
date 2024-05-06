@@ -3834,6 +3834,9 @@ padding: 6px 12px;
 .header-content {
     align-items: center;
 }
+span.linebx {
+  display: block;
+}
  }
  @media (max-width: 576px) { 
  
@@ -3849,17 +3852,56 @@ padding: 6px 12px;
 
 .header-logo .page-name {
   font-size: 12px;
+  margin: 0px !important;
+  white-space: nowrap;
+  position: relative;
 }
+.header-logo .page-name::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  width: 5px;
+  height: 15px;
+  background-color: #fff;               
+}
+
+
 .header-logo .upfilly_logo {
   width: 100%;
   max-width: 100px;
+  display: none;
 }
+.fixed-topbar{
+  padding: 15px !important;
+}
+.profile-img .dropdown img {
+  width: 24px !important;
+  height: 24px !important;
+}
+.header-right{
+  gap: 0px;
+}
+.header-content {
+  gap: 7px;
+}
+
+.header-content .help-icon svg {
+  margin: 0px;
+}
+
+.header-content .notifications {
+  margin: 0px;
+}
+span.linebx {
+  display: none;
+}
+
 
   }
   @media  (max-width:470px) {
-    .header-right,  .header-logo,  .header-content  {
-      width: 100%;
-  }    
+  //   .header-right,  .header-logo,  .header-content  {
+  //     width: 100%;
+  // }    
   
   
   }

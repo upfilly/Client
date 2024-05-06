@@ -84,21 +84,21 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
 
     const Logout = () => {
         crendentialModel.logout()
-        history.push('/login');
+        history.push('/login');    
     };
 
     return (
         <>
             <div className='fixed-topbar sidebar-content-detail' >
 
-                <div className='d-flex justify-content-between header-right flex-wrap'>
-                    <div className='d-flex align-items-center header-logo flex-wrap'>
+                <div className='d-flex justify-content-between header-right '>
+                    <div className='d-flex align-items-center header-logo '>
                         <a href='/'>
                             <img src="/assets/img/logo.png" className="upfilly_logo" alt="" /></a>
                         <span className="ml-2 page-name" > / {name}</span>
                     </div>
 
-                    <div className='d-flex justify-content-end header-content flex-wrap'>
+                    <div className='d-flex justify-content-end header-content '>
                         {isDashboard && <div className='searchInput'>
                             <input type="search"
                                 className='form-control quick-radius'
