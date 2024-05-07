@@ -437,6 +437,12 @@ img.cross-hide {
     display: block;
 }
 
+.sidebar_main.active  .icns_center{
+    justify-content: center;
+}
+
+
+
 .collapse.dropdown-btm.show {
     margin-left: 20px;
 }
@@ -446,6 +452,9 @@ img.cross-hide {
     position: relative;
     top: 3px;
 }
+
+
+
 
 .sidebar_main.active a.nav-link.hoverclass span {
     display: none !IMPORTANT;
@@ -494,3 +503,35 @@ img.cross-hide {
 .sidebar_main.active .text_black {
     margin-right: 0px !important;
 }
+
+// gourav css start 
+
+
+
+.side_titles {
+    position: relative;
+}
+
+.side_titles .fontsize20 {
+    position: absolute;
+    right: 4px;
+    top: 19px;
+}
+
+.sidebar_main.active .side_titles .fontsize20 {
+display: none;
+}
+.sidebar_main .side_titles .fontsize20 {
+    display: block;
+    }
+
+    .sidebar_main .svg_iconbx {
+  width: 31px !important;
+}
+.sidebar_main.active .svg_iconbx {
+    width: unset !important;
+  }
+
+  .sidebar_main.active .main-top{
+margin: 0px auto ;
+  }
