@@ -47,6 +47,18 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                 {submitted && !form?.lastName ? <div className="invalid-feedback d-block">LastName is Required</div> : <></>}
                             </div>
 
+                            <div className="col-md-6 mb-3">
+                                <label>E-mail<span className="star">*</span></label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    value={form?.email}
+                                    onChange={e => setform({ ...form, email: e.target.value })}
+
+                                />
+                                {submitted && !form?.email ? <div className="invalid-feedback d-block">Email is Required</div> : <></>}
+                            </div>
+
                             {/* {role ? <></> : <div className="col-md-6 mb-3">
                         <label>Role<span className="star">*</span></label>
                         <div className="select_row">
