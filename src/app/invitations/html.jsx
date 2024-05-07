@@ -120,16 +120,16 @@ const Html = ({
                                              <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>
                                             {/* <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td> */}
                                             <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
-                                            {<td className='table_dats d-flex '>
+                                            {<td className='table_dats d-flex set_iconstabls '>
                                                 {user && user?.role == "affiliate" && <>
                                                     {itm?.status == 'pending' ? <div >
                                                         <button onClick={() => {
                                                             statusChange("accepted", itm?.id || itm?._id)
                                                             // Tracklogin(itm?.campaign_unique_id)
-                                                        }} className="btn btn-primary mr-2">
+                                                        }} className="btn btn-primary  circle_icons mr-2">
                                                             <i className='fa fa-check'></i>
                                                         </button>
-                                                        <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2">
+                                                        <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red circle_icons">
                                                             <i className='fa fa-times'></i>
                                                         </button>
                                                     </div> :
@@ -139,13 +139,13 @@ const Html = ({
                                                     }
                                                 </>}
                                                 <>
-                                                    <span className='btn btn-primary ml-2'
+                                                    <button type='button' className='btn btn-primary circle_icons'
                                                         onClick={() => {
                                                             history.push(`/chat`)
                                                             localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)
                                                         }}>
                                                         <i className='fa fa-comment-o'></i>
-                                                    </span>
+                                                    </button>
                                                 </>
 
                                                 {/* {itm?.status == 'accepted' &&
