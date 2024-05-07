@@ -53,7 +53,7 @@ const Html = ({
                     />
 
                     <article className="d-flex filterFlex phView">
-                        {user?.role == 'affiliate' ? <>
+                        {user?.role == 'affiliate' || user?.permission_detail?.untrack_sales_add ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
                                 Raise a ticket
                             </a>

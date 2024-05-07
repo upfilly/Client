@@ -140,16 +140,16 @@ const Detail = (p) => {
                                        </div>
                                         </div>
                                   
-                                        <div className='col-6'>
-                                      <div className='mb-3'>
-                                      <div className='userdata'>
-                                                <p className='headmain'>Mobile Number:</p>
+                                        {(data?.mobileNo) && <div className='col-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Mobile Number:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data?.dialCode}{data && data?.mobileNo}</p>
+                                                </div>
                                             </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data?.dialCode}{data && data?.mobileNo}</p>
-                                            </div>
-                                      </div>
-                                        </div>
+                                        </div>}
                                         {/* <div className='col-6'>
                                      <div className='mb-3'>
                                      <div className='userdata'>

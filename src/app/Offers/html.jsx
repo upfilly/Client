@@ -103,7 +103,7 @@ const Html = ({
                    
                      
 
-                        {user?.role == 'affiliate' ? <>
+                        {user?.role == 'affiliate' ||  user?.permission_detail?.offer_add ? <>
                                 <a className="btn btn-primary" onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i>  Add Offers
                                 </a>
@@ -149,13 +149,13 @@ const Html = ({
                                     {/* dropdown */}
                                     <td className='table_dats'>
                                         <div className="action_icons">
-                                            {isAllow('editAdmins') ? <>
+                                            {isAllow('editAdmins') || user?.permission_detail?.offer_edit ? <>
                                                 <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
                                                     <i className="material-icons edit" title="Edit">edit</i>
                                                 </a>
                                             </> : <></>}
 
-                                            {isAllow('deleteAdmins') ? <>
+                                            {isAllow('deleteAdmins') || user?.permission_detail?.offer_delete  ? <>
                                                 <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
                                                     <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                                                 </a>

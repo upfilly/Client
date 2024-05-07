@@ -22,8 +22,6 @@ const Html = ({
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
-console.log(total,"ttttttttt")
-
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             filter();
@@ -84,7 +82,8 @@ console.log(total,"ttttttttt")
                             <table className="table table-striped  ">
                                 <thead className='table_head'>
                                     <tr className='heading_row'>
-                                        <th scope="col" class="table_data" >Invitation Message</th>
+                                        <th scope="col" class="table_data" >Merchnat Name</th>
+                                        <th scope="col" class="table_data" >Message</th>
                                         <th scope="col" className='table_data' >Commission</th>
                                         <th scope="col" className='table_data' >Tags</th>
                                         <th scope="col" className='table_data' >Status</th>
@@ -96,6 +95,16 @@ console.log(total,"ttttttttt")
                                 <tbody>
                                     {!loaging && data && data.map((itm, i) => {
                                         return <tr className='data_row' key={i}>
+                                        <td className='table_dats' 
+                                            // onClick={()=>view(itm?.id)}
+                                            >
+                                                <div className='user_detail'>
+                                                    <div className='user_name'>
+                                                        <h4 className='user'>
+                                                            {itm?.addedBy?.fullName}
+                                                        </h4>
+                                                    </div>
+                                                </div></td>
                                             <td className='table_dats' 
                                             // onClick={()=>view(itm?.id)}
                                             >

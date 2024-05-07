@@ -12,7 +12,9 @@ const Html = () => {
     const [form, setForm] = useState({
         email: '',
         language: '',
-        type: ''
+        type: '',
+        firstName:'',
+        lastName:''
     })
 
     const handleSubmit = () => {
@@ -20,7 +22,9 @@ const Html = () => {
         const payload = {
             role: form?.type,
             language: form?.language,
-            email: form?.email
+            email: form?.email,
+            firstName:form?.firstName,
+            lastName:form?.lastName
         }
         loader(true);
         ApiClient.post('add/user', payload).then((res) => {
@@ -29,7 +33,9 @@ const Html = () => {
                 setForm({
                     email: '',
                     language: '',
-                    type: ''
+                    type: '',
+                    firstName:'',
+                    lastName:''
                 })
             }
             loader(false);
@@ -51,6 +57,32 @@ const Html = () => {
                         <div className='card-body'>
 
                             <div className='row'>
+                                <div className='col-12 col-md-6'>
+                                    <div className='mb-3' >
+                                        <div className='mb-2' >First Name</div>
+                                        <input
+                                            type="text"
+                                            className='form-control'
+                                            placeholder="Enter First Name"
+                                            value={form?.firstName}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className='col-12 col-md-6'>
+                                    <div className='mb-3' >
+                                        <div className='mb-2' >Last Name</div>
+                                        <input
+                                            type="text"
+                                            className='form-control'
+                                            placeholder="Enter Last Name"
+                                            value={form?.lastName}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Enter Email</div>
