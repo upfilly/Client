@@ -33,7 +33,7 @@ const Html = ({
 
     return (
         <>
-            <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters} >
+            <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates Users" filters={filters} >
 
                 <div className='nmain-list '>
                     <div className='row mx-0'>
@@ -51,6 +51,20 @@ const Html = ({
                                     options={[
                                         { id: 'active', name: 'Active' },
                                         { id: 'deactive', name: 'Inactive' },
+                                    ]}
+                                />
+
+                                <SelectDropdown
+                                    id="statusDropdown" className="mr-2 "
+                                    displayValue="name"
+                                    placeholder="All Status"
+                                    intialValue={filters?.role}
+                                    result={e => { ChangeStatus(e.value) }}
+                                    options={[
+                                        { id: 'analyzer', name: 'Analyzer' },
+                                        { id: 'publisher', name: 'Publisher' },
+                                        { id: 'operator', name: 'Operator' },
+                                        { id: 'affiliate', name: 'Super User' },
                                     ]}
                                 />
 
@@ -104,7 +118,7 @@ const Html = ({
                                                 <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
                                                 <td>
-                                                   {user?.role != 'team'  &&
+                                                   {user?.role == 'affiliate'  &&
                                                     <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>

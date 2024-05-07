@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 const AffiliateTeam = () => {
 
     const user = crendentialModel.getUser()
-    const [filters, setFilter] = useState({page: 0, count: 10, search: '', isDeleted: false,status:''})
+    const [filters, setFilter] = useState({page: 0, count: 10, search: '', isDeleted: false,status:'',role:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)

@@ -75,6 +75,7 @@ const Html = () => {
                     return acc;
                 }, []);
                 setBrandData(filteredData);
+                generateShortLink(url)
             }
         })
     }
