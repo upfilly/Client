@@ -17,8 +17,7 @@ export default function Dashboard() {
   const [recentUser,setRecentUser] = useState<any>([])
   const [CampaignRequest , setCampaignRequest] = useState<any>(null)
 
-  console.log(user,"dhgfhdhfgdhjfg")
-
+  
   useEffect(() => {
       if (!user) {
           history.push('/')
