@@ -93,7 +93,7 @@ export default function affilate() {
     }
     ApiClient.post(`addInvite`,payload).then(res => {
       if (res.success) {
-        getData()
+        getData({ page: 1 })
         toast.success("Invitation Send Successfully..")
         handleClose()
       }
