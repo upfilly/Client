@@ -2404,7 +2404,7 @@ ul.sales-listing {
 }
 
 .sidebar_main.active a.nav-link {
-  width: 52px;
+  width: 49px;
   display: flex;
   justify-content: center;
 }
@@ -2468,6 +2468,7 @@ span.contract {
   font-style: normal;
   line-height: normal;
   padding: 7px 11px;
+  min-height: 30px;
   font-weight: 400;
   color: #fff;
   border-radius: 50px;
@@ -3811,9 +3812,12 @@ padding: 6px 12px;
 }
 @media (max-width: 768px) { 
 
+// Responsive Header css ---------------------------------
+
   .header-logo .upfilly_logo {
     width: 100%;
     max-width: 130px;
+    display: none;
 }
 
 .header-right {
@@ -3823,6 +3827,16 @@ padding: 6px 12px;
 
 .header-logo .page-name {
     font-size: 16px;
+    position: relative;
+}
+
+.header-logo .page-name::before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  width: 8px;
+  height: 25px;
+  background-color: #fff;               
 }
 
 .header-content 
@@ -3837,9 +3851,15 @@ padding: 6px 12px;
 span.linebx {
   display: block;
 }
+// Sidebar css start -------------------------------
+.left_sidebar {
+  padding: 15px 10px !important;
+}
+
+
  }
  @media (max-width: 576px) { 
- 
+// Responsive Header css ---------------------------------
 
 .dropdown.ml-auto {
   top: 0px;
@@ -3856,20 +3876,13 @@ span.linebx {
   white-space: nowrap;
   position: relative;
 }
-.header-logo .page-name::before {
-  content: '';
-  position: absolute;
-  left: 0px;
-  width: 5px;
-  height: 15px;
-  background-color: #fff;               
-}
+
 
 
 .header-logo .upfilly_logo {
   width: 100%;
   max-width: 100px;
-  display: none;
+
 }
 .fixed-topbar{
   padding: 15px !important;
@@ -3896,12 +3909,9 @@ span.linebx {
   display: none;
 }
 
+// sidebar css start 
+.new-sidebar .toggle-img {
+  height: 40px;
+}
 
-  }
-  @media  (max-width:470px) {
-  //   .header-right,  .header-logo,  .header-content  {
-  //     width: 100%;
-  // }    
-  
-  
   }
