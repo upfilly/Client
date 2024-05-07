@@ -97,8 +97,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             {urlAllow('addcommision') ? <>
               <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
                 {/* <i className="fa fa-user-circle-o icon  svg_iconbx" aria-hidden="true"></i> */}
-                <i  class="material-icons svg_iconbx">payments</i >
+              <div className="d-flex align-items-center icns_center">
+              <i  class="material-icons svg_iconbx">payments</i >
                 <span className="side_head">Add Commissions</span>
+              </div>
               </ListItemLink>
             </> : <></>}
 
