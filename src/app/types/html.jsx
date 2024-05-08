@@ -59,7 +59,8 @@ const Html = ({
 
             </div>
 
-            <div className="table-responsive table_section">
+       <div className='table_section'>
+       <div className="table-responsive ">
 
 <table className="table table-striped">
     <thead className='table_head'>
@@ -112,6 +113,7 @@ const Html = ({
 
 
 </div>
+       </div>
 
 
 

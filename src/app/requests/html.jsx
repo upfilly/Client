@@ -33,16 +33,16 @@ const Html = ({
     };
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Send Offers" : "Offer Requests"} filters={filters}>
-            <div className='sidebar-left-content'>
+            <div className='sidebar-left-content main_box'>
                 <div className='card'>
                     <div className='card-header'>
-                        <div className="main_title_head d-flex justify-content-between align-items-center">
+                        <div className="main_title_head gap-3 d-flex justify-content-between align-items-center">
                             <h3 className="">
                                 Offers Management
                             </h3>
 
-                            <article className="d-flex filterFlex phView">
-                                <div className='searchInput'>
+                            <article className=" filterFlex phView flex-wrap d-flex gap-3">
+                                <div className='searchInput ml-0'>
                                     <input
                                         type="text"
                                         value={filters.search}
@@ -94,85 +94,87 @@ const Html = ({
                     <div className='card-body'>
 
 
-                        <div className="table-responsive table_section mt-0">
+                       <div className='table_section mt-0'>
+                       <div className="table-responsive ">
 
-                            <table className="table table-striped  ">
-                                <thead className='table_head'>
-                                    <tr className='heading_row'>
-                                        <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affilite Name"}</th>
-                                        <th scope="col" className='table_data' >Title</th>
-                                        <th scope="col" className='table_data' >Comment</th>
-                                        {user && user?.role == "brand" && <th scope="col" className='table_data' >Status</th>}
-                                        <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                        <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                        <th scope="col" className='table_data'>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {!loaging && data && data.map((itm, i) => {
-                                        return <tr className='data_row' key={i}>
-                                            <td className='table_dats' onClick={e => view(itm.id)}>
-                                                <div className='user_detail'>
-                                                    <div className='user_name'>
-                                                        {user?.role == 'affiliate' ?
-                                                            <h4 className='user'>
-                                                                {methodModel.capitalizeFirstLetter(itm.brand_name)}
-                                                            </h4>
-                                                            : <h4 className='user'>
-                                                                {methodModel.capitalizeFirstLetter(itm.affiliate_name)}
-                                                            </h4>}
-                                                    </div>
-                                                </div></td>
-                                            <td className='table_dats'>{itm?.product_name}</td>
-                                            <td className='table_dats'>{itm?.comments.slice(0, 40)}</td>
-                                            {user && user?.role == "brand" && <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>}
-                                            <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                                            <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
-
-                                            {<td className='table_dats d-flex '>
-                                                {user && user?.role == "affiliate" && <>
-                                                    {itm?.status == 'pending' ? <div >
-                                                        <button onClick={() => {
-                                                            statusChange("accepted", itm?.id)
-                                                            Tracklogin(itm?.campaign_unique_id)
-                                                        }} className="btn btn-primary mr-2">
-                                                            <i className='fa fa-check'></i>
-                                                        </button>
-                                                        <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
-                                                            <i className='fa fa-times'></i>
-                                                        </button>
-                                                    </div> :
-                                                        itm?.status == 'rejected' ?
-                                                            <div className="btn btn-primary">Rejected</div> :
-                                                            <div className="btn btn-primary">Accepted</div>
-                                                    }
-                                                </>}
-                                                <>
-                                                    <span className='btn btn-primary ml-2'
-                                                        onClick={() => {
-                                                            history.push(`/chat`)
-                                                            localStorage.setItem("chatId", itm?.brand_id)
-                                                        }}>
-                                                        <i className='fa fa-comment-o'></i>
-                                                    </span>
-                                                </>
-
-                                                {/* {itm?.status == 'accepted' &&
-                                            <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
-                                                Send Proposal
-                                            </button>} */}
-
-                                            </td>}
-
-                                        </tr>
-
-                                    })
-                                    }
-                                </tbody>
-                            </table>
-
-
+<table className="table table-striped  ">
+    <thead className='table_head'>
+        <tr className='heading_row'>
+            <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affilite Name"}</th>
+            <th scope="col" className='table_data' >Title</th>
+            <th scope="col" className='table_data' >Comment</th>
+            {user && user?.role == "brand" && <th scope="col" className='table_data' >Status</th>}
+            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {!loaging && data && data.map((itm, i) => {
+            return <tr className='data_row' key={i}>
+                <td className='table_dats' onClick={e => view(itm.id)}>
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            {user?.role == 'affiliate' ?
+                                <h4 className='user'>
+                                    {methodModel.capitalizeFirstLetter(itm.brand_name)}
+                                </h4>
+                                : <h4 className='user'>
+                                    {methodModel.capitalizeFirstLetter(itm.affiliate_name)}
+                                </h4>}
                         </div>
+                    </div></td>
+                <td className='table_dats'>{itm?.product_name}</td>
+                <td className='table_dats'>{itm?.comments.slice(0, 40)}</td>
+                {user && user?.role == "brand" && <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>}
+                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
+
+                {<td className='table_dats d-flex '>
+                    {user && user?.role == "affiliate" && <>
+                        {itm?.status == 'pending' ? <div >
+                            <button onClick={() => {
+                                statusChange("accepted", itm?.id)
+                                Tracklogin(itm?.campaign_unique_id)
+                            }} className="btn btn-primary mr-2">
+                                <i className='fa fa-check'></i>
+                            </button>
+                            <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
+                                <i className='fa fa-times'></i>
+                            </button>
+                        </div> :
+                            itm?.status == 'rejected' ?
+                                <div className="btn btn-primary">Rejected</div> :
+                                <div className="btn btn-primary">Accepted</div>
+                        }
+                    </>}
+                    <>
+                        <span className='btn btn-primary ml-2'
+                            onClick={() => {
+                                history.push(`/chat`)
+                                localStorage.setItem("chatId", itm?.brand_id)
+                            }}>
+                            <i className='fa fa-comment-o'></i>
+                        </span>
+                    </>
+
+                    {/* {itm?.status == 'accepted' &&
+                <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
+                    Send Proposal
+                </button>} */}
+
+                </td>}
+
+            </tr>
+
+        })
+        }
+    </tbody>
+</table>
+
+
+</div>
+                       </div>
 
                         {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
 

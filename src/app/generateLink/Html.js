@@ -197,9 +197,9 @@ const Html = () => {
                         <div className='card-body'>
 
                             <div className='row'>
-                                <div className='col-12 col-md-6'>
-                                    <div>
-                                            <div>Select a Merchant</div>
+                                <div className='col-12 col-sm-6 col-md-6'>
+                                    <div className='mb-3' >
+                                            <label>Select a Merchant</label>
                                             <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
                                                 <option value="">Select a Merchant</option>
                                                 {brands.map(brand => (
@@ -208,9 +208,9 @@ const Html = () => {
                                             </select>
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6'>
-                                    <div>
-                                        <div>Destination URL</div>
+                                <div className='col-12 col-sm-6 col-md-6'>
+                                <div className='mb-3' >
+                                        <label>Destination URL</label>
                                         <input
                                             type="text"
                                             className='form-control'
@@ -222,8 +222,10 @@ const Html = () => {
                                 </div>
 
                                 <div className='col-12 col-md-12'>
-                                    <div>
-                                    <div>Select Custom Parameters</div>
+            <div className='select_parabx mb-3' >
+            <div className='mb-3' >
+                                    <label>Select Custom Parameters</label>
+                                        <div className='position-relative set_downbx '>
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="label"
@@ -234,16 +236,16 @@ const Html = () => {
                                             inputValues={inputValues}
                                             options={checkboxValues}
                                         />
+                                        <i class="fa fa-angle-down down_bx" aria-hidden="true"></i>
+                                        </div>
+
                                     </div>
 
-                                    <div className='addkey mt-3 mb-3 d-flex justify-content-end'>
+                                    <div className='addkey mt-3  d-flex justify-content-end'>
                                             <button className='btn btn-primary btn-sm' onClick={()=>setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
                                     </div>
-
-                                </div>
-
-
-                                <div className='col-12 col-md-12 mt-2'>
+<div className='row'>
+<div className='col-12 col-md-12 '>
                                     <div className='row'>
                                         {selectedValues.map((selected,index) => (
                                             <div className='col-12 col-md-4 ' key={index}>
@@ -261,6 +263,12 @@ const Html = () => {
                                     </div>
 
                                 </div>
+</div>
+            </div>
+                                </div>
+
+
+                               
 
 
                             </div>
@@ -268,33 +276,37 @@ const Html = () => {
 
                         
 
-                            <div className='text-end mt-3'>
-                                <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Add Data</button>
+                            <div className='text-end'>
+                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
-                            <h5 className="link_default m-0"> Your Link :</h5>
+                           <div className='mb-3'>
+                           <h6 className="link_default m-0"> Your Link :</h6>
 
-                            <div className="input-group mb-2 mt-3">
-                                <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
-                                    <div className="input-group-text">
-                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
-                                    </div>
-                                </div>
-                                {!selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
-                                {selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
-                            </div>
+<div className="input-group my-2">
+    <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
+        <div className="input-group-text">
+            <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+        </div>
+    </div>
+    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto  br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
+    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+</div>
+                           </div>
                             {copied && <div className="">Copied!</div>}
 
-                            <h5 className="link_default m-0"> Your Short Link : </h5>
+                           <div className='mb-3' >
+                           <h6 className="link_default m-0"> Your Short Link : </h6>
 
-                           {shrtlnk && <div className="input-group mb-2 mt-3">
-                                <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
-                                    <div className="input-group-text">
-                                        <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
-                                    </div>
-                                </div>
-                                 <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</p>
-                            </div>}
+{shrtlnk && <div className="input-group my-2">
+     <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
+         <div className="input-group-text">
+             <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+         </div>
+     </div>
+      <p id="textShortToCopy" className="form-control gen_links br0 mb-0 heauto" >{shrtlnk}</p>
+ </div> }
+                           </div>
                             {/* {copied && <div className="">Copied!</div>} */}
                         </div>
                     </div>
@@ -303,23 +315,23 @@ const Html = () => {
             {showNewKeyForm && (
                 <div class="modal d-block">
                     <div class="modal-dialog  modal-dialog-centered dateModal" role="document">
-                        <div class="modal-content ">
+                        <div class="modal-content  p-0">
                             <div class="modal-body">
                                 <div className='d-flex justify-content-between'>
                                     <h5 className='mb-3'>Add New Key</h5>
                                     <i className='fa fa-times' onClick={() => setShowNewKeyForm(false)}></i>
                                 </div>
                                 <div className='form-group'>
-                                    <p className='mb-2'>Key:</p>
+                                    <label className='mb-2'>Key:</label>
                                     <input type="text" className='form-control' value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder="Enter Key" />
                                 </div>
 
                                 <div className='form-group'>
-                                    <p className='mb-2'>Value:</p>
+                                    <label className='mb-2'>Value:</label>
                                     <input type="text" className='form-control' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />                            </div>
 
                                 <div className='text-end'>
-                                    <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleAddNew} >Add Key</button>
+                                    <button type="button" class="btn btn-primary " onClick={handleAddNew} >Add Key</button>
                                 </div>
                             </div>
 

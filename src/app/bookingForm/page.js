@@ -350,7 +350,7 @@ export default function BillingForm() {
                     </div> */}
 
                     <div>
-                      <button type="button" class="btn btn-primary pr-5 pl-5" onClick={() => handleClick()} >Ok</button>
+                      <button type="button" class="btn btn-primary " onClick={() => handleClick()} >Ok</button>
                     </div>
                   </div>
 

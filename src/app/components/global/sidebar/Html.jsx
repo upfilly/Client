@@ -127,7 +127,8 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
         </ListItemLink>}
 
         {user && user?.role == "affiliate" && <ListItemLink to="/inviteUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" disabled={(user?.role == "affiliate" && !user?.account_id )? true : false}>
-          <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i>
+          {/* <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i> */}
+          <i class="material-icons svg_iconbx " title="campaignManagement">person_add</i>
           <span className="side_head">Invite Users</span>
         </ListItemLink>}
 

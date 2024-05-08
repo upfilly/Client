@@ -97,87 +97,89 @@ const Html = ({
 
                 </div>
 
-                <div className="table-responsive table_section">
+                <div className='table_section'>
+                <div className="table-responsive ">
 
-                    <table className="table table-striped table-width">
-                        <thead className='table_head'>
-                            <tr className='heading_row'>
-                                <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                <th scope="col" className='table_data'>Amount</th>
-                                <th scope="col" className='table_data'>Status</th>
-                                <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
-                                <th scope="col" className='table_data'>Action</th>
+<table className="table table-striped table-width">
+    <thead className='table_head'>
+        <tr className='heading_row'>
+            <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data'>Amount</th>
+            <th scope="col" className='table_data'>Status</th>
+            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
+            <th scope="col" className='table_data'>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {!loaging && data && data.map((itm, i) => {
-                                return <tr className='data_row' key={i}>
-                                    <td className='table_dats' onClick={e => view(itm.id)}>
+        </tr>
+    </thead>
+    <tbody>
+        {!loaging && data && data.map((itm, i) => {
+            return <tr className='data_row' key={i}>
+                <td className='table_dats' onClick={e => view(itm.id)}>
 
-                                        <div className='user_detail'>
-                                            <div className='user_name'>
-                                                <h4 className='user'>
-                                                    {methodModel.capitalizeFirstLetter(itm.name)}
-                                                </h4>
-                                            </div>
-                                        </div></td>
-                                    <td className='table_dats'>
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            <h4 className='user'>
+                                {methodModel.capitalizeFirstLetter(itm.name)}
+                            </h4>
+                        </div>
+                    </div></td>
+                <td className='table_dats'>
 
-                                        <div className='user_detail'>
-                                            <div className='user_name'>
-                                                <h4 className='user'>
-                                                    {methodModel.capitalizeFirstLetter(itm?.event_type)}
-                                                </h4>
-                                            </div>
-                                        </div></td>
-                                        <td className='table_dats'>{itm?.amount}</td>
-                                    <td className='table_dats'>   <div className={`user_hours`}>
-                                        <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
-                                        >
-                                            {itm.status}
-                                            {/* {itm.status == 'deactive' ? 'inactive' : 'active'} */}
-                                        </span>
-                                        {/* <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
-                                        style={itm?.status=="accepted"?{color:'green'}:itm?.status=="pending"?{color:'orange'}:{color:'red'}}>
-                                            {itm.status}
-                                        </span> */}
-                                    </div></td>
-                                    <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                                    {/* <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td> */}
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            <h4 className='user'>
+                                {methodModel.capitalizeFirstLetter(itm?.event_type)}
+                            </h4>
+                        </div>
+                    </div></td>
+                    <td className='table_dats'>{itm?.amount}</td>
+                <td className='table_dats'>   <div className={`user_hours`}>
+                    <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
+                    >
+                        {itm.status}
+                        {/* {itm.status == 'deactive' ? 'inactive' : 'active'} */}
+                    </span>
+                    {/* <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
+                    style={itm?.status=="accepted"?{color:'green'}:itm?.status=="pending"?{color:'orange'}:{color:'red'}}>
+                        {itm.status}
+                    </span> */}
+                </div></td>
+                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                {/* <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td> */}
 
-                                    {/* dropdown */}
-                                    <td className='table_dats'>
-                                        <div className="action_icons">
-                                            {isAllow('editAdmins') ? <>
-                                                <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
-                                                    <i className="material-icons edit" title="Edit">edit</i>
-                                                </a>
-                                            </> : <></>}
+                {/* dropdown */}
+                <td className='table_dats'>
+                    <div className="action_icons">
+                        {isAllow('editAdmins') ? <>
+                            <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
+                                <i className="material-icons edit" title="Edit">edit</i>
+                            </a>
+                        </> : <></>}
 
-                                            {isAllow('deleteAdmins') ? <>
-                                                <a className='edit_icon edit-delete' onClick={itm?.status=="accepted" ? "" : () => deleteItem(itm.id)}>
-                                                    <i className={`material-icons ${itm?.status=="accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
-                                                </a>
-                                            </> : <></>}
+                        {isAllow('deleteAdmins') ? <>
+                            <a className='edit_icon edit-delete' onClick={itm?.status=="accepted" ? "" : () => deleteItem(itm.id)}>
+                                <i className={`material-icons ${itm?.status=="accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                            </a>
+                        </> : <></>}
 
-                                            <>
-                                                <a className='edit_icon action-btn' onClick={() =>{history.push(`/chat`)
-                                                                            localStorage.setItem("chatId",itm?.affiliate_id)}}>
-                                                   <i className='fa fa-comment-o text-white'></i>
-                                                </a>
-                                            </>
-                                        </div>
-                                    </td>
+                        <>
+                            <a className='edit_icon action-btn' onClick={() =>{history.push(`/chat`)
+                                                        localStorage.setItem("chatId",itm?.affiliate_id)}}>
+                               <i className='fa fa-comment-o text-white'></i>
+                            </a>
+                        </>
+                    </div>
+                </td>
 
-                                </tr>
+            </tr>
 
-                            })
-                            }
-                        </tbody>
-                    </table>
+        })
+        }
+    </tbody>
+</table>
+</div>
                 </div>
 
                 {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}

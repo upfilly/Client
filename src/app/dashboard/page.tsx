@@ -66,9 +66,10 @@ export default function Dashboard() {
 
   return (
     <Layout activeSidebar={activeSidebar} handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Dashboard"} filters={undefined}>
-    <div className='main-dashboards mb-3'>
-        <div className='row mx-0'>
-          <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3 pr-0'>
+    <div className='main-dashboards  main_box mb-3'>
+      <div className="container-fluid">
+      <div className='row '>
+          <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3 '>
             <div className='fixi-ic'>
               <div className='d-flex align-items-center'>
                 <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img>
@@ -95,7 +96,7 @@ export default function Dashboard() {
             </div>
 
           </div>
-          <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3 pr-0'>
+          <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3'>
             <div className='fixi-ic'>
               <div className='d-flex align-items-center'>
                 <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img>
@@ -121,7 +122,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 pr-0'>
+          <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 '>
             <div className='fixi-ic'>
               <div className='d-flex align-items-center'>
                 <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img>
@@ -172,7 +173,10 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className='row mx-0 mt-3'>
+      </div>
+  <div className="mt-3">
+  <div className="container-fluid ">
+     <div className='row '>
           <div className='col-sm-12 col-md-7 col-lg-7 col-xl-9  mb-3 '>
             <img className='w-100' src='/assets/img/yeks.png' alt=''></img>
           </div>
@@ -187,22 +191,22 @@ export default function Dashboard() {
                 <img className='pro-bar' src='/assets/img/progresser.png' alt=''></img>
               </div>
               <div className='row mx-auto mt-3'>
-                <div className='col-md-6 p-0'>
+                <div className='col-md-6 '>
                   <p className='tebs-t'><i className="fa fa-circle aas mr-2" aria-hidden="true"></i>
                     Desktop
                   </p>
                 </div>
-                <div className='col-md-6 p-0'>
+                <div className='col-md-6 '>
                   <p className='tebs-t'><i className="fa fa-circle yell mr-2" aria-hidden="true"></i>
                     Android
                   </p>
                 </div>
-                <div className='col-md-6 p-0'>
+                <div className='col-md-6'>
                   <p className='tebs-t'><i className="fa fa-circle blu mr-2" aria-hidden="true"></i>
                     iPhone
                   </p>
                 </div>
-                <div className='col-md-6 p-0'>
+                <div className='col-md-6'>
                   <p className='tebs-t'><i className="fa fa-circle pik mr-2" aria-hidden="true"></i>
                     Tablet
                   </p>
@@ -211,6 +215,8 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+     </div>
+  </div>
 
        {user.role == 'brand' && <div className='row mt-3 mx-0'>
             <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6 '>

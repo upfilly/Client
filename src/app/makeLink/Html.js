@@ -284,7 +284,7 @@ const Html = () => {
                             </div>
 
                             <div className='text-end mt-3'>
-                                <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Add Data</button>
+                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
                             <h5 className="link_default m-0"> Your Link :</h5>
@@ -333,7 +333,7 @@ const Html = () => {
                                     <input type="text" className='form-control' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />                            </div>
 
                                 <div className='text-end'>
-                                    <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleAddNew} >Add Key</button>
+                                    <button type="button" class="btn btn-primary" onClick={handleAddNew} >Add Key</button>
                                 </div>
                             </div>
 

@@ -57,7 +57,7 @@ const Html = () => {
                         <div className='card-body'>
 
                             <div className='row'>
-                                <div className='col-12 col-md-6'>
+                                <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >First Name</div>
                                         <input
@@ -70,7 +70,7 @@ const Html = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6'>
+                                <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Last Name</div>
                                         <input
@@ -83,7 +83,7 @@ const Html = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6'>
+                                <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Enter Email</div>
                                         <input
@@ -95,7 +95,7 @@ const Html = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6'>
+                                <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Select User Role</div>
                                         <SelectDropdown
@@ -113,7 +113,7 @@ const Html = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6'>
+                                <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Language</div>
                                         <SelectDropdown
@@ -131,7 +131,7 @@ const Html = () => {
                             </div>
 
                             <div className='text-end mt-3'>
-                                <button type="button" class="btn btn-primary pr-5 pl-5" onClick={handleSubmit} >Invite User</button>
+                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Invite User</button>
                             </div>
                         </div>
                     </div>

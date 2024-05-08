@@ -56,7 +56,8 @@ const Detail = (p) => {
                                 <h3>No Progress</h3>
                             </div>
                             : <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 '>
-                                <div className='table-responsive table_section mt-3'>
+                              <div className='table_section mt-3'>
+                              <div className='table-responsive '>
                                     <table className='table table-striped'>
                                         <thead>
                                             <tr>
@@ -76,6 +77,7 @@ const Detail = (p) => {
                                         })}
                                     </table>
                                 </div>
+                              </div>
                             </div>}
                     </div>
                 </div>

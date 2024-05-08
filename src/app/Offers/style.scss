@@ -96,6 +96,7 @@ input.form-control-file.over_input {
   }
   .searchInput input {
     padding-right: 35px;
+    max-width: 240px;
   }
 
   i.material-icons.diabled {
@@ -160,4 +161,14 @@ input[type=number] {
 .img-wrappper .imagethumbWrapper .fa-times {
     right: -7px;
     top: -7px;
+}
+//gourav csss
+
+
+
+.searchInput i {
+    position: absolute;
+    top: 18px;
+    right: 13px;
+    font-size: 14px;
 }

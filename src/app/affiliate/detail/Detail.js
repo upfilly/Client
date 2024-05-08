@@ -395,8 +395,8 @@ const Detail = (p) => {
                                         <div className='NoProgressHeading'>
                                             <h3>No Progress</h3>
                                         </div>
-                                        : <div className=' '>
-                                            <div className='table-responsive table_section mt-3'>
+                                        : <div className='table_section mt-3 '>
+                                            <div className='table-responsive '>
                                                 <table className='table table-striped'>
                                                     <thead>
                                                         <tr>

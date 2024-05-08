@@ -135,59 +135,61 @@ const Html = ({
                     </div>
                 </div>
 
-                <div className="table-responsive table_section">
+                <div className='table_section'>
+                <div className="table-responsive ">
 
-                    <table className="table table-striped table-width">
-                        <thead className='table_head'>
-                            <tr className='heading_row'>
-                                <th scope="col" className='table_data' onClick={e => sorting('email')}>E-mail{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                <th scope="col" className='table_data'>Status</th>
-                                <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                {/* <th scope="col" className='table_data'>Action</th> */}
+<table className="table table-striped table-width">
+    <thead className='table_head'>
+        <tr className='heading_row'>
+            <th scope="col" className='table_data' onClick={e => sorting('email')}>E-mail{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data'>Status</th>
+            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            {/* <th scope="col" className='table_data'>Action</th> */}
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {!loaging && data && data.map((itm, i) => {
-                                return <tr className='data_row' key={i}>
-                                    <td className='table_dats' onClick={e => view(itm.id)}>
-                                        <div className='user_detail'>
-                                            <div className='user_name'>
-                                                <h4 className='user'>
-                                                    {methodModel.capitalizeFirstLetter(itm.email)}
-                                                </h4>
-                                            </div>
-                                        </div></td>
-                                    <td className='table_dats'>   <div className={`user_hours`}>
-                                        <span className={itm?.invite_status == "onboard" ? 'contract' : itm?.invite_status == "invited" ? 'pending_status' : 'inactive'}
-                                        // onClick={() => statusChange(itm)}
-                                        >
-                                            {itm.invite_status}
-                                        </span>
-                                    </div></td>
-                                    <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                                    {/* dropdown */}
-                                    {/* <td className='table_dats'>
-                                        <div className="action_icons">
-                                            {isAllow('editAdmins') ? <>
-                                                <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
-                                                    <i className="material-icons edit" title="Edit">edit</i>
-                                                </a>
-                                            </> : <></>}
+        </tr>
+    </thead>
+    <tbody>
+        {!loaging && data && data.map((itm, i) => {
+            return <tr className='data_row' key={i}>
+                <td className='table_dats' onClick={e => view(itm.id)}>
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            <h4 className='user'>
+                                {methodModel.capitalizeFirstLetter(itm.email)}
+                            </h4>
+                        </div>
+                    </div></td>
+                <td className='table_dats'>   <div className={`user_hours`}>
+                    <span className={itm?.invite_status == "onboard" ? 'contract' : itm?.invite_status == "invited" ? 'pending_status' : 'inactive'}
+                    // onClick={() => statusChange(itm)}
+                    >
+                        {itm.invite_status}
+                    </span>
+                </div></td>
+                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                {/* dropdown */}
+                {/* <td className='table_dats'>
+                    <div className="action_icons">
+                        {isAllow('editAdmins') ? <>
+                            <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
+                                <i className="material-icons edit" title="Edit">edit</i>
+                            </a>
+                        </> : <></>}
 
-                                            {isAllow('deleteAdmins') ? <>
-                                                <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
-                                                    <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
-                                                </a>
-                                            </> : <></>}
-                                        </div>
-                                    </td> */}
-                                </tr>
+                        {isAllow('deleteAdmins') ? <>
+                            <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
+                                <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                            </a>
+                        </> : <></>}
+                    </div>
+                </td> */}
+            </tr>
 
-                            })
-                            }
-                        </tbody>
-                    </table>
+        })
+        }
+    </tbody>
+</table>
+</div>
                 </div>
 
                 {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}

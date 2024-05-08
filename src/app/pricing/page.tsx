@@ -526,7 +526,7 @@ export default function Pricing() {
                   </div>
 
                   <div>
-                    <button type="button" className="btn btn-primary pr-5 pl-5" onClick={() => setShowPopup(false)} >Ok</button>
+                    <button type="button" className="btn btn-primary" onClick={() => setShowPopup(false)} >Ok</button>
                   </div>
                 </div>
 

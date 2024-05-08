@@ -29,7 +29,7 @@ const Html = ({
     };
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={"Invitations"} filters={filters}>
-            <div className='sidebar-left-content'>
+            <div className='sidebar-left-content main_box'>
                 <div className='card'>
                     <div className='card-header'>
                         <div className="main_title_head d-flex justify-content-between align-items-center">
@@ -77,92 +77,94 @@ const Html = ({
                     <div className='card-body'>
 
 
-                        <div className="table-responsive table_section mt-0">
+                        <div className='table_section mt-0'>
+                        <div className="table-responsive ">
 
-                            <table className="table table-striped  ">
-                                <thead className='table_head'>
-                                    <tr className='heading_row'>
-                                        <th scope="col" class="table_data" >Merchnat Name</th>
-                                        <th scope="col" class="table_data" >Message</th>
-                                        <th scope="col" className='table_data' >Commission</th>
-                                        <th scope="col" className='table_data' >Tags</th>
-                                        <th scope="col" className='table_data' >Status</th>
-                                        <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                        <th></th>
-                                        {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {!loaging && data && data.map((itm, i) => {
-                                        return <tr className='data_row' key={i}>
-                                        <td className='table_dats' 
-                                            // onClick={()=>view(itm?.id)}
-                                            >
-                                                <div className='user_detail'>
-                                                    <div className='user_name'>
-                                                        <h4 className='user'>
-                                                            {itm?.addedBy?.fullName}
-                                                        </h4>
-                                                    </div>
-                                                </div></td>
-                                            <td className='table_dats' 
-                                            // onClick={()=>view(itm?.id)}
-                                            >
-                                                <div className='user_detail'>
-                                                    <div className='user_name'>
-                                                        <h4 className='user'>
-                                                            {itm?.message}
-                                                        </h4>
-                                                    </div>
-                                                </div></td>
-                                            <td className='table_dats'>{itm?.commission}</td>
-                                            <td className='table_dats'>{itm?.tags?.map((data)=>data).join(",")}</td>
-                                             <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>
-                                            {/* <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td> */}
-                                            <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
-                                            {<td className='table_dats d-flex set_iconstabls '>
-                                                {user && user?.role == "affiliate" && <>
-                                                    {itm?.status == 'pending' ? <div >
-                                                        <button onClick={() => {
-                                                            statusChange("accepted", itm?.id || itm?._id)
-                                                            // Tracklogin(itm?.campaign_unique_id)
-                                                        }} className="btn btn-primary  circle_icons mr-2">
-                                                            <i className='fa fa-check'></i>
-                                                        </button>
-                                                        <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red circle_icons">
-                                                            <i className='fa fa-times'></i>
-                                                        </button>
-                                                    </div> :
-                                                        itm?.status == 'rejected' ?
-                                                            <div className="btn btn-primary">Rejected</div> :
-                                                            <div className="btn btn-primary">Accepted</div>
-                                                    }
-                                                </>}
-                                                <>
-                                                    <button type='button' className='btn btn-primary circle_icons'
-                                                        onClick={() => {
-                                                            history.push(`/chat`)
-                                                            localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)
-                                                        }}>
-                                                        <i className='fa fa-comment-o'></i>
-                                                    </button>
-                                                </>
+<table className="table table-striped  ">
+    <thead className='table_head'>
+        <tr className='heading_row'>
+            <th scope="col" class="table_data" >Merchnat Name</th>
+            <th scope="col" class="table_data" >Message</th>
+            <th scope="col" className='table_data' >Commission</th>
+            <th scope="col" className='table_data' >Tags</th>
+            <th scope="col" className='table_data' >Status</th>
+            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th></th>
+            {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
+        </tr>
+    </thead>
+    <tbody>
+        {!loaging && data && data.map((itm, i) => {
+            return <tr className='data_row' key={i}>
+            <td className='table_dats' 
+                // onClick={()=>view(itm?.id)}
+                >
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            <h4 className='user'>
+                                {itm?.addedBy?.fullName}
+                            </h4>
+                        </div>
+                    </div></td>
+                <td className='table_dats' 
+                // onClick={()=>view(itm?.id)}
+                >
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            <h4 className='user'>
+                                {itm?.message}
+                            </h4>
+                        </div>
+                    </div></td>
+                <td className='table_dats'>{itm?.commission}</td>
+                <td className='table_dats'>{itm?.tags?.map((data)=>data).join(",")}</td>
+                 <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>
+                {/* <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td> */}
+                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
+                {<td className='table_dats d-flex set_iconstabls justify-content-center '>
+                    {user && user?.role == "affiliate" && <>
+                        {itm?.status == 'pending' ? <div >
+                            <button onClick={() => {
+                                statusChange("accepted", itm?.id || itm?._id)
+                                // Tracklogin(itm?.campaign_unique_id)
+                            }} className="btn btn-primary  circle_icons mb-0 mr-2">
+                                <i className='fa fa-check'></i>
+                            </button>
+                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red circle_icons mb-0">
+                                <i className='fa fa-times'></i>
+                            </button>
+                        </div> :
+                            itm?.status == 'rejected' ?
+                                <div className="btn btn-primary">Rejected</div> :
+                                <div className="btn btn-primary">Accepted</div>
+                        }
+                    </>}
+                    <>
+                        <button type='button' className='btn btn-primary circle_icons mb-0'
+                            onClick={() => {
+                                history.push(`/chat`)
+                                localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)
+                            }}>
+                            <i className='fa fa-comment-o'></i>
+                        </button>
+                    </>
 
-                                                {/* {itm?.status == 'accepted' &&
-                                            <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
-                                                Send Proposal
-                                            </button>} */}
+                    {/* {itm?.status == 'accepted' &&
+                <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
+                    Send Proposal
+                </button>} */}
 
-                                            </td>}
+                </td>}
 
-                                        </tr>
+            </tr>
 
-                                    })
-                                    }
-                                </tbody>
-                            </table>
+        })
+        }
+    </tbody>
+</table>
 
 
+</div>
                         </div>
 
                         {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}

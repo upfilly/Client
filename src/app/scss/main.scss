@@ -469,6 +469,7 @@ i.fa {
 
 .action_icons {
   display: flex;
+  gap: 12px;
 }
 
 a.edit_icon {
@@ -479,7 +480,6 @@ a.edit_icon {
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  margin-right: 6px;
 
   &:hover {
     text-decoration: none !important;
@@ -946,9 +946,7 @@ input.searchbar.mr-2 {
   // .dropdown.addDropdown.chnages {
   //   margin-top: 10px;
   // }
-  article.d-flex {
-    margin-top: 1rem !important;
-  }
+ 
 }
 
 @media only screen and (min-width:991px) and (max-width:1000px) {
@@ -988,9 +986,7 @@ input.searchbar.mr-2 {
     display: block !important;
   }
 
-  article.d-flex {
-    margin-top: 1rem;
-  }
+  
 
   .main-wrapper main.main {
     width: 100% !important;
@@ -1033,10 +1029,7 @@ input.searchbar.mr-2 {
     margin-top: 15px !important;
   }
 
-  article.d-flex {
-    flex-wrap: wrap !important;
-    display: flex;
-  }
+ 
 
   .dropdown.addDropdown.chnagest_name {
     margin-top: 13px;
@@ -1049,10 +1042,7 @@ input.searchbar.mr-2 {
   //   .dropdown.addDropdown.chnagesname {
   //     margin-top: 15px !important;
   // }
-  article.d-flex {
-    flex-wrap: wrap !important;
-    display: flex;
-  }
+
 }
 
 @media screen and (min-width:601px)and (max-width:609px) {
@@ -1099,10 +1089,7 @@ input.searchbar.mr-2 {
     display: block !important;
   }
 
-  article.d-flex {
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
+  
 
   .main-wrapper main.main {
     width: 100% !important;
@@ -1173,11 +1160,7 @@ input.searchbar.mr-2 {
     margin-bottom: 20px;
   }
 
-  article.d-flex {
-    display: flex !important;
-    margin-top: 1rem !important;
-    flex-wrap: wrap;
-  }
+ 
 
   // .d-flex.justify-content-between.align-items-center {
   //   /* flex-wrap: wrap; */
@@ -1242,9 +1225,7 @@ input.searchbar.mr-2 {
     margin-top: 15px;
   }
 
-  .dropdown.addDropdown {
-    margin-top: 15px;
-  }
+ 
 
   button.btn.btn-primary.mr-2.export {
     margin-left: 15px;
@@ -1263,10 +1244,7 @@ input.searchbar.mr-2 {
   //   display: block !important;
   // }
 
-  article.d-flex {
-    display: block !important;
-    margin-top: 1rem !important;
-  }
+ 
 
   .min-sidebar~div>.main-sidebar {
     display: none !important;
@@ -1310,9 +1288,6 @@ input.searchbar.mr-2 {
     display: block !important;
   }
 
-  article.d-flex {
-    margin-top: 1rem;
-  }
 
   // .d-flex.justify-content-between.mb-3 {
   //   display: block !important;
@@ -1344,10 +1319,7 @@ input.searchbar.mr-2 {
     font-size: 14px;
   }
 
-  article.d-flex {
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
+ 
 
   button#dropdownMenuButtonstatusDropdown\ reset {
     margin-top: 15px;
@@ -1457,10 +1429,7 @@ input.searchbar.mr-2 {
     border-bottom: 1px solid #ffffff;
   }
 
-  article.d-flex {
-    display: block !important;
-    margin-top: 1rem !important;
-  }
+ 
 
   .new_cards {
     height: 100% !important;
@@ -1535,7 +1504,8 @@ input.searchbar.mr-2 {
 
   p.mb-0 {
     white-space: nowrap;
-    width: 180px;
+    // width: 180px; 
+    max-width: 180px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -1591,18 +1561,13 @@ input.searchbar.mr-2 {
     font-size: 14px;
   }
 
-  article.d-flex a,
-  button {
-    margin-bottom: 1rem !important;
-  }
+
 
   button.btn.btn-primary.dropdown-toggle.removeBg {
     margin-bottom: 0px !important;
   }
 
-  .table_section {
-    margin-top: 10px !important;
-  }
+
 
   .mr-2.phBottomSpace {
     margin-bottom: 10px;
@@ -2252,7 +2217,8 @@ p.checkbox-option-main span {
 .sidebar_main .nav-item .nav-link {
   background: #F8F9FA;
   border-radius: 50px;
-  padding: 14px 13px !important;
+  // padding: 14px 13px !important;
+  padding: 10px 12px !important;
 }
 
 .sidebar_main .nav-item {
@@ -2435,6 +2401,7 @@ ul.sales-listing {
   top: 50%;
   transform: translateY(-50%);
   right: 10px;
+
 }
 
 .searchInput input {
@@ -2502,6 +2469,7 @@ span.contract {
 
 select.form-select {
   border-radius: 50px;
+  text-transform: capitalize;
 }
 
 .phoneInput.main-no .react-tel-input .flag-dropdown {
@@ -2540,11 +2508,11 @@ select.form-select {
 }
 
 .main-dashboards {
-  padding: 35px 0 0 0;
+  padding: 30px 0 0 0;
 }
 
 .main-top {
-  padding: 21px 0 0 0;
+  padding: 12px 0 0 0;
 }
 
 .sidebar_main.active .toggle-img {
@@ -3828,6 +3796,7 @@ padding: 6px 12px;
 .header-logo .page-name {
     font-size: 16px;
     position: relative;
+    padding-top: 0px;
 }
 
 .header-logo .page-name::before {
@@ -3851,10 +3820,104 @@ padding: 6px 12px;
 span.linebx {
   display: block;
 }
+.count {
+  right: -8px !important;
+  height: 15px !important;
+  width: 15px !important;
+  font-size: 9px !important;
+}
 // Sidebar css start -------------------------------
 .left_sidebar {
   padding: 15px 10px !important;
 }
+
+
+
+
+
+// sidebar and header   css 
+.sidebar_main {
+  position: relative !important;
+}
+
+.sidebar_main.active .left_sidebar, .sidebar_main.active .left_sidebar .new-sidebar  {
+  width: 250px;
+  z-index: 99;
+}
+
+
+
+.sidebar_main .left_sidebar .main-top {
+  width: 250px;
+  position: relative !important;
+  top: 0px;
+  padding-right: 0px;
+  
+}
+.sidebar_main.active .left_sidebar .main-top {
+  width: 70px;
+  position: relative !important;
+  margin: 0px;
+  top: 0;
+}
+
+.sidebar_main .layout_right  {
+  // width: calc(100% - 0px) !important;
+  width: calc(100% - 90px) !important;
+  position: absolute;
+  right: 0px;
+}
+
+
+
+.sidebar_main .layout_right .main_box  {
+  width: calc(100% - 0px) !important;
+  position: absolute;
+  right: 0px;
+}
+
+.sidebar_main.active .toggle-img {
+  margin: unset;
+  width: 69px;
+}
+.sidebar_main .toggle-img {
+
+  width: 250px;
+}
+
+.sidebar_main.active .left_sidebar .nav-item {
+  width: 70px !important;
+  margin: 14px  auto !important;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+// .sidebar_main .left_sidebar {
+//   width: 257px !important;
+// }
+.sidebar_main.active .left_sidebar .new-sidebar {
+  width: 74px !important;
+}
+
+.sidebar_main .left_sidebar .new-sidebar {
+  width: 90px !important;
+}
+.sidebar_main .left_sidebar {
+  width: 272px !important;
+  background: #fff !important;
+  height: 100vh !important;
+  z-index: 99 !important;
+  position: fixed;
+}
+
+
+
+//offer page css
+.all_flexbx .removeBg, .all_flexbx input, .all_flexbx .set_reset  {
+  font-size: 14px;
+}
+
 
 
  }
@@ -3871,7 +3934,7 @@ span.linebx {
 }
 
 .header-logo .page-name {
-  font-size: 12px;
+  font-size: 14px;
   margin: 0px !important;
   white-space: nowrap;
   position: relative;
@@ -3909,9 +3972,126 @@ span.linebx {
   display: none;
 }
 
+.count {
+  right: -5px !important;
+  height: 13px !important;
+  width: 13px !important;
+  font-size: 8px !important;
+}
+
 // sidebar css start 
 .new-sidebar .toggle-img {
   height: 40px;
 }
 
+// sidebar and header css 
+.left_sidebar .main-top {
+  width: 250px;
+  position: fixed !important;
+  top: 51px;
+  height: 100vh;
+  background-color: #fff;
+}
+
+//offers css 
+
+.cal_search {flex-wrap: wrap;}
+
+.cal_search div {
+    width: 100%;
+}
+
+.cal_search .searchInput input {
+    max-width: 100%;
+}
+
+.cal_search .searchInput {
+    width: 100%;
+}
+
+//dashborad page css
+p.revuh{
+  font-size: 13px !important;
+}
+
+//users page css
+.all_bxbtns button, .all_bxbtns .add_users {
+  font-size: 14px;
+}
+
+//generate link css
+.select_parabx .search-wrapper .searchBox {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.select_parabx .search-wrapper.searchWrapper {
+  border-radius: 10px !important;
+}
+
+
+
+
   }
+
+
+
+//dashbaord css
+@media (max-width:1200px){
+  // .layout_right .main_box {
+  //   width: calc(100% - 90px) !important;
+  //   position: absolute;
+  //   right: 0px;
+  // }
+}
+
+@media (max-width:992px){
+  .headerreverse{
+    flex-direction: column-reverse;
+  }
+}
+
+
+.table_section {
+  border: 1px solid #f0f2f5;
+  margin-top: 22px;
+}
+
+.sidebar_main .layout_right {
+  width: calc(100% - 0px) !important;
+}
+.sidebar_main.active .layout_right {
+  width: calc(100% - 90px) !important;
+}
+.sidebar_main .left_sidebar {
+  width: 300px;
+  background: #fff;
+  height: 100vh;
+  padding: 20px 10px;
+  transition: 0.5s ease-in-out;
+  z-index: 99;
+}
+
+.left_btx {
+  background-color: #8aacfd;
+  color: #fff !important;
+  padding: 5px 6px;
+  border-radius: 6px;
+  font-size: 13px !important;
+}
+
+.payment_bx .searchInput {
+  max-width: 200px;
+  position: relative;
+}
+.payment_bx .searchInput input {
+  border-radius: 34px !important;
+}
+
+.payment_bx .searchInput .search_fa {
+  position: absolute;
+  top: 19px;
+  right: 10px;
+  font-size: 14px;
+  color: #888888;
+}

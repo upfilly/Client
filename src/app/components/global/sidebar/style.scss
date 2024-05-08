@@ -224,18 +224,18 @@ a.col_side.collapsess.collapsed i.material-icons.mr-2 {
 
 
 .sidebar-left-content {
-    padding: 35px 30px 30px;
+    padding:20px;
 }
 
-.table-responsive {
-    overflow-y: auto;
-    height: 590px;
-    padding: 0 !important;
-}
+// .table-responsive {
+//     overflow-y: auto;
+//     height: 590px;
+//     padding: 0 !important;
+// }
 
-.table-responsive::-webkit-scrollbar {
-    width: 2px;
-}
+// .table-responsive::-webkit-scrollbar {
+//     width: 2px;
+// }
 
 
 // .left_sidebar {
@@ -254,7 +254,8 @@ a.col_side.collapsess.collapsed i.material-icons.mr-2 {
 }
 
 .new-sidebar .hoverclass:hover {
-    padding: 14px 13px !important;
+    // padding: 14px 13px !important;
+    padding: 10px 12px !important;
     font-weight: 300;
     line-height: 20px;
     color: rgb(255, 255, 255) !important;
@@ -362,7 +363,7 @@ a.nav-link.hoverclass i {
 }
 
 .sidebar_main.active .left_sidebar {
-    width: 90px;
+    width: 90px !important;
 
 }
 
@@ -421,7 +422,7 @@ img.cross-hide {
 }
 
 .nmain-list {
-    padding: 35px 0 0 0;
+    padding-top: 20px;
 }
 
 .main-affiliate {
