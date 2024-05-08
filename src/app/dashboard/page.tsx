@@ -17,8 +17,7 @@ export default function Dashboard() {
   const [recentUser,setRecentUser] = useState<any>([])
   const [CampaignRequest , setCampaignRequest] = useState<any>(null)
 
-  console.log(user,"dhgfhdhfgdhjfg")
-
+  
   useEffect(() => {
       if (!user) {
           history.push('/')
@@ -292,7 +291,7 @@ export default function Dashboard() {
                         <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
                     </div>
                     <ul className='sales-listing'>
-                      {recentUser?.map((data:any)=><li>
+                      {recentUser.slice(0,5)?.map((data:any)=><li>
                         <div className='d-flex align-items-center item-name'>
                           {data?.image ? <img src={`${environment.api}${data?.image}`} className='dashboard_image'/>:
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>

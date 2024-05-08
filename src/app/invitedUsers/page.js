@@ -80,6 +80,11 @@ const AffiliateTeam = () => {
         getData({ status: e, page: 1 })
     }
 
+    const ChangeRole =(e)=>{
+        setFilter({ ...filters, role: e })
+        getData({ role: e, page: 1 })  
+    }
+
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
         getData({ ...p , page:filters?.page + 1})
@@ -158,6 +163,7 @@ const AffiliateTeam = () => {
             count:10,
             search: '',
             page: 1,
+            role:''
         }
         setFilter({ ...filters, ...filter })
         getData({ ...filter })
@@ -200,6 +206,7 @@ const AffiliateTeam = () => {
             setFilter={setFilter}
             user={user}
             history={history}
+            ChangeRole={ChangeRole}
         />
     </>;
 };

@@ -23,6 +23,7 @@ const Html = ({
     setFilter,
     user,
     history,
+    ChangeRole,
 }) => {
 
     const handleKeyPress = (event) => {
@@ -57,9 +58,9 @@ const Html = ({
                                 <SelectDropdown
                                     id="statusDropdown" className="mr-2 "
                                     displayValue="name"
-                                    placeholder="All Status"
+                                    placeholder="All Roles"
                                     intialValue={filters?.role}
-                                    result={e => { ChangeStatus(e.value) }}
+                                    result={e => { ChangeRole(e.value) }}
                                     options={[
                                         { id: 'analyzer', name: 'Analyzer' },
                                         { id: 'publisher', name: 'Publisher' },
@@ -68,7 +69,7 @@ const Html = ({
                                     ]}
                                 />
 
-                                {filters?.status  ? <>
+                                {filters?.status || filters?.role ? <>
                                     <a className="btn btn-primary  ml-2 reset-same" onClick={e => reset()}>
                                         Reset
                                     </a>

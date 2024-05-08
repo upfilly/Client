@@ -39,9 +39,7 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
                             <div className="d-flex filterFlex phView align-items-center   justify-content-end">
-                               {user?.role == 'affiliate' || user?.permission_detail?.user_add && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
-                                    <i className='fa fa-plus mr-1'></i> Add user
-                                </a></>}
+                              
                                 <SelectDropdown
                                     id="statusDropdown" className="mr-2 "
                                     displayValue="name"
@@ -53,6 +51,10 @@ const Html = ({
                                         { id: 'deactive', name: 'Inactive' },
                                     ]}
                                 />
+
+                                {(user?.role == 'affiliate' || user?.permission_detail?.user_add) && <> <a className="btn btn-primary ms-2 " onClick={e => add()}>
+                                    <i className='fa fa-plus mr-1'></i> Add user
+                                </a></>}
 
                                 {filters?.status  ? <>
                                     <a className="btn btn-primary  ml-2 reset-same" onClick={e => reset()}>
