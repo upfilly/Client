@@ -192,9 +192,9 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         <></>
                                     )} */}
                                 </div>}
-                                <div className="select_type select_drop col-md-6 mb-3">
+                                <div className="select_type select_drop col-md-12 mb-3">
                                     <label>Placement<span className="star">*</span></label>
-                                    <div className="select_row">
+                                    <div className="select_row select_arrowbx">
                                         <MultiSelectDropdown
                                             id="statusDropdown"
                                             displayValue="name"
@@ -223,7 +223,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                 </div>
                                 <div className="select_type select_drop col-md-12 mb-3">
                                     <label>Opportunity Type<span className="star">*</span></label>
-                                    <div className="select_row">
+                                    <div className="select_row select_arrowbx">
                                         <MultiSelectDropdown
                                             id="statusDropdown"
                                             displayValue="name"
@@ -253,7 +253,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
 
                                 <div className="select_drop col-md-12 mb-3">
                                     <label>Payment Model<span className="star">*</span></label>
-                                    <div className="select_row selectmultiple">
+                                    <div className="select_row selectmultiple select_arrowbx">
                                         <MultiSelectDropdown
                                             id="statusDropdown"
                                             displayValue="name"
@@ -284,11 +284,16 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
 
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
-                                    <textarea
+                                
+                                   <div className="textarea_offers">
+                                   <textarea
                                      type="text"
-                                     className="form-control"
+                                     className="form-control  "
+                                     rows={3}
                                      value={form.description}
                                      onChange={e => setform({ ...form, description: e.target.value })}/>
+                                   </div>
+                                   
                                     {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                                         onEditorChange={(newValue, editor) => {
                                             setform({ ...form, description: newValue })

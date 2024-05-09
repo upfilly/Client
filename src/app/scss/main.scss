@@ -2555,7 +2555,7 @@ select.form-select {
 a.nav-link.hoverclass.affilate.collapsed-m {
   background: #F8F9FA;
   border-radius: 50px;
-  padding: 14px 13px !important;
+  padding: 10px 12px !important;
 }
 
 .nav-link.hoverclass.affilate.collapsed-m i {
@@ -3169,10 +3169,10 @@ p.ipsi {
   color: #fff !important;
 }
 
-.icon_down_dir {
+// .icon_down_dir {
 
-  filter: invert(1);
-}
+//   filter: invert(1);
+// }
 
 
 .names_checklist{
@@ -3772,6 +3772,8 @@ padding: 6px 12px;
   border-bottom: unset !important;
 }
 
+//gourav page css start
+
 // .header css 
 
 .upfilly_logo {
@@ -4190,4 +4192,37 @@ p.revuh{
 }
 .set_search_icons .searchInput .quick-radius {
   cursor: pointer ;
+}
+
+// sidebar css
+
+
+.side_titles {
+  position: relative;
+}
+
+.side_titles .fontsize20 {
+  position: absolute;
+  right: 4px;
+  top: 12px;
+}
+
+
+// offer edit page css 
+.select_arrowbx .icon_down_dir {
+  width: 9px;
+}
+.textarea_offers{
+  padding: 10px ;
+  border-radius: 60px;
+  border: 1px solid #ddd;
+}
+.textarea_offers textarea {
+  border: 1px solid transparent;
+}
+
+.textarea_offers textarea:focus {
+  border: 1px solid transparent;
+  outline: 1px solid transparent;
+  box-shadow: unset;
 }

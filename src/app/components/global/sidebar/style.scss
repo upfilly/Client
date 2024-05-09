@@ -450,7 +450,7 @@ img.cross-hide {
 
 .fontsize20 {
     font-size: 18px !important;
-    position: relative;
+    position: relative ;
     top: 3px;
 }
 
@@ -509,15 +509,7 @@ img.cross-hide {
 
 
 
-.side_titles {
-    position: relative;
-}
 
-.side_titles .fontsize20 {
-    position: absolute;
-    right: 4px;
-    top: 19px;
-}
 
 .sidebar_main.active .side_titles .fontsize20 {
 display: none;
