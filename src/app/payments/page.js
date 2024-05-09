@@ -125,6 +125,7 @@ export default function affilate() {
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Payments" filters={filters}>
         <div className='nmain-list  mb-3 main_box'>
        <div className='container-fluid'>
+     
        <div className='row'>
             <div className='col-md-12'>
               <div className='d-flex flex-wrap gap-2 all_flexbx justify-content-end'>
@@ -241,11 +242,13 @@ export default function affilate() {
               </div>
             </div>
           </div>
+
+          {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
        </div>
 
         </div>
-
-        {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
+        
+      
 
         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
           <span>Show {data?.length} from {total} Users</span>

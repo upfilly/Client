@@ -99,22 +99,42 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                     </div>
 
                     <div className='d-flex justify-content-end header-content '>
-                       
-                    {isDashboard && 
-                <div className='payment_bx'> 
-                    <div className='searchInput'>
-                            <input type="search"
-                                className='form-control quick-radius'
-                                placeholder='Search'
-                                onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value })}
-                                onKeyPress={handleKeyPress}
-                            />
-                            <i class="fa fa-search search_fa" onClick={() => {
-                                filter()
-                            }} aria-hidden="true"></i>
-                        </div> 
-                </div>
-                }
+    
+    
+
+
+
+    {isDashboard && 
+
+<div class="dropdown set_search_icons">
+<a class=""  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<i class="fa fa-search search_main" aria-hidden="true"></i>
+</a>
+
+<ul class="dropdown-menu">
+  <li><a class="dropdown-item"> 
+  
+  <div className='payment_bx'> 
+    <div className='searchInput'>
+            <input type="search"
+                className='form-control quick-radius'
+                placeholder='Search'
+                onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value })}
+                onKeyPress={handleKeyPress}
+            />
+            <i class="fa fa-search search_fa" onClick={() => {
+                filter()
+            }} aria-hidden="true"></i>
+        </div> 
+</div>
+  
+  
+  </a></li>
+</ul>
+</div>
+
+
+}                  
                       
                       <a href='#' className='help-icon' ><svg className='fonts15' xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41" fill="none">
                             <path d="M0 20.083C0 16.111 1.17785 12.2281 3.3846 8.92549C5.59134 5.62286 8.72788 3.04877 12.3976 1.52874C16.0673 0.00870156 20.1053 -0.389009 24.001 0.385898C27.8967 1.16081 31.4752 3.07353 34.2838 5.88218C37.0925 8.69084 39.0052 12.2693 39.7801 16.165C40.555 20.0607 40.1573 24.0988 38.6373 27.7684C37.1172 31.4381 34.5431 34.5747 31.2405 36.7814C27.9379 38.9882 24.055 40.166 20.083 40.166C14.7567 40.166 9.64847 38.0501 5.88217 34.2838C2.11588 30.5175 0 25.4094 0 20.083ZM2.319 20.083C2.3192 23.5961 3.36112 27.0303 5.31302 29.9512C7.26492 32.8722 10.0391 35.1488 13.2849 36.4931C16.5306 37.8374 20.102 38.1891 23.5476 37.5036C26.9932 36.8182 30.1582 35.1265 32.6423 32.6423C35.1265 30.1582 36.8182 26.9932 37.5036 23.5476C38.1891 20.1021 37.8374 16.5306 36.4931 13.2849C35.1488 10.0391 32.8722 7.26493 29.9512 5.31303C27.0303 3.36113 23.5961 2.31921 20.083 2.31901C17.7501 2.31875 15.44 2.77805 13.2847 3.67068C11.1294 4.56331 9.17096 5.87179 7.52137 7.52138C5.87178 9.17097 4.5633 11.1294 3.67067 13.2847C2.77804 15.4401 2.31874 17.7501 2.319 20.083Z" fill="#252849" />
