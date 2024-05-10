@@ -15,18 +15,20 @@ export default function Platforms() {
         name={undefined}
         filters={undefined}
       >
-        <div className="company-page">
-          <div className="container pl-5 pr-5 mt-5">
-            <div className="row align-items-center mb-5">
+        <div className="company-page my-5">
+          <div className="container ">
+           <div className=" platform_bx" >
+           <div className="row align-items-center ">
               <div className="col-md-12">
                 <h1 className="text-center rise">Platform</h1>
                 <p className="text-center printit">
                   Lorem Ipsum is simply dummy text of the printing and
-                  typesetting <br /> industry. Lorem Ipsum has been the
+                  typesetting industry. Lorem Ipsum has been the
                   industry's standard{" "}
                 </p>
               </div>
             </div>
+           </div>
 
             <div className="row">
               <div className="col-lg-12">
@@ -40,9 +42,11 @@ export default function Platforms() {
               </div>
             </div>
 
-            <div className="row align-items-center mb-150 mobile-flex-reverse">
-              <div className="col-md-5 mt-5 pt-5 pr-5">
-                <h1 className="text-black">
+            <div>
+           <div className="my-5">
+           <div className="row align-items-center mb-150 mobile-flex-reverse">
+              <div className=" col-12 col-sm-12   col-md-5  ">
+                <h1 className="text-black ulable  ">
                   Usable Upfilly <br /> Platform
                 </h1>
                 <p>
@@ -81,21 +85,25 @@ export default function Platforms() {
                   />
                 </div>
               </div>
-              <div className="col-md-7 mt-5 pt-5">
-                <div className="platform-feature-img platform-feature-left">
-                  <img src="/assets/img/platform-feature.png" className="w-100 " alt="" />
+              <div className= " col-12 col-sm-12   col-md-7">
+               <div className="" >
+               <div className="platform-feature-img platform-feature-left">
+                  <img src="/assets/img/platform-feature.png" className="img-fluid " alt="" />
                 </div>
+               </div>
               </div>
 
 
 
+            </div>
+           </div>
             </div>
 
 
             <div className="row align-items-center mb-150">
               <div className="col-md-7 mt-5 pt-5">
                 <div className="platform-feature-img">
-                  <img src="/assets/img/platform-feature-two.png" className="w-100" alt="" />
+                  <img src="/assets/img/platform-feature-two.png" className="img-fluid" alt="" />
                 </div>
               </div>
               <div className="col-md-5 mt-5 pt-5 pr-5 ">

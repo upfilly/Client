@@ -49,7 +49,7 @@ const Detail = (p) => {
                                 <div className='main-view-pages '>
 <div className='row'>
                                     {data?.user_id?.fullName && 
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>User:</p>
@@ -64,7 +64,7 @@ const Detail = (p) => {
                                    }
 
                                     {data?.user_id?.role && 
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Role:</p>
@@ -79,7 +79,7 @@ const Detail = (p) => {
                                    }
 
                                     {data && data?.user_id?.email &&  
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Email:</p>
@@ -94,7 +94,7 @@ const Detail = (p) => {
 
 
                                     {data && data?.amount && 
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Price:</p>
@@ -112,7 +112,7 @@ const Detail = (p) => {
 
 
                                     {data && data?.transaction_type && 
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction Type:</p>
@@ -133,7 +133,7 @@ const Detail = (p) => {
                                        
                                            
                                       
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction Status:</p>
@@ -150,7 +150,7 @@ const Detail = (p) => {
                                         
                                           
                                         
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction ID:</p>
@@ -168,7 +168,7 @@ const Detail = (p) => {
                                         
                                            
                                         
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Currency:</p>
@@ -185,7 +185,7 @@ const Detail = (p) => {
                                        
                                           
                                        
-                                        <div className='col-6 col-md-6 col-lg-4'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Subscription Plan:</p>

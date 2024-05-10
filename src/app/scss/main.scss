@@ -509,6 +509,7 @@ i.material-icons.edit {
   font-size: 15px;
   font-weight: 600;
   color: #898989;
+  vertical-align: initial;
 
 }
 
@@ -516,6 +517,7 @@ i.material-icons.delete {
   font-size: 15px;
   font-weight: 600;
   color: #ee0909;
+  vertical-align: initial;
 
 }
 
@@ -1294,9 +1296,6 @@ input.searchbar.mr-2 {
   // }
 
 
-  p.mb-0 {
-    font-size: 13px;
-  }
 
   img.listIc {
     height: 40px;
@@ -2784,13 +2783,9 @@ a.btn.btn-primary.edit {
   // home page start
 
   .blue_header {
-    padding: 4px 1rem;
+    padding: 13px 1rem;
     flex-direction: column-reverse;
     row-gap: 10px;
-  }
-
-  .main-section .pl_section {
-    padding-left: 10px !important;
   }
 
   button.navbar-toggler {
@@ -2812,9 +2807,9 @@ a.btn.btn-primary.edit {
     font-size: 13px;
   }
 
-  nav.navbar.navbar-expand-lg.navbar-light.bg-white {
-    margin: 10px 0px 20px !important;
-  }
+  // nav.navbar.navbar-expand-lg.navbar-light.bg-white {
+  //   margin: 10px 0px 20px !important;
+  // }
 
 
 
@@ -2859,7 +2854,7 @@ a.btn.btn-primary.edit {
 
   .footer {
     background: #E8E9ED;
-    padding: 20px 2rem !important;
+    padding: 20px 0rem !important;
     margin: 0px 1rem !important;
     border-radius: 20px;
   }
@@ -4225,4 +4220,249 @@ p.revuh{
   border: 1px solid transparent;
   outline: 1px solid transparent;
   box-shadow: unset;
+}
+
+@media (max-width:1200px) {
+  h2.heding_main {
+    font-size: 38px !important;
+    max-width: 300px !important;
+    margin-bottom: 16px !important;
+}
+
+.pl_section p.desc {
+    font-size: 16px;
+}
+.leading_heading {
+  font-size: 24px;
+}
+
+.affiliatebx br {
+  display: none;
+}
+.affiliatebx  {
+  font-size: 20px;
+}
+
+.para_affiliate {
+  font-size: 14px;
+}
+
+.set_tool_list {
+  font-size: 14px;
+
+}
+.set_lensbx {
+  font-size: 38px;
+}
+.lens_details.plbx{
+  padding-left:0px!important;
+}
+
+.lens_details.prbx{
+  padding-right:0px!important;
+}
+.customers {
+  font-size: 38px !important;
+  margin-bottom: 22px;
+}
+.customers br{
+  display: none !important;
+}
+.bg_tracked{
+  padding: 28px !important;
+}
+
+.footer_heading {
+  font-size: 30px !important;
+}
+
+.footer_para {
+  font-size: 16px;
+}
+.platform_bx h1 {
+  font-size: 38px;
+}
+
+.blue-color {
+  font-size: 24px;
+}
+.platform-desc {
+  text-align: center;
+  margin-top: 22px !important;
+}
+
+.mobile-flex-reverse h1 {
+  font-size: 39px;
+}
+
+.ulable br {
+  display: none;
+}
+
+
+}
+
+
+@media (max-width:992px) {
+  .abouts {
+    font-size: 24px;
+  }
+
+  h2.heding_main {
+    font-size: 24px !important;
+}
+.pl_section p.desc {
+  font-size: 14px;
+}
+.pl_section {
+  padding-left: 10px !important;
+}
+
+.lens_details .set_lensbx br  {
+  display:none;
+}
+.lens_details .set_lensbx  
+{
+  font-size: 28px !important;
+}
+
+.flex_list .lens_details p {
+  font-size: 14px;
+}
+
+
+.flex_list img.check_list {
+  width: 18px !important;
+margin-bottom: 0px !important;
+}
+.lens_details{
+  padding:0px !important;
+}
+.set_heading {
+  margin-bottom: 15px;
+}
+
+.set_navbx{
+  width: unset !important;
+  margin: unset !important;
+}
+.set_nabx{
+  background-color: #e8e9ed !important;
+  border-radius: 9px;
+  margin-top: 8px !important;
+}
+
+.customers {
+  font-size: 28px !important;
+}
+.bg_tracked .btn-light {
+  font-size: 14px;
+}
+.footer_heading {
+  font-size: 24px;
+}
+
+.footer_para {
+  font-size: 14px;
+}
+
+}
+
+@media (max-width:768px){
+  .pl_section {
+    padding-left: 10px !important;
+    max-width: 400px;
+    margin: 0px auto;
+}
+.centerimg .main_bg {
+  margin: 0 auto;
+  height: 310px;
+  max-width: 388px;
+}
+
+.btn.btn-outline-primary{
+
+  padding: 6px 12px;
+}
+.lens_details .set_lensbx {
+  font-size: 20px !important;
+}
+.lens_details .set_lensbx br {
+  display:none;
+}
+
+.customers {
+  font-size: 20px !important;
+}
+
+.bg_goal:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  border-radius: 30px;
+  width: 100%;
+  height: 100%;
+  background-color: #22307047;
+  left: 0;
+}
+
+}
+
+@media (max-width:576px) {
+  .centerimg .main_bg {
+    max-width: 232px;
+    height: unset;
+    object-fit: cover;
+}
+.customers {
+  font-size: 18px !important;
+}
+.set_fullbx {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.footer_heading {
+  font-size: 20px !important;
+}
+
+.abouts, .leading_heading  {
+  font-size: 20px;
+}
+.mobile-pl p{
+  margin-bottom: 0px;
+}
+
+
+
+}
+
+
+
+
+//header css 
+.set_navbar {
+  padding: 16px 25px;
+}
+.lens_details.plbx{
+  padding-left:48px;
+}
+
+.lens_details.prbx{
+  padding-right:48px;
+}
+
+
+
+.footer_list svg {
+  width: 27px;
+  height: 27px;
+}
+.mobile-center .pointer {
+  width: 30px !important;
+  height: 30px !important;
+}
+.pxbx {
+  font-size: 14px !important;
 }

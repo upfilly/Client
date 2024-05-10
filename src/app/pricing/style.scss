@@ -113,6 +113,7 @@ h2.heding_main {
     font-weight: 600;
     margin-bottom: 0px;
     color: #000 !important;
+    max-width: 400px;
 }
 
 p.desc {
@@ -329,6 +330,7 @@ img.check_list {
     background-repeat: no-repeat;
     border-radius: 30px;
     margin-top: 6rem;
+    position: relative;
 }
 
 button.btn.btn-blue {

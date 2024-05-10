@@ -591,7 +591,7 @@ export default function Chat() {
           <div className="chat-bg">
             <div className="row">
               <div className="col-lg-4">
-                <div className="conversations">
+                <div className="conversations mb-4">
                   <div className="card p-0">
                     <div className="card-header pl-0 pr-0 p-0" id="headingOne">
                       <div  className="pointer">

@@ -420,7 +420,7 @@ export default function Pricing() {
 
             <div className='last-sec pricing-padding'>
               <div className='main-title text-center'>
-                <h1 className=' '>Frequent Asked Questions</h1>
+                <h1 className='customers'>Frequent Asked Questions</h1>
               </div>
 
               <div className="accordion " id="accordionExample">

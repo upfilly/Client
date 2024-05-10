@@ -119,7 +119,7 @@ const Detail = (p) => {
                                 <div className=" col-md-12">
 
                                     <div className='row'>
-                                        <div className='col-6'>
+                                        <div className='class="col-12 col-sm-12 col-md-4 col-lg-3"'>
                                            <div className='mb-3'>
                                            <div className='userdata'>
                                                 <p className='headmain'>Name:</p>
@@ -129,7 +129,7 @@ const Detail = (p) => {
                                             </div>
                                            </div>
                                         </div>
-                                        <div className='col-6'>
+                                        <div className='class="col-12 col-sm-12 col-md-4 col-lg-3"'>
                                        <div className='mb-3'>
                                        <div className='userdata'>
                                                 <p className='headmain'>Email:</p>
@@ -140,7 +140,7 @@ const Detail = (p) => {
                                        </div>
                                         </div>
                                   
-                                        <div className='col-6'>
+                                        <div className='class="col-12 col-sm-12 col-md-4 col-lg-3"'>
                                       <div className='mb-3'>
                                       <div className='userdata'>
                                                 <p className='headmain'>Mobile Number:</p>
@@ -150,7 +150,7 @@ const Detail = (p) => {
                                             </div>
                                       </div>
                                         </div>
-                                        {/* <div className='col-6'>
+                                        {/* <div className='class="col-12 col-sm-12 col-md-4 col-lg-3"'>
                                      <div className='mb-3'>
                                      <div className='userdata'>
                                                 <p className='headmain'>Address:</p>
@@ -162,7 +162,7 @@ const Detail = (p) => {
                                             </div>
                                      </div>
                                         </div> */}
-                                        <div className='col-6'>
+                                        <div className='class="col-12 col-sm-12 col-md-4 col-lg-3"'>
                                         <div className='mb-3'>
                                         <div className='userdata'>
                                                 <p className='headmain'>Creation Date:</p>
@@ -175,7 +175,7 @@ const Detail = (p) => {
                                         </div>
                                         </div>
 
-                                        <div className='col-6'>
+                                        <div className='class="col-12 col-sm-12 col-md-4 col-lg-3"'>
                                       <div className='mb-3'>
                                       <div className='userdata  d-flex gap-3'>
                                                 <p className='headmain'>Status:</p>

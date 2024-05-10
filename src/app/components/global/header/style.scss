@@ -13,7 +13,8 @@ a.btn.barlink.text-primary {
 // }
 .right_auth a {
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 a.dropdown-item {
@@ -32,11 +33,12 @@ a.dropdown-item:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 3rem;
+  padding: 13px 3rem;
 }
 
 nav.navbar.navbar-expand-lg.navbar-light.bg-white {
-  padding: 10px 3rem !important;
+  // padding: 10px 3rem !important;
+  // margin-top: 20px ;
 }
 
 a.btn.barlink.text-primary {
@@ -522,4 +524,8 @@ svg.fonts15 {
   text-align: center;
   font-weight: bold;
   margin: 20px
+}
+
+.set_navbar {
+  padding: 8px 29px;
 }

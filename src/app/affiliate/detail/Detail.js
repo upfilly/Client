@@ -68,7 +68,7 @@ const Detail = (p) => {
 
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-12 mb-3'>
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 <div className='affilate-detals'>
 
                                     <div className='billing_dtls'>
@@ -76,12 +76,12 @@ const Detail = (p) => {
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Name:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.fullName)}</p>
                                             </div>
@@ -89,12 +89,12 @@ const Detail = (p) => {
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Email:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.email)}</p>
                                             </div>
@@ -102,12 +102,12 @@ const Detail = (p) => {
                                     </div>
 
                                     {data?.title && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Title:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
                                             </div>
@@ -115,12 +115,12 @@ const Detail = (p) => {
                                     </div>}
 
                                     {data?.language && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Language:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.language)}</p>
                                             </div>
@@ -129,12 +129,12 @@ const Detail = (p) => {
 
 
                                     {data?.time_zone && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Time zone:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.time_zone)}</p>
                                             </div>
@@ -143,12 +143,12 @@ const Detail = (p) => {
 
 
                                     {data?.tax_detail && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Tax Details:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 {/* <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.tax_detail)}</p> */}
                                             </div>
@@ -156,12 +156,12 @@ const Detail = (p) => {
                                     </div>}
 
                                     {data?.mobileNo && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Mobile Number:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.mobileNo)}</p>
                                             </div>
@@ -170,12 +170,12 @@ const Detail = (p) => {
 
 
                                     {data?.work_phone && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Work Number:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.work_phone)}</p>
                                             </div>
@@ -183,12 +183,12 @@ const Detail = (p) => {
                                     </div>}
 
                                     {data?.description && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Description:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.description)}</p>
                                             </div>
@@ -196,12 +196,12 @@ const Detail = (p) => {
                                     </div>}
 
                                     {data?.affiliate_group_name && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Affiliate group:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.affiliate_group_name)}</p>
                                             </div>
@@ -210,12 +210,12 @@ const Detail = (p) => {
 
 
                                     {data?.parter_manager_name && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Partner Manager:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.parter_manager_name)}</p>
                                             </div>
@@ -223,12 +223,12 @@ const Detail = (p) => {
                                     </div>}
 
                                     {data?.images && <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Image:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
 
                                                 <p className='headsub'> <img src={methodModel.noImg(data?.images)} className="w170" /></p>
@@ -239,19 +239,19 @@ const Detail = (p) => {
                                 </div>
                             </div>
 
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-12 mb-3'>
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 {<div className='billing_dtls'>
                                     <h6>Billing Detail</h6>
                                 </div>
                                 }
 
                                 {data?.default_invoice_setting && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Default Invoice:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data?.default_invoice_setting}</p>
                                         </div>
@@ -259,12 +259,12 @@ const Detail = (p) => {
                                 </div>}
 
                                 {data?.billing_frequency && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Billing Frequency:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data?.billing_frequency}</p>
                                         </div>
@@ -272,12 +272,12 @@ const Detail = (p) => {
                                 </div>}
 
                                 {data?.address && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Address:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.address)}</p>
                                         </div>
@@ -285,18 +285,18 @@ const Detail = (p) => {
                                 </div>}
                             </div>
 
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-12 mb-3'>
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 <div className='billing_dtls'>
                                     <h6>Tax Detail</h6>
                                 </div>
 
                                 {data?.tax_detail?.tax_name && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Tax Name:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data?.tax_detail?.tax_name}</p>
                                         </div>
@@ -304,12 +304,12 @@ const Detail = (p) => {
                                 </div>}
 
                                 {data?.tax_detail?.tax_classification && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Tax Classification:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data?.tax_detail?.tax_classification}</p>
                                         </div>
@@ -317,12 +317,12 @@ const Detail = (p) => {
                                 </div>}
 
                                <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Us Citizen:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data && data?.tax_detail?.is_us_citizen ? 'Yes' : 'No'}</p>
                                         </div>
@@ -330,12 +330,12 @@ const Detail = (p) => {
                                 </div>
 
                                 {data?.tax_detail?.federal_text_classification && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Federal Text Classification:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data && data?.tax_detail?.federal_text_classification}</p>
                                         </div>
@@ -343,12 +343,12 @@ const Detail = (p) => {
                                 </div>}
 
                                 {data?.tax_detail?.trade_name && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Trade Name:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data && data?.tax_detail?.trade_name}</p>
                                         </div>
@@ -356,12 +356,12 @@ const Detail = (p) => {
                                 </div>}
 
                                {data?.tax_detail?.social_security_number && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Social Security Number:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data && data?.tax_detail?.social_security_number}</p>
                                         </div>
@@ -369,12 +369,12 @@ const Detail = (p) => {
                                 </div>}
 
                                {data?.tax_detail?.signature_date && <div className='row'>
-                                    <div className='col-3'>
+                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                         <div className='userdata'>
                                             <p className='headmain'>Signature Date:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                         <div className='name-dtls'>
                                             <p className='headsub'>{data && data?.tax_detail?.signature_date}</p>
                                         </div>

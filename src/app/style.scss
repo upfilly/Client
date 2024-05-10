@@ -10,6 +10,7 @@ h2.heding_main {
     font-weight: 600;
     margin-bottom: 0px;
     color: #000 !important;
+    max-width: 400px;
 }
 
 p.desc {
@@ -79,7 +80,7 @@ ul.tool_list li {
 }
 
 .pl_section {
-    padding-left: 5rem !important;
+    padding-left: 5rem;
 }
 
 img.check_list {
@@ -106,6 +107,7 @@ img.check_list {
     background-repeat: no-repeat;
     border-radius: 30px;
     margin-top: 6rem;
+    position: relative;
 }
 
 button.btn.btn-blue {

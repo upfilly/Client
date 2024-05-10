@@ -89,8 +89,8 @@ export default function AboutUs() {
         <section className='common-padding pt-0'>
           <div className='container'>
             <div className="row">
-              <div className="col-md-12 text-center mb-4 pb-3">
-                <h2>Frequent Asked Questions</h2>
+              <div className="col-md-12 text-center">
+                <h2 className='customers' > Frequent Asked Questions</h2>
               </div>
               <div className="accordion " id="accordionExample">
                 <div className="row">

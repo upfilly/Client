@@ -126,7 +126,7 @@ export default function Addcomminson() {
 
 
               <div className=' row mt-4'>
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic'>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/1.png' alt=''></img>
@@ -161,7 +161,7 @@ export default function Addcomminson() {
 
                 </div>
 
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic '>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/2.png' alt=''></img>
@@ -174,10 +174,10 @@ export default function Addcomminson() {
 
                   <div className='row'>
                     <div className='col-md-12'>
-                      <div className='checkbox_ipt'>
+                      <div className='checkbox_ipt mt-0'>
                         <div className="">
                           <div className="">
-                            <label className="">
+                            <label className="w-100">
                               <input
                                 className="form-control"
                                 type="text"
@@ -239,7 +239,7 @@ export default function Addcomminson() {
                   </div>
                 </div>
 
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic'>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/3.png' alt=''></img>
@@ -323,7 +323,7 @@ export default function Addcomminson() {
                 </div>
 
 
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic'>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/4.png' alt=''></img>
