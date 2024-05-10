@@ -694,8 +694,6 @@ button.btn.btn-primary.loginclass {
   height: 100vh;
 
   >.container {
-    max-width: 500px;
-
     .shadow {
       border-top: 3px solid $primaryColor;
     }
@@ -2757,7 +2755,7 @@ a.btn.btn-primary.edit {
 
 
 .pricing-padding {
-  margin: 80px 0px;
+  margin: 60px 0px;
 }
 
 .main-title {
@@ -2783,7 +2781,7 @@ a.btn.btn-primary.edit {
   // home page start
 
   .blue_header {
-    padding: 13px 1rem;
+    padding: 13px 1rem !important;
     flex-direction: column-reverse;
     row-gap: 10px;
   }
@@ -2826,11 +2824,7 @@ a.btn.btn-primary.edit {
     text-align: center;
   }
 
-  .container,
-  .container-sm {
-    max-width: 620px;
-  }
-
+ 
   ul.footer_list {
     text-align: center;
   }
@@ -4280,23 +4274,38 @@ p.revuh{
   font-size: 16px;
 }
 .platform_bx h1 {
-  font-size: 38px;
+  font-size: 38px !important;
 }
 
 .blue-color {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 .platform-desc {
   text-align: center;
   margin-top: 22px !important;
 }
 
-.mobile-flex-reverse h1 {
-  font-size: 39px;
+.reversebx h1 {
+  font-size: 38px;
+}
+.reversebx h1 br {
+ display: none;
 }
 
 .ulable br {
-  display: none;
+  display: none !important;
+}
+.monthalu_plan h3 {
+  font-size: 16px !important;
+  margin-left: 12px !important;
+  margin-right: 12px !important;
+}
+h1.triel-city, p.dollarf-sec {
+  font-size: 20px !important;
+}
+
+p.textWrong {
+  font-size: 12px;
 }
 
 
@@ -4304,8 +4313,9 @@ p.revuh{
 
 
 @media (max-width:992px) {
-  .abouts {
-    font-size: 24px;
+
+  .abouts, .platform_bx h1, .main-title h1 {
+    font-size: 24px !important;
   }
 
   h2.heding_main {
@@ -4321,9 +4331,10 @@ p.revuh{
 .lens_details .set_lensbx br  {
   display:none;
 }
-.lens_details .set_lensbx  
+
+.lens_details .set_lensbx, .reversebx h1   
 {
-  font-size: 28px !important;
+  font-size: 24px !important;
 }
 
 .flex_list .lens_details p {
@@ -4333,6 +4344,7 @@ p.revuh{
 
 .flex_list img.check_list {
   width: 18px !important;
+  height: 17px !important;
 margin-bottom: 0px !important;
 }
 .lens_details{
@@ -4358,17 +4370,22 @@ margin-bottom: 0px !important;
 .bg_tracked .btn-light {
   font-size: 14px;
 }
-.footer_heading {
-  font-size: 24px;
+.footer_heading, .feature-text h1 {
+  font-size: 24px !important;
 }
 
 .footer_para {
   font-size: 14px;
 }
+.monthalu_plan h3{
+  font-size: 14px !important;
+}
+
 
 }
 
 @media (max-width:768px){
+
   .pl_section {
     padding-left: 10px !important;
     max-width: 400px;
@@ -4391,8 +4408,8 @@ margin-bottom: 0px !important;
   display:none;
 }
 
-.customers {
-  font-size: 20px !important;
+.customers, .main-title h1 {
+  font-size: 18px !important;
 }
 
 .bg_goal:before {
@@ -4405,10 +4422,24 @@ margin-bottom: 0px !important;
   background-color: #22307047;
   left: 0;
 }
+.platform-feature-img img {
+  max-width: 100% !important;
+  margin: unset !important;
+  height: 400px;
+  width: 100%;
+  object-fit: contain;
+}
 
 }
 
 @media (max-width:576px) {
+  .platform-feature-img img {
+    max-width: 100% !important;
+    margin: unset !important;
+    height: 400px;
+    width: 100%;
+    object-fit: contain;
+}
   .centerimg .main_bg {
     max-width: 232px;
     height: unset;
@@ -4434,7 +4465,9 @@ margin-bottom: 0px !important;
   margin-bottom: 0px;
 }
 
-
+.monthalu_plan h3 {
+    font-size: 12px !important;
+}
 
 }
 
@@ -4465,4 +4498,11 @@ margin-bottom: 0px !important;
 }
 .pxbx {
   font-size: 14px !important;
+}
+
+.plan-features img.checkss.check_list {
+  margin-bottom: 0px;
+}
+.card_height {
+  height: 514px !important;
 }
