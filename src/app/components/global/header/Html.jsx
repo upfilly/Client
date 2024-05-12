@@ -175,7 +175,7 @@ const Html = ({settingData , setShowPopup, isOpen, toggle, isOpen2, toggle2, set
         </Link>
       </nav>} */}
       {!isDashboard &&
-       <nav class="navbar container-fluid navbar-expand-lg navbar-light bg-white pl-4 pr-4  ">
+       <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4  ">
         <Link href="/">
           <img src={`${environment?.api}${settingData?.logo}`} className="logo" alt="" />
         </Link>

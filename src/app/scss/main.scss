@@ -542,6 +542,7 @@ body {
 
 .inputWrapper {
   position: relative;
+  font-size: 14px;
 
   .fa {
     position: absolute;
@@ -549,6 +550,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     color: #84818A;
+    font-size: 14px;
   }
 }
 
@@ -670,7 +672,7 @@ button.btn.btn-primary.loginclass {
   border: none;
   border-radius: 30px;
   width: 100%;
-  height: 49px;
+  height: 38px;
   font-size: 14px;
   font-weight: 600;
   padding: 5px 15px;
@@ -1500,7 +1502,7 @@ input.searchbar.mr-2 {
   }
 
   p.mb-0 {
-    white-space: nowrap;
+    // white-space: nowrap;
     // width: 180px; 
     max-width: 180px;
     overflow: hidden;
@@ -2310,7 +2312,7 @@ ul.opt-category img.checkss {
 .recent-sales {
   border: 1px solid #E2E2E2;
   border-radius: 10px;
-  padding: 20px;
+  padding: 12px;
   height: 100%;
 }
 
@@ -2318,9 +2320,11 @@ ul.opt-category img.checkss {
   display: flex;
   justify-content: space-between;
   border: 1px solid #e2e2e2;
+  flex-wrap: wrap;
   padding: 9px;
   border-radius: 10px;
   margin: 10px 0 0 0;
+  gap: 12px; 
 }
 
 ul.sales-listing {
@@ -2346,7 +2350,7 @@ ul.sales-listing {
 }
 
 .item-name p {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .yellow-badge {
@@ -2368,6 +2372,7 @@ ul.sales-listing {
 
 .sidebar_main.active a.nav-link {
   width: 49px;
+  height: 49px;
   display: flex;
   justify-content: center;
 }
@@ -2884,12 +2889,12 @@ a.btn.btn-primary.edit {
 }
 
 @media (max-width:767px) {
-  form.centerLogin {
-    padding: 1rem 1rem !important;
-  }
+  // form.centerLogin {
+  //   padding: 1rem 1rem !important;
+  // }
 
   .right_side {
-    padding: 16px !important;
+    padding: 0px !important;
   }
 }
 
@@ -3826,83 +3831,6 @@ span.linebx {
 
 
 
-// sidebar and header   css 
-.sidebar_main {
-  position: relative !important;
-}
-
-.sidebar_main.active .left_sidebar, .sidebar_main.active .left_sidebar .new-sidebar  {
-  width: 250px;
-  z-index: 99;
-}
-
-
-
-.sidebar_main .left_sidebar .main-top {
-  width: 250px;
-  position: relative !important;
-  top: 0px;
-  padding-right: 0px;
-  
-}
-.sidebar_main.active .left_sidebar .main-top {
-  width: 70px;
-  position: relative !important;
-  margin: 0px;
-  top: 0;
-}
-
-.sidebar_main .layout_right  {
-  // width: calc(100% - 0px) !important;
-  width: calc(100% - 90px) !important;
-  position: absolute;
-  right: 0px;
-}
-
-
-
-.sidebar_main .layout_right .main_box  {
-  width: calc(100% - 0px) !important;
-  position: absolute;
-  right: 0px;
-}
-
-.sidebar_main.active .toggle-img {
-  margin: unset;
-  width: 69px;
-}
-.sidebar_main .toggle-img {
-
-  width: 250px;
-}
-
-.sidebar_main.active .left_sidebar .nav-item {
-  width: 70px !important;
-  margin: 14px  auto !important;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-// .sidebar_main .left_sidebar {
-//   width: 257px !important;
-// }
-.sidebar_main.active .left_sidebar .new-sidebar {
-  width: 74px !important;
-}
-
-.sidebar_main .left_sidebar .new-sidebar {
-  width: 90px !important;
-}
-.sidebar_main .left_sidebar {
-  width: 272px !important;
-  background: #fff !important;
-  height: 100vh !important;
-  z-index: 99 !important;
-  position: fixed;
-}
-
-
 
 //offer page css
 .all_flexbx .removeBg, .all_flexbx input, .all_flexbx .set_reset  {
@@ -4307,6 +4235,101 @@ h1.triel-city, p.dollarf-sec {
 p.textWrong {
   font-size: 12px;
 }
+.forbx {
+  font-size: 14px !important;
+}
+
+
+// sidebar and header   css 
+.sidebar_main {
+  position: relative !important;
+}
+
+.sidebar_main.active .left_sidebar, .sidebar_main.active .left_sidebar .new-sidebar  {
+  width: 250px;
+  z-index: 99;
+}
+
+
+
+.sidebar_main .left_sidebar .main-top {
+  width: 250px;
+  position: relative !important;
+  top: 0px;
+  padding-right: 0px;
+  
+}
+.sidebar_main.active .left_sidebar .main-top {
+  width: 70px;
+  position: relative !important;
+  margin: 0px;
+  top: 0;
+}
+
+.sidebar_main .layout_right  {
+  // width: calc(100% - 0px) !important;
+  width: calc(100% - 90px) !important;
+  position: absolute;
+  right: 0px;
+}
+
+
+
+.sidebar_main .layout_right .main_box  {
+  width: calc(100% - 0px) !important;
+  position: absolute;
+  right: 0px;
+}
+
+.sidebar_main.active .toggle-img {
+  margin: unset;
+  width: 69px;
+}
+.sidebar_main .toggle-img {
+
+  width: 250px;
+}
+
+.sidebar_main.active .left_sidebar .nav-item {
+  width: 70px !important;
+  margin: 14px  auto !important;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+// .sidebar_main .left_sidebar {
+//   width: 257px !important;
+// }
+.sidebar_main.active .left_sidebar .new-sidebar {
+  width: 74px !important;
+}
+
+.sidebar_main .left_sidebar .new-sidebar {
+  width: 90px !important;
+}
+.sidebar_main .left_sidebar {
+  width: 272px !important;
+  background: #fff !important;
+  height: 100vh !important;
+  z-index: 99 !important;
+  position: fixed;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
@@ -4429,6 +4452,9 @@ margin-bottom: 0px !important;
   width: 100%;
   object-fit: contain;
 }
+.forbx{
+  font-size: 12px !important;
+}
 
 }
 
@@ -4469,6 +4495,10 @@ margin-bottom: 0px !important;
     font-size: 12px !important;
 }
 
+form.centerLogin {
+
+  padding: 20px 10px;
+}
 }
 
 
@@ -4505,4 +4535,10 @@ margin-bottom: 0px !important;
 }
 .card_height {
   height: 514px !important;
+}
+.orbx, .account_bx {
+  font-size: 14px !important;
+}
+ .forbx {
+  font-size: 14px;
 }

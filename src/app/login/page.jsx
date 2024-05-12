@@ -183,7 +183,7 @@ export default function Login() {
       <div className='card_parent'>
       <div className="container ">
 
-<div className="row align-items-center mx-auto">
+<div className="form-row align-items-center mx-auto">
   {/* <div className="col-md-4 px-0">
     <div className='banner_img'>
       <div className='logo_img'>
@@ -194,7 +194,7 @@ export default function Login() {
       </div> 
     </div>
   </div> */}
-  <div className="col-md-5 mx-auto">
+  <div className="col-12 col-sm-8 col-md-6 col-lg-5 mx-auto">
     <div className='right_side'>
 
       <form
@@ -232,15 +232,15 @@ export default function Login() {
           <button type="submit" className="btn btn-primary loginclass mb-2 mt-1">
             Login
           </button>
-          <div className='d-flex mt-2'>
-            <label className='d-flex align-items-center mb-0'><input type="radio" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2 radio" /><span className=' '>Keep me logged</span></label>
+          <div className='d-flex flex-wrap  justify-content-between  mt-2'>
+            <label className='d-flex align-items-center mb-0'><input type="radio" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2 radio" /><span className='forbx '>Keep me logged</span></label>
 
-            <Link href="/forgotpassword" className="text-primary ml-auto text-black">Forgot Password</Link>
+            <Link href="/forgotpassword" className="text-primary  forbx text-black">Forgot Password</Link>
           </div>
 
 
         </div>
-        <div className="text-center or mt-3 mb-1">
+        <div className="text-center or mt-2 mb-1 orbx">
           OR
         </div>
         <button className='btn btn-outline-white' type='button'
@@ -271,8 +271,8 @@ export default function Login() {
         </div>
 
 
-        <p className='text-center border-top pt-3 mb-1 mt-2'>Don't have an account?</p>
-        <Link className='btn btn-outline-white' type='button' href="/SignupOptions" >
+        <p className='text-center border-top pt-2 mb-1 mt-2 account_ptag'>Don't have an account?</p>
+        <Link className='btn btn-outline-white mb-0' type='button' href="/SignupOptions" >
           Register Now
         </Link>
       </form>

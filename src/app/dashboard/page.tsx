@@ -71,7 +71,7 @@ export default function Dashboard() {
       <div className='row '>
           <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3 '>
             <div className='fixi-ic'>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center flex-wrap'>
                 <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img>
                 {user.role == 'brand' ? <div className='ml-2'>
                   <p className='revuh'>Total Campaign</p>
@@ -98,7 +98,7 @@ export default function Dashboard() {
           </div>
           <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3'>
             <div className='fixi-ic'>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center flex-wrap'>
                 <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img>
                 {user.role == 'brand' ? <div className='ml-2'>
                   <p className='revuh'>Accept Campaign</p>
@@ -124,7 +124,7 @@ export default function Dashboard() {
           </div>
           <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 '>
             <div className='fixi-ic'>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center flex-wrap'>
                 <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img>
                {user.role == 'brand' ? <div className='ml-2'>
                   <p className='revuh'>Pending Campaign</p>
@@ -150,7 +150,7 @@ export default function Dashboard() {
           </div>
           <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3'>
             <div className='fixi-ic'>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center flex-wrap'>
                 <img className='fixi-boxx' src='/assets/img/growth.png' alt=''></img>
                 {user.role == 'brand' ? <div className='ml-2'>
                   <p className='revuh'>Rejected Campaign</p>
@@ -182,7 +182,7 @@ export default function Dashboard() {
           </div>
           <div className='col-sm-12 col-md-5 col-lg-5 col-xl-3   mb-3'>
             <div className='dispost'>
-              <div className='d-flex align-items-center justify-content-between'>
+              <div className='d-flex align-items-center flex-wrap justify-content-between'>
                 <p className='tives mb-0'>Dispositives</p>
                 <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
 
@@ -221,30 +221,30 @@ export default function Dashboard() {
        {user.role == 'brand' && <div className='row mt-3 mx-0'>
             <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6 '>
                 <div className='recent-sales'>
-                    <div className='d-flex align-items-center justify-content-between'>
+                    <div className='d-flex align-items-center flex-wrap justify-content-between'>
                         <p className='tives mb-0'>Recent Sales</p>
                         <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
                     </div>
                     <ul className='sales-listing'>
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex flex-wrap  align-items-center item-name'>
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
                           <p className='mb-0'>Product Item Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='light-badge'>Confirmed</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
                           <p className='mb-0'>Product Item Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='light-badge'>Confirmed</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
@@ -252,36 +252,36 @@ export default function Dashboard() {
 
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
                           <p className='mb-0'>Product Item Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Payment Pending</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
                           <p className='mb-0'>Product Item Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Payment Pending</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
                           <p className='mb-0'>Product Item Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Payment Pending</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
@@ -292,32 +292,32 @@ export default function Dashboard() {
 
             <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6 '>
             <div className='recent-sales active-users'>
-                    <div className='d-flex align-items-center justify-content-between'>
+                    <div className='d-flex align-items-center flex-wrap justify-content-between'>
                         <p className='tives mb-0'>Recent Users</p>
                         <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
                     </div>
                     <ul className='sales-listing'>
                       {recentUser.slice(0,5)?.map((data:any)=><li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex flex-wrap align-items-center item-name'>
                           {data?.image ? <img src={`${environment.api}${data?.image}`} className='dashboard_image'/>:
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
                         }
                           <p className='mb-0'>{data?.fullName}</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex flex-wrap align-items-center item-status'>
                           <p className='yellow-badge'>{data?.role}</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>)}
 
                       {/* <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/girl-img.png' />
                           <p className='mb-0'>Person Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Last Activity: Today</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
@@ -325,36 +325,36 @@ export default function Dashboard() {
 
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/girl-img.png' />
                           <p className='mb-0'>Person Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Last Activity: Today</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/girl-img.png' />
                           <p className='mb-0'>Person Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Last Activity: Today</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>
 
                       <li>
-                        <div className='d-flex align-items-center item-name'>
+                        <div className='d-flex align-items-center flex-wrap item-name'>
                           <img src='/assets/img/girl-img.png' />
                           <p className='mb-0'>Person Name</p>
                         </div>
 
-                        <div className='d-flex align-items-center item-status'>
+                        <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Last Activity: Today</p>
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>

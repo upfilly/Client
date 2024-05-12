@@ -172,10 +172,11 @@ export default function Login() {
 
     
     <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
-      <div className="container-fluid p-0 bg-black">
+      <div className='card_parent bg-black'>
+      <div className="container">
         {/* <a className="p-3 d-block text-white" href="/">Back</a> */}
-        <div className="row align-items-center mx-auto">
-          <div className="col-lg-4 col-md-7 p-0 mx-auto">
+        <div className="row align-items-center ">
+          <div className="col-12 col-sm-8 col-md-6 col-lg-5 mx-auto">
             <div className='right_side'>
               <form
                 className="centerLogin"
@@ -183,10 +184,10 @@ export default function Login() {
               >
                 <Link href="/"><i className="fa fa-angle-double-left back_button" aria-hidden="true"></i></Link>
                 <div className="text-center mb-2">
-                  <h3 className="text-center lgtext">Register Now </h3>
+                  <h3 className="text-center lgtext mb-0">Register Now </h3>
                 </div>
-                <div className="d-flex">
-                  <div className="col-md-6 p-1">
+                <div className="form-row">
+                  <div className="col-12 col-sm-12 col col-md-6 ">
                     <div className="mb-3">
                       <input
                         type="First Name"
@@ -200,8 +201,9 @@ export default function Login() {
                       {submitted && form?.firstName && form?.firstName?.length < 3 && <p className='text-danger'>Required minimum length minimum 3</p>}
                     </div>
                   </div>
-                  <div className="col-md-6 p-1">
-                    <input
+                  <div className="col-12 col-sm-12 col col-md-6 ">
+                 <div className='mb-3' >
+                 <input
                       type="text"
                       className="form-control mb-0 bginput"
                       placeholder={role === 'brand' ? 'Brand Name' : 'Last Name'}
@@ -211,6 +213,7 @@ export default function Login() {
                           setForm({ ...form, lastName: e.target.value })
                       }}
                     />
+                 </div>
                   </div>
                 </div>
                 <div className="mb-3">
@@ -247,10 +250,10 @@ export default function Login() {
                   <button type="submit" className="btn btn-primary loginclass mb-2" >
                     Create Account
                   </button>
-                  <p className='text-center'>By signing up, you agree to our Terms and Privacy Policy</p>
+                  <p className='text-center mb-2'>By signing up, you agree to our Terms and Privacy Policy</p>
                 </div>
 
-                <div className="text-center or mt-3 mb-1">
+                <div className="text-center or mt-2 mb-1 orbx">
                   OR
                 </div>
                 <button className='btn btn-outline-white' type='button' onClick={googleLogin}>
@@ -276,8 +279,8 @@ export default function Login() {
                     buttonStyle={{ border: "none", background: "none" }}
                     callback={e => FaceBookLoginHandler(e)} />
                 </div>
-                <p className='text-center border-top pt-3 mb-1 mt-2'>Already have an account?</p>
-                <Link className='btn btn-outline-white' type='button' href='/login'>
+                <p className='text-center border-top pt-2 mb-1 mt-2 account_bx'>Already have an account?</p>
+                <Link className='btn btn-outline-white mb-0' type='button' href='/login'>
                   Login Here
                 </Link>
               </form>
@@ -314,6 +317,8 @@ export default function Login() {
 
         )}
       </div>
+      </div>
+      
     </PageContainer>
   )
 }

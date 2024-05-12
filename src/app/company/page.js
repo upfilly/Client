@@ -33,8 +33,8 @@ export default function Company() {
                 </div>
               </div>
               <div className="col-lg-6  ">
-                <div className="feature-text mb-4">
-                  <h1 class="text-black ulable mb-0">Enhance your <br /> Business Outcomes</h1>
+                <div className="feature-text mb-4 lens_details " >
+                  <h1 class="text-black set_lensbx mb-0">Enhance your <br /> Business Outcomes</h1>
                   <p className="border-common"></p>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing and
@@ -53,7 +53,8 @@ export default function Company() {
 
             </div>
 
-            <div className="row align-items-center pt-4">
+           <div className="my-5">
+           <div className="row align-items-center flex-column-reverse flex-md-row">
               <div className="col-lg-6  ">
                 <div className="feature-text">
                   <h1 class="text-black ulable mb-0">
@@ -80,6 +81,7 @@ export default function Company() {
                 </div>
               </div>
             </div>
+           </div>
           </div>
 
           <div className="conatiner-fluid">
