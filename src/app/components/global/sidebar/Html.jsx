@@ -66,7 +66,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
         {user?.role == "brand" && <>
 
-          {urlAllow('commisionplan', 'addcommision') ? <>
+          {urlAllow('commisionplan', 'addcommision' ,'manualCommission') ? <>
             <div className="nav-item">
               <a className={` side_titles nav-link hoverclass affilate ${tabclass('commisions') || tab == 'commisions' ? '' : 'collapsed-m'}`} onClick={() => tabChange('commisions')}
                 data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
@@ -100,6 +100,15 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               <div className="d-flex align-items-center icns_center">
               <i  class="material-icons svg_iconbx">payments</i >
                 <span className="side_head">Add Commissions</span>
+              </div>
+              </ListItemLink>
+            </> : <></>}
+            {urlAllow('manualCommission') ? <>
+              <ListItemLink to="/commission/manualCommission" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
+                {/* <i className="fa fa-user-circle-o icon  svg_iconbx" aria-hidden="true"></i> */}
+              <div className="d-flex align-items-center icns_center">
+              <i  class="material-icons svg_iconbx">payments</i >
+                <span className="side_head">Manual Commission</span>
               </div>
               </ListItemLink>
             </> : <></>}
