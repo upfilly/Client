@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Layout from '../../components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
-import loader from '@/methods/loader';
 import './style.scss'
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import MultiSelectValue from '../../components/common/MultiSelectValue'
-import axios from 'axios';
 import SelectDropdown from '@/app/components/common/SelectDropdown';
 
 const Html = () => {
