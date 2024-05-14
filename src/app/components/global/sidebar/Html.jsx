@@ -107,7 +107,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               <ListItemLink to="/commission/manualCommission" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
                 {/* <i className="fa fa-user-circle-o icon  svg_iconbx" aria-hidden="true"></i> */}
               <div className="d-flex align-items-center icns_center">
-              <i  class="material-icons svg_iconbx">payments</i >
+              <i class="material-icons svg_iconbx">payments</i >
                 <span className="side_head">Manual Commission</span>
               </div>
               </ListItemLink>
