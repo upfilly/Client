@@ -54,7 +54,7 @@ const Html = () => {
 
     return (
         <>
-            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Generate Link" filters={''} >
+            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Manual Commission" filters={''} >
                 <div className='sidebar-left-content'>
                     <div className="card">
                         <div className='card-header'>
