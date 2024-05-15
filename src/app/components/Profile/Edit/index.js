@@ -155,8 +155,12 @@ const EditProfile = () => {
     // delete value.category_id
     delete value.role
 
-    if(!form?.affiliate_group){
+    if (!form?.affiliate_group) {
       delete value.affiliate_group
+    }
+
+    if (user?.role != "affiliate"){
+      delete value.affiliate_type
     }
 
     loader(true)

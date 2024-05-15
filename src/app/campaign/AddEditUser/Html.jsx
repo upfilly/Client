@@ -6,8 +6,8 @@ import ApiClient from "@/methods/api/apiClient";
 import '../style.scss';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
 import dynamic from 'next/dynamic';
+import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -19,6 +19,11 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
     const [vidLoder, setvidLoder] = useState()
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
+
+    const handleRemove = (valueToRemove) => {
+        const updatedValues = form?.event_type?.filter((value) => value !== valueToRemove);
+        setform({ ...form, event_type: updatedValues });
+    };
 
     const uploadImage = async (e, key) => {
         let files = e.target.files
@@ -210,7 +215,29 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                     />
                                     {submitted && !form?.name ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
                                 </div>
+                               
                                 <div className="col-md-6 mb-3">
+                                    <label>Type<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Type"
+                                            intialValue={form?.access_type}
+                                            // disabled={(form?.status == "rejected" || !id) ? false : true}
+                                            result={e => {
+                                                setform({ ...form, access_type: e.value })
+                                            }}
+                                            options={[{
+                                                id:"public",name:"Public"
+                                            },{
+                                                id:"private",name:"Private"
+                                            }]}
+                                        />
+                                    </div>
+                                    {submitted && !form?.access_type ? <div className="invalid-feedback d-block">Access Type is Required</div> : <></>}
+                                </div>
+                                {form?.access_type == "private" && <div className="col-md-6 mb-3">
                                     <label>Affiliate<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
@@ -226,11 +253,11 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                         />
                                     </div>
                                     {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
-                                </div>
+                                </div>}
                                 <div className="col-md-6 mb-3">
                                     <label>Event Type:<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <MultiSelectDropdown
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Type"
@@ -243,9 +270,16 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                                 { id: 'lead', name: 'Lead' },
                                                 { id: 'visitor', name: 'Visitor' },
                                                 { id: 'purchase', name: 'Purchase' },
-                                                { id: 'line-item', name: 'Line-item' }
+                                                // { id: 'line-item', name: 'Line-item' }
                                             ]}
                                         />
+                                        {form?.event_type?.length > 0 && <div className="selected_offrs_market">
+                                            {form?.event_type?.map((value, index) => (
+                                                <span key={index}>
+                                                    {value} <i className="fa fa-times" onClick={() => handleRemove(value)}></i>
+                                                </span>
+                                            ))}
+                        </div>}
                                     </div>
                                     {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
                                 </div>
@@ -317,7 +351,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                     />}
                                     {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
-                                <div className='col-md-6'>
+                                {/* <div className='col-md-6'>
                                     <label>Images (Max. Limit 10) </label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
@@ -339,9 +373,9 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
-                                <div className='col-md-6'>
+                                {/* <div className='col-md-6'>
                                     <label>Videos (Max. Limit 10)   </label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
@@ -366,7 +400,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className='col-md-6'>
                                     <label>Document(Max. Limit 10)  </label>

@@ -1,4 +1,4 @@
-export const userType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:'',
+export const userType={ id:'',role:"",fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:'',
 instagram_username: "",
     instagram_profile_link: "",
     youtube_username: "",
@@ -164,4 +164,16 @@ export const campaignType={
     end_date: "",
     opportunity_type: [],
     placement: [],
+}
+
+export const addCampaignType = {
+    name: "",
+    amount: "",
+    description: "",
+    images: [],
+    documents: [],
+    videos: [],
+    affiliate_id: null,
+    status: "",
+    event_type: [],
 }

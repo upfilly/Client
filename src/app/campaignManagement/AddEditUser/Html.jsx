@@ -21,68 +21,68 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
 
-    const uploadImage = async (e, key) => {
-        console.log('enter');
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
+    // const uploadImage = async (e, key) => {
+    //     console.log('enter');
+    //     let files = e.target.files
+    //     let i = 0
+    //     let imgfile = []
+    //     for (let item of files) {
+    //         imgfile.push(item)
+    //     }
 
-        setLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/image?modelName=campaign'
+    //     setLoader(true)
+    //     for await (let item of imgfile) {
+    //         let file = files.item(i)
+    //         let url = 'upload/image?modelName=campaign'
 
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.fullpath
-                form?.images?.push({
-                    name: `images/campaign/${path}`,
-                    url: `images/campaign/${path}`
-                })
+    //         const res = await ApiClient.postFormData(url, { file: file })
+    //         if (res.success) {
+    //             let path = res?.data?.fullpath
+    //             form?.images?.push({
+    //                 name: `images/campaign/${path}`,
+    //                 url: `images/campaign/${path}`
+    //             })
 
-            }
-            i++
-        }
-        setLoader(false)
-        setImgLoder(false)
-        // setVdo(false)
-    }
+    //         }
+    //         i++
+    //     }
+    //     setLoader(false)
+    //     setImgLoder(false)
+    //     // setVdo(false)
+    // }
 
-    const uploadVideos = async (e, key) => {
-        console.log('enter');
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
+    // const uploadVideos = async (e, key) => {
+    //     console.log('enter');
+    //     let files = e.target.files
+    //     let i = 0
+    //     let imgfile = []
+    //     for (let item of files) {
+    //         imgfile.push(item)
+    //     }
 
-        setVidLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/video/multiple?modelName=videos'
+    //     setVidLoader(true)
+    //     for await (let item of imgfile) {
+    //         let file = files.item(i)
+    //         let url = 'upload/video/multiple?modelName=videos'
 
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.videoPath
-                let items = path?.map((itm) => {
-                    return itm
-                })
-                form?.videos?.push({
-                    name: `videos/${items}`,
-                    url: `videos/${items}`
-                })
+    //         const res = await ApiClient.postFormData(url, { file: file })
+    //         if (res.success) {
+    //             let path = res?.data?.videoPath
+    //             let items = path?.map((itm) => {
+    //                 return itm
+    //             })
+    //             form?.videos?.push({
+    //                 name: `videos/${items}`,
+    //                 url: `videos/${items}`
+    //             })
 
-            }
-            i++
-        }
-        setVidLoader(false)
-        setvidLoder(false)
-        // setVdo(false)
-    }
+    //         }
+    //         i++
+    //     }
+    //     setVidLoader(false)
+    //     setvidLoder(false)
+    //     // setVdo(false)
+    // }
 
     const uploadDocument = async (e, key) => {
         console.log('enter');
@@ -115,12 +115,12 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
     }
 
 
-    const removeVideo = (index, key) => {
-        const filterVid = form?.videos?.length > 0 && form.videos.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, videos: filterVid })
-    }
+    // const removeVideo = (index, key) => {
+    //     const filterVid = form?.videos?.length > 0 && form.videos.filter((data, indx) => {
+    //         return index != indx
+    //     })
+    //     setform({ ...form, videos: filterVid })
+    // }
 
     const removeDocument = (index, key) => {
         const filterVid = form?.documents?.length > 0 && form.documents.filter((data, indx) => {
@@ -129,12 +129,12 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
         setform({ ...form, documents: filterVid })
     }
 
-    const remove = (index, key) => {
-        const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, images: filterImg })
-    }
+    // const remove = (index, key) => {
+    //     const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
+    //         return index != indx
+    //     })
+    //     setform({ ...form, images: filterImg })
+    // }
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"CampaignManagement"} filters={undefined}>
@@ -193,7 +193,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                                         bounds={'.app'}
                                     />
                         </div>
-                        <div className='col-md-6'>
+                        {/* <div className='col-md-6'>
                             <label>Images </label>
                             <div className="form-group drag_drop">
                                 <div className='upload_file'>
@@ -215,9 +215,9 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div className='col-md-6'>
+                        {/* <div className='col-md-6'>
                             <label>Videos   </label>
                             <div className="form-group drag_drop">
                                 <div className='upload_file'>
@@ -242,7 +242,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className='col-md-6'>
                             <label>Document   </label>

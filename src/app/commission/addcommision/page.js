@@ -15,7 +15,7 @@ export default function Addcomminson() {
   const user = crendentialModel.getUser()
   const [affiliateGroup, setAffiliategroup] = useState([])
   const [affiliate, setAffiliate] = useState([])
-
+  const [CampaignData,setCampaignData] = useState()
   const [errors, setError] = useState(false)
   const [formData, setFormData] = useState({
     "event_type": "",
@@ -26,6 +26,8 @@ export default function Addcomminson() {
     "time_frame": '',
     "affiliate_id": "",
   });
+
+  console.log(CampaignData,"CampaignDataCampaignData")
 
   const handleAffiliateGroup = () => {
 
@@ -65,9 +67,20 @@ export default function Addcomminson() {
     })
   }
 
+  const getCampaignData = (p = {}) => {
+    let filter = { search: '', isDeleted: false,status:'',brand_id:user?.id}
+    let url='campaign/all'
+    ApiClient.get(url, filter).then(res => {
+        if (res.success) {
+            setCampaignData(res.data.data)
+        }
+    })
+}
+
   useEffect(() => {
     handleAffiliateGroup()
     handleAffiliate()
+    getCampaignData()
   }, [])
 
   const handleCheckboxChange = (type) => {
@@ -355,18 +368,18 @@ export default function Addcomminson() {
                             }}
                             value={formData.affiliate_group || formData.affiliate_id || ""}
                           >
-                            <option value="" disabled style={{ color: "black" }}>Select an affiliate group</option>
-                            {affiliateGroup.map((itm, index) => (
+                            <option value="" disabled style={{ color: "black" }}>Select an Campaign</option>
+                            {CampaignData?.map((itm, index) => (
                               <option key={`group_${index}`} value={itm?.id} data-group>
-                                {itm?.group_name}
+                                {itm?.name}
                               </option>
                             ))}
-                            <option value="" disabled style={{ color: "black" }}>Select affiliate</option>
+                            {/* <option value="" disabled style={{ color: "black" }}>Select affiliate</option>
                             {affiliate.map((itm, index) => (
                               <option key={`affiliate_${index}`} value={itm?.id}>
                                 {itm?.fullName}
                               </option>
-                            ))}
+                            ))} */}
                           </select>
                           {(errors && !formData?.affiliate_group && !formData?.affiliate_id) ? (
                             <div className="invalid-feedback d-block">Affiliate or Affiliate group is Required</div>

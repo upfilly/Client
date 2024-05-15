@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ApiClient from "../../../methods/api/apiClient";
 import loader from "../../../methods/loader";
 import methodModel from "../../../methods/methods";
-import { campaignType } from "../../../models/type.model";
+import { addCampaignType } from "../../../models/type.model";
 import Html from "./Html";
 import { toast } from "react-toastify";
 import { useRouter,useParams } from "next/navigation";
@@ -12,7 +12,7 @@ const AddEditUser = () => {
     const { role, id } = useParams()
     const user = crendentialModel.getUser()
     const [images, setImages] = useState({ image: ''});
-    const defaultvalue = campaignType
+    const defaultvalue = addCampaignType
     const [form, setform] = useState({
         id:"",
         name:"",
@@ -23,7 +23,8 @@ const AddEditUser = () => {
         videos: [],
         affiliate_id:null,
         status:"",
-        event_type:"",
+        access_type:"",
+        event_type:[],
     })
     const [affiliateData, setAffiliateData] = useState();
     const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
@@ -40,7 +41,7 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
        
-        if(!form?.affiliate_id || !form?.description || !form?.name || !form?.amount || !form?.event_type){
+        if( !form?.description || !form?.name || !form?.amount || !form?.event_type){
             setSubmitted(true)
             return;
         }
@@ -62,6 +63,10 @@ const AddEditUser = () => {
             delete value.event_type
         } else {
             delete value.id
+        }
+
+        if(value?.access_type == "public"){
+            delete value?.affiliate_id
         }
 
         delete value.confirmPassword
