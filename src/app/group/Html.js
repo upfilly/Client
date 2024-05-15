@@ -64,79 +64,71 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
 
-                           <div className='table_section mt-3'>
-                           <div className="table-responsive ">
+                            <div className='table_section mt-3'>
+                                <div className="table-responsive ">
 
-<table className="table table-striped">
-    <thead className='table_head'>
-        <tr className='heading_row'>
-            <th scope="col" className='table_data' onClick={e => sorting('name')}>Affliate Group {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data' >Affiliates </th>
-            <th scope="col" className='table_data' >Default</th>
-            <th scope="col" className='table_data' onClick={e => sorting('status')}>Status {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data ml-5' ></th>
-        </tr>
-    </thead>
-    <tbody>
-        {!loaging && data && data.map((itm, i) => {
-            return <tr className='data_row' key={i}>
-                <td className='table_dats' onClick={e => view(itm?.id)}>
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {methodModel?.capitalizeFirstLetter(itm?.group_name)}
-                            </h4>
-                        </div>
-                    </div></td>
-                <td className='table_dats'>   <span className={`active_btn${itm?.status}`} >
-                    <span className=''>
-                        {itm?.number_of_affiliate_added}
-                    </span>
-                </span></td>
-                <td className='table_dats'>
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {itm?.isDefaultAffiliateGroup ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
-                            </h4>
-                        </div>
-                    </div></td>
-                <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
-                    <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
-                        {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
-                    </span>
-                </span></td>
-                <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
-                <td>
-                    <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                                    <table className="table table-striped">
+                                        <thead className='table_head'>
+                                            <tr className='heading_row'>
+                                                <th scope="col" className='table_data' onClick={e => sorting('name')}>Affliate Group {filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                                <th scope="col" className='table_data' >Affiliates </th>
+                                                <th scope="col" className='table_data' >Default</th>
+                                                <th scope="col" className='table_data' onClick={e => sorting('status')}>Status {filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                                <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                                <th scope="col" className='table_data ml-5' ></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {!loaging && data && data.map((itm, i) => {
+                                                return <tr className='data_row' key={i}>
+                                                    <td className='table_dats' onClick={e => view(itm?.id)}>
+                                                        <div className='user_detail'>
+                                                            <div className='user_name'>
+                                                                <h4 className='user'>
+                                                                    {methodModel?.capitalizeFirstLetter(itm?.group_name)}
+                                                                </h4>
+                                                            </div>
+                                                        </div></td>
+                                                    <td className='table_dats'>   <span className={`active_btn${itm?.status}`} >
+                                                        <span className=''>
+                                                            {itm?.number_of_affiliate_added}
+                                                        </span>
+                                                    </span></td>
+                                                    <td className='table_dats'>
+                                                        <div className='user_detail'>
+                                                            <div className='user_name'>
+                                                                <h4 className='user'>
+                                                                    {itm?.isDefaultAffiliateGroup ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
+                                                                </h4>
+                                                            </div>
+                                                        </div></td>
+                                                    <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
+                                                        <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
+                                                            {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
+                                                        </span>
+                                                    </span></td>
+                                                    <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
+                                                    <td>
+                                                        <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
-                        <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
-                    </a>
+                                                            <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
+                                                        </a>
 
-                        <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
-                            <i className={`material-icons delete`} title='Delete'> delete</i>
-                        </a></div>
-                </td>
-            </tr>
+                                                            <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
+                                                                <i className={`material-icons delete`} title='Delete'> delete</i>
+                                                            </a></div>
+                                                    </td>
+                                                </tr>
 
-        })
-        }
-    </tbody>
-</table>
-
-
-</div>
-                           </div>
-
+                                            })
+                                            }
+                                        </tbody>
+                                    </table></div>
+                                {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
-                {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
-
                 <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                     <span>Show {data?.length} from {total} Users</span>
                     <ReactPaginate
