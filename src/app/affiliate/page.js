@@ -285,7 +285,165 @@ export default function affilate() {
         <div className='nmain-list  mb-3'>
           <div className='row align-items-center mx-0'>
             <div className='col-12 col-md-12 col-lg-12'>
-              <div className=' '>
+        
+<div className='text-right mb-3'>
+<button type="button" class="btn btn-primary abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  filter
+</button>
+</div>
+
+
+<div class="modal filter_modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">All Filter</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
+        <b className='' >Brand</b>
+      </button>
+    </h2>
+    <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      <ul className='filter_ullist' >
+        <li>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+  <label class="form-check-label" for="flexCheckDefault">
+    Samsung
+  </label>
+</div>
+        </li>
+        <li>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1"/>
+  <label class="form-check-label" for="flexCheckDefault1">
+    Apple
+  </label>
+</div>
+        </li>
+        <li>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2"/>
+  <label class="form-check-label" for="flexCheckDefault2">
+   Asus
+  </label>
+</div>
+        </li>
+        <li>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3"/>
+  <label class="form-check-label" for="flexCheckDefault3">
+Oppo
+  </label>
+</div>
+        </li>
+      </ul>
+
+  <h6 className='shw_more' > Show more </h6> 
+
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
+      <b className='' >Sizes</b>
+      </button>
+    </h2>
+    <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      <ul className='row flex-wrap filter_ullist' >
+        <li className='col-6'>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+  <label class="form-check-label" for="flexCheckDefault">
+    Samsung
+  </label>
+</div>
+        </li>
+        <li className='col-6'>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1"/>
+  <label class="form-check-label" for="flexCheckDefault1">
+    Apple
+  </label>
+</div>
+        </li>
+        <li className='col-6'>
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2"/>
+  <label class="form-check-label" for="flexCheckDefault2">
+   Asus
+  </label>
+</div>
+        </li>
+        <li className='col-6' >
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3"/>
+  <label class="form-check-label" for="flexCheckDefault3">
+    Default checkbox
+  </label>
+</div>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+      <b className='' >Country</b>
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      ............
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+      <b className='' >Condition</b>
+      </button>
+    </h2>
+    <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      ............
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+      <b className='' >Manufacturer</b>
+      </button>
+    </h2>
+    <div id="collapsefive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      ............
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+      <div class="modal-footer gap-3">
+        <button type="button" class="btn btn-outline-secondary m-0" data-bs-dismiss="modal">Clear all Filter</button>
+        <button type="button" class="btn btn-primary m-0">Apply Filter</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+              
+              <div className='set_modal postion-relative '>
                 <div className='d-flex gap-2 align-items-center flex-wrap'>
                   <div className='filter-opt'>
                     <button className='set-filter'><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
@@ -357,6 +515,8 @@ export default function affilate() {
                     </a>
                   </> : <></>}
                 </div>
+
+
 
 
               </div>

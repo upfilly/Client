@@ -59,16 +59,20 @@ const Html = () => {
                     <div className="card">
                         <div className='card-header'>
                             <div className='main_title_head d-flex justify-content-between align-items-center'>
-                                <h3 className="link_default m-0"><i className="fa fa-bullhorn link_icon" aria-hidden="true"></i>
+                                <h3 className="link_default m-0"><i className="fa fa-bullhorn mr-3 link_icon" aria-hidden="true"></i>
                                     Manual Commission
                                 </h3>
                             </div>
                         </div>
                         <div className='card-body'>
 
-                            <div className='row'>
-                                <div>
+                        <div className='container' >
+
+                                
+                                   <div className='d-flex gap-5 align-items-center mb-4 ' >
+                                     <div className="form-check" >
                                     <input
+                                    className="form-check-input"
                                         type="radio"
                                         id="single"
                                         name="formType"
@@ -76,8 +80,11 @@ const Html = () => {
                                         checked={formType === 'single'}
                                         onChange={() => setFormType('single')}
                                     />
-                                    <label htmlFor="single">Single</label>
+                                    <label className="form-check-label" htmlFor="single">Single</label>
+                                    </div>
+                                    <div className="form-check" >
                                     <input
+                                    className="form-check-input"
                                         type="radio"
                                         id="batch"
                                         name="formType"
@@ -85,11 +92,14 @@ const Html = () => {
                                         checked={formType === 'batch'}
                                         onChange={() => setFormType('batch')}
                                     />
-                                    <label htmlFor="batch">Batch(CSV)</label>
-                                </div>
-                                {formType === 'single' && <div>
-                                    <div className='col-md-6 mb-3'>
-                                        {/* <div className='mb-3' > */}
+                                    <label className="form-check-label" htmlFor="batch">Batch(CSV)</label>
+                                    </div>
+                                   </div>
+                               
+                                {formType === 'single' && 
+                                <div className='row' >
+                                    <div className='col-md-6 '>
+                                        <div className='mb-3' >
                                         <label>Select a Commission Type</label>
                                         <select class="form-select mb-2" id="brandSelect" value={selectedBrand}
                                         // onChange={handleBrandChange}
@@ -99,10 +109,10 @@ const Html = () => {
                                                 <option key={data.id} value={data.id} >{data.name}</option>
                                             ))}
                                         </select>
-                                        {/* </div> */}
+                                        </div>
                                     </div>
-                                    <div className='col-md-6 mb-3'>
-                                        {/* <div className='mb-3' > */}
+                                    <div className='col-md-6 '>
+                                        <div className='mb-3' >
                                         <label>Publisher Id</label>
                                         <input
                                             type="text"
@@ -110,9 +120,9 @@ const Html = () => {
                                             placeholder="Enter your Publisher Id"
                                             value={DestinationUrl}
                                             onChange={(e) => setDestinationUrl(e.target.value)} />
-                                        {/* </div> */}
+                                        </div>
                                     </div>
-                                    <div className='col-md-6 mb-3'>
+                                    <div className='col-md-6 '>
                                         <div className='mb-3' >
                                             <label>Amount of Commission </label>
                                             <input
@@ -123,7 +133,7 @@ const Html = () => {
                                                 onChange={(e) => setDestinationUrl(e.target.value)} />
                                         </div>
                                     </div>
-                                    <div className='col-md-6 mb-3'>
+                                    <div className='col-md-6 '>
                                         <div className='mb-3' >
                                             <label>Commission Status</label>
                                             <SelectDropdown
@@ -141,7 +151,7 @@ const Html = () => {
                                         </div>
                                     </div>
 
-                                    <div className='col-md-6 mb-3'>
+                                    <div className='col-md-6 '>
                                         <div className='mb-3' >
                                             <label>Order Rference</label>
                                             <input
@@ -153,7 +163,7 @@ const Html = () => {
                                         </div>
                                     </div>
 
-                                    <div className='col-md-6 mb-3'>
+                                    <div className='col-md-6 '>
                                         <div className='mb-3' >
                                             <label>click ref (IO Number)</label>
                                             <input
@@ -164,17 +174,26 @@ const Html = () => {
                                                 onChange={(e) => setDestinationUrl(e.target.value)} />
                                         </div>
                                     </div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            checked={isChecked}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        Check the box to send the publisher an email containing the commission details
-                                    </label>
+                                  <div className='col-md-12'>
+                                    <div className='mb-3'>
+                                    <div  className="form-check form-check-inline ">
+                                   
+                                   <label className="form-check-label" >
+                                   <input
+                                       className="form-check-input mt-1"
+                                           type="checkbox"
+                                           checked={isChecked}
+                                           onChange={handleCheckboxChange}
+                                       />
+                                    <span className='ml-2' >Check the box to send the publisher an email containing the commission details </span>
+                                   </label>
+                                   </div>
+                                    </div>
+                                  </div>
+                                  
                                 </div>}
                                 {formType != 'single' && <form onSubmit={handleSubmit}>
-                                    <div>
+                                    <div className='mb-3' >
                                         <label htmlFor="fileInput">Upload CSV file:</label>
                                         <input
                                             type="file"
@@ -184,7 +203,7 @@ const Html = () => {
                                             onChange={handleFileChange}
                                         />
                                     </div>
-                                    <div>
+                                    <div className='mb-3' >
                                         <label htmlFor="localeSelect">Select Locale:</label>
                                         <select className='form-control' id="localeSelect" value={locale} onChange={handleLocaleChange}>
                                             <option value="">Select Locale</option>
@@ -192,22 +211,21 @@ const Html = () => {
                                             <option value="fr">French</option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <label htmlFor="headerCheckbox">
-                                            <input
-                                                type="checkbox"
+                                    <div className="form-check form-check-inline" >
+                                    <input className="form-check-input"type="checkbox"
                                                 id="headerCheckbox"
                                                 checked={hasHeader}
                                                 onChange={handleHeaderChange}
                                             />
-                                            Does first line contain header?
+                                        <label className="form-check-label" htmlFor="headerCheckbox"> Does first line contain header?
                                         </label>
                                     </div>
                                 </form>}
-                            </div>
+                          
                             <div className='text-end'>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Submit Commisssion</button>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

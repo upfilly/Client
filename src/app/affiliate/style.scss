@@ -290,3 +290,73 @@ gap: 12px;
   font-size: 14px;
   white-space: nowrap;
 }
+
+//filter css 
+.filter_modal .modal-dialog {
+  max-width: 350px;
+  margin: 0px;
+  margin-left: auto;
+}
+.filter_ullist {
+  padding: 0px;
+  list-style: none;
+  margin: 0px;
+}
+.filter_ullist li {
+  margin-bottom: 12px;
+}
+
+.filter_ullist .form-check label {font-size: 14px;font-weight: 500;}
+
+.shw_more {
+  color: #007bff !important;
+  font-weight: 400;
+}
+.filter_modal .btn-outline-secondary {
+  color: #007bff !important;
+  border-color: unset;
+  border-radius: 40px !important;
+}
+
+.filter_modal .btn-outline-secondary:hover {
+  color: #fff;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  border-color: unset;
+}
+.filter_modal .accordion-button:not(.collapsed) {
+  color: #007bff;
+  background-color: transparent !important;
+  box-shadow: unset !important;
+ 
+  border: unset !important;
+}
+
+
+.filter_modal  .accordion-item {
+  color: #000;
+  background-color: #fff;
+  border: 0px;
+  border-bottom: 1px solid #000;
+ 
+}
+.filter_modal  .accordion-button::after {
+  margin-left: 10px !important;
+}
+.filter_modal .accordion-header button {
+  padding-left: 0px;
+}
+.filter_modal .accordion-item:last-of-type .accordion-button.collapsed{
+  border-radius: unset;
+}
+.filter_modal .accordion-body {
+  padding-left: 5px;
+}
+.filter_modal  .modal-content {
+  height: 100vh;
+}
+.filter_modal .modal-header {
+  border-bottom: 1px solid #000;
+}
+.filter_modal  .modal-footer {
+  border-top: 1px solid #000;
+}
