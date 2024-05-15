@@ -423,9 +423,27 @@ button.p-0.dropdown-toggle.btn:hover {
     max-height: 350px;
     overflow-y: auto;
     height: 100%;
-    min-height: 350px;
-    overflow-y: auto;
     padding: 0;
+}
+
+.persons-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.persons-list:-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.persons-list::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+.persons-list:hover::-webkit-scrollbar-thumb{
+    background:#60adf1;
+}
+
+.persons-list::-webkit-scrollbar-track {
+    background-color: #fff;
 }
 
 .conversations #accordion .card .btn-link {
@@ -1089,8 +1107,7 @@ h3.about_head span {
     font-weight: 400;
 }
 
-.chat-body-detail::-webkit-scrollbar,
-.persons-list::-webkit-scrollbar {
+.chat-body-detail::-webkit-scrollbar {
     width: 0;
     /* This will hide the scrollbar */
 }
