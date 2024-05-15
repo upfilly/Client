@@ -7,6 +7,7 @@ form.p-3.rounded.shadow {
 }
 a.text-primary.ml-auto.text-black {
     color: #000 !important;
+    font-size: 14px;
 }
 .btn.btn-outline-white:hover{
     box-shadow: 0px 2px 3px rgb(218, 218, 218);
@@ -17,22 +18,25 @@ a.text-primary.ml-auto.text-black {
     width: 100%;
     margin-bottom: 10px;
     position: relative;
-    padding: 11px;
+    padding: 8px 12px;
     font-weight: 500;
+    font-size: 14px;
 }
 svg.google_right {
     position: absolute;
-    left: 9px;
-    top: 7px;
+    left: 11px;
+    top: 2px;
+    width: 19px;
 }
 svg.facebook_right{
     position: absolute;
-    left: 12px;
-    top: 7px;  
+    left: 14px;
+    top: 4px;
+    width: 13px;
 }
 input.mr-2.radio {
-    height: 22px;
-    width: 22px;
+    height: 18px;
+    width: 18px;
     accent-color: #8b8b8b;
 }
 img.greentik {
@@ -72,7 +76,7 @@ form.centerLogin {
     margin: auto;
     background: #fff;
     width: 100%;
-    padding: 2rem 3rem;
+    padding: 20px;
     border-radius: 20px;
 }
 img.logimg {
@@ -117,10 +121,10 @@ img.logo {
 }
 
 .right_side {
-    height: 100vh;
-    display: flex;
+    // height: 100vh;
+    // display: flex;
     position: relative;
-    justify-content: center;
+    // justify-content: center;
 }
 p.accopunt {
     text-align: right;
@@ -152,10 +156,11 @@ h3.text-left.lgtext {
 .bginput { 
     border-radius: 50px !important;
     border: 1px solid #E8E8E8 !important;
-    height: 50px !important;
+    height: 38px !important;
+    font-size: 14px !important;
 }
 h3.text-center.lgtext {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
 }
 a.text-primary:hover, a.text-primary:focus {
@@ -268,7 +273,7 @@ a.google_heading {
 }
 @media only screen and (min-width:320px) and (max-width:1024px)  {
     .right_side {
-        padding: 32px;
+        // padding: 32px 0px;
     }
 }
 .centerLogin {
@@ -279,5 +284,8 @@ a.google_heading {
     position: absolute;
     left: 25px;
     top: 18px;
-    font-size: 22px !important;
+    font-size: 18px !important;
+}
+.account_ptag {
+    font-size: 14px;
 }

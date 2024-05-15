@@ -24,7 +24,7 @@ export default function Resources() {
               <div className='col-md-12'>
                 <div className='need_contactus'>
                   <div className='row'>
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box'>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -35,7 +35,7 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -46,7 +46,7 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -57,7 +57,7 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -68,7 +68,7 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -79,7 +79,7 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -90,7 +90,7 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
                       <div className='card_box text-center hover_box '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
@@ -101,8 +101,8 @@ export default function Resources() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
-                      <div className='card_box text-center hover_box '>
+                    <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
+                      <div className='card_box text-center hover_box  '>
                         <div className='imgtag_card'>
                           <img src="/assets/img/reso1.png" className='img-fluid heighteual mb-0' />
 
