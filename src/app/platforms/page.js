@@ -86,7 +86,7 @@ export default function Platforms() {
                 </div>
               </div>
               <div className= " col-12 col-sm-12   col-md-7">
-               <div className="" >
+               <div className="ulable" >
                <div className="platform-feature-img platform-feature-left">
                   <img src="/assets/img/platform-feature.png" className="img-fluid " alt="" />
                 </div>
