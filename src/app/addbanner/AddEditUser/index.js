@@ -31,6 +31,17 @@ const AddEditUser = () => {
     const [emailLoader, setEmailLoader] = useState(false) 
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
+    const [category, setCategory] = useState([])
+
+    const getCategory = (p = {}) => {
+        let url = 'main-category/all'
+        ApiClient.get(url).then(res => {
+          if (res.success) {
+            const data = res.data.data
+            setCategory(data)
+          }
+        })
+      }
     
     const getBrandData = (p = {}) => {
         let filter = { status: 'accepted' }
@@ -77,7 +88,7 @@ const AddEditUser = () => {
         if(!value?.image){
             delete value?.image
         }
-        
+
         delete value.status
         if (value.id) {
             method = 'put'
@@ -183,6 +194,7 @@ const AddEditUser = () => {
     useEffect(()=>{
         getData()
         getBrandData()
+        getCategory()
     },[])
 
     return <>
@@ -206,6 +218,7 @@ const AddEditUser = () => {
             getError={getError}
             affiliateData={affiliateData}
             BrandData={BrandData}
+            category={category}
         />
     </>
 }

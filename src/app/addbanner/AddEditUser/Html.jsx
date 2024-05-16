@@ -8,9 +8,7 @@ import ImageUpload from "@/app/components/common/ImageUpload";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
-
-    console.log(form,"ffffffffff")
+const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
@@ -46,6 +44,27 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                     />
                                     {submitted && !form?.destination_url ? <div className="invalid-feedback d-block">Destination url is Required</div> : <></>}
                                 </div>
+
+                                <div className='col-12 col-sm-12 col-md-6'>
+                                    <div className='form-group'>
+                                        <div className="select_drop ">
+                                            <label>Category<span className='star'>*</span></label>
+                                            <div className="select_row">
+                                                <SelectDropdown
+                                                    id="statusDropdown"
+                                                    displayValue="name"
+                                                    placeholder="Select category"
+                                                    intialValue={form?.category_id}
+                                                    result={e => setform({ ...form, category_id: e.value })}
+                                                    options={category}
+                                                />
+                                            </div>
+                                            {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>}
+
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="col-md-6 mb-3">
                                     <label>SEO Attributes<span className="star">*</span></label>
                                     <input
@@ -136,7 +155,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         }
                                     />
                                     <label className="form-check-label" >
-                                    Is Animation
+                                        Is Animation
                                     </label>
                                 </div>
 
@@ -153,7 +172,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         }
                                     />
                                     <label className="form-check-label" >
-                                    Is Deep Linking
+                                        Is Deep Linking
                                     </label>
                                 </div>
 
@@ -170,7 +189,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                         }
                                     />
                                     <label className="form-check-label" >
-                                    Mobile Creative
+                                        Mobile Creative
                                     </label>
                                 </div>
 
