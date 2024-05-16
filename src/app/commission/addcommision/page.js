@@ -18,16 +18,14 @@ export default function Addcomminson() {
   const [CampaignData,setCampaignData] = useState()
   const [errors, setError] = useState(false)
   const [formData, setFormData] = useState({
-    "event_type": "",
-    "amount_type": "",
-    "amount": '',
-    "affiliate_group": "",
-    "time_frame_type": '',
-    "time_frame": '',
-    "affiliate_id": "",
+    "event_type":"",
+    "amount_type":"",
+    "amount":'',
+    // "affiliate_group":"",
+    "time_frame_type":'',
+    "time_frame":'',
+    "campaign_id":"",
   });
-
-  console.log(CampaignData,"CampaignDataCampaignData")
 
   const handleAffiliateGroup = () => {
 
@@ -116,9 +114,6 @@ export default function Addcomminson() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name="Commissions" filters={undefined}>
-
-
-
         <div className="">
           <div className="sidebar-left-content">
             <div className='top_bar_btns'>
@@ -275,8 +270,8 @@ export default function Addcomminson() {
                             <option value="">select</option>
                             <option value="0">Immediately, no delay</option>
                             <option value="1">1 month after purchase</option>
-                            <option value="2">2 month after purchase</option>
-                            <option value="3">3 month after purchase</option>
+                            <option value="2">2 months after purchase</option>
+                            <option value="3">3 months after purchase</option>
                           </select>:
                           <select
                           className='form-control'
@@ -286,9 +281,9 @@ export default function Addcomminson() {
                           <option value="">select</option>
                           <option value="0">Immediately, no delay</option>
                           <option value="1">1 day after purchase</option>
-                          <option value="2">2 day after purchase</option>
-                          <option value="2">3 day after purchase</option>
-                          <option value="3">4 day after purchase</option>
+                          <option value="2">2 days after purchase</option>
+                          <option value="2">3 days after purchase</option>
+                          <option value="3">4 days after purchase</option>
                         </select>
                           }
                           {errors && !formData?.time_frame ? <div className="invalid-feedback d-block">Time Frame is Required</div> : <></>}
@@ -342,7 +337,7 @@ export default function Addcomminson() {
                       <img className='fixi-boxx-commsion' src='/assets/img/4.png' alt=''></img>
                       <div className='ml-2 addcomminson'>
                         <p className='revuh m-0'>Who</p>
-                        <h3 className='dollars-t'>Choose affilate group</h3>
+                        <h3 className='dollars-t'>Choose Campaign</h3>
                       </div>
                     </div>
 
@@ -393,10 +388,10 @@ export default function Addcomminson() {
                     <div className='col-md-12'>
                       <div className='checkbox_ipt position-relative'>
                         <div className='addfile_commison'>
-                          <Link href="/group/add" className='m-0'
+                          <Link href="/campaign" className='m-0'
                           //  data-bs-toggle="modal" 
                           //  data-bs-target="#comminsion"
-                          > <img className='w28' src='../assets/img/plus-p.png' /> Add new Affiliate Group</Link>
+                          > <img className='w28' src='../assets/img/plus-p.png' /> Add New Campaign</Link>
                         </div>
                       </div>
                     </div>

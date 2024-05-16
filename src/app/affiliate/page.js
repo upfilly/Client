@@ -28,7 +28,7 @@ export default function affilate() {
     // createBybrand_id: user?.id,
     isDeleted: false,
     status: '',
-    invite_status:'',
+    invite_status: '',
     end_date: '',
     start_date: '',
     affiliate_group_id: ''
@@ -36,7 +36,7 @@ export default function affilate() {
   const [form, setform] = useState({
     "message": "",
     "tags": [],
-    "commission":"",
+    "commission": "",
   })
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
@@ -45,13 +45,35 @@ export default function affilate() {
   const [endDate, setEndDate] = useState(null);
   const [affiliategroup, setAffiliategroup] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [submitted,setSubmitted] = useState(false)
+  const [category,setCategory] = useState([])
+  const [submitted, setSubmitted] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [tagInput, setTagInput] = useState('');
-  const [selectedAffiliteid,setselectedAffiliteid] = useState('');
+  const [selectedAffiliteid, setselectedAffiliteid] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
+
+  console.log(selectedCategory,"selectedCategoryselectedCategory")
+
+  const handleCategoryChange = (category) => {
+    console.log(category,"ccccccc")
+    setSelectedCategory(category);
+    setSelectedSubCategory(null);
+    setSelectedSubSubCategory(null);
+  };
+
+  const handleSubCategoryChange = (subCategory) => {
+    setSelectedSubCategory(subCategory);
+    setSelectedSubSubCategory(null);
+  };
+
+  const handleSubSubCategoryChange = (subSubCategory) => {
+    setSelectedSubSubCategory(subSubCategory);
+  };
 
   const handleTagInputChange = (e) => {
     setTagInput(e.target.value);
@@ -71,12 +93,12 @@ export default function affilate() {
   };
 
   const Commission = [
-    {id:"Program Standard Commission Rates" ,name:"Program Standard Commission Rates"},
-    {id:"Default 8% Commission" ,name:"Default 8% Commission"},
-    {id:"Padel/Sports Publisher" ,name:"Padel/Sports Publisher"},
-    {name:"2% Commission Increase (10%)"},
-    {id:"5% Commission Increase (13%)" ,name:"5% Commission Increase (13%)"},
-    {id:"2% Commission Increase (7%)" ,name:"2% Commission Increase (7%)"}
+    { id: "Program Standard Commission Rates", name: "Program Standard Commission Rates" },
+    { id: "Default 8% Commission", name: "Default 8% Commission" },
+    { id: "Padel/Sports Publisher", name: "Padel/Sports Publisher" },
+    { name: "2% Commission Increase (10%)" },
+    { id: "5% Commission Increase (13%)", name: "5% Commission Increase (13%)" },
+    { id: "2% Commission Increase (7%)", name: "2% Commission Increase (7%)" }
   ]
 
   const handleKeyPress = (event) => {
@@ -85,13 +107,13 @@ export default function affilate() {
     }
   };
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault()
-   const payload={
-    affiliate_id:selectedAffiliteid,
+    const payload = {
+      affiliate_id: selectedAffiliteid,
       ...form,
     }
-    ApiClient.post(`addInvite`,payload).then(res => {
+    ApiClient.post(`addInvite`, payload).then(res => {
       if (res.success) {
         getData({ page: 1 })
         toast.success("Invitation Send Successfully..")
@@ -136,9 +158,22 @@ export default function affilate() {
     })
   };
 
+  const getCategory = (p = {}) => {
+    let url = "categoryWithSub?page&count&search&cat_type=product&status=active";
+    ApiClient.get(url).then((res) => {
+      if (res.success) {
+        const data = res.data.data;
+        setCategory(data);
+      }
+    });
+  };
+
   useEffect(() => {
     getData({ page: 1 })
+    getCategory()
   }, [])
+
+  console.log(category,"categorycategory")
 
   const pageChange = (e) => {
     setFilter({ ...filters, page: e.selected })
@@ -172,7 +207,7 @@ export default function affilate() {
   const reset = () => {
     let filter = {
       status: '',
-      invite_status:'',
+      invite_status: '',
       role: '',
       search: '',
       role: 'affiliate',
@@ -285,168 +320,220 @@ export default function affilate() {
         <div className='nmain-list  mb-3'>
           <div className='row align-items-center mx-0'>
             <div className='col-12 col-md-12 col-lg-12'>
-        
-<div className='text-right mb-3'>
-<button type="button" class="btn btn-primary abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  filter
-</button>
-</div>
 
+              <div class="modal filter_modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">All Filter</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                        <h2>Select Category</h2>
+                        <ul>
+                          {category.map(category => (
+                            <li key={category._id}>
+                              <input
+                                type="radio"
+                                id={category._id}
+                                name="category"
+                                value={category._id}
+                                checked={selectedCategory === category._id}
+                                onChange={() => handleCategoryChange(category)}
+                              />
+                              <label htmlFor={category._id}>{category.parent_cat_name}</label>
+                            </li>
+                          ))}
+                        </ul>
 
-<div class="modal filter_modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">All Filter</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
-        <b className='' >Brand</b>
-      </button>
-    </h2>
-    <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      <ul className='filter_ullist' >
-        <li>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-  <label class="form-check-label" for="flexCheckDefault">
-    Samsung
-  </label>
-</div>
-        </li>
-        <li>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1"/>
-  <label class="form-check-label" for="flexCheckDefault1">
-    Apple
-  </label>
-</div>
-        </li>
-        <li>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2"/>
-  <label class="form-check-label" for="flexCheckDefault2">
-   Asus
-  </label>
-</div>
-        </li>
-        <li>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3"/>
-  <label class="form-check-label" for="flexCheckDefault3">
-Oppo
-  </label>
-</div>
-        </li>
-      </ul>
+                        {selectedCategory && (
+                          <div>
+                            <h2>Select Subcategory</h2>
+                            <ul>
+                              {selectedCategory.subCategories.map(subCategory => (
+                                <li key={subCategory.id}>
+                                  <input
+                                    type="radio"
+                                    id={subCategory.id}
+                                    name="subCategory"
+                                    value={subCategory.id}
+                                    checked={selectedSubCategory === subCategory.id}
+                                    onChange={() => handleSubCategoryChange(subCategory)}
+                                  />
+                                  <label htmlFor={subCategory.id}>{subCategory.name}</label>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
 
-  <h6 className='shw_more' > Show more </h6> 
+                        {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
+                          <div>
+                            <h2>Select Subsubcategory</h2>
+                            <ul>
+                              {selectedSubCategory.subchildcategory.map(subSubCategory => (
+                                <li key={subSubCategory._id}>
+                                  <input
+                                    type="checkbox"
+                                    id={subSubCategory._id}
+                                    name="subSubCategory"
+                                    value={subSubCategory._id}
+                                    checked={selectedSubSubCategory === subSubCategory._id}
+                                    onChange={() => handleSubSubCategoryChange(subSubCategory)}
+                                  />
+                                  <label htmlFor={subSubCategory._id}>{subSubCategory.name}</label>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                      {/* <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
+                              <b className='' >Brand</b>
+                            </button>
+                          </h2>
+                          <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <ul className='filter_ullist' >
+                                <li>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Samsung
+                                    </label>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
+                                    <label class="form-check-label" for="flexCheckDefault1">
+                                      Apple
+                                    </label>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" />
+                                    <label class="form-check-label" for="flexCheckDefault2">
+                                      Asus
+                                    </label>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" />
+                                    <label class="form-check-label" for="flexCheckDefault3">
+                                      Oppo
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
 
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
-      <b className='' >Sizes</b>
-      </button>
-    </h2>
-    <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      <ul className='row flex-wrap filter_ullist' >
-        <li className='col-6'>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-  <label class="form-check-label" for="flexCheckDefault">
-    Samsung
-  </label>
-</div>
-        </li>
-        <li className='col-6'>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1"/>
-  <label class="form-check-label" for="flexCheckDefault1">
-    Apple
-  </label>
-</div>
-        </li>
-        <li className='col-6'>
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2"/>
-  <label class="form-check-label" for="flexCheckDefault2">
-   Asus
-  </label>
-</div>
-        </li>
-        <li className='col-6' >
-        <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3"/>
-  <label class="form-check-label" for="flexCheckDefault3">
-    Default checkbox
-  </label>
-</div>
-        </li>
-      </ul>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-      <b className='' >Country</b>
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      ............
-      </div>
-    </div>
-  </div>
+                              <h6 className='shw_more' > Show more </h6>
 
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
-      <b className='' >Condition</b>
-      </button>
-    </h2>
-    <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      ............
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
-      <b className='' >Manufacturer</b>
-      </button>
-    </h2>
-    <div id="collapsefive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      ............
-      </div>
-    </div>
-  </div>
-</div>
-      </div>
-      <div class="modal-footer gap-3">
-        <button type="button" class="btn btn-outline-secondary m-0" data-bs-dismiss="modal">Clear all Filter</button>
-        <button type="button" class="btn btn-primary m-0">Apply Filter</button>
-      </div>
-    </div>
-  </div>
-</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
+                              <b className='' >Sizes</b>
+                            </button>
+                          </h2>
+                          <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <ul className='row flex-wrap filter_ullist' >
+                                <li className='col-6'>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Samsung
+                                    </label>
+                                  </div>
+                                </li>
+                                <li className='col-6'>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
+                                    <label class="form-check-label" for="flexCheckDefault1">
+                                      Apple
+                                    </label>
+                                  </div>
+                                </li>
+                                <li className='col-6'>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" />
+                                    <label class="form-check-label" for="flexCheckDefault2">
+                                      Asus
+                                    </label>
+                                  </div>
+                                </li>
+                                <li className='col-6' >
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" />
+                                    <label class="form-check-label" for="flexCheckDefault3">
+                                      Default checkbox
+                                    </label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              <b className='' >Country</b>
+                            </button>
+                          </h2>
+                          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              ............
+                            </div>
+                          </div>
+                        </div>
 
-              
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                              <b className='' >Condition</b>
+                            </button>
+                          </h2>
+                          <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              ............
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                              <b className='' >Manufacturer</b>
+                            </button>
+                          </h2>
+                          <div id="collapsefive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              ............
+                            </div>
+                          </div>
+                        </div>
+                      </div> */}
+                    </div>
+                    <div class="modal-footer gap-3">
+                      <button type="button" class="btn btn-outline-secondary m-0" data-bs-dismiss="modal">Clear all Filter</button>
+                      <button type="button" class="btn btn-primary m-0">Apply Filter</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className='set_modal postion-relative '>
                 <div className='d-flex gap-2 align-items-center flex-wrap'>
                   <div className='filter-opt'>
-                    <button className='set-filter'><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
+                    <button className='set-filter' type="button" class="set-filter abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
                   </div>
                   <div class="">
                     <SelectDropdown
@@ -465,7 +552,6 @@ Oppo
                   </div>
 
                   <div class="">
-
                     <DatePicker
                       className="datepicker-field"
                       selected={startDate}
@@ -480,7 +566,7 @@ Oppo
                     />
                   </div>
 
-                  <div className={`checkbox-inner checkbox-dropdown ${isOpen ? 'open' : ''} ml_3`}>
+                  {/* <div className={`checkbox-inner checkbox-dropdown ${isOpen ? 'open' : ''} ml_3`}>
                     <div className="newselectmulti position-relative" onClick={toggleDropdown}>
                       {selectedOptions.length === 0 ? "Select Groups " : (
                         <p className='checkbox-option-main'>
@@ -507,7 +593,7 @@ Oppo
                         </label>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
 
                   {filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
                     <a className="btn btn-primary   " onClick={e => reset()}>
@@ -562,7 +648,7 @@ Oppo
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
                       <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name}</p></td>
                       <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
-                      <td className='table_dats'>   <span className={`active_btn${itm?.status}`} 
+                      <td className='table_dats'>   <span className={`active_btn${itm?.status}`}
                       // onClick={() => statusChange(itm)}
                       >
                         <span className={itm.status}>
@@ -579,7 +665,7 @@ Oppo
                           {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
-                         { <button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary" onClick={()=>{handleShow();setselectedAffiliteid(itm?.id || itm?._id)}}>
+                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary" onClick={() => { handleShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
                             <i className='fa fa-plus'></i>
                           </button>}
                           <span className='btn btn-primary ml-2'
@@ -604,22 +690,22 @@ Oppo
             <Modal.Header className='align-items-center' closeButton>
               <h5 className='modal-title'>Send Invite</h5>
             </Modal.Header>
-          <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3 d-flex flex-column justify-content-between width_label' controlId="formBasicEmail">
-              <Form.Label>Invitation Message</Form.Label>
-              <Form.Control
-                as="textarea"
-                className='br0'
-                rows={3}
-                cols={6}
-                placeholder="Enter text"
-                value={form?.message }
-                onChange={(e) => setform({ ...form, message: e.target.value })}
-                required
-              />
-              {submitted && !form?.message ? <div className="invalid-feedback d-block">message is Required</div> : <></>}
-            </Form.Group>
+            <Modal.Body>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className='mb-3 d-flex flex-column justify-content-between width_label' controlId="formBasicEmail">
+                  <Form.Label>Invitation Message</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    className='br0'
+                    rows={3}
+                    cols={6}
+                    placeholder="Enter text"
+                    value={form?.message}
+                    onChange={(e) => setform({ ...form, message: e.target.value })}
+                    required
+                  />
+                  {submitted && !form?.message ? <div className="invalid-feedback d-block">message is Required</div> : <></>}
+                </Form.Group>
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select Commission</Form.Label>
@@ -645,27 +731,27 @@ Oppo
                       onChange={handleTagInputChange}
                     />
                     <Button variant="primary" onClick={handleAddTag}> <i class="fa fa-plus mr-2 " aria-hidden="true"></i>
- Add</Button>
+                      Add</Button>
                   </div>
                 </Form.Group>
                 <div className='d-flex align-items-center  text_adds gap-2 flex-wrap' >
                   {form.tags.map((tag, index) => (
                     <ul key={index} className="d-flex align-items-center gap-3 mb-2">
                       <li> <span>{tag}</span> <i class="fa fa-times-circle ml-2" onClick={() => handleDeleteTag(index)} aria-hidden="true"></i></li>
-                      
+
 
                       {/* <Button variant="danger" size="sm" className="ms-2" >Delete</Button> */}
                     </ul>
                   ))}
                 </div>
 
-            <div className='d-flex align-items-center justify-content-end'>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
+                <div className='d-flex align-items-center justify-content-end'>
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </Form>
+            </Modal.Body>
 
           </Modal>
 
