@@ -420,14 +420,14 @@ button.p-0.dropdown-toggle.btn:hover {
 }
 
 .persons-list {
-    max-height: 350px;
+    max-height: 299px;
     overflow-y: auto;
     height: 100%;
     padding: 0;
 }
 
 .persons-list::-webkit-scrollbar {
-    width: 5px;
+    width: 2px;
 }
 
 .persons-list:-webkit-scrollbar {
@@ -443,7 +443,7 @@ button.p-0.dropdown-toggle.btn:hover {
 }
 
 .persons-list::-webkit-scrollbar-track {
-    background-color: #fff;
+    background-color: #cce1f1;
 }
 
 .conversations #accordion .card .btn-link {

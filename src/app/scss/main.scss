@@ -35,16 +35,11 @@ b {
 //   color: #fff !important;
 // }
 
-.btn.btn-outline-primary {
-  border-radius: 50px;
-  color: #000 !important;
-  border: 1px solid #000;
-  font-size: 14px;
-}
+
 
 .btn.btn-outline-white:hover {
   color: #000 !important;
-  border: 1px solid #ccc !important;
+  border: 1px solid #000 !important;
 }
 
 // .blog_bg {
@@ -723,9 +718,10 @@ button.btn.btn-primary.loginclass {
   }
 }
 
-h3.text-left.lgtext {
+.lgtext {
+  font-size: 21px;
   font-weight: 600;
-  font-size: 24px;
+  margin-bottom: 14px;
 }
 
 .paraclss {
@@ -3930,7 +3926,8 @@ span.linebx {
 
 // sidebar css start 
 .new-sidebar .toggle-img {
-  height: 40px;
+  height: 41
+  px;
 }
 
 // sidebar and header css 
@@ -4234,9 +4231,7 @@ h1.triel-city, p.dollarf-sec {
 p.textWrong {
   font-size: 12px;
 }
-.forbx {
-  font-size: 14px !important;
-}
+
 
 
 // sidebar and header   css 
@@ -4315,6 +4310,12 @@ p.textWrong {
   position: fixed;
 }
 
+
+.sidebar_main.active .left_sidebar {
+  width: 85px !important;
+  border-right: 1px solid #e2e2e2;
+  padding: 14px 10px !important;
+}
 
 
 
@@ -4407,6 +4408,142 @@ margin-bottom: 0px !important;
 }
 
 @media (max-width:768px){
+// sidebar main css
+.sidebar_main.active .left_sidebar {
+  width: 272px !important;
+  background: #fff !important;
+  height: 100vh !important;
+  z-index: 99 !important;
+  position: fixed;
+  padding: 14px 10px !important;
+}
+
+.sidebar_main.active .left_sidebar .new-sidebar {
+  width: 250px !important;
+}
+
+.sidebar_main.active .toggle-img {
+  margin: unset;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.sidebar_main.active .toggle-img img {
+  width: 30px;
+  margin: unset !important;
+}
+
+.sidebar_main.active .left_sidebar .main-top {
+  width: 250px;
+  position: relative !important;
+  margin: 0px;
+  top: 0;
+}
+
+.sidebar_main.active .left_sidebar .nav-item {
+  width: 250px !important;
+  margin: 14px auto !important;
+  display: flex;
+  justify-content: left;
+}
+
+.sidebar_main.active a.nav-link.hoverclass {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+}
+
+.sidebar_main.active .nav-item .nav-link i {
+  font-size: 20px;
+  margin: 0 9px 0 0 !important;
+}
+
+.sidebar_main.active .new-sidebar .nav-item.active span.side_head {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  color: #ffffff !important;
+  display: block !important ;
+}
+.sidebar_main.active  .new-sidebar span.side_head{
+  color: #000 !important;
+  display: block !important ;
+}
+
+.sidebar_main.active a.nav-link {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar_main.active .svg_iconbx {
+  width: unset !important;
+}
+.sidebar_main.active  a.nav-link.hoverclass span {
+  display: block !important;
+  color: #000 !important;
+}
+
+// sidebar main active css
+
+
+.sidebar_main .left_sidebar {
+    width: 85px !important;
+    border-right: 1px solid #e2e2e2;
+    padding: 14px 10px !important;
+}
+
+.sidebar_main .left_sidebar .new-sidebar {
+    width: 70px !important;
+}
+
+.sidebar_main .toggle-img {
+    margin: unset;
+    width: 69px;
+}
+
+.sidebar_main .toggle-img img {
+    margin: 0 auto;
+}
+
+.sidebar_main .left_sidebar .main-top {
+    width: 65px;
+    position: relative !important;
+    margin: 0px;
+    top: 0;
+}
+
+.sidebar_main .left_sidebar .nav-item {
+    // width: 70px !important;
+    margin: 14px auto !important;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.sidebar_main a.nav-link {
+    width: 49px;
+    height: 49px;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar_main .svg_iconbx {
+    width: unset !important;
+}
+
+.sidebar_main .nav-item .nav-link i {
+    margin: 0 !important;
+}
+
+.sidebar_main a.nav-link.hoverclass span {
+    display: none !important;
+}
+
+
+  /////////////////////////////////////////////////////
 
   .pl_section {
     padding-left: 10px !important;
@@ -4455,6 +4592,63 @@ margin-bottom: 0px !important;
 }
 
 @media (max-width:576px) {
+  img.logo{
+    width: 136px !important;
+  }
+  .miansign .aff_liate {
+    font-size: 16px;
+}
+  //forgot css, SignupOptions css
+  .lgtext, .signupas{
+    font-size: 20px !important;
+  }
+  // login css 
+  .font_set{
+    font-size: 13px !important;
+  }
+// sidebar css 
+.sidebar_main .layout_right{
+  width: calc(100% - 65px) !important;
+}
+
+.sidebar_main .left_sidebar {
+  width: 65px !important;
+  border-right: 1px solid #e2e2e2;
+  padding: 14px 10px !important;
+}
+
+.sidebar_main .toggle-img {
+  margin: unset;
+  width: 44px;
+}
+
+.sidebar_main .left_sidebar .main-top {
+  width: 44px;
+  position: relative !important;
+  margin: 0px;
+  top: 0;
+}
+
+.sidebar_main a.nav-link {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar_main .left_sidebar .new-sidebar {
+  width: 45px !important;
+}
+
+
+
+
+
+
+
+
+
+
   .platform-feature-img img {
     max-width: 100% !important;
     margin: unset !important;
@@ -4541,3 +4735,38 @@ form.centerLogin {
 
 
 
+
+
+.btn.btn-outline-primary {
+  border-radius: 50px;
+  color: #000;
+  border: 1px solid #000 !important;
+  font-size: 14px;
+  background: transparent;
+}
+
+.btn.btn-outline-primary:hover{
+  background: #000;
+  color: #fff;
+  
+}
+.btn.btn-outline-primary:active {
+  color: #fff !important;
+  border: 1px solid #000 !important;
+  background-color: #000 !important;
+}
+
+//login and signup css
+input.mr-2.radio {
+  height: 14px;
+  width: 14px;
+  accent-color: #8b8b8b;
+}
+.radi_o{
+  height: 14px;
+  width: 14px;
+  accent-color: #8b8b8b;
+}
+.forbx {
+  font-size: 14px;
+}
