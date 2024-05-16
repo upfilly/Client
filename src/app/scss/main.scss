@@ -35,16 +35,11 @@ b {
 //   color: #fff !important;
 // }
 
-.btn.btn-outline-primary {
-  border-radius: 50px;
-  color: #000 !important;
-  border: 1px solid #000;
-  font-size: 14px;
-}
+
 
 .btn.btn-outline-white:hover {
   color: #000 !important;
-  border: 1px solid #ccc !important;
+  border: 1px solid #000 !important;
 }
 
 // .blog_bg {
@@ -4541,3 +4536,23 @@ form.centerLogin {
 
 
 
+
+
+.btn.btn-outline-primary {
+  border-radius: 50px;
+  color: #000;
+  border: 1px solid #000 !important;
+  font-size: 14px;
+  background: transparent;
+}
+
+.btn.btn-outline-primary:hover{
+  background: #000;
+  color: #fff;
+  
+}
+.btn.btn-outline-primary:active {
+  color: #fff !important;
+  border: 1px solid #000 !important;
+  background-color: #000 !important;
+}
