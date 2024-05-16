@@ -2272,7 +2272,7 @@ p.checkbox-option-main span {
 }
 
 ul.opt-category img.checkss {
-  width: 20px;
+  width: 14px;
 }
 
 .opt-main-cate {
@@ -2802,7 +2802,7 @@ a.btn.btn-primary.edit {
 
   .blue_header span,
   .right_auth a {
-    font-size: 13px;
+    font-size: 13px !important;
   }
 
   // nav.navbar.navbar-expand-lg.navbar-light.bg-white {
@@ -2969,10 +2969,11 @@ ul.tool_list {
 
 p.ipsi {
   color: #252849;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   margin-bottom: 0px;
   line-height: 20px;
+  // white-space: nowrap;
 }
 
 .opt-category {
@@ -3867,6 +3868,11 @@ span.linebx {
 
  }
  @media (max-width: 576px) { 
+
+  .reversebx .ulable{
+  font-size: 20px !important;
+}
+  
 // Responsive Header css ---------------------------------
 
 .dropdown.ml-auto {
@@ -4020,6 +4026,10 @@ p.revuh{
   .headerreverse{
     flex-direction: column-reverse;
   }
+  //booking from css
+.select_plans {
+  font-size: 30px;
+}
 }
 
 
@@ -4209,10 +4219,10 @@ p.revuh{
   margin-top: 22px !important;
 }
 
-.reversebx h1 {
+.reversebx .ulable {
   font-size: 38px;
 }
-.reversebx h1 br {
+.reversebx .ulable br {
  display: none;
 }
 
@@ -4355,7 +4365,11 @@ p.textWrong {
   display:none;
 }
 
-.lens_details .set_lensbx, .reversebx h1   
+.lens_details .set_lensbx   
+{
+  font-size: 24px !important;
+}
+.reversebx .ulable   
 {
   font-size: 24px !important;
 }
@@ -4767,6 +4781,17 @@ input.mr-2.radio {
   width: 14px;
   accent-color: #8b8b8b;
 }
-.forbx {
+
+//booking from css
+.select_plans {
+  font-size: 30px;
+}
+//header css
+.proifle_dropbx .dropdown-menu.show  a.has-icon.dropdown-item {
   font-size: 14px;
+}
+
+.sub_ulbx {
+  list-style: none;
+  margin: 10px 0px;
 }

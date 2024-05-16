@@ -199,7 +199,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
 
                         <div className="profile-img">
                             {user && <>
-                                <Dropdown className="ml-auto ml-2">
+                                <Dropdown className="ml-auto ml-2 proifle_dropbx">
                                     <Dropdown.Toggle className="d-flex p-0 align-items-center drpdown_new" variant="" id="">
                                         <img alt="image" src={user?.image ? methodModel.userImg(user && user?.image) : '/assets/img/person.jpg'} className="rounded-circle mr-1" />
                                         {/* <div className="ml-1 nameFont text-white">
@@ -208,11 +208,11 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/')}><i class="fa fa-dashboard" /> Home</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user" /> Profile</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}> <i class="fa-solid fa-chart-simple"></i> MarketPlace</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog" aria-hidden="true"></i> Change Password</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/')}><i class="fa fa-dashboard mr-2 " /> Home</Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2" /> Profile</Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}> <i class="fa-solid fa-chart-simple mr-2"></i> MarketPlace</Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout</Dropdown.Item>
 
                                     </Dropdown.Menu>
 
