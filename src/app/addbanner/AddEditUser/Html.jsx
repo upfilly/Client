@@ -1,0 +1,192 @@
+import React, { useState } from "react";
+import Layout from "@/app/components/global/layout";
+import SelectDropdown from "@/app/components/common/SelectDropdown";
+import '../style.scss';
+import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic';
+import ImageUpload from "@/app/components/common/ImageUpload";
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
+const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
+
+    console.log(form,"ffffffffff")
+
+    return <>
+        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
+            <form onSubmit={handleSubmit}>
+                <div className="sidebar-left-content">
+                    <div className=" pprofile1 card card-shadow p-4">
+                        <div className="">
+                            <div className="main_title_head profile-card">
+
+                                <h3 className='VieUser'>
+                                    <a to="/campaign" onClick={e => back()}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
+                                    {form && form.id ? 'Edit' : 'Add'} Banner</h3>
+                                <hr></hr>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-md-6 mb-3">
+                                    <label>Title<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.title}
+                                        onChange={e => setform({ ...form, title: e.target.value })}
+                                    />
+                                    {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Destination Url<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.destination_url}
+                                        onChange={e => setform({ ...form, destination_url: e.target.value })}
+                                    />
+                                    {submitted && !form?.destination_url ? <div className="invalid-feedback d-block">Destination url is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>SEO Attributes<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.seo_attributes}
+                                        onChange={e => setform({ ...form, seo_attributes: e.target.value })}
+                                    />
+                                    {submitted && !form?.seo_attributes ? <div className="invalid-feedback d-block">SEO Attributes is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Activation Date<span className="star">*</span></label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        value={form.activation_date}
+                                        onChange={e => setform({ ...form, activation_date: e.target.value })}
+                                    />
+                                    {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Activation Date Date is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Availability Date<span className="star">*</span></label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        value={form.availability_date}
+                                        onChange={e => setform({ ...form, availability_date: e.target.value })}
+                                    />
+                                    {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Expiration Date<span className="star">*</span></label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        value={form.expiration_date}
+                                        onChange={e => setform({ ...form, expiration_date: e.target.value })}
+                                    />
+                                    {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
+                                </div>
+
+                                <div className="col-md-12 mb-3">
+                                    <label>Description</label>
+                                    {affiliateData && <DynamicReactQuill
+                                        theme="snow"
+                                        value={form?.description ? form?.description : ''}
+
+                                        onChange={(newValue, editor) => {
+                                            setform({ ...form, description: newValue })
+                                        }}
+                                        className='tuncketcls'
+                                        modules={{
+                                            toolbar: [
+                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                                [{ size: [] }],
+                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                                { 'indent': '-1' }, { 'indent': '+1' }],
+                                                ['link', 'image', 'video'],
+                                                ['clean']
+                                            ],
+                                        }}
+                                        formats={[
+                                            'header', 'font', 'size',
+                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                            'list', 'bullet', 'indent',
+                                            'link', 'image', 'video'
+                                        ]}
+                                        bounds={'.app'}
+                                    />}
+                                </div>
+
+                                <div className="col-md-6 mt-3">
+                                    <label className='lablefontcls'>Image</label><br></br>
+                                    <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
+                                </div>
+
+                                <div className="form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input mr-4"
+                                        checked={form?.is_animation}
+                                        onClick={(e) =>
+                                            setform({
+                                                ...form,
+                                                is_animation: !form?.is_animation,
+                                            })
+                                        }
+                                    />
+                                    <label className="form-check-label" >
+                                    Is Animation
+                                    </label>
+                                </div>
+
+                                <div className="form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input mr-4"
+                                        checked={form?.is_deep_linking}
+                                        onClick={(e) =>
+                                            setform({
+                                                ...form,
+                                                is_deep_linking: !form?.is_deep_linking,
+                                            })
+                                        }
+                                    />
+                                    <label className="form-check-label" >
+                                    Is Deep Linking
+                                    </label>
+                                </div>
+
+                                <div className="form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input mr-4"
+                                        checked={form?.mobile_creative}
+                                        onClick={(e) =>
+                                            setform({
+                                                ...form,
+                                                mobile_creative: !form?.mobile_creative,
+                                            })
+                                        }
+                                    />
+                                    <label className="form-check-label" >
+                                    Mobile Creative
+                                    </label>
+                                </div>
+
+                            </div>
+
+
+                            <div className="text-right edit-btns">
+
+                                <button type="submit" className="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </Layout>
+    </>
+}
+
+export default Html

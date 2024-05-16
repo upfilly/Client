@@ -47,7 +47,7 @@ const EditProfile = () => {
   });
   const [picLoader,setPicLoader]=useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState([])
   const [changeSubCategory, setChangeSubCategory] = useState('')
   const [address, setAddress] = useState(form?.address);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -76,8 +76,24 @@ const EditProfile = () => {
     { key: 'dialCode', minLength:1 },
     { key: 'category_id', required:true },
   ]
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedSubSubcategory, setSelectedSubSubcategory] = useState('');
 
-  console.log(form,"ffffffoooooo")
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setSelectedSubcategory('');
+    setSelectedSubSubcategory('');
+  };
+
+  const handleSubcategoryChange = (e) => {
+    setSelectedSubcategory(e.target.value);
+    setSelectedSubSubcategory('');
+  };
+
+  const handleSubsubcategoryChange = (e) => {
+    setSelectedSubSubcategory(e.target.value);
+  };
   
   useEffect(() => {
     if (!form?.dialCode) {
@@ -240,12 +256,10 @@ const EditProfile = () => {
     }, []);
 
   const getCategory = (p = {}) => {
-    // let filter = { ...filters, ...p }
-    let url = 'main-category/all'
+    let url = 'categoryWithSub'
     ApiClient.get(url).then(res => {
       if (res.success) {
-        const data = res.data.data.filter(item => item.status === "active");
-
+        const data = res.data.data
         setCategory(data)
       }
     })
@@ -304,6 +318,12 @@ const EditProfile = () => {
         setDOB={setDOB}
         handleDateChange={handleDateChange}
         user={user}
+        handleCategoryChange={handleCategoryChange}
+        handleSubcategoryChange={handleSubcategoryChange}
+        handleSubsubcategoryChange={handleSubsubcategoryChange}
+        selectedCategory={selectedCategory}
+        selectedSubcategory={selectedSubcategory}
+        selectedSubSubcategory={selectedSubSubcategory}
       />
     </>
   );

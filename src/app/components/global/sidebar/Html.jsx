@@ -103,16 +103,21 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </div>
               </ListItemLink>
             </> : <></>}
-            {/* {urlAllow('manualCommission') ? <>
+            {urlAllow('manualCommission') ? <>
               <ListItemLink to="/commission/manualCommission" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
               <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">monetization_on</i >
                 <span className="side_head">Manual Commission</span>
               </div>
               </ListItemLink>
-            </> : <></>} */}
+            </> : <></>}
 
           </div></>}
+
+          {user && user?.role == "brand" && <ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+          <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
+          <span className="side_head">Add Banner</span>
+        </ListItemLink>}
 
         {user && user?.role == "brand" && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>

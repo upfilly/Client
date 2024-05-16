@@ -16,7 +16,12 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureCheckbox, handleSubmit, setChangeSubCategory,
   handleChange, handleSelect, address, changeSubCategory,formData,setFormData,dob, setDOB,handleDateChange,
-  form, getError, uploadImage, submitted, category, pageLoad ,setForm }) => {
+  form, getError, uploadImage, submitted, category, pageLoad ,setForm,
+  handleCategoryChange,
+  handleSubcategoryChange,
+  selectedCategory,
+  selectedSubcategory,
+  selectedSubSubcategory,handleSubsubcategoryChange }) => {
   const [inputFocused, setInputFocused] = useState(false)
 
   const data = ["youtube", "twitter", "instagram", "linkedin"]
@@ -265,14 +270,38 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                     </div>
                     <div className='card-body'>
                       <div className='row'>
+                      <div className='col-12 col-sm-12 col-md-6'>
+                      <label htmlFor="category">Category:</label>
+                        <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
+                          <option value="">Select a category</option>
+                          {category?.map(category => (
+                            <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
+                          ))}
+                        </select></div>
                         <div className='col-12 col-sm-12 col-md-6'>
+                        <label htmlFor="subcategory">Subcategory:</label>
+                        <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
+                          <option value="">Select a subcategory</option>
+                          {selectedCategory && category.find(cat => cat._id === selectedCategory).subCategories.map(subcategory => (
+                            <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                          ))}
+                        </select></div>
+                        <div className='col-12 col-sm-12 col-md-6'>
+                        <label htmlFor="subsubcategory">Sub-subcategory:</label>
+                        <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
+                          <option value="">Select a sub-subcategory</option>
+                          {selectedSubcategory && category.find(cat => cat._id === selectedCategory).subCategories.find(subcat => subcat.id || subcat?._id === selectedSubcategory).subchildcategory.map(subsubcat => (
+                            <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
+                          ))}
+                        </select></div>
+                        {/* <div className='col-12 col-sm-12 col-md-6'>
                           <div className='form-group'>
                             <div className="select_drop ">
                               <label>Category<span className='star'>*</span></label>
                               <div className="select_row">
                                 <SelectDropdown
                                   id="statusDropdown"
-                                  displayValue="name"
+                                  displayValue="parent_cat_name"
                                   placeholder="Select category"
                                   intialValue={form?.category_id}
                                   result={e => setForm({ ...form, category_id: e.value })}
@@ -283,7 +312,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
 
                             </div>
                           </div>
-                        </div>
+                        </div> */}
 
                         {user?.role == 'affiliate' && <div className='col-12 col-sm-12 col-md-6'>
                           <div className='form-group'>
