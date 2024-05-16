@@ -358,13 +358,13 @@ a.nav-link.hoverclass i {
     color: #fff !important;
 }
 
-.sidebar_main.active a.nav-link.hoverclass span {
-    display: none;
-}
+// .sidebar_main.active a.nav-link.hoverclass span {
+//     display: none;
+// }
 
 .sidebar_main.active .left_sidebar {
-    width: 90px !important;
-
+    width: 90px;
+    border-right: 1px solid #e2e2e2;
 }
 
 .sidebar_main.active .new-sidebar .sidees span {
@@ -458,7 +458,7 @@ img.cross-hide {
 
 
 .sidebar_main.active a.nav-link.hoverclass span {
-    display: none !IMPORTANT;
+    display: none ;
 }
 
 
@@ -518,9 +518,7 @@ display: none;
     display: block;
     }
 
-    .sidebar_main .svg_iconbx {
-  width: 31px !important;
-}
+ 
 .sidebar_main.active .svg_iconbx {
     width: unset !important;
   }

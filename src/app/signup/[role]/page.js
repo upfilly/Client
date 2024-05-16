@@ -176,7 +176,7 @@ export default function Login() {
       <div className="container">
         {/* <a className="p-3 d-block text-white" href="/">Back</a> */}
         <div className="row align-items-center ">
-          <div className="col-12 col-sm-8 col-md-6 col-lg-5 mx-auto">
+          <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
             <div className='right_side'>
               <form
                 className="centerLogin"
@@ -184,7 +184,7 @@ export default function Login() {
               >
                 <Link href="/"><i className="fa fa-angle-double-left back_button" aria-hidden="true"></i></Link>
                 <div className="text-center mb-2">
-                  <h3 className="text-center lgtext mb-0">Register Now </h3>
+                  <h3 className="text-center lgtext">Register Now </h3>
                 </div>
                 <div className="form-row">
                   <div className="col-12 col-sm-12 col col-md-6 ">
