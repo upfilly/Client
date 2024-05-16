@@ -339,35 +339,34 @@ export default function affilate() {
                                 id={category._id}
                                 name="category"
                                 value={category._id}
-                                checked={selectedCategory === category._id}
+                                checked={selectedCategory?._id === category._id}
                                 onChange={() => handleCategoryChange(category)}
                               />
                               <label htmlFor={category._id}>{category.parent_cat_name}</label>
+
+                              {/* Render subcategories under selected main category */}
+                              {selectedCategory?._id === category._id && selectedCategory && (
+                                <ul>
+                                  {category.subCategories.map(subCategory => (
+                                    <li key={subCategory.id}>
+                                      <input
+                                        type="radio"
+                                        id={subCategory.id}
+                                        name="subCategory"
+                                        value={subCategory.id}
+                                        checked={selectedSubCategory === subCategory.id}
+                                        onChange={() => handleSubCategoryChange(subCategory)}
+                                      />
+                                      <label htmlFor={subCategory.id}>{subCategory.name}</label>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
                             </li>
                           ))}
                         </ul>
 
-                        {selectedCategory && (
-                          <div>
-                            <h2>Select Subcategory</h2>
-                            <ul>
-                              {selectedCategory.subCategories.map(subCategory => (
-                                <li key={subCategory.id}>
-                                  <input
-                                    type="radio"
-                                    id={subCategory.id}
-                                    name="subCategory"
-                                    value={subCategory.id}
-                                    checked={selectedSubCategory === subCategory.id}
-                                    onChange={() => handleSubCategoryChange(subCategory)}
-                                  />
-                                  <label htmlFor={subCategory.id}>{subCategory.name}</label>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-
+                        {/* Render subsubcategories under selected subcategory */}
                         {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
                           <div>
                             <h2>Select Subsubcategory</h2>
