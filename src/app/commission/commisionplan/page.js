@@ -171,10 +171,10 @@ export default function Commissions() {
                       <div className='manin_innertabs'>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
+                            <a class="nav-link navtaabs active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
+                            <a class="nav-link navtaabs" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
                           </li>
                           {/* <li class="nav-item">
                             <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">All Commissions</a>

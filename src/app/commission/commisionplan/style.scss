@@ -28,7 +28,16 @@ color: #ffffff !important;
     color: #d86bd6 !important;
 }
 
-.sidebar_main.active a.nav-link {
+// .sidebar_main.active a.nav-link {
+//     width: 100% !important;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     text-align: center;
+// }
+
+
+.sidebar_main.active a.nav-link.navtaabs {
     width: 100% !important;
     display: flex;
     justify-content: center;

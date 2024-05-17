@@ -2371,8 +2371,9 @@ ul.sales-listing {
 }
 
 .sidebar_main.active a.nav-link {
-  width: 49px;
-  height: 49px;
+  width: 43px;
+  align-items: center;
+  height: 43px;
   display: flex;
   justify-content: center;
 }
@@ -4857,4 +4858,15 @@ input.mr-2.radio {
 
 .change_passwordbx {
   margin: 80px 0px !important;
+}
+.select_check{
+  
+    padding: 0px 16px;
+
+}
+.sidebar_main .left_sidebar .side_titles .fontsize20 {
+  display: none;
+}
+.sidebar_main.active .left_sidebar .side_titles .fontsize20 {
+  display: block;
 }
