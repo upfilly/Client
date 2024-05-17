@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
-import methodModel from '@/methods/methods';
 import datepipeModel from '@/models/datepipemodel';
-import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
 
 const Html = ({
