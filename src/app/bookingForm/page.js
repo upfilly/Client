@@ -318,12 +318,12 @@ export default function BillingForm() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-        <div className='main-affiliate mt-3 mb-3'>
+        <div className='main-affiliate mt-3 mb-0 pt-0'>
           <div className='container'>
 
             <div>
-              <img src="/assets/img/logo.png" className='mx-auto mb-5 pointer' onClick={() => history.push('/')} />
-              <h2 className='text-center mb-4'> Select a plan</h2>
+              <img src="/assets/img/logo.png" className='mx-auto mb-4 pointer logo' onClick={() => history.push('/')} />
+              <h2 className='text-center mb-0 select_plans'> Select a plan</h2>
             </div>
 
           </div>
@@ -365,15 +365,15 @@ export default function BillingForm() {
         <section className='common-padding'>
           <div className='container'>
             <div className='row'>
-              <div className='col-12 col-md-8'>
-                <div className='card p-0'>
+              <div className='col-12 col-md-12 col-lg-8'>
+                <div className='card p-0 mb-4'>
                   <div className='card-header '>
                     <h3 className='mb-0 card-title'>Account <span className='subsmal'>Select a plan</span></h3>
                   </div>
                   <div className='card-body'>
 
 
-                    <div className='row px-2'>
+                    <div className='row '>
                       {FilterData?.map((itm) => {
                         const calculateDiscountedAmount = (amount, discountDetails) => {
                           if (!discountDetails || !discountDetails.discount_type) {
@@ -394,7 +394,7 @@ export default function BillingForm() {
 
                         const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
 
-                        return <label htmlFor={`exampleRadios${itm._id}`} className='col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-4 pr-0'> <div class={selectedId == itm?._id ? "checked_tbn" : "checked_tbn_after"} >
+                        return <label htmlFor={`exampleRadios${itm._id}`} className=' col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4'> <div class={selectedId == itm?._id ? "checked_tbn" : "checked_tbn_after"} >
                           <div className='sub-opt form-check pl-0' >
 
 
@@ -444,8 +444,8 @@ export default function BillingForm() {
                 </div>
               </div>
 
-              <div className='col-12 col-md-4'>
-                <div className='row'>
+              <div className='col-12 col-md-12 col-lg-4'>
+               
                   <div className='card p-0 mb-4'>
                     <div className='card-header'>
                       <h4 className='card-title'>Basic Information</h4>
@@ -455,7 +455,7 @@ export default function BillingForm() {
                       <div className='row'>
                         {!user && <>
 
-                          <div className='col-12 col-md-6 pr-0 '>
+                          <div className='col-12 col-md-6 col-lg-6  '>
                             <div className="form-group">
                               <label className='label-set'>First Name</label>
                               <input
@@ -469,7 +469,8 @@ export default function BillingForm() {
                               {summitted && !formData.firstName ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
 
                             </div>
-                          </div><div className='col-12 col-md-6'>
+                          </div>
+                          <div className='col-12 col-md-6 col-lg-6'>
                             <div className="form-group">
                               <label className='label-set'>Last Name </label>
                               <input
@@ -483,7 +484,8 @@ export default function BillingForm() {
                               {summitted && !formData.lastName ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
 
                             </div>
-                          </div><div className='col-12 col-md-12 pr-0'>
+                          </div>
+                          <div className='col-12 col-md-6 col-lg-12 '>
                             <div className="form-group">
                               <label className='label-set'>Email </label>
                               <input
@@ -498,21 +500,8 @@ export default function BillingForm() {
 
                             </div>
                           </div>
-                          {/* <div className='col-12 col-md-6'>
-                      <div class="form-group">
-                        <label className='label-set' >Payment Method <img className='sad-img' src='/assets/img/information-button.png' alt=''></img> </label>
-                        <select class="form-select " aria-label="Default select example" name='payment_method' value={formData?.payment_method}
-                          onChange={handleInputChange}>
-                          <option selected>Select your payment method</option>
-                          <option value="stripe">Stripe</option>
-                          <option value="account detail">Account detail</option>
-                        </select>
-                        {summitted && !formData?.payment_method ? <div className="invalid-feedback d-block">Payment method is Required</div> : <></>}
-                      </div>
-                    </div> */}
-
-
-                          <div className='col-12 col-md-12'>
+                        
+                          <div className='col-12 col-md-6 col-lg-12'>
                             <div className="form-group">
                               <label className='label-set'>Password </label>
                               <div className='input-group position-relative'>
@@ -533,7 +522,8 @@ export default function BillingForm() {
 
                             </div>
 
-                          </div><div className='col-12 col-md-12'>
+                          </div>
+                          <div className='col-12 col-md-6 col-lg-12'>
                             <div className="form-group">
                               <label className='label-set'>confirm Password </label>
                               <div className='input-group position-relative'>
@@ -555,7 +545,7 @@ export default function BillingForm() {
                             </div>
                           </div>
 
-                          <div className='col-12 col-md-6 pr-0'>
+                          <div className='col-12 col-md-6 col-lg-6 '>
                             <div className="form-group">
                               <label className='label-set'>Website  </label>
                               <input
@@ -568,7 +558,7 @@ export default function BillingForm() {
                                 onChange={handleInputChange} />
                             </div>
                           </div>
-                          <div className='col-12 col-md-6'>
+                          <div className='col-12 col-md-6 col-lg-6'>
                             <div className="form-group">
                               <label className='label-set'>Currency </label>
                               <input
@@ -651,7 +641,7 @@ export default function BillingForm() {
                           </div>
                         </div>
 
-                        <div className='col-md-6 pl-0'>
+                        <div className='col-md-6'>
                           <div class="form-group">
                             <label className='label-set'>City </label>
                             <input placeholder='Enter city' type="text" value={selectedLocation?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
@@ -733,13 +723,16 @@ export default function BillingForm() {
                 {summitted && !formData.paypal_email ? <div className="invalid-feedback d-block">Paypal email is not required</div> : <></>}
               </div> */}
 
-                      <div className='col-md-12  d-flex justify-content-center'>
+                      <div className='col-md-12 '>
+                        <div className=' d-flex justify-content-center  justify-content-md-end justify-content-lg-center' >
                         <button className='btn btn-primary buy-btn' onClick={handleSave}>Buy</button>
                         <button className='btn btn-danger buy-btn ml-2' onClick={() => history.back()}>Cancel</button>
+                        </div>
+                       
                       </div>
                     </div>
                   </div>
-                </div>
+              
               </div>
             </div>
           </div>

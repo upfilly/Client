@@ -329,7 +329,124 @@ export default function affilate() {
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <div>
+
+  <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
+                              <b className='' >Select Category</b>
+                            </button>
+                          </h2>
+                          <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+{/* ///////////////////////////////////////////////////////////////////////////////// */}
+
+                       
+                          
+{/* ///////////////////////////////////////////////////////////////////////////////// */}
+                              <ul className='filter_ullist' >
+                              {category.map(category => (
+                                <li key={category._id} >
+                                  
+                                  <div class="form-check">
+                                  
+                                    
+                                    <input
+                                    className=" form-check-input"
+                                type="radio"
+                                id={category._id}
+                                name="category"
+                                value={category._id}
+                                checked={selectedCategory?._id === category._id}
+                                onChange={() => handleCategoryChange(category)}
+                              />
+                              <label class="form-check-label" htmlFor={category._id}>{category.parent_cat_name}</label>
+
+                                  </div>
+
+  {/* Render subcategories under selected main category */}
+  {selectedCategory?._id === category._id && selectedCategory && (
+                                <ul  className=' sub_ulbx ' >
+                                  {category.subCategories.map(subCategory => (
+                                    <li key={subCategory.id}>
+                                       <div class="form-check">
+                                       <input
+                                       className= "form-check-input"
+                                        type="radio"
+                                        id={subCategory.id}
+                                        name="subCategory"
+                                        value={subCategory.id}
+                                        checked={selectedSubCategory === subCategory.id}
+                                        onChange={() => handleSubCategoryChange(subCategory)}
+                                      />
+                                      <label class="form-check-label"  htmlFor={subCategory.id}>{subCategory.name}</label>
+                                       </div>
+                                      
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+
+
+                                </li>
+                               
+                              ))}
+                              </ul>
+
+                            
+                            </div>
+                          </div>
+                        </div>
+
+
+                        {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
+                          
+                         
+                       
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
+                              <b className='' >Select Subsubcategory</b>
+                            </button>
+                          </h2>
+                          <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <ul className='filter_ullist' >
+                              {selectedSubCategory.subchildcategory.map(subSubCategory => (
+                                <li key={subSubCategory._id}>
+                                  <div class="form-check">
+                                  <input
+                                  class="form-check-input"
+                                    type="checkbox"
+                                    id={subSubCategory._id}
+                                    name="subSubCategory"
+                                    value={subSubCategory._id}
+                                    checked={selectedSubSubCategory === subSubCategory._id}
+                                    onChange={() => handleSubSubCategoryChange(subSubCategory)}
+                                  />
+                                    
+                                  
+                                    <label  class="form-check-label"  htmlFor={subSubCategory._id}>{subSubCategory.name}</label>
+
+                                  </div>
+                                </li>
+                               
+                              ))}
+                             
+                              </ul>
+   
+                         
+
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                       
+                      </div>
+
+
+                      {/* <div>
                         <h2>Select Category</h2>
                         <ul>
                           {category.map(category => (
@@ -344,7 +461,7 @@ export default function affilate() {
                               />
                               <label htmlFor={category._id}>{category.parent_cat_name}</label>
 
-                              {/* Render subcategories under selected main category */}
+                              Render subcategories under selected main category
                               {selectedCategory?._id === category._id && selectedCategory && (
                                 <ul>
                                   {category.subCategories.map(subCategory => (
@@ -366,7 +483,7 @@ export default function affilate() {
                           ))}
                         </ul>
 
-                        {/* Render subsubcategories under selected subcategory */}
+                        Render subsubcategories under selected subcategory
                         {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
                           <div>
                             <h2>Select Subsubcategory</h2>
@@ -387,7 +504,7 @@ export default function affilate() {
                             </ul>
                           </div>
                         )}
-                      </div>
+                      </div> */}
                       {/* <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                           <h2 class="accordion-header">
