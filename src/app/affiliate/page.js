@@ -711,8 +711,8 @@ export default function affilate() {
                       value={tagInput}
                       onChange={handleTagInputChange}
                     />
-                    <Button variant="primary" onClick={handleAddTag}> <i class="fa fa-plus mr-2 " aria-hidden="true"></i>
-                      Add</Button>
+                    <Button variant="primary" onClick={handleAddTag}> <i class="fa fa-plus" aria-hidden="true"></i>
+                      </Button>
                   </div>
                 </Form.Group>
                 <div className='d-flex align-items-center  text_adds gap-2 flex-wrap' >
