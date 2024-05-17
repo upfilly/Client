@@ -1,17 +1,17 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import ApiClient from '../../methods/api/apiClient';
+import ApiClient from '@/methods/api/apiClient';
 import './style.scss';
-import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
+import loader from '@/methods/loader';
 
 
-const banneres = () => {
+const Manualcommission = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
     const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:''})
@@ -32,7 +32,7 @@ const banneres = () => {
         setLoader(true)
         let filter= { ...filters, ...p}
 
-        let url='banners'
+        let url='get-commissions'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
@@ -140,18 +140,18 @@ const banneres = () => {
     }
 
     const view=(id)=>{
-        history.push("/addbanner/detail/"+id)
+        history.push("/commission/manualCommission/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/addbanner/edit/${id}`
-        if(role) url=`/addbanner/${role}/edit/${id}`
+        let url=`/commission/manualCommission/${id}`
+        // if(role) url=`/addbanner/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/addbanner/add`
-        if(role) url=`/addbanner/${role}/add`
+        let url=`/commission/manualCommission`
+        // if(role) url=`/addbanner/${role}/add`
         history.push(url)
     }
 
@@ -212,4 +212,4 @@ const banneres = () => {
     </>;
 };
 
-export default banneres;
+export default Manualcommission;

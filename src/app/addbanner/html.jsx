@@ -127,7 +127,7 @@ const Html = ({
                         </div>
                     </div></td>
                     <td className='table_dats'>{itm.seo_attributes}</td>
-                    <td className='table_dats'>{itm.seo_attributes}</td>
+                    {/* <td className='table_dats'>{itm.seo_attributes}</td> */}
                     <td className='table_dats'>{datepipeModel.date(itm.expiration_date)}</td>
                     <td className='table_dats'>{datepipeModel.date(itm.activation_date)}</td>
                     <td className='table_dats'>{datepipeModel.date(itm.availability_date)}</td>
@@ -142,20 +142,6 @@ const Html = ({
                 {/* dropdown */}
                 <td className='table_dats'>
                     <div className="action_icons gap-3 ">
-                        {/* {user?.role == 'brand' && <>{itm?.status == 'pending' ? <div >
-                            <button onClick={() => {
-                                statusChange("accepted", itm?.id || itm?._id)
-                            }} className="btn btn-primary mr-2 ml-3">
-                                <i className='fa fa-check'></i>
-                            </button>
-                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2">
-                                <i className='fa fa-times'></i>
-                            </button>
-                        </div> :
-                            itm?.status == 'rejected' ?
-                                <div className="btn btn-primary mr-2">Rejected</div> :
-                                <div className="btn btn-primary mr-2">Accepted</div>
-                        }</>} */}
                         {<>{isAllow('editAdmins') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
                                 <i className="material-icons edit" title="Edit">edit</i>
@@ -167,14 +153,7 @@ const Html = ({
                                     <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                                 </a>
                             </> : <></>}</>}
-
                         <>
-                            {/* <a className='edit_icon action-btn' onClick={() => {
-                                history.push(`/chat`)
-                                localStorage.setItem("chatId", user?.role == 'brand' ? itm?.affiliate_id : itm?.brand_id)
-                            }}>
-                                <i className='fa fa-comment-o text-white'></i>
-                            </a> */}
                         </>
                     </div>
                 </td>

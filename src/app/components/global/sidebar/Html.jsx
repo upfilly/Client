@@ -104,7 +104,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </ListItemLink>
             </> : <></>}
             {urlAllow('manualCommission') ? <>
-              <ListItemLink to="/commission/manualCommission" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
+              <ListItemLink to="/commission/manualCommission/view" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
               <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">monetization_on</i >
                 <span className="side_head">Manual Commission</span>
