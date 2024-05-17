@@ -76,10 +76,10 @@ b {
   list-style-type: none;
 
   .pagination-item {
-    padding: 0 4px;
+    padding: 0px;
     height: 32px;
     text-align: center;
-    margin: auto 4px;
+    margin: auto 0px;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
     box-sizing: border-box;
@@ -96,6 +96,9 @@ b {
 li.pagination-item.pagination-item-active a {
   background: #2988cf;
   color: #fff !important;
+  width: 24px;
+  padding: 3px;
+  height: 24px;
 }
 
 li.previous a:hover {
@@ -112,15 +115,13 @@ ul.pagination-item li {
 
 li.pagination-item a {
   background: #eaeaea;
-  padding: 3px 9px;
+  padding: 2px;
   border-radius: 50px;
+  width: 24px;
+  height: 24px;
 }
 
-li.pagination-item a {
-  background: #eaeaea;
-  padding: 3px 9px;
-  border-radius: 50px;
-}
+
 
 .profileImageLabel {
   margin: 0;
@@ -274,13 +275,17 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
     width: fit-content;
   }
 }
-
+.paginationWrapper ul li a {
+  font-size: 14px;
+}
 
 .paginationWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
 
   >span {
     font-size: 13px;
@@ -2168,13 +2173,13 @@ p.checkbox-option-main span {
   color: #fff !important;
 }
 
-.paginationWrapper {
-  padding: 0 15px !important;
-}
 
 .paginationWrapper ul {
   display: flex;
   align-items: center !important;
+  padding: 0px;
+  margin: 0px;
+  
 }
 
 .phoneInput.w-100 {
@@ -3183,7 +3188,7 @@ p.ipsi {
 }
 
 .job-searchbar h4 {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 20px;
 }
 
@@ -3226,9 +3231,9 @@ h4.filtes_herd {
   padding: 20px;
   border: 1px solid #e9e9e9;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   cursor: pointer;
-  height: 250px;
+  min-height: 250px;
 }
 
 .showngmkt.lists_mkt:hover {
@@ -3326,6 +3331,10 @@ p.types_date {
   position: relative;
   min-height: 40px;
   border-radius: 50px !important;
+  
+}
+.hide_checksbox .searchWrapper {
+  margin-bottom: 24px;
 }
 
 .dateselect{
@@ -3336,12 +3345,13 @@ p.types_date {
 }
 
 .selectDropdown .searchBox  {
-  // width: 100%;
+  width: 100%;
   padding: 2px;
+  max-width: 173px;
 }
 
 .names_checklist p {
-  font-size: 15px;
+  font-size: 14px;
   text-transform: capitalize;
 }
 
@@ -3511,12 +3521,12 @@ button.cancel_btns{
 
 .selected_offrs_market span{
   background-color: rgb(255, 255, 255);
-  margin-right: 10px;
+ 
   padding: 5px 10px;
   border-radius: 50px;
   font-size: 12px;
   color: #000;
-  margin-bottom: 5px;
+
 }
 
 .selected_offrs_market span i{
@@ -3524,8 +3534,9 @@ button.cancel_btns{
 }
 
 .selected_offrs_market {
-  margin-top: 10px;
+  margin: 10px 0px;
   display: flex;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -3868,6 +3879,21 @@ span.linebx {
 
  }
  @media (max-width: 576px) { 
+  .card.profile-card {
+    padding: 10px !important;
+}
+a.btn.btn-primary.profiles {
+  font-size: 13px;
+}
+.profiles i.material-icons.prob {
+  font-size: 14px;
+}
+.main_title_head h3{
+  font-size: 14px;
+}
+.profileImageLabel .profileImage {
+  margin: 0px auto;
+}
 
   .reversebx .ulable{
   font-size: 20px !important;
@@ -4023,6 +4049,9 @@ p.revuh{
 }
 
 @media (max-width:992px){
+  .profile-edit-sec{
+    border: unset !important;
+  }
   .headerreverse{
     flex-direction: column-reverse;
   }
@@ -4151,6 +4180,11 @@ p.revuh{
 }
 
 @media (max-width:1200px) {
+
+  .main-head {
+    font-size: 24px !important;
+  }
+
   h2.heding_main {
     font-size: 38px !important;
     max-width: 300px !important;
@@ -4346,7 +4380,13 @@ p.textWrong {
 
 
 @media (max-width:992px) {
-
+  .printit br{
+    display: none;
+  }
+  
+  .main-head {
+    font-size: 20px !important;
+  }
   .abouts, .platform_bx h1, .main-title h1 {
     font-size: 24px !important;
   }
@@ -4422,6 +4462,9 @@ margin-bottom: 0px !important;
 }
 
 @media (max-width:768px){
+   .feature-text h1 {
+    font-size: 20px !important;
+}
 // sidebar main css
 .sidebar_main.active .left_sidebar {
   width: 272px !important;
@@ -4578,8 +4621,8 @@ margin-bottom: 0px !important;
   display:none;
 }
 
-.customers, .main-title h1 {
-  font-size: 18px !important;
+.customers, .main-title h1, .blue-color {
+  font-size: 20px !important;
 }
 
 .bg_goal:before {
@@ -4606,6 +4649,14 @@ margin-bottom: 0px !important;
 }
 
 @media (max-width:576px) {
+
+
+  .paginationWrapper ul li a {
+    font-size: 13px;
+  }
+  .paginationWrapper ul{
+    margin-left: auto;
+  }
   img.logo{
     width: 136px !important;
   }
@@ -4634,6 +4685,7 @@ margin-bottom: 0px !important;
 .sidebar_main .toggle-img {
   margin: unset;
   width: 44px;
+  height: 44px;
 }
 
 .sidebar_main .left_sidebar .main-top {
@@ -4794,4 +4846,15 @@ input.mr-2.radio {
 .sub_ulbx {
   list-style: none;
   margin: 10px 0px;
+}
+
+.hide_checksbox .react-datepicker__input-container{
+  margin-bottom: 24px;
+}
+.reversebx .ulable, .rise{
+  font-size: 32px;
+}
+
+.change_passwordbx {
+  margin: 80px 0px !important;
 }

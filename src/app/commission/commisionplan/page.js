@@ -206,7 +206,8 @@ export default function Commissions() {
                     <div class="tab-content" id="myTabContent">
                       {/* first tab start */}
                       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <table className='table table-striped  '>
+                      <div className='table-responsive' >
+                      <table className='table table-striped  '>
                           <thead>
                             <tr>
                               <th></th>
@@ -275,6 +276,7 @@ export default function Commissions() {
                           </tbody>
                         </table>
                         {pendingData?.data?.length <= 0 && <div className='py-3 text-center'>No Data Found</div>}
+                      </div>
                       </div>
                       {/* second tab start */}
                       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

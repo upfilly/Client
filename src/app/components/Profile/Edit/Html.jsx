@@ -95,7 +95,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
               </div>
               <div className='card-body'>
                 <div className='row'>
-                  <div className='col-12 col-sm-12 col-md-3 col-lg-3'>
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-3'>
                     <div className='profile-edit-sec '>
                       <div className='user-profile-edit '>
                         <div className='text-center mb-3'>
@@ -129,7 +129,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                     </div>
                   </div>
 
-                  <div className='col-12 col-sm-12 col-md-9 col-lg-9'>
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-9'>
                     <div className='edit-user-details'>
 
                       <div className='row'>
@@ -164,7 +164,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                         <div className="col-12 col-sm-12 col-md-6 form-group">
                           <label>Mobile No<span className='star'>*</span></label>
                           <div className='w-100'>
-                            <div className="phoneInput w-100">
+                            <div className="phoneInput w-100 ">
                               <div className='dailCode phn-code'>
                                 <PhoneInput
                                   international
@@ -210,7 +210,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                           </div>
                         </div>
 
-                        <div className="col-12 form-group">
+                        <div className=" col-12 col-sm-12 col-md-6  form-group">
                           <label>Description</label>
                           {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                             onEditorChange={(newValue, editor) => {
@@ -262,7 +262,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
             <div className='mt-4 mb-3'>
               <div className='row'>
                 <div className='col-12 col-sm-12 col-md-8 col-lg-8'>
-                  <div className='card'>
+                  <div className='card mb-4'>
                     <div className='card-header'>
                       <div className='main_title_head'>
                         <h3>User Information</h3>
@@ -271,29 +271,39 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                     <div className='card-body'>
                       <div className='row'>
                       <div className='col-12 col-sm-12 col-md-6'>
+                      <div className="mb-3">
                       <label htmlFor="category">Category:</label>
                         <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
                           <option value="">Select a category</option>
                           {category?.map(category => (
                             <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
                           ))}
-                        </select></div>
+                        </select>
+                      </div>
+                        </div>
                         <div className='col-12 col-sm-12 col-md-6'>
                         <label htmlFor="subcategory">Subcategory:</label>
-                        <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
+                       <div className="mb-3">
+                       <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
                           <option value="">Select a subcategory</option>
                           {selectedCategory && category.find(cat => cat._id === selectedCategory).subCategories.map(subcategory => (
                             <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                           ))}
-                        </select></div>
+                        </select>
+                       </div>
+                       </div>
                         <div className='col-12 col-sm-12 col-md-6'>
-                        <label htmlFor="subsubcategory">Sub-subcategory:</label>
+                       <div className="mb-3">
+                       <label htmlFor="subsubcategory">Sub-subcategory:</label>
                         <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
                           <option value="">Select a sub-subcategory</option>
                           {selectedSubcategory && category.find(cat => cat._id === selectedCategory).subCategories.find(subcat => subcat.id || subcat?._id === selectedSubcategory).subchildcategory.map(subsubcat => (
                             <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
                           ))}
-                        </select></div>
+                        </select>
+                       </div>
+                       
+                       </div>
                         {/* <div className='col-12 col-sm-12 col-md-6'>
                           <div className='form-group'>
                             <div className="select_drop ">
@@ -336,7 +346,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
 
 
 
-                        {<><> <div className="col-md-6">
+                        {<><> <div className="col-12 col-sm-12 col-md-6 ">
 
                           <div className="form-group">
                             <label>Location</label>
@@ -380,12 +390,12 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             </div>
 
                           </div>
-                        </div></><div className='col-md-6'>
+                        </div></><div className='col-12 col-sm-12 col-md-6 '>
                             <div class="form-group">
                               <label className='label-set'>Country  </label>
                               <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                             </div>
-                          </div><div className='col-md-3 p-0'>
+                          </div><div className='col-md-3 '>
                             <div class="form-group">
                               <label className='label-set'>City  </label>
                               <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
@@ -400,7 +410,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                         }
 
 
-                        {<div className="col-md-6">
+                        {<div className="col-12 col-sm-12 col-md-6 ">
                           <div className='form-group'>
                             <label>website</label>
                             <input
@@ -414,7 +424,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                           </div>
                         </div>}
 
-                        <div className="col-md-6">
+                        <div className="col-12 col-sm-12 col-md-6 ">
                           <div className='form-group'>
                             <label>Gender<span className="star">*</span></label>
                             <div className="select_row">
@@ -484,9 +494,9 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                       </div>
                     </div>
                     <div className='card-body'>
-                      {<div className="col-md-12">
-                        <div className="form-group">
-                          <div className="row">
+                      {
+                        
+                          <div className="row mx-auto">
 
                             {data?.map((item) => (
                               <div key={item?.id} className=" col-12 col-sm-12 col-md-12 p-0 mb-3">
@@ -541,8 +551,8 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                                 </div>
                               </div>
                             ))}
-                          </div></div>
-                      </div>
+                          </div>
+                      
                       }
                     </div>
                   </div>
@@ -563,7 +573,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                           <div className='card-body'>
                         
                         <div className='row '>
-                          {/* <div className='col-md-6'>
+                          {/* <div className='col-12 col-sm-12 col-md-6 '>
 
                             <div className='form-group'>
                               <p className='mb-0'><label className='label-set'>Auto Invoicing <img className='sad-img' src='/assets/img/information-button.png' alt=''></img></label></p>
@@ -577,7 +587,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
 
 
                           </div>
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
 
 
                             <div className='form-group'>
@@ -592,7 +602,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                           </div> */}
                         </div>
                         <div className='row  '>
-                          {/* <div className='col-md-6'>
+                          {/* <div className='col-12 col-sm-12 col-md-6 '>
                             <div class="form-group">
                               <label className='label-set' >Payment Method  </label>
                               <select class="form-select " aria-label="Default select example" name='payment_method' value={formData?.payment_method}
@@ -604,7 +614,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && !formData?.payment_method ? <div className="invalid-feedback d-block">Payment method is Required</div> : <></>}
                             </div>
                           </div> */}
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
                             <div className='form-group'>
                               <p className='mb-0'><label className='label-set'>Account Holder Name </label></p>
                               <input
@@ -616,7 +626,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && !formData?.accountholder_name ? <div className="invalid-feedback d-block">Account Holder Name is Required</div> : <></>}
                             </div>
                           </div>
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
                             <div className='form-group'>
                               <p className='mb-0'><label className='label-set'>Company Name </label></p>
                               <input
@@ -629,7 +639,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && !formData?.company_name ? <div className="invalid-feedback d-block">Company Name is Required</div> : <></>}
                             </div>
                           </div>
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
 
 
                             <div className='form-group'>
@@ -644,7 +654,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && formData?.account_number?.length < 12 ? <div className="invalid-feedback d-block">Account Number is must be 12 digit</div> : <></>}
                             </div>
                           </div>
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
 
 
                             <div className='form-group'>
@@ -659,7 +669,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && formData?.routing_number?.length < 9  ? <div className="invalid-feedback d-block">Routing Number is must be 9 digit</div> : <></>}
                             </div>
                           </div>
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
 
 
                             <div className='form-group'>
@@ -674,7 +684,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && formData?.ssn_number?.length < 9 ? <div className="invalid-feedback d-block">SSN Number is must be 9 digit</div> : <></>}
                             </div>
                           </div>
-                          {/* <div className='col-md-6'>
+                          {/* <div className='col-12 col-sm-12 col-md-6 '>
                             <div className='form-group rect-cust-width'>
                               <label className='label-set'>Date of Birth:</label>
                               <p>
@@ -694,7 +704,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             </div>
                           </div> */}
 
-                          {/* <div className='col-md-6 ml-1'>
+                          {/* <div className='col-12 col-sm-12 col-md-6  ml-1'>
                             <div class="form-group">
                               <label className='label-set' >Tax Details <img className='sad-img' src='/assets/img/information-button.png' alt=''></img> </label>
                               <input type="text" className="form-control " id="tax_detail" name="tax_detail" value={formData?.tax_detail}
@@ -764,7 +774,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
          
 
             <div className='mt-4 btn-discards'>
-              <div className="col-md-12 p-0 text-left mt-3   edit-btns">
+              <div className="text-end edit-btns">
                 <Link href="/profile" className="btn btn-primary edit ">
                   Discard
                 </Link>

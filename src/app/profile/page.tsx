@@ -41,9 +41,9 @@ const Profile = () => {
 
       <div className='container pprofile1  edit-profile-page' >
         <div className='row'>
-          <div className='col-lg-8 mx-auto  '>
+          <div className='col-12 col-sm-12 col-md-12  col-lg-10 mx-auto  '>
             <div className='card  profile-card ' >
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center flex-wrap ">
                 <div className='main_title_head'>
                   <h3 className=''>Basic Information </h3>
                 </div>
@@ -62,7 +62,7 @@ const Profile = () => {
               </div>
               <hr />
               <div className="form-row mx-auto row">
-                <div className="col-md-12  inputFlexs  mb-2">
+                <div className="col-md-12 ">
                   {/* <label>Image</label> */}
 
                   <div className="profileImageLabel">
@@ -71,7 +71,7 @@ const Profile = () => {
 
 
                 </div>
-                <div className="col-md-6">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                   <div className=' inputFlexs width400'>
                     <label>Name:</label>
                     <div>
@@ -81,7 +81,7 @@ const Profile = () => {
 
                 </div>
 
-                <div className="col-md-6 ">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400'>
                     <label>Email:</label>
                     <div>
@@ -91,7 +91,8 @@ const Profile = () => {
 
                 </div>
 
-                {data?.category_name && <div className="col-md-6 ">
+                {data?.category_name &&
+                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400'>
                     <label>Category Name:</label>
                     <div>
@@ -101,7 +102,8 @@ const Profile = () => {
 
                 </div>}
 
-                {data?.parter_manager_name && <div className="col-md-6 ">
+                {data?.parter_manager_name &&
+                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400'>
                     <label>Parter Manager Name:</label>
                     <div>
@@ -111,7 +113,8 @@ const Profile = () => {
 
                 </div>}
 
-                {data?.account_executive_name && <div className="col-md-6 ">
+                {data?.account_executive_name && 
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400'>
                     <label>Account Executive Name:</label>
                     <div>
@@ -122,7 +125,8 @@ const Profile = () => {
                 </div>}
 
 
-                {data?.affiliate_group_name && <div className="col-md-6 ">
+                {data?.affiliate_group_name &&
+                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400'>
                     <label>Affiliate Group:</label>
                     <div>
@@ -132,7 +136,8 @@ const Profile = () => {
 
                 </div>}
 
-                {data?.address && <div className="col-md-6 inputFlexs">
+                {data?.address && 
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6  inputFlexs">
                   <div className='inputFlexs width400'>
                     <label >Address:</label>
                     <p className="profile_data">{data && data?.address}</p>
@@ -141,7 +146,8 @@ const Profile = () => {
 
 
 
-                {data?.address2 && <div className="col-md-6 ">
+                {data?.address2 && 
+                <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                   <div className='inputFlexs width400'>
                     <label>Address 2:</label>
                     <div>
@@ -152,7 +158,8 @@ const Profile = () => {
                 </div>}
 
 
-                {data?.dialCode && data?.mobileNo && <div className="col-md-6">
+                {data?.dialCode && data?.mobileNo &&
+                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400' >
                     <label>Mobile No</label>
                     <div>
@@ -161,7 +168,8 @@ const Profile = () => {
                   </div>
                 </div>}
 
-                {data?.cellDialCode && data?.work_phone && <div className="col-md-6">
+                {data?.cellDialCode && data?.work_phone &&
+                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400' >
                     <label>Work No</label>
                     <div>
@@ -170,7 +178,7 @@ const Profile = () => {
                   </div>
                 </div>}
 
-                {data?.brand_name && data?.mobileNo && <div className="col-md-6">
+                {data?.brand_name && data?.mobileNo && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400' >
                     <label>Brand Name</label>
                     <div>
@@ -179,7 +187,7 @@ const Profile = () => {
                   </div>
                 </div>}
 
-                {data?.language && <div className="col-md-6">
+                {data?.language && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400' >
                     <label>Language</label>
                     <div>
@@ -188,7 +196,7 @@ const Profile = () => {
                   </div>
                 </div>}
 
-                {data?.reffering_affiliate && <div className="col-md-6 ">
+                {data?.reffering_affiliate && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                   <div className='inputFlexs width400'>
                     <label>Brand Email:</label>
                     <div>
@@ -203,7 +211,7 @@ const Profile = () => {
                   <>
 
 
-                    {data?.social_media_platforms?.length > 0 && <div className="col-md-6 ">
+                    {data?.social_media_platforms?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                       <div className='inputFlexs width400'>
                         <label >Social Media</label>
                         <div className='d-flex wraps'>
@@ -215,7 +223,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.tags?.length > 0 && <div className="col-md-6">
+                    {data?.tags?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400'>
                         <label >Tags:</label>
                         <div className='d-flex wraps'>
@@ -235,7 +243,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {/* {data?.tax_detail && <div className="col-md-6">
+                    {/* {data?.tax_detail && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Tax Detail</label>
                         <div>
@@ -244,7 +252,7 @@ const Profile = () => {
                       </div>
                     </div>} */}
 
-                    {data?.default_invoice_setting && <div className="col-md-6">
+                    {data?.default_invoice_setting && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Default Invoice </label>
                         <div>
@@ -253,7 +261,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.accountholder_name && <div className="col-md-6">
+                    {data?.accountholder_name && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Account Holdername</label>
                         <div>
@@ -262,7 +270,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.routing_number && <div className="col-md-6">
+                    {data?.routing_number && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Routing Number</label>
                         <div>
@@ -271,7 +279,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.account_number && <div className="col-md-6">
+                    {data?.account_number && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Account Number</label>
                         <div>
@@ -280,7 +288,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.ssn_number && <div className="col-md-6">
+                    {data?.ssn_number && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>SSN Number</label>
                         <div>
@@ -289,7 +297,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.company_name && <div className="col-md-6">
+                    {data?.company_name && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Company Name</label>
                         <div>
@@ -298,7 +306,7 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {data?.payment_method && <div className="col-md-6">
+                    {data?.payment_method && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                       <div className='inputFlexs width400' >
                         <label>Payment Method</label>
                         <div>
@@ -338,7 +346,7 @@ const Profile = () => {
                       <div className="row mt-2">
 
                         {data?.instagram_username && data?.instagram_profile_link &&
-                          <div className="col-md-6 ">
+                          <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                             <div className='d-flex inputFlexs social-media-links '>
                               <i className=" mr-1" aria-hidden="true"><img src="/assets/img/instagram.png" /> </i>
                               <div className='ml-1'>
@@ -357,7 +365,7 @@ const Profile = () => {
 
 
                         {data?.linkedin_username && data?.linkedin_profile_link &&
-                          <div className="col-md-6 ">
+                          <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                             <div className='d-flex inputFlexs social-media-links'>
                               <i className=" mr-1" aria-hidden="true"><img src="/assets/img/linkedin.png" /> </i>
                               <div className='ml-1'>
@@ -376,7 +384,7 @@ const Profile = () => {
 
 
                         {data?.twitter_username && data?.twitter_profile_link &&
-                          <div className="col-md-6 ">
+                          <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                             <div className='d-flex inputFlexs social-media-links'>
                               <i className=" mr-1" aria-hidden="true"><img src="/assets/img/twitter.png" /> </i>
                               <div className='ml-1'>
@@ -395,7 +403,7 @@ const Profile = () => {
 
 
                         {data?.youtube_username && data?.youtube_profile_link &&
-                          <div className="col-md-6 ">
+                          <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                             <div className='d-flex inputFlexs social-media-links'>
                               <i className=" mr-1" aria-hidden="true"><img src="/assets/img/youtub.png" /> </i>
                               <div className='ml-1'>

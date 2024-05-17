@@ -236,14 +236,14 @@ export default function affilate() {
                 </table>
                 {loaging ? <div className="text-center py-4">
                   <img src="/assets/img/loader.gif" className="pageLoader" />
-                </div> : <></>}
-
+                </div> : <></>} 
+                {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
               </div>
               </div>
             </div>
           </div>
 
-          {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
+         
        </div>
 
         </div>
