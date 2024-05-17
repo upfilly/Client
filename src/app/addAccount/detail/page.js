@@ -69,17 +69,17 @@ export default function addAffiliateAccount() {
     })
   }
 
-  useEffect(() => {
-    if (user && user?.role == 'affiliate' && !user?.account_id && !user?.tax_detail) {
-      setTaxDetailTabEnabled(false)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (user && user?.role == 'affiliate' && !user?.account_id && !user?.tax_detail) {
+  //     setTaxDetailTabEnabled(false)
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (user && user?.role == 'affiliate' &&  !user?.tax_detail && user?.account_id) {
-      setTaxDetailTabEnabled(true)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (user && user?.role == 'affiliate' &&  !user?.tax_detail && user?.account_id) {
+  //     setTaxDetailTabEnabled(true)
+  //   }
+  // }, [])
 
   const handleSubmit = (e) => {
 
@@ -107,6 +107,8 @@ export default function addAffiliateAccount() {
       ...form
     }
 
+    delete payload?.baseImg
+
     if(payload?.tax_classification == 'business'){
       delete payload?.tax_name,
       delete payload?.social_security_number
@@ -121,7 +123,7 @@ export default function addAffiliateAccount() {
       if (res.success) {
         let uUser = { ...user, tax_detail:{...payload} }
         crendentialModel.setUser(uUser)
-        router.push("/profile")
+        router.push("/dashboard")
         toast.success('Tax Detail Added Sccessfully ...')
         // router.push(`/`)
       }
@@ -133,12 +135,12 @@ export default function addAffiliateAccount() {
     setAddress(newAddress);
   };
 
-  useEffect(() => {
-    toast.error('Please add your account and tax detail first... ')
-    setTimeout(() => {
-      setStateAutocomplete(false)
-    }, 2000);
-  }, [])
+  // useEffect(() => {
+  //   toast.error('Please add your account and tax detail first... ')
+  //   setTimeout(() => {
+  //     setStateAutocomplete(false)
+  //   }, 2000);
+  // }, [])
 
   const handleSelect = async (selectedAddress) => {
     try {
@@ -388,14 +390,14 @@ export default function addAffiliateAccount() {
             <div className='row'>
               <div className='col-lg-12'>
                 <ul class="nav accout_details nav-pills mb-3" id="pills-tab" role="tablist">
-                  <li class="nav-item" role="presentation">
+                  {/* <li class="nav-item" role="presentation">
                     <button class={`nav-link nb_link ${taxDetailTabEnabled ? 'disabled' : 'active'}`} id="account_details" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account Detail</button>
-                  </li>
+                  </li> */}
                   <li class="nav-item" role="presentation">
-                    <button class={`nav-link nb_link ${taxDetailTabEnabled ? 'active' : 'disabled'}`} id="text_details" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" disabled={!taxDetailTabEnabled}>Tax Detail</button>   </li>
+                    <button class={`nav-link nb_link ${!taxDetailTabEnabled ? 'active' : 'disabled'}`} id="text_details" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" disabled={!taxDetailTabEnabled}>Tax Detail</button>   </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-                  <div class={`tab-pane fade ${taxDetailTabEnabled ? '' : 'show active'}`} id="pills-home" role="tabpanel" aria-labelledby="account_details" tabindex="0">
+                  <div class={`tab-pane fade ${!taxDetailTabEnabled ? '' : 'show active'}`} id="pills-home" role="tabpanel" aria-labelledby="account_details" tabindex="0">
                     <div className='card'>
                       <div className='card-body account_body '>
 
@@ -707,7 +709,7 @@ export default function addAffiliateAccount() {
                       </div>
                     </div>
                   </div>
-                  <div class={`tab-pane fade ${!taxDetailTabEnabled ? '' : 'show active'}`} id="pills-profile" role="tabpanel" aria-labelledby="text_details" tabindex="0">
+                  <div class={`tab-pane fade ${taxDetailTabEnabled ? '' : 'show active'}`} id="pills-profile" role="tabpanel" aria-labelledby="text_details" tabindex="0">
 
                     <div className='tx_detailsbx '>
                     <div class="dtls_head"><h3>Tax Detail  </h3></div>
