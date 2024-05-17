@@ -319,7 +319,7 @@ gap: 12px;
 }
 
 .filter_modal .btn-outline-secondary:hover {
-  color: #fff;
+  color: #fff !important;
   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
   border-color: unset;
 }
@@ -351,9 +351,9 @@ gap: 12px;
 .filter_modal .accordion-body {
   padding-left: 5px;
 }
-.filter_modal  .modal-content {
-  height: 100vh;
-}
+// .filter_modal  .modal-content {
+//   height: 100vh;
+// }
 .filter_modal .modal-header {
   border-bottom: 1px solid #000;
 }

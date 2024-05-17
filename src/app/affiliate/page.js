@@ -358,8 +358,8 @@ export default function affilate() {
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-                      <div class="accordion" id="accordionExample">
+<div  className='height_fixed'>
+<div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                           <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
@@ -501,6 +501,8 @@ export default function affilate() {
 
 
                       </div>
+</div>
+                     
 
                     </div>
                     <div class="modal-footer gap-3">
