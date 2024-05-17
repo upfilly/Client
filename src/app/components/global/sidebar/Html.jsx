@@ -10,7 +10,8 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
         <img src="/assets/img/cross.svg" onClick={() => setActiveSidebar(!activeSidebar)} className="cross-hide" />
       </div>
 
-      <div className="main-top">
+     <div className="top_scrollbx">
+     <div className="main-top">
         {urlAllow('dashboard') ? <>
           <ListItemLink to="/dashboard" data-bs-toggle="tooltip" data-bs-placement="top" title="Dashboard">
 
@@ -218,7 +219,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <i class="material-icons  svg_iconbx">list_alt</i>
           <span className="side_head">Change Plan</span>
         </ListItemLink>}
-      </div></div>
+      </div>
+     </div>
+      
+      </div>
   );
 }
 

@@ -164,8 +164,8 @@ export default function MarketPlace() {
         <section className="p-80">
           <div className="container">
             <div className="row">
-              <div className="col-12 col-md-3">
-                <div className="filters_data_list">
+              <div className="col-12 col-sm-12 col-md-6 col-lg-4 ">
+                <div className="filters_data_list mb-4">
                   <div className="categories-container">
                     <h5 className="mb-4">Category</h5>
                     {category.map((itm: any) => {
@@ -180,7 +180,7 @@ export default function MarketPlace() {
                           </div>
                           {itm?.subCategories?.map((data: any) => {
                             return (
-                              <div className={!isOpenCategory ? "show_checksbox mb-4" : "hide_checksbox mb-4"} key={data._id}>
+                              <div className={!isOpenCategory ? "show_checksbox " : "hide_checksbox "} key={data._id}>
                                 <div className="d-flex align-items-center gap-2 mb-2">
                                   <label className="container_checks m-0">
                                     <input
@@ -215,7 +215,7 @@ export default function MarketPlace() {
                         <p className="mb-2"><i className="fa fa-angle-down"></i></p>
                       </div>
 
-                      <div className={Datefilter ? "show_checksbox mb-4" : "hide_checksbox mb-4"}>
+                      <div className={Datefilter ? "show_checksbox " : "hide_checksbox"}>
                         <DatePicker
                           showIcon
                           className="dateselect"
@@ -244,7 +244,7 @@ export default function MarketPlace() {
                         <p className="mb-2"><i className="fa fa-angle-down"></i></p>
                       </div>
 
-                      <div className={PlacementSate ? "show_checksbox mb-4" : "hide_checksbox mb-4"}>
+                      <div className={PlacementSate ? "show_checksbox" : "hide_checksbox"}>
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -275,7 +275,7 @@ export default function MarketPlace() {
                         <p className="mb-2"><i className="fa fa-angle-down"></i></p>
                       </div>
 
-                      <div className={opportunitySate ? "show_checksbox mb-4" : "hide_checksbox mb-4"}>
+                      <div className={opportunitySate ? "show_checksbox " : "hide_checksbox"}>
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -307,16 +307,16 @@ export default function MarketPlace() {
                 </div>
               </div>
 
-              <div className="col-12 col-md-9">
+              <div className="col-12 col-sm-12 col-md-6 col-lg-8">
                 <div className="lists_marketplace">
-                  <div className="job-searchbar mb-6">
+                  <div className="job-searchbar gap-4 flex-wrap">
                     <h4 className="mb-0">{total} Results Found</h4>
                     <form>
                       <div className="row">
                         <div className="col-md-12">
                           <div className="d-flex jobs_child-flex">
                             <input value={filters.search} onKeyPress={handleKeyPress} onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })} className="form-control me-3" type="text" placeholder="Search Here" />
-                            <button className="btn-primary btn-sm" onClick={(e) => filter(e)}> Search</button>
+                            <button className=" btn btn-primary" onClick={(e) => filter(e)}> Search</button>
                            { filters?.search && <button className="btn-secondary btn-sm ml-3" onClick={(e) => reset()}> Reset</button>}
                           </div>
                         </div>
@@ -335,7 +335,8 @@ export default function MarketPlace() {
                     </div>
 
                     <div className="row">
-                      {!loaging  && data.map((data: any, index: any) => <div className="col-12 col-md-6" >
+                      {!loaging  && data.map((data: any, index: any) =>
+                         <div className="col-12 col-sm-12 col-md-12 col-lg-6" >
                         <div className="showngmkt lists_mkt">
 
                           <div className="grid_lists_mkt ">
@@ -381,7 +382,19 @@ export default function MarketPlace() {
                     </div>
                     {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
 
-                    <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+                  
+
+                    {loaging ? <div className="text-center py-4">
+                      <img src="/assets/img/loader.gif" className="pageLoader" />
+                    </div> : <></>}
+                  </div>
+
+                </div>
+              </div>
+
+
+            </div>
+            <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                       <span>Show {data?.length} from {total} Offers</span>
                       <ReactPaginate
                         breakLabel="..."
@@ -396,17 +409,6 @@ export default function MarketPlace() {
                         activeClassName={"pagination-item-active"}
                       />
                     </div>
-
-                    {loaging ? <div className="text-center py-4">
-                      <img src="/assets/img/loader.gif" className="pageLoader" />
-                    </div> : <></>}
-                  </div>
-
-                </div>
-              </div>
-
-
-            </div>
           </div>
           <OfferFormModal getProductData={getData} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} id={id} affiliateName={affiliateName} />
         </section>

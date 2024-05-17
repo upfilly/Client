@@ -171,10 +171,10 @@ export default function Commissions() {
                       <div className='manin_innertabs'>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
+                            <a class="nav-link navtaabs active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
+                            <a class="nav-link navtaabs" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
                           </li>
                           {/* <li class="nav-item">
                             <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">All Commissions</a>
@@ -206,7 +206,8 @@ export default function Commissions() {
                     <div class="tab-content" id="myTabContent">
                       {/* first tab start */}
                       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <table className='table table-striped  '>
+                      <div className='table-responsive' >
+                      <table className='table table-striped  '>
                           <thead>
                             <tr>
                               <th></th>
@@ -275,6 +276,7 @@ export default function Commissions() {
                           </tbody>
                         </table>
                         {pendingData?.data?.length <= 0 && <div className='py-3 text-center'>No Data Found</div>}
+                      </div>
                       </div>
                       {/* second tab start */}
                       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

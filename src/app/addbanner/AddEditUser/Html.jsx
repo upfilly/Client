@@ -106,44 +106,10 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     />
                                     {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
                                 </div>
-
-                                <div className="col-md-12 mb-3">
-                                    <label>Description</label>
-                                    {affiliateData && <DynamicReactQuill
-                                        theme="snow"
-                                        value={form?.description ? form?.description : ''}
-
-                                        onChange={(newValue, editor) => {
-                                            setform({ ...form, description: newValue })
-                                        }}
-                                        className='tuncketcls'
-                                        modules={{
-                                            toolbar: [
-                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                                [{ size: [] }],
-                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                                { 'indent': '-1' }, { 'indent': '+1' }],
-                                                ['link', 'image', 'video'],
-                                                ['clean']
-                                            ],
-                                        }}
-                                        formats={[
-                                            'header', 'font', 'size',
-                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                            'list', 'bullet', 'indent',
-                                            'link', 'image', 'video'
-                                        ]}
-                                        bounds={'.app'}
-                                    />}
-                                </div>
-
-                                <div className="col-md-6 mt-3">
-                                    <label className='lablefontcls'>Image</label><br></br>
-                                    <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
-                                </div>
-
-                                <div className="form-check">
+<div className="col-md-6 mb-3 ">
+<label>Select</label>
+<div className="select_check">
+<div className="form-check">
                                     <input
                                         type="checkbox"
                                         className="form-check-input mr-4"
@@ -193,6 +159,45 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         Mobile Creative
                                     </label>
                                 </div>
+</div>
+</div>
+                                <div className="col-md-12 mb-3">
+                                    <label>Description</label>
+                                    {affiliateData && <DynamicReactQuill
+                                        theme="snow"
+                                        value={form?.description ? form?.description : ''}
+
+                                        onChange={(newValue, editor) => {
+                                            setform({ ...form, description: newValue })
+                                        }}
+                                        className='tuncketcls'
+                                        modules={{
+                                            toolbar: [
+                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                                [{ size: [] }],
+                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                                { 'indent': '-1' }, { 'indent': '+1' }],
+                                                ['link', 'image', 'video'],
+                                                ['clean']
+                                            ],
+                                        }}
+                                        formats={[
+                                            'header', 'font', 'size',
+                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                            'list', 'bullet', 'indent',
+                                            'link', 'image', 'video'
+                                        ]}
+                                        bounds={'.app'}
+                                    />}
+                                </div>
+
+                                <div className="col-md-6 mt-3">
+                                    <label className='lablefontcls'>Image</label><br></br>
+                                    <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
+                                </div>
+
+                               
 
                             </div>
 

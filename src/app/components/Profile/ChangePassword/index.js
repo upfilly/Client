@@ -39,10 +39,12 @@ const ChangePassword = p => {
 
   return (
     <>
-      <div className='row'>
-        <div className='col-lg-9 mx-auto mb-4 mt-4'>
+<section className='change_passwordbx' >
+  <div className='container'>
+  <div className='row'>
+        <div className='col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto'>
           <form
-            className="pprofile1 shadow mb-4 mt-4 form-row py-3 w-50 mx-auto "
+            className="pprofile1 shadow  "
             onSubmit={handleSubmit}
           >
             <div className="col-md-12 mb-3">
@@ -114,6 +116,8 @@ const ChangePassword = p => {
           </form>
         </div>
       </div>
+  </div>
+</section>
     </>
   );
 };

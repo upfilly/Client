@@ -88,8 +88,8 @@ const Html = ({
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Invites" filters={filters}>
             <div className='sidebar-left-content'>
-                <div className="d-flex justify-content-between align-items-center">
-                    <div className='d-flex align-items-center gap-2'>
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 ">
+                    <div className='d-flex align-items-center flex-wrap gap-2'>
                     <SelectDropdown
                         id="statusDropdown"
                         displayValue="name"
@@ -189,10 +189,11 @@ const Html = ({
         }
     </tbody>
 </table>
+{!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
 </div>
                 </div>
 
-                {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
+               
 
                 <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                     <span>Show {data?.length} from {total} Users</span>

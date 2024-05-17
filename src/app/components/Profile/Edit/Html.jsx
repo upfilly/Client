@@ -114,7 +114,7 @@ const Html = ({ user,
               </div>
               <div className='card-body'>
                 <div className='row'>
-                  <div className='col-12 col-sm-12 col-md-3 col-lg-3'>
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-3'>
                     <div className='profile-edit-sec '>
                       <div className='user-profile-edit '>
                         <div className='text-center mb-3'>
@@ -148,7 +148,7 @@ const Html = ({ user,
                     </div>
                   </div>
 
-                  <div className='col-12 col-sm-12 col-md-9 col-lg-9'>
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-9'>
                     <div className='edit-user-details'>
 
                       <div className='row'>
@@ -183,7 +183,7 @@ const Html = ({ user,
                         <div className="col-12 col-sm-12 col-md-6 form-group">
                           <label>Mobile No<span className='star'>*</span></label>
                           <div className='w-100'>
-                            <div className="phoneInput w-100">
+                            <div className="phoneInput w-100 ">
                               <div className='dailCode phn-code'>
                                 <PhoneInput
                                   international
@@ -229,7 +229,7 @@ const Html = ({ user,
                           </div>
                         </div>
 
-                        <div className="col-12 form-group">
+                        <div className=" col-12 col-sm-12 col-md-6  form-group">
                           <label>Description</label>
                           {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                             onEditorChange={(newValue, editor) => {
@@ -281,7 +281,7 @@ const Html = ({ user,
             <div className='mt-4 mb-3'>
               <div className='row'>
                 <div className='col-12 col-sm-12 col-md-8 col-lg-8'>
-                  <div className='card'>
+                  <div className='card mb-4'>
                     <div className='card-header'>
                       <div className='main_title_head'>
                         <h3>User Information</h3>
@@ -415,12 +415,12 @@ const Html = ({ user,
                             </div>
 
                           </div>
-                        </div></><div className='col-md-6'>
+                        </div></><div className='col-12 col-sm-12 col-md-6 '>
                             <div class="form-group">
                               <label className='label-set'>Country  </label>
                               <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                             </div>
-                          </div><div className='col-md-3 p-0'>
+                          </div><div className='col-md-3 '>
                             <div class="form-group">
                               <label className='label-set'>City  </label>
                               <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
@@ -447,7 +447,7 @@ const Html = ({ user,
                           </div>
                         </div>}
 
-                        <div className="col-md-6">
+                        <div className="col-12 col-sm-12 col-md-6 ">
                           <div className='form-group'>
                             <label>Gender<span className="star">*</span></label>
                             <div className="select_row">
@@ -513,9 +513,9 @@ const Html = ({ user,
                       </div>
                     </div>
                     <div className='card-body'>
-                      {<div className="col-md-12">
-                        <div className="form-group">
-                          <div className="row">
+                      {
+                        
+                          <div className="row mx-auto">
 
                             {data?.map((item) => (
                               <div key={item?.id} className=" col-12 col-sm-12 col-md-12 p-0 mb-3">
@@ -570,8 +570,8 @@ const Html = ({ user,
                                 </div>
                               </div>
                             ))}
-                          </div></div>
-                      </div>
+                          </div>
+                      
                       }
                     </div>
                   </div>
@@ -602,7 +602,7 @@ const Html = ({ user,
 
 
                           </div>
-                          <div className='col-md-6'>
+                          <div className='col-12 col-sm-12 col-md-6 '>
 
 
                             <div className='form-group'>
@@ -787,7 +787,7 @@ const Html = ({ user,
 
 
             <div className='mt-4 btn-discards'>
-              <div className="col-md-12 p-0 text-left mt-3   edit-btns">
+              <div className="text-end edit-btns">
                 <Link href="/profile" className="btn btn-primary edit ">
                   Discard
                 </Link>
