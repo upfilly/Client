@@ -61,14 +61,14 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                     />
                                     {submitted && !form?.group_name ? <div className="invalid-feedback d-block">Group name is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Commision<span className="star">*</span></label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={form?.commision}
                                         onChange={e => setform({ ...form, commision: e.target.value })}
-                                    />
+                                    /> */}
                                     {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.commision ? form?.commision : ''} className='tuncketcls'
                                         onEditorChange={(newValue, editor) => {
                                             setform({ ...form, commision: newValue })
@@ -79,9 +79,9 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                             height: 250,
                                         }}
                                     /> */}
-                                    {submitted && !form?.commision ? <div className="invalid-feedback d-block">Commision is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3 ml-3">
+                                    {/* {submitted && !form?.commision ? <div className="invalid-feedback d-block">Commision is Required</div> : <></>}
+                                </div> */}
+                                {/* <div className="col-md-6 mb-3 ml-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={form?.isDefaultAffiliateGroup} onChange={e => {
                                             setform({ ...form, isDefaultAffiliateGroup: !form.isDefaultAffiliateGroup })
@@ -91,7 +91,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                         }} />
                                         <label class="form-check-label" for="flexSwitchCheckChecked">Set Default Group</label>
                                     </div>
-                                </div>
+                                </div> */}
                                 {/* <div className="col-md-6 mb-3 ml-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={form?.isPreRegisterLeads} onChange={e => {

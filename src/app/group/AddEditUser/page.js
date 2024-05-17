@@ -14,8 +14,8 @@ const AddEditUser = () => {
     const [images, setImages] = useState({ image: '' });
     const defaultvalue = affilliateGrouptype
     const [form, setform] = useState({group_name: "",
-    commision:"",
-    isDefaultAffiliateGroup:false,
+    // commision:"",
+    // isDefaultAffiliateGroup:false,
     isArchive:false,isPreRegisterLeads:false})
     const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
     const [submitted, setSubmitted] = useState(false)
@@ -29,8 +29,8 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         setSubmitted(true)
-        let invalid = methodModel.getFormError(formValidation, form)
-        if (invalid) return
+        // let invalid = methodModel.getFormError(formValidation, form)
+        // if (form?.group_name) return
         let method = 'post'
         let url = 'affiliate-group'
         let value = {
