@@ -9,21 +9,40 @@ import SelectDropdown from '../../common/SelectDropdown';
 import 'react-datepicker/dist/react-datepicker.css';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
 import dynamic from 'next/dynamic';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureCheckbox, handleSubmit, setChangeSubCategory,
-  handleChange, handleSelect, address, changeSubCategory,formData,setFormData,dob, setDOB,handleDateChange,
-  form, getError, uploadImage, submitted, category, pageLoad ,setForm,
+const Html = ({ user,
+  picLoader,
+  selectedItems,
+  handleFeatureCheckbox,
+  handleSubmit,
+  setChangeSubCategory,
+  handleChange,
+  handleSelect,
+  address,
+  changeSubCategory,
+  formData,
+  setFormData,
+  form,
+  getError,
+  uploadImage,
+  submitted,
+  category,
+  setForm,
   handleCategoryChange,
   handleSubcategoryChange,
   selectedCategory,
   selectedSubcategory,
-  selectedSubSubcategory,handleSubsubcategoryChange }) => {
+  selectedSubSubcategory,
+  handleSubsubcategoryChange }) => {
   const [inputFocused, setInputFocused] = useState(false)
-
+  const categoryTypes = [
+    { id: 'promotional_models', name: 'Promotional Models' },
+    { id: 'property_types', name: 'Property Types' },
+    { id: 'advertiser_categories', name: 'Advertiser Categories' },
+  ]
   const data = ["youtube", "twitter", "instagram", "linkedin"]
 
   const pattern = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
@@ -51,11 +70,11 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (name === 'routing_number' && value.length > 9 ) {
+    if (name === 'routing_number' && value.length > 9) {
       return;
     }
 
-    if (name === 'account_number' && value.length > 12 ) {
+    if (name === 'account_number' && value.length > 12) {
       return;
     }
 
@@ -223,32 +242,32 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             }}
                           /> */}
                           <DynamicReactQuill
-                                        theme="snow"
-                                        value={form?.description ? form?.description : ''}
-                                       
-                                        onChange={(newValue, editor) => {
-                                            setForm({ ...form, description: newValue })
-                                        }}
-                                        className='tuncketcls'
-                                        modules={{
-                                            toolbar: [
-                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                                [{ size: [] }],
-                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                                { 'indent': '-1' }, { 'indent': '+1' }],
-                                                ['link', 'image', 'video'],
-                                                ['clean']
-                                            ],
-                                        }}
-                                        formats={[
-                                            'header', 'font', 'size',
-                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                            'list', 'bullet', 'indent',
-                                            'link', 'image', 'video'
-                                        ]}
-                                        bounds={'.app'}
-                                    />
+                            theme="snow"
+                            value={form?.description ? form?.description : ''}
+
+                            onChange={(newValue, editor) => {
+                              setForm({ ...form, description: newValue })
+                            }}
+                            className='tuncketcls'
+                            modules={{
+                              toolbar: [
+                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                [{ size: [] }],
+                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                { 'indent': '-1' }, { 'indent': '+1' }],
+                                ['link', 'image', 'video'],
+                                ['clean']
+                              ],
+                            }}
+                            formats={[
+                              'header', 'font', 'size',
+                              'bold', 'italic', 'underline', 'strike', 'blockquote',
+                              'list', 'bullet', 'indent',
+                              'link', 'image', 'video'
+                            ]}
+                            bounds={'.app'}
+                          />
                         </div>
 
                       </div>
@@ -270,30 +289,49 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                     </div>
                     <div className='card-body'>
                       <div className='row'>
-                      <div className='col-12 col-sm-12 col-md-6'>
-                      <label htmlFor="category">Category:</label>
-                        <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
-                          <option value="">Select a category</option>
-                          {category?.map(category => (
-                            <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
-                          ))}
-                        </select></div>
+                        {user?.role == 'affiliate' && <div className='col-12 col-sm-12 col-md-6'>
+                          <div className='form-group'>
+                            <div className="select_drop ">
+                              <label>Category Type</label>
+                              <div className="select_row">
+                                <SelectDropdown
+                                  id="statusDropdown"
+                                  displayValue="name"
+                                  placeholder="Select Type"
+                                  intialValue={form?.cat_type}
+                                  result={e => setForm({ ...form, cat_type: e.value })}
+                                  options={categoryTypes}
+                                />
+                              </div>
+                              {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
+
+                            </div>
+                          </div>
+                        </div>}
                         <div className='col-12 col-sm-12 col-md-6'>
-                        <label htmlFor="subcategory">Subcategory:</label>
-                        <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
-                          <option value="">Select a subcategory</option>
-                          {selectedCategory && category.find(cat => cat._id === selectedCategory).subCategories.map(subcategory => (
-                            <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
-                          ))}
-                        </select></div>
+                          <label htmlFor="category">Category:</label>
+                          <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
+                            <option value="">Select a category</option>
+                            {category?.map(category => (
+                              <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
+                            ))}
+                          </select></div>
                         <div className='col-12 col-sm-12 col-md-6'>
-                        <label htmlFor="subsubcategory">Sub-subcategory:</label>
-                        <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
-                          <option value="">Select a sub-subcategory</option>
-                          {selectedSubcategory && category.find(cat => cat._id === selectedCategory).subCategories.find(subcat => subcat.id || subcat?._id === selectedSubcategory).subchildcategory.map(subsubcat => (
-                            <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
-                          ))}
-                        </select></div>
+                          <label htmlFor="subcategory">Subcategory:</label>
+                          <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
+                            <option value="">Select a subcategory</option>
+                            {selectedCategory && category.find(cat => cat._id === selectedCategory).subCategories.map(subcategory => (
+                              <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
+                            ))}
+                          </select></div>
+                        <div className='col-12 col-sm-12 col-md-6'>
+                          <label htmlFor="subsubcategory">Sub-subcategory:</label>
+                          <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
+                            <option value="">Select a sub-subcategory</option>
+                            {selectedSubcategory && category.find(cat => cat._id === selectedCategory).subCategories.find(subcat => subcat.id || subcat?._id === selectedSubcategory).subchildcategory.map(subsubcat => (
+                              <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
+                            ))}
+                          </select></div>
                         {/* <div className='col-12 col-sm-12 col-md-6'>
                           <div className='form-group'>
                             <div className="select_drop ">
@@ -325,7 +363,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                                   placeholder="Select Type"
                                   intialValue={form?.affiliate_type}
                                   result={e => setForm({ ...form, affiliate_type: e.value })}
-                                  options={[{name:'Business',id:'business'},{name:'Individual',id:'individual'}]}
+                                  options={[{ name: 'Business', id: 'business' }, { name: 'Individual', id: 'individual' }]}
                                 />
                               </div>
                               {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
@@ -334,10 +372,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                           </div>
                         </div>}
 
-
-
                         {<><> <div className="col-md-6">
-
                           <div className="form-group">
                             <label>Location</label>
 
@@ -396,9 +431,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
                             </div>
                           </div></>
-
                         }
-
 
                         {<div className="col-md-6">
                           <div className='form-group'>
@@ -435,8 +468,6 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             {submitted && !form?.gender ? <div className="invalid-feedback d-block">Gender is Required</div> : <></>}
                           </div>
                         </div>
-
-
                         {
                           <div className='col-12 col-sm-12 col-md-12'>
                             <div className=" form-group">
@@ -469,8 +500,6 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             </div>
                           </div>
                         }
-
-
                       </div>
                     </div>
                   </div>
@@ -547,23 +576,19 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                     </div>
                   </div>
                 </div>
-
-
               </div>
-
-
               <div className='col-12 mt-4'>
-                   <div className='row'>
-                        <div className='card p-0'>
-                          <div className='card-header'>
-                          <div className='main_title_head'>
+                <div className='row'>
+                  <div className='card p-0'>
+                    <div className='card-header'>
+                      <div className='main_title_head'>
                         <h3>Add Your Account Detail</h3>
                       </div>
-                          </div>
-                          <div className='card-body'>
-                        
-                        <div className='row '>
-                          {/* <div className='col-md-6'>
+                    </div>
+                    <div className='card-body'>
+
+                      <div className='row '>
+                        {/* <div className='col-md-6'>
 
                             <div className='form-group'>
                               <p className='mb-0'><label className='label-set'>Auto Invoicing <img className='sad-img' src='/assets/img/information-button.png' alt=''></img></label></p>
@@ -590,9 +615,9 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                                 className="checkbox-custom d-block"></input>
                             </div>
                           </div> */}
-                        </div>
-                        <div className='row  '>
-                          {/* <div className='col-md-6'>
+                      </div>
+                      <div className='row  '>
+                        {/* <div className='col-md-6'>
                             <div class="form-group">
                               <label className='label-set' >Payment Method  </label>
                               <select class="form-select " aria-label="Default select example" name='payment_method' value={formData?.payment_method}
@@ -604,77 +629,75 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               {submitted && !formData?.payment_method ? <div className="invalid-feedback d-block">Payment method is Required</div> : <></>}
                             </div>
                           </div> */}
-                          <div className='col-md-6'>
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>Account Holder Name </label></p>
-                              <input
-                                value={formData?.accountholder_name}
-                                onChange={handleInputChange}
-                                name="accountholder_name"
-                                type="text"
-                                className="form-control "></input>
-                              {submitted && !formData?.accountholder_name ? <div className="invalid-feedback d-block">Account Holder Name is Required</div> : <></>}
-                            </div>
+                        <div className='col-md-6'>
+                          <div className='form-group'>
+                            <p className='mb-0'><label className='label-set'>Account Holder Name </label></p>
+                            <input
+                              value={formData?.accountholder_name}
+                              onChange={handleInputChange}
+                              name="accountholder_name"
+                              type="text"
+                              className="form-control "></input>
+                            {submitted && !formData?.accountholder_name ? <div className="invalid-feedback d-block">Account Holder Name is Required</div> : <></>}
                           </div>
-                          <div className='col-md-6'>
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>Company Name </label></p>
-                              <input
-                                value={formData?.company_name}
-                                onChange={handleInputChange}
-                                name="company_name"
-                                placeholder="Enter your Company Number"
-                                type="text"
-                                className="form-control "></input>
-                              {submitted && !formData?.company_name ? <div className="invalid-feedback d-block">Company Name is Required</div> : <></>}
-                            </div>
+                        </div>
+                        <div className='col-md-6'>
+                          <div className='form-group'>
+                            <p className='mb-0'><label className='label-set'>Company Name </label></p>
+                            <input
+                              value={formData?.company_name}
+                              onChange={handleInputChange}
+                              name="company_name"
+                              placeholder="Enter your Company Number"
+                              type="text"
+                              className="form-control "></input>
+                            {submitted && !formData?.company_name ? <div className="invalid-feedback d-block">Company Name is Required</div> : <></>}
                           </div>
-                          <div className='col-md-6'>
+                        </div>
+                        <div className='col-md-6'>
 
 
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>Account Number</label></p>
-                              <input
-                                value={formData?.account_number}
-                                onChange={handleInputChange}
-                                name="account_number"
-                                placeholder="Enter your Account Number"
-                                type="number"
-                                className="form-control "></input>
-                              {submitted && formData?.account_number?.length < 12 ? <div className="invalid-feedback d-block">Account Number is must be 12 digit</div> : <></>}
-                            </div>
+                          <div className='form-group'>
+                            <p className='mb-0'><label className='label-set'>Account Number</label></p>
+                            <input
+                              value={formData?.account_number}
+                              onChange={handleInputChange}
+                              name="account_number"
+                              placeholder="Enter your Account Number"
+                              type="number"
+                              className="form-control "></input>
+                            {submitted && formData?.account_number?.length < 12 ? <div className="invalid-feedback d-block">Account Number is must be 12 digit</div> : <></>}
                           </div>
-                          <div className='col-md-6'>
+                        </div>
+                        <div className='col-md-6'>
 
-
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>Routing Number </label></p>
-                              <input
-                                value={formData?.routing_number}
-                                onChange={handleInputChange}
-                                name="routing_number"
-                                placeholder="Enter your Routing Number"
-                                type="number"
-                                className="form-control "></input>
-                              {submitted && formData?.routing_number?.length < 9  ? <div className="invalid-feedback d-block">Routing Number is must be 9 digit</div> : <></>}
-                            </div>
+                          <div className='form-group'>
+                            <p className='mb-0'><label className='label-set'>Routing Number </label></p>
+                            <input
+                              value={formData?.routing_number}
+                              onChange={handleInputChange}
+                              name="routing_number"
+                              placeholder="Enter your Routing Number"
+                              type="number"
+                              className="form-control "></input>
+                            {submitted && formData?.routing_number?.length < 9 ? <div className="invalid-feedback d-block">Routing Number is must be 9 digit</div> : <></>}
                           </div>
-                          <div className='col-md-6'>
+                        </div>
+                        <div className='col-md-6'>
 
-
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>SSN Number </label></p>
-                              <input
-                                value={formData?.ssn_number}
-                                onChange={handleInputChange}
-                                name="ssn_number"
-                                placeholder="Enter your SSN Number"
-                                type="number"
-                                className="form-control "></input>
-                              {submitted && formData?.ssn_number?.length < 9 ? <div className="invalid-feedback d-block">SSN Number is must be 9 digit</div> : <></>}
-                            </div>
+                          <div className='form-group'>
+                            <p className='mb-0'><label className='label-set'>SSN Number </label></p>
+                            <input
+                              value={formData?.ssn_number}
+                              onChange={handleInputChange}
+                              name="ssn_number"
+                              placeholder="Enter your SSN Number"
+                              type="number"
+                              className="form-control "></input>
+                            {submitted && formData?.ssn_number?.length < 9 ? <div className="invalid-feedback d-block">SSN Number is must be 9 digit</div> : <></>}
                           </div>
-                          {/* <div className='col-md-6'>
+                        </div>
+                        {/* <div className='col-md-6'>
                             <div className='form-group rect-cust-width'>
                               <label className='label-set'>Date of Birth:</label>
                               <p>
@@ -694,14 +717,14 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             </div>
                           </div> */}
 
-                          {/* <div className='col-md-6 ml-1'>
+                        {/* <div className='col-md-6 ml-1'>
                             <div class="form-group">
                               <label className='label-set' >Tax Details <img className='sad-img' src='/assets/img/information-button.png' alt=''></img> </label>
                               <input type="text" className="form-control " id="tax_detail" name="tax_detail" value={formData?.tax_detail}
                                 onChange={handleInputChange} />
                             </div>
                           </div> */}
-                          {/* <div className='col-md-6'>
+                        {/* <div className='col-md-6'>
                             <label>Front Doc (only image)</label>
                             <div className="form-group drag_drop">
                               <div className='upload_file'>
@@ -726,7 +749,7 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                             </div>
                           </div> */}
 
-                          {/* <div className='col-md-6'>
+                        {/* <div className='col-md-6'>
                             <label>Back Doc(only image) </label>
                             <div className="form-group drag_drop">
                               <div className='upload_file'>
@@ -750,18 +773,18 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                               </div>
                             </div>
                           </div> */}
-                        </div>
-                    
-                          </div>
-                        </div>
+                      </div>
+
+                    </div>
                   </div>
-            </div>
+                </div>
+              </div>
 
 
 
             </div>
 
-         
+
 
             <div className='mt-4 btn-discards'>
               <div className="col-md-12 p-0 text-left mt-3   edit-btns">
@@ -773,15 +796,9 @@ const Html = ({ user, selectedLocation, picLoader, selectedItems, handleFeatureC
                 </button>
               </div>
             </div>
-
-
           </form>
         </div>
       </div>
-
-
-
-
     </>
   );
 };

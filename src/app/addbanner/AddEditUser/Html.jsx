@@ -5,11 +5,12 @@ import '../style.scss';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import ImageUpload from "@/app/components/common/ImageUpload";
+import moment from "moment";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
-
+    console.log(form,"fffffffffooooooo")
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
@@ -80,7 +81,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     <input
                                         type="date"
                                         className="form-control"
-                                        value={form.activation_date}
+                                        value={moment(form.activation_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, activation_date: e.target.value })}
                                     />
                                     {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Activation Date Date is Required</div> : <></>}
@@ -90,7 +91,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     <input
                                         type="date"
                                         className="form-control"
-                                        value={form.availability_date}
+                                        value={moment(form.availability_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, availability_date: e.target.value })}
                                     />
                                     {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
@@ -100,7 +101,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     <input
                                         type="date"
                                         className="form-control"
-                                        value={form.expiration_date}
+                                        value={moment(form.expiration_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, expiration_date: e.target.value })}
                                     />
                                     {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}

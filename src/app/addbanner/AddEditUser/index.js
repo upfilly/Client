@@ -156,6 +156,7 @@ const AddEditUser = () => {
                         "destination_url": value?.destination_url,
                         "description": value?.description,
                         "seo_attributes": value?.seo_attributes,
+                        "category_id": value?.category_id?.id,
                         "activation_date": value?.activation_date,
                         "availability_date": value?.availability_date,
                         "expiration_date": value?.expiration_date,

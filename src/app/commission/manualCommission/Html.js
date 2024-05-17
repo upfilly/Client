@@ -10,21 +10,32 @@ const Html = () => {
     const user = crendentialModel.getUser()
     const [selectedBrand, setSelectedBrand] = useState('')
     const [formData, setFormData] = useState({});
-    const [inputValues, setInputValues] = useState({});
-    const [DestinationUrl, setDestinationUrl] = useState('')
+    const [data, setData] = useState([]);
     const [formType, setFormType] = useState('single');
     const [isChecked, setIsChecked] = useState(false);
     const [file, setFile] = useState(null);
     const [locale, setLocale] = useState('');
     const [hasHeader, setHasHeader] = useState(false);
+    const [commissionSelectType, setCommissionType] = useState("");
+
+    console.log(data,"datadatav")
 
     const commissionType = [{
-        id: "sales or lead", name: "Sales or Lead"
+        id: "sales", name: "Sales"
+    },
+    {
+        id: "lead", name: "Lead"
     }]
 
     const handleFileChange = (event) => {
+        console.log("innnnnnn")
         const selectedFile = event.target.files[0];
-        setFile(selectedFile);
+        ApiClient.postFormData('upload/document',{file:selectedFile}).then((res)=>{
+            if(res?.success){
+                // setFile(selectedFile)
+                console.log(res?.data)
+            }
+        })
     };
 
     const handleLocaleChange = (event) => {
@@ -39,12 +50,63 @@ const Html = () => {
         setIsChecked(event.target.checked);
     };
 
+    const handleCommissionTypeChange =(e)=>{
+        setCommissionType(e.target.value)
+    }
+
+    const getData = (p = {}) => {
+        // let filter = { ...filters, ...p }
+        ApiClient.get(`users/list`).then(res => {
+          if (res.success) {
+            setData(res?.data?.data)
+          }
+        })
+      };
+
+      useEffect(()=>{
+        getData()
+      },[])
+
     const handleSubmit = () => {
 
-        ApiClient.post('get-link', { "base_url": base_url, "parameters": inputValues }).then((res) => {
+        let payload ;
+
+        if(formType == "single"){
+            payload={
+                "upload_method": formType,
+                "commission_type": commissionSelectType,
+                // "publisher_id": formData?.publisher_id,
+                "amount_of_sale": formData?.amount_of_sale,
+                "amount_of_commission": formData?.amount_of_commission,
+                "order_reference": formData?.order_reference,
+                "click_ref": formData?.click_ref,
+                "affiliate_id": formData?.publisher_id,
+                "is_send_email_to_publisher": isChecked,
+            }
+        }else{
+           payload={
+            "batch_file": formData?.batch_file,
+            "isContain_headers": hasHeader ? "yes" : "no",
+            "locality": locale,
+           }
+        }
+
+        ApiClient.post('add-commission',payload).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
-                
+                setFormType('')
+                setCommissionType('')
+                setFormData({
+                    "amount_of_sale":"",
+                    "amount_of_commission":"",
+                    "order_reference":"",
+                    "click_ref":"",
+                    "affiliate_id":"",
+                    "is_send_email_to_publisher": false,
+                    "batch_file":"",
+                    "isContain_headers":false,
+                    "locality": '',
+                })
             }
             // loader(false);
         });
@@ -101,25 +163,27 @@ const Html = () => {
                                     <div className='col-md-6 '>
                                         <div className='mb-3' >
                                         <label>Select a Commission Type</label>
-                                        <select class="form-select mb-2" id="brandSelect" value={selectedBrand}
-                                        // onChange={handleBrandChange}
-                                        >
-                                            <option value="">Select a Commission Type</option>
-                                            {commissionType.map(data => (
-                                                <option key={data.id} value={data.id} >{data.name}</option>
-                                            ))}
-                                        </select>
+                                                <SelectDropdown
+                                                    id="statusDropdown"
+                                                    displayValue="name"
+                                                    placeholder="select"
+                                                    intialValue={commissionSelectType}
+                                                    result={e => { setCommissionType(e.value) }}
+                                                    options={commissionType}
+                                                />
                                         </div>
                                     </div>
                                     <div className='col-md-6 '>
                                         <div className='mb-3' >
                                         <label>Publisher Id</label>
-                                        <input
-                                            type="text"
-                                            className='form-control'
-                                            placeholder="Enter your Publisher Id"
-                                            value={DestinationUrl}
-                                            onChange={(e) => setDestinationUrl(e.target.value)} />
+                                                <SelectDropdown
+                                                    id="statusDropdown"
+                                                    displayValue="fullName"
+                                                    placeholder="select"
+                                                    intialValue={formData?.publisher_id}
+                                                    result={e => { setFormData({ ...formData, publisher_id:e.value}) }}
+                                                    options={data}
+                                                />
                                         </div>
                                     </div>
                                     <div className='col-md-6 '>
@@ -129,8 +193,8 @@ const Html = () => {
                                                 type="text"
                                                 className='form-control'
                                                 placeholder="Enter your Amount of Commission"
-                                                value={DestinationUrl}
-                                                onChange={(e) => setDestinationUrl(e.target.value)} />
+                                                value={formData?.amount_of_commission}
+                                                onChange={(e) => setFormData({ ...formData, amount_of_commission: e.target.value })} />
                                         </div>
                                     </div>
                                     <div className='col-md-6 '>
@@ -139,10 +203,9 @@ const Html = () => {
                                             <SelectDropdown
                                                 id="statusDropdown"
                                                 displayValue="name"
-
                                                 placeholder="select"
-                                                intialValue={formData?.instant_messaging}
-                                                result={e => { setFormData({ ...formData, instant_messaging: e.value }) }}
+                                                intialValue={formData?.commission_status}
+                                                result={e => { setFormData({ ...formData, commission_status: e.value }) }}
                                                 options={[
                                                     { id: 'pending', name: 'Pending' },
                                                     { id: 'confirmed', name: 'Confirmed' },
@@ -153,13 +216,13 @@ const Html = () => {
 
                                     <div className='col-md-6 '>
                                         <div className='mb-3' >
-                                            <label>Order Rference</label>
+                                            <label>Order Reference</label>
                                             <input
                                                 type="text"
                                                 className='form-control'
                                                 placeholder="Enter your Order Rference"
-                                                value={DestinationUrl}
-                                                onChange={(e) => setDestinationUrl(e.target.value)} />
+                                                value={formData?.order_reference}
+                                                onChange={(e) => setFormData({ ...formData, order_reference: e.value })} />
                                         </div>
                                     </div>
 
@@ -170,8 +233,8 @@ const Html = () => {
                                                 type="text"
                                                 className='form-control'
                                                 placeholder="Enter your click ref (IO Number)"
-                                                value={DestinationUrl}
-                                                onChange={(e) => setDestinationUrl(e.target.value)} />
+                                                value={formData?.click_ref}
+                                                onChange={(e) => setFormData({ ...formData, click_ref: e.value })} />
                                         </div>
                                     </div>
                                   <div className='col-md-12'>
@@ -192,7 +255,7 @@ const Html = () => {
                                   </div>
                                   
                                 </div>}
-                                {formType != 'single' && <form onSubmit={handleSubmit}>
+                                {formType != 'single' &&<>
                                     <div className='mb-3' >
                                         <label htmlFor="fileInput">Upload CSV file:</label>
                                         <input
@@ -219,8 +282,7 @@ const Html = () => {
                                             />
                                         <label className="form-check-label" htmlFor="headerCheckbox"> Does first line contain header?
                                         </label>
-                                    </div>
-                                </form>}
+                                    </div></>}
                           
                             <div className='text-end'>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Submit Commisssion</button>

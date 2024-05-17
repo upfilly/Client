@@ -29,6 +29,8 @@ const Html = ({
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
+    console.log(data,"dhsjghgfj")
+
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             filter();
@@ -36,7 +38,7 @@ const Html = ({
     };
 
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Untracked Sales" filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Banners" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-end gap-2 flex-wrap align-items-center all_flexbx">
                     <SelectDropdown
@@ -102,8 +104,11 @@ const Html = ({
     <thead className='table_head'>
         <tr className='heading_row'>
             <th scope="col" className='table_data' onClick={e => sorting('title')}>Title{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data' onClick={e => sorting('brand_id')}>{user?.role == "brand" ? "Affiliate" : "Brand"}{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data'>Status</th>
+            <th scope="col" className='table_data' >SEO Attributes</th>
+            <th scope="col" className='table_data'>Expiration Date</th>
+            <th scope="col" className='table_data'>Activation Date</th>
+            <th scope="col" className='table_data'>Availability Date</th>
+            {/* <th scope="col" className='table_data'>Status</th> */}
             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
             <th scope="col" className='table_data'>Action</th>
 
@@ -113,7 +118,7 @@ const Html = ({
         {!loaging && data && data.map((itm, i) => {
             return <tr className='data_row' key={i}>
                 <td className='table_dats' onClick={e => view(itm.id || itm?._id)}>
-
+                <img src={methodModel.userImg(itm?.image)} className="user_imgs" />
                     <div className='user_detail'>
                         <div className='user_name'>
                             <h4 className='user'>
@@ -121,21 +126,17 @@ const Html = ({
                             </h4>
                         </div>
                     </div></td>
-                <td className='table_dats'>
-
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {user?.role == "brand" ? methodModel.capitalizeFirstLetter(itm?.affiliate_fullName) : methodModel.capitalizeFirstLetter(itm?.brand_fullName)}
-                            </h4>
-                        </div>
-                    </div></td>
-                <td className='table_dats'>   <div className={`user_hours`}>
+                    <td className='table_dats'>{itm.seo_attributes}</td>
+                    <td className='table_dats'>{itm.seo_attributes}</td>
+                    <td className='table_dats'>{datepipeModel.date(itm.expiration_date)}</td>
+                    <td className='table_dats'>{datepipeModel.date(itm.activation_date)}</td>
+                    <td className='table_dats'>{datepipeModel.date(itm.availability_date)}</td>
+                {/* <td className='table_dats'>   <div className={`user_hours`}>
                     <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
                     >
                         {itm.status}
                     </span>
-                </div></td>
+                </div></td> */}
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                 {/* dropdown */}

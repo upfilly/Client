@@ -55,7 +55,7 @@ const Html = ({
                                     ]}
                                 />
 
-                                {(user?.role == 'affiliate' || user?.permission_detail?.user_add) && <> <a className="btn btn-primary add_users " onClick={e => add()}>
+                                {(user?.role == 'brand' || user?.role == 'affiliate' || user?.permission_detail?.user_add) && <> <a className="btn btn-primary add_users " onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i> Add user
                                 </a></>}
 

@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import methodModel from '@/methods/methods';
 
-
 const EditProfile = () => {
   const history = useRouter()
   const user = crendentialModel.getUser()
@@ -43,6 +42,7 @@ const EditProfile = () => {
     ssn_number: '',
     company_name: "",
     affiliate_type:'',
+    cat_type:''
     // dob:''
   });
   const [picLoader,setPicLoader]=useState(false)

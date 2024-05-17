@@ -31,7 +31,10 @@ export default function affilate() {
     invite_status: '',
     end_date: '',
     start_date: '',
-    affiliate_group_id: ''
+    affiliate_group_id: '',
+    sub_category_id: '',
+    sub_child_category_id: '',
+    category_id: '',
   })
   const [form, setform] = useState({
     "message": "",
@@ -45,34 +48,51 @@ export default function affilate() {
   const [endDate, setEndDate] = useState(null);
   const [affiliategroup, setAffiliategroup] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [category,setCategory] = useState([])
+  const [category, setCategory] = useState([])
   const [submitted, setSubmitted] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [tagInput, setTagInput] = useState('');
   const [selectedAffiliteid, setselectedAffiliteid] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
+  const [categoryType, SetCategoryType] = useState('')
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const categoryTypes = [
+    { id: 'promotional_models', name: 'Promotional Models' },
+    { id: 'property_types', name: 'Property Types' },
+    { id: 'advertiser_categories', name: 'Advertiser Categories' },
+  ]
 
-  console.log(selectedCategory,"selectedCategoryselectedCategory")
+  console.log(selectedCategory, "hihjkhjkhjkhjkh")
 
   const handleCategoryChange = (category) => {
-    console.log(category,"ccccccc")
+    getData({ page: 1, category_id: category?.id || category?._id })
+    setFilter({ ...filters, category_id: category?.id || category?._id })
     setSelectedCategory(category);
     setSelectedSubCategory(null);
     setSelectedSubSubCategory(null);
   };
 
   const handleSubCategoryChange = (subCategory) => {
+    setFilter({ ...filters, page: 1, sub_category_id: subCategory?.id || subCategory?._id })
+    getData({ sub_category_id: subCategory?.id || subCategory?._id })
     setSelectedSubCategory(subCategory);
     setSelectedSubSubCategory(null);
   };
 
   const handleSubSubCategoryChange = (subSubCategory) => {
+    getData({ page: 1, sub_child_category_id: subSubCategory?.id || subSubCategory?._id })
+    setFilter({ ...filters, sub_child_category_id: subSubCategory?.id || subSubCategory?._id })
     setSelectedSubSubCategory(subSubCategory);
+  };
+
+  const handleCategoryTypeChange = (CategoryType) => {
+    getData({ page: 1, cat_type:CategoryType})
+    setFilter({ ...filters, cat_type:CategoryType})
+    SetCategoryType(CategoryType);
   };
 
   const handleTagInputChange = (e) => {
@@ -137,6 +157,7 @@ export default function affilate() {
       setSelectedOptions([...selectedOptions, option]);
     }
   };
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -159,7 +180,7 @@ export default function affilate() {
   };
 
   const getCategory = (p = {}) => {
-    let url = "categoryWithSub?page&count&search&cat_type=product&status=active";
+    let url = `categoryWithSub?page&count&search&cat_type=${categoryType}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data.data;
@@ -171,9 +192,9 @@ export default function affilate() {
   useEffect(() => {
     getData({ page: 1 })
     getCategory()
-  }, [])
+  }, [categoryType])
 
-  console.log(category,"categorycategory")
+  console.log(category, "categorycategory")
 
   const pageChange = (e) => {
     setFilter({ ...filters, page: e.selected })
@@ -215,8 +236,16 @@ export default function affilate() {
       count: 10,
       end_date: '',
       start_date: '',
-      affiliate_group_id: ''
+      affiliate_group_id: '',
+      sub_category_id: '',
+      sub_child_category_id: '',
+      category_id: '',
+      cat_type:''
     }
+    setSelectedCategory(null);
+    setSelectedSubCategory(null);
+    setSelectedSubSubCategory(null);
+    SetCategoryType('')
     setStartDate("");
     setEndDate("");
     setSelectedOptions([])
@@ -330,317 +359,153 @@ export default function affilate() {
                     </div>
                     <div class="modal-body">
 
-  <div class="accordion" id="accordionExample">
+                      <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                           <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
-                              <b className='' >Select Category</b>
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
+                              <b className='' >Select Category Type</b>
                             </button>
                           </h2>
-                          <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                          <div id="collapsebxone" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-{/* ///////////////////////////////////////////////////////////////////////////////// */}
-
-                       
-                          
-{/* ///////////////////////////////////////////////////////////////////////////////// */}
                               <ul className='filter_ullist' >
-                              {category.map(category => (
-                                <li key={category._id} >
-                                  
-                                  <div class="form-check">
-                                  
-                                    
-                                    <input
-                                    className=" form-check-input"
-                                type="radio"
-                                id={category._id}
-                                name="category"
-                                value={category._id}
-                                checked={selectedCategory?._id === category._id}
-                                onChange={() => handleCategoryChange(category)}
-                              />
-                              <label class="form-check-label" htmlFor={category._id}>{category.parent_cat_name}</label>
-
-                                  </div>
-
-  {/* Render subcategories under selected main category */}
-  {selectedCategory?._id === category._id && selectedCategory && (
-                                <ul  className=' sub_ulbx ' >
-                                  {category.subCategories.map(subCategory => (
-                                    <li key={subCategory.id}>
-                                       <div class="form-check">
-                                       <input
-                                       className= "form-check-input"
+                                {categoryTypes.map(category => (
+                                  <li key={category.id} >
+                                    <div class="form-check">
+                                      <input
+                                        className=" form-check-input"
                                         type="radio"
-                                        id={subCategory.id}
-                                        name="subCategory"
-                                        value={subCategory.id}
-                                        checked={selectedSubCategory === subCategory.id}
-                                        onChange={() => handleSubCategoryChange(subCategory)}
+                                        id={category.id}
+                                        name="category"
+                                        value={categoryType}
+                                        checked={categoryType == category.id ? true : false}
+                                        onChange={() => handleCategoryTypeChange(category.id)}
                                       />
-                                      <label class="form-check-label"  htmlFor={subCategory.id}>{subCategory.name}</label>
-                                       </div>
-                                      
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-
-
-                                </li>
-                               
-                              ))}
+                                      <label class="form-check-label" htmlFor={category.id}>{category.name}</label>
+                                    </div>
+                                  </li>
+                                ))}
                               </ul>
-
-                            
                             </div>
                           </div>
                         </div>
-
-
-                        {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
-                          
-                         
-                       
-                        <div class="accordion-item">
-                          <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
-                              <b className='' >Select Subsubcategory</b>
-                            </button>
-                          </h2>
-                          <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                              <ul className='filter_ullist' >
-                              {selectedSubCategory.subchildcategory.map(subSubCategory => (
-                                <li key={subSubCategory._id}>
-                                  <div class="form-check">
-                                  <input
-                                  class="form-check-input"
-                                    type="checkbox"
-                                    id={subSubCategory._id}
-                                    name="subSubCategory"
-                                    value={subSubCategory._id}
-                                    checked={selectedSubSubCategory === subSubCategory._id}
-                                    onChange={() => handleSubSubCategoryChange(subSubCategory)}
-                                  />
-                                    
-                                  
-                                    <label  class="form-check-label"  htmlFor={subSubCategory._id}>{subSubCategory.name}</label>
-
-                                  </div>
-                                </li>
-                               
-                              ))}
-                             
-                              </ul>
-   
-                         
-
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                       
                       </div>
 
 
-                      {/* <div>
-                        <h2>Select Category</h2>
-                        <ul>
-                          {category.map(category => (
-                            <li key={category._id}>
-                              <input
-                                type="radio"
-                                id={category._id}
-                                name="category"
-                                value={category._id}
-                                checked={selectedCategory?._id === category._id}
-                                onChange={() => handleCategoryChange(category)}
-                              />
-                              <label htmlFor={category._id}>{category.parent_cat_name}</label>
-
-                              Render subcategories under selected main category
-                              {selectedCategory?._id === category._id && selectedCategory && (
-                                <ul>
-                                  {category.subCategories.map(subCategory => (
-                                    <li key={subCategory.id}>
-                                      <input
-                                        type="radio"
-                                        id={subCategory.id}
-                                        name="subCategory"
-                                        value={subCategory.id}
-                                        checked={selectedSubCategory === subCategory.id}
-                                        onChange={() => handleSubCategoryChange(subCategory)}
-                                      />
-                                      <label htmlFor={subCategory.id}>{subCategory.name}</label>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-
-                        Render subsubcategories under selected subcategory
-                        {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
-                          <div>
-                            <h2>Select Subsubcategory</h2>
-                            <ul>
-                              {selectedSubCategory.subchildcategory.map(subSubCategory => (
-                                <li key={subSubCategory._id}>
-                                  <input
-                                    type="checkbox"
-                                    id={subSubCategory._id}
-                                    name="subSubCategory"
-                                    value={subSubCategory._id}
-                                    checked={selectedSubSubCategory === subSubCategory._id}
-                                    onChange={() => handleSubSubCategoryChange(subSubCategory)}
-                                  />
-                                  <label htmlFor={subSubCategory._id}>{subSubCategory.name}</label>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div> */}
-                      {/* <div class="accordion" id="accordionExample">
+                      <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                           <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
-                              <b className='' >Brand</b>
+                              <b className='' >Select Category of Affiliate</b>
                             </button>
                           </h2>
                           <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
+                              {/* ///////////////////////////////////////////////////////////////////////////////// */}
+
+                              {/* ///////////////////////////////////////////////////////////////////////////////// */}
                               <ul className='filter_ullist' >
-                                <li>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                      Samsung
-                                    </label>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
-                                    <label class="form-check-label" for="flexCheckDefault1">
-                                      Apple
-                                    </label>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" />
-                                    <label class="form-check-label" for="flexCheckDefault2">
-                                      Asus
-                                    </label>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" />
-                                    <label class="form-check-label" for="flexCheckDefault3">
-                                      Oppo
-                                    </label>
-                                  </div>
-                                </li>
+                                {category.map(category => (
+                                  <li key={category._id} >
+
+                                    <div class="form-check">
+                                      <input
+                                        className=" form-check-input"
+                                        type="radio"
+                                        id={category._id}
+                                        name="category"
+                                        value={category._id}
+                                        checked={selectedCategory?._id === category._id}
+                                        onChange={() => handleCategoryChange(category)}
+                                      />
+                                      <label class="form-check-label" htmlFor={category._id}>{category.parent_cat_name}</label>
+
+                                    </div>
+
+                                    {selectedCategory?._id === category._id && selectedCategory && (
+                                      <ul className=' sub_ulbx ' >
+                                        {category.subCategories.map(subCategory => (
+                                          <li key={subCategory.id}>
+                                            <div class="form-check">
+                                              <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                id={subCategory.id}
+                                                name="subCategory"
+                                                value={subCategory.id || subCategory._id}
+                                                checked={selectedSubCategory?._id || selectedSubCategory?.id === subCategory.id || subCategory._id}
+                                                onChange={() => handleSubCategoryChange(subCategory)}
+                                              />
+                                              <label class="form-check-label" htmlFor={subCategory.id}>{subCategory.name}</label>
+                                            </div>
+
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )}
+
+                                    {selectedCategory?._id === category._id && selectedSubCategory && (
+                                      <ul className='filter_ullist' >
+                                        {selectedSubCategory.subchildcategory.map(subSubCategory => (
+                                          <li key={subSubCategory._id}>
+                                            <div class="form-check">
+                                              <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id={subSubCategory._id}
+                                                name="subSubCategory"
+                                                value={subSubCategory._id}
+                                                checked={selectedSubSubCategory?.id || selectedSubSubCategory?._id === subSubCategory._id}
+                                                onChange={() => handleSubSubCategoryChange(subSubCategory)}
+                                              />
+
+
+                                              <label class="form-check-label" htmlFor={subSubCategory._id}>{subSubCategory.name}</label>
+
+                                            </div>
+                                          </li>
+
+                                        ))}
+
+                                      </ul>)}
+
+                                  </li>
+
+                                ))}
                               </ul>
 
-                              <h6 className='shw_more' > Show more </h6>
-
-                            </div>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
-                              <b className='' >Sizes</b>
-                            </button>
-                          </h2>
-                          <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                              <ul className='row flex-wrap filter_ullist' >
-                                <li className='col-6'>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                      Samsung
-                                    </label>
-                                  </div>
-                                </li>
-                                <li className='col-6'>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
-                                    <label class="form-check-label" for="flexCheckDefault1">
-                                      Apple
-                                    </label>
-                                  </div>
-                                </li>
-                                <li className='col-6'>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" />
-                                    <label class="form-check-label" for="flexCheckDefault2">
-                                      Asus
-                                    </label>
-                                  </div>
-                                </li>
-                                <li className='col-6' >
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" />
-                                    <label class="form-check-label" for="flexCheckDefault3">
-                                      Default checkbox
-                                    </label>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                              <b className='' >Country</b>
-                            </button>
-                          </h2>
-                          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                              ............
                             </div>
                           </div>
                         </div>
 
-                        <div class="accordion-item">
-                          <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
-                              <b className='' >Condition</b>
-                            </button>
-                          </h2>
-                          <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                              ............
+
+                        {/* {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
+
+
+
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
+                                <b className='' >Select Subsubcategory</b>
+                              </button>
+                            </h2>
+                            <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                               
+
+
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
-                              <b className='' >Manufacturer</b>
-                            </button>
-                          </h2>
-                          <div id="collapsefive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                              ............
-                            </div>
-                          </div>
-                        </div>
-                      </div> */}
+                        )} */}
+
+
+                      </div>
+
                     </div>
                     <div class="modal-footer gap-3">
-                      <button type="button" class="btn btn-outline-secondary m-0" data-bs-dismiss="modal">Clear all Filter</button>
-                      <button type="button" class="btn btn-primary m-0">Apply Filter</button>
+                      <button type="button" class="btn btn-outline-secondary m-0" data-bs-dismiss="modal" onClick={reset}>Clear all Filter</button>
+                      {/* <button type="button" class="btn btn-primary m-0">Apply Filter</button> */}
                     </div>
                   </div>
                 </div>
