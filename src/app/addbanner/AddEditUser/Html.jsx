@@ -12,7 +12,7 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
     console.log(form,"fffffffffooooooo")
     return <>
-        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
+        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Banner"} filters={undefined}>
             <form onSubmit={handleSubmit}>
                 <div className="sidebar-left-content">
                     <div className=" pprofile1 card card-shadow p-4">
