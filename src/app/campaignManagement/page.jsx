@@ -29,12 +29,6 @@ console.log(ip,"dcuhdbhuc")
     }
   }, [role])
 
-  useEffect(() => {
-    if (user?.role == 'affiliate' && !user?.account_id) {
-        history.push('/addAccount/detail')
-    }
-}, [])
-
 
   const getData = (p = {}) => {
     setLoader(true)

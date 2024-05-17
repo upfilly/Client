@@ -86,16 +86,15 @@
 .set_downbx .down_bx {
   position: absolute;
   top: 14px;
-  color: #afa9a9;
   right: 14px;
 }
 
 //generate link css
 .select_parabx .search-wrapper .searchBox {
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
   border-radius: 4px;
   padding: 2px 12px;
-  max-width: 274px;
+  max-width: 100%;
   width: 100%;
 }
 

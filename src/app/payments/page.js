@@ -46,12 +46,6 @@ export default function affilate() {
   };
 
   useEffect(() => {
-    if (user?.role == 'affiliate' && !user?.account_id) {
-      history.push('/addAccount/detail')
-    }
-  }, [])
-
-  useEffect(() => {
 
     if (user.role == 'brand' ) {
       getData({ page: 1, user_id: user?.id })

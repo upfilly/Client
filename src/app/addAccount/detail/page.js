@@ -1,6 +1,6 @@
 'use client'
 
-import react, { useEffect, useState } from 'react';
+import react, { useState } from 'react';
 import "../style.scss";
 import Layout from '../../components/global/layout';
 import { useRouter } from 'next/navigation';
@@ -56,7 +56,6 @@ export default function addAffiliateAccount() {
     setForm({ ...form, baseImg: e.target.value })
     let files = e.target.files
     let file = files.item(0)
-    // loader(true)
     setImgLoder(true)
     setLoader(true)
     ApiClient.postFormData('upload/image?modelName=users', { file: file, modelName: 'users' }).then(res => {
@@ -313,7 +312,6 @@ export default function addAffiliateAccount() {
 
 
   const handleSave = () => {
-                // setTaxDetailTabEnabled(true)
 
     if (!formData?.mobileNo || !formData?.account_number || !formData?.company_name || !frontDoc || !backDoc ||
       formData?.ssn_number?.length < 9 || formData?.routing_number?.length < 9 || !formData?.accountholder_name || formData?.account_number?.length < 12 || !dob || formData?.mobileNo?.length < 10) {

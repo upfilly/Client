@@ -28,13 +28,6 @@ const Requests = () => {
     }
   }, [role])
 
-  useEffect(() => {
-    if (user?.role == 'affiliate' && !user?.account_id) {
-        history.push('/addAccount/detail')
-    }
-}, [])
-
-
   const getData = (p = {}) => {
     setLoader(true)
     // const brand_id = user?.role == 'brand' ? user?.id : null

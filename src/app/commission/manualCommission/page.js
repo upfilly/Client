@@ -9,12 +9,6 @@ const GenerateLink = () => {
 const user = crendentialModel.getUser()
 const history = useRouter()
 
-useEffect(() => {
-    if (user?.role == 'affiliate' && !user?.account_id) {
-        history.push('/addAccount/detail')
-    }
-}, [])
-
     return <>
         <Html  
         />

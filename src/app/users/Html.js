@@ -111,7 +111,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
                 <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
                 <td>
-                   {user?.role == 'affiliate' ||user?.role == 'brand' || user?.permission_detail?.user_edit  &&
+                   {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_edit)  &&
                     <div className='action_icons'>
                             { <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
