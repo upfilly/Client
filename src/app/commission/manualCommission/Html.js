@@ -127,7 +127,7 @@ const Html = () => {
                         </div>
                         <div className='card-body'>
                            <div className='container' >
-                           <div className='row' >
+                           <div className='' >
 
 <div className='d-flex gap-5 align-items-center mb-4 ' >
     <div className="form-check" >
