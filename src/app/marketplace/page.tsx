@@ -177,10 +177,14 @@ export default function MarketPlace() {
                           }}>
                             <p className="mb-2">{itm.parent_cat_name}</p>
                             <p className="mb-2"><i className="fa fa-angle-down"></i></p>
+                            
                           </div>
+                          
                           {itm?.subCategories?.map((data: any) => {
                             return (
+                              
                               <div className={!isOpenCategory ? "show_checksbox " : "hide_checksbox "} key={data._id}>
+                                
                                 <div className="d-flex align-items-center gap-2 mb-2">
                                   <label className="container_checks m-0">
                                     <input
@@ -190,6 +194,7 @@ export default function MarketPlace() {
                                         setSelectedSubcategory(prevState => prevState === data.id ? null : data.id);
                                         setSubcategory_id(prevState => prevState === data.id ? null : data.id);
                                       }}
+                                      
                                     />
                                     <div className="checkmark"></div>
                                   </label>
@@ -245,7 +250,11 @@ export default function MarketPlace() {
                       </div>
 
                       <div className={PlacementSate ? "show_checksbox" : "hide_checksbox"}>
+                     
+                    <div className="position-relative  downarrow">
+                    <i className="fa fa-caret-down " aria-hidden="true"></i>
                         <MultiSelectDropdown
+                        
                           id="statusDropdown"
                           displayValue="name"
 
@@ -257,12 +266,15 @@ export default function MarketPlace() {
                           { name: "Mobile", id: "mobile" }]}
 
                         />
+                    </div>
                         {placement?.length > 0 && <div className="selected_offrs_market">
                           {placement.map((value:any,index:any) => (
                             <span key={index}>
-                              {value} <i className="fa fa-times" onClick={() => handleRemove(value)}></i> 
+                              {value} <i className="fa fa-times" onClick={() => handleRemove(value)}></i>
+                               
                             </span>
                           ))}
+                          
                         </div>}
                       </div>
 
@@ -276,6 +288,8 @@ export default function MarketPlace() {
                       </div>
 
                       <div className={opportunitySate ? "show_checksbox " : "hide_checksbox"}>
+                      <div className="position-relative  downarrow">
+                    <i className="fa fa-caret-down " aria-hidden="true"></i>
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -289,7 +303,7 @@ export default function MarketPlace() {
                           ]}
 
                         />
-
+</div>
                         {opportunity?.length > 0 && <div className="selected_offrs_market">
                            {opportunity.map((value: any,index:any) =>{ 
                             console.log(value,"dfhnjihnj")
@@ -309,19 +323,22 @@ export default function MarketPlace() {
 
               <div className="col-12 col-sm-12 col-md-6 col-lg-8">
                 <div className="lists_marketplace">
-                  <div className="job-searchbar gap-4 flex-wrap">
+                  <div className="job-searchbar gap-2 flex-wrap">
                     <h4 className="mb-0">{total} Results Found</h4>
-                    <form>
-                      <div className="row">
-                        <div className="col-md-12">
-                          <div className="d-flex jobs_child-flex">
-                            <input value={filters.search} onKeyPress={handleKeyPress} onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })} className="form-control me-3" type="text" placeholder="Search Here" />
-                            <button className=" btn btn-primary" onClick={(e) => filter(e)}> Search</button>
-                           { filters?.search && <button className="btn-secondary btn-sm ml-3" onClick={(e) => reset()}> Reset</button>}
-                          </div>
-                        </div>
-                      </div>
-                    </form>
+                
+                          <div className="d-flex jobs_child-flex align-items-center gap-2">
+                           
+                            <div className="position-relative">
+                            <input value={filters.search} onKeyPress={handleKeyPress} onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })} className="form-control search_market" type="text" placeholder="Search Here" />
+                            <i className="fa fa-search schbx  onClick={(e) => filter(e)}" aria-hidden="true"></i>
+
+                            </div>
+                           
+                            {/* <button className=" btn btn-primary"> Search</button> */}
+                           { filters?.search && <button className="btn btn-secondary" onClick={(e) => reset()}> Reset</button>}
+                          
+                          </div> 
+                      
 
 
 
@@ -356,7 +373,7 @@ export default function MarketPlace() {
                             </div>
 
 
-                            <div className="d-flex align-items-center justify-content-between bordertop">
+                            <div className="d-flex align-items-center justify-content-between bordertop gap-3">
                               <div className="leftshead">
                                 {/* <h6>${data?.price}</h6> */}
                                 <p className="types_date mb-0"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>

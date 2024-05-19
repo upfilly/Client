@@ -194,7 +194,7 @@ export default function Login() {
       </div> 
     </div>
   </div> */}
-  <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
+  <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
     <div className='right_side'>
 
       <form
@@ -233,7 +233,7 @@ export default function Login() {
             Login
           </button>
           <div className='d-flex flex-wrap  justify-content-between  mt-2'>
-            <label className='d-flex align-items-center mb-0'><input type="radio radi_o" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2 radio" /><span className='forbx '>Keep me logged</span></label>
+            <label className='d-flex align-items-center mb-0'><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2" /><span className='forbx '>Keep me logged</span></label>
 
             <Link href="/forgotpassword" className="text-primary  forbx text-black">Forgot Password</Link>
           </div>

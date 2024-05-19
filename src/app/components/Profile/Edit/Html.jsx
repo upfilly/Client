@@ -108,26 +108,26 @@ const Html = ({ user,
 
             <div className='card mb-3'>
               <div className='card-header'>
-                <div className='main_title_head'>
-                  <h3>User Details</h3>
+                <div className='main_title_head d-flex gap-3 align-items-center'>
+                <button type='button'className='btn btn-primary rounded-2'><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
+
+                  <h3>  User Details</h3>
                 </div>
               </div>
-              <div className='card-body'>
+              <div className='card-body p-3'>
                 <div className='row'>
-                  <div className='col-12 col-sm-12 col-md-12 col-lg-3'>
-                    <div className='profile-edit-sec '>
-                      <div className='user-profile-edit '>
-                        <div className='text-center mb-3'>
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
+                    <div className='profile-edit-sec  flex-wrap  mb-3'>
                           <label className="">
                             <img src={methodModel.userImg(form && form.image)} className="profileuserimg" />
                           </label>
 
-                          <div className='samebtn_width'>
+                          <div className='d-flex gap-2 align-items-center width-profile '>
 
                             {picLoader ?
                               <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
                               : <div>
-                                <label className="btn btn-primary  edit">
+                                <label className="btn btn-primary  edit_btns mb-0">
                                   <input
                                     id="bannerImage"
                                     type="file"
@@ -135,20 +135,19 @@ const Html = ({ user,
                                     accept="image/*"
                                     value={form.baseImg ? form.baseImg : ''}
                                     onChange={(e) => { uploadImage(e); }}
-                                  />{form.image ? 'Change' : 'Upload'} Image</label>
+                                  />{form.image ? '  Change' : 'Upload'} Image</label>
                               </div>}
                             <div>
-                              {form.image ? <label className="btn bgdanger  btn-primary text-white delete" onClick={e => setForm({ ...form, image: "" })}>Remove Image</label> : <></>}
+                              {form.image ? <label className="btn btn-secondary mb-0 edit_btns" onClick={e => setForm({ ...form, image: "" })}>Remove Image</label> : <></>}
                             </div>
                             {/* <input type="hidden" name='image' required value={form.image} /> */}
                             {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}
                           </div>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
 
-                  <div className='col-12 col-sm-12 col-md-12 col-lg-9'>
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
                     <div className='edit-user-details'>
 
                       <div className='row'>
@@ -229,7 +228,7 @@ const Html = ({ user,
                           </div>
                         </div>
 
-                        <div className=" col-12 col-sm-12 col-md-6  form-group">
+                        <div className=" col-12 col-sm-12 col-md-12">
                           <label>Description</label>
                           {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
                             onEditorChange={(newValue, editor) => {
@@ -241,7 +240,8 @@ const Html = ({ user,
                               height: 200,
                             }}
                           /> */}
-                          <DynamicReactQuill
+                      <div className="rounded-5 descript_editpro">
+                      <DynamicReactQuill
                             theme="snow"
                             value={form?.description ? form?.description : ''}
 
@@ -268,6 +268,7 @@ const Html = ({ user,
                             ]}
                             bounds={'.app'}
                           />
+                      </div>
                         </div>
 
                       </div>
@@ -280,7 +281,7 @@ const Html = ({ user,
 
             <div className='mt-4 mb-3'>
               <div className='row'>
-                <div className='col-12 col-sm-12 col-md-8 col-lg-8'>
+                <div className='col-12 col-sm-12 col-md-12 col-lg-8'>
                   <div className='card mb-4'>
                     <div className='card-header'>
                       <div className='main_title_head'>
@@ -289,7 +290,9 @@ const Html = ({ user,
                     </div>
                     <div className='card-body'>
                       <div className='row'>
-                        {user?.role == 'affiliate' && <div className='col-12 col-sm-12 col-md-6'>
+                        {user?.role == 'affiliate' &&
+                        
+                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <div className='form-group'>
                             <div className="select_drop ">
                               <label>Category Type</label>
@@ -308,7 +311,7 @@ const Html = ({ user,
                             </div>
                           </div>
                         </div>}
-                        <div className='col-12 col-sm-12 col-md-6'>
+                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="category">Category:</label>
                           <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
                             <option value="">Select a category</option>
@@ -316,7 +319,7 @@ const Html = ({ user,
                               <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
                             ))}
                           </select></div>
-                        <div className='col-12 col-sm-12 col-md-6'>
+                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="subcategory">Subcategory:</label>
                           <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
                             <option value="">Select a subcategory</option>
@@ -324,7 +327,7 @@ const Html = ({ user,
                               <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                             ))}
                           </select></div>
-                        <div className='col-12 col-sm-12 col-md-6'>
+                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="subsubcategory">Sub-subcategory:</label>
                           <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
                             <option value="">Select a sub-subcategory</option>
@@ -332,27 +335,10 @@ const Html = ({ user,
                               <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
                             ))}
                           </select></div>
-                        {/* <div className='col-12 col-sm-12 col-md-6'>
-                          <div className='form-group'>
-                            <div className="select_drop ">
-                              <label>Category<span className='star'>*</span></label>
-                              <div className="select_row">
-                                <SelectDropdown
-                                  id="statusDropdown"
-                                  displayValue="parent_cat_name"
-                                  placeholder="Select category"
-                                  intialValue={form?.category_id}
-                                  result={e => setForm({ ...form, category_id: e.value })}
-                                  options={category}
-                                />
-                              </div>
-                              {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>}
+                      
 
-                            </div>
-                          </div>
-                        </div> */}
-
-                        {user?.role == 'affiliate' && <div className='col-12 col-sm-12 col-md-6'>
+                        {user?.role == 'affiliate' &&
+                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <div className='form-group'>
                             <div className="select_drop ">
                               <label>Type</label>
@@ -372,12 +358,11 @@ const Html = ({ user,
                           </div>
                         </div>}
 
-                        {<><> <div className="col-md-6">
+                        {<><>
+                         <div className="col-12 col-sm-12 col-md-6 mb-3">
                           <div className="form-group">
                             <label>Location</label>
-
-                            <div>
-                              <PlacesAutocomplete
+                            <PlacesAutocomplete
                                 value={address}
                                 onChange={handleChange}
                                 onSelect={handleSelect}
@@ -412,20 +397,26 @@ const Html = ({ user,
                                   </div>
                                 )}
                               </PlacesAutocomplete>
+                            <div>
+                              
                             </div>
 
                           </div>
-                        </div></><div className='col-12 col-sm-12 col-md-6 '>
+                        </div>
+                        </>
+                        <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>Country  </label>
                               <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                             </div>
-                          </div><div className='col-md-3 '>
+                          </div>
+                          <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>City  </label>
                               <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                             </div>
-                          </div> <div className='col-md-3'>
+                          </div> 
+                            <div className='col-12 col-sm-12 col-md-6 mb-3'>
                             <div class="form-group">
                               <label className='label-set' >Postal Code</label>
                               <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
@@ -433,12 +424,13 @@ const Html = ({ user,
                           </div></>
                         }
 
-                        {<div className="col-md-6">
+                        {<div className="col-12 col-sm-12 col-md-6 mb-3">
                           <div className='form-group'>
                             <label>website</label>
                             <input
                               type="text"
                               className="form-control"
+                              placeholder='URL'
                               value={form?.website}
                               onChange={e => setForm({ ...form, website: e.target.value })}
                               title="http://www.example.com"
@@ -447,7 +439,7 @@ const Html = ({ user,
                           </div>
                         </div>}
 
-                        <div className="col-12 col-sm-12 col-md-6 ">
+                        <div className="col-12 col-sm-12 col-md-6 mb-3 ">
                           <div className='form-group'>
                             <label>Gender<span className="star">*</span></label>
                             <div className="select_row">
@@ -469,10 +461,10 @@ const Html = ({ user,
                           </div>
                         </div>
                         {
-                          <div className='col-12 col-sm-12 col-md-12'>
+                          <div className='col-12 col-sm-12 col-md-6 mb-3  col-lg-12'>
                             <div className=" form-group">
                               <label> Tags</label>
-                              <div className="d-flex flex-row">
+                              <div className="d-flex gap-3  flex-row">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -483,20 +475,23 @@ const Html = ({ user,
 
                                 />
                                 <a
-                                  className="p_plus btn btn-primary ml-2 mb-0"
+                                  className=" d-flex justify-content-center align-items-center btn btn-primary"
                                   onClick={addTag}
                                 ><i className='fa fa-plus'></i></a>
                               </div>
+                              <div className="d-flex gap-3 align-items-center flex-wrap mt-4 ">
                               {form && form?.tags?.map((item, i) => {
                                 return (
-                                  <button type="button" class="btn btn-primary position-relative mr-3 btn_min mt-3" key={i}>
-                                    {item}
-                                    <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-light  rounded-circle span_close">
-                                      <span style={{ width: '5px', height: '5px' }} onClick={() => cancele(item, 'tags')}><i className='fa fa-close'></i></span>
-                                    </span>
+                                         <button type="button" class="btn btn-primary d-flex gap-2 align-items-center" key={i}>
+                                          <span className=' pt_bx'> {item}</span>
+                                          <i className='fa fa-close cloosebtn'  onClick={() => cancele(item, 'tags')} ></i>
                                   </button>
+                                  
+                             
                                 )
                               })}
+                              </div>
+                            
                             </div>
                           </div>
                         }
@@ -505,7 +500,7 @@ const Html = ({ user,
                   </div>
                 </div>
 
-                <div className='col-12 col-sm-12 col-md-4 col-lg-4'>
+                <div className='col-12 col-sm-12 col-md-12 col-lg-4'>
                   <div className='card'>
                     <div className='card-header'>
                       <div className='main_title_head'>
@@ -518,8 +513,8 @@ const Html = ({ user,
                           <div className="row mx-auto">
 
                             {data?.map((item) => (
-                              <div key={item?.id} className=" col-12 col-sm-12 col-md-12 p-0 mb-3">
-                                <div className="card p-3 border">
+                              <div key={item?.id} className=" col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div className="card rounded-5 border platforms_input mb-3">
                                   <input
                                     className="form-check-input ml-0"
                                     type="checkbox"
@@ -532,11 +527,12 @@ const Html = ({ user,
                                   </label>
                                   {selectedItems?.includes(item) && (
                                     <div className="row">
-                                      <div className="col-md-12 mb-3 mt-4">
+                                      <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
                                         <label>User name</label>
                                         <input
                                           type="text"
                                           className="form-control"
+                                          placeholder='Enter Name'
                                           value={form[`${item}_username`]}
                                           onChange={(e) => {
                                             setForm((prevForm) => ({
@@ -548,11 +544,13 @@ const Html = ({ user,
                                         />
                                       </div>
 
-                                      <div className="col-md-12 mb-3">
+                                      <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
                                         <label>{`${methodModel?.capitalizeFirstLetter(item)} link`}</label>
                                         <input
                                           type="text"
                                           className="form-control"
+                                          placeholder='Enter link'
+
                                           value={form[`${item}_profile_link`]}
                                           onChange={(e) => {
                                             setForm((prevForm) => ({
@@ -636,6 +634,7 @@ const Html = ({ user,
                               value={formData?.accountholder_name}
                               onChange={handleInputChange}
                               name="accountholder_name"
+                              placeholder="Enter your Holder Number"
                               type="text"
                               className="form-control "></input>
                             {submitted && !formData?.accountholder_name ? <div className="invalid-feedback d-block">Account Holder Name is Required</div> : <></>}
@@ -787,11 +786,11 @@ const Html = ({ user,
 
 
             <div className='mt-4 btn-discards'>
-              <div className="text-end edit-btns">
-                <Link href="/profile" className="btn btn-primary edit ">
+              <div className="text-end edit-btns d-flex gap-3 align-items-center justify-content-end">
+                <Link href="/profile" className="btn btn-secondary ">
                   Discard
                 </Link>
-                <button type="submit" className="btn btn-primary edit ml-3 mb-0">
+                <button type="submit" className="btn btn-primary">
                   Update
                 </button>
               </div>

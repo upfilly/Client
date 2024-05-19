@@ -38,12 +38,12 @@ const Profile = () => {
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-
-      <div className='container pprofile1  edit-profile-page' >
+<div className="pprofile1  edit-profile-page my-5">
+<div className='container ' >
         <div className='row'>
-          <div className='col-12 col-sm-12 col-md-12  col-lg-10 mx-auto  '>
-            <div className='card  profile-card ' >
-              <div className="d-flex justify-content-between align-items-center flex-wrap ">
+          <div className='col-12 col-sm-12 col-md-12  col-lg-11 mx-auto  '>
+            <div className='card p-3 rounded-3 ' >
+              <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
                 <div className='main_title_head'>
                   <h3 className=''>Basic Information </h3>
                 </div>
@@ -60,18 +60,21 @@ const Profile = () => {
                 </a>}
               </div>
               </div>
-              <hr />
-              <div className="form-row mx-auto row">
-                <div className="col-md-12 ">
+              {/* <hr /> */}
+              <div className=" row">
+                <div className="col-12 col-sm-12 col-md-3 ">
                   {/* <label>Image</label> */}
 
-                  <div className="profileImageLabel">
+                  <div className="  d-flex justify-content-center align-items-center profileimage ">
                     <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
                   </div>
 
 
                 </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+
+                <div className="col-12 col-sm-12 col-md-9">
+                  <div className="row">
+                  <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                   <div className=' inputFlexs width400'>
                     <label>Name:</label>
                     <div>
@@ -80,7 +83,6 @@ const Profile = () => {
                   </div>
 
                 </div>
-
                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                   <div className='inputFlexs width400'>
                     <label>Email:</label>
@@ -90,6 +92,18 @@ const Profile = () => {
                   </div>
 
                 </div>
+                {data?.address && 
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                  <div className='inputFlexs width400'>
+                    <label >Address:</label>
+                    <p className="profile_data">{data && data?.address}</p>
+                  </div>
+                </div>}
+                  </div>
+                </div>
+                
+
+                
 
                 {data?.category_name &&
                  <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
@@ -136,13 +150,7 @@ const Profile = () => {
 
                 </div>}
 
-                {data?.address && 
-                <div className="col-12 col-sm-6 col-md-6 col-lg-6  inputFlexs">
-                  <div className='inputFlexs width400'>
-                    <label >Address:</label>
-                    <p className="profile_data">{data && data?.address}</p>
-                  </div>
-                </div>}
+              
 
 
 
@@ -430,6 +438,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
+</div>
+      
 
     </Layout>
   );

@@ -176,7 +176,7 @@ export default function Login() {
       <div className="container">
         {/* <a className="p-3 d-block text-white" href="/">Back</a> */}
         <div className="row align-items-center ">
-          <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
+          <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
             <div className='right_side'>
               <form
                 className="centerLogin"

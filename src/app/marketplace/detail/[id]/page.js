@@ -64,7 +64,7 @@ export default function MarketPlaceDetail() {
                             </div>
 
 
-                            <div className="d-flex align-items-center justify-content-between bordertop">
+                            <div className="d-flex align-items-center justify-content-between bordertop gap-3">
                                 <div className="leftshead">
                                     {/* <h6>${data?.price}</h6> */}
                                     <p className="types_date"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>

@@ -19,7 +19,7 @@ export default function Company() {
           <div className="container  ">
             <div className="row align-items-center ">
               <div className="col-md-12">
-                <div className='main-title text-center'>
+                <div className='main-title text-center mb-3'>
                   <h1 className=''>Company</h1>
                   <p className=' printit'>Lorem Ipsum is simply dummy text of the printing and typesetting  <br /> industry. Lorem Ipsum has been the industry's standard </p>
                 </div>
@@ -28,12 +28,12 @@ export default function Company() {
 
             <div className="row align-items-center mb-5 pt-4">
               <div class="col-lg-6 ">
-                <div className="feature-left mb-4">
-                  <img className="img-fluid" src="assets/img/company-feature-one.png" />
+                <div className="feature-left mb-3">
+                  <img className="company_img" src="assets/img/company-feature-one.png" />
                 </div>
               </div>
               <div className="col-lg-6  ">
-                <div className="feature-text mb-4 lens_details " >
+                <div className="feature-text mb-4 lens_details mb-3 " >
                   <h1 class="text-black set_lensbx mb-0">Enhance your <br /> Business Outcomes</h1>
                   <p className="border-common"></p>
                   <p>
@@ -54,9 +54,9 @@ export default function Company() {
             </div>
 
            <div className="my-5">
-           <div className="row align-items-center flex-column-reverse flex-md-row">
+           <div className="row align-items-center flex-column-reverse flex-lg-row">
               <div className="col-lg-6  ">
-                <div className="feature-text">
+                <div className="feature-text mb-3">
                   <h1 class="text-black ulable mb-0">
                     Optimise your business growth operating model
                   </h1>
@@ -76,8 +76,8 @@ export default function Company() {
                 </div>
               </div>
               <div class="col-lg-6  ">
-                <div className="feature-left">
-                  <img className="img-fluid" src="assets/img/company-feature-two.png" />
+                <div className="feature-left mb-3" >
+                  <img className="company_img" src="assets/img/company-feature-two.png" />
                 </div>
               </div>
             </div>

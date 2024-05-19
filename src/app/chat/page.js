@@ -950,7 +950,7 @@ export default function Chat() {
                         {picLoader ?
                           <div className="text-success text-center top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
                           : <div>
-                            <label className="btn btn-primary btn-sm edit">
+                            <label className="btn btn-primary">
                               <input
                                 id="bannerImage"
                                 type="file"
@@ -958,10 +958,11 @@ export default function Chat() {
                                 accept="image/*"
                                 // value={form.baseImg ? form.baseImg : ''}
                                 onChange={(e) => { uploadGroupImage(e) }}
-                              />{group.image ? 'Change' : 'Upload'} Image</label>
+                              /> <i class="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>
+                              {group.image ? 'Change' : 'Upload'} Image</label>
                           </div>}
                         <div>
-                          {group.image ? <label className="btn btn-sm bgdanger  ml-2 btn-primary text-white delete" onClick={e => setGroup({ ...group, image: "" })}>Remove Image</label> : <></>}
+                          {group.image ? <label className="btn btn-secondary" onClick={e => setGroup({ ...group, image: "" })}>Remove Image</label> : <></>}
                         </div>
                         {/* <input type="hidden" name='image' required value={form.image} /> */}
                         {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}

@@ -20,7 +20,7 @@ export default function Partners() {
 
             </div>
 
-            <div className='row cpadd pt-0'>
+            <div className='row'>
 
 
               <div className='col-md-12'>
@@ -42,7 +42,7 @@ export default function Partners() {
 
 
                   <div className='row'>
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
@@ -53,7 +53,7 @@ export default function Partners() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
@@ -64,7 +64,7 @@ export default function Partners() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
@@ -75,7 +75,7 @@ export default function Partners() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
@@ -86,7 +86,7 @@ export default function Partners() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
@@ -97,7 +97,7 @@ export default function Partners() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
@@ -108,7 +108,7 @@ export default function Partners() {
                       </div>
                     </div>
 
-                    <div className='col-sm-12 col-md-3 col-lg-3 col-xl-3'>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                       <div className='card_box  hover_box'>
                         <div className='imgtag_card'>
                           <h4>Customer engagement for partner opportunities</h4>
