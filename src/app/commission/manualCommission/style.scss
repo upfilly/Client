@@ -108,3 +108,41 @@
 .btn-primary{
   font-size: 14px !important;
 }
+.upload_filebx {position: relative;}
+
+.upload_filebx .file_input {
+    position: absolute;
+    opacity: 0;
+    width: 129px;
+    display: inline-block;
+    left: 0;
+    height: 33px;
+}
+
+
+.upload_csvfile {
+  position: relative;
+}
+
+.upload_csvfile .removeCross {
+  position: absolute;
+  top: -4px;
+  left: 102px;
+  background-color: #68bafe;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.upload_csvfile img.thumbnail {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #eeeff6;
+  object-fit: contain;
+}
+.csv_close{
+  }
