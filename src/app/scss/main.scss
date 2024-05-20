@@ -4948,7 +4948,7 @@ input.mr-2.radio {
 }
 .sidebar_main .left_sidebar .top_scrollbx {
   overflow-y: auto;
-  height: 593px;
+  height: 677px;
   overflow-x: hidden;
   margin: 0px auto;
   width: 272px;
@@ -5020,4 +5020,8 @@ input.mr-2.radio {
 .sidebar_main.active .layout_right {
   width: calc(100% - 90px);
   margin-left: auto;
+}
+.table_section .inline_bx {
+  display: flex;
+  gap: 12px;
 }

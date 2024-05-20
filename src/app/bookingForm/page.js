@@ -365,7 +365,7 @@ export default function BillingForm() {
         <section className='common-padding'>
           <div className='container'>
             <div className='row'>
-              <div className='col-12 col-md-12 col-lg-8'>
+              <div className='col-12 col-md-12 col-lg-12 col-xl-8'>
                 <div className='card p-0 mb-4'>
                   <div className='card-header '>
                     <h3 className='mb-0 card-title'>Account <span className='subsmal'>Select a plan</span></h3>
@@ -394,7 +394,7 @@ export default function BillingForm() {
 
                         const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
 
-                        return <label htmlFor={`exampleRadios${itm._id}`} className=' col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4'> <div class={selectedId == itm?._id ? "checked_tbn" : "checked_tbn_after"} >
+                        return <label htmlFor={`exampleRadios${itm._id}`} className=' col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 mb-4'> <div class={selectedId == itm?._id ? "checked_tbn" : "checked_tbn_after"} >
                           <div className='sub-opt form-check pl-0' >
 
 
@@ -444,7 +444,7 @@ export default function BillingForm() {
                 </div>
               </div>
 
-              <div className='col-12 col-md-12 col-lg-4'>
+              <div className='col-12 col-md-12 col-lg-12 col-xl-4'>
                
                   <div className='card p-0 mb-4'>
                     <div className='card-header'>
