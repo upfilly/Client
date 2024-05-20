@@ -6,6 +6,9 @@ import './style.scss'
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import SelectDropdown from '../components/common/SelectDropdown';
+import dynamic from 'next/dynamic';
+
+const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -13,8 +16,9 @@ const Html = () => {
         email: '',
         language: '',
         type: '',
-        firstName:'',
-        lastName:''
+        firstName: '',
+        lastName: '',
+        description: '',
     })
 
     const handleSubmit = () => {
@@ -23,8 +27,9 @@ const Html = () => {
             role: form?.type,
             language: form?.language,
             email: form?.email,
-            firstName:form?.firstName,
-            lastName:form?.lastName
+            firstName: form?.firstName,
+            lastName: form?.lastName,
+            description: form?.description
         }
         loader(true);
         ApiClient.post('add/user', payload).then((res) => {
@@ -34,8 +39,8 @@ const Html = () => {
                     email: '',
                     language: '',
                     type: '',
-                    firstName:'',
-                    lastName:''
+                    firstName: '',
+                    lastName: ''
                 })
             }
             loader(false);
@@ -110,6 +115,38 @@ const Html = () => {
                                                 { id: 'analyzer', name: 'Analyzer' },
                                                 { id: 'publisher', name: 'Publisher' },
                                             ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className='col-md-12 mb-3'>
+                                    <div className='mb-3' >
+                                        <div className='mb-2' >Description</div>
+                                        <DynamicReactQuill
+                                            theme="snow"
+                                            value={form?.description ? form?.description : ''}
+
+                                            onChange={(newValue, editor) => {
+                                                setForm({ ...form, description: newValue })
+                                            }}
+                                            className='tuncketcls'
+                                            modules={{
+                                                toolbar: [
+                                                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                                    [{ size: [] }],
+                                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                                    { 'indent': '-1' }, { 'indent': '+1' }],
+                                                    ['link', 'image', 'video'],
+                                                    ['clean']
+                                                ],
+                                            }}
+                                            formats={[
+                                                'header', 'font', 'size',
+                                                'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                                'list', 'bullet', 'indent',
+                                                'link', 'image', 'video'
+                                            ]}
+                                            bounds={'.app'}
                                         />
                                     </div>
                                 </div>
