@@ -2660,9 +2660,11 @@ p.checkbox-option-main {
 .headsub {
   color: #5c5050;
   margin: 0;
-  padding: 5px 0px 10px;
+  padding: 6px 12px;
+  border-radius: 4px;
   font-weight: 500;
   font-size: 14px;
+  background-color: #eeeff6ab;
 }
 
 .billing_dtls h6 {

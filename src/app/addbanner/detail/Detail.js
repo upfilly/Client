@@ -66,115 +66,105 @@ const Detail = (p) => {
                             <div className='col-lg-12'>
                                 <div className='campaine_detls_wrapper'>
                                     <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                          <div className='mb-3'>
+                                          <div className='userdata'>
                                                 <p className='headmain'>Title:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
+                                                </div>
+                                                <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
                                             </div>
+                                          </div>
+                                           
                                         </div>
-                                    </div>
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                     
+                                  
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Seo Attributes:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.seo_attributes)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                          
+                                        </div>
+                                      
+                                 
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Category:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_id?.name)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                         
+                                        </div>
+                                       
+                                  
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Activation Date:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && datepipeModel.date(data?.activation_date)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                          
+                                        </div>
+                                    
+                                    
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Availability Date:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && datepipeModel.date(data?.availability_date)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                           
+                                        </div>
+                                    
+                                  
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Expiration Date:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && datepipeModel.date(data?.expiration_date)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                         
+                                        </div>
+                               
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Destination Url:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data?.destination_url}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Description:</p>
-                                            </div>
+                                          
                                         </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub mb-0' dangerouslySetInnerHTML={{ __html: data?.description }} />
-                                            </div>
-                                        </div>
-                                    </div>
+                                      
+                                 
+                                   
+                                  
 
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
+                                   
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
                                                 <p className='headmain'>Images:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div>
                                                     {/* {data?.images?.map((itm) => */}
@@ -185,12 +175,50 @@ const Detail = (p) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className='name-dtls'>
+                                          
+                                        </div>
+
+
+                                        <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
+                                        <div className='mb-3'>
+                                        <div className='userdata'>
+                                                <p className='headmain'>Description:</p>
+                                            </div>
+                                            <div className='headsub'>
+                                                <p className='mb-0 multiP' dangerouslySetInnerHTML={{ __html: data?.description }} />
+                                           
+                                        
+                                            </div>
+                                        </div>
+                                           
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
+                                        <div className='mb-3 '>
+                                   
+                                        <div className=' headsub '>
+                                            <div className='url_set'>
+                                       
+                                       <ul>
+                                        <li>
                                         {`
-                                        <a href=${data?.destination_url}><img src=${methodModel.noImg(data?.image)}></img></a>
-                                       `}
+                                            
+                                            <a  href=${data?.destination_url}> 
+                                            
+                                            <img src=${methodModel.noImg(data?.image)}></img>
+                                            
+                                            </a>
+                                           `}
+                                        </li>
+                                       </ul>
+                                            </div>
+                                       
                                     </div>
+                                        </div>
+                                           
+                                        </div>
+                                       
+                                    </div>
+                                   
 
 
                                 </div>
