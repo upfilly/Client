@@ -643,17 +643,17 @@ export default function affilate() {
                           {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
-                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary" onClick={() => { handleShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
+                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
                             <i className='fa fa-plus fa_icns'></i>
                           </button>}
-                          <span className='btn btn-primary '
+                          <span className='btn btn-primary btn_primary '
                             onClick={() => {
                               history.push(`/chat`)
                               localStorage.setItem("chatId", itm?._id || itm?.id)
                             }}>
                             <i className='fa fa-comment-o fa_icns'></i>
                           </span>
-                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary" onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
+                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
                             {/* <i className='fa fa-plus'></i> */}
                             <i class="fa-solid fa-people-group fa_icns"></i>
                           </button>}

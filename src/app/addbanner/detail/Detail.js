@@ -195,22 +195,28 @@ const Detail = (p) => {
                                         <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
                                         <div className='mb-3 '>
                                    
-                                        <div className=' headsub '>
-                                            <div className='url_set'>
-                                       
-                                       <ul>
-                                        <li>
+                                        <div className=' headsub  '>
+                                        <p className='startbx mb-3' >/* START ADVERTISER: WebHosting  */</p>
+                                            <div className=' startbx '>
+                                     
+                                     
                                         {`
                                             
+
+
                                             <a  href=${data?.destination_url}> 
                                             
-                                            <img src=${methodModel.noImg(data?.image)}></img>
-                                            
-                                            </a>
+                                         
+                                     
                                            `}
-                                        </li>
-                                       </ul>
+                                           <p className='text-center mb-0 '>
+                                         {`  <img src=${methodModel.noImg(data?.image)}></img>
+                                            
+                                           `}
+                                           </p>
+                                           <p className='' >{` </a>`}</p>
                                             </div>
+                                            <p className='startbx' > /* END ADVERTISER: WebHosting  */</p>
                                        
                                     </div>
                                         </div>

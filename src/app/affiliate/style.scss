@@ -16,7 +16,7 @@ i.fa.fa-plus-circle.mr-2 {
 thead.thead-clr tr th {
     background-color: #EFF2F5 !important;
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -66,11 +66,11 @@ p.name-person{
     margin-bottom: 0px;
 }
 img.person-img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #d9dcde;
+  width: 33px;
+  height: 33px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #d9dcde;
 }
 
 .checkbox-dropdown {
@@ -362,4 +362,13 @@ gap: 12px;
 }
 .filter_modal .modal-content{
   min-height: 100vh;
+}
+.btn_primary {width: 30px;height: 30px;}
+
+.btn_primary .fa_icns {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    padding: 4px 4px;
+    justify-content: center;
 }
