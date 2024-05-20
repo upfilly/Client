@@ -39,7 +39,8 @@ export default function affilate() {
   const [form, setform] = useState({
     "message": "",
     "tags": [],
-    "commission": "",
+    // "commission": "",
+    "campaign_id":""
   })
   const [groupForm, setGroupform] = useState({
     "affiliate_group": "",
@@ -62,6 +63,7 @@ export default function affilate() {
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
   const [categoryType, SetCategoryType] = useState('')
+  const [Campaigns,setCampaign] = useState([])
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleGroupClose = () => setGroupShow(false);
@@ -270,6 +272,14 @@ export default function affilate() {
     })
   }
 
+  const handleCampaign = () => {
+    ApiClient.get('campaign/all', { brand_id:user?.id }).then(res => {
+      if (res.success == true) {
+        setCampaign(res?.data?.data)
+      }
+    })
+  }
+
   const handleSetGroup = (e) => {
     e.preventDefault()
     const data = {
@@ -288,6 +298,7 @@ export default function affilate() {
 
   useEffect(() => {
     handleAffiliateGroup()
+    handleCampaign()
   }, [])
 
   useEffect(() => {
@@ -690,17 +701,17 @@ export default function affilate() {
                 </Form.Group>
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
-                  <Form.Label>Select Commission</Form.Label>
+                  <Form.Label>Select Campaign</Form.Label>
                   <SelectDropdown
                     id="statusDropdown"
                     className="w-100"
                     displayValue="name"
-                    placeholder="Select Commission"
-                    intialValue={form?.commission}
+                    placeholder="Select Campaign"
+                    intialValue={form?.campaign_id}
                     result={e => {
-                      setform({ ...form, commission: e.value })
+                      setform({ ...form, campaign_id: e.value })
                     }}
-                    options={Commission}
+                    options={Campaigns}
                   /></Form.Group>
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
