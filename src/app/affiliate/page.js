@@ -610,7 +610,7 @@ export default function affilate() {
                       <th scope="col" onClick={e => sorting('createdAt')}>Join Date {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
                       </th>
                       <th scope="col">Invitation Status</th>
-                      <th></th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
