@@ -18,6 +18,7 @@ const Html = () => {
     const [locale, setLocale] = useState('');
     const [hasHeader, setHasHeader] = useState(false);
     const [commissionSelectType, setCommissionType] = useState("");
+    const [submitted,setsubmitted] = useState(false)
     const history = useRouter()
 
     const commissionType = [{
@@ -68,6 +69,13 @@ const Html = () => {
     const handleSubmit = () => {
 
         let payload;
+
+        if (formType == "single") {
+            if(!commissionSelectType){
+                setsubmitted(true)
+                return
+            }
+        }
 
         if (formType == "single") {
             payload = {
@@ -169,6 +177,7 @@ const Html = () => {
                     result={e => { setCommissionType(e.value) }}
                     options={commissionType}
                 />
+{submitted && !commissionSelectType ? <div className="invalid-feedback d-block">Commission Type is Required</div> : <></>}
             </div>
         </div>
         <div className='col-md-6 '>
