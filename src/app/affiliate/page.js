@@ -35,6 +35,7 @@ export default function affilate() {
     sub_category_id: '',
     sub_child_category_id: '',
     category_id: '',
+    cat_type:''
   })
   const [form, setform] = useState({
     "message": "",
@@ -197,8 +198,11 @@ export default function affilate() {
 
   useEffect(() => {
     getData({ page: 1 })
-    getCategory()
-  }, [categoryType])
+  }, [])
+
+  useEffect(()=>{
+   getCategory()
+  },[categoryType])
 
 
   const pageChange = (e) => {
@@ -397,19 +401,19 @@ export default function affilate() {
                             <div id="collapsebxone" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                 <ul className='filter_ullist' >
-                                  {categoryTypes.map(category => (
-                                    <li key={category.id} >
+                                  {categoryTypes.map(category1 => (
+                                    <li key={category1.id} >
                                       <div class="form-check">
                                         <input
-                                          className=" form-check-input"
+                                          className="form-check-input"
                                           type="radio"
-                                          id={category.id}
-                                          name="category"
+                                          id={category1.id}
+                                          name="categoryType"
                                           value={categoryType}
-                                          checked={categoryType == category.id ? true : false}
-                                          onChange={() => handleCategoryTypeChange(category.id)}
+                                          checked={categoryType == category1.id ? true : false}
+                                          onChange={() => handleCategoryTypeChange(category1.id)}
                                         />
-                                        <label class="form-check-label" htmlFor={category.id}>{category.name}</label>
+                                        <label class="form-check-label" htmlFor={category1.id}>{category1.name}</label>
                                       </div>
                                     </li>
                                   ))}
