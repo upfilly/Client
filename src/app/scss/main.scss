@@ -4079,7 +4079,7 @@ p.revuh{
 //   width: calc(100% - 90px) !important;
 // }
 .sidebar_main .left_sidebar {
-  width: 300px;
+  width: 290px;
   background: #fff;
   height: 100vh;
   padding: 20px 10px;
@@ -4206,7 +4206,7 @@ p.revuh{
       height: 693px !important;
       overflow-x: hidden !important;
       margin: 0px auto !important;
-      width: 80px !important;
+      width: 75px !important;
       padding-left: 0px !important;
       transition: 0.5s ease-in-out !important;
   }
@@ -5004,12 +5004,12 @@ input.mr-2.radio {
 
 
 .sidebar_main .left_sidebar {
-  width: 300px;
+  width: 290px;
   background: #fff;
   height: 100vh;
   padding: 20px 10px;
   transition: 0.5s ease-in-out;
-  z-index: 9999 !important;
+  z-index: 999 !important;
   position: fixed;
   top: 0px;
 }
