@@ -219,8 +219,8 @@ export default function affilate() {
                         <td className='name-person ml-2'  >{itm?.currency}</td>
                         {/* <td className='name-person ml-2'  >{itm?.transaction_id}</td> */}
                         <td className='name-person ml-2'  >{itm?.transaction_status}</td>
-                        <td className='table_dats' >{datepipeModel.date(itm?.createdAt)}</td>
-                        <td className='table_dats' >{datepipeModel.date(itm?.updatedAt)}</td>
+                        <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
+                        <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td>
 
                       </tr>
 

@@ -495,28 +495,6 @@ export default function affilate() {
                             </div>
                           </div>
 
-
-                          {/* {selectedSubCategory && selectedSubCategory.subchildcategory.length > 0 && (
-
-
-
-                          <div class="accordion-item">
-                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesizes" aria-expanded="false" aria-controls="collapsesizes">
-                                <b className='' >Select Subsubcategory</b>
-                              </button>
-                            </h2>
-                            <div id="collapsesizes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
-                               
-
-
-                              </div>
-                            </div>
-                          </div>
-                        )} */}
-
-
                         </div>
                       </div>
 
@@ -666,18 +644,18 @@ export default function affilate() {
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
                           {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary" onClick={() => { handleShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
-                            <i className='fa fa-plus'></i>
+                            <i className='fa fa-plus fa_icns'></i>
                           </button>}
-                          <span className='btn btn-primary ml-2'
+                          <span className='btn btn-primary '
                             onClick={() => {
                               history.push(`/chat`)
                               localStorage.setItem("chatId", itm?._id || itm?.id)
                             }}>
-                            <i className='fa fa-comment-o'></i>
+                            <i className='fa fa-comment-o fa_icns'></i>
                           </span>
                           {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary" onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
                             {/* <i className='fa fa-plus'></i> */}
-                            <i class="fa-solid fa-people-group"></i>
+                            <i class="fa-solid fa-people-group fa_icns"></i>
                           </button>}
                         </div>
                       </td>

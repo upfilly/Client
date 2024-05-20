@@ -110,12 +110,12 @@ const Html = ({
         }
     </tbody>
 </table>
-
+{!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
 
 </div>
                         </div>
 
-                        {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
+                       
 
                         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                             <span>Show {data?.length} from {total} Customers</span>
