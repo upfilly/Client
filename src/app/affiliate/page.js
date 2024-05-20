@@ -14,7 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
 import methodModel from '@/methods/methods';
-import { Modal, Button, Form, FormGroup } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 export default function affilate() {
@@ -263,18 +263,18 @@ export default function affilate() {
   }
 
   const handleAffiliateGroup = () => {
-    ApiClient.get('affiliate-groups', { status: "active" , addedBy:user?.id }).then(res => {
+    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id }).then(res => {
       if (res.success == true) {
         setAffiliategroup(res?.data?.data)
       }
     })
   }
 
-  const handleSetGroup = (e) =>{
+  const handleSetGroup = (e) => {
     e.preventDefault()
-    const data ={
-      id:selectedAffiliteid,
-      affiliate_group:groupForm?.affiliate_group
+    const data = {
+      id: selectedAffiliteid,
+      affiliate_group: groupForm?.affiliate_group
     }
     ApiClient.put('edit/profile', data).then(res => {
 
