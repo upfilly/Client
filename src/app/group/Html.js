@@ -107,7 +107,9 @@ const Html = ({
                                                             {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
                                                         </span>
                                                     </span></td>
-                                                    <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
+                                                    <td className='table_dats'>
+                                                    <h4 class="user"> {datepipeModel.date(itm?.createdAt)}</h4>
+                                                       </td>
                                                     <td>
                                                         <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 

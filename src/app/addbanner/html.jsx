@@ -144,7 +144,7 @@ const Html = ({
                     <div className="action_icons gap-3 ">
                         {<>{isAllow('editAdmins') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
-                                <i className="material-icons edit" title="Edit">edit</i>
+                                <i className="material-icons edit " title="Edit">edit</i>
                             </a>
                         </> : <></>}
 

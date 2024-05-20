@@ -2878,15 +2878,6 @@ a.btn.btn-primary.edit {
   }
 
 
-  // Platform page end
-
-
-}
-
-@media (max-width:767px) {
-  // form.centerLogin {
-  //   padding: 1rem 1rem !important;
-  // }
 
   .right_side {
     padding: 0px !important;
@@ -5024,4 +5015,13 @@ input.mr-2.radio {
 .table_section .inline_bx {
   display: flex;
   gap: 12px;
+}
+.fa_icns {
+  font-size: 14px;
+}
+.active_btnactive .active {
+  font-size: 13px;
+}
+.name-person{
+  font-size: 13px;
 }
