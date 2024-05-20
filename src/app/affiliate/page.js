@@ -668,8 +668,7 @@ export default function affilate() {
                             }}>
                             <i className='fa fa-comment-o fa_icns'></i>
                           </span>
-                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
-                            {/* <i className='fa fa-plus'></i> */}
+                          {<button className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
                             <i class="fa-solid fa-people-group fa_icns"></i>
                           </button>}
                         </div>
