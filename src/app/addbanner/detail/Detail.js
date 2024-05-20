@@ -31,6 +31,24 @@ const Detail = (p) => {
         getDetail(id)
     }, [id])
 
+    const renderAnchorAndImage = () => {
+        if (!data) return null;
+
+        const anchorElement = document.createElement('a');
+        anchorElement.href = data.destination_url || '#';
+        anchorElement.textContent = 'Click Here';
+
+        const imageElement = document.createElement('img');
+        imageElement.src = methodModel.noImg(data.image);
+        
+        return (
+            <>
+                {anchorElement}
+                {imageElement}
+            </>
+        );
+    };
+
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
             <div className='sidebar-left-content'>
@@ -47,7 +65,6 @@ const Detail = (p) => {
                         <div className='row'>
                             <div className='col-lg-12'>
                                 <div className='campaine_detls_wrapper'>
-
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
@@ -128,6 +145,19 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
+                                                <p className='headmain'>Destination Url:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data?.destination_url}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
                                                 <p className='headmain'>Description:</p>
                                             </div>
                                         </div>
@@ -155,6 +185,11 @@ const Detail = (p) => {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className='name-dtls'>
+                                        {`
+                                        <a href=${data?.destination_url}><img src=${methodModel.noImg(data?.image)}></img></a>
+                                       `}
                                     </div>
 
 

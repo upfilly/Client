@@ -72,8 +72,6 @@ export default function affilate() {
     { id: 'advertiser_categories', name: 'Advertiser Categories' },
   ]
 
-  console.log(selectedCategory, "hihjkhjkhjkhjkh")
-
   const handleCategoryChange = (category) => {
     getData({ page: 1, category_id: category?.id || category?._id })
     setFilter({ ...filters, category_id: category?.id || category?._id })
