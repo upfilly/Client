@@ -5044,13 +5044,28 @@ input.mr-2.radio {
 }
 
 // modal table css
-button.swal2-confirm.swal2-styled.swal2-default-outline {
-  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
-  border-radius: 50px; 
-  padding:8px 20px;
-  // width: 120px;
-}
+// button.swal2-confirm.swal2-styled.swal2-default-outline {
+//   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+//   border-radius: 50px; 
+//   padding:8px 20px;
+//   width: 120px;
+// }
 
-.swal2-icon-content {
-  color: #3d6fb2;
+// .swal2-icon-content {
+//   color: #3d6fb2;
+// }
+
+div:where(.swal2-icon).swal2-warning{
+  border: 1px solid #7066e0 !important;
+  color: #fff !important;
+  background-color: #7066e0 !important;
+}
+.fb_reset button.swal2-cancel.swal2-styled.swal2-default-outline {
+  background-color: rgb(133 127 127) !important;
+}
+.fb_reset div:where(.swal2-container) h2:where(.swal2-title){
+  font-size: 24px !important;
+}
+.fb_reset div:where(.swal2-container) .swal2-html-container{
+  font-size: 16px !important;
 }
