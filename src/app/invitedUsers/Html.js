@@ -108,9 +108,9 @@ const Html = ({
                             <h4 className='user'>
                                 {methodModel?.capitalizeFirstLetter(itm?.fullName)}
                             </h4>
-                            <p className='user_info'>
+                            {/* <p className='user_info'>
                                 {itm?.email}
-                            </p>
+                            </p> */}
                         </div>
                     </div></td>
                     <td>{itm?.role == 'affiliate' ?  "Super User"  : methodModel?.capitalizeFirstLetter(itm?.role)}</td>
