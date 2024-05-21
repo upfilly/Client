@@ -275,9 +275,13 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                         />
                                         {form?.event_type?.length > 0 && <div className="selected_offrs_market">
                                             {form?.event_type?.map((value, index) => (
-                                                <span key={index}>
-                                                    {value} <i className="fa fa-times" onClick={() => handleRemove(value)}></i>
-                                                </span>
+                                                <div className="d-flex gap-3 align-items-center btn btn-primary">
+                                                  <p className="mb-0 valus" key={index}>
+                                                    {value} 
+                                                </p>
+                                                <i className="fa fa-times close_bx" onClick={() => handleRemove(value)}></i>
+                                                </div>
+                                                
                                             ))}
                         </div>}
                                     </div>
