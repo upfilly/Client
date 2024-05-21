@@ -173,11 +173,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">URL Shortener</span>
         </ListItemLink>} */}
 
-        {user && user?.role == "brand" && <ListItemLink to="/invites" data-bs-toggle="tooltip" data-bs-placement="top" title="Invites">
-          {/* <i className="fa fa-envelope-o mr-2 " title="campaignManagement"></i> */}
+        {/* {user && user?.role == "brand" && <ListItemLink to="/invites" data-bs-toggle="tooltip" data-bs-placement="top" title="Invites">
           <i class="material-icons svg_iconbx">markunread</i>
           <span className="side_head">Invites</span>
-        </ListItemLink>}
+        </ListItemLink>} */}
 
         {user && user?.role == "brand" && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Sent Offers">
           <i className="material-icons  svg_iconbx" title="campaignManagement">business</i>

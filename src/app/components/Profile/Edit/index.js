@@ -74,7 +74,10 @@ const EditProfile = () => {
     { key: 'mobileNo', minLength: 10 },
     { key: 'gender', required:true },
     { key: 'dialCode', minLength:1 },
-    { key: 'category_id', required:true },
+    // { key: 'affiliate_type', required:true },
+    // { key: 'category_id', required:true },
+    // { key: 'sub_category_id', required:true },
+    // { key: 'sub_child_category_id', required:true },
   ]
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
@@ -148,6 +151,7 @@ const EditProfile = () => {
     if(form?.dialCode == "") return
     if(form?.mobileNo == "") return
     if (invalid) return
+    if(user?.role == 'affiliate' && !form?.affiliate_type)return
 
     let value = {
       ...form,
@@ -163,9 +167,25 @@ const EditProfile = () => {
       accountholder_name: formData?.accountholder_name,
       routing_number: formData?.routing_number,
       account_number: formData?.account_number,
-      ssn_number:formData?.ssn_number,
+      ssn_number: formData?.ssn_number,
       company_name: formData?.company_name,
+      sub_category_id: selectedSubcategory,
+      sub_child_category_id: selectedSubSubcategory,
+      category_id: selectedCategory,
+      // cat_type:form?.cat_type
       // dob: formatedDob,
+    }
+    if(!value?.cat_type){
+      delete value?.cat_type
+    }
+    if(!value?.sub_category_id){
+      delete value?.sub_category_id
+    }
+    if(!value?.category_id){
+      delete value?.category_id
+    }
+    if(!value?.sub_child_category_id){
+      delete value?.sub_child_category_id
     }
     delete value.category_name
     // delete value.category_id

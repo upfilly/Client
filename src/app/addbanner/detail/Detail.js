@@ -13,6 +13,7 @@ const Detail = (p) => {
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
+    
     const getDetail = (did) => {
         loader(true)
         ApiClient.get(`banner`, { id: did }).then(res => {
@@ -30,24 +31,6 @@ const Detail = (p) => {
     useEffect(() => {
         getDetail(id)
     }, [id])
-
-    const renderAnchorAndImage = () => {
-        if (!data) return null;
-
-        const anchorElement = document.createElement('a');
-        anchorElement.href = data.destination_url || '#';
-        anchorElement.textContent = 'Click Here';
-
-        const imageElement = document.createElement('img');
-        imageElement.src = methodModel.noImg(data.image);
-        
-        return (
-            <>
-                {anchorElement}
-                {imageElement}
-            </>
-        );
-    };
 
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -67,166 +50,147 @@ const Detail = (p) => {
                                 <div className='campaine_detls_wrapper'>
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                          <div className='mb-3'>
-                                          <div className='userdata'>
-                                                <p className='headmain'>Title:</p>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Title:</p>
                                                 </div>
                                                 <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
-                                            </div>
-                                          </div>
-                                           
-                                        </div>
-                                     
-                                  
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Seo Attributes:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.seo_attributes)}</p>
-                                            </div>
-                                        </div>
-                                          
-                                        </div>
-                                      
-                                 
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Category:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_id?.name)}</p>
-                                            </div>
-                                        </div>
-                                         
-                                        </div>
-                                       
-                                  
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Activation Date:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && datepipeModel.date(data?.activation_date)}</p>
-                                            </div>
-                                        </div>
-                                          
-                                        </div>
-                                    
-                                    
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Availability Date:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && datepipeModel.date(data?.availability_date)}</p>
-                                            </div>
-                                        </div>
-                                           
-                                        </div>
-                                    
-                                  
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Expiration Date:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && datepipeModel.date(data?.expiration_date)}</p>
-                                            </div>
-                                        </div>
-                                         
-                                        </div>
-                               
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Destination Url:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data?.destination_url}</p>
-                                            </div>
-                                        </div>
-                                          
-                                        </div>
-                                      
-                                 
-                                   
-                                  
-
-                                   
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Images:</p>
-                                            </div>
-                                            <div className='name-dtls'>
-                                                <div>
-                                                    {/* {data?.images?.map((itm) => */}
-                                                    <div className="imagethumbWrapper">
-                                                        <img src={methodModel.noImg(data?.image)} className="" />
-                                                    </div>
-                                                    {/* )} */}
+                                                    <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                          
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Seo Attributes:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.seo_attributes)}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Category:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_id?.name)}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Activation Date:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data && datepipeModel.date(data?.activation_date)}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Availability Date:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data && datepipeModel.date(data?.availability_date)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Expiration Date:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data && datepipeModel.date(data?.expiration_date)}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Destination Url:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>{data?.destination_url}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Images:</p>
+                                                </div>
+                                                <div className='name-dtls'>
+                                                    <div>
+                                                        {/* {data?.images?.map((itm) => */}
+                                                        <div className="imagethumbWrapper">
+                                                            <img src={methodModel.noImg(data?.image)} className="" />
+                                                        </div>
+                                                        {/* )} */}
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
 
 
                                         <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
-                                        <div className='mb-3'>
-                                        <div className='userdata'>
-                                                <p className='headmain'>Description:</p>
+                                            <div className='mb-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Description:</p>
+                                                </div>
+                                                <div className='headsub'>
+                                                    <p className='mb-0 multiP' dangerouslySetInnerHTML={{ __html: data?.description }} />
+
+
+                                                </div>
                                             </div>
-                                            <div className='headsub'>
-                                                <p className='mb-0 multiP' dangerouslySetInnerHTML={{ __html: data?.description }} />
-                                           
-                                        
-                                            </div>
-                                        </div>
-                                           
+
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
-                                        <div className='mb-3 '>
-                                   
-                                        <div className=' headsub  '>
-                                        <p className='startbx mb-3' >/* START ADVERTISER: WebHosting  */</p>
-                                            <div className=' startbx '>
-                                     
-                                     
-                                        {`
-                                            
+                                            <div className='mb-3 '>
 
-
+                                                <div className=' headsub  '>
+                                                    <p className='startbx mb-3' >/* START ADVERTISER: WebHosting  */</p>
+                                                    <div className=' startbx '>
+                                                        {`
                                             <a  href=${data?.destination_url}> 
-                                            
-                                         
-                                     
                                            `}
-                                           <p className='text-center mb-0 '>
-                                         {`  <img src=${methodModel.noImg(data?.image)}></img>
+                                                        <p className='text-center mb-0 '>
+                                                            {`  <img src=${methodModel.noImg(data?.image)}/>
                                             
                                            `}
-                                           </p>
-                                           <p className='' >{` </a>`}</p>
+                                                        </p>
+                                                        <p className='' >{` </a>`}</p>
+                                                    </div>
+                                                    <p className='startbx' > /* END ADVERTISER: WebHosting  */</p>
+
+                                                </div>
                                             </div>
-                                            <p className='startbx' > /* END ADVERTISER: WebHosting  */</p>
-                                       
-                                    </div>
                                         </div>
-                                           
-                                        </div>
-                                       
                                     </div>
-                                   
-
-
                                 </div>
                             </div>
                         </div>

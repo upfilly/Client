@@ -335,7 +335,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (!activeUser) {
-      setActiveData(chatList[0])
+      setActiveData(chatWith)
     };
   }, [chat]);
 
@@ -552,8 +552,8 @@ export default function Chat() {
 
   const addMember = () => {
     const payload = {
-      "group_id": activeData?.room_id,
-      "admin_id": activeData?.user_id,
+      "group_id": activeData?.room_id || roomId,
+      "admin_id": activeData?.user_id || activeData?._id || activeData?.id,
       "users": addMembers?.updatedUsers
     }
 
