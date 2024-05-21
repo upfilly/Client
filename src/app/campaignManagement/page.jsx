@@ -14,7 +14,7 @@ import axios from 'axios';
 const Users = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: ''})
+  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -22,6 +22,7 @@ const Users = () => {
 
   useEffect(() => {
     if (user) {
+      // setFilter({ ...filters ,role})
       getData({ role, page: 1 })
     }
   }, [role])
@@ -54,7 +55,7 @@ const Users = () => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#6c757d',
+      cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -127,7 +128,7 @@ const Users = () => {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#6c757d',
+        cancelButtonColor: '#d33',
         confirmButtonText: 'Deny',
       }).then((result) => {
         if (result.isConfirmed) {
@@ -162,7 +163,7 @@ const Users = () => {
       // icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#6c757d',
+      cancelButtonColor: '#d33',
       confirmButtonText: 'Send',
     }).then((result) => {
       if (result.isConfirmed) {
@@ -200,6 +201,7 @@ const Users = () => {
     if (role) url = `/campaign/${role}/add`
     history.push(url)
   }
+
 
   const reset = () => {
     let filter = {

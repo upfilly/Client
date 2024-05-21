@@ -163,11 +163,11 @@ export default function Login() {
         crendentialModel.setUser(res.data)
 
         let url = '/dashboard'
-        if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
-          history.push('/addAccount/detail')
-        } else {
+        // if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
+        //   history.push('/addAccount/detail')
+        // } else {
           history.push(url)
-        }
+        // }
        ;
       }
       loader(false)
