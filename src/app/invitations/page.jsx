@@ -57,7 +57,7 @@ const Invitations = () => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
@@ -132,7 +132,7 @@ const Invitations = () => {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
         confirmButtonText: 'Deny',
       }).then((result) => {
         if (result.isConfirmed) {
@@ -167,7 +167,7 @@ const Invitations = () => {
   //     // icon: 'success',
   //     showCancelButton: true,
   //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
+  //     cancelButtonColor: '#6c757d',
   //     confirmButtonText: 'Send',
   //   }).then((result) => {
   //     if (result.isConfirmed) {

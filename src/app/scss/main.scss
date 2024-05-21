@@ -5055,17 +5055,24 @@ input.mr-2.radio {
 //   color: #3d6fb2;
 // }
 
+
+
+
+
 div:where(.swal2-icon).swal2-warning{
-  border: 1px solid #7066e0 !important;
+  border: 1px solid #3085d6 !important;
   color: #fff !important;
-  background-color: #7066e0 !important;
+  background-color: #3085d6 !important;
 }
-.fb_reset button.swal2-cancel.swal2-styled.swal2-default-outline {
-  background-color: rgb(133 127 127) !important;
-}
-.fb_reset div:where(.swal2-container) h2:where(.swal2-title){
+#swal2-title{
   font-size: 24px !important;
 }
-.fb_reset div:where(.swal2-container) .swal2-html-container{
+#swal2-html-container{
   font-size: 16px !important;
+}
+.swal2-confirm, .swal2-cancel {
+  border-radius: 55px !important;
+}
+.swal2-popup{
+  width: 450px !important;
 }
