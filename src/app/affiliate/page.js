@@ -639,7 +639,7 @@ export default function affilate() {
                         <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
                       </div></td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
-                      <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name}</p></td>
+                      <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
                       <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
                       <td className='table_dats'>   <span className={`active_btn${itm?.status}`}
                       // onClick={() => statusChange(itm)}
@@ -659,17 +659,17 @@ export default function affilate() {
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
                           {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
-                            <i className='fa fa-plus fa_icns'></i>
+                            <i className='fa fa-plus fa_icns' title='Invite'></i>
                           </button>}
                           <span className='btn btn-primary btn_primary '
                             onClick={() => {
                               history.push(`/chat`)
                               localStorage.setItem("chatId", itm?._id || itm?.id)
                             }}>
-                            <i className='fa fa-comment-o fa_icns'></i>
+                            <i className='fa fa-comment-o fa_icns' title='Chat'></i>
                           </span>
                           {<button className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
-                            <i class="fa-solid fa-people-group fa_icns"></i>
+                            <i class="fa-solid fa-people-group fa_icns" title='Add Group'></i>
                           </button>}
                         </div>
                       </td>
