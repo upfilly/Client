@@ -20,7 +20,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result?.isConfirmed) {

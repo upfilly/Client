@@ -313,7 +313,7 @@ export default function Chat() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
       confirmButtonText: 'Yes, Leave it!'
     }).then((result) => {
       if (result.isConfirmed) {

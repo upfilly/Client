@@ -5042,3 +5042,37 @@ input.mr-2.radio {
     border-radius: 12px;
     font-size: 13px;
 }
+
+// modal table css
+// button.swal2-confirm.swal2-styled.swal2-default-outline {
+//   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+//   border-radius: 50px; 
+//   padding:8px 20px;
+//   width: 120px;
+// }
+
+// .swal2-icon-content {
+//   color: #3d6fb2;
+// }
+
+
+
+
+
+div:where(.swal2-icon).swal2-warning{
+  border: 1px solid #3085d6 !important;
+  color: #fff !important;
+  background-color: #3085d6 !important;
+}
+#swal2-title{
+  font-size: 24px !important;
+}
+#swal2-html-container{
+  font-size: 16px !important;
+}
+.swal2-confirm, .swal2-cancel {
+  border-radius: 55px !important;
+}
+.swal2-popup{
+  width: 450px !important;
+}
