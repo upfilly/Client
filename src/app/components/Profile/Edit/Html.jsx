@@ -97,7 +97,6 @@ const Html = ({ user,
 
   return (
     <>
-
       <div className='padding60'>
         <div className='container'>
           <form
@@ -109,7 +108,7 @@ const Html = ({ user,
             <div className='card mb-3'>
               <div className='card-header'>
                 <div className='main_title_head d-flex gap-3 align-items-center'>
-                <button type='button'className='btn btn-primary rounded-2'><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
+                  <button type='button' className='btn btn-primary rounded-2'><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
 
                   <h3>  User Details</h3>
                 </div>
@@ -118,32 +117,32 @@ const Html = ({ user,
                 <div className='row'>
                   <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
                     <div className='profile-edit-sec  flex-wrap  mb-3'>
-                          <label className="">
-                            <img src={methodModel.userImg(form && form.image)} className="profileuserimg" />
-                          </label>
+                      <label className="">
+                        <img src={methodModel.userImg(form && form.image)} className="profileuserimg" />
+                      </label>
 
-                          <div className='d-flex gap-2 align-items-center width-profile '>
+                      <div className='d-flex gap-2 align-items-center width-profile '>
 
-                            {picLoader ?
-                              <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
-                              : <div>
-                                <label className="btn btn-primary  edit_btns mb-0">
-                                  <input
-                                    id="bannerImage"
-                                    type="file"
-                                    className="d-none"
-                                    accept="image/*"
-                                    value={form.baseImg ? form.baseImg : ''}
-                                    onChange={(e) => { uploadImage(e); }}
-                                  />{form.image ? '  Change' : 'Upload'} Image</label>
-                              </div>}
-                            <div>
-                              {form.image ? <label className="btn btn-secondary mb-0 edit_btns" onClick={e => setForm({ ...form, image: "" })}>Remove Image</label> : <></>}
-                            </div>
-                            {/* <input type="hidden" name='image' required value={form.image} /> */}
-                            {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}
-                          </div>
-                      
+                        {picLoader ?
+                          <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
+                          : <div>
+                            <label className="btn btn-primary  edit_btns mb-0">
+                              <input
+                                id="bannerImage"
+                                type="file"
+                                className="d-none"
+                                accept="image/*"
+                                value={form.baseImg ? form.baseImg : ''}
+                                onChange={(e) => { uploadImage(e); }}
+                              />{form.image ? '  Change' : 'Upload'} Image</label>
+                          </div>}
+                        <div>
+                          {form.image ? <label className="btn btn-secondary mb-0 edit_btns" onClick={e => setForm({ ...form, image: "" })}>Remove Image</label> : <></>}
+                        </div>
+                        {/* <input type="hidden" name='image' required value={form.image} /> */}
+                        {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}
+                      </div>
+
                     </div>
                   </div>
 
@@ -240,35 +239,35 @@ const Html = ({ user,
                               height: 200,
                             }}
                           /> */}
-                      <div className="rounded-5 descript_editpro">
-                      <DynamicReactQuill
-                            theme="snow"
-                            value={form?.description ? form?.description : ''}
+                          <div className="rounded-5 descript_editpro">
+                            <DynamicReactQuill
+                              theme="snow"
+                              value={form?.description ? form?.description : ''}
 
-                            onChange={(newValue, editor) => {
-                              setForm({ ...form, description: newValue })
-                            }}
-                            className='tuncketcls'
-                            modules={{
-                              toolbar: [
-                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                [{ size: [] }],
-                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                { 'indent': '-1' }, { 'indent': '+1' }],
-                                ['link', 'image', 'video'],
-                                ['clean']
-                              ],
-                            }}
-                            formats={[
-                              'header', 'font', 'size',
-                              'bold', 'italic', 'underline', 'strike', 'blockquote',
-                              'list', 'bullet', 'indent',
-                              'link', 'image', 'video'
-                            ]}
-                            bounds={'.app'}
-                          />
-                      </div>
+                              onChange={(newValue, editor) => {
+                                setForm({ ...form, description: newValue })
+                              }}
+                              className='tuncketcls'
+                              modules={{
+                                toolbar: [
+                                  [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                  [{ size: [] }],
+                                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                  [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                  { 'indent': '-1' }, { 'indent': '+1' }],
+                                  ['link', 'image', 'video'],
+                                  ['clean']
+                                ],
+                              }}
+                              formats={[
+                                'header', 'font', 'size',
+                                'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                'list', 'bullet', 'indent',
+                                'link', 'image', 'video'
+                              ]}
+                              bounds={'.app'}
+                            />
+                          </div>
                         </div>
 
                       </div>
@@ -291,26 +290,26 @@ const Html = ({ user,
                     <div className='card-body'>
                       <div className='row'>
                         {user?.role == 'affiliate' &&
-                        
-                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                          <div className='form-group'>
-                            <div className="select_drop ">
-                              <label>Category Type</label>
-                              <div className="select_row">
-                                <SelectDropdown
-                                  id="statusDropdown"
-                                  displayValue="name"
-                                  placeholder="Select Type"
-                                  intialValue={form?.cat_type}
-                                  result={e => setForm({ ...form, cat_type: e.value })}
-                                  options={categoryTypes}
-                                />
-                              </div>
-                              {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
 
+                          <div className='col-12 col-sm-12 col-md-6 mb-3'>
+                            <div className='form-group'>
+                              <div className="select_drop ">
+                                <label>Category Type</label>
+                                <div className="select_row">
+                                  <SelectDropdown
+                                    id="statusDropdown"
+                                    displayValue="name"
+                                    placeholder="Select Type"
+                                    intialValue={form?.cat_type}
+                                    result={e => setForm({ ...form, cat_type: e.value })}
+                                    options={categoryTypes}
+                                  />
+                                </div>
+                                {/* {submitted && !form?.cat_type ? <div className="invalid-feedback d-block">Cat Type is Required</div> : <></>} */}
+
+                              </div>
                             </div>
-                          </div>
-                        </div>}
+                          </div>}
                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="category">Category:</label>
                           <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
@@ -318,7 +317,9 @@ const Html = ({ user,
                             {category?.map(category => (
                               <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
                             ))}
-                          </select></div>
+                          </select>
+                          {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
+                          </div>
                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="subcategory">Subcategory:</label>
                           <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
@@ -326,7 +327,9 @@ const Html = ({ user,
                             {selectedCategory && category.find(cat => cat._id === selectedCategory).subCategories.map(subcategory => (
                               <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                             ))}
-                          </select></div>
+                          </select>
+                          {/* {submitted && !form?.sub_category_id ? <div className="invalid-feedback d-block">Subcategory is Required</div> : <></>} */}
+                          </div>
                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="subsubcategory">Sub-subcategory:</label>
                           <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
@@ -334,35 +337,37 @@ const Html = ({ user,
                             {selectedSubcategory && category.find(cat => cat._id === selectedCategory).subCategories.find(subcat => subcat.id || subcat?._id === selectedSubcategory).subchildcategory.map(subsubcat => (
                               <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
                             ))}
-                          </select></div>
-                      
+                          </select>
+                          {/* {submitted && !form?.sub_child_category_id ? <div className="invalid-feedback d-block">Sub-subcategory is Required</div> : <></>} */}
+                          </div>
+
 
                         {user?.role == 'affiliate' &&
-                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                          <div className='form-group'>
-                            <div className="select_drop ">
-                              <label>Type</label>
-                              <div className="select_row">
-                                <SelectDropdown
-                                  id="statusDropdown"
-                                  displayValue="name"
-                                  placeholder="Select Type"
-                                  intialValue={form?.affiliate_type}
-                                  result={e => setForm({ ...form, affiliate_type: e.value })}
-                                  options={[{ name: 'Business', id: 'business' }, { name: 'Individual', id: 'individual' }]}
-                                />
-                              </div>
-                              {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
+                          <div className='col-12 col-sm-12 col-md-6 mb-3'>
+                            <div className='form-group'>
+                              <div className="select_drop ">
+                                <label>Type</label>
+                                <div className="select_row">
+                                  <SelectDropdown
+                                    id="statusDropdown"
+                                    displayValue="name"
+                                    placeholder="Select Type"
+                                    intialValue={form?.affiliate_type}
+                                    result={e => setForm({ ...form, affiliate_type: e.value })}
+                                    options={[{ name: 'Business', id: 'business' }, { name: 'Individual', id: 'individual' }]}
+                                  />
+                                </div>
+                                {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
 
+                              </div>
                             </div>
-                          </div>
-                        </div>}
+                          </div>}
 
                         {<><>
-                         <div className="col-12 col-sm-12 col-md-6 mb-3">
-                          <div className="form-group">
-                            <label>Location</label>
-                            <PlacesAutocomplete
+                          <div className="col-12 col-sm-12 col-md-6 mb-3">
+                            <div className="form-group">
+                              <label>Location</label>
+                              <PlacesAutocomplete
                                 value={address}
                                 onChange={handleChange}
                                 onSelect={handleSelect}
@@ -397,14 +402,14 @@ const Html = ({ user,
                                   </div>
                                 )}
                               </PlacesAutocomplete>
-                            <div>
-                              
-                            </div>
+                              <div>
 
+                              </div>
+
+                            </div>
                           </div>
-                        </div>
                         </>
-                        <div className='col-12 col-sm-12 col-md-6 mb-3 '>
+                          <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>Country  </label>
                               <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
@@ -415,8 +420,8 @@ const Html = ({ user,
                               <label className='label-set'>City  </label>
                               <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                             </div>
-                          </div> 
-                            <div className='col-12 col-sm-12 col-md-6 mb-3'>
+                          </div>
+                          <div className='col-12 col-sm-12 col-md-6 mb-3'>
                             <div class="form-group">
                               <label className='label-set' >Postal Code</label>
                               <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
@@ -480,18 +485,18 @@ const Html = ({ user,
                                 ><i className='fa fa-plus'></i></a>
                               </div>
                               <div className="d-flex gap-3 align-items-center flex-wrap mt-4 ">
-                              {form && form?.tags?.map((item, i) => {
-                                return (
-                                         <button type="button" class="btn btn-primary d-flex gap-2 align-items-center" key={i}>
-                                          <span className=' pt_bx'> {item}</span>
-                                          <i className='fa fa-close cloosebtn'  onClick={() => cancele(item, 'tags')} ></i>
-                                  </button>
-                                  
-                             
-                                )
-                              })}
+                                {form && form?.tags?.map((item, i) => {
+                                  return (
+                                    <button type="button" class="btn btn-primary d-flex gap-2 align-items-center" key={i}>
+                                      <span className=' pt_bx'> {item}</span>
+                                      <i className='fa fa-close cloosebtn' onClick={() => cancele(item, 'tags')} ></i>
+                                    </button>
+
+
+                                  )
+                                })}
                               </div>
-                            
+
                             </div>
                           </div>
                         }
@@ -509,67 +514,67 @@ const Html = ({ user,
                     </div>
                     <div className='card-body'>
                       {
-                        
-                          <div className="row mx-auto">
 
-                            {data?.map((item) => (
-                              <div key={item?.id} className=" col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div className="card rounded-5 border platforms_input mb-3">
-                                  <input
-                                    className="form-check-input ml-0"
-                                    type="checkbox"
-                                    id={item}
-                                    onChange={() => handleFeatureCheckbox(item)}
-                                    checked={selectedItems?.includes(item)}
-                                  />
-                                  <label className="form-check-label ml-3 pl-2" for={item}>
-                                    {methodModel?.capitalizeFirstLetter(item)}
-                                  </label>
-                                  {selectedItems?.includes(item) && (
-                                    <div className="row">
-                                      <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
-                                        <label>User name</label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          placeholder='Enter Name'
-                                          value={form[`${item}_username`]}
-                                          onChange={(e) => {
-                                            setForm((prevForm) => ({
-                                              ...prevForm,
-                                              [`${item}_username`]: e.target.value,
-                                            }));
-                                          }}
-                                          required
-                                        />
-                                      </div>
+                        <div className="row mx-auto">
 
-                                      <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
-                                        <label>{`${methodModel?.capitalizeFirstLetter(item)} link`}</label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          placeholder='Enter link'
-
-                                          value={form[`${item}_profile_link`]}
-                                          onChange={(e) => {
-                                            setForm((prevForm) => ({
-                                              ...prevForm,
-                                              [`${item}_profile_link`]: e.target.value,
-                                            }));
-                                          }}
-                                          title="http://www.example.com"
-                                          pattern={pattern}
-                                          required
-                                        />
-                                      </div>
+                          {data?.map((item) => (
+                            <div key={item?.id} className=" col-12 col-sm-12 col-md-12 col-lg-12">
+                              <div className="card rounded-5 border platforms_input mb-3">
+                                <input
+                                  className="form-check-input ml-0"
+                                  type="checkbox"
+                                  id={item}
+                                  onChange={() => handleFeatureCheckbox(item)}
+                                  checked={selectedItems?.includes(item)}
+                                />
+                                <label className="form-check-label ml-3 pl-2" for={item}>
+                                  {methodModel?.capitalizeFirstLetter(item)}
+                                </label>
+                                {selectedItems?.includes(item) && (
+                                  <div className="row">
+                                    <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
+                                      <label>User name</label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder='Enter Name'
+                                        value={form[`${item}_username`]}
+                                        onChange={(e) => {
+                                          setForm((prevForm) => ({
+                                            ...prevForm,
+                                            [`${item}_username`]: e.target.value,
+                                          }));
+                                        }}
+                                        required
+                                      />
                                     </div>
-                                  )}
-                                </div>
+
+                                    <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
+                                      <label>{`${methodModel?.capitalizeFirstLetter(item)} link`}</label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder='Enter link'
+
+                                        value={form[`${item}_profile_link`]}
+                                        onChange={(e) => {
+                                          setForm((prevForm) => ({
+                                            ...prevForm,
+                                            [`${item}_profile_link`]: e.target.value,
+                                          }));
+                                        }}
+                                        title="http://www.example.com"
+                                        pattern={pattern}
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                )}
                               </div>
-                            ))}
-                          </div>
-                      
+                            </div>
+                          ))}
+                        </div>
+
                       }
                     </div>
                   </div>
@@ -778,13 +783,7 @@ const Html = ({ user,
                   </div>
                 </div>
               </div>
-
-
-
             </div>
-
-
-
             <div className='mt-4 btn-discards'>
               <div className="text-end edit-btns d-flex gap-3 align-items-center justify-content-end">
                 <Link href="/profile" className="btn btn-secondary ">
