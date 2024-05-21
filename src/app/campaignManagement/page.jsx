@@ -14,17 +14,14 @@ import axios from 'axios';
 const Users = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id })
+  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: ''})
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
-  const [ip,setIP]=useState("")
   const history = useRouter()
-console.log(ip,"dcuhdbhuc")
 
   useEffect(() => {
     if (user) {
-      // setFilter({ ...filters ,role})
       getData({ role, page: 1 })
     }
   }, [role])
@@ -203,7 +200,6 @@ console.log(ip,"dcuhdbhuc")
     if (role) url = `/campaign/${role}/add`
     history.push(url)
   }
-
 
   const reset = () => {
     let filter = {

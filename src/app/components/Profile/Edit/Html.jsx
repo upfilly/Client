@@ -289,7 +289,7 @@ const Html = ({ user,
                     </div>
                     <div className='card-body'>
                       <div className='row'>
-                        {user?.role == 'affiliate' &&
+                        {/* {user?.role == 'affiliate' &&
 
                           <div className='col-12 col-sm-12 col-md-6 mb-3'>
                             <div className='form-group'>
@@ -305,11 +305,10 @@ const Html = ({ user,
                                     options={categoryTypes}
                                   />
                                 </div>
-                                {/* {submitted && !form?.cat_type ? <div className="invalid-feedback d-block">Cat Type is Required</div> : <></>} */}
 
                               </div>
                             </div>
-                          </div>}
+                          </div>} */}
                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="category">Category:</label>
                           <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
@@ -357,7 +356,7 @@ const Html = ({ user,
                                     options={[{ name: 'Business', id: 'business' }, { name: 'Individual', id: 'individual' }]}
                                   />
                                 </div>
-                                {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Affiliate Type is Required</div> : <></>}
+                                {submitted && !form?.affiliate_type ? <div className="invalid-feedback d-block">Affiliate Type is Required</div> : <></>}
 
                               </div>
                             </div>

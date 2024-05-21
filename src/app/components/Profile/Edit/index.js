@@ -172,7 +172,7 @@ const EditProfile = () => {
       sub_category_id: selectedSubcategory,
       sub_child_category_id: selectedSubSubcategory,
       category_id: selectedCategory,
-      cat_type:form?.cat_type
+      // cat_type:form?.cat_type
       // dob: formatedDob,
     }
     if(!value?.cat_type){
