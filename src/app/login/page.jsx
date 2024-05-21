@@ -163,7 +163,7 @@ export default function Login() {
         crendentialModel.setUser(res.data)
 
         let url = '/dashboard'
-        if (res?.data?.tax_detail?.tax_classification == '' && res?.data?.role == 'affiliate') {
+        if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
           history.push('/addAccount/detail')
         } else {
           history.push(url)
