@@ -147,7 +147,7 @@ const Html = ({
                     <span className={itm?.status == "active" ? 'contract capital' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
                         onClick={() => statusChange(itm)}
                     >
-                        {itm.status}
+                        {methodModel.capitalizeFirstLetter(itm.status)}
                     </span>
                 </div></td>
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
