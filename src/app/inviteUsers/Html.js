@@ -6,6 +6,7 @@ import './style.scss'
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import SelectDropdown from '../components/common/SelectDropdown';
+import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -50,7 +51,7 @@ const Html = () => {
 
     return (
         <>
-            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Generate Link" filters={''} >
+            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Invite User" filters={''} >
                 <div className='sidebar-left-content'>
                     <div className="card">
                         <div className='card-header'>
