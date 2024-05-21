@@ -236,7 +236,7 @@ const Html = () => {
                                             inputValues={inputValues}
                                             options={checkboxValues}
                                         />
-                                        <i class="fa fa-angle-down down_bx" aria-hidden="true"></i>
+                                        {/* <i class="fa fa-angle-down down_bx" aria-hidden="true"></i> */}
                                         </div>
 
                                     </div>
