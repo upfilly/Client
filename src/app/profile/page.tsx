@@ -99,6 +99,18 @@ const Profile = () => {
                     <p className="profile_data">{data && data?.address}</p>
                   </div>
                 </div>}
+
+  {data?.affiliate_group_name &&
+                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
+                  <div className='inputFlexs width400'>
+                    <label>Affiliate Group:</label>
+                    <div>
+                      <p className="profile_data">{data && data?.affiliate_group_name}</p>
+                    </div>
+                  </div>
+
+                </div>}
+
                   </div>
                 </div>
                 
@@ -139,16 +151,7 @@ const Profile = () => {
                 </div>}
 
 
-                {data?.affiliate_group_name &&
-                 <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                  <div className='inputFlexs width400'>
-                    <label>Affiliate Group:</label>
-                    <div>
-                      <p className="profile_data">{data && data?.affiliate_group_name}</p>
-                    </div>
-                  </div>
-
-                </div>}
+              
 
               
 
