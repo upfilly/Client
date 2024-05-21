@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 import SelectDropdown from '../components/common/SelectDropdown';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = () => {
     const user = crendentialModel.getUser()
+    const history = useRouter()
     const [form, setForm] = useState({
         email: '',
         language: '',
@@ -35,6 +37,7 @@ const Html = () => {
         loader(true);
         ApiClient.post('add/user', payload).then((res) => {
             if (res?.success) {
+                history.push('/invitedUsers')
                 toast.success(res?.message)
                 setForm({
                     email: '',
