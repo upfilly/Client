@@ -5027,3 +5027,18 @@ input.mr-2.radio {
 .name-person{
   font-size: 13px;
 }
+
+.selected_offrs_market .valus {
+    font-size: 13px !important;
+}
+
+.selected_offrs_market .close_bx {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(255 0 0 / 78%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 13px;
+}
