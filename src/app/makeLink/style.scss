@@ -55,3 +55,44 @@
   font-size: 14px;
   margin-bottom: 2px;
 }
+
+
+
+.select_parabx {
+  padding: 20px;
+  border: 1px solid #d0d4da;
+  border-radius: 12px;
+  background-color: #f7f7f7;
+
+}
+.select_parabx .search-wrapper {
+  background-color: #fff;
+}
+.select_parabx .search-wrapper .chip {
+  margin-bottom: 0px;
+}
+
+.set_downbx .down_bx {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+//generate link css
+.select_parabx .search-wrapper .searchBox {
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 12px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.select_parabx .search-wrapper.searchWrapper {
+  border-radius: 10px !important;
+}
+.select_parabx .search-wrapper .searchBox::placeholder {
+  color: #afa3a3 !important;
+}
+.btn-primary{
+  font-size: 14px !important;
+}

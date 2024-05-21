@@ -211,7 +211,7 @@ const Html = () => {
                             <div className='row'>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3'>
-                                            <div className='mb-2' >Select a Affiliate</div>
+                                            <label className='mb-2' >Select a Affiliate</label>
                                             <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
                                                 <option value="">Select a Affiliate</option>
                                                 {brands.map(brand => (
@@ -222,7 +222,7 @@ const Html = () => {
                                 </div>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
-                                            <div className='mb-2' >Select a Campaign</div>
+                                            <label className='mb-2' >Select a Campaign</label>
                                             <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
                                                 <option value="">Select a Campaign</option>
                                                 {CampaignData.map(item => (
@@ -233,7 +233,7 @@ const Html = () => {
                                 </div>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
-                                        <div className='mb-2' >Destination URL</div>
+                                        <label className='mb-2' >Destination URL</label>
                                         <input
                                             type="text"
                                             className='form-control'
@@ -245,8 +245,9 @@ const Html = () => {
                                 </div>
 
                                 <div className='col-12 col-md-12'>
+                                    <div class="select_parabx mb-3" >
                                     <div className='mb-3' >
-                                    <div className='mb-2'>Select Custom Parameters</div>
+                                    <label className='mb-2'>Select Custom Parameters</label>
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="label"
@@ -265,8 +266,8 @@ const Html = () => {
 
                                 </div>
 
-
-                                <div className='col-12 col-md-12 mt-2'>
+<div className='row'>
+<div className='col-12 col-md-12 '>
                                     <div className='row'>
                                         {selectedValues.map((selected,index) => (
                                             <div className='col-12 col-md-4' key={index}>
@@ -281,14 +282,18 @@ const Html = () => {
                                          ))}
                                     </div>
                                 </div>
+</div>
+                                    </div>
+                                   
+                             
                             </div>
 
                             <div className='text-end mt-3'>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
-                            <h5 className="link_default m-0"> Your Link :</h5>
-                            <div className="input-group mb-2 mt-3">
+                            <h6 className="link_default m-0"> Your Link :</h6>
+                            <div className="input-group my-3">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
                                     <div className="input-group-text">
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
@@ -300,8 +305,8 @@ const Html = () => {
                                 {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
                             </div>
 
-                            <h5 className="link_default m-0"> Your Short URL Link :</h5>
-                            <div className="input-group mb-2 mt-3">
+                            <h6 className="link_default mt-3 mb-0"> Your Short URL Link :</h6>
+                            <div className="input-group my-2">
                                 <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
                                     <div className="input-group-text">
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
