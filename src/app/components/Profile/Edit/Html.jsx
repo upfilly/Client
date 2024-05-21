@@ -357,7 +357,7 @@ const Html = ({ user,
                                     options={[{ name: 'Business', id: 'business' }, { name: 'Individual', id: 'individual' }]}
                                   />
                                 </div>
-                                {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
+                                {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Affiliate Type is Required</div> : <></>}
 
                               </div>
                             </div>
