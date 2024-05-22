@@ -5079,3 +5079,13 @@ div:where(.swal2-icon).swal2-warning{
 .swal2-popup{
   width: 450px !important;
 }
+
+
+.csv_modal .csv_img_file {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.csv_modal .modal-dialog {
+max-width: 1000px;
+}
