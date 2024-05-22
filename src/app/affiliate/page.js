@@ -59,13 +59,13 @@ export default function affilate() {
   const [show, setShow] = useState(false);
   const [groupShow, setGroupShow] = useState(false);
   const [tagInput, setTagInput] = useState('');
-  const [selectedAffiliteid, setselectedAffiliteid] = useState('');
+  const [selectedAffiliteid, setselectedAffiliteid] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
   const [categoryType, SetCategoryType] = useState('')
   const [Campaigns,setCampaign] = useState([])
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setShow(false),setselectedAffiliteid([])};
   const handleShow = () => setShow(true);
   const handleGroupClose = () => setGroupShow(false);
   const handleGroupShow = () => setGroupShow(true);
@@ -379,7 +379,16 @@ export default function affilate() {
       }
     })
   }
-
+  const MultiSelectAffliates=(add,id)=>{
+    let data=selectedAffiliteid
+    if(add){
+      data.push(id)
+      setselectedAffiliteid([...data])
+    }else{
+      data=data.filter(itm=>itm!==id)
+      setselectedAffiliteid([...data])
+    }
+  }
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
@@ -598,13 +607,17 @@ export default function affilate() {
                       Reset
                     </a>
                   </> : <></>}
+                  <button disabled={selectedAffiliteid?.length<=0} className="btn btn-primary btn_primary" onClick={() => { handleShow() }}>
+                            <i className='fa fa-plus fa_icns' title='Invite'></i>
+                          </button>
                 </div>
 
 
 
-
+                
               </div>
             </div>
+            
 
             {/* <div className='col-12 col-md-2 col-lg-3'>
               <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
@@ -635,13 +648,16 @@ export default function affilate() {
                   </thead>
                   <tbody>
                     {!loaging && data?.data?.map((itm) => <tr className='table_row'>
-                      <td onClick={e => view(itm.id)}><div className='d-flex align-items-center'>
+                      <td><div className='d-flex align-items-center gap-2'>
+                        <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e=>MultiSelectAffliates(e.target.checked,itm.id)} />
+                        <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
                         {itm?.image ?
                           <img className='person-img' src={`http://endpoint.jcsoftwaresolution.com:6043/${itm?.image}`} alt=''></img>
                           :
                           <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
                         }
                         <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
+                        </div>
                       </div></td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
                       <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
@@ -663,7 +679,7 @@ export default function affilate() {
                           {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
-                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
+                          {<button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid([itm?.id]) }}>
                             <i className='fa fa-plus fa_icns' title='Invite'></i>
                           </button>}
                           <span className='btn btn-primary btn_primary '
