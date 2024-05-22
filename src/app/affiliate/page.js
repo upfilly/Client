@@ -63,12 +63,22 @@ export default function affilate() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
+  const [expandedRowId, setExpandedRowId] = useState(null);
   const [categoryType, SetCategoryType] = useState('')
   const [Campaigns,setCampaign] = useState([])
   const handleClose = () => {setShow(false),setselectedAffiliteid([])};
   const handleShow = () => setShow(true);
   const handleGroupClose = () => setGroupShow(false);
   const handleGroupShow = () => setGroupShow(true);
+
+  const handleRowClick = (id) => {
+    if (expandedRowId === id) {
+      setExpandedRowId(null);
+    } else {
+      setExpandedRowId(id)
+    }
+  };
+
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
     { id: 'property_types', name: 'Property Types' },
@@ -647,18 +657,26 @@ export default function affilate() {
                     </tr>
                   </thead>
                   <tbody>
-                    {!loaging && data?.data?.map((itm) => <tr className='table_row'>
-                      <td><div className='d-flex align-items-center gap-2'>
-                        <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e=>MultiSelectAffliates(e.target.checked,itm.id)} />
-                        <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
-                        {itm?.image ?
-                          <img className='person-img' src={`http://endpoint.jcsoftwaresolution.com:6043/${itm?.image}`} alt=''></img>
-                          :
-                          <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
-                        }
-                        <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
+                    {!loaging && data?.data?.map((itm) => <><tr className='table_row' >
+                      <td>
+                        <div className='d-flex flex-column ' >
+                          <div className='d-flex align-items-center gap-2'>
+                            <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
+                            <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
+                              {itm?.image ?
+                                <img className='person-img' src={`http://endpoint.jcsoftwaresolution.com:6043/${itm?.image}`} alt=''></img>
+                                :
+                                <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
+                              }
+                              <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
+                            </div>
+
+                          </div>
+                          <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                            Show More
+                          </a>
                         </div>
-                      </div></td>
+                      </td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
                       <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
                       <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
@@ -694,8 +712,34 @@ export default function affilate() {
                           </button>}
                         </div>
                       </td>
-
-                    </tr>)}
+                   
+                    </tr>
+                      {expandedRowId === itm.id && (
+                        <tr>
+                          <td>
+                            <div>
+                              <p>Affiliate Type: {itm.affiliate_type || "--"}</p>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <p>Social Media Platforms: {itm.social_media_platforms.map((itm)=>itm).join(",") || "--"}</p>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <p>Category Type: {itm.cat_type || "--"}</p>
+                            </div>
+                          </td>
+                          <td>
+                            <div>
+                              <p>Country: {itm.country || "--"}</p>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                    )}
                   </tbody>
                 </table>
 
