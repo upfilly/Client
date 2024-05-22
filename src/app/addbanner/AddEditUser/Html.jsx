@@ -77,7 +77,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
-                                    <label>Activation Date<span className="star">*</span></label>
+                                    <label className="form-label">Activation Date<span className="star">*</span></label>
                                     <ReactDatePicker
                                         showIcon
                                         isClearable
@@ -177,6 +177,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         </div>
 
                                         <div className="form-check">
+                                        
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input mr-4"
