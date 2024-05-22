@@ -130,7 +130,7 @@ const Html = ({
                     <div className='user_detail'>
                         <div className='user_name'>
                             <h4 className='user'>
-                                {/* {methodModel.capitalizeFirstLetter(itm?.event_type)} */}
+                                {itm?.event_type.map((itm)=>itm).join(",")}
                             </h4>
                         </div>
                     </div></td>

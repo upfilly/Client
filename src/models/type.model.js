@@ -171,6 +171,7 @@ export const addCampaignType = {
     amount: "",
     description: "",
     images: [],
+    access_type:'',
     documents: [],
     videos: [],
     affiliate_id: null,

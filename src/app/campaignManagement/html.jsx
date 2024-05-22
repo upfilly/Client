@@ -117,7 +117,7 @@ const Html = ({
                             </h4>
                         </div>
                     </div></td>
-                <td className='table_dats'>{itm?.event_type}</td>
+                <td className='table_dats'>{itm?.event_type.map((itm)=>itm).join(",")}</td>
                 <td className='table_dats'>{itm?.amount}</td>
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
