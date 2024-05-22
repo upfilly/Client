@@ -140,6 +140,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Merchant Invites</span>
         </ListItemLink>}
 
+        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+          <i className="material-icons  svg_iconbx" title="campaignManagement">manage_accounts</i>
+          <span className="side_head">Campaign Management</span>
+        </ListItemLink>}
+
         {user && user?.role == "affiliate" && <ListItemLink to="/inviteUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
           {/* <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i> */}
           <i class="material-icons svg_iconbx " title="campaignManagement">person_add</i>
@@ -198,11 +203,6 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
   
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
-
-        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
-          <i className="material-icons  svg_iconbx" title="campaignManagement">manage_accounts</i>
-          <span className="side_head">Campaign Management</span>
-        </ListItemLink>}
 
         {user?.role != "users" && <ListItemLink to="/payments" data-bs-toggle="tooltip" data-bs-placement="top" title="Payments">
           {/* <svg className="text_black  svg_iconbx" xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
