@@ -286,9 +286,14 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
   margin-top: 15px;
   flex-wrap: wrap;
   gap: 10px;
+  padding: 0px 18px;
 
   >span {
     font-size: 13px;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    gap: 12px;
     color: #84818A;
   }
 }
@@ -5088,4 +5093,21 @@ div:where(.swal2-icon).swal2-warning{
 }
 .csv_modal .modal-dialog {
 max-width: 1000px;
+}
+
+.react-datepicker-wrapper{
+  display:unset !important;
+}
+
+.user_name {
+  width: 144px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.paginationWrapper  span select.form-control {
+  border-radius: 7px !important;
+  height: 35px !important;
 }

@@ -113,7 +113,7 @@ const Html = ({
                             </p> */}
                         </div>
                     </div></td>
-                    <td>{itm?.role == 'affiliate' ?  "Super User"  : methodModel?.capitalizeFirstLetter(itm?.role)}</td>
+                    <td className='table_dats' >{itm?.role == 'affiliate' ?  "Super User"  : methodModel?.capitalizeFirstLetter(itm?.role)}</td>
                 <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
                     <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
                         {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
