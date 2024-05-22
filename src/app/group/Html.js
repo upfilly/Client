@@ -72,7 +72,7 @@ const Html = ({
                                             <tr className='heading_row'>
                                                 <th scope="col" className='table_data' onClick={e => sorting('name')}>Affliate Group {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                                 <th scope="col" className='table_data' >Affiliates </th>
-                                                <th scope="col" className='table_data' >Default</th>
+                                                {/* <th scope="col" className='table_data' >Default</th> */}
                                                 <th scope="col" className='table_data' onClick={e => sorting('status')}>Status {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                                 <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                                 <th scope="col" className='table_data ml-5' ></th>
@@ -94,14 +94,14 @@ const Html = ({
                                                             {itm?.number_of_affiliate_added}
                                                         </span>
                                                     </span></td>
-                                                    <td className='table_dats'>
+                                                    {/* <td className='table_dats'>
                                                         <div className='user_detail'>
                                                             <div className='user_name'>
                                                                 <h4 className='user'>
                                                                     {itm?.isDefaultAffiliateGroup ? <i class="fa fa-check" aria-hidden="true"></i> : <i class="fa fa-times" aria-hidden="true"></i>}
                                                                 </h4>
                                                             </div>
-                                                        </div></td>
+                                                        </div></td> */}
                                                     <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
                                                         <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
                                                             {itm?.status == 'deactive' ? 'Inactive' : 'Active'}

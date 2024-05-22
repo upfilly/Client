@@ -85,7 +85,7 @@ const Html = () => {
                 "amount_of_sale": formData?.amount_of_sale,
                 "amount_of_commission": formData?.amount_of_commission,
                 "order_reference": formData?.order_reference,
-                "click_ref": formData?.click_ref,
+                // "click_ref": formData?.click_ref,
                 "affiliate_id": formData?.publisher_id,
                 "is_send_email_to_publisher": isChecked,
             }
@@ -107,7 +107,7 @@ const Html = () => {
                     "amount_of_sale": "",
                     "amount_of_commission": "",
                     "order_reference": "",
-                    "click_ref": "",
+                    // "click_ref": "",
                     "affiliate_id": "",
                     "is_send_email_to_publisher": false,
                     "batch_file": "",
@@ -244,7 +244,7 @@ const Html = () => {
             </div>
         </div>
 
-        <div className='col-md-6 '>
+        {/* <div className='col-md-6 '>
             <div className='mb-3' >
                 <label>click ref (IO Number)</label>
                 <input
@@ -254,7 +254,7 @@ const Html = () => {
                     value={formData?.click_ref}
                     onChange={(e) => setFormData({ ...formData, click_ref: e?.target?.value })} />
             </div>
-        </div>
+        </div> */}
         <div className='col-md-12'>
             <div className='mb-3'>
                 <div className="form-check form-check-inline ">

@@ -90,6 +90,11 @@ export default function affilate() {
     setSelectedSubSubCategory(null);
   };
 
+  const handleCountChange = (count) => {
+    setFilter({ ...filters, count: count, page: 1 });
+    getData({ count: count, page: 1 });
+  };
+
   const handleSubSubCategoryChange = (subSubCategory) => {
     getData({ page: 1, sub_child_category_id: subSubCategory?.id || subSubCategory?._id })
     setFilter({ ...filters, sub_child_category_id: subSubCategory?.id || subSubCategory?._id })
@@ -822,7 +827,17 @@ export default function affilate() {
         {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
 
         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-          <span>Show {data?.length} from {total} Users</span>
+          <span>Show <select
+            className="form-control"
+            onChange={(e) => handleCountChange(parseInt(e.target.value))}
+            value={filters.count}
+          >
+            <option value={10}>10</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={150}>150</option>
+            <option value={200}>200</option>
+          </select> from {total} Users</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"
