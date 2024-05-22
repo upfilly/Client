@@ -4190,18 +4190,18 @@ p.revuh{
 
 
   .sidebar_main .left_sidebar .top_scrollbx {
-    overflow-x: hidden !important;
+    // overflow-x: hidden !important;
     margin: 0px auto !important;
     width: 254px !important;
   }
     .sidebar_main.active .left_sidebar .top_scrollbx {
       overflow-y: auto !important;
-      height: 693px !important;
-      overflow-x: hidden !important;
+      // height: 693px !important;
+      // overflow-x: hidden !important;
       margin: 0px auto !important;
       width: 75px !important;
       padding-left: 0px !important;
-      transition: 0.5s ease-in-out !important;
+      // transition: 0.5s ease-in-out !important;
   }
 
 
@@ -4501,12 +4501,12 @@ margin-bottom: 0px !important;
 }
   .sidebar_main.active .left_sidebar .top_scrollbx {
     overflow-y: auto !important;
-    height: 693px!important;
-    overflow-x: hidden!important;
+    // height: 693px!important;
+    // overflow-x: hidden!important;
     margin: 0px auto!important;
     width: 262px !important;
     padding-left: 0px !important;
-    transition: 0.5s ease-in-out!important;
+    // transition: 0.5s ease-in-out!important;
   
   
   
@@ -4941,7 +4941,8 @@ input.mr-2.radio {
 }
 .sidebar_main .left_sidebar .top_scrollbx {
   overflow-y: auto;
-  height: 677px;
+  // height: 677px;
+  height: calc(100vh - 80px);
   overflow-x: hidden;
   margin: 0px auto;
   width: 272px;
@@ -4949,13 +4950,15 @@ input.mr-2.radio {
 }
   .sidebar_main.active .left_sidebar .top_scrollbx {
     overflow-y: auto;
-    height: 693px;
-    overflow-x: hidden;
+    // height: 693px;
+    height: calc(100vh - 80px);
+    overflow-x: hidden !important;
     margin: 0px auto;
     width: 80px;
     padding-left: 13px;
-    transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out !important;
 }
+
 
 
 // scrollbar 
