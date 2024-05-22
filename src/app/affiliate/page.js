@@ -658,9 +658,9 @@ export default function affilate() {
                   </thead>
                   <tbody>
                     {!loaging && data?.data?.map((itm) => <><tr className='table_row' >
-                      <td>
-                        <div className='d-flex flex-column ' >
-                          <div className='d-flex align-items-center gap-2'>
+                      <td className='profile_height' >
+                        
+                          <div className='d-flex align-items-center gap-2 pb-3'>
                             <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
                             <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
                               {itm?.image ?
@@ -680,7 +680,7 @@ export default function affilate() {
                            Show Less
                          </a>
                           }
-                        </div>
+                        
                       </td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
                       <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
@@ -720,26 +720,32 @@ export default function affilate() {
                    
                     </tr>
                       {expandedRowId === itm.id && (
-                        <tr>
+                        <tr class="table_row  show_mores">
                           <td>
-                            <div>
-                              <p>Affiliate Type: {itm.affiliate_type || "--"}</p>
-                            </div>
+                            
+                              <label className='form-label' >Affiliate Type:</label>
+                              <p className='affi_tabbls' >{itm.affiliate_type || "--"}</p>
+                            
                           </td>
                           <td>
-                            <div>
-                              <p>Social Media Platforms: {itm.social_media_platforms.map((itm)=>itm).join(",") || "--"}</p>
-                            </div>
+                           
+                              
+                              <label className='form-label' >Social Media Platforms:</label>
+                              <p className='affi_tabbls' >{itm.social_media_platforms.map((itm)=>itm).join(",") || "--"}</p>
+                          
                           </td>
                           <td>
-                            <div>
-                              <p>Category Type: {itm.cat_type || "--"}</p>
-                            </div>
-                          </td>
+                           
+                           
+                              <label className='form-label' >Category Type:</label>
+                              <p className='affi_tabbls' >{itm.cat_type || "--"}</p>
+                              </td>
                           <td>
-                            <div>
-                              <p>Country: {itm.country || "--"}</p>
-                            </div>
+                           
+                              
+                              <label className='form-label' >Country:</label>
+                              <p className='affi_tabbls' >{itm.country || "--"}</p>
+                          
                           </td>
                         </tr>
                       )}

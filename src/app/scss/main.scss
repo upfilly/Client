@@ -576,10 +576,10 @@ input:-ms-input-placeholder {
   opacity: 1 !important;
 }
 
-.table-responsive {
-  max-height: 590px !important;
-  height: 100% !important;
-}
+// .table-responsive {
+//   max-height: 590px !important;
+//   height: 100% !important;
+// }
 
 .paginationWrapper ul li {
   list-style: none !important;
@@ -3778,6 +3778,8 @@ padding: 6px 12px;
 }
 @media (max-width: 768px) { 
 
+ 
+  
   .sidebar_main.active  .layout_right {
     width: calc(100% - 90px) !important;
     margin-left: auto;
@@ -3883,6 +3885,7 @@ span.linebx {
 
  }
  @media (max-width: 576px) { 
+ 
 
   .company_img {
   height: unset !important;
@@ -4054,6 +4057,12 @@ p.revuh{
 }
 
 @media (max-width:992px){
+  .none_bx{
+    display: block !important;
+  }
+  .show_bx{
+    display: none !important;
+  }
 
   .headerreverse{
     flex-direction: column-reverse;
@@ -5110,4 +5119,36 @@ max-width: 1000px;
 .paginationWrapper  span select.form-control {
   border-radius: 7px !important;
   height: 35px !important;
+}
+
+
+// affiliate page css
+.affi_tabbls {
+  margin: 0px;
+  font-size: 14px;
+  background-color: #f0f2f5;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.show_mores {
+  border: 1px solid #e2e2e2;
+}
+.sidebar-content-detail .searchInput i {
+  position: absolute;
+  top: 46%;
+  transform: translateY(-50%);
+  right: 10px;
+  font-size: 16px;
+}
+
+.quick-radius {
+  max-width: 250px;
+}
+.none_bx {
+  display: none;
+  margin-top: 6px;
+}
+.show_bx{
+  display: block;
 }

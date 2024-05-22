@@ -102,11 +102,25 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
     
     
 
+    {isDashboard && <>
 
 
-    {isDashboard && 
+<div className='searchInput show_bx'>
+<input type="search"
+    className='form-control quick-radius'
+    placeholder='Search'
+    onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value })}
+    onKeyPress={handleKeyPress}
+/>
+<i class="fa fa-search search_fa" onClick={() => {
+    filter()
+}} aria-hidden="true"></i>
+</div> 
 
-<div class="dropdown set_search_icons">
+
+
+
+<div class="dropdown set_search_icons none_bx">
 <a class=""  role="button" data-bs-toggle="dropdown" aria-expanded="false">
 <i class="fa fa-search search_main" aria-hidden="true"></i>
 </a>
@@ -132,7 +146,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
   </a></li>
 </ul>
 </div>
-
+</>
 
 }                  
                       
