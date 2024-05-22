@@ -21,16 +21,13 @@ export default function Addcomminson() {
     "event_type": "",
     "amount_type": "",
     "amount": '',
-    // "affiliate_group":"",
     "time_frame_type": '',
     "time_frame": '',
     "campaign_id": "",
   });
 
   const handleAffiliateGroup = () => {
-
     ApiClient.get('affiliate-groups', { status: "active" }).then(res => {
-
       if (res.success == true) {
         setAffiliategroup(res?.data?.data)
       }
@@ -38,9 +35,7 @@ export default function Addcomminson() {
   }
 
   const handleAffiliate = () => {
-
     ApiClient.get('users/list', { status: "active", role: "affiliate", createBybrand_id: user?.id, }).then(res => {
-
       if (res.success == true) {
         setAffiliate(res?.data?.data)
       }
@@ -53,11 +48,8 @@ export default function Addcomminson() {
       setError(true)
       return;
     }
-
     loader(true)
-
     ApiClient.post('commission', formData).then(res => {
-
       if (res.success == true) {
         router.push(`/commission/commisionplan`)
       }
@@ -102,14 +94,12 @@ export default function Addcomminson() {
     });
   };
 
-  const handleAdditionalOptionChange = (option) => {
-    setFormData({
-      ...formData,
-      time_frame_type: formData.selectedAdditionalOption === option ? "" : option,
-    });
-  };
-
-
+  // const handleAdditionalOptionChange = (option) => {
+  //   setFormData({
+  //     ...formData,
+  //     time_frame_type: formData.selectedAdditionalOption === option ? "" : option,
+  //   });
+  // };
 
   return (
     <>
@@ -117,7 +107,6 @@ export default function Addcomminson() {
         <div className="">
           <div className="sidebar-left-content">
             <div className='top_bar_btns'>
-
               <div className=' row'>
 
                 <div className='col-md-12'>
@@ -129,9 +118,6 @@ export default function Addcomminson() {
                 </div>
 
               </div>
-
-
-
 
               <div className=' row mt-4'>
                 <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
@@ -264,10 +250,10 @@ export default function Addcomminson() {
                         <div className='slect_drop'>
 
                           <input
-                          type='date'
-                           className='form-control'
-                           onChange={handlePaymentTimeFrameChange}
-                           value={formData.time_frame || ""}
+                            type='date'
+                            className='form-control'
+                            onChange={handlePaymentTimeFrameChange}
+                            value={formData.time_frame || ""}
                           />
 
                           {/* <select
@@ -361,9 +347,7 @@ export default function Addcomminson() {
                         <h3 className='dollars-t'>Choose Campaign</h3>
                       </div>
                     </div>
-
                   </div>
-
 
                   <div className='row'>
                     <div className='col-md-12'>
@@ -374,7 +358,6 @@ export default function Addcomminson() {
                             onChange={(e) => {
                               const selectedValue = e.target.value;
                               const selectedOption = e.target.options[e.target.selectedIndex];
-                              console.log(selectedOption.dataset, "jbdchdbchj")
 
                               if (selectedOption.dataset.group == "true") {
                                 setFormData({ ...formData, affiliate_group: selectedValue, affiliate_id: null });
@@ -416,19 +399,9 @@ export default function Addcomminson() {
                         </div>
                       </div>
                     </div>
-
-
                   </div>
-
                 </div>
-
-
-
               </div>
-
-
-
-
             </div>
           </div>
         </div>
