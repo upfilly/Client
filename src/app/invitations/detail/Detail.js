@@ -3,8 +3,6 @@ import Layout from '@/app/components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
 import loader from '@/methods/loader';
 import './style.scss';
-import methodModel from '@/methods/methods';
-import rolesModel from '@/models/role.model';
 import { useRouter, useParams } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
 

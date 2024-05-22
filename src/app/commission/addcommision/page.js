@@ -15,16 +15,16 @@ export default function Addcomminson() {
   const user = crendentialModel.getUser()
   const [affiliateGroup, setAffiliategroup] = useState([])
   const [affiliate, setAffiliate] = useState([])
-  const [CampaignData,setCampaignData] = useState()
+  const [CampaignData, setCampaignData] = useState()
   const [errors, setError] = useState(false)
   const [formData, setFormData] = useState({
-    "event_type":"",
-    "amount_type":"",
-    "amount":'',
+    "event_type": "",
+    "amount_type": "",
+    "amount": '',
     // "affiliate_group":"",
-    "time_frame_type":'',
-    "time_frame":'',
-    "campaign_id":"",
+    "time_frame_type": '',
+    "time_frame": '',
+    "campaign_id": "",
   });
 
   const handleAffiliateGroup = () => {
@@ -39,7 +39,7 @@ export default function Addcomminson() {
 
   const handleAffiliate = () => {
 
-    ApiClient.get('users/list', { status: "active" ,role: "affiliate",createBybrand_id: user?.id, }).then(res => {
+    ApiClient.get('users/list', { status: "active", role: "affiliate", createBybrand_id: user?.id, }).then(res => {
 
       if (res.success == true) {
         setAffiliate(res?.data?.data)
@@ -66,14 +66,14 @@ export default function Addcomminson() {
   }
 
   const getCampaignData = (p = {}) => {
-    let filter = { search: '', isDeleted: false,status:'',brand_id:user?.id}
-    let url='campaign/all'
+    let filter = { search: '', isDeleted: false, status: '', brand_id: user?.id }
+    let url = 'campaign/all'
     ApiClient.get(url, filter).then(res => {
-        if (res.success) {
-            setCampaignData(res.data.data)
-        }
+      if (res.success) {
+        setCampaignData(res.data.data)
+      }
     })
-}
+  }
 
   useEffect(() => {
     handleAffiliateGroup()
@@ -146,7 +146,7 @@ export default function Addcomminson() {
 
                   </div>
 
-                  {["lead", "visitor" , "purchase" ,"line-item"].map((type, index) => (
+                  {["lead", "visitor", "purchase", "line-item"].map((type, index) => (
                     <div className="col-md-12" key={index}>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
@@ -165,7 +165,7 @@ export default function Addcomminson() {
                       </div>
                     </div>
                   ))}
-{errors && !formData?.event_type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
+                  {errors && !formData?.event_type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
 
                 </div>
 
@@ -206,7 +206,7 @@ export default function Addcomminson() {
                       </div>
                     </div>
 
-                    <div className='col-md-12'>
+                    {formData?.event_type != 'lead' && <div className='col-md-12'>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
                           <div className="checkboxes__item">
@@ -223,7 +223,7 @@ export default function Addcomminson() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div>}
 
                     <div className='col-md-12'>
                       <div className='checkbox_ipt'>
@@ -262,7 +262,28 @@ export default function Addcomminson() {
                     <div className='col-md-12'>
                       <div className='checkbox_ipt position-relative'>
                         <div className='slect_drop'>
-                          {formData.time_frame_type !== "day" ? <select
+
+                          <input
+                          type='date'
+                           className='form-control'
+                           onChange={handlePaymentTimeFrameChange}
+                           value={formData.time_frame || ""}
+                          />
+
+                          {/* <select
+                            className='form-control'
+                            onChange={handlePaymentTimeFrameChange}
+                            value={formData.time_frame || ""}
+                          >
+                            <option value="">select</option>
+                            <option value="0">Immediately, no delay</option>
+                            <option value="1">1 day after purchase</option>
+                            <option value="2">2 days after purchase</option>
+                            <option value="2">3 days after purchase</option>
+                            <option value="3">4 days after purchase</option>
+                          </select> */}
+
+                          {/* {formData.time_frame_type !== "day" ? <select
                             className='form-control'
                             onChange={handlePaymentTimeFrameChange}
                             value={formData.time_frame || ""}
@@ -272,26 +293,26 @@ export default function Addcomminson() {
                             <option value="1">1 month after purchase</option>
                             <option value="2">2 months after purchase</option>
                             <option value="3">3 months after purchase</option>
-                          </select>:
-                          <select
-                          className='form-control'
-                          onChange={handlePaymentTimeFrameChange}
-                          value={formData.time_frame || ""}
-                        >
-                          <option value="">select</option>
-                          <option value="0">Immediately, no delay</option>
-                          <option value="1">1 day after purchase</option>
-                          <option value="2">2 days after purchase</option>
-                          <option value="2">3 days after purchase</option>
-                          <option value="3">4 days after purchase</option>
-                        </select>
-                          }
+                          </select> :
+                            <select
+                              className='form-control'
+                              onChange={handlePaymentTimeFrameChange}
+                              value={formData.time_frame || ""}
+                            >
+                              <option value="">select</option>
+                              <option value="0">Immediately, no delay</option>
+                              <option value="1">1 day after purchase</option>
+                              <option value="2">2 days after purchase</option>
+                              <option value="2">3 days after purchase</option>
+                              <option value="3">4 days after purchase</option>
+                            </select>
+                          } */}
                           {errors && !formData?.time_frame ? <div className="invalid-feedback d-block">Time Frame is Required</div> : <></>}
                         </div>
                       </div>
                     </div>
 
-                    <div className='col-md-12'>
+                    {/* <div className='col-md-12'>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
                           <div className="checkboxes__item">
@@ -325,7 +346,7 @@ export default function Addcomminson() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   {errors && !formData?.time_frame_type ? <div className="invalid-feedback d-block">Time Frame Type is Required</div> : <></>}
                 </div>
@@ -353,7 +374,7 @@ export default function Addcomminson() {
                             onChange={(e) => {
                               const selectedValue = e.target.value;
                               const selectedOption = e.target.options[e.target.selectedIndex];
-                              console.log(selectedOption.dataset,"jbdchdbchj")
+                              console.log(selectedOption.dataset, "jbdchdbchj")
 
                               if (selectedOption.dataset.group == "true") {
                                 setFormData({ ...formData, affiliate_group: selectedValue, affiliate_id: null });

@@ -13,7 +13,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
   const [stab, setstab] = useState(false)
   const menus = {
     user: ['roles', 'users'],
-    commisions: ['commisionplan', 'addcommision','manualCommission'],
+    commisions: ['commisionplan','manualCommission'],
     catalogue: ['types', 'categories', 'category/'],
     affiliates: ['affiliate', 'group'],
     api: ['bookingSystem', 'pos', 'reviews', 'accounting-system'],

@@ -67,7 +67,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
         {user?.role == "brand" && <>
 
-          {urlAllow('commisionplan', 'addcommision' ,'manualCommission') ? <>
+          {urlAllow('commisionplan', 'manualCommission') ? <>
             <div className="nav-item">
               <a className={` side_titles nav-link hoverclass affilate ${tabclass('commisions') || tab == 'commisions' ? '' : 'collapsed-m'}`} onClick={() => tabChange('commisions')}
                 data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
@@ -95,15 +95,14 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </div>
               </ListItemLink>
             </> : <></>}
-            {urlAllow('addcommision') ? <>
+            {/* {urlAllow('addcommision') ? <>
               <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
-                {/* <i className="fa fa-user-circle-o icon  svg_iconbx" aria-hidden="true"></i> */}
               <div className="d-flex align-items-center icns_center">
               <i  class="material-icons svg_iconbx">payments</i >
                 <span className="side_head">Add Commissions</span>
               </div>
               </ListItemLink>
-            </> : <></>}
+            </> : <></>} */}
             {urlAllow('manualCommission') ? <>
               <ListItemLink to="/commission/manualCommission/view" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
               <div className="d-flex align-items-center icns_center">
@@ -119,6 +118,13 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
           <span className="side_head">Add Banner</span>
         </ListItemLink>}
+
+          {user && user?.role == "brand" && <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
+            <div className="d-flex align-items-center icns_center">
+              <i class="material-icons svg_iconbx">payments</i >
+              <span className="side_head">Add Commissions</span>
+            </div>
+          </ListItemLink>}
 
         {user && user?.role == "brand" && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
