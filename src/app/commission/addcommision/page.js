@@ -21,9 +21,10 @@ export default function Addcomminson() {
     "event_type": "",
     "amount_type": "",
     "amount": '',
-    "time_frame_type": '',
-    "time_frame": '',
-    "campaign_id": "",
+    // "time_frame_type": '',
+    // "time_frame": '',
+    "campaign": "",
+    "date": ""
   });
 
   const handleAffiliateGroup = () => {
@@ -44,7 +45,7 @@ export default function Addcomminson() {
 
   const handleSave = () => {
 
-    if (!formData?.event_type || !formData?.time_frame_type || !formData?.time_frame || !formData?.amount_type) {
+    if (!formData?.event_type || !formData?.date || !formData?.amount_type || !formData?.campaign) {
       setError(true)
       return;
     }
@@ -90,7 +91,7 @@ export default function Addcomminson() {
   const handlePaymentTimeFrameChange = (e) => {
     setFormData({
       ...formData,
-      time_frame: e.target.value,
+      date: e.target.value,
     });
   };
 
@@ -253,7 +254,7 @@ export default function Addcomminson() {
                             type='date'
                             className='form-control'
                             onChange={handlePaymentTimeFrameChange}
-                            value={formData.time_frame || ""}
+                            value={formData.date || ""}
                           />
 
                           {/* <select
@@ -293,7 +294,7 @@ export default function Addcomminson() {
                               <option value="3">4 days after purchase</option>
                             </select>
                           } */}
-                          {errors && !formData?.time_frame ? <div className="invalid-feedback d-block">Time Frame is Required</div> : <></>}
+                          {errors && !formData?.date ? <div className="invalid-feedback d-block">Date is Required</div> : <></>}
                         </div>
                       </div>
                     </div>
@@ -334,7 +335,7 @@ export default function Addcomminson() {
                       </div>
                     </div> */}
                   </div>
-                  {errors && !formData?.time_frame_type ? <div className="invalid-feedback d-block">Time Frame Type is Required</div> : <></>}
+                  {/* {errors && !formData?.time_frame_type ? <div className="invalid-feedback d-block">Time Frame Type is Required</div> : <></>} */}
                 </div>
 
 
@@ -357,17 +358,18 @@ export default function Addcomminson() {
                             className='form-control'
                             onChange={(e) => {
                               const selectedValue = e.target.value;
-                              const selectedOption = e.target.options[e.target.selectedIndex];
+                              // const selectedOption = e.target.options[e.target.selectedIndex];
+                              setFormData({ ...formData, campaign: selectedValue });
 
-                              if (selectedOption.dataset.group == "true") {
-                                setFormData({ ...formData, affiliate_group: selectedValue, affiliate_id: null });
-                              } else {
-                                setFormData({ ...formData, affiliate_group: null, affiliate_id: selectedValue });
-                              }
+                              // if (selectedOption.dataset.group == "true") {
+                              //   setFormData({ ...formData, affiliate_group: selectedValue, affiliate_id: null });
+                              // } else {
+                              //   setFormData({ ...formData, affiliate_group: null, affiliate_id: selectedValue });
+                              // }
                             }}
-                            value={formData.affiliate_group || formData.affiliate_id || ""}
+                            value={formData.campaign || formData.campaign || ""}
                           >
-                            <option value="" disabled style={{ color: "black" }}>Select an Campaign</option>
+                            <option value=""  style={{ color: "black" }}>Select an Campaign</option>
                             {CampaignData?.map((itm, index) => (
                               <option key={`group_${index}`} value={itm?.id} data-group>
                                 {itm?.name}
@@ -380,8 +382,8 @@ export default function Addcomminson() {
                               </option>
                             ))} */}
                           </select>
-                          {(errors && !formData?.affiliate_group && !formData?.affiliate_id) ? (
-                            <div className="invalid-feedback d-block">Affiliate or Affiliate group is Required</div>
+                          {(errors && !formData?.campaign) ? (
+                            <div className="invalid-feedback d-block">Campaign is Required</div>
                           ) : (
                             <></>
                           )}
