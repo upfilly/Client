@@ -16,9 +16,9 @@ const AddEditUser = () => {
         "destination_url": "",
         "description": "",
         "seo_attributes": "",
-        "activation_date": "",
-        "availability_date": "",
-        "expiration_date": "",
+        "activation_date":"",
+        "availability_date":"",
+        "expiration_date":"",
         "image":"",
         "is_animation": false,
         "is_deep_linking": false,
@@ -32,6 +32,9 @@ const AddEditUser = () => {
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
     const [category, setCategory] = useState([])
+    // const [ActivationDate,setActivationDate] = useState('')
+    // const [AvailabilityDate,setAvailabilityDate] = useState('')
+    // const [ExpirationDate,setExpirationDate] =  useState('')
 
     const getCategory = (p = {}) => {
         let url = 'main-category/all'
@@ -83,6 +86,10 @@ const AddEditUser = () => {
         let value = {
             ...form,
             image:images
+        }
+
+        if (!value?.seo_attributes) {
+            delete value?.seo_attributes
         }
 
         if(!value?.image){
@@ -157,9 +164,9 @@ const AddEditUser = () => {
                         "description": value?.description,
                         "seo_attributes": value?.seo_attributes,
                         "category_id": value?.category_id?.id,
-                        "activation_date": value?.activation_date,
-                        "availability_date": value?.availability_date,
-                        "expiration_date": value?.expiration_date,
+                        "activation_date": new Date(value?.activation_date),
+                        "availability_date": new Date(value?.availability_date),
+                        "expiration_date": new Date(value?.expiration_date),
                         "image": value?.image,
                         "is_animation": value?.is_animation,
                         "is_deep_linking": value?.is_deep_linking,
@@ -220,6 +227,9 @@ const AddEditUser = () => {
             affiliateData={affiliateData}
             BrandData={BrandData}
             category={category}
+            // setActivationDate={setActivationDate}
+            // setAvailabilityDate={setAvailabilityDate}
+            // setExpirationDate={setExpirationDate}
         />
     </>
 }

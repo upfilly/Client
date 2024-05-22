@@ -5,12 +5,13 @@ import '../style.scss';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import ImageUpload from "@/app/components/common/ImageUpload";
-import moment from "moment";
+import "react-datepicker/dist/react-datepicker.css";
+import ReactDatePicker from "react-datepicker";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
-    console.log(form,"fffffffffooooooo")
+    console.log(form, "fffffffffooooooo")
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Banner"} filters={undefined}>
             <form onSubmit={handleSubmit}>
@@ -67,100 +68,132 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                 </div>
 
                                 <div className="col-md-6 mb-3">
-                                    <label>SEO Attributes<span className="star">*</span></label>
+                                    <label>SEO Attributes</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={form.seo_attributes}
                                         onChange={e => setform({ ...form, seo_attributes: e.target.value })}
                                     />
-                                    {submitted && !form?.seo_attributes ? <div className="invalid-feedback d-block">SEO Attributes is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Activation Date<span className="star">*</span></label>
-                                    <input
+                                    <ReactDatePicker
+                                        showIcon
+                                        isClearable
+                                        placeholderText="Select Activation Date"
+                                        selected={form?.activation_date}
+                                        className="form-control"
+                                        onChange={(date) => setform({ ...form, activation_date: date })}
+                                        timeInputLabel="Time:"
+                                        dateFormat="MM/dd/yyyy h:mm aa"
+                                        showTimeInput
+                                    />
+                                    {/* <input
                                         type="date"
                                         className="form-control"
                                         value={moment(form.activation_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, activation_date: e.target.value })}
-                                    />
+                                    /> */}
                                     {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Activation Date Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Availability Date<span className="star">*</span></label>
-                                    <input
+                                    <ReactDatePicker
+                                        showIcon
+                                        isClearable
+                                        placeholderText="Select Availability Date"
+                                        selected={form?.availability_date}
+                                        className="form-control"
+                                        onChange={(date) => setform({ ...form, availability_date: date })}
+                                        timeInputLabel="Time:"
+                                        dateFormat="MM/dd/yyyy h:mm aa"
+                                        showTimeInput
+                                    />
+                                    {/* <input
                                         type="date"
                                         className="form-control"
                                         value={moment(form.availability_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, availability_date: e.target.value })}
-                                    />
+                                    /> */}
                                     {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Expiration Date<span className="star">*</span></label>
-                                    <input
+                                    <ReactDatePicker
+                                        showIcon
+                                        isClearable
+                                        placeholderText="Select Expiration Date"
+                                        selected={form?.expiration_date}
+                                        className="form-control"
+                                        onChange={(date) => setform({ ...form, expiration_date: date })}
+                                        timeInputLabel="Time:"
+                                        dateFormat="MM/dd/yyyy h:mm aa"
+                                        showTimeInput
+                                    />
+                                    {/* <input
                                         type="date"
                                         className="form-control"
                                         value={moment(form.expiration_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, expiration_date: e.target.value })}
-                                    />
+                                    /> */}
                                     {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
                                 </div>
-<div className="col-md-6 mb-3 ">
-<label>Select</label>
-<div className="select_check">
-<div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input mr-4"
-                                        checked={form?.is_animation}
-                                        onClick={(e) =>
-                                            setform({
-                                                ...form,
-                                                is_animation: !form?.is_animation,
-                                            })
-                                        }
-                                    />
-                                    <label className="form-check-label" >
-                                        Is Animation
-                                    </label>
-                                </div>
+                                <div className="col-md-6 mb-3 ">
+                                    <label>Select : </label>
+                                    <div className="select_check">
+                                        {/* <div className="form-check">
+                                            <input
+                                                type="checkbox"
+                                                className="form-check-input mr-4"
+                                                checked={form?.is_animation}
+                                                onClick={(e) =>
+                                                    setform({
+                                                        ...form,
+                                                        is_animation: !form?.is_animation,
+                                                    })
+                                                }
+                                            />
+                                            <label className="form-check-label" >
+                                                Is Animation
+                                            </label>
+                                        </div> */}
 
-                                <div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input mr-4"
-                                        checked={form?.is_deep_linking}
-                                        onClick={(e) =>
-                                            setform({
-                                                ...form,
-                                                is_deep_linking: !form?.is_deep_linking,
-                                            })
-                                        }
-                                    />
-                                    <label className="form-check-label" >
-                                        Is Deep Linking
-                                    </label>
-                                </div>
+                                        <div className="form-check">
+                                            <input
+                                                type="checkbox"
+                                                className="form-check-input mr-4"
+                                                checked={form?.is_deep_linking}
+                                                onClick={(e) =>
+                                                    setform({
+                                                        ...form,
+                                                        is_deep_linking: !form?.is_deep_linking,
+                                                    })
+                                                }
+                                            />
+                                            <label className="form-check-label" >
+                                                Is Deep Linking
+                                            </label>
+                                        </div>
 
-                                <div className="form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input mr-4"
-                                        checked={form?.mobile_creative}
-                                        onClick={(e) =>
-                                            setform({
-                                                ...form,
-                                                mobile_creative: !form?.mobile_creative,
-                                            })
-                                        }
-                                    />
-                                    <label className="form-check-label" >
-                                        Mobile Creative
-                                    </label>
+                                        <div className="form-check">
+                                            <input
+                                                type="checkbox"
+                                                className="form-check-input mr-4"
+                                                checked={form?.mobile_creative}
+                                                onClick={(e) =>
+                                                    setform({
+                                                        ...form,
+                                                        mobile_creative: !form?.mobile_creative,
+                                                    })
+                                                }
+                                            />
+                                            <label className="form-check-label" >
+                                                Mobile Creative
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-</div>
-</div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description</label>
                                     {affiliateData && <DynamicReactQuill
@@ -197,7 +230,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
                                 </div>
 
-                               
+
 
                             </div>
 

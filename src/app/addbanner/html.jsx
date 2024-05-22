@@ -126,7 +126,7 @@ const Html = ({
                             </h4>
                         </div>
                     </div></td>
-                    <td className='table_dats'>{itm.seo_attributes}</td>
+                    <td className='table_dats'>{itm.seo_attributes || "--"}</td>
                     {/* <td className='table_dats'>{itm.seo_attributes}</td> */}
                     <td className='table_dats'>{datepipeModel.date(itm.expiration_date)}</td>
                     <td className='table_dats'>{datepipeModel.date(itm.activation_date)}</td>
