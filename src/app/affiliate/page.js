@@ -672,9 +672,14 @@ export default function affilate() {
                             </div>
 
                           </div>
-                          <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                         {!expandedRowId ? 
+                         <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
                             Show More
-                          </a>
+                          </a> : 
+                           <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                           Show Less
+                         </a>
+                          }
                         </div>
                       </td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
