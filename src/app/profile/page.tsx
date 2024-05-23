@@ -61,18 +61,50 @@ const Profile = () => {
               </div>
               </div>
               {/* <hr /> */}
-              <div className=" row">
-                <div className="col-12 col-sm-12 col-md-3 ">
+              <div className=" row align-items-center ">
+                <div className="col-12 col-sm-12 col-md-4 ">
                   {/* <label>Image</label> */}
 
-                  <div className="  d-flex justify-content-center align-items-center profileimage ">
+                  {/* <div className="  d-flex justify-content-center align-items-center profileimage ">
                     <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
+                  </div> */}
+
+<div className="user-profile_scroller">
+
+<div className="d-flex gap-4 align-items-center users_detialsbx">
+                  <input type="radio" className='radio_users' />
+                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                  <div className='user_profiles_bx'>
+                    <h5 className='users_names'>Akshay</h5>
+                    <p className='users_emails'>Akshay@yopmail.com</p>
                   </div>
+                  </div>
+
+                  <div className="d-flex gap-4 align-items-center users_detialsbx">
+                  <input type="radio" className='radio_users' />
+                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                  <div className='user_profiles_bx'>
+                    <h5 className='users_names'>Akshay</h5>
+                    <p className='users_emails'>Akshay@yopmail.com</p>
+                  </div>
+                  </div>
+
+
+                  <div className="d-flex gap-4 align-items-center users_detialsbx">
+                  <input type="radio" className='radio_users' />
+                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                  <div className='user_profiles_bx'>
+                    <h5 className='users_names'>Akshay</h5>
+                    <p className='users_emails'>Akshay@yopmail.com</p>
+                  </div>
+                  </div>
+</div>
+                 
 
 
                 </div>
 
-                <div className="col-12 col-sm-12 col-md-9">
+                <div className="col-12 col-sm-12 col-md-8">
                   <div className="row">
                   <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                   <div className=' inputFlexs width400'>
@@ -326,32 +358,6 @@ const Profile = () => {
                       </div>
                     </div>}
 
-                    {/* {data?.instagram_username && data?.instagram_profile_link && 
-                <div className="col-md-12 inputFlexs">
-                  <label><i className='fa fa-facebook mr-1'></i> Instagram</label>
-                  <p className="profile_data name_space">User Name : <b>{data?.instagram_username}</b></p>
-                  <div>
-                  <p className="profile_data name_space ">Link : <b>{data?.instagram_profile_link}</b></p>
-                  </div>
-                </div>} */}
-
-                    {/* {data?.linkedin_username && data?.linkedin_profile_link && 
-                <div className="col-md-12 inputFlexs">
-                  <label ><i className='fa fa-linkedin mr-1'></i> Linkedin</label>
-                  <p className="profile_data name_space">User Name : <b>{data?.linkedin_username}</b></p>
-                  <div>
-                  <p className="profile_data ">Link : <b>{data?.linkedin_profile_link}</b></p>
-                  </div>
-                </div>} */}
-
-                    {/* {data?.twitter_username && data?.twitter_profile_link && 
-                <div className="col-md-3 inputFlexs social-media-links">
-                  <label ><i className="fa fa-twitter mr-1" aria-hidden="true"></i> Twitter</label>
-                  <p className="profile_data name_space">User Name : <b>{data?.twitter_username}</b></p>
-                  <div>
-                  <p className="profile_data ">Link : <b>{data?.twitter_profile_link}</b></p>
-                  </div>
-                </div>} */}
 
                     <div className="">
                       <div className="row mt-2">
