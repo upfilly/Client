@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
 import methodModel from '@/methods/methods';
+import environment from '../../environment/index'
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
@@ -664,7 +665,7 @@ export default function affilate() {
                             <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
                             <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
                               {itm?.image ?
-                                <img className='person-img' src={`http://endpoint.jcsoftwaresolution.com:6043/${itm?.image}`} alt=''></img>
+                                <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
                                 :
                                 <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
                               }
