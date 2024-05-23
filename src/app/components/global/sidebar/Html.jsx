@@ -114,10 +114,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           </div></>}
 
-          {user && user?.role == "brand" && <ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
-          <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
-          <span className="side_head">Add Banner</span>
-        </ListItemLink>}
+          { <ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+            <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
+            <span className="side_head">{user.role == "brand" ? "Add Banner" : "Banners"}</span>
+          </ListItemLink>}
 
           {user && user?.role == "brand" && <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
             <div className="d-flex align-items-center icns_center">

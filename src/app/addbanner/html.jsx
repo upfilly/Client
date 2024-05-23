@@ -55,11 +55,11 @@ const Html = ({
                     />
 
                     <article className="d-flex filterFlex phView">
-                        <>
+                       {user?.role == "brand" && <>
                             <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Banner
                             </a>
-                        </>
+                        </>}
                         {/* <div className='searchInput'>
                             <input
                                 type="text"
@@ -110,7 +110,7 @@ const Html = ({
             <th scope="col" className='table_data'>Availability Date</th>
             {/* <th scope="col" className='table_data'>Status</th> */}
             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data'>Action</th>
+            {user?.role == "brand" && <th scope="col" className='table_data'>Action</th>}
 
         </tr>
     </thead>
@@ -140,7 +140,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                 {/* dropdown */}
-                <td className='table_dats'>
+                {user?.role == "brand" && <td className='table_dats'>
                     <div className="action_icons gap-3 ">
                         {<>{isAllow('editAdmins') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
@@ -156,7 +156,7 @@ const Html = ({
                         <>
                         </>
                     </div>
-                </td>
+                </td>}
 
             </tr>
 

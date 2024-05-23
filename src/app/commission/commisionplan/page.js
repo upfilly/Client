@@ -211,7 +211,7 @@ export default function Commissions() {
                           <thead>
                             <tr>
                               <th></th>
-                              <th>Affiliate</th>
+                              {/* <th>Affiliate</th> */}
                               <th>Type</th>
                               <th>Due</th>
                               <th>Amount</th>
@@ -237,8 +237,8 @@ export default function Commissions() {
                                   }
                                 }}
                               /></td>
-                              {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
-                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>}
+                              {/* {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
+                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>} */}
                               <td>{itm?.event_type}</td>
 
                               <td>{datepipeModel.date(itm.due_date)}</td>

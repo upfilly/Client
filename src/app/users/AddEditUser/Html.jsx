@@ -12,7 +12,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
     getError, setEyes, eyes, back, }) => {
 
     return <>
-        <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Affiliate Team" filters={''} >
+        <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Users" filters={''} >
             <form onSubmit={handleSubmit}>
 
                 <div className="pprofile1 mt-3">
@@ -59,24 +59,25 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                 {submitted && !form?.email ? <div className="invalid-feedback d-block">Email is Required</div> : <></>}
                             </div>
 
-                            {/* {role ? <></> : <div className="col-md-6 mb-3">
-                        <label>Role<span className="star">*</span></label>
-                        <div className="select_row">
-                            <SelectDropdown
-                                id="statusDropdown"
-                                displayValue="name"
-                                placeholder="Select Role"
-                                intialValue={form?.role}
-                                disabled={form?.id ? true : false}
-                                result={e => { setform({ ...form, role: e.value }) }}
-                                options={rolesModel.list}
-                            />
-                        </div>
-                        {submitted && !form?.role ? <div className="invalid-feedback d-block">Role is Required</div> : <></>}
-                    </div>} */}
+                            <div className="col-md-6 mb-3">
+                                <label>Language</label>
+                                <div className="select_row">
+                                    <SelectDropdown
+                                        id="statusDropdown"
+                                        displayValue="name"
+                                        placeholder="Select Role"
+                                        intialValue={form?.language}
+                                        // disabled={form?.id ? true : false}
+                                        result={e => { setform({ ...form, language: e.value }) }}
+                                        options={[{
+                                            id: 'english', name: 'English'
+                                        }]}
+                                    />
+                                </div>
+                            </div>
 
                             <div className="col-md-12 mb-3">
-                                <label>Description<span className="star">*</span></label>
+                                <label>Description</label>
                                 <DynamicReactQuill
                                     theme="snow"
                                     value={form?.description ? form?.description : ''}
@@ -110,7 +111,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
 
                             </div>
 
-                            {
+                            {/* {
                                 <div className="select_drop col-md-6 mb-3">
                                     <label>Affiliate Group</label>
                                     <div className="select_row">
@@ -124,11 +125,11 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
 
                                         />
                                     </div>
-                                </div>}
+                                </div>} */}
                         </div>
                     </div>
 
-                    <div className="add_team_bx">
+                    {/* <div className="add_team_bx">
                         <div className=" form-row">
                             {!id && <> <div className="col-md-6 mb-3">
                                 <label>Password<span className="star">*</span></label>
@@ -168,7 +169,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                             </div>
 
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="set-buttons d-flex align-items-center justify-content-end mt-3">
                         <button type="button" className="btn btn-secondary  discard back-link mr-2" onClick={e => back()}>Cancel</button>

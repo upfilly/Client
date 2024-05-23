@@ -15,7 +15,7 @@ const AddEditUser = () => {
   const {id} = useParams()
   const [image, setImages] = useState('');
   const defaultvalue = userType
-  const [form, setform] = useState({email:'',mobileNo:'', social_media_platforms: [], tags: [], category_id: null, dialCode: '', role: "affiliate",country:"",city:"",pincode:""})
+  const [form, setform] = useState({email:''})
   const [permissions, setPermissions] = useState({})
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false)
@@ -34,19 +34,13 @@ const AddEditUser = () => {
     // { key: 'category_id', required:true },
     // { key: 'gender', required: true },
     // { key: 'ic_number', minLength: 6 },
-    { key: 'password', minLength: 8 },
-    { key: 'confirmPassword', minLength: 8, confirmMatch: ['confirmPassword', 'password'] },
+    // { key: 'password', minLength: 8 },
+    // { key: 'confirmPassword', minLength: 8, confirmMatch: ['confirmPassword', 'password'] },
     // { key: 'dialCode', minLength: 2 },
   ]
   const [category, setCategory] = useState('')
   const [address, setAddress] = useState(form?.address);
   const [selectedLocation, setSelectedLocation] = useState(null);
-
-  useEffect(() => {
-    if (!form?.dialCode) {
-      setform((prevForm) => ({ ...prevForm, dialCode: '+1' }));
-    }
-  }, [form?.dialCode]);
 
   const handleChange = (newAddress) => {
     setAddress(newAddress);
@@ -130,21 +124,10 @@ const AddEditUser = () => {
     // if (form?.dialCode == "") return
     if (invalid) return
     let method = 'post'
-    let url = 'add/user'
+    let url = 'addinviteuser'
     let value = {
       ...form,
       role:"users",
-      image,
-      permissions,
-      // email:form?.email,
-      social_media_platforms: selectedItems,
-      // lat: selectedLocation?.lat?.toString(),
-      // lng: selectedLocation?.lng?.toString(),
-      // address: selectedLocation?.address,
-      // country: selectedLocation?.country,
-      // state: selectedLocation?.state,
-      // city: selectedLocation?.city,
-      // pincode: selectedLocation?.pincode
     }
 
     if (value.id) {

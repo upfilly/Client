@@ -736,10 +736,10 @@ export default function affilate() {
                           
                           </td>
                           <td>
-                           
+                          
                            
                               <label className='form-label' >Category Type:</label>
-                              <p className='affi_tabbls' >{itm.cat_type || "--"}</p>
+                              <p className='affi_tabbls' >{itm.cat_type == "promotional_models" ? "Promotional Models" : itm.cat_type == "property_types" ? "Property Type" : itm.cat_type == "advertiser_categories" ? "Advertiser Categories" : "" || "--"}</p>
                               </td>
                           <td>
                            

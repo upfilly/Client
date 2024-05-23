@@ -123,7 +123,7 @@ const EditProfile = () => {
 
   const gallaryData = () => {
     loader(true)
-    ApiClient.get(`user/detail`, { id: user.id }).then(res => {
+    ApiClient.get(`user/detail`, { id: user?.activeUser?.id }).then(res => {
       if (res.success) {
         // setForm(res.data)
         let value = res.data
