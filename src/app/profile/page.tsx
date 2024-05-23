@@ -41,7 +41,52 @@ const Profile = () => {
 <div className="pprofile1  edit-profile-page my-5">
 <div className='container ' >
         <div className='row'>
-          <div className='col-12 col-sm-12 col-md-12  col-lg-11 mx-auto  '>
+          <div className="col-12 col-sm-12 col-md-12  col-lg-12">
+            <div className="row">
+            <div className="col-12 col-sm-12 col-md-5  col-lg-5 ">
+            
+                  {/* <label>Image</label> */}
+
+                  {/* <div className="  d-flex justify-content-center align-items-center profileimage ">
+                    <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
+                  </div> */}
+
+<div className="user-profile_scroller">
+
+<div className="d-flex gap-2 align-items-center users_detialsbx">
+                  <input type="radio" className='radio_users' />
+                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                  <div className='user_profiles_bx'>
+                    <h5 className='users_names'>Akshay</h5>
+                    <p className='users_emails'>Akshay@yopmail.com</p>
+                  </div>
+                  </div>
+
+                  <div className="d-flex gap-2 align-items-center users_detialsbx">
+                  <input type="radio" className='radio_users' />
+                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                  <div className='user_profiles_bx'>
+                    <h5 className='users_names'>Akshay</h5>
+                    <p className='users_emails'>Akshay@yopmail.com</p>
+                  </div>
+                  </div>
+
+
+                  <div className="d-flex gap-2 align-items-center users_detialsbx">
+                  <input type="radio" className='radio_users' />
+                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                  <div className='user_profiles_bx'>
+                    <h5 className='users_names'>Akshay</h5>
+                    <p className='users_emails'>Akshay@yopmail.com</p>
+                  </div>
+                  </div>
+</div>
+                 
+         
+
+                
+            </div>
+          <div className='col-12 col-sm-12 col-md-7  col-lg-7  '>
             <div className='card p-3 rounded-3 ' >
               <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
                 <div className='main_title_head'>
@@ -62,49 +107,9 @@ const Profile = () => {
               </div>
               {/* <hr /> */}
               <div className=" row align-items-center ">
-                <div className="col-12 col-sm-12 col-md-4 ">
-                  {/* <label>Image</label> */}
+              
 
-                  {/* <div className="  d-flex justify-content-center align-items-center profileimage ">
-                    <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
-                  </div> */}
-
-<div className="user-profile_scroller">
-
-<div className="d-flex gap-4 align-items-center users_detialsbx">
-                  <input type="radio" className='radio_users' />
-                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
-                  <div className='user_profiles_bx'>
-                    <h5 className='users_names'>Akshay</h5>
-                    <p className='users_emails'>Akshay@yopmail.com</p>
-                  </div>
-                  </div>
-
-                  <div className="d-flex gap-4 align-items-center users_detialsbx">
-                  <input type="radio" className='radio_users' />
-                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
-                  <div className='user_profiles_bx'>
-                    <h5 className='users_names'>Akshay</h5>
-                    <p className='users_emails'>Akshay@yopmail.com</p>
-                  </div>
-                  </div>
-
-
-                  <div className="d-flex gap-4 align-items-center users_detialsbx">
-                  <input type="radio" className='radio_users' />
-                  <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
-                  <div className='user_profiles_bx'>
-                    <h5 className='users_names'>Akshay</h5>
-                    <p className='users_emails'>Akshay@yopmail.com</p>
-                  </div>
-                  </div>
-</div>
-                 
-
-
-                </div>
-
-                <div className="col-12 col-sm-12 col-md-8">
+                <div className="col-12 col-sm-12 col-md-12">
                   <div className="row">
                   <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                   <div className=' inputFlexs width400'>
@@ -445,6 +450,9 @@ const Profile = () => {
               </div>
             </div>
           </div>
+            </div>
+          </div>
+         
         </div>
       </div>
 </div>

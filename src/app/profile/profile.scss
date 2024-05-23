@@ -135,8 +135,8 @@ p.profile_data {
 
 // profile csss
 .users_detialsbx .profileUsers {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     border-radius: 67px;
 }
 
@@ -145,7 +145,7 @@ p.profile_data {
 .users_detialsbx input.radio_users {
     width: 15px;
     height: 15px;
-}
+}    
 
 .user_profiles_bx .users_names {
     font-size: 16px;
@@ -162,7 +162,7 @@ p.profile_data {
 .user-profile_scroller {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 242px;
+    height: 285px;
 }
 .user-profile_scroller::-webkit-scrollbar {
     width: 2px;
