@@ -57,8 +57,8 @@ const Profile = () => {
         <div className='container ' >
           <div className='row'>
             <div className="col-12 col-sm-12 col-md-12  col-lg-12">
-              <div className="row">
-                <div className="col-12 col-sm-12 col-md-5  col-lg-5 ">
+              <div className="form-row flex-md-column-reverse flex-lg-row">
+                <div className="col-12 col-sm-12 col-md-12  col-lg-4 ">
 
                   {/* <label>Image</label> */}
 
@@ -66,7 +66,7 @@ const Profile = () => {
                     <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
                   </div> */}
 
-                  <div className="user-profile_scroller">
+                  <div className="user-profile_scroller mb-4">
 
                     {data?.listOfOtherUsers.map((itm: any) => {
 
@@ -85,8 +85,8 @@ const Profile = () => {
 
                 </div>
                {data?.activeUser ?  
-               <div className='col-12 col-sm-12 col-md-7  col-lg-7  '>
-               <div className='card p-3 rounded-3 ' >
+               <div className='col-12 col-sm-12 col-md-12  col-lg-8  '>
+               <div className='card p-3 rounded-3 mb-4 ' >
                  <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
                    <div className='main_title_head'>
                      <h3 className=''>Basic Information </h3>

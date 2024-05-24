@@ -110,6 +110,7 @@ p.profile_data {
     background-color: #f7f7f7;
     border-radius: 6px;
     margin-top: 6px;
+    min-height: 38px;
 }
 
 
@@ -140,7 +141,7 @@ p.profile_data {
     border-radius: 67px;
 }
 
-.users_detialsbx {border: 1px solid #e8e9ed;padding: 17px;border-radius: 9px; margin-bottom: 15px;}
+.users_detialsbx {border: 1px solid #e8e9ed;padding: 12px;border-radius: 9px; margin-bottom: 15px;}
 
 .users_detialsbx input.radio_users {
     width: 15px;
@@ -148,13 +149,13 @@ p.profile_data {
 }    
 
 .user_profiles_bx .users_names {
-    font-size: 16px;
+    font-size: 13px;
     margin-bottom: 3px;
     font-weight: 500;
 }
 
 .user_profiles_bx .users_emails {
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 0px;
     font-weight: 400;
 }
@@ -162,7 +163,7 @@ p.profile_data {
 .user-profile_scroller {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 285px;
+    height: 295px;
 }
 .user-profile_scroller::-webkit-scrollbar {
     width: 2px;
