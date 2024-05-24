@@ -66,20 +66,35 @@ const Profile = () => {
                     <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
                   </div> */}
 
-                  <div className="user-profile_scroller mb-4">
+          
+<div className="box_div">
+<div className="user-profile_scroller ">
+{data?.listOfOtherUsers.map((itm: any) => {
 
-                    {data?.listOfOtherUsers.map((itm: any) => {
+return <div >
+  {/* <input type="radio" className='radio_users ' checked={itm?.user_id == user?.activeUser?.id ? true : false} /> */}
 
-                      return <div className="d-flex gap-2 align-items-center users_detialsbx" onClick={() => handleSwitchUser(itm?.user_id)}>
-                        <input type="radio" className='radio_users' checked={itm?.user_id == user?.activeUser?.id ? true : false} />
-                        <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
-                        <div className='user_profiles_bx'>
-                          <h5 className='users_names'>{itm?.firstName} {itm?.lastName}</h5>
-                          <p className='users_emails'>{itm?.email}</p>
-                        </div>
-                      </div>
 
-                    })}
+  <label className="custom-radio m-0 mb-3 d-flex gap-2 align-items-center users_detialsbx" onClick={() => handleSwitchUser(itm?.user_id)}>
+     <div>
+     <input type="radio" name="radio-option" checked={itm?.user_id == user?.activeUser?.id ? true : false}/>
+        <span className="radio-btn"></span>
+     </div>
+     <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+   <div>
+   <p className='users_names '> {itm?.firstName} {itm?.lastName}</p>
+<p className='users_emails '>        {itm?.email}</p>
+   </div>
+    </label>
+  
+      
+</div>
+
+
+
+})}
+</div>
+                   
 
                   </div>
 
