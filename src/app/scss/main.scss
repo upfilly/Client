@@ -5161,7 +5161,7 @@ max-width: 1000px;
   border: 0px solid #ccc !important;
 }
 ///////////////////////////////////////////////////////////////////
-input[type="radio"] {
+ input[type="radio"].profile_radio {
   display: none;
 }
 
@@ -5181,7 +5181,7 @@ input[type="radio"] {
   top: 4px; 
 }
 
-input[type=radio]:checked + .radio-btn::after {
+input[type="radio"].profile_radio:checked + .radio-btn::after {
   content: "";
   display: block;
   width: 10px;
@@ -5195,7 +5195,7 @@ input[type=radio]:checked + .radio-btn::after {
 }
 ///////////////////////////////////////////////////////////////////
 
-input[type="checkbox"] {
+input[type="checkbox"].check_bx_input {
   display: none;
 }
 
@@ -5215,7 +5215,7 @@ input[type="checkbox"] {
   top: 4px;
 }
 
-input[type=checkbox]:checked + .checkbox-btn::after {
+input[type=checkbox].check_bx_input:checked + .checkbox-btn::after {
   content: "";
   display: block;
   width: 100%;
