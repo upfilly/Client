@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSidebar, activeSidebar, user }) => {
+const addedUser = JSON.parse(localStorage.getItem('addedUser'))
 
   return (
     <div className="nav flex-column new-sidebar" component="siderbar">
@@ -22,7 +23,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Dashboard </span>
           </ListItemLink>
         </> : <></>}
-        {user?.role == "brand" && <>
+        {(user?.role == "brand" || addedUser?.role == "brand") && <>
 
           {urlAllow('affiliate', 'group') ? <>
             <div className="nav-item">
@@ -65,7 +66,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           </div></>}
 
-        {user?.role == "brand" && <>
+        {(user?.role == "brand" || addedUser?.role == "brand") && <>
 
           {urlAllow('commisionplan', 'manualCommission') ? <>
             <div className="nav-item">
@@ -116,37 +117,37 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           { <ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
             <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
-            <span className="side_head">{user.role == "brand" ? "Add Banner" : "Banners"}</span>
+            <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Banner" : "Banners"}</span>
           </ListItemLink>}
 
-          {user && user?.role == "brand" && <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
+          {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
             <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">payments</i >
               <span className="side_head">Add Commissions</span>
             </div>
           </ListItemLink>}
 
-        {user && user?.role == "brand" && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+        {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
           <span className="side_head">Add Campaign</span>
         </ListItemLink>}
 
-        {user && ((user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
+        {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
           <i className="material-icons  svg_iconbx ListItemLink" title="product">add_shopping_cart</i>
           <span className="side_head ">Add Offer</span>
         </ListItemLink>}
 
-        {user && ((user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
+        {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
           <i className="material-icons  svg_iconbx " title="campaignManagement">business_center</i>
           <span className="side_head">Offer Request</span>
         </ListItemLink>}
 
-        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
+        {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
           <i className="material-icons  svg_iconbx " title="campaignManagement">transfer_within_a_station</i>
           <span className="side_head">Merchant Invites</span>
         </ListItemLink>}
 
-        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+        {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignManagement" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
           <i className="material-icons  svg_iconbx" title="campaignManagement">manage_accounts</i>
           <span className="side_head">Campaign Management</span>
         </ListItemLink>}
@@ -156,7 +157,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Invite Users</span>
         </ListItemLink>} */}
 
-        {/* {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/invitedUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
+        {/* {user && (user?.role == "affiliate" ) && <ListItemLink to="/invitedUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
           <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i>
           <span className="side_head">Invited Users</span>
         </ListItemLink>} */}
@@ -171,7 +172,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Add Users</span>
         </ListItemLink>}
 
-        {user?.role != "users" && <ListItemLink to="/salesTracking" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer">
+        {(user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/salesTracking" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer">
           <i className="material-icons  svg_iconbx" title="untracked sales">
             real_estate_agent</i>
           <span className="side_head">Untracked Sales</span>
@@ -188,22 +189,22 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Invites</span>
         </ListItemLink>} */}
 
-        {user && user?.role == "brand" && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Sent Offers">
+        {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requests" data-bs-toggle="tooltip" data-bs-placement="top" title="Sent Offers">
           <i className="material-icons  svg_iconbx" title="campaignManagement">business</i>
           <span className="side_head">Sent Offers</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
+        {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
           <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
-        {user && user?.role == "brand" && <ListItemLink to="/makeLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
+        {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/makeLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
           <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
           <span className="side_head">Generate Link</span>
         </ListItemLink>}
 
-        {/* {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
+        {/* {user && (user?.role == "affiliate" ) && <ListItemLink to="/Trackings" data-bs-toggle="tooltip" data-bs-placement="top" title="Trackings">
           <i className="material-icons  svg_iconbx" title="tracking">show_chart</i>
   
           <span className="side_head">Trackings</span>
@@ -216,7 +217,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <i class="material-icons  svg_iconbx">payment</i>
           <span className="side_head">Payments</span>
         </ListItemLink>}
-        {user?.role == "brand" && <ListItemLink to="/pricing" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Plan">
+        {(user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/pricing" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Plan">
           {/* <svg className="text_black svg_iconbx" xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="0 0 60 60" fill="none">
             <path d="M9.375 3.75V56.25H50.625V3.75H9.375ZM46.875 52.5H13.125V7.5H46.875V52.5ZM28.125 11.25H16.875V22.5H28.125V11.25ZM24.375 18.75H20.625V15H24.375V18.75ZM43.125 18.75H30V15H43.125V18.75ZM28.125 24.375H16.875V35.625H28.125V24.375ZM24.375 31.875H20.625V28.125H24.375V31.875ZM43.125 31.875H30V28.125H43.125V31.875ZM28.125 37.5H16.875V48.75H28.125V37.5ZM24.375 45H20.625V41.25H24.375V45ZM43.125 45H30V41.25H43.125V45Z" fill="#111918" />
           </svg> */}

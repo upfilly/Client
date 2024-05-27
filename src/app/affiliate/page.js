@@ -681,13 +681,13 @@ export default function affilate() {
 
 
                         {!expandedRowId.includes(itm.id) ? (
-                          <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                          <span className='show_morebx' onClick={() => handleRowClick(itm.id)}>
                             Show More
-                          </a>
+                          </span>
                         ) : (
-                          <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                          <span className='show_morebx' onClick={() => handleRowClick(itm.id)}>
                             Show Less
-                          </a>
+                          </span>
                         )}
 
                       </td>

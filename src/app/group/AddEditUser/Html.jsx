@@ -7,6 +7,7 @@ import Layout from "@/app/components/global/layout";
 import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
 import dynamic from 'next/dynamic';
+import SelectDropdown from "@/app/components/common/SelectDropdown";
 
 const Html = ({ submitted, form, handleSubmit, setform, back }) => {
 
@@ -60,6 +61,23 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                         onChange={e => setform({ ...form, group_name: e.target.value })}
                                     />
                                     {submitted && !form?.group_name ? <div className="invalid-feedback d-block">Group name is Required</div> : <></>}
+                                </div>
+
+                                <div className='col-md-6 mb-3'>
+                                    {/* <div className='mb-3' > */}
+                                        <div className='mb-2' >Select Type</div>
+                                        <SelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Type"
+                                            intialValue={form?.group_type}
+                                            result={e => setform({ ...form, group_type: e.value })}
+                                            options={[
+                                                { id: 'affiliate', name: 'Affiliate' },
+                                                { id: 'banner', name: 'Banner' },
+                                            ]}
+                                        />
+                                    {/* </div> */}
                                 </div>
                                 {/* <div className="col-md-6 mb-3">
                                     <label>Commision<span className="star">*</span></label>

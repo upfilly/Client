@@ -9,7 +9,7 @@ import crendentialModel from '@/models/credential.model';
 import Link from 'next/link';
 import Layout from '../components/global/layout/index';
 import { useRouter } from 'next/navigation';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 const Profile = () => {
   const history = useRouter()
@@ -17,7 +17,8 @@ const Profile = () => {
   const [data, setData] = useState<any>();
   const [Id, setId] = useState<any>('')
   const [show, setShow] = useState(false);
-  const [ActivityData,setActivityData] = useState([])
+  const [ActivityData, setActivityData] = useState([])
+  const [assosiateUserData,setAssosiateUserData] = useState([])
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -26,6 +27,7 @@ const Profile = () => {
     ApiClient.get(`user/detail`, { id: id }).then(res => {
       if (res.success) {
         setData(res.data)
+        activityLogsData(res?.data?.addedBy || res?.data?.id, res?.data?.activeUser?.id || res?.data?.id || res?.data?._id)
         if (res?.data?.activeUser)
           crendentialModel?.setUser(res?.data)
       }
@@ -34,9 +36,17 @@ const Profile = () => {
     })
   };
 
-  const activityLogsData = (id: any) => {
+  const AssosiateUserData = () => {
+    ApiClient.get(`getallassociatedusers`).then(res => {
+      if (res.success) {
+        setAssosiateUserData(res.data)
+      }
+    })
+  };
+
+  const activityLogsData = (mainId: any, id: any) => {
     loader(true)
-    ApiClient.get(`getallactivities`, { parentUserId: id }).then(res => {
+    ApiClient.get(`getallactivities`, { parentUserId: mainId, addedBy: id }).then(res => {
       if (res.success) {
         setActivityData(res.data)
       }
@@ -59,7 +69,7 @@ const Profile = () => {
     () => {
       if (user) {
         gallaryData(user?.activeUser?.id || user?.id || user?._id);
-        activityLogsData(user?.activeUser?.id || user?.id || user?._id)
+        AssosiateUserData()
       }
     },
     []
@@ -83,14 +93,14 @@ const Profile = () => {
 
                   <div className="box_div">
                     <div className="user-profile_scroller ">
-                      {data?.listOfOtherUsers.map((itm: any) => {
+                      {assosiateUserData.map((itm: any) => {
 
                         return <div >
                           {/* <input type="radio" className='radio_users ' checked={itm?.user_id == user?.activeUser?.id ? true : false} /> */}
 
                           <label className="custom-radio m-0 mb-3 d-flex gap-2 align-items-center users_detialsbx" onClick={() => handleSwitchUser(itm?.user_id)}>
                             <div>
-                              <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == user?.activeUser?.id ? true : false} />
+                              <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == user?.activeUser?.activeUser || Id ? true : false} />
                               <span className="radio-btn"></span>
                             </div>
                             <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
@@ -118,15 +128,14 @@ const Profile = () => {
                             Edit Profile
                           </Link>}
                           <button className="btn btn-primary profiles" onClick={handleShow}>
-                            <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             See Activity Logs
                           </button>
-                          {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
+                          {/* {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
                             history.push(`/chat`)
                             localStorage.setItem("chatId", user?.addedBy)
                           }}>
                             <i className='fa fa-comment-o text-white'></i>
-                          </a>}
+                          </a>} */}
                         </div>
                       </div>
                       {/* <hr /> */}
@@ -153,7 +162,7 @@ const Profile = () => {
                               </div>
 
                             </div>
-                            {data?.address &&
+                            {data?.activeUser?.address &&
                               <div className="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div className='inputFlexs width400'>
                                   <label >Address:</label>
@@ -161,7 +170,7 @@ const Profile = () => {
                                 </div>
                               </div>}
 
-                            {data?.affiliate_group_name &&
+                            {data?.activeUser?.affiliate_group_name &&
                               <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                                 <div className='inputFlexs width400'>
                                   <label>Affiliate Group:</label>
@@ -189,7 +198,7 @@ const Profile = () => {
 
                           </div>}
 
-                        {data?.parter_manager_name &&
+                        {data?.activeUser?.parter_manager_name &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400'>
                               <label>Parter Manager Name:</label>
@@ -200,7 +209,7 @@ const Profile = () => {
 
                           </div>}
 
-                        {data?.account_executive_name &&
+                        {data?.activeUser?.account_executive_name &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400'>
                               <label>Account Executive Name:</label>
@@ -211,7 +220,7 @@ const Profile = () => {
 
                           </div>}
 
-                        {data?.address2 &&
+                        {data?.activeUser?.address2 &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                             <div className='inputFlexs width400'>
                               <label>Address 2:</label>
@@ -223,7 +232,7 @@ const Profile = () => {
                           </div>}
 
 
-                        {data?.dialCode && data?.mobileNo &&
+                        {data?.activeUser?.dialCode && data?.activeUser?.mobileNo &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400' >
                               <label>Mobile No</label>
@@ -233,7 +242,7 @@ const Profile = () => {
                             </div>
                           </div>}
 
-                        {data?.cellDialCode && data?.work_phone &&
+                        {data?.activeUser?.cellDialCode && data?.activeUser?.work_phone &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400' >
                               <label>Work No</label>
@@ -469,24 +478,27 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-
-                  : <div className='col-12 col-sm-12 col-md-7  col-lg-7  '>
+                  :
+                  <div className='col-12 col-sm-12 col-md-7  col-lg-7  '>
                     <div className='card p-3 rounded-3 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
                         <div className='main_title_head'>
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
-                          </Link>
-                          {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
+                          </Link>}
+                          <button className="btn btn-primary profiles" onClick={handleShow}>
+                            See Activity Logs
+                          </button>
+                          {/* {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
                             history.push(`/chat`)
                             localStorage.setItem("chatId", user?.addedBy)
                           }}>
                             <i className='fa fa-comment-o text-white'></i>
-                          </a>}
+                          </a>} */}
                         </div>
                       </div>
                       {/* <hr /> */}

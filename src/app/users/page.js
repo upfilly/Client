@@ -13,7 +13,7 @@ const AffiliateTeam = () => {
 
     const user = crendentialModel.getUser()
     const [filters, setFilter] = useState({
-    addedBy:user?.id,page: 0, count: 10, search: '', isDeleted: false,status:'',role:'users'})
+    addedBy:user?.id,page: 0, count: 10, search: '', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
@@ -31,7 +31,7 @@ const AffiliateTeam = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='users/list'
+        let url='invite/users-list'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data.data)

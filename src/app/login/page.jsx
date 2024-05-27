@@ -161,6 +161,7 @@ export default function Login() {
         // toast.success(res.message)
         localStorage.setItem('token', res.data.access_token)
         crendentialModel.setUser(res.data)
+        localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
 
         let url = '/dashboard'
         // if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
