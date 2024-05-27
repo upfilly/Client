@@ -36,13 +36,13 @@ export default function affilate() {
     sub_category_id: '',
     sub_child_category_id: '',
     category_id: '',
-    cat_type:''
+    cat_type: ''
   })
   const [form, setform] = useState({
     "message": "",
     "tags": [],
     // "commission": "",
-    "campaign_id":""
+    "campaign_id": ""
   })
   const [groupForm, setGroupform] = useState({
     "affiliate_group": "",
@@ -66,15 +66,15 @@ export default function affilate() {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
   const [expandedRowId, setExpandedRowId] = useState([]);
   const [categoryType, SetCategoryType] = useState('')
-  const [Campaigns,setCampaign] = useState([])
-  const handleClose = () => {setShow(false),setselectedAffiliteid([])};
+  const [Campaigns, setCampaign] = useState([])
+  const handleClose = () => { setShow(false), setselectedAffiliteid([]) };
   const handleShow = () => setShow(true);
   const handleGroupClose = () => setGroupShow(false);
   const handleGroupShow = () => setGroupShow(true);
 
   const handleRowClick = (id) => {
     const isExpanded = expandedRowId.includes(id);
-    
+
     if (isExpanded) {
       setExpandedRowId(expandedRowId.filter(rowId => rowId !== id));
     } else {
@@ -218,9 +218,9 @@ export default function affilate() {
     getData({ page: 1 })
   }, [])
 
-  useEffect(()=>{
-   getCategory()
-  },[categoryType])
+  useEffect(() => {
+    getCategory()
+  }, [categoryType])
 
 
   const pageChange = (e) => {
@@ -295,7 +295,7 @@ export default function affilate() {
   }
 
   const handleCampaign = () => {
-    ApiClient.get('campaign/all', { brand_id:user?.id }).then(res => {
+    ApiClient.get('campaign/all', { brand_id: user?.id }).then(res => {
       if (res.success == true) {
         setCampaign(res?.data?.data)
       }
@@ -392,16 +392,19 @@ export default function affilate() {
       }
     })
   }
-  const MultiSelectAffliates=(add,id)=>{
-    let data=selectedAffiliteid
-    if(add){
+  const MultiSelectAffliates = (add, id) => {
+    let data = selectedAffiliteid
+    if (add) {
       data.push(id)
       setselectedAffiliteid([...data])
-    }else{
-      data=data.filter(itm=>itm!==id)
+    } else {
+      data = data.filter(itm => itm !== id)
       setselectedAffiliteid([...data])
     }
   }
+
+  console.log(selectedAffiliteid,"selectedAffiliteid")
+
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
@@ -620,17 +623,17 @@ export default function affilate() {
                       Reset
                     </a>
                   </> : <></>}
-                  <button disabled={selectedAffiliteid?.length<=0} className="btn btn-primary btn_primary" onClick={() => { handleShow() }}>
-                            <i className='fa fa-plus fa_icns' title='Invite'></i>
-                          </button>
+                  <button disabled={selectedAffiliteid?.length <= 0} className="btn btn-primary btn_primary" onClick={() => { handleShow() }}>
+                    <i className='fa fa-plus fa_icns' title='Invite'></i>
+                  </button>
                 </div>
 
 
 
-                
+
               </div>
             </div>
-            
+
 
             {/* <div className='col-12 col-md-2 col-lg-3'>
               <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
@@ -662,20 +665,20 @@ export default function affilate() {
                   <tbody>
                     {!loaging && data?.data?.map((itm) => <><tr className='table_row' >
                       <td className='profile_height' >
-                        
-                          <label className='d-flex align-items-center gap-2 pb-3'>
-                            <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
-                          <span className='checkbox-btn' ></span>
-                            <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
-                              {itm?.image ?
-                                <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
-                                :
-                                <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
-                              }
-                              <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
-                            </div>
-                            </label>
-                          
+
+                        <label className='d-flex align-items-center gap-2 pb-3'>
+                          <input type='checkbox' className='form-check-input' checked={selectedAffiliteid?.includes(itm.id) ? true : false} disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
+                          {/* <span className='checkbox-btn' ></span> */}
+                          <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
+                            {itm?.image ?
+                              <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
+                              :
+                              <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
+                            }
+                            <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
+                          </div>
+                        </label>
+
 
                         {!expandedRowId.includes(itm.id) ? (
                           <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
@@ -686,7 +689,7 @@ export default function affilate() {
                             Show Less
                           </a>
                         )}
-                        
+
                       </td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
                       <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
@@ -723,35 +726,35 @@ export default function affilate() {
                           </button>}
                         </div>
                       </td>
-                   
+
                     </tr>
                       {expandedRowId.includes(itm.id) && (
                         <tr class="table_row  show_mores">
                           <td>
-                            
-                              <label className='form-label' >Affiliate Type:</label>
-                              <p className='affi_tabbls' >{itm.affiliate_type || "--"}</p>
-                            
+
+                            <label className='form-label' >Affiliate Type:</label>
+                            <p className='affi_tabbls' >{itm.affiliate_type || "--"}</p>
+
                           </td>
                           <td>
-                           
-                              
-                              <label className='form-label' >Social Media Platforms:</label>
-                              <p className='affi_tabbls' >{itm.social_media_platforms.map((itm)=>itm).join(",") || "--"}</p>
-                          
+
+
+                            <label className='form-label' >Social Media Platforms:</label>
+                            <p className='affi_tabbls' >{itm.social_media_platforms.map((itm) => itm).join(",") || "--"}</p>
+
                           </td>
                           <td>
-                          
-                           
-                              <label className='form-label' >Category Type:</label>
-                              <p className='affi_tabbls' >{itm.cat_type == "promotional_models" ? "Promotional Models" : itm.cat_type == "property_types" ? "Property Type" : itm.cat_type == "advertiser_categories" ? "Advertiser Categories" : "" || "--"}</p>
-                              </td>
+
+
+                            <label className='form-label' >Category Type:</label>
+                            <p className='affi_tabbls' >{itm.cat_type == "promotional_models" ? "Promotional Models" : itm.cat_type == "property_types" ? "Property Type" : itm.cat_type == "advertiser_categories" ? "Advertiser Categories" : "" || "--"}</p>
+                          </td>
                           <td>
-                           
-                              
-                              <label className='form-label' >Country:</label>
-                              <p className='affi_tabbls' >{itm.country || "--"}</p>
-                          
+
+
+                            <label className='form-label' >Country:</label>
+                            <p className='affi_tabbls' >{itm.country || "--"}</p>
+
                           </td>
                         </tr>
                       )}
