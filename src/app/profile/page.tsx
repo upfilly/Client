@@ -8,7 +8,6 @@ import methodModel from '@/methods/methods';
 import crendentialModel from '@/models/credential.model';
 import Link from 'next/link';
 import Layout from '../components/global/layout/index';
-import { userDetailType } from "@/models/type.model";
 import { useRouter } from 'next/navigation';
 import { Modal, Button, Form } from 'react-bootstrap';
 
