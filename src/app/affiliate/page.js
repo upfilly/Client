@@ -663,8 +663,9 @@ export default function affilate() {
                     {!loaging && data?.data?.map((itm) => <><tr className='table_row' >
                       <td className='profile_height' >
                         
-                          <div className='d-flex align-items-center gap-2 pb-3'>
+                          <label className='d-flex align-items-center gap-2 pb-3'/>
                             <input type='checkbox' className='' disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
+                          <span className='checkbox-btn' ></span>
                             <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
                               {itm?.image ?
                                 <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
@@ -674,7 +675,7 @@ export default function affilate() {
                               <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
                             </div>
 
-                          </div>
+                          {/* </div> */}
                         {!expandedRowId.includes(itm.id) ? (
                           <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
                             Show More

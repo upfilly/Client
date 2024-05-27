@@ -65,13 +65,33 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                     <SelectDropdown
                                         id="statusDropdown"
                                         displayValue="name"
-                                        placeholder="Select Role"
+                                        placeholder="Select Language"
                                         intialValue={form?.language}
                                         // disabled={form?.id ? true : false}
                                         result={e => { setform({ ...form, language: e.value }) }}
                                         options={[{
                                             id: 'english', name: 'English'
                                         }]}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 mb-3">
+                                <label>Select Role</label>
+                                <div className="select_row">
+                                    <SelectDropdown
+                                        id="statusDropdown"
+                                        displayValue="name"
+                                        placeholder="Select Role"
+                                        intialValue={form?.role}
+                                        // disabled={form?.id ? true : false}
+                                        result={e => { setform({ ...form, role: e.value }) }}
+                                        options={[
+                                            { id: 'affiliate', name: 'Super User' },
+                                            { id: 'operator', name: 'Operator' },
+                                            { id: 'analyzer', name: 'Analyzer' },
+                                            { id: 'publisher', name: 'Publisher' },
+                                        ]}
                                     />
                                 </div>
                             </div>

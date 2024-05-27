@@ -30,13 +30,7 @@ const AddEditUser = () => {
     { key: 'firstName', required: true },
     { key: 'lastName', required: true },
     { key: 'email', required: true },
-    // { key: 'mobileNo', minLength: 10 },
-    // { key: 'category_id', required:true },
-    // { key: 'gender', required: true },
-    // { key: 'ic_number', minLength: 6 },
-    // { key: 'password', minLength: 8 },
-    // { key: 'confirmPassword', minLength: 8, confirmMatch: ['confirmPassword', 'password'] },
-    // { key: 'dialCode', minLength: 2 },
+    { key: 'role', required: true },
   ]
   const [category, setCategory] = useState('')
   const [address, setAddress] = useState(form?.address);
@@ -127,7 +121,6 @@ const AddEditUser = () => {
     let url = 'addinviteuser'
     let value = {
       ...form,
-      role:"users",
     }
 
     if (value.id) {

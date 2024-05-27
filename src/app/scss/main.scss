@@ -2066,6 +2066,7 @@ input.datepicker-field {
 
 .react-datepicker__view-calendar-icon input {
   padding: 6px 10px 5px 35px !important;
+  background-color: #fff !important;
 }
 
 .filter-opt button.set-filter {
@@ -2379,8 +2380,8 @@ ul.sales-listing {
 
 
 .sidebar_main.active .toggle-img img {
-  width: 30px;
-  margin: 0 auto;
+  width: 24px;
+  margin-left: 23px;
 }
 
 .main-card .form-check-input[type=radio] {
@@ -4558,7 +4559,7 @@ margin-bottom: 0px !important;
 }
 
 .sidebar_main.active .toggle-img img {
-  width: 30px;
+  width: 24px;
   margin: unset !important;
 }
 
@@ -5154,4 +5155,79 @@ max-width: 1000px;
 }
 .show_bx{
   display: block;
+}
+.react-datepicker__view-calendar-icon input:focus-visible {
+  outline: 1px solid #ccc !important;
+  border: 0px solid #ccc !important;
+}
+///////////////////////////////////////////////////////////////////
+input[type="radio"] {
+  display: none;
+}
+
+.custom-radio {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-btn {
+  display: inline-block;
+  width: 20px; 
+  height: 20px;
+  border: 2px solid #0c83e5; 
+  border-radius: 50%; 
+  position: relative;
+  top: 4px; 
+}
+
+input[type=radio]:checked + .radio-btn::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #0c83e5;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+///////////////////////////////////////////////////////////////////
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox-btn {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #0c83e5;
+  border-radius: 4px;
+  position: relative;
+  top: 4px;
+}
+
+input[type=checkbox]:checked + .checkbox-btn::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 19px;
+  background-position: top;
+  background-size: inherit;
+  max-width: 14px;
+  background-image: url(/assets/img/aff_check.png);
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

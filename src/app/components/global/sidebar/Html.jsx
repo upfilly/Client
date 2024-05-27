@@ -151,16 +151,15 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Campaign Management</span>
         </ListItemLink>}
 
-        {user && user?.role == "affiliate" && <ListItemLink to="/inviteUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
-          {/* <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i> */}
+        {/* {user && user?.role == "affiliate" && <ListItemLink to="/inviteUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
           <i class="material-icons svg_iconbx " title="campaignManagement">person_add</i>
           <span className="side_head">Invite Users</span>
-        </ListItemLink>}
+        </ListItemLink>} */}
 
-        {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/invitedUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
+        {/* {user && (user?.role == "affiliate" || user?.role == "operator" || user?.role == "analyzer" || user?.role == "publisher") && <ListItemLink to="/invitedUsers" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
           <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i>
           <span className="side_head">Invited Users</span>
-        </ListItemLink>}
+        </ListItemLink>} */}
 
         {user && (user?.role != "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
           <i className="material-icons  svg_iconbx"  title="product">groups_3</i>
