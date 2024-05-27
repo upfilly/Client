@@ -64,7 +64,7 @@ export default function affilate() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
-  const [expandedRowId, setExpandedRowId] = useState(null);
+  const [expandedRowId, setExpandedRowId] = useState([]);
   const [categoryType, SetCategoryType] = useState('')
   const [Campaigns,setCampaign] = useState([])
   const handleClose = () => {setShow(false),setselectedAffiliteid([])};
@@ -73,10 +73,12 @@ export default function affilate() {
   const handleGroupShow = () => setGroupShow(true);
 
   const handleRowClick = (id) => {
-    if (expandedRowId === id) {
-      setExpandedRowId(null);
+    const isExpanded = expandedRowId.includes(id);
+    
+    if (isExpanded) {
+      setExpandedRowId(expandedRowId.filter(rowId => rowId !== id));
     } else {
-      setExpandedRowId(id)
+      setExpandedRowId([...expandedRowId, id]);
     }
   };
 
@@ -673,14 +675,15 @@ export default function affilate() {
                             </div>
 
                           </div>
-                         {!expandedRowId ? 
-                         <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                        {!expandedRowId.includes(itm.id) ? (
+                          <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
                             Show More
-                          </a> : 
-                           <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
-                           Show Less
-                         </a>
-                          }
+                          </a>
+                        ) : (
+                          <a href="#" className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                            Show Less
+                          </a>
+                        )}
                         
                       </td>
                       <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
@@ -720,7 +723,7 @@ export default function affilate() {
                       </td>
                    
                     </tr>
-                      {expandedRowId === itm.id && (
+                      {expandedRowId.includes(itm.id) && (
                         <tr class="table_row  show_mores">
                           <td>
                             
@@ -898,7 +901,7 @@ export default function affilate() {
 
         {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
 
-        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
           <span>Show <select
             className="form-control"
             onChange={(e) => handleCountChange(parseInt(e.target.value))}
