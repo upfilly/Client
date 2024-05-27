@@ -77,7 +77,7 @@ return <div >
 
   <label className="custom-radio m-0 mb-3 d-flex gap-2 align-items-center users_detialsbx" onClick={() => handleSwitchUser(itm?.user_id)}>
      <div>
-     <input type="radio" name="radio-option" checked={itm?.user_id == user?.activeUser?.id ? true : false}/>
+     <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == user?.activeUser?.id ? true : false}/>
         <span className="radio-btn"></span>
      </div>
      <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
