@@ -27,7 +27,7 @@ const Profile = () => {
     ApiClient.get(`user/detail`, { id: id }).then(res => {
       if (res.success) {
         setData(res.data)
-        activityLogsData(res?.data?.addedBy || res?.data?.id, res?.data?.activeUser?.id || res?.data?.id || res?.data?._id)
+        activityLogsData(res?.data?.activeUser?.id || res?.data?.id || res?.data?._id)
         // if (res?.data?.activeUser)
           // crendentialModel?.setUser(res?.data)
       }
@@ -44,9 +44,9 @@ const Profile = () => {
     })
   };
 
-  const activityLogsData = (mainId: any, id: any) => {
+  const activityLogsData = (id: any) => {
     loader(true)
-    ApiClient.get(`getallactivities`, { parentUserId: mainId, addedBy: id }).then(res => {
+    ApiClient.get(`getallactivities`, { addedBy: id }).then(res => {
       if (res.success) {
         setActivityData(res.data)
       }
@@ -57,7 +57,7 @@ const Profile = () => {
     loader(true)
     ApiClient.put(`changeactiveuser`, { id: id }).then(res => {
       if (res.success) {
-        gallaryData(id)
+        // gallaryData(id)
         setId(id)
       }
       loader(false)
