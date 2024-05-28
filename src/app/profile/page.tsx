@@ -57,6 +57,7 @@ const Profile = () => {
     loader(true)
     ApiClient.put(`changeactiveuser`, { id: id }).then(res => {
       if (res.success) {
+        activityLogsData(id)
         // gallaryData(id)
         setId(id)
       }
