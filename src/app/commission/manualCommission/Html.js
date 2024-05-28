@@ -30,11 +30,19 @@ const Html = () => {
         handleShow()
     }
 
+    const handleDownload = () => {
+        const url ='/assets/img/Example.csv';
+        window.open(url, '_blank');
+      };
+
     const commissionType = [{
         id: "sales", name: "Sales"
     },
     {
         id: "lead", name: "Lead"
+    },
+    {
+        id: "bonus", name: "Bonus"
     }]
 
     const handleFileChange = (event) => {
@@ -102,7 +110,7 @@ const Html = () => {
             payload = {
                 "batch_file": `/documents/${file}`,
                 "isContain_headers": hasHeader ? "yes" : "no",
-                "locality": locale,
+                // "locality": locale,
             }
         }
 
@@ -349,6 +357,7 @@ const Html = () => {
                                 <Modal show={show} onHide={handleClose} className="shadowboxmodal csv_modal">
                                     <Modal.Header className='align-items-center p-0 pb-3' closeButton>
                                         <h5 className='modal-title'>Sample CSV File</h5>
+                                        <button className='btn btn-primary ml-2' onClick={handleDownload}>Download CSV</button>
                                     </Modal.Header>
                                     <Modal.Body className='p-0' >
                                         <img src="/assets/img/affiliteCsv.png" className='csv_img_file'

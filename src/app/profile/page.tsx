@@ -28,8 +28,8 @@ const Profile = () => {
       if (res.success) {
         setData(res.data)
         activityLogsData(res?.data?.addedBy || res?.data?.id, res?.data?.activeUser?.id || res?.data?.id || res?.data?._id)
-        if (res?.data?.activeUser)
-          crendentialModel?.setUser(res?.data)
+        // if (res?.data?.activeUser)
+          // crendentialModel?.setUser(res?.data)
       }
       loader(false)
 

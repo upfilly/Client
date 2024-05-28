@@ -223,7 +223,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <i class="material-icons  svg_iconbx">payment</i>
           <span className="side_head">Payments</span>
         </ListItemLink>}
-        {(user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/pricing" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Plan">
+        {(user?.role == "brand") && <ListItemLink to="/pricing" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Plan">
           {/* <svg className="text_black svg_iconbx" xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="0 0 60 60" fill="none">
             <path d="M9.375 3.75V56.25H50.625V3.75H9.375ZM46.875 52.5H13.125V7.5H46.875V52.5ZM28.125 11.25H16.875V22.5H28.125V11.25ZM24.375 18.75H20.625V15H24.375V18.75ZM43.125 18.75H30V15H43.125V18.75ZM28.125 24.375H16.875V35.625H28.125V24.375ZM24.375 31.875H20.625V28.125H24.375V31.875ZM43.125 31.875H30V28.125H43.125V31.875ZM28.125 37.5H16.875V48.75H28.125V37.5ZM24.375 45H20.625V41.25H24.375V45ZM43.125 45H30V41.25H43.125V45Z" fill="#111918" />
           </svg> */}
