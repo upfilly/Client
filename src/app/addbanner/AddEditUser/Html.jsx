@@ -104,6 +104,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         isClearable
                                         placeholderText="Select Availability Date"
                                         selected={form?.availability_date}
+                                        minDate={form?.activation_date}
                                         className="form-control"
                                         onChange={(date) => setform({ ...form, availability_date: date })}
                                         timeInputLabel="Time:"
@@ -125,6 +126,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         isClearable
                                         placeholderText="Select Expiration Date"
                                         selected={form?.expiration_date}
+                                        minDate={form?.activation_date}
                                         className="form-control"
                                         onChange={(date) => setform({ ...form, expiration_date: date })}
                                         timeInputLabel="Time:"
