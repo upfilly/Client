@@ -71,12 +71,12 @@ const Profile = () => {
       if (user) {
         gallaryData(user?.activeUser?.id || user?.id || user?._id);
         AssosiateUserData()
+        activityLogsData(Id)
       }
     },
     []
   );
 
-  console.log(ActivityData,"ActivityDataActivityData")
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -873,6 +873,7 @@ const Profile = () => {
                     })
 
                     }
+                    {ActivityData?.length == 0 && <div>No Data</div>}
                   </Modal.Body>
                 </Modal>
 
