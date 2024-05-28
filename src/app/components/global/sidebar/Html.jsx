@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSidebar, activeSidebar, user }) => {
-const addedUser = JSON.parse(localStorage.getItem('addedUser'))
+  const [addedUser, setaddedUser] = useState()
+
+  // const addedUser = JSON.parse(localStorage.getItem('addedUser'))
+
+  useEffect(() => {
+    setaddedUser(JSON.parse(localStorage.getItem('addedUser')))
+  }, [])
 
   return (
     <div className="nav flex-column new-sidebar" component="siderbar">
