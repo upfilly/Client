@@ -873,7 +873,7 @@ const Profile = () => {
                     })
 
                     }
-                    {ActivityData?.length == 0 && <div>No Data</div>}
+                    {ActivityData?.length == 0 && <div className='d-flex justify-content-center align-items-center height_fix' > <img src="/assets/img/no-data.jpg"  className='n-databx' alt="" /> </div>}
                   </Modal.Body>
                 </Modal>
 
