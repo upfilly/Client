@@ -858,18 +858,21 @@ const Profile = () => {
 
                 {/* Activity Log Modal */}
 
-                <Modal show={show} onHide={handleClose} className="shadowboxmodal">
+                <Modal show={show} onHide={handleClose} className="shadowboxmodal activity_modals">
                   <Modal.Header className='align-items-center' closeButton>
                     <h5 className='modal-title'>Activity Logs</h5>
                   </Modal.Header>
                   <Modal.Body>
-                        {ActivityData?.map((data:any)=>{
-                          return<h5>{data?.message}</h5>
-                        })
+                    {ActivityData?.map((data: any) => {
+                      return <div className='modal_bx'><h5 className='title_body mb-0'>{data?.message}</h5>
+                        {data?.response_data?.data?.name && <>
+                        <div className="d-flex align-items-center gap-3 sert ">
+                        <h5 className='mb-0'>Campaign Name :</h5><span>{methodModel.capitalizeFirstLetter(data?.response_data?.data?.name)}</span>
+                        </div>
+                        </>}</div>
+                    })
 
-                        }
-
-
+                    }
                   </Modal.Body>
                 </Modal>
 
