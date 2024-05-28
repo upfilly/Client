@@ -51,6 +51,7 @@ export default function Login() {
           }
           // toast.success(res.message)
           localStorage.setItem('token', res.data.access_token)
+          localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
           history.push(url);
@@ -82,6 +83,7 @@ export default function Login() {
           }
           // toast.success(res.message)
           localStorage.setItem('token', res.data.access_token)
+          localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
           history.push(url);

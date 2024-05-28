@@ -35,6 +35,24 @@ export default function Addcomminson() {
     })
   }
 
+  function getCurrentDate() {
+    const today = new Date();
+    let month = String(today.getMonth() + 1);
+    let day = String(today.getDate());
+    const year = today.getFullYear();
+
+    // Add leading zero if month or day is a single digit
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return `${year}-${month}-${day}`;
+  }
+
+
   const handleAffiliate = () => {
     ApiClient.get('users/list', { status: "active", role: "affiliate", createBybrand_id: user?.id, }).then(res => {
       if (res.success == true) {
@@ -255,6 +273,7 @@ export default function Addcomminson() {
                             className='form-control'
                             onChange={handlePaymentTimeFrameChange}
                             value={formData.date || ""}
+                            min={getCurrentDate()}
                           />
 
                           {/* <select

@@ -31,6 +31,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
             if (res.success == true) {
                 crendentialModel?.setUser(res?.data)
                 localStorage.setItem('token', res.data.access_token)
+                localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
                 // let url = '/dashboard'
                 // history.push(url);
                 window.location.reload();

@@ -29,7 +29,6 @@ export default function Commissions() {
     event_type: itm?.event_type
   }))
 
-
   const idsAndAmountFromAffiliate = affiliateData?.map((data) => ({
     commission_id: data?.id,
     user_id: data?.affiliate_id,
@@ -286,10 +285,10 @@ export default function Commissions() {
                           <thead>
                             <tr>
                               <th></th>
-                              <th>Affiliate</th>
+                              <th>Type</th>
                               {/* <th>Email</th> */}
                               <th>Due</th>
-                              <th>Count</th>
+                              {/* <th>Count</th> */}
                               <th>Ammout</th>
                               <th>Status</th>
 
@@ -303,7 +302,7 @@ export default function Commissions() {
                                 checked={selectedUser.some((user) => user.id === itm.id)}
                                 onChange={() => {
                                   if (itm?.groupDetails?.length <= 0) {
-                                    toast.success('No affiliate in this group')
+                                    toast.error('No affiliate in this group')
                                   } else {
                                     handleCheckboxChange(itm);
                                   }
@@ -312,14 +311,14 @@ export default function Commissions() {
                                   }
                                 }}
                               /></td> : <td></td>}
-                              {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
-                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>}
-                              {/* <td>contact@email.com</td> */}
+                              {/* {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
+                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>} */}
+                              <td>{itm?.event_type}</td>
 
                               <td>{datepipeModel.date(itm.due_date)}</td>
 
                               <td>${itm?.amount}</td>
-                              <td></td>
+                              {/* <td></td> */}
 
 
                               <td><span class={itm?.status=="pending"?"pending_status":"contract"}>{itm?.status}</span></td>
