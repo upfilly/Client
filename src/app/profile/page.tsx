@@ -17,7 +17,7 @@ const Profile = () => {
   const [data, setData] = useState<any>();
   const [Id, setId] = useState<any>('')
   const [show, setShow] = useState(false);
-  const [ActivityData, setActivityData] = useState([])
+  const [ActivityData, setActivityData] = useState<any>([])
   const [assosiateUserData,setAssosiateUserData] = useState([])
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -48,7 +48,7 @@ const Profile = () => {
     loader(true)
     ApiClient.get(`getallactivities`, { addedBy: id }).then(res => {
       if (res.success) {
-        setActivityData(res.data)
+        setActivityData(res?.data?.data)
       }
     })
   };
@@ -74,6 +74,8 @@ const Profile = () => {
     },
     []
   );
+
+  console.log(ActivityData,"ActivityDataActivityData")
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -860,7 +862,11 @@ const Profile = () => {
                     <h5 className='modal-title'>Activity Logs</h5>
                   </Modal.Header>
                   <Modal.Body>
+                        {ActivityData?.map((data:any)=>{
+                          return<h5>{data?.message}</h5>
+                        })
 
+                        }
 
 
                   </Modal.Body>
