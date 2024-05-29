@@ -271,7 +271,7 @@ export default function Dashboard() {
 
                         <div className='d-flex align-items-center flex-wrap item-status'>
                           <p className='yellow-badge'>Payment Pending</p>
-                          <i className="fa fa-chevron-right " aria-hidden="true"></i>
+                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>
 
@@ -297,7 +297,7 @@ export default function Dashboard() {
                         <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
                     </div>
                     <ul className='sales-listing'>
-                      {recentUser?.slice(0,5)?.map((data:any)=><li>
+                     {recentUser?.slice(0,5)?.map((data:any)=><li>
                         <div className='d-flex flex-wrap align-items-center item-name'>
                           {data?.image ? <img src={`${environment.api}${data?.image}`} className='dashboard_image'/>:
                           <img src='/assets/img/person.jpg' className='dashboard_image'/>
@@ -310,6 +310,8 @@ export default function Dashboard() {
                           <i className="fa fa-chevron-right " aria-hidden="true"></i>
                         </div>
                       </li>)}
+
+                      {recentUser?.length == 0 && <div className="py-3 text-center">No User</div>}
 
                       {/* <li>
                         <div className='d-flex align-items-center flex-wrap item-name'>

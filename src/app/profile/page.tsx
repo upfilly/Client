@@ -18,7 +18,9 @@ const Profile = () => {
   const [Id, setId] = useState<any>('')
   const [show, setShow] = useState(false);
   const [ActivityData, setActivityData] = useState<any>([])
-  const [assosiateUserData,setAssosiateUserData] = useState([])
+  const [assosiateUserData, setAssosiateUserData] = useState([])
+  const [switchUser,setSwitchUser] = useState<any>(null)
+  const [roles, setRoles] = useState<any>('')
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -29,7 +31,7 @@ const Profile = () => {
         setData(res.data)
         activityLogsData(res?.data?.activeUser?.id || res?.data?.id || res?.data?._id)
         // if (res?.data?.activeUser)
-          // crendentialModel?.setUser(res?.data)
+        // crendentialModel?.setUser(res?.data)
       }
       loader(false)
 
@@ -62,16 +64,17 @@ const Profile = () => {
         setId(id)
       }
       loader(false)
-
     })
   }
 
   useEffect(
     () => {
       if (user) {
-        gallaryData(user?.activeUser?.id || user?.id || user?._id);
+        gallaryData(user?.id || user?._id);
         AssosiateUserData()
-        activityLogsData(Id)
+        handleSwitchUser(user?.id || user?._id)
+        // activityLogsData(user?.activeUser?.id || user?.id || user?._id)
+        setRoles(user?.activeUser?.role)
       }
     },
     []
@@ -87,29 +90,20 @@ const Profile = () => {
               <div className="form-row flex-md-column-reverse flex-lg-row">
                 <div className="col-12 col-sm-12 col-md-12  col-lg-4 ">
 
-                  {/* <label>Image</label> */}
-
-                  {/* <div className="  d-flex justify-content-center align-items-center profileimage ">
-                    <img src={methodModel.userImg(data && data?.image)} className="profileImage" />
-                  </div> */}
-
-
                   <div className="box_div">
                     <div className="user-profile_scroller ">
                       {assosiateUserData.map((itm: any) => {
 
-                        return <div >
-                          {/* <input type="radio" className='radio_users ' checked={itm?.user_id == user?.activeUser?.id ? true : false} /> */}
-
-                          <label className="custom-radio m-0 mb-3 d-flex gap-2 align-items-center users_detialsbx" onClick={() => handleSwitchUser(itm?.user_id)}>
+                        return <div>
+                          <label className="custom-radio m-0 mb-3 d-flex gap-2 align-items-center users_detialsbx" onClick={() => { handleSwitchUser(itm?.user_id); setRoles(itm?.role); setSwitchUser(itm) }}>
                             <div>
-                              <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == user?.activeUser?.activeUser || Id ? true : false} />
+                              <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == Id ? true : false} />
                               <span className="radio-btn"></span>
                             </div>
                             <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
                             <div>
                               <p className='users_names '> {itm?.firstName} {itm?.lastName}</p>
-                              <p className='users_emails '>        {itm?.email}</p>
+                              <p className='users_emails '>{itm?.email}</p>
                             </div>
                           </label>
                         </div>
@@ -118,7 +112,7 @@ const Profile = () => {
                   </div>
 
                 </div>
-                {data?.activeUser ?
+                {data?.activeUser?.id == Id ?
                   <div className='col-12 col-sm-12 col-md-12  col-lg-8  '>
                     <div className='card p-3 rounded-3 mb-4 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
@@ -126,25 +120,17 @@ const Profile = () => {
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && roles == 'brand' && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
-                          <button className="btn btn-primary profiles" onClick={handleShow}>
+                          {/* <button className="btn btn-primary profiles" onClick={handleShow}>
                             See Activity Logs
-                          </button>
-                          {/* {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
-                            history.push(`/chat`)
-                            localStorage.setItem("chatId", user?.addedBy)
-                          }}>
-                            <i className='fa fa-comment-o text-white'></i>
-                          </a>} */}
+                          </button> */}
                         </div>
                       </div>
                       {/* <hr /> */}
                       <div className=" row align-items-center ">
-
-
                         <div className="col-12 col-sm-12 col-md-12">
                           <div className="row">
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6">
@@ -154,7 +140,6 @@ const Profile = () => {
                                   <p className="profile_data">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.fullName)}</p>
                                 </div>
                               </div>
-
                             </div>
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                               <div className='inputFlexs width400'>
@@ -163,7 +148,6 @@ const Profile = () => {
                                   <p className="profile_data">{data && data?.activeUser?.email}</p>
                                 </div>
                               </div>
-
                             </div>
                             {data?.activeUser?.address &&
                               <div className="col-12 col-sm-12 col-md-12 col-lg-12 ">
@@ -181,7 +165,6 @@ const Profile = () => {
                                     <p className="profile_data">{data && data?.activeUser?.affiliate_group_name}</p>
                                   </div>
                                 </div>
-
                               </div>}
 
                           </div>
@@ -489,22 +472,15 @@ const Profile = () => {
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && roles == 'brand'  && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
                           <button className="btn btn-primary profiles" onClick={handleShow}>
                             See Activity Logs
                           </button>
-                          {/* {user?.addedBy && <a className='edit_icon action-btn' onClick={() => {
-                            history.push(`/chat`)
-                            localStorage.setItem("chatId", user?.addedBy)
-                          }}>
-                            <i className='fa fa-comment-o text-white'></i>
-                          </a>} */}
                         </div>
                       </div>
-                      {/* <hr /> */}
                       <div className=" row align-items-center ">
 
 
@@ -514,7 +490,7 @@ const Profile = () => {
                               <div className=' inputFlexs width400'>
                                 <label>Name:</label>
                                 <div>
-                                  <p className="profile_data">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.firstName || data?.firstName)}</p>
+                                  <p className="profile_data">{switchUser && methodModel.capitalizeFirstLetter(switchUser?.firstName)}</p>
                                 </div>
                               </div>
 
@@ -523,19 +499,19 @@ const Profile = () => {
                               <div className='inputFlexs width400'>
                                 <label>Email:</label>
                                 <div>
-                                  <p className="profile_data">{data && data?.activeUser?.email || data?.email}</p>
+                                  <p className="profile_data">{switchUser && switchUser?.email}</p>
                                 </div>
                               </div>
 
                             </div>
-                            {data?.address &&
+                            {
                               <div className="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div className='inputFlexs width400'>
-                                  <label >Address:</label>
-                                  <p className="profile_data">{data && data?.activeUser?.address || data?.address}</p>
+                                  <label >Role:</label>
+                                  <p className="profile_data">{switchUser && switchUser?.role}</p>
                                 </div>
                               </div>}
-
+{/* 
                             {data?.affiliate_group_name &&
                               <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                                 <div className='inputFlexs width400'>
@@ -545,7 +521,7 @@ const Profile = () => {
                                   </div>
                                 </div>
 
-                              </div>}
+                              </div>} */}
 
                           </div>
                         </div>
@@ -553,7 +529,7 @@ const Profile = () => {
 
 
 
-                        {data?.category_name &&
+                        {/* {data?.category_name &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400'>
                               <label>Category Name:</label>
@@ -562,9 +538,9 @@ const Profile = () => {
                               </div>
                             </div>
 
-                          </div>}
+                          </div>} */}
 
-                        {data?.parter_manager_name &&
+                        {/* {data?.parter_manager_name &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400'>
                               <label>Parter Manager Name:</label>
@@ -573,9 +549,9 @@ const Profile = () => {
                               </div>
                             </div>
 
-                          </div>}
+                          </div>} */}
 
-                        {data?.account_executive_name &&
+                        {/* {data?.account_executive_name &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400'>
                               <label>Account Executive Name:</label>
@@ -584,9 +560,9 @@ const Profile = () => {
                               </div>
                             </div>
 
-                          </div>}
+                          </div>} */}
 
-                        {data?.address2 &&
+                        {/* {data?.address2 &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                             <div className='inputFlexs width400'>
                               <label>Address 2:</label>
@@ -595,10 +571,10 @@ const Profile = () => {
                               </div>
                             </div>
 
-                          </div>}
+                          </div>} */}
 
 
-                        {data?.dialCode && data?.mobileNo &&
+                        {/* {data?.dialCode && data?.mobileNo &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400' >
                               <label>Mobile No</label>
@@ -606,9 +582,9 @@ const Profile = () => {
                                 <p className="profile_data">({data && data?.activeUser?.dialCode || data?.dialCode}) {data && data?.activeUser?.mobileNo || data?.mobileNo}</p>
                               </div>
                             </div>
-                          </div>}
+                          </div>} */}
 
-                        {data?.cellDialCode && data?.work_phone &&
+                        {/* {data?.cellDialCode && data?.work_phone &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                             <div className='inputFlexs width400' >
                               <label>Work No</label>
@@ -616,27 +592,27 @@ const Profile = () => {
                                 <p className="profile_data">({data && data?.activeUser?.cellDialCode || data?.cellDialCode}) {data && data?.activeUser?.work_phone || data?.work_phone}</p>
                               </div>
                             </div>
-                          </div>}
+                          </div>} */}
 
-                        {data?.brand_name && data?.mobileNo && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
+                        {/* {data?.brand_name && data?.mobileNo && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                           <div className='inputFlexs width400' >
                             <label>Brand Name</label>
                             <div>
                               <p className="profile_data">{data && data?.activeUser?.brand_name || data?.brand_name}</p>
                             </div>
                           </div>
-                        </div>}
+                        </div>} */}
 
-                        {data?.language && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
+                        {/* {data?.language && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                           <div className='inputFlexs width400' >
                             <label>Language</label>
                             <div>
                               <p className="profile_data">{data && data?.activeUser?.language || data?.language}</p>
                             </div>
                           </div>
-                        </div>}
+                        </div>} */}
 
-                        {data?.reffering_affiliate && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
+                        {/* {data?.reffering_affiliate && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                           <div className='inputFlexs width400'>
                             <label>Brand Email:</label>
                             <div>
@@ -644,10 +620,10 @@ const Profile = () => {
                             </div>
                           </div>
 
-                        </div>}
+                        </div>} */}
 
 
-                        {
+                        {/* {
                           <>
 
 
@@ -694,15 +670,6 @@ const Profile = () => {
                                 <h3>Billing Detail</h3>
                               </div>
                             </div>}
-
-                            {/* {data?.tax_detail && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                      <div className='inputFlexs width400' >
-                        <label>Tax Detail</label>
-                        <div>
-                          <p className="profile_data">{data && data?.tax_detail}</p>
-                        </div>
-                      </div>
-                    </div>} */}
 
                             {data?.default_invoice_setting && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                               <div className='inputFlexs width400' >
@@ -849,7 +816,7 @@ const Profile = () => {
                               </div>
                             </div>
                           </>
-                        }
+                        } */}
 
                       </div>
                     </div>
@@ -866,14 +833,14 @@ const Profile = () => {
                     {ActivityData?.map((data: any) => {
                       return <div className='modal_bx'><h5 className='title_body mb-0'>{data?.message}</h5>
                         {data?.response_data?.data?.name && <>
-                        <div className="d-flex align-items-center gap-3 sert ">
-                        <h5 className='mb-0'>Campaign Name :</h5><span>{methodModel.capitalizeFirstLetter(data?.response_data?.data?.name)}</span>
-                        </div>
+                          <div className="d-flex align-items-center gap-3 sert ">
+                            <h5 className='mb-0'>Campaign Name :</h5><span>{methodModel.capitalizeFirstLetter(data?.response_data?.data?.name)}</span>
+                          </div>
                         </>}</div>
                     })
 
                     }
-                    {ActivityData?.length == 0 && <div className='d-flex justify-content-center align-items-center height_fix' > <img src="/assets/img/no-data.jpg"  className='n-databx' alt="" /> </div>}
+                    {ActivityData?.length == 0 && <div className='d-flex justify-content-center align-items-center height_fix' > <img src="/assets/img/no-data.jpg" className='n-databx' alt="" /> </div>}
                   </Modal.Body>
                 </Modal>
 
