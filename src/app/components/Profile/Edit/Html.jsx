@@ -36,7 +36,7 @@ const Html = ({ user,
   selectedCategory,
   selectedSubcategory,
   selectedSubSubcategory,
-  handleSubsubcategoryChange }) => {
+  handleSubsubcategoryChange,history }) => {
   const [inputFocused, setInputFocused] = useState(false)
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
@@ -108,7 +108,7 @@ const Html = ({ user,
             <div className='card mb-3'>
               <div className='card-header'>
                 <div className='main_title_head d-flex gap-3 align-items-center'>
-                  <button type='button' className='btn btn-primary rounded-2'><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
+                  <button type='button' className='btn btn-primary rounded-2' onClick={()=>history.push("/profile")}><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
 
                   <h3>  User Details</h3>
                 </div>

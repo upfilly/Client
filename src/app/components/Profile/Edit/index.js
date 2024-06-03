@@ -344,6 +344,7 @@ const EditProfile = () => {
         selectedCategory={selectedCategory}
         selectedSubcategory={selectedSubcategory}
         selectedSubSubcategory={selectedSubSubcategory}
+        history={history}
       />
     </>
   );

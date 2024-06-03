@@ -193,6 +193,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Sent Offers</span>
           </ListItemLink>}
 
+          <ListItemLink to="/coupons" data-bs-toggle="tooltip" data-bs-placement="top" title="Sent Offers">
+            <i className="material-icons  svg_iconbx" title="campaignManagement">confirmation_number</i>
+            <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
+          </ListItemLink>
+
           {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
             <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
             <span className="side_head">Generate Link</span>
