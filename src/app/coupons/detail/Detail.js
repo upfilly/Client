@@ -15,7 +15,7 @@ const Detail = (p) => {
     const [data, setData] = useState()
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`getTrackingById`, { id: did }).then(res => {
+        ApiClient.get(`coupon/get`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
@@ -38,7 +38,7 @@ const Detail = (p) => {
                 <div className='card'>
                     <div className='card-header'>
                         <div className="main_title_head">
-                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>  untarcked Sale Detail</h3>
+                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>  Coupon Detail</h3>
                         </div>
                     </div>
 
@@ -51,37 +51,24 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Type:</p>
+                                                <p className='headmain'>Coupon Code:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.type)}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.couponCode)}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Title:</p>
+                                                <p className='headmain'>Coupon Type:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Order Reference:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.order_reference}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.couponType)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -89,12 +76,12 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Order Date:</p>
+                                                <p className='headmain'>Coupon Commission:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && datepipeModel.date(data?.order_date)}</p>
+                                                <p className='headsub'>{data && data?.couponCommission}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -102,12 +89,12 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Commission:</p>
+                                                <p className='headmain'>Commission Type:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.commission}</p>
+                                                <p className='headsub'>{data && data?.commissionType}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -115,12 +102,12 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Customer Reference:</p>
+                                                <p className='headmain'>Coupon Commission:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.customer_reference)}</p>
+                                                <p className='headsub'>{data && data?.couponCommission}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -128,12 +115,12 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Description:</p>
+                                                <p className='headmain'>Expiration Date:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0' dangerouslySetInnerHTML={{ __html: data?.description }} />
+                                                <p className='headsub'>{data && datepipeModel.date(data?.expirationDate)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -141,35 +128,12 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Brand detail:</p>
+                                                <p className='headmain'>Start Date:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <ul className='ulclass'>
-                                                    <li> <div className='profiledetailscls mr-3'><b><i className='fa fa-user blue-icon mr-2'></i></b>{data?.affiliate_fullName}</div>
-                                                    </li>
-                                                    <li> <div className='profiledetailscls'><b><i className='fa fa-envelope blue-icon mr-2'></i></b>{data?.affiliate_email}</div></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Images:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
-                                                <div>
-                                                    {/* {data?.images?.map((itm) => */}
-                                                        <div className="imagethumbWrapper">
-                                                            <img src={methodModel.noImg(data?.image)} className="" />
-                                                        </div>
-                                                    {/* )} */}
-                                                </div>
+                                                <p className='headsub'>{data && datepipeModel.date(data?.startDate)}</p>
                                             </div>
                                         </div>
                                     </div>
