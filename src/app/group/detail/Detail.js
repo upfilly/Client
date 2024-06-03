@@ -79,10 +79,11 @@ const Detail = (p) => {
                     <div className="card-header">
                         <div className="d-flex justify-content-between align-items-center  gap-3 flex-wrap ">
 
-                            <div className=''>
-                                <div className='main_title_head '>
+                            <div className='main_title_head'>
+                                <div className='d-flex gap-2 align-items-center '>
+                                    <button onClick={back} type='button' className='btn btn-primary px-2 py-0 ' ><i className="fa fa-arrow-left " title='Back' aria-hidden="true"></i></button>
                                     <h3 className=" ">
-                                        <a to="/categories" onClick={back} className="back_icon">  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>
+                                        {/* <a to="/categories"  className="back_icon">  </a> */}
                                         Group Details
                                     </h3>
 
@@ -118,65 +119,51 @@ const Detail = (p) => {
                                 <div className=" col-md-12">
 
                                     <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
+                                            
                                             <div className='userdata'>
                                                 <p className='headmain'>Group Name:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && data?.group_name}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                      
+                                  
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Creation Date:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{datepipeModel.date(data?.createdAt)}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                       
+                                    
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Status:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && data?.status}</p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                     
+                                  
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Commision:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub' dangerouslySetInnerHTML={{ __html: data && data?.commision }} />
                                             </div>
                                         </div>
-                                    </div>
-
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                      
+                                    
+                                        <div className='col-12 col-sm-12 col-md-12 col-lg-12 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Added Affiliates:</p>
                                             </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls d-flex flex-wrap'>
                                                 <ul className='ulclass flex-wrap'>
 
@@ -189,6 +176,7 @@ const Detail = (p) => {
 
                                             </div>
                                         </div>
+                                      
                                     </div>
 
 

@@ -391,3 +391,13 @@ gap: 12px;
   height: 68px;
   position: relative;
 }
+
+.disable_check {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+  position: relative;
+  top: 4px;
+}
