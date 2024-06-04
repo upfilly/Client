@@ -287,7 +287,7 @@ export default function affilate() {
   }
 
   const handleAffiliateGroup = () => {
-    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id }).then(res => {
+    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id ,group_name:'affiliate'}).then(res => {
       if (res.success == true) {
         setAffiliategroup(res?.data?.data)
       }

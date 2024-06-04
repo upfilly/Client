@@ -31,10 +31,10 @@ const AffiliateTeam = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='invite/users-list'
+        let url='getallassociatedusers'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                setData(res.data.data)
+                setData(res.data)
                 setTotal(res?.data?.total)
             }
             setLoader(false)
@@ -60,7 +60,7 @@ const AffiliateTeam = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             loader(true)
-            ApiClient.delete(`delete?model=users&id=${id}`).then(res => {
+            ApiClient.delete(`deleteinviteuser?id=${id}`).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()
