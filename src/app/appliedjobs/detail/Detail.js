@@ -15,7 +15,7 @@ const Detail = (p) => {
     const [data, setData] = useState()
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`campaign`, { id: did }).then(res => {
+        ApiClient.get(`getInviteById`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
@@ -32,7 +32,7 @@ const Detail = (p) => {
     }, [id])
 
     return (
-        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={'Request'} filters={undefined}>
 
             <div className='sidebar-left-content'>
                 <div className='card'>

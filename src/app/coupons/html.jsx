@@ -53,11 +53,11 @@ const Html = ({
                     /> */}
 
                     <article className="d-flex filterFlex phView">
-                         <>
+                        {user?.role == "brand" && <>
                             <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Coupon
                             </a>
-                        </>
+                        </>}
                         {/* <div className='searchInput'>
                             <input
                                 type="text"

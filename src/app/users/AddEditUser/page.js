@@ -17,7 +17,7 @@ const AddEditUser = () => {
   const user = crendentialModel.getUser()
   const [image, setImages] = useState('');
   const defaultvalue = userType
-  const [form, setform] = useState({email:'',role:''})
+  const [form, setform] = useState({email:'',role:'',brand_id:user?.id})
   const [permissions, setPermissions] = useState({})
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false)

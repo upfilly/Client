@@ -30,7 +30,7 @@ const Html = ({
         }
     };
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Requests" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className='card'>
                     <div className='card-header'>
@@ -108,7 +108,9 @@ const Html = ({
                                     <tbody>
                                         {!loaging && data && data.map((itm, i) => {
                                             return <tr className='data_row' key={i}>
-                                                <td className='table_dats' onClick={e => view(itm.id || itm._id)}>
+                                                <td className='table_dats' 
+                                                onClick={e => view(itm.id || itm._id)}
+                                                >
 
                                                     <div className='user_detail'>
                                                         <div className='user_name'>
@@ -117,7 +119,7 @@ const Html = ({
                                                             </h4>
                                                         </div>
                                                     </div></td>
-                                                <td className='table_dats'>{itm?.affiliate_id_details?.affiliate_type}</td>
+                                                <td className='table_dats'>{itm?.affiliate_id_details?.affiliate_type || "--"}</td>
                                                 <td className='table_dats'>{itm?.affiliate_id_details?.email}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
