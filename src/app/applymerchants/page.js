@@ -814,7 +814,7 @@ export default function affilate() {
 
         </div>
 
-        {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
+        {!loaging && total == 0 ? <div className="py-3 text-center">No Brands</div> : <></>}
 
         <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
           <span>Show <select
