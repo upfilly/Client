@@ -110,7 +110,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/commission/addcommision" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
             <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">local_atm</i >
-              <span className="side_head">Add Commissions</span>
+              <span className="side_head">Manage Commissions</span>
             </div>
           </ListItemLink>}
 
@@ -123,7 +123,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
             <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
-            <span className="side_head">Add Campaign</span>
+            <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
 
           {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >

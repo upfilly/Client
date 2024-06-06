@@ -40,8 +40,9 @@ const AddEditUser = () => {
 
   const handleChange = (newAddress) => {
     setAddress(newAddress);
-  };
+  }
 
+  
   const handleSelect = async (selectedAddress) => {
     try {
       const results = await geocodeByAddress(selectedAddress);

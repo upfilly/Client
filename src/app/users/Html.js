@@ -84,7 +84,7 @@ const Html = ({
                                             <tbody>
                                                 {!loaging && data && data.map((itm, i) => {
                                                     return <tr className='data_row' key={i}>
-                                                        <td className='table_dats' onClick={e => view(itm?.id)}>
+                                                        <td className='table_dats' onClick={e => view(itm?.user_id)}>
                                                             <div className='user_detail' onClick={e => view(itm?.id)}>
                                                                 <img src={methodModel.userImg(itm?.image)} className="user_imgs" />
                                                                 <div className=''>

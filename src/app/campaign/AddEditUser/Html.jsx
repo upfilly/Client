@@ -7,11 +7,11 @@ import '../style.scss';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
+import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
+const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back }) => {
 
     const [loaderr, setLoader] = useState()
     const [imgLoder, setImgLoder] = useState()
@@ -20,10 +20,19 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
 
-    const handleRemove = (valueToRemove) => {
-        const updatedValues = form?.event_type?.filter((value) => value !== valueToRemove);
+    const EventType = [
+        {id:'lead',name:'Lead' },
+        {id:'visitor',name:'Visitor' },
+        {id:'purchase',name:'Purchase' },
+        // { id: 'line-item', name: 'Line-item' }
+    ]
+
+    const handleRemove = (valueToRemove,type) => {
+        const updatedValues = (form?.event_type || []).filter((value) => String(value) !== String(valueToRemove));
         setform({ ...form, event_type: updatedValues });
     };
+
+    console.log(form,"formformform")
 
     const uploadImage = async (e, key) => {
         let files = e.target.files
@@ -192,7 +201,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
     }
 
     return <>
-        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
+        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
                 <div className="sidebar-left-content">
                     <div className=" pprofile1 card card-shadow p-4">
@@ -257,21 +266,16 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                 <div className="col-md-6 mb-3">
                                     <label>Event Type:<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <MultiSelectDropdown
+                                        <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Type"
                                             intialValue={form?.event_type}
-                                            disabled={!id? false : true}
+                                            disabled={!id}
                                             result={e => {
                                                 setform({ ...form, event_type: e.value })
                                             }}
-                                            options={[
-                                                { id: 'lead', name: 'Lead' },
-                                                { id: 'visitor', name: 'Visitor' },
-                                                { id: 'purchase', name: 'Purchase' },
-                                                // { id: 'line-item', name: 'Line-item' }
-                                            ]}
+                                            options={EventType}
                                         />
                                         {form?.event_type?.length > 0 && <div className="selected_offrs_market">
                                             {form?.event_type?.map((value, index) => (
@@ -279,7 +283,7 @@ const Html = ({ id, role, form, affiliateData, handleSubmit, setform, submitted,
                                                   <p className="mb-0 valus" key={index}>
                                                     {value} 
                                                 </p>
-                                                <i className="fa fa-times close_bx" onClick={() => handleRemove(value)}></i>
+                                                <i className="fa fa-times close_bx" onClick={() => handleRemove(value,'remove')}></i>
                                                 </div>
                                                 
                                             ))}

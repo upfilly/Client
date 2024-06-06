@@ -126,10 +126,15 @@ export default function affilate() {
 
   const handleAddTag = () => {
     if (tagInput.trim() !== '') {
-      setform({ ...form, tags: [...form.tags, tagInput] });
+      if (!form.tags.includes(tagInput)) {
+        setform({ ...form, tags: [...form.tags, tagInput] });
+      } else {
+        toast.error('Tag already exists.')
+      }
       setTagInput('');
     }
   };
+  
 
   const handleDeleteTag = (index) => {
     const newTags = [...form.tags];

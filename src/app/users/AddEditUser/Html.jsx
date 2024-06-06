@@ -59,7 +59,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                 {submitted && !form?.email ? <div className="invalid-feedback d-block">Email is Required</div> : <></>}
                             </div>
 
-                            <div className="col-md-6 mb-3">
+                            {/* <div className="col-md-6 mb-3">
                                 <label>Language</label>
                                 <div className="select_row">
                                     <SelectDropdown
@@ -74,7 +74,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                         }]}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="col-md-6 mb-3">
                                 <label>Select Role</label>
