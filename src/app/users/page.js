@@ -31,7 +31,7 @@ const AffiliateTeam = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='getallassociatedusers'
+        let url='getAllInvitedUsers'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data)

@@ -194,7 +194,7 @@ const AddEditUser = () => {
           setDetail(value)
           let payload = {
             "brand_id": value?.brand_id,
-            "user_id": value?.id,
+            "user_id":id,
             "email": value?.email,
             "firstName": value?.firstName,
             "lastName": value?.lastName,
