@@ -102,6 +102,56 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             </div></>}
 
+          { <>
+
+            {urlAllow('CreativeAsset', 'EmailTemplate' , 'EmailMessages' , 'DataFeeds') ? <>
+              <div className="nav-item">
+                <a className={` side_titles  nav-link hoverclass affilate ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? '' : 'collapsed-m'}`} onClick={() => tabChange('CreativeAssets')}
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="Creative Assets">
+                  <i class="material-icons  svg_iconbx">account_circle</i>
+                  <span className="  side_head" >Creative Assets
+                  </span>
+                  <i className="fa fa-angle-down fontsize20" aria-hidden="true"></i>
+                </a>
+              </div>
+            </> : <></>}
+
+            <div className={`collapse dropdown-btm ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? 'show' : ''}`}>
+
+              {urlAllow('CreativeAsset') && (user?.role == "brand" || addedUser?.role == "brand") ? <>
+                <ListItemLink to="/CreativeAsset" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage">
+                  <div className="d-flex align-items-center icns_center">
+                    <i class="material-icons  svg_iconbx" >manage_accounts</i>
+                    <span className="side_head">Data Feeds</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>}
+              {urlAllow('EmailTemplate') && (user?.role == "brand" || addedUser?.role == "brand")  ? <>
+                <ListItemLink to="/EmailTemplate" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">groups</i>
+                    <span className="side_head">Email Template</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>}
+              {urlAllow('DataFeeds') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
+                <ListItemLink to="/DataFeeds" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage">
+                  <div className="d-flex align-items-center icns_center">
+                    <i class="material-icons  svg_iconbx" >manage_accounts</i>
+                    <span className="side_head">Data Feeds</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>}
+              {urlAllow('EmailMessages') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
+                <ListItemLink to="/EmailMessages" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">groups</i>
+                    <span className="side_head">Email Messages</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>}
+            </div></>}
+
           {<ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
             <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Banner" : "Banners"}</span>
