@@ -29,7 +29,6 @@ const Users = () => {
         let url = 'emailmessage/list'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                console.log(res?.data, "kfhgjkfhgjkfhgjk")
                 setData(res?.data)
                 setTotal(res.total)
             }

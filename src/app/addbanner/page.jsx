@@ -30,9 +30,11 @@ const banneres = () => {
 
     const getData = (p = {}) => {
         setLoader(true)
-        let filter= { ...filters, ...p}
-
-        let url='banners'
+        let filter = { ...filters, ...p }
+        if (user?.role == "brand") {
+            filter = { ...filters, ...p, addedBy: user?.id }
+        }
+        let url = 'banners'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)

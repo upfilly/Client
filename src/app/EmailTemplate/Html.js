@@ -12,33 +12,9 @@ import { useRouter } from 'next/navigation';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ relatedAffiliate }) => {
+const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
     const user = crendentialModel.getUser()
     const history = useRouter()
-    const [form, setForm] = useState({
-        "title": "",
-        "user_id": "",
-        description: '',
-    })
-
-    const handleSubmit = () => {
-
-        const payload = {
-            "title": form?.title,
-            "user_id": form?.user_id,
-            description: form?.description
-        }
-        loader(true);
-        ApiClient.post('emailmessage/send', payload).then((res) => {
-            if (res?.success) {
-                history.push('/invitedUsers')
-                toast.success(res?.message)
-                setForm({})
-            }
-            loader(false);
-        });
-    };
-
 
     return (
         <>
@@ -61,7 +37,7 @@ const Html = ({ relatedAffiliate }) => {
                                             type="text"
                                             className='form-control'
                                             placeholder="Enter Title"
-                                            value={form?.title}
+                                            value={form?.title ? form?.title : ''}
                                             autocomplete="off"
                                             onChange={(e) => setForm({ ...form, title: e.target.value })}
                                         />
@@ -74,7 +50,7 @@ const Html = ({ relatedAffiliate }) => {
                                             id="statusDropdown"
                                             displayValue="fullName"
                                             placeholder="Select User"
-                                            intialValue={form?.user_id}
+                                            intialValue={form?.user_id ? form?.user_id : ''}
                                             result={e => setForm({ ...form, user_id: e.value })}
                                             options={relatedAffiliate}
                                         />

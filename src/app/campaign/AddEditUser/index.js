@@ -51,6 +51,7 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
+            brand_id:user?.id
         }
         delete value.status
         if (value.id) {
