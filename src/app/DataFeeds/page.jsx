@@ -3,9 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ApiClient from '../../methods/api/apiClient';
 import './style.scss';
-import loader from '../../methods/loader';
 import Html from './html';
-import { userType } from '../../models/type.model';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
@@ -15,7 +13,7 @@ const Users = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
     const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,invite_status:'',
-        // addedBy:user?.id
+        user_id:user?.id
     })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
@@ -35,6 +33,9 @@ const Users = () => {
         })
     }
 
+    useEffect(() => {
+        getData()
+    }, [])
 
     const clear = () => {
         setFilter({ ...filters, search: '', page: 1 })

@@ -16,7 +16,7 @@ const Users = () => {
     const { role } = useParams()
     const [filters, setFilter] = useState({
         page: 0, count: 10, search: '', role: role || '', isDeleted: false, invite_status: '',
-        // addedBy:user?.id
+        user_id:user?.id
     })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)

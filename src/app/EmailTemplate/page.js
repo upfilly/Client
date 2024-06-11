@@ -31,6 +31,7 @@ const resetForm = () => {
 const handleSubmit = () => {
 
     const payload = {
+        addedBy: user?.id,
         title: form?.title,
         user_id: form?.user_id,
         description: form?.description
