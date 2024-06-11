@@ -12,9 +12,10 @@ const Detail = (p) => {
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
+
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`invite`, { id: did }).then(res => {
+        ApiClient.get(`emailmessage`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
@@ -27,17 +28,19 @@ const Detail = (p) => {
     }
 
     useEffect(() => {
-        getDetail(id)
+        if (id) {
+            getDetail(id)
+        }
     }, [id])
 
     return (
-        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+        <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Message Detail"} filters={undefined}>
             <div className='sidebar-left-content'>
 
                 <div className='card'>
                     <div className='card-header'>
                         <div className="main_title_head">
-                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>Invite Detail</h3>
+                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>Message  Detail</h3>
                         </div>
                     </div>
 
@@ -47,15 +50,41 @@ const Detail = (p) => {
                             <div className='col-lg-12'>
                                 <div className='campaine_detls_wrapper'>
 
-                                    <div className='row'>
+                                <div className='row'>
                                         <div className='col-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>E-mail:</p>
+                                                <p className='headmain'>Sender E-mail:</p>
                                             </div>
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.email)}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.addedBy?.email)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Sender Name:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.addedBy?.fullName)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Title:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -65,30 +94,15 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Status:</p>
+                                                <p className='headmain'>Content:</p>
                                             </div>
                                         </div>
                                         <div className='col-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.invite_status}</p>
+                                                <p className='headsub' dangerouslySetInnerHTML={{ __html: data?.description || "--" }}/>
                                             </div>
                                         </div>
                                     </div>
-
-
-                                    {/* <div className='row'>
-                                        <div className='col-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Quantity:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.quantity}</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
-
                                 </div>
                             </div>
                         </div>

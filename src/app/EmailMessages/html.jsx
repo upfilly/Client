@@ -138,7 +138,7 @@ const Html = ({
                                 <tr className='heading_row'>
                                     <th scope="col" className='table_data' onClick={e => sorting('email')}>E-mail{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Title</th>
-                                    <th scope="col" className='table_data'>Description</th>
+                                    <th scope="col" className='table_data'>Content</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Sended Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data'>Action</th> */}
                                 </tr>
@@ -147,7 +147,7 @@ const Html = ({
                                 {!loaging && data && data.map((itm, i) => {
                                     return <tr className='data_row' key={i}>
                                         <td className='table_dats'
-                                        //  onClick={e => view(itm.id)}
+                                         onClick={e => view(itm.id || itm?._id)}
                                          >
                                             <div className='user_detail'>
                                                 <div className='user_name'>
