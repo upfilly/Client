@@ -33,9 +33,6 @@ const Users = () => {
         })
     }
 
-    useEffect(() => {
-        getData()
-    }, [])
 
     const clear = () => {
         setFilter({ ...filters, search: '', page: 1 })
