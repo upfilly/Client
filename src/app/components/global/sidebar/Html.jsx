@@ -119,7 +119,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <div className={`collapse dropdown-btm ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? 'show' : ''}`}>
 
               {urlAllow('CreativeAsset') && (user?.role == "brand" || addedUser?.role == "brand") ? <>
-                <ListItemLink to="/CreativeAsset" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage">
+                <ListItemLink to="/CreativeAsset" data-bs-toggle="tooltip" data-bs-placement="top" title="Data Feeds">
                   <div className="d-flex align-items-center icns_center">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
                     <span className="side_head">Data Feeds</span>
@@ -127,7 +127,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </ListItemLink>
               </> : <></>}
               {urlAllow('EmailTemplate') && (user?.role == "brand" || addedUser?.role == "brand")  ? <>
-                <ListItemLink to="/EmailTemplate" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
+                <ListItemLink to="/EmailTemplate" data-bs-toggle="tooltip" data-bs-placement="top" title="Email Template">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">groups</i>
                     <span className="side_head">Email Template</span>
@@ -135,7 +135,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </ListItemLink>
               </> : <></>}
               {urlAllow('DataFeeds') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
-                <ListItemLink to="/DataFeeds" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage">
+                <ListItemLink to="/DataFeeds" data-bs-toggle="tooltip" data-bs-placement="top" title="Data Feeds">
                   <div className="d-flex align-items-center icns_center">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
                     <span className="side_head">Data Feeds</span>
@@ -143,7 +143,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </ListItemLink>
               </> : <></>}
               {urlAllow('EmailMessages') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
-                <ListItemLink to="/EmailMessages" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
+                <ListItemLink to="/EmailMessages" data-bs-toggle="tooltip" data-bs-placement="top" title="Email Messages">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">groups</i>
                     <span className="side_head">Email Messages</span>
@@ -153,7 +153,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             </div></>}
 
           {<ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">collections</i>
+            <i className="material-icons  svg_iconbx" title="Banners">collections</i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Banner" : "Banners"}</span>
           </ListItemLink>}
 
@@ -164,14 +164,14 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             </div>
           </ListItemLink>}
 
-          {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" data-bs-toggle="tooltip" data-bs-placement="top" title="Commissions">
+          {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" data-bs-toggle="tooltip" data-bs-placement="top" title="Affiliate Request">
             <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">payments</i >
               <span className="side_head">Affiliate Request</span>
             </div>
           </ListItemLink>}
 
-          {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+          {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign">
             <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
             <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
@@ -181,7 +181,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head ">Add Offer</span>
           </ListItemLink>}
 
-          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/applymerchants" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
+          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/applymerchants" data-bs-toggle="tooltip" data-bs-placement="top" title="Apply Merchants" >
             <i class="material-icons  svg_iconbx">account_circle</i>
             <span className="side_head ">Apply Merchants</span>
           </ListItemLink>}
@@ -191,7 +191,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Offer Request</span>
           </ListItemLink>}
 
-          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Offer Request" >
+          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" data-bs-toggle="tooltip" data-bs-placement="top" title="Merchant Invites" >
             <i className="material-icons  svg_iconbx " title="campaignManagement">transfer_within_a_station</i>
             <span className="side_head">Merchant Invites</span>
           </ListItemLink>}
@@ -211,17 +211,17 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Invited Users</span>
         </ListItemLink>} */}
 
-          {user && (user?.role != "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer" >
+          {user && (user?.role != "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Users" >
             <i className="material-icons  svg_iconbx" title="product">groups_3</i>
             <span className="side_head">Add Users</span>
           </ListItemLink>}
 
-          {user && (user?.role == "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer">
+          {user && (user?.role == "users") && <ListItemLink to="/users" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Users">
             <i className="material-icons  svg_iconbx" title="product">groups_3</i>
             <span className="side_head">Add Users</span>
           </ListItemLink>}
 
-          {(user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/salesTracking" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Offer">
+          {(user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/salesTracking" data-bs-toggle="tooltip" data-bs-placement="top" title="Untracked Sales">
             <i className="material-icons  svg_iconbx" title="untracked sales">
               real_estate_agent</i>
             <span className="side_head">Untracked Sales</span>
@@ -243,7 +243,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Sent Offers</span>
           </ListItemLink>}
 
-          <ListItemLink to="/coupons" data-bs-toggle="tooltip" data-bs-placement="top" title="Sent Offers">
+          <ListItemLink to="/coupons" data-bs-toggle="tooltip" data-bs-placement="top" title="Coupons">
             <i className="material-icons  svg_iconbx" title="campaignManagement">confirmation_number</i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
           </ListItemLink>
