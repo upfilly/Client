@@ -58,7 +58,7 @@ const Html = () => {
     const handleSubmit = () => {
 
         const payload = {
-            addedBy: user?.id,
+            // addedBy: user?.id,
             user_id: form?.user_id,
             filePath: `/documents/${file}`
         }
