@@ -142,28 +142,34 @@ const CreativeEmail = () => {
                     {/* <Tooltip placement="top" title="Back"> */}
                     <p
                       onClick={(e) => history("/CreativeEmail/templates")}
-                      className="cursor-pointer flex items-center justify-center  rounded-full shadow-box border !border-grey bg-white h-10 w-10 hover:bg-[#F3F2F5] border  transition-all    mr-3">
+                      className="cursor-pointer   ">
                       {/* <IoArrowBackSharp /> */}
                     </p>
                     {/* </Tooltip> */}
-                    <div>
-                      <h3 className="text-2xl font-semibold text-[#111827]">
+                    <div className="d-flex align-items-center  add_memeber_bx">
+                    <a>  <i class="fa fa-arrow-left left_arrows" title="Back" aria-hidden="true"></i></a>
+                      <div className="Profilehedding " >
+                      <h3 className="add_email">
                         {form && form?.id ? "Edit" : "Add"} Email
                       </h3>
-                      <p class="text-sm font-normal text-[#75757A]">
+                      <p class="mb-0 add_detils">
                         Here you can see all about your Email
                       </p>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-12 gap-4">
-                    <div className="md:col-span-12 col-span-12">
-                      <label className="text-sm font-normal text-[#75757A] !mb-3">
+                  </div>
+<div className="pprofile1 pt-0">
+<div className="  add_team_bx mt-0  ">
+<div className="row">
+                    <div className="col-md-6">
+                    <div className="mb-3" >
+                    <label className=" form-label ">
                         Title<span className="star">*</span>
                       </label>
                       <input
                         type="text"
-                        className="shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className=" form-control shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
                         value={form?.title}
                         onChange={(e) =>
                           setform({ ...form, title: e.target.value })
@@ -171,43 +177,46 @@ const CreativeEmail = () => {
                         required
                       />
                     </div>
-                    <div className="md:col-span-12 col-span-12">
-                      <label className="text-sm font-normal text-[#75757A] !mb-3">
+                    </div>
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                      <label className="form-label ">
                         Subject<span className="star">*</span>
                       </label>
                       <input
                         type="text"
-                        className="shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
                         value={form?.subject}
                         onChange={(e) =>
                           setform({ ...form, subject: e.target.value })
                         }
                         required
                       />
+                      </div>
+                     
                     </div>
-                    <div className="md:col-span-12 col-span-12">
-                      <div className="grid grid-cols-12 gap-4">
-                        <div className="md:col-span-8 col-span-12">
-                          <label className="text-sm font-normal text-[#75757A] block !mb-3">
-                            Body<span className="star">*</span>
+                        <div className="col-md-12">
+                      <div className="mb-3">
+                      <label className="text-sm font-normal text-[#75757A] block !mb-3">
+                            Description<span className="star">*</span>
                           </label>
-                          <div className="shadow-box border !border-grey w-full p-4 bg-white rounded-large">
-                            <ul class="nav nav-tabs flex mb-3">
-                              <li className="nav-item flex ml-2 mr-2 cursor-pointer">
+                          <div className="">
+                            <ul class="nav nav-tabs flex mb-3 d-flex justify-content-start gap-3  align-items-center boder p-2">
+                              <li className="nav-item flex mr-0 cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` pt-[1px] px-[4px] pb-[11px] block text-sm font-normal hover:!text-primary hover:no-underline ${htmlCode
-                                      ? "border-b-2 !border-primary !text-primary !font-medium"
-                                      : "!text-[#667085]"
+                                  className={` ${htmlCode
+                                       ? " btn btn-outline-light"
+                                      : "  btn btn-primary"
                                     }`}
                                   onClick={(e) => setHtmlCode(true)}>
                                   Html Code
                                 </a>
                               </li>
-                              <li className="nav-item cursor-pointer">
+                              <li className="nav-item cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` pt-[1px] px-[4px] pb-[11px] block text-sm font-normal hover:!text-primary hover:no-underline ${!htmlCode
-                                      ? "border-b-2 !border-primary !text-primary !font-medium"
-                                      : "!text-[#667085]"
+                                  className={` ${!htmlCode
+                                      ? " btn btn-outline-light"
+                                      : "  btn btn-primary"
                                     }`}
                                   onClick={(e) => setHtmlCode(false)}>
                                   Editor
@@ -218,7 +227,8 @@ const CreativeEmail = () => {
                               <>
                                 <textarea
                                   ref={textAreaRef}
-                                  className="w-full text-sm placeholder:text-gray-500 rounded-large h-[400px]  flex items-center gap-2 overflow-hidden px-2 !ring-primary !outline-primary disabled:!bg-gray-200"
+                                  className="form-control  rounded-2"
+                                  rows="4"
                                   value={form?.content}
                                   onChange={(e) =>
                                     setform({
@@ -259,9 +269,11 @@ const CreativeEmail = () => {
                               </>
                             )}
                           </div>
+                      </div>
                         </div>
-                        <div className="md:col-span-4 col-span-12">
-                          <label className="text-sm font-normal text-[#75757A] block !mb-3">
+                     <div className="col-md-12">
+                     <div className="mb-3">
+                          <label className="form-label">
                             Variables
                           </label>
 
@@ -279,23 +291,27 @@ const CreativeEmail = () => {
                             </ul>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex text-right">
+                     </div>
+                 <div className="col-md-12">
+                 <div className="d-flex justify-content-end  align-items-center  gap-3 ">
                     <button
                       type="button"
-                      className="mx-2 ml-auto !px-4 text-sm font-normal text-white h-9 flex items-center justify-center gap-2 !bg-primary rounded-extra_large shadow-btn hover:opacity-80 transition-all focus:ring-2 ring-[#EDEBFC] disabled:bg-[#D0CAF6] disabled:cursor-not-allowed"
+                      className="btn btn-secondary"
                       onClick={(e) => setTab("preview")}>
                       Preview
                     </button>
                     <button
-                      type="submit"
-                      className="!px-4 text-sm font-normal text-white h-9 flex items-center justify-center gap-2 !bg-primary rounded-extra_large shadow-btn hover:opacity-80 transition-all focus:ring-2 ring-[#EDEBFC] disabled:bg-[#D0CAF6] disabled:cursor-not-allowed">
+                      type="button"
+                      className="btn btn-primary">
                       Save
                     </button>
                   </div>
+                 </div>
+</div>
+                 
                 </div>
+</div>
+
               </form>
             </>
           ) : (
