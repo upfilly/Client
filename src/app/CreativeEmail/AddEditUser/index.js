@@ -6,10 +6,10 @@ import ApiClient from "@/methods/api/apiClient";
 import loader from "@/methods/loader";
 import methodModel from "@/methods/methods";
 import { emailType } from "@/models/type.model";
-import Layout from '../components/global/layout';
+import Layout from '../../components/global/layout';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -22,11 +22,12 @@ const CreativeEmail = () => {
     keys.status = "active";
     return keys;
   };
-  const [form, setform] = useState();
+  const { id } = useParams()
+  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'HTML',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:''});
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
   const specialChars = useRef([]);
-  const [variables, setVariables] = useState([]);
+  const [variables, setVariables] = useState('');
   const [htmlCode, setHtmlCode] = useState(false);
   const formValidation = [{ key: "subject", required: true }];
   const history = useRouter()
@@ -39,66 +40,50 @@ const CreativeEmail = () => {
       return;
     }
     let method = "post";
-    let url = "api/email";
+    let url = "emailtemplate";
     let value = {
-      ...form,
+      ...form,id:id
     };
-    if (value.id) {
+    if (id) {
       method = "put";
-      url = `api/update/template?id=${value.id}`;
+      url = `emailtemplate`;
     } else {
       delete value.id;
     }
     loader(true);
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
-        // toast.success(res.message)
-        history("/email/templates");
+        toast.success(res?.message)
+        history.push("/CreativeEmail");
       }
       loader(false);
     });
   };
 
-  const getConstants = () => {
-    ApiClient.get("api/constants").then((res) => {
-      if (res.success) {
-        let data = res.data.map((itm) => {
-          return {
-            text: itm,
-            value: itm,
-          };
-        });
-        setVariables([...data]);
-        specialChars.current = data;
-      }
-    });
-  };
 
   useEffect(() => {
-    // getConstants()
-    // if (id) {
-    // loader(true);
-    // ApiClient.get("api/template", { id }, "", "", { apiCall: true }).then(
+    if (id) {
+    loader(true);
+    ApiClient.get("emailtemplate", { id:id }).then(
     (res) => {
       if (res.success) {
         let value = res.data;
-        let payload = emailType;
+        let payload = form;
         Object.keys(payload).map((itm) => {
           payload[itm] = value[itm];
         });
         setform({
-          ...payload,
+          ...payload,id:id
         });
-        setVariables([...value?.constants]);
       }
-      // loader(false);
+      loader(false);
     }
-    // );
+    );
   }
-    //  else {
-    //   setform(defaultvalue());
-    // }
-    // }
+     else {
+      setform(defaultvalue());
+    }
+    }
     , []);
 
   const onSelect = (e) => { };
@@ -129,6 +114,32 @@ const CreativeEmail = () => {
       textAreaRef.current.selectionEnd = end + variable.length + 2;
     } catch (err) { }
   };
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handlepersonalize();
+    }
+  };
+
+  const handlepersonalize=()=>{
+    if(!variables){
+      return
+    }else{
+      let personalize=form?.personalizationTags||[]
+      personalize.push(variables)
+      setform({...form,personalizationTags:personalize})
+      setVariables('')
+    }
+  }
+  const removepersonalize=(name)=>{
+    let personalize=form?.personalizationTags||[]
+    if(personalize?.length==0){
+      return
+    }
+    personalize = personalize.filter(itm=>itm!=name)
+    setform({...form,personalizationTags:personalize})
+  }
 
   return (
     <>
@@ -161,14 +172,14 @@ const CreativeEmail = () => {
                     <div className="col-md-6">
                     <div className="mb-3" >
                     <label className=" form-label ">
-                        Title<span className="star">*</span>
+                    Template Name<span className="star">*</span>
                       </label>
                       <input
                         type="text"
                         className=" form-control shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
-                        value={form?.title}
+                        value={form?.templateName}
                         onChange={(e) =>
-                          setform({ ...form, title: e.target.value })
+                          setform({ ...form, templateName: e.target.value })
                         }
                         required
                       />
@@ -177,7 +188,58 @@ const CreativeEmail = () => {
                     <div className="col-md-6">
                       <div className="mb-3">
                       <label className="form-label ">
-                        Subject<span className="star">*</span>
+                      Email Name<span className="star">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        value={form?.emailName}
+                        onChange={(e) =>
+                          setform({ ...form, emailName: e.target.value })
+                        }
+                        required
+                      />
+                      </div>
+                     
+                    </div>
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                      <label className="form-label ">
+                      Purpose<span className="star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        value={form?.purpose}
+                        onChange={(e) =>
+                          setform({ ...form, purpose: e.target.value })
+                        }
+                        required
+                      />
+                      </div>
+                     
+                    </div>
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                      <label className="form-label ">
+                      Audience<span className="star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        value={form?.audience}
+                        onChange={(e) =>
+                          setform({ ...form, audience: e.target.value })
+                        }
+                        required
+                      />
+                      </div>
+                     
+                    </div>
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                      <label className="form-label ">
+                      Subject<span className="star">*</span>
                       </label>
                       <input
                         type="text"
@@ -185,6 +247,23 @@ const CreativeEmail = () => {
                         value={form?.subject}
                         onChange={(e) =>
                           setform({ ...form, subject: e.target.value })
+                        }
+                        required
+                      />
+                      </div>
+                     
+                    </div>
+                    <div className="col-md-6">
+                      <div className="mb-3">
+                      <label className="form-label ">
+                      From<span className="star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        value={form?.from}
+                        onChange={(e) =>
+                          setform({ ...form, from: e.target.value })
                         }
                         required
                       />
@@ -200,36 +279,36 @@ const CreativeEmail = () => {
                             <ul class="nav nav-tabs flex mb-3 d-flex justify-content-start gap-3  align-items-center boder p-2">
                               <li className="nav-item flex mr-0 cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` ${htmlCode
+                                  className={` ${form?.format=='Text'
                                        ? " btn btn-outline-light"
                                       : "  btn btn-primary"
                                     }`}
-                                  onClick={(e) => setHtmlCode(true)}>
+                                  onClick={(e) => setform({...form,format:'HTML'})}>
                                   Html Code
                                 </a>
                               </li>
                               <li className="nav-item cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` ${!htmlCode
+                                  className={` ${form?.format!=='Text'
                                       ? " btn btn-outline-light"
                                       : "  btn btn-primary"
                                     }`}
-                                  onClick={(e) => setHtmlCode(false)}>
+                                    onClick={(e) => setform({...form,format:'Text'})}>
                                   Editor
                                 </a>
                               </li>
                             </ul>
-                            {htmlCode ? (
+                            {form?.format!=='Text' ? (
                               <>
                                 <textarea
                                   ref={textAreaRef}
                                   className="form-control  rounded-2"
                                   rows="4"
-                                  value={form?.content}
+                                  value={form?.htmlContent}
                                   onChange={(e) =>
                                     setform({
                                       ...form,
-                                      content: e.target.value,
+                                      htmlContent: e.target.value,
                                     })
                                   }></textarea>
                               </>
@@ -237,10 +316,10 @@ const CreativeEmail = () => {
                               <>
                                 <DynamicReactQuill
                                   theme="snow"
-                                  value={form?.description ? form?.description : ''}
+                                  value={form?.textContent ? form?.textContent : ''}
 
                                   onChange={(newValue, editor) => {
-                                    setForm({ ...form, description: newValue })
+                                    setform({ ...form, textContent: newValue })
                                   }}
                                   className='tuncketcls'
                                   modules={{
@@ -267,24 +346,42 @@ const CreativeEmail = () => {
                           </div>
                       </div>
                         </div>
-                     <div className="col-md-12">
+                     <div className="col-md-6">
                      <div className="mb-3">
                           <label className="form-label">
-                            Variables
+                          Personalization Tags
                           </label>
+                          
+                          <div className="d-flex gap-3  flex-row">
+                          <input
+                        type="text"
+                        className="form-control  "
+                        value={variables}
+                        onChange={(e) =>
+                          setVariables(e.target.value)
+                        }
+                        onKeyDown={handleKeyDown}
+                        required={!form?.personalizationTags ||form?.personalizationTags?.length==0}
+                      />
+                      <a onClick={handlepersonalize} className=" d-flex justify-content-center align-items-center btn btn-primary" >
+                      <i class="fa fa-plus" aria-hidden="true" ></i>
+                      </a>
+                          </div>
+                          {submitted && form?.personalizationTags?.length<=0 &&<span className="text-danger">Please add personalization Tags</span>}
 
-                          <div className="form-control">
-                            <ul className=" list-disc list-inside">
-                              {variables.map((itm) => {
+                          <div className="d-flex gap-3 align-items-center flex-wrap mt-4 ">
+                            <div className=" list-disc list-inside inside_bx d-flex align-items-center gap-3 flex-wrap">
+                              {form?.personalizationTags&&form?.personalizationTags.map((itm) => {
                                 return (
-                                  <li
-                                    className="pb-1 cursor-pointer"
+                                  <span
+                                    className="pb-1 cursor-pointer btn btn-primary d-flex gap-2 align-items-center"
                                     onClick={(e) => insertVariable(itm)}>
-                                    {itm}
-                                  </li>
+                                    <span className="item_add" >{itm}</span>
+                                    <i class="fa fa-close cloosebtn" onClick={e=>removepersonalize(itm)}></i>
+                                  </span>
                                 );
                               })}
-                            </ul>
+                            </div>
                           </div>
                         </div>
                      </div>
@@ -297,7 +394,7 @@ const CreativeEmail = () => {
                       Preview
                     </button>
                     <button
-                      type="button"
+                      type="submit"
                       className="btn btn-primary">
                       Save
                     </button>

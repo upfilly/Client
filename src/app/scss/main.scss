@@ -5264,3 +5264,30 @@ input[type=checkbox].check_bx_input:checked + .checkbox-btn::after {
   background-color: #fff !important;
   border-radius: 43px !important;
   }
+
+  // CreativeEmail template css 
+  .main_tags input {
+    padding-right: 46px;
+}
+
+.main_tags .plusInput {
+    position: absolute;
+    color: #007bff;
+    top: 11px;
+    right: 14px;
+}
+.cloosebtn {
+
+  width: 20px;
+  height: 20px;
+  background-color: rgb(201, 55, 55);
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px !important;
+  border-radius: 13px;
+}
+.item_add{
+  font-size: 14px;
+  text-transform: capitalize;
+}
