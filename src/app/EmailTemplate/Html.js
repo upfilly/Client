@@ -9,13 +9,14 @@ import SelectDropdown from '../components/common/SelectDropdown';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
+import moment from 'moment'
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
     const user = crendentialModel.getUser()
     const history = useRouter()
-
+console.log(form)
     return (
         <>
             <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Send E-mail" filters={''} >
@@ -30,6 +31,70 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                         <div className='card-body'>
 
                             <div className='row'>
+                            <div className='col-12 col-sm-3 col-md-3'>
+                                    <div className='mb-3' >
+                                        <input
+                                            type="radio"
+                                            className=''
+                                            placeholder="Enter Title"
+                                            checked={form?.isAllJoined}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, isAllJoined: e.target.checked ,timeInterval:'',affiliateStatus:false ,acceptedDate:''})}
+                                        />
+                                        <label className='mb-2' >All Joined</label>
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-3 col-md-3'>
+                                    <div className='mb-3' >
+                                        <input
+                                            type="radio"
+                                            className=''
+                                            placeholder="Enter Title"
+                                            checked={form?.timeInterval=='before' ? true : false}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, isAllJoined: false,timeInterval:'before',affiliateStatus:false })}
+                                        />
+                                        <label className='mb-2' >before</label>
+                                        </div>
+                                        <div className='mb-3' >
+                                        <input
+                                            type="radio"
+                                            className=''
+                                            placeholder="Enter Title"
+                                            checked={form?.timeInterval=='after' ? true:false}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, isAllJoined: false,timeInterval:'after',affiliateStatus:false })}
+                                        />
+                                        <label className='mb-2' >after</label>
+                                        </div>
+                                </div>
+                                <div className='col-12 col-sm-3 col-md-3'>
+                                    <div className='mb-3' >
+                                    <label className='mb-2' >Accepted Date</label>
+                                        <input
+                                            type="date"
+                                            className=''
+                                            disabled={!form?.timeInterval}
+                                            placeholder="Select date"
+                                            value={moment(form?.acceptedDate).format('YYYY-MM-DD')}
+                                            onChange={(e) => setForm({ ...form, acceptedDate:e.target.value })}
+                                        />
+                                       
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-3 col-md-3'>
+                                    <div className='mb-3' >
+                                        <input
+                                            type="radio"
+                                            className=''
+                                            placeholder="Enter Title"
+                                            checked={form?.affiliateStatus}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, isAllJoined: false ,timeInterval:'',affiliateStatus:e.target.checked ,acceptedDate:''})}
+                                        />
+                                        <label className='mb-2' >Active Affiliate</label>
+                                    </div>
+                                </div>
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Title</div>
