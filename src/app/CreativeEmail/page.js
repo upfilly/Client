@@ -277,7 +277,7 @@ const CreativeEmail = () => {
                             Variables
                           </label>
 
-                          <div className="text-sm shadow-box border !border-grey p-3 bg-white rounded-large">
+                          <div className="form-control">
                             <ul className=" list-disc list-inside">
                               {variables.map((itm) => {
                                 return (
