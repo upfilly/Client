@@ -13,6 +13,10 @@ const user = crendentialModel.getUser()
 const history = useRouter()
 const [relatedAffiliate,setAllAffiliate] = useState([])
 const [form, setForm] = useState({
+    isAllJoined:true,
+    timeInterval:'',
+    acceptedDate:'',
+    affiliateStatus:false,
     title: "",
     user_id: "",
     description: '',
@@ -31,7 +35,7 @@ const resetForm = () => {
 const handleSubmit = () => {
 
     const payload = {
-        // addedBy: user?.id,
+        ...form,
         title: form?.title,
         user_id: form?.user_id,
         description: form?.description
