@@ -668,7 +668,7 @@ export default function affilate() {
 
                         <label className='d-flex align-items-center gap-2 pb-3 ml-3'>
                           <input type='checkbox' className='form-check-input check_bx_input' checked={selectedAffiliteid?.includes(itm.id) ? true : false} disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />
-                          <span className='checkbox-btn ' ></span>
+                          <span className={itm.invite_status == 'not_invited'? "checkbox-btn" : 'disable_check'} ></span>
                           <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
                             {itm?.image ?
                               <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
