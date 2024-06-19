@@ -9,13 +9,15 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import loader from '@/methods/loader';
 import { affilliateGrouptype, userType } from "@/models/type.model";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import crendentialModel from "@/models/credential.model";
 
 
 const AddEditUser = () => {
   const {id} = useParams()
+  const user = crendentialModel.getUser()
   const [image, setImages] = useState('');
   const defaultvalue = userType
-  const [form, setform] = useState({email:''})
+  const [form, setform] = useState({email:'',role:'',brand_id:user?.id})
   const [permissions, setPermissions] = useState({})
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false)
@@ -38,8 +40,9 @@ const AddEditUser = () => {
 
   const handleChange = (newAddress) => {
     setAddress(newAddress);
-  };
+  }
 
+  
   const handleSelect = async (selectedAddress) => {
     try {
       const results = await geocodeByAddress(selectedAddress);
@@ -123,12 +126,12 @@ const AddEditUser = () => {
       ...form,
     }
 
-    if (value.id) {
+    if (value.id || value.user_id) {
       method = 'put'
-      url = 'edit/profile'
+      url = 'updateInviteUser'
       delete value.permissions
       delete value.baseImg
-      delete value.role
+      // delete value.role
       delete value.email
       delete value.category_name
       // delete value.category_id
@@ -186,16 +189,26 @@ const AddEditUser = () => {
 
     if (id) {
       loader(true)
-      ApiClient.get("user/detail", { id }).then(res => {
+      ApiClient.get(`getinviteuser?user_id=${id}&brand_id=${user?.role == 'brand' ? user?.id : ''}`).then(res => {
         if (res.success) {
           let value = res.data
           setDetail(value)
-          let payload = defaultvalue
-          let oarr = Object.keys(defaultvalue)
-          oarr.map(itm => {
-            payload[itm] = value[itm] || ''
-          })
-          setform({ ...payload })
+          let payload = {
+            "brand_id": value?.brand_id,
+            "user_id":id,
+            "email": value?.email,
+            "firstName": value?.firstName,
+            "lastName": value?.lastName,
+            "language": value?.language,
+            "role": value?.role,
+            "description": value?.description,
+            // "brand_id": value?.brand_id
+          }
+          // let oarr = Object.keys(defaultvalue)
+          // oarr.map(itm => {
+          //   payload[itm] = value[itm] || ''
+          // })
+          setform(payload)
           setImages(payload?.image)
         }
         loader(false)

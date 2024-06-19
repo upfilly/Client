@@ -31,7 +31,7 @@ const Html = ({
 
     return (
         <>
-            <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters} >
+            <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Groups" filters={filters} >
 
                 <div className='nmain-list '>
                     <div className='row mx-0'>

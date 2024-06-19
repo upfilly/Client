@@ -50,7 +50,8 @@ const AddEditUser = () => {
         ApiClient.get(url).then(res => {
             if (res.success) {
                 const data = res.data
-                setAllAffiliate(data)
+                const filteredData = data.filter(item => item !== null);
+                setAllAffiliate(filteredData)
             }
         })
     }

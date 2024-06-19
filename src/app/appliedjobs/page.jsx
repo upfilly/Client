@@ -186,12 +186,12 @@ const Users = () => {
   }
 
   const view = (id) => {
-    history.push("/campaignManagement/detail/" + id)
+    history.push("/appliedjobs/detail/" + id)
   }
 
   const edit = (id) => {
-    let url = `/campaign/edit/${id}`
-    if (role) url = `/campaign/${role}/edit/${id}`
+    let url = `/appliedjobs/edit/${id}`
+    if (role) url = `/appliedjobs/${role}/edit/${id}`
     history.push(url)
   }
 

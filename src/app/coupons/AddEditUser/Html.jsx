@@ -4,7 +4,7 @@ import SelectDropdown from "@/app/components/common/SelectDropdown";
 import '../style.scss';
 import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
 
-const Html = ({ category, relatedAffiliate , form, handleSubmit, setform, submitted, back }) => {
+const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitted, back }) => {
 
     const handleRemove = (valueToRemove) => {
         const updatedValues = form?.applicable?.filter((value) => value !== valueToRemove);
@@ -58,90 +58,27 @@ const Html = ({ category, relatedAffiliate , form, handleSubmit, setform, submit
                                         />
                                     </div>
                                 </div>
-                              {form?.visibility == 'Exclusive to specific affiliate' &&  <div className="col-md-6 mb-3">
-                                    <label>Media<span className="star">*</span></label>
+                                <div className="col-md-6 mb-3">
+                                    <label>Commission Type</label>
                                     <div className="select_row">
                                         <SelectDropdown
                                             id="statusDropdown"
-                                            displayValue="fullName"
-                                            placeholder="Select Media"
-                                            intialValue={form?.media}
+                                            displayValue="name"
+                                            placeholder="Select Commission Type"
+                                            intialValue={form?.commissionType}
                                             // disabled={(form?.status == "rejected" || !id) ? false : true}
                                             result={e => {
-                                                setform({ ...form, media: e.value })
+                                                setform({ ...form, commissionType: e.value })
                                             }}
-                                            options={relatedAffiliate}
+                                            options={[{
+                                                name: 'Fixed amount', id: 'Fixed amount'
+                                            },
+                                            {
+                                                name: 'Percentage', id: 'Percentage Commission'
+                                            },
+                                            ]}
                                         />
                                     </div>
-                                    {submitted && !form?.brand_id ? <div className="invalid-feedback d-block">Brand is Required</div> : <></>}
-                                </div>}
-                                <div className="col-md-6 mb-3">
-                                    <label>Applicable<span className="star">*</span></label>
-                                    <div className="select_row">
-                                        <MultiSelectDropdown
-                                            id="statusDropdown"
-                                            displayValue="name"
-                                            placeholder="Select Applicable"
-                                            intialValue={form?.applicable}
-                                            result={e => {
-                                                setform({ ...form, applicable: e.value })
-                                            }}
-                                            options={category}
-                                        />
-                                        {filtered?.length > 0 && <div className="selected_offrs_market">
-                                            {filtered?.map((value, index) => (
-                                                <div className="d-flex gap-3 align-items-center btn btn-primary">
-                                                    <p className="mb-0 valus" key={index}>
-                                                        {value?.name}
-                                                    </p>
-                                                    <i className="fa fa-times close_bx" onClick={() => handleRemove(value?.id)}></i>
-                                                </div>
-
-                                            ))}
-                                        </div>}
-                                    </div>
-                                    {submitted && !form?.applicable ? <div className="invalid-feedback d-block">Applicable is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Coupon Commission<span className="star">*</span></label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={form.couponCommission}
-                                        onChange={e => setform({ ...form, couponCommission: e.target.value })}
-                                    />
-                                    {submitted && !form?.couponCommission ? <div className="invalid-feedback d-block">Coupon Commission is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Site URL<span className="star">*</span></label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={form.url}
-                                        onChange={e => setform({ ...form, url: e.target.value })}
-                                    />
-                                    {submitted && !form?.url ? <div className="invalid-feedback d-block">Site URL is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Start Date<span className="star">*</span></label>
-                                    <input
-                                        type="date"
-                                        className="form-control"
-                                        value={form.startDate}
-                                        onChange={e => setform({ ...form, startDate: e.target.value })}
-                                    />
-                                    {submitted && !form?.startDate ? <div className="invalid-feedback d-block">Start Date is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Expired Date<span className="star">*</span></label>
-                                    <input
-                                        type="date"
-                                        className="form-control"
-                                        min={form.startDate}
-                                        value={form.expirationDate}
-                                        onChange={e => setform({ ...form, expirationDate: e.target.value })}
-                                    />
-                                    {submitted && !form?.expirationDate ? <div className="invalid-feedback d-block">Expiration Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Coupon Type</label>
@@ -172,28 +109,95 @@ const Html = ({ category, relatedAffiliate , form, handleSubmit, setform, submit
                                         />
                                     </div>
                                 </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Commission Type</label>
+                                {form?.visibility == 'Exclusive to specific affiliate' && <div className="col-md-6 mb-3">
+                                    <label>Media<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
                                             id="statusDropdown"
-                                            displayValue="name"
-                                            placeholder="Select Commission Type"
-                                            intialValue={form?.commissionType}
+                                            displayValue="fullName"
+                                            placeholder="Select Media"
+                                            intialValue={form?.media}
                                             // disabled={(form?.status == "rejected" || !id) ? false : true}
                                             result={e => {
-                                                setform({ ...form, commissionType: e.value })
+                                                setform({ ...form, media: e.value })
                                             }}
-                                            options={[{
-                                                name: 'Fixed amount', id: 'Fixed amount'
-                                            },
-                                            {
-                                                name: 'Percentage', id: 'Percentage Commission'
-                                            },
-                                            ]}
+                                            options={relatedAffiliate}
                                         />
                                     </div>
+                                    {submitted && !form?.brand_id ? <div className="invalid-feedback d-block">Brand is Required</div> : <></>}
+                                </div>}
+                                {/* <div className="col-md-6 mb-3">
+                                    <label>Applicable<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <MultiSelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Applicable"
+                                            intialValue={form?.applicable}
+                                            result={e => {
+                                                setform({ ...form, applicable: e.value })
+                                            }}
+                                            options={category}
+                                        />
+                                        {filtered?.length > 0 && <div className="selected_offrs_market">
+                                            {filtered?.map((value, index) => (
+                                                <div className="d-flex gap-3 align-items-center btn btn-primary">
+                                                    <p className="mb-0 valus" key={index}>
+                                                        {value?.name}
+                                                    </p>
+                                                    <i className="fa fa-times close_bx" onClick={() => handleRemove(value?.id)}></i>
+                                                </div>
+
+                                            ))}
+                                        </div>}
+                                    </div>
+                                    {submitted && !form?.applicable ? <div className="invalid-feedback d-block">Applicable is Required</div> : <></>}
+                                </div> */}
+                               
+                                <div className="col-md-6 mb-3">
+                                    <label>Start Date<span className="star">*</span></label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        value={form.startDate}
+                                        onChange={e => setform({ ...form, startDate: e.target.value })}
+                                    />
+                                    {submitted && !form?.startDate ? <div className="invalid-feedback d-block">Start Date is Required</div> : <></>}
                                 </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Expired Date<span className="star">*</span></label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        min={form.startDate}
+                                        value={form.expirationDate}
+                                        onChange={e => setform({ ...form, expirationDate: e.target.value })}
+                                    />
+                                    {submitted && !form?.expirationDate ? <div className="invalid-feedback d-block">Expiration Date is Required</div> : <></>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Coupon Commission</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.couponCommission}
+                                        onChange={e => setform({ ...form, couponCommission: e.target.value })}
+                                    />
+                                    {/* {submitted && !form?.couponCommission ? <div className="invalid-feedback d-block">Coupon Commission is Required</div> : <></>} */}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Site URL<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.url}
+                                        onChange={e => setform({ ...form, url: e.target.value })}
+                                    />
+                                    {submitted && !form?.url ? <div className="invalid-feedback d-block">Site URL is Required</div> : <></>}
+                                </div>
+
+
+
 
                                 {/* <div className="col-md-6 mt-3">
                                     <label className='lablefontcls'>Image</label><br></br>

@@ -3,41 +3,30 @@
 import React, { useEffect, useState } from 'react';
 import ApiClient from '../../methods/api/apiClient';
 import './style.scss';
-import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
 
-
-const banneres = () => {
+const Users = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:''})
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,invite_status:'',
+        user_id:user?.id
+    })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
     const history=useRouter()
-    
-    useEffect(() => {
-        if (user) {
-            // setFilter({ ...filters ,page: filters?.page + 1 ,role})
-            getData({role, page: 1 })
-        }
-    }, [role])
-
 
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        if (user?.role == "brand") {
-            filter = { ...filters, ...p, addedBy: user?.id }
-        }
-        let url = 'banners'
+        let url='dataset/list'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                setData(res?.data?.data)
+                setData(res.data)
                 setTotal(res.total)
             }
             setLoader(false)
@@ -49,54 +38,6 @@ const banneres = () => {
         setFilter({ ...filters, search: '', page: 1 })
         getData({ search: '', page: 1 })
     }
-
-    const statusChange = (itm, id) => {
-        if (itm === 'accepted') {
-
-            loader(true);
-          ApiClient.put('update/status', { status: itm, id: id }).then((res) => {
-            if (res.success) {
-    
-              toast.success(res.message)
-              getData({ page: filters?.page + 1 });
-            }
-            loader(false);
-          });
-        } else {
-
-            Swal.fire({
-         
-            html: `
-             <h2 style="" class="modal-title-main pt-0">Deny Campaign</h2>
-                <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
-                  <textarea type="text" id="denialReason" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
-                `,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Deny',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              const denialReason = document.getElementById('denialReason').value;
-    
-              if (denialReason.trim() === '') {
-                Swal.fire('Error', 'Please enter a reason for deny', 'error');
-                return;
-              }
-    
-              loader(true);
-              ApiClient.put('update/status', { status: itm, id: id, reason: denialReason }).then((res) => {
-                if (res.success) {
-                  toast.success(res.message)
-                  getData({ page: filters?.page + 1 });
-                }
-                loader(false);
-              });
-            }
-          });
-        }
-      };
 
     const deleteItem = (id) => {
 
@@ -111,7 +52,7 @@ const banneres = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             // loader(true)
-            ApiClient.delete('banner', {id: id }).then(res => {
+            ApiClient.delete('delete', {id: id ,model:'product' }).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()
@@ -129,33 +70,61 @@ const banneres = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+        getData({ ...p , page:filters?.page+1,addedBy:user?.id})
     }
+
+    
 
     const ChangeRole = (e) => {
         setFilter({ ...filters, role: e, page: 1 })
         getData({ role: e, page: 1 })
     }
     const ChangeStatus = (e) => {
-        setFilter({ ...filters, status: e, page: 1 })
-        getData({ status: e, page: 1 })
+        setFilter({ ...filters, invite_status: e, page: 1 })
+        getData({...filters, invite_status: e, page: 1 })
     }
+
+    // const statusChange=(itm)=>{
+    //     let modal='users'
+    //     let status='active'
+    //     if(itm.status=='active') status='deactive'
+
+    //     Swal.fire({
+    //         title: ``,
+    //         text: `Do you want to ${status =='active'?'Active':'Deactive'} this user`,
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#6c757d',
+    //         confirmButtonText: 'Yes'
+    //       }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             loader(true)
+    //             ApiClient.put(`change/status`,{status,id:itm.id,model:'product'}).then(res=>{
+    //                 if(res.success){
+    //                     getData({page: 1})
+    //                 }
+    //                 loader(false)
+    //             })
+    //         }
+    //       })
+    // }
 
     const view=(id)=>{
-        history.push("/addbanner/detail/"+id)
+        history.push("/invites/detail/"+id)
     }
 
-    const edit=(id)=>{
-        let url=`/addbanner/edit/${id}`
-        if(role) url=`/addbanner/${role}/edit/${id}`
-        history.push(url)
-    }
+    // const edit=(id)=>{
+    //     let url=`/Offers/edit/${id}`
+    //     if(role) url=`/product/${role}/edit/${id}`
+    //     history.push(url)
+    // }
 
-    const add=()=>{
-        let url=`/addbanner/add`
-        if(role) url=`/addbanner/${role}/add`
-        history.push(url)
-    }
+    // const add=()=>{
+    //     let url=`/Offers/add`
+    //     if(role) url=`/Offers/${role}/add`
+    //     history.push(url)
+    // }
 
 
     const reset=()=>{
@@ -164,7 +133,7 @@ const banneres = () => {
             role:'',
             search:'',
              page: 1,
-             count:5
+             count:5, start_date:'', end_date: '',addedBy:user?.id
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
@@ -182,7 +151,7 @@ const banneres = () => {
         }
 
         let sortBy = `${key} ${sorder}`;
-        filter({ sortBy, key, sorder  })
+        filter({sortBy, key, sorder  })
     }
 
     const isAllow=(key='')=>{
@@ -194,9 +163,7 @@ const banneres = () => {
         filter={filter}
         isAllow={isAllow}
         reset={reset}
-        add={add}
         view={view}
-        edit={edit}
         role={role}
         ChangeRole={ChangeRole}
         ChangeStatus={ChangeStatus}
@@ -208,10 +175,9 @@ const banneres = () => {
         total={total}
         sorting={sorting}
         setFilter={setFilter}
-        user={user}
-        statusChange={statusChange}
+        getData={getData}
     />
     </>;
 };
 
-export default banneres;
+export default Users;

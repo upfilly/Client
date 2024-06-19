@@ -17,15 +17,13 @@ const Detail = (p) => {
     const getDetail = (did) => {
         loader(true)
         if (did)
-            ApiClient.get(`user/detail?id=${id}`).then(res => {
+            ApiClient.get(`getinviteuser?user_id=${id}`).then(res => {
                 if (res.success) {
                     setData(res.data)
                 }
                 loader(false)
             })
     };
-
-    console.log(data, "=========")
 
     const back = () => {
         history.back()
@@ -92,7 +90,7 @@ const Detail = (p) => {
                             </div>
                             <div>
                                 <>
-                                    <button className='btn btn-primary mr-2 ' title="Edit" onClick={e => edit(data.id)}>
+                                    <button className='btn btn-primary mr-2 ' title="Edit" onClick={e => edit(data.user_id)}>
                                         <i className="material-icons edit text-white mr-2" title="Edit">edit</i>
                                         Edit
                                     </button>
@@ -125,7 +123,7 @@ const Detail = (p) => {
                                                 <p className='headmain'>Name:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.fullName}</p>
+                                                <p className='headsub'>{data && data?.firstName} {data && data?.lastName}</p>
                                             </div>
                                            </div>
                                         </div>
@@ -140,28 +138,16 @@ const Detail = (p) => {
                                        </div>
                                         </div>
                                   
-                                        {(data?.mobileNo) && <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
                                             <div className='mb-3'>
                                                 <div className='userdata'>
-                                                    <p className='headmain'>Mobile Number:</p>
+                                                    <p className='headmain'>Role:</p>
                                                 </div>
                                                 <div className='name-dtls'>
-                                                    <p className='headsub'>{data?.dialCode}{data && data?.mobileNo}</p>
+                                                    <p className='headsub'>{data && data?.role}</p>
                                                 </div>
                                             </div>
-                                        </div>}
-                                        {/* <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                     <div className='mb-3'>
-                                     <div className='userdata'>
-                                                <p className='headmain'>Address:</p>
-                                            </div>
-                                        
-                                      
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.address}</p>
-                                            </div>
-                                     </div>
-                                        </div> */}
+                                        </div>
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
                                         <div className='mb-3'>
                                         <div className='userdata'>
@@ -174,65 +160,9 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         </div>
-
-                                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                                      <div className='mb-3'>
-                                      <div className='userdata  d-flex gap-3'>
-                                                <p className='headmain'>Status:</p>
-                                                 <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.status)}</p>
-                                            </div> 
-                                            </div>
-
-                                      
-
-                                        {data?.social_media_platforms?.length > 0 && 
-                                            <div className='inputFlexs width400'>
-                                                <label >Social Media</label>
-                                                <div className='d-flex wraps'>
-                                                    {data?.social_media_platforms?.map((item, index, array) =>
-                                                        <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p>
-                                                    )
-                                                    }
-                                                </div>
-                                            </div>
-                                       }
-
-                                        {data?.tags?.length > 0 && 
-                                            <div className='inputFlexs width400'>
-                                                <div className='d-flex wraps'>
-                                                <label className='mr-2'>Tags:</label>
-                                                
-                                                    {data?.tags?.map((item, index, array) =>
-                                                        <div key={item} className="profile_data_wrapper">
-                                                            <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
-                                                    )
-
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-                                      </div>
-                                        </div>
                                        
                                     </div>
-                                   
-
-                               
-
-                                  
-                                      
-                                            
-                                   
-
-                                    <div className='row'>
-                                       
-                                           
-
-                                        <div className='col-9'>
-                                           
-                                        </div>
-                                    </div>
+                                
                                 </div>
                             </div>
                         </div>

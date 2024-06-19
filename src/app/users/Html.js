@@ -20,6 +20,8 @@ const Html = ({
     total,
     setFilter,
     user,
+    edit,
+    deleteItem,
 }) => {
 
     const handleKeyPress = (event) => {
@@ -76,18 +78,18 @@ const Html = ({
                                                     {/* <th onClick={e => sorting('istrusted')} scope="col" className='table_data'>Trusted {filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                                     <th onClick={e => sorting('createdAt')} scope="col" className='table_data'>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                                     <th onClick={e => sorting('updatedAt')} scope="col" className='table_data'>Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                                    {/* <th>Action</th> */}
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {!loaging && data && data.map((itm, i) => {
                                                     return <tr className='data_row' key={i}>
-                                                        <td className='table_dats' onClick={e => view(itm?.id)}>
+                                                        <td className='table_dats' onClick={e => view(itm?.user_id)}>
                                                             <div className='user_detail' onClick={e => view(itm?.id)}>
                                                                 <img src={methodModel.userImg(itm?.image)} className="user_imgs" />
-                                                                <div className='user_name'>
+                                                                <div className=''>
                                                                     <h4 className='user'>
-                                                                        {methodModel?.capitalizeFirstLetter(itm?.fullName)}
+                                                                        {methodModel?.capitalizeFirstLetter(itm?.firstName)}
                                                                     </h4>
                                                                     <p className='user_info'>
                                                                         {itm?.email}
@@ -95,34 +97,36 @@ const Html = ({
                                                                 </div>
                                                             </div></td>
                                                         <td>{methodModel?.capitalizeFirstLetter(itm?.role)}</td>
-                                                        <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
+                                                        <td className='table_dats'>   <span className={`active_btn${itm?.status}`}
+                                                        //  onClick={() => statusChange(itm)}
+                                                         >
                                                             <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
                                                                 {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
                                                             </span>
                                                         </span></td>
                                                         <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
                                                         <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
-                                                        {/* <td>
+                                                        <td>
                                                             {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_edit) &&
                                                                 <div className='action_icons'>
-                                                                    {<a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                                                                    {<a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
 
                                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                                     </a>}
 
-                                                                    <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
+                                                                    <a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
                                                                         <i className={`material-icons delete`} title='Delete'> delete</i>
                                                                     </a>
-                                                                    <a className='edit_icon action-btn' onClick={() => {
+                                                                    {/* <a className='edit_icon action-btn' onClick={() => {
                                                                         history.push(`/chat`)
                                                                         localStorage.setItem("chatId", user?.role != 'affiliate' ? itm?._id || itm?.id : itm?.addedBy)
                                                                     }}>
                                                                         <i className='fa fa-comment-o text-white'></i>
-                                                                    </a>
+                                                                    </a> */}
 
                                                                 </div>}
 
-                                                        </td> */}
+                                                        </td>
                                                     </tr>
 
                                                 })

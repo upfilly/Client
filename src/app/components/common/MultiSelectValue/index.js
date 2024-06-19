@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import methodModel from "../../../methods/methods";
 import Html from "./html";
 import methodModel from "@/methods/methods";
 
-const MultiSelectValue = ({intialValue,options,updateDictionary,isSingle=false,result,displayValue='name',id}) => {
+const MultiSelectValue = ({intialValue,options,isSingle=false,result,displayValue='name',id,name}) => {
 
     const [selectedValues,setSelectedValues]=useState([])
 
@@ -21,7 +20,6 @@ const MultiSelectValue = ({intialValue,options,updateDictionary,isSingle=false,r
             value=e.map(itm=>{
                 return itm.id
             })
-            updateDictionary()
         }
         result({event:"value",value:value})
     }
@@ -64,6 +62,7 @@ const MultiSelectValue = ({intialValue,options,updateDictionary,isSingle=false,r
         options={options}
         selectedValues={selectedValues}
         handleChange={handleChange}
+        name={name}
         />
     </>
 }

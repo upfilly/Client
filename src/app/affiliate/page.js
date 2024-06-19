@@ -126,10 +126,15 @@ export default function affilate() {
 
   const handleAddTag = () => {
     if (tagInput.trim() !== '') {
-      setform({ ...form, tags: [...form.tags, tagInput] });
+      if (!form.tags.includes(tagInput)) {
+        setform({ ...form, tags: [...form.tags, tagInput] });
+      } else {
+        toast.error('Tag already exists.')
+      }
       setTagInput('');
     }
   };
+  
 
   const handleDeleteTag = (index) => {
     const newTags = [...form.tags];
@@ -161,6 +166,11 @@ export default function affilate() {
     ApiClient.post(`addInvite`, payload).then(res => {
       if (res.success) {
         getData({ page: 1 })
+        setform({
+          "message": "",
+          "tags": [],
+          "campaign_id": ""
+        })
         toast.success("Invitation Send Successfully..")
         handleClose()
       }
@@ -194,7 +204,7 @@ export default function affilate() {
   const getData = (p = {}) => {
     setLoader(true)
     let filter = { ...filters, ...p }
-    ApiClient.get(`users/list`, filter).then(res => {
+    ApiClient.get(`getAllAffiliateBrand`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
         setTotal(res?.data?.total)
@@ -287,7 +297,7 @@ export default function affilate() {
   }
 
   const handleAffiliateGroup = () => {
-    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id }).then(res => {
+    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id ,group_type:'affiliate'}).then(res => {
       if (res.success == true) {
         setAffiliategroup(res?.data?.data)
       }
