@@ -16,7 +16,6 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
     const user = crendentialModel.getUser()
     const history = useRouter()
-console.log(form)
     return (
         <>
             <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Send E-mail" filters={''} >
