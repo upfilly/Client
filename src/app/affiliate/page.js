@@ -199,7 +199,7 @@ export default function affilate() {
   const getData = (p = {}) => {
     setLoader(true)
     let filter = { ...filters, ...p }
-    ApiClient.get(`users/list`, filter).then(res => {
+    ApiClient.get(`getAllAffiliateBrand`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
         setTotal(res?.data?.total)
@@ -292,7 +292,7 @@ export default function affilate() {
   }
 
   const handleAffiliateGroup = () => {
-    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id ,group_name:'affiliate'}).then(res => {
+    ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id ,group_type:'affiliate'}).then(res => {
       if (res.success == true) {
         setAffiliategroup(res?.data?.data)
       }

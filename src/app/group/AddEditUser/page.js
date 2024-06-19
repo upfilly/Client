@@ -23,7 +23,7 @@ const AddEditUser = () => {
     const [detail, setDetail] = useState()
     const formValidation = [
         { key: 'group_name', required: true },
-        { key: 'commision', required: true },
+        // { key: 'commision', required: true },
     ]
 
     const handleSubmit = (e) => {
