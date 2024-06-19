@@ -32,48 +32,60 @@ console.log(form)
 
                             <div className='row'>
                             <div className='col-12 col-sm-3 col-md-3'>
-                                    <div className='mb-3' >
+                                    <div className='form-check mb-3' >
                                         <input
                                             type="radio"
-                                            className=''
+                                            className='form-check-input'
                                             placeholder="Enter Title"
                                             checked={form?.isAllJoined}
                                             autocomplete="off"
                                             onChange={(e) => setForm({ ...form, isAllJoined: e.target.checked ,timeInterval:'',affiliateStatus:false ,acceptedDate:''})}
                                         />
-                                        <label className='mb-2' >All Joined</label>
+                                        <label className='form-check-label' >All Joined</label>
+                                    </div>
+                                    <div className='form-check mb-3' >
+                                        <input
+                                            type="radio"
+                                            className='form-check-input'
+                                            placeholder="Enter Title"
+                                            checked={form?.affiliateStatus}
+                                            autocomplete="off"
+                                            onChange={(e) => setForm({ ...form, isAllJoined: false ,timeInterval:'',affiliateStatus:e.target.checked ,acceptedDate:''})}
+                                        />
+                                        <label className=' form-check-label' >Active Affiliate</label>
                                     </div>
                                 </div>
                                 <div className='col-12 col-sm-3 col-md-3'>
-                                    <div className='mb-3' >
+                                    <div className='form-check mb-3' >
                                         <input
                                             type="radio"
-                                            className=''
+                                            className='form-check-input'
                                             placeholder="Enter Title"
                                             checked={form?.timeInterval=='before' ? true : false}
                                             autocomplete="off"
                                             onChange={(e) => setForm({ ...form, isAllJoined: false,timeInterval:'before',affiliateStatus:false })}
                                         />
-                                        <label className='mb-2' >before</label>
+                                        <label className='form-check-label' >before</label>
                                         </div>
-                                        <div className='mb-3' >
+                                        <div className='form-check mb-3' >
                                         <input
                                             type="radio"
-                                            className=''
+                                            className='form-check-input'
                                             placeholder="Enter Title"
                                             checked={form?.timeInterval=='after' ? true:false}
                                             autocomplete="off"
                                             onChange={(e) => setForm({ ...form, isAllJoined: false,timeInterval:'after',affiliateStatus:false })}
                                         />
-                                        <label className='mb-2' >after</label>
+                                        <label className='form-check-label' >after</label>
                                         </div>
                                 </div>
-                                <div className='col-12 col-sm-3 col-md-3'>
-                                    <div className='mb-3' >
-                                    <label className='mb-2' >Accepted Date</label>
+                              
+                                <div className='col-12 col-sm-6 col-md-6'>
+                                    <div className=' mb-3' >
+                                    <label  className='form-label' >Accepted Date</label>
                                         <input
                                             type="date"
-                                            className=''
+                                            className='form-control'
                                             disabled={!form?.timeInterval}
                                             placeholder="Select date"
                                             value={moment(form?.acceptedDate).format('YYYY-MM-DD')}
@@ -82,19 +94,7 @@ console.log(form)
                                        
                                     </div>
                                 </div>
-                                <div className='col-12 col-sm-3 col-md-3'>
-                                    <div className='mb-3' >
-                                        <input
-                                            type="radio"
-                                            className=''
-                                            placeholder="Enter Title"
-                                            checked={form?.affiliateStatus}
-                                            autocomplete="off"
-                                            onChange={(e) => setForm({ ...form, isAllJoined: false ,timeInterval:'',affiliateStatus:e.target.checked ,acceptedDate:''})}
-                                        />
-                                        <label className='mb-2' >Active Affiliate</label>
-                                    </div>
-                                </div>
+                             
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Title</div>
