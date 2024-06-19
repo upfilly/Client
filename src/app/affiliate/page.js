@@ -166,6 +166,11 @@ export default function affilate() {
     ApiClient.post(`addInvite`, payload).then(res => {
       if (res.success) {
         getData({ page: 1 })
+        setform({
+          "message": "",
+          "tags": [],
+          "campaign_id": ""
+        })
         toast.success("Invitation Send Successfully..")
         handleClose()
       }
