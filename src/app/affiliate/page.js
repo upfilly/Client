@@ -204,7 +204,7 @@ export default function affilate() {
   const getData = (p = {}) => {
     setLoader(true)
     let filter = { ...filters, ...p }
-    ApiClient.get(`getAllAffiliateBrand`, filter).then(res => {
+    ApiClient.get(`getAllAffiliateForBrand`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
         setTotal(res?.data?.total)

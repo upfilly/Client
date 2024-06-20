@@ -150,6 +150,14 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
+              {urlAllow('EmailMessages') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
+                <ListItemLink to="/CreativeEmail" data-bs-toggle="tooltip" data-bs-placement="top" title="Email Messages">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">groups</i>
+                    <span className="side_head">Creative Emails</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>}
               {urlAllow('CreativeEmail') && (user?.role == "brand" || addedUser?.role == "brand")  ? <>
                 <ListItemLink to="/CreativeEmail" data-bs-toggle="tooltip" data-bs-placement="top" title="Creative Email">
                   <div className="d-flex align-items-center  icns_center">

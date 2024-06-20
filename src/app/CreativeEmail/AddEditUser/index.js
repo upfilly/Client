@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import ApiClient from "@/methods/api/apiClient";
 import loader from "@/methods/loader";
 import methodModel from "@/methods/methods";
-import { emailType } from "@/models/type.model";
 import Layout from '../../components/global/layout';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
@@ -14,14 +13,6 @@ import { useParams, useRouter } from 'next/navigation';
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const CreativeEmail = () => {
-  const defaultvalue = () => {
-    let keys = { ...emailType };
-    Object.keys(emailType).map((itm) => {
-      if (itm != "permissions") keys[itm] = "";
-    });
-    keys.status = "active";
-    return keys;
-  };
   const { id } = useParams()
   const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'HTML',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:''});
   const [tab, setTab] = useState("form");
@@ -81,7 +72,7 @@ const CreativeEmail = () => {
     );
   }
      else {
-      setform(defaultvalue());
+      // setform(defaultvalue());
     }
     }
     , []);
@@ -200,7 +191,6 @@ const CreativeEmail = () => {
                         required
                       />
                       </div>
-                     
                     </div>
                     <div className="col-md-6">
                       <div className="mb-3">

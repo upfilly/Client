@@ -26,7 +26,8 @@ const Html = ({
     isAllow,
     total,
     setFilter,
-    filter
+    filter,
+    user
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -109,19 +110,18 @@ const Html = ({
             <th scope="col" className='table_data'>Purpose</th>
             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
             {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
-            <th scope="col" className='table_data'>Action</th>
-
+            {user?.role != "affiliate" && <th scope="col" className='table_data'>Action</th>}
         </tr>
     </thead>
     <tbody>
         {!loaging && data && data.map((itm, i) => {
             return <tr className='data_row' key={i}>
-                <td className='table_dats' onClick={e => view(itm._id)}>
+                <td className='table_dats' onClick={e => view(user?.role == 'affiliate' ? itm?.emailtemplate_details?._id : itm._id)}>
 
                     <div className='user_detail'>
                         <div className='user_name'>
                             <h4 className='user'>
-                                {methodModel.capitalizeFirstLetter(itm.templateName)}
+                                {user?.role == "affiliate" ?  methodModel.capitalizeFirstLetter(itm?.emailtemplate_details?.templateName) : methodModel.capitalizeFirstLetter(itm.templateName)}
                             </h4>
                         </div>
                     </div></td>
@@ -130,20 +130,20 @@ const Html = ({
                     <div className='user_detail'>
                         <div className='user_name'>
                             <h4 className='user'>
-                                {itm?.emailName}
+                                {user?.role == "affiliate" ?  itm?.emailtemplate_details?.emailName  : itm?.emailName}
                             </h4>
                         </div>
                     </div></td>
-                    <td className='table_dats'>{itm?.subject}</td>
+                    <td className='table_dats'>{user?.role == "affiliate" ?  itm?.emailtemplate_details?.subject : itm?.subject}</td>
                 <td className='table_dats'>   <div className={`user_hours`}>
-                    <span className={itm?.purpose} 
-                    ></span>
+                    <span className= ''
+                    >{user?.role == "affiliate" ? itm?.emailtemplate_details?.purpose : itm?.purpose}</span>
                 </div></td>
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                 {/* <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td> */}
 
                 {/* dropdown */}
-                <td className='table_dats'>
+               {user?.role != "affiliate" && <td className='table_dats'>
                     <div className="action_icons">
                         {isAllow('editAdmins') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm._id)}>
@@ -157,7 +157,7 @@ const Html = ({
                             </a>
                         </> : <></>}
                     </div>
-                </td>
+                </td>}
 
             </tr>
 

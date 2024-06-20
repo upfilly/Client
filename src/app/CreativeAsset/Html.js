@@ -59,7 +59,7 @@ const Html = () => {
 
         const payload = {
             // addedBy: user?.id,
-            user_id: form?.user_id,
+            // user_id: form?.user_id,
             filePath: `/documents/${file}`
         }
 
@@ -89,7 +89,7 @@ const Html = () => {
                         <div className='card-body'>
 
                             <div className='row'>
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Select Affiliate<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
@@ -103,7 +103,7 @@ const Html = () => {
                                             options={relatedAffiliate}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className='col-md-12'>
                                     <div className='mb-3'>
                                         <label>Upload CSV File <span onClick={openModal} style={{ color: 'red' }}>(See a example)</span></label>
