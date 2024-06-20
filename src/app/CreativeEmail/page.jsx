@@ -68,7 +68,7 @@ const Users = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             // loader(true)
-            ApiClient.delete('campaign', {id: id }).then(res => {
+            ApiClient.delete('emailtemplate', {id: id }).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()

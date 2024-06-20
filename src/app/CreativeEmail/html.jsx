@@ -152,7 +152,7 @@ const Html = ({
                         </> : <></>}
 
                         {isAllow('deleteAdmins') ? <>
-                            <a className='edit_icon edit-delete' onClick={itm?.status=="accepted" ? "" : () => deleteItem(itm.id)}>
+                            <a className='edit_icon edit-delete' onClick={itm?.status=="accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
                                 <i className={`material-icons ${itm?.status=="accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                             </a>
                         </> : <></>}
