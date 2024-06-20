@@ -18,7 +18,7 @@ const [form, setForm] = useState({
     acceptedDate:'',
     affiliateStatus:false,
     title: "",
-    user_id: "",
+    // user_id: "",
     description: '',
 })
 
@@ -37,8 +37,26 @@ const handleSubmit = () => {
     const payload = {
         ...form,
         title: form?.title,
-        user_id: form?.user_id,
+        // user_id: form?.user_id,
         description: form?.description
+    }
+
+    if (form?.isAllJoined) {
+        delete form?.timeInterval
+        delete form?.acceptedDate
+        delete form?.affiliateStatus
+    } else if (form?.timeInterval) {
+        delete form?.acceptedDate
+        delete form?.affiliateStatus
+        delete form?.isAllJoined
+    } else if (form?.acceptedDate) {
+        delete form?.timeInterval
+        delete form?.acceptedDate
+        delete form?.affiliateStatus
+    } else if (form?.affiliateStatus) {
+        delete form?.timeInterval
+        delete form?.acceptedDate
+        delete form?.isAllJoined
     }
     // loader(true);
     ApiClient.post('emailmessage/send', payload).then((res) => {
@@ -46,7 +64,7 @@ const handleSubmit = () => {
             toast.success(res?.message)
             setTimeout(()=>{
                 location.reload()
-            },1000)
+            },2000)
         }
         // loader(false);
     });

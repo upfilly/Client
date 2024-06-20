@@ -107,7 +107,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='col-12 col-sm-6 col-md-6'>
+                                {/* <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Select User</div>
                                         <SelectDropdown
@@ -119,7 +119,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                                             options={relatedAffiliate}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className='col-md-12 mb-3'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Description</div>
