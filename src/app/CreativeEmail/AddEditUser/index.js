@@ -9,12 +9,13 @@ import Layout from '../../components/global/layout';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
+import Emaileditor from "@/app/email/page";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const CreativeEmail = () => {
   const { id } = useParams()
-  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'HTML',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:''});
+  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'HTML',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:'',textJSONContent:{}});
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
   const specialChars = useRef([]);
@@ -22,9 +23,25 @@ const CreativeEmail = () => {
   const [htmlCode, setHtmlCode] = useState(false);
   const formValidation = [{ key: "subject", required: true }];
   const history = useRouter()
+  const childRef = useRef();
+
+  const handleClick = () => {
+    childRef.current.export_to_html();
+    toast.success('Data Exported Successfully')
+  };
+
+
+
+
+
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
     setSubmitted(true);
+    // handleClick()
+    if(form?.format=='Text' && (!form?.textJSONContent || !form?.textContent)){
+      toast.error('You need to export to HTML template design first')
+      return
+    }
     let invalid = methodModel.getFormError(formValidation, form);
     if (invalid) {
       setTab("form");
@@ -42,6 +59,8 @@ const CreativeEmail = () => {
       delete value.id;
     }
     loader(true);
+
+    setTimeout(() => {
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res?.message)
@@ -49,6 +68,9 @@ const CreativeEmail = () => {
       }
       loader(false);
     });
+     
+  }, 2000);
+  
   };
 
 
@@ -304,7 +326,7 @@ const CreativeEmail = () => {
                               </>
                             ) : (
                               <>
-                                <DynamicReactQuill
+                                {/* <DynamicReactQuill
                                   theme="snow"
                                   value={form?.textContent ? form?.textContent : ''}
 
@@ -330,7 +352,8 @@ const CreativeEmail = () => {
                                     'link', 'image', 'video'
                                   ]}
                                   bounds={'.app'}
-                                />
+                                /> */}
+                                <Emaileditor state={form} setstate={setform} ref={childRef}/>
                               </>
                             )}
                           </div>

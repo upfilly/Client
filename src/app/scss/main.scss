@@ -5292,3 +5292,8 @@ input[type=checkbox].check_bx_input:checked + .checkbox-btn::after {
   font-size: 14px;
   text-transform: capitalize;
 }
+
+// CreativeEmail editor  page css
+.decbx iframe {
+  min-width: unset !important;
+}
