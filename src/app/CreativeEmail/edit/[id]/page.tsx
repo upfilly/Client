@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
-import AddEditUser from "../../AddEditUser";
+import React from 'react';
+import AddEditUser from '../../AddEditUser';
 
 const Add = () => {
     return <AddEditUser/>
