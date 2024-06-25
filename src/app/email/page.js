@@ -10,7 +10,6 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
     export_to_html: exportHtml,
   }));
 
-  // Export HTML content from the editor
   const exportHtml = () => {
     const unlayer = emailEditorRef.current?.editor;
 
@@ -61,7 +60,6 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
     });
   };
 
-  // Load a selected design into the editor (if needed)
   const loadSelectedDesign = (design) => {
     console.log("loadSelectedDesign", design);
     if (emailEditorRef.current && emailEditorRef.current.editor)
