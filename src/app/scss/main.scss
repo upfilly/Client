@@ -688,9 +688,18 @@ button.btn.btn-primary.loginclass {
 }
 
 @media(max-width:768px) {
+
+  .pprofile1{
+    padding: 20px 20px ;
+  }
   .taableWrapper {
     max-height: calc(100vh - 300px);
   }
+}
+@media (max-width:576px){
+  .decbx {
+    margin-top: -39px !important;
+}
 }
 
 .login-wrapper {
@@ -3658,7 +3667,7 @@ p.checkbox-option-main {
 .add_team_bx {
   padding: 20px;
   border-radius: 5px;
-  border: 1px solid #c1c1c1;
+  border: 1px solid #d8d8d8;
   margin-top: 18px;
   background-color: #e0e0e02e;
 }
@@ -5296,4 +5305,22 @@ input[type=checkbox].check_bx_input:checked + .checkbox-btn::after {
 // CreativeEmail editor  page css
 .decbx iframe {
   min-width: unset !important;
+}
+
+.decbx {margin-top: -52px;}
+
+.decbx .btn-primary {
+    font-size: 14px;
+}
+.descrption_multi {
+  border: 1px solid #d0d4da;
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.add_detils {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }

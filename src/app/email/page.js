@@ -69,12 +69,12 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
   };
 
   return (
-    <div className='col-md-12'>
       <div className='decbx'>
         <div className='text-right mb-3'>
           <button className='btn btn-primary' onClick={exportHtml} type='button'>Export HTML</button>
         </div>
-        <EmailEditor
+     <div className='descrption_multi'>
+     <EmailEditor
           ref={emailEditorRef}
           onReady={onReady}
           onLoad={onLoad}
@@ -83,8 +83,9 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
             handle: handleImageUpload,
           }}
         />
+     </div>
       </div>
-    </div>
+    
   );
 });
 

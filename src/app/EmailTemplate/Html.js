@@ -96,7 +96,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                              
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
-                                        <div className='mb-2' >Title</div>
+                                        <label className='mb-2' >Title</label>
                                         <input
                                             type="text"
                                             className='form-control'
@@ -120,9 +120,9 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                                         />
                                     </div>
                                 </div> */}
-                                <div className='col-md-12 mb-3'>
+                                <div className='col-md-12 '>
                                     <div className='mb-3' >
-                                        <div className='mb-2' >Description</div>
+                                        <label className='mb-2' >Description</label>
                                         <DynamicReactQuill
                                             theme="snow"
                                             value={form?.description ? form?.description : ''}
