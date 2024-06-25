@@ -1,20 +1,11 @@
-import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
+"use client"
+
+import React, { forwardRef, useRef, useImperativeHandle} from 'react';
 import EmailEditor from 'react-email-editor';
 import { toast } from 'react-toastify';
 
-const Emaileditor = forwardRef(({ state, setstate }, ref) => {
+const EmailEditorTemplate = ({ state, setstate }) => {
   const emailEditorRef = useRef(null);
-  const [editorValue, setEditorValue] = useState('');
-
-  console.log(state,"djkfsdhbfshdbfhb")
-
-  const handleEditorChange = (value) => {
-    setEditorValue(value);
-  };
-
-  useImperativeHandle(ref, () => ({
-    export_to_html: exportHtml,
-  }));
 
   const exportHtml = () => {
     const unlayer = emailEditorRef.current?.editor;
@@ -78,8 +69,8 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
       </div>
     
   );
-});
+};
 
-export default Emaileditor;
+export default EmailEditorTemplate;
 
 
