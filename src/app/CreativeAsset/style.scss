@@ -73,12 +73,14 @@
   
   .upload_csvfile {
     position: relative;
+    margin-top: 12px;
   }
   
   .upload_csvfile .removeCross {
     position: absolute;
     top: -4px;
     left: 102px;
+    color: #fff;
     background-color: #68bafe;
     width: 20px;
     height: 20px;

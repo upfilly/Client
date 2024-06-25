@@ -189,7 +189,7 @@ const CreativeEmail = () => {
                       </label>
                       <input
                         type="text"
-                        className=" form-control shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className=" form-control"
                         value={form?.templateName}
                         onChange={(e) =>
                           setform({ ...form, templateName: e.target.value })
@@ -205,7 +205,7 @@ const CreativeEmail = () => {
                       </label>
                       <input
                         type="email"
-                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className="form-control "
                         value={form?.emailName}
                         onChange={(e) =>
                           setform({ ...form, emailName: e.target.value })
@@ -221,7 +221,7 @@ const CreativeEmail = () => {
                       </label>
                       <input
                         type="text"
-                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className="form-control "
                         value={form?.purpose}
                         onChange={(e) =>
                           setform({ ...form, purpose: e.target.value })
@@ -238,7 +238,7 @@ const CreativeEmail = () => {
                       </label>
                       <input
                         type="text"
-                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className="form-control "
                         value={form?.audience}
                         onChange={(e) =>
                           setform({ ...form, audience: e.target.value })
@@ -255,7 +255,7 @@ const CreativeEmail = () => {
                       </label>
                       <input
                         type="text"
-                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className="form-control "
                         value={form?.subject}
                         onChange={(e) =>
                           setform({ ...form, subject: e.target.value })
@@ -272,7 +272,7 @@ const CreativeEmail = () => {
                       </label>
                       <input
                         type="text"
-                        className="form-control  shadow-box border !border-grey bg-white w-full text-sm placeholder:text-gray-500 rounded-large h-10 flex items-center gap-2 overflow-hidden px-4 !ring-primary !outline-primary disabled:!bg-gray-200"
+                        className="form-control "
                         value={form?.from}
                         onChange={(e) =>
                           setform({ ...form, from: e.target.value })
@@ -288,7 +288,7 @@ const CreativeEmail = () => {
                             Description<span className="star">*</span>
                           </label>
                           <div className="">
-                            <ul class="nav nav-tabs flex mb-3 d-flex justify-content-start gap-3  align-items-center boder p-2">
+                            <ul class="nav nav-tabs flex mb-2 d-flex justify-content-start gap-2  align-items-center border-bottom-0 p-2">
                               <li className="nav-item flex mr-0 cursor-pointer mt-0 set_buttons">
                                 <a
                                   className={` ${form?.format=='Text'
@@ -310,6 +310,7 @@ const CreativeEmail = () => {
                                 </a>
                               </li>
                             </ul>
+
                             {form?.format!=='Text' ? (
                               <>
                                 <textarea
@@ -356,6 +357,9 @@ const CreativeEmail = () => {
                                 <Emaileditor state={form} setstate={setform} ref={childRef}/>
                               </>
                             )}
+
+
+
                           </div>
                       </div>
                         </div>

@@ -1,6 +1,6 @@
 //This file is used to load Unlayer script so it could be edited
 
-const scriptUrl = '//editor.unlayer.com/embed.js?1';
+const scriptUrl = '//editor.unlayer.com/embed.js?239054';
 const callbacks = [];
 let loaded = false;
 

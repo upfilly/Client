@@ -1,11 +1,17 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useState } from 'react';
 import EmailEditor from 'react-email-editor';
 import { toast } from 'react-toastify';
 
 const Emaileditor = forwardRef(({ state, setstate }, ref) => {
   const emailEditorRef = useRef(null);
+  const [editorValue, setEditorValue] = useState('');
 
-  // Imperative handle to expose exportHtml method
+  console.log(state,"djkfsdhbfshdbfhb")
+
+  const handleEditorChange = (value) => {
+    setEditorValue(value);
+  };
+
   useImperativeHandle(ref, () => ({
     export_to_html: exportHtml,
   }));
@@ -32,23 +38,10 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
     }
   };
 
-  // Callback for handling image uploads
-  const handleImageUpload = (file) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const imageUrl = '/assets/img/logo.png';
-        resolve({ data: { link: imageUrl } });
-      }, 2000)
-    });
-  };
-
-  // Load the editor with initial content and handle editor ready state
   const onLoad = () => {
-    const templateJson = state?.textJSONContent || '{}';
-    emailEditorRef.current.editor.loadDesign(templateJson);
+   
   };
 
-  // Handle editor being ready
   const onReady = (unlayer) => {
     unlayer.setAppearance({
       theme: 'modern_light',
@@ -58,6 +51,8 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
         }
       },
     });
+    const templateJson = state?.textJSONContent || '{}';
+    emailEditorRef.current.editor.loadDesign(templateJson);
   };
 
   const loadSelectedDesign = (design) => {
@@ -67,23 +62,24 @@ const Emaileditor = forwardRef(({ state, setstate }, ref) => {
   };
 
   return (
-    <div className='col-md-12'>
       <div className='decbx'>
         <div className='text-right mb-3'>
           <button className='btn btn-primary' onClick={exportHtml} type='button'>Export HTML</button>
         </div>
+     <div className='descrption_multi'>
         <EmailEditor
+          projectId={239054}
           ref={emailEditorRef}
           onReady={onReady}
-          onLoad={onLoad}
+          // onLoad={onLoad}
           initialContent={state?.textContent}
-          imageUpload={{
-            handle: handleImageUpload,
-          }}
         />
+     </div>
       </div>
-    </div>
+    
   );
 });
 
 export default Emaileditor;
+
+
