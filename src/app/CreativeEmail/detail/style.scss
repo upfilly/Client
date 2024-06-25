@@ -200,3 +200,15 @@ input.form-control-file.over_input {
     border-radius: 18px;
     overflow: hidden;
 }
+
+.content_scrollbx {
+    max-height: 150px;
+    min-width: 100px;
+    overflow-y: auto;
+}
+.image_content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 200px !important;
+}
