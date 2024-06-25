@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
+import environment from '@/environment';
 
 const Html = ({
     view,
@@ -86,11 +87,11 @@ const Html = ({
     };
 
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Messages" filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Data Feeds" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 ">
                     <div className='d-flex align-items-center flex-wrap gap-2'>
-                        {/* <SelectDropdown
+                        <SelectDropdown
                             id="statusDropdown"
                             displayValue="name"
                             placeholder="All Status"
@@ -99,9 +100,9 @@ const Html = ({
                             options={[
                                 { id: 'invited', name: 'Invited' },
                                 { id: 'onboard', name: 'Onboard' },
-                                { id: 'rejected', name: 'Rejected' },
+                                // { id: 'rejected', name: 'Rejected' },
                             ]}
-                        /> */}
+                        />
                         <div className='searchInput'>
                             <input
                                 type="text"
@@ -120,6 +121,11 @@ const Html = ({
                     <div className='d-flex gap-3 align-items-center'>
 
                         <div className="d-flex filterFlex phView">
+                            {/* {isAllow('addAdmins') ? <>
+                                <a className="btn btn-primary" onClick={handleShow}>
+                                    <i className='fa fa-plus mr-1'></i>  Send Invite
+                                </a>
+                            </> : <></>} */}
                             {filters.status ? <>
                                 <a className="btn btn-primary" onClick={e => reset()}>
                                     Reset
@@ -136,19 +142,16 @@ const Html = ({
                         <table className="table table-striped table-width">
                             <thead className='table_head'>
                                 <tr className='heading_row'>
-                                    <th scope="col" className='table_data' onClick={e => sorting('email')}>E-mail{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    <th scope="col" className='table_data'>Title</th>
-                                    <th scope="col" className='table_data'>Content</th>
-                                    <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Sended Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    {/* <th scope="col" className='table_data'>Action</th> */}
+                                    <th scope="col" className='table_data' >Sender E-mail</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    <th scope="col" className='table_data'>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {!loaging && data && data.map((itm, i) => {
                                     return <tr className='data_row' key={i}>
-                                        <td className='table_dats'
-                                         onClick={e => view(itm.id || itm?._id)}
-                                         >
+                                        <td className='table_dats'>
                                             <div className='user_detail'>
                                                 <div className='user_name'>
                                                     <h4 className='user'>
@@ -156,9 +159,9 @@ const Html = ({
                                                     </h4>
                                                 </div>
                                             </div></td>
-                                        <td className='table_dats'>{itm?.title}</td>
-                                        <td className='table_dats' dangerouslySetInnerHTML={{ __html: itm?.description?.slice(0, 50) || "--" }} />
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                                        <td className='table_dats'><a href={`${environment?.api}${itm?.filePath}`} download="filename.pdf">Download</a></td>
+
                                         {/* dropdown */}
                                         {/* <td className='table_dats'>
                     <div className="action_icons">
@@ -184,6 +187,8 @@ const Html = ({
                         {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
                     </div>
                 </div>
+
+
 
                 <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                     <span>Show {data?.length} from {total} Users</span>

@@ -1,45 +1,55 @@
-'use client'
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import EmailEditor, { EditorRef, EmailEditorProps } from 'react-email-editor';
-import Layout from '../components/global/layout';
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import EmailEditor from 'react-email-editor';
 import { toast } from 'react-toastify';
-const Emaileditor =forwardRef( ({state,setstate},ref) => {
+
+const Emaileditor = forwardRef(({ state, setstate }, ref) => {
   const emailEditorRef = useRef(null);
 
+  // Imperative handle to expose exportHtml method
   useImperativeHandle(ref, () => ({
     export_to_html: exportHtml,
   }));
 
+  // Export HTML content from the editor
   const exportHtml = () => {
     const unlayer = emailEditorRef.current?.editor;
-  
+
     if (unlayer) {
       unlayer.exportHtml((data) => {
         const { design, html } = data;
         console.log('exportHtml', html);
-  
+
         if (html) {
           setstate((prev) => ({
             ...prev,
             textContent: html,
             textJSONContent: design || {}
           }));
-          toast.success('Data Exported Successfully')
+          toast.success('Data Exported Successfully');
         }
       });
     } else {
       console.error('Unlayer editor not available');
     }
   };
-  
 
+  // Callback for handling image uploads
+  const handleImageUpload = (file) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const imageUrl = '/assets/img/logo.png';
+        resolve({ data: { link: imageUrl } });
+      }, 2000)
+    });
+  };
+
+  // Load the editor with initial content and handle editor ready state
   const onLoad = () => {
-    // editor instance is created
-    // you can load your template here;
-    const templateJson = state?.textJSONContent||'{}'
-        emailEditorRef.current.editor.loadDesign(templateJson);
-  }
+    const templateJson = state?.textJSONContent || '{}';
+    emailEditorRef.current.editor.loadDesign(templateJson);
+  };
 
+  // Handle editor being ready
   const onReady = (unlayer) => {
     unlayer.setAppearance({
       theme: 'modern_light',
@@ -51,28 +61,31 @@ const Emaileditor =forwardRef( ({state,setstate},ref) => {
     });
   };
 
+  // Load a selected design into the editor (if needed)
   const loadSelectedDesign = (design) => {
     console.log("loadSelectedDesign", design);
-    // does not work:
     if (emailEditorRef.current && emailEditorRef.current.editor)
       emailEditorRef.current.editor.loadDesign(design);
-  }
-  
-
+  };
 
   return (
-
-      <div className='col-md-12'>
-     <div className='decbx'>
-    <div className='text-right mb-3'>
-    <button className='btn btn-primary' onClick={exportHtml} type='button'>Export HTML</button>
-    </div>
-     <EmailEditor ref={emailEditorRef} onReady={onReady} onLoad={onLoad} initialContent={state?.textContent}/>
-     </div>
+    <div className='col-md-12'>
+      <div className='decbx'>
+        <div className='text-right mb-3'>
+          <button className='btn btn-primary' onClick={exportHtml} type='button'>Export HTML</button>
+        </div>
+        <EmailEditor
+          ref={emailEditorRef}
+          onReady={onReady}
+          onLoad={onLoad}
+          initialContent={state?.textContent}
+          imageUpload={{
+            handle: handleImageUpload,
+          }}
+        />
       </div>
+    </div>
+  );
+});
 
-  )
-}
-)
-
-export default Emaileditor
+export default Emaileditor;
