@@ -1,3 +1,4 @@
+import methodModel from "@/methods/methods";
 import React, { useEffect, useState } from "react";
 
 const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSidebar, activeSidebar, user }) => {
@@ -47,7 +48,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {urlAllow('group') ? <>
+              {urlAllow('group') && methodModel.permission('affiliate_group')? <>
                 <ListItemLink to="/group" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">groups</i>
@@ -168,8 +169,8 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </> : <></>}
             </div></>}
 
-          {<ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
-            <i className="material-icons  svg_iconbx" title="Banners">collections</i>
+          {methodModel.permission('banner_get')&& <ListItemLink to="/addbanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Campaign Management">
+            <i className="material-icons  svg_iconbx" title="Banners"></i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Banner" : "Banners"}</span>
           </ListItemLink>}
 
@@ -264,12 +265,12 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
           </ListItemLink>
 
-          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
+          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate")|| methodModel.permission('generate_link_add') && <ListItemLink to="/generateLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
             <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
             <span className="side_head">Generate Link</span>
           </ListItemLink>}
 
-          {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/makeLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
+          {user && (user?.role == "brand" || addedUser?.role == "brand") || methodModel.permission('generate_link_add') && <ListItemLink to="/makeLink" data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Link" >
             <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
             <span className="side_head">Generate Link</span>
           </ListItemLink>}

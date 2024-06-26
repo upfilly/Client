@@ -55,7 +55,7 @@ const Html = ({
                     />
 
                     <article className="d-flex filterFlex phView">
-                       {user?.role == "brand" && <>
+                       {(user?.role == "brand" || methodModel.permission('banner_add')) && <>
                             <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Banner
                             </a>
@@ -140,7 +140,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                 {/* dropdown */}
-                {user?.role == "brand" && <td className='table_dats'>
+                {(user?.role == "brand"||methodModel.permission('banner_edit')) && <td className='table_dats'>
                     <div className="action_icons gap-3 ">
                         {<>{isAllow('editAdmins') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
@@ -148,7 +148,7 @@ const Html = ({
                             </a>
                         </> : <></>}
 
-                            {isAllow('deleteAdmins') ? <>
+                            {isAllow('deleteAdmins')&&methodModel.permission('banner_delete') ? <>
                                 <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
                                     <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                                 </a>

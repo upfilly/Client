@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import './style.scss';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
+import methodModel from '@/methods/methods';
 
 const Html = ({
     edit,
@@ -51,9 +52,9 @@ const Html = ({
 
                     <article className="d-flex filterFlex phView">
                         <>
-                            <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
+                            {methodModel.permission('commission_add')&&<a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Commission
-                            </a>
+                            </a>}
                         </>
 
                         {/* {filters.status ? <>

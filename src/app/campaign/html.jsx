@@ -55,7 +55,7 @@ const Html = ({
                         />
 
                     <article className="d-flex filterFlex phView">
-                        {isAllow('addAdmins') ? <>
+                        {isAllow('addAdmins')&&methodModel.permission('campaign_add') ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
                                 Add Campaign 
                             </a>
@@ -152,24 +152,24 @@ const Html = ({
                 {/* dropdown */}
                 <td className='table_dats'>
                     <div className="action_icons">
-                        {isAllow('editAdmins') ? <>
+                        {isAllow('editAdmins')&&methodModel.permission('campaign_edit') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
                                 <i className="material-icons edit" title="Edit">edit</i>
                             </a>
                         </> : <></>}
 
-                        {isAllow('deleteAdmins') ? <>
+                        {isAllow('deleteAdmins')&&methodModel.permission('campaign_delete') ? <>
                             <a className='edit_icon edit-delete' onClick={itm?.status=="accepted" ? "" : () => deleteItem(itm.id)}>
                                 <i className={`material-icons ${itm?.status=="accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                             </a>
                         </> : <></>}
 
-                        <>
+                        {methodModel.permission('campaign_edit')&&<>
                             <a className='edit_icon action-btn' onClick={() =>{history.push(`/chat`)
                                                         localStorage.setItem("chatId",itm?.affiliate_id)}}>
                                <i className='fa fa-comment-o text-white'></i>
                             </a>
-                        </>
+                        </>}
                     </div>
                 </td>
 
