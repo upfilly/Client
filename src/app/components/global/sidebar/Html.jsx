@@ -150,16 +150,16 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {urlAllow('EmailMessages') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
-                <ListItemLink to="/CreativeEmail" data-bs-toggle="tooltip" data-bs-placement="top" title="Email Messages">
+              {urlAllow('CreativeEmails') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
+                <ListItemLink to="/CreativeEmails" data-bs-toggle="tooltip" data-bs-placement="top" title="Email Messages">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">local_library</i>
                     <span className="side_head">Creative Emails</span>
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {urlAllow('CreativeEmail') && (user?.role == "brand" || addedUser?.role == "brand")  ? <>
-                <ListItemLink to="/CreativeEmail" data-bs-toggle="tooltip" data-bs-placement="top" title="Creative Email">
+              {urlAllow('CreativeEmails') && (user?.role == "brand" || addedUser?.role == "brand")  ? <>
+                <ListItemLink to="/CreativeEmails" data-bs-toggle="tooltip" data-bs-placement="top" title="Creative Email">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">local_library</i>
                     <span className="side_head">Creative Email</span>

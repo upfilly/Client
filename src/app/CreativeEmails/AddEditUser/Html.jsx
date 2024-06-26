@@ -10,7 +10,7 @@ import EmailEditorTemplate from '../../email/emaileditor'
 
 const Html = () => {
   const { id } = useParams()
-  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'HTML',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:'',textJSONContent:{}});
+  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'Text',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:'',textJSONContent:{}});
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
   const specialChars = useRef([]);
@@ -24,10 +24,6 @@ const Html = () => {
     childRef.current.export_to_html();
     toast.success('Data Exported Successfully')
   };
-
-
-
-
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
@@ -59,7 +55,7 @@ const Html = () => {
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res?.message)
-        history.push("/CreativeEmail");
+        history.push("/CreativeEmails");
       }
       loader(false);
     });
@@ -322,33 +318,6 @@ const Html = () => {
                               </>
                             ) : (
                               <>
-                                {/* <DynamicReactQuill
-                                  theme="snow"
-                                  value={form?.textContent ? form?.textContent : ''}
-
-                                  onChange={(newValue, editor) => {
-                                    setform({ ...form, textContent: newValue })
-                                  }}
-                                  className='tuncketcls'
-                                  modules={{
-                                    toolbar: [
-                                      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                      [{ size: [] }],
-                                      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                      [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                      { 'indent': '-1' }, { 'indent': '+1' }],
-                                      ['link', 'image', 'video'],
-                                      ['clean']
-                                    ],
-                                  }}
-                                  formats={[
-                                    'header', 'font', 'size',
-                                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                    'list', 'bullet', 'indent',
-                                    'link', 'image', 'video'
-                                  ]}
-                                  bounds={'.app'}
-                                /> */}
                                 <EmailEditorTemplate state={form} setstate={setform} ref={childRef}/>
                               </>
                             )}
