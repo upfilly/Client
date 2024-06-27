@@ -9,9 +9,7 @@ import Layout from '../../components/global/layout';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
-import Emaileditor from "@/app/email/page";
-
-const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import EmailEditorTemplate from '../../email/emaileditor'
 
 const CreativeEmail = () => {
   const { id } = useParams()
@@ -354,7 +352,7 @@ const CreativeEmail = () => {
                                   ]}
                                   bounds={'.app'}
                                 /> */}
-                                <Emaileditor state={form} setstate={setform} ref={childRef}/>
+                                <EmailEditorTemplate state={form} setstate={setform} ref={childRef}/>
                               </>
                             )}
 
