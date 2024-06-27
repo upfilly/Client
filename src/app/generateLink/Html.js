@@ -7,6 +7,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import MultiSelectValue from '../components/common/MultiSelectValue'
 import axios from 'axios';
+import methodModel from '@/methods/methods';
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -280,7 +281,7 @@ const Html = () => {
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
-                           <div className='mb-3'>
+                          {methodModel.permission('generate_link_get') && <div className='mb-3'>
                            <h6 className="link_default m-0"> Your Link :</h6>
 
 <div className="input-group my-2">
@@ -292,10 +293,10 @@ const Html = () => {
     {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto  br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
     {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
 </div>
-                           </div>
+                           </div>}
                             {copied && <div className="">Copied!</div>}
 
-                           <div className='mb-3' >
+                           {methodModel.permission('generate_link_get')&&<div className='mb-3' >
                            <h6 className="link_default m-0"> Your Short Link : </h6>
 
 {shrtlnk && <div className="input-group my-2">
@@ -306,7 +307,7 @@ const Html = () => {
      </div>
       <p id="textShortToCopy" className="form-control gen_links br0 mb-0 heauto" >{shrtlnk}</p>
  </div> }
-                           </div>
+                           </div>}
                             {/* {copied && <div className="">Copied!</div>} */}
                         </div>
                     </div>

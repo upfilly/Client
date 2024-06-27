@@ -9,6 +9,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
+import methodModel from '@/methods/methods';
 
 
 const banneres = () => {
@@ -29,6 +30,10 @@ const banneres = () => {
 
 
     const getData = (p = {}) => {
+        if(!methodModel.permission('banner_add')){
+            setLoader(false)
+            return
+        }
         setLoader(true)
         let filter = { ...filters, ...p }
         if (user?.role == "brand") {

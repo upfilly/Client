@@ -127,17 +127,17 @@ const Users = () => {
     }
 
     const view=(id)=>{
-        history.push("/CreativeEmail/detail/"+id)
+        history.push("/CreativeEmails/detail/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/CreativeEmail/edit/${id}`
+        let url=`/CreativeEmails/edit/${id}`
         if(role) url=`/campaign/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/CreativeEmail/add`
+        let url=`/CreativeEmails/edit/add`
         history.push(url)
     }
 

@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import ApiClient from "@/methods/api/apiClient";
@@ -7,13 +5,12 @@ import loader from "@/methods/loader";
 import methodModel from "@/methods/methods";
 import Layout from '../../components/global/layout';
 import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic';
 import { useParams, useRouter } from 'next/navigation';
 import EmailEditorTemplate from '../../email/emaileditor'
 
-const CreativeEmail = () => {
+const Html = () => {
   const { id } = useParams()
-  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'HTML',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:'',textJSONContent:{}});
+  const [form, setform] = useState({templateName:'',emailName:'',purpose:'',audience:'',format:'Text',subject:'',from:'',htmlContent:'',textContent:'',personalizationTags:'',textJSONContent:{}});
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
   const specialChars = useRef([]);
@@ -27,10 +24,6 @@ const CreativeEmail = () => {
     childRef.current.export_to_html();
     toast.success('Data Exported Successfully')
   };
-
-
-
-
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
@@ -62,7 +55,7 @@ const CreativeEmail = () => {
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res?.message)
-        history.push("/CreativeEmail");
+        history.push("/CreativeEmails");
       }
       loader(false);
     });
@@ -325,33 +318,6 @@ const CreativeEmail = () => {
                               </>
                             ) : (
                               <>
-                                {/* <DynamicReactQuill
-                                  theme="snow"
-                                  value={form?.textContent ? form?.textContent : ''}
-
-                                  onChange={(newValue, editor) => {
-                                    setform({ ...form, textContent: newValue })
-                                  }}
-                                  className='tuncketcls'
-                                  modules={{
-                                    toolbar: [
-                                      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                      [{ size: [] }],
-                                      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                      [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                                      { 'indent': '-1' }, { 'indent': '+1' }],
-                                      ['link', 'image', 'video'],
-                                      ['clean']
-                                    ],
-                                  }}
-                                  formats={[
-                                    'header', 'font', 'size',
-                                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                    'list', 'bullet', 'indent',
-                                    'link', 'image', 'video'
-                                  ]}
-                                  bounds={'.app'}
-                                /> */}
                                 <EmailEditorTemplate state={form} setstate={setform} ref={childRef}/>
                               </>
                             )}
@@ -492,4 +458,4 @@ const CreativeEmail = () => {
   );
 };
 
-export default CreativeEmail;
+export default Html;

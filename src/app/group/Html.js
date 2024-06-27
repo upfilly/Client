@@ -37,9 +37,9 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
                             <div className="d-flex gap-3 flex-wrap filterFlex phView align-items-center   justify-content-end">
-                                <a className="btn btn-primary ms-2 " onClick={e => add()}>
+                                {methodModel.permission('group_add') && <a className="btn btn-primary ms-2 " onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i> Add
-                                </a>
+                                </a>}
                                 <SelectDropdown
                                     id="statusDropdown" className="mr-2 "
                                     displayValue="name"
@@ -108,17 +108,19 @@ const Html = ({
                                                         </span>
                                                     </span></td>
                                                     <td className='table_dats'>
-                                                    <h4 class="user"> {datepipeModel.date(itm?.createdAt)}</h4>
-                                                       </td>
+                                                        <h4 class="user"> {datepipeModel.date(itm?.createdAt)}</h4>
+                                                    </td>
                                                     <td>
-                                                        <div className='action_icons'> <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                                                        <div className='action_icons'>
+                                                            {methodModel.permission('group_edit')&&<a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
-                                                            <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
-                                                        </a>
+                                                                <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
+                                                            </a>}
 
-                                                            <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
+                                                            {methodModel.permission('group_delete')&&<a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                                                                 <i className={`material-icons delete`} title='Delete'> delete</i>
-                                                            </a></div>
+                                                            </a>}
+                                                        </div>
                                                     </td>
                                                 </tr>
 

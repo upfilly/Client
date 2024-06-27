@@ -16,7 +16,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     commisions: ['commisionplan','manualCommission'],
     catalogue: ['types', 'categories', 'category/'],
     affiliates: ['affiliate', 'group'],
-    CreativeAssets: ['CreativeAsset', 'EmailTemplate','EmailMessages','DataFeeds','CreativeEmail'],
+    CreativeAssets: ['CreativeAsset', 'EmailTemplate','EmailMessages','DataFeeds','CreativeEmails'],
     api: ['bookingSystem', 'pos', 'reviews', 'accounting-system'],
     geo: ['continents', 'countries', 'regions', 'cities'],
     dynamicPricing: ['dynamicprice'],

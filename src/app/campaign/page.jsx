@@ -12,6 +12,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
+import methodModel from '@/methods/methods';
 
 
 const Users = () => {
@@ -36,6 +37,10 @@ const Users = () => {
 
 
     const getData = (p = {}) => {
+        if(methodModel.permission('campaign_get')){
+            setLoader(false)
+            return
+        }
         setLoader(true)
         let filter = { ...filters, ...p }
         let url='campaign/all'

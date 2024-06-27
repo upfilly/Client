@@ -114,9 +114,9 @@ const Html = ({
                                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                                     </a>}
 
-                                                                    <a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
+                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_delete) &&<a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
                                                                         <i className={`material-icons delete`} title='Delete'> delete</i>
-                                                                    </a>
+                                                                    </a>}
                                                                     {/* <a className='edit_icon action-btn' onClick={() => {
                                                                         history.push(`/chat`)
                                                                         localStorage.setItem("chatId", user?.role != 'affiliate' ? itm?._id || itm?.id : itm?.addedBy)
