@@ -81,11 +81,111 @@ const Html = ({
   return (
     <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Performance" filters={filters}>
       <div className='sidebar-left-content'>
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 ">
-          jhhh
+      
 
-        </div>
-        <div className=" ">
+      <div class="accordion" id="accordionExample">
+  <div class="accordion-item main_accordingbx">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+       Program - Daily
+      </button>
+
+
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+       <div className="program_bx">
+   <div className="row">
+   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+   <div className="selectbx1">
+   <div className="form-group">
+      <label>Performance By</label>
+      <select class="form-select" >
+  <option selected>Program</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+<i class="fa fa-caret-down down-arrAW" aria-hidden="true"></i>
+
+    </div>
+   </div>
+   </div>
+   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+   <div className="selectbx1">
+   <div className="form-group">
+      <label>Trend</label>
+      <select class="form-select" >
+  <option selected>Daily</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+<i class="fa fa-caret-down down-arrAW" aria-hidden="true"></i>
+    </div>
+   </div>
+   </div>
+   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+   <div className="selectbx1">
+   <div className="form-group">
+      <label>Date Range</label>
+      <select class="form-select" >
+  <option selected>Custom</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+<i class="fa fa-caret-down down-arrAW" aria-hidden="true"></i>
+    </div>
+   </div>
+   </div>
+   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+   <div className="selectbx1">
+   <div className="form-group">
+      <label>Start Date</label>
+      <input className='form-control' type="date" id="birthday" name="birthday"/>
+    </div>
+   </div>
+   </div>
+
+
+   </div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div className=" graph_charts ">
          
 
         <Chart
