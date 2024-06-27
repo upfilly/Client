@@ -8,6 +8,7 @@ import Html from './Html';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import { useRouter } from 'next/navigation';
+import methodModel from '@/methods/methods';
 
 const Categories = () => {
 
@@ -30,6 +31,10 @@ const Categories = () => {
 
 
     const getData = (p = {}) => {
+        if(!methodModel.permission('group_get')){
+            setLoader(false)
+            return
+        }
         setLoader(true)
         let filter = { ...filters, ...p }
         let url='affiliate-groups'
