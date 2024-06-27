@@ -1,7 +1,6 @@
 import crendentialModel from "@/models/credential.model"
 import environment from "../environment"
 const user=crendentialModel.getUser()
-console.log(user,"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
 const permission=(p)=>{
     if(user?.role=='brand'||(user?.permission_detail&& user?.permission_detail[p])){
         return true
@@ -195,7 +194,6 @@ const route=(route)=>{
 }
 
 function capitalizeFirstLetter(str) {
-    console.log(str,"ssssstttt")
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   }

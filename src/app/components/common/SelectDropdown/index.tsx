@@ -9,9 +9,6 @@ const SelectDropdown = ({intialValue,options,isSingle,result,displayValue='name'
         result({event:"value",value:e})
         setToggle(false)
     }
-
-    console.log(intialValue,"intialValueintialValue")
-
     return <>
         <Html
         toggle={toggle}

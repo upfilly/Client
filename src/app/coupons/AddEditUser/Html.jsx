@@ -3,6 +3,7 @@ import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import '../style.scss';
 import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
+import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitted, back }) => {
 
@@ -28,14 +29,14 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                             </div>
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
-                                    <label>Coupon Code<span className="star">*</span></label>
+                                    <label>Coupon Code</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={form.couponCode}
                                         onChange={e => setform({ ...form, couponCode: e.target.value })}
                                     />
-                                    {submitted && !form?.couponCode ? <div className="invalid-feedback d-block">Coupon Code is Required</div> : <></>}
+                                    {/* {submitted && !form?.couponCode ? <div className="invalid-feedback d-block">Coupon Code is Required</div> : <></>} */}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Coupon Type</label>
@@ -78,10 +79,32 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                             },
                                             ]}
                                         />
+                                        {!form?.commissionType && submitted && <p className="invalid-feedback d-block">Commission Type is required</p>}
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-3">
-                                    <label>Coupon Type</label>
+                                    <label>Coupon Commission</label>
+                                    <SelectDropdown
+                                        id="statusDropdown"
+                                        displayValue="name"
+                                        placeholder="Select Commission Type"
+                                        intialValue={form?.couponCommission}
+                                        m
+                                        result={e => {
+                                            setform({ ...form, couponCommission: e.value })
+                                        }}
+                                        options={[{
+                                            name: 'Fixed amount', id: 'Fixed amount'
+                                        },
+                                        {
+                                            name: 'Percentage', id: 'Percentage Commission'
+                                        },
+                                        ]}
+                                    />
+                                    {/* {submitted && !form?.couponCommission ? <div className="invalid-feedback d-block">Coupon Commission is Required</div> : <></>} */}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Coupon Type <span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
                                             id="statusDropdown"
@@ -105,26 +128,31 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                             },
                                             {
                                                 id: 'New Customer', name: 'new customer'
+                                            },
+                                            {
+                                                id: 'other', name: 'Other'
                                             }]}
                                         />
+                                        {submitted && !form?.couponType ? <div className="invalid-feedback d-block">Coupon Type is Required</div> : <></>}
+
                                     </div>
                                 </div>
                                 {form?.visibility == 'Exclusive to specific affiliate' && <div className="col-md-6 mb-3">
                                     <label>Media<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <MultiSelectValue
                                             id="statusDropdown"
-                                            displayValue="fullName"
+                                            displayValue="name"
                                             placeholder="Select Media"
                                             intialValue={form?.media}
-                                            // disabled={(form?.status == "rejected" || !id) ? false : true}
                                             result={e => {
-                                                setform({ ...form, media: e.value })
+                                                setform({ ...form, media: e })
                                             }}
+                                            isSingle={false}
                                             options={relatedAffiliate}
                                         />
                                     </div>
-                                    {submitted && !form?.brand_id ? <div className="invalid-feedback d-block">Brand is Required</div> : <></>}
+                                    {submitted && !form?.media ? <div className="invalid-feedback d-block">Brand is Required</div> : <></>}
                                 </div>}
                                 {/* <div className="col-md-6 mb-3">
                                     <label>Applicable<span className="star">*</span></label>
@@ -153,7 +181,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     </div>
                                     {submitted && !form?.applicable ? <div className="invalid-feedback d-block">Applicable is Required</div> : <></>}
                                 </div> */}
-                               
+
                                 <div className="col-md-6 mb-3">
                                     <label>Start Date<span className="star">*</span></label>
                                     <input
@@ -175,16 +203,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     />
                                     {submitted && !form?.expirationDate ? <div className="invalid-feedback d-block">Expiration Date is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6 mb-3">
-                                    <label>Coupon Commission</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={form.couponCommission}
-                                        onChange={e => setform({ ...form, couponCommission: e.target.value })}
-                                    />
-                                    {/* {submitted && !form?.couponCommission ? <div className="invalid-feedback d-block">Coupon Commission is Required</div> : <></>} */}
-                                </div>
+
                                 <div className="col-md-6 mb-3">
                                     <label>Site URL<span className="star">*</span></label>
                                     <input
@@ -195,14 +214,6 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     />
                                     {submitted && !form?.url ? <div className="invalid-feedback d-block">Site URL is Required</div> : <></>}
                                 </div>
-
-
-
-
-                                {/* <div className="col-md-6 mt-3">
-                                    <label className='lablefontcls'>Image</label><br></br>
-                                    <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
-                                </div> */}
 
                             </div>
 

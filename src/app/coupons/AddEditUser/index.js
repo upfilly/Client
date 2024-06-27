@@ -51,7 +51,10 @@ const AddEditUser = () => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);
-                setAllAffiliate(filteredData)
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setAllAffiliate(manipulateData)
             }
         })
     }
@@ -83,18 +86,22 @@ const AddEditUser = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setSubmitted(true)
 
-        // if (!form?.title || !form?.brand_id || !form?.amount || !form?.commission || !form?.customer_reference
-        //     || !form?.order_date || !form?.type || !form?.title) {
-        //     setSubmitted(true)
-        //     return;
-        // }
-
+        if(!form?.couponType || !form?.commissionType || !form?.couponCommission ||form?.startDate
+            || !form?.expirationDate 
+        ){
+            return
+        }
         let method = 'post'
         let url = 'coupon/add'
 
         let value = {
             ...form,
+        }
+        if(value?.media){
+            value={...value , media:value?.media?.value.toString()}
+
         }
         if(form?.visibility == 'Public'){
             delete value.media
@@ -106,7 +113,6 @@ const AddEditUser = () => {
         } else {
             delete value.id
         }
-
         loader(true)
         ApiClient.allApi(url, value, method).then(res => {
             if (res.success) {
@@ -116,6 +122,7 @@ const AddEditUser = () => {
                 history.push(url)
             }
             loader(false)
+            setSubmitted(true)
         })
     }
 
@@ -158,8 +165,7 @@ const AddEditUser = () => {
                 if (res.success) {
                     let value = res.data
                     setDetail(value)
-                    console.log(value, "vvvvvvvvvqqqqq")
-                    setform({
+                        setform({
                         "id":value?.id,
                         "media":value?.media,
                         "couponCode":value?.couponCode,
