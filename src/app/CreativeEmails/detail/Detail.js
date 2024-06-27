@@ -54,7 +54,7 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
+                                            <div className='name-dtls '>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.templateName)}</p>
                                             </div>
                                         </div>
@@ -127,7 +127,7 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
+                                            <div className='name-dtls content_scrollbx'>
                                                 <p className='headsub mb-0' >{data?.textContent}</p>
                                             </div>
                                         </div>
@@ -140,7 +140,7 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
+                                            <div className='name-dtls image_content'>
                                             <p className='headsub mb-0' dangerouslySetInnerHTML={{__html:data&&data?.textContent || '--'}}></p>
                                             </div>
                                         </div>
