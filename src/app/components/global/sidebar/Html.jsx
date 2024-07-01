@@ -59,7 +59,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               {urlAllow('group') && methodModel.permission('affiliate_group')? <>
                 <ListItemLink to="/marketplace" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
                   <div className="d-flex align-items-center  icns_center">
-                    <i class="material-icons svg_iconbx">groups</i>
+                    <i class="material-icons svg_iconbx">add_shopping_cart</i>
                     <span className="side_head">Marketplace</span>
                   </div>
                 </ListItemLink>
