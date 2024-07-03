@@ -38,6 +38,8 @@ const banneres = () => {
         let filter = { ...filters, ...p }
         if (user?.role == "brand") {
             filter = { ...filters, ...p, addedBy: user?.id }
+        }else{
+            filter = { ...filters, ...p, affiliate_id: user?.id }
         }
         let url = 'banners'
         ApiClient.get(url, filter).then(res => {
