@@ -30,10 +30,10 @@ const banneres = () => {
 
 
     const getData = (p = {}) => {
-        if(!methodModel.permission('banner_add')){
-            setLoader(false)
-            return
-        }
+        // if(!methodModel.permission('banner_add')){
+        //     setLoader(false)
+        //     return
+        // }
         setLoader(true)
         let filter = { ...filters, ...p }
         if (user?.role == "brand") {
