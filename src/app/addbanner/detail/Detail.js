@@ -163,8 +163,6 @@ const Detail = (p) => {
                                                 </div>
                                                 <div className='headsub'>
                                                     <p className='mb-0 multiP' dangerouslySetInnerHTML={{ __html: data?.description }} />
-
-
                                                 </div>
                                             </div>
 
@@ -175,13 +173,12 @@ const Detail = (p) => {
                                                 <div className=' headsub  '>
                                                     <p className='startbx mb-3' >/* START ADVERTISER: WebHosting  */</p>
                                                     <div className=' startbx '>
-                                                        {`
-                                            <a  href=${data?.destination_url}> 
-                                           `}
+                                                        {
+                                                            "<a  href=" + `${data?.destination_url}` + ">"
+                                                        }
                                                         <p className='text-center mb-0 '>
-                                                            {`  <img src=${methodModel.noImg(data?.image)}/>
-                                            
-                                           `}
+                                                            {"<img src=" + `${methodModel.noImg(data?.image)}` + " " + "/>"
+                                                            }
                                                         </p>
                                                         <p className='' >{` </a>`}</p>
                                                     </div>
