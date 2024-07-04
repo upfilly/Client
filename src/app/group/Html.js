@@ -1,9 +1,9 @@
 import datepipeModel from '@/models/datepipemodel';
 import React from 'react';
 import SelectDropdown from '../components/common/SelectDropdown';
-import methodModel from '@/methods/methods';
 import ReactPaginate from 'react-paginate';
 import Layout from '../components/global/layout';
+import methodModel from '../../methods/methods';
 
 const Html = ({
     filter,

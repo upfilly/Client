@@ -7,7 +7,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import MultiSelectValue from '../components/common/MultiSelectValue'
 import axios from 'axios';
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 
 const Html = () => {
     const user = crendentialModel.getUser()

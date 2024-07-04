@@ -4,7 +4,7 @@ import ReactPaginate from 'react-paginate';
 import './style.scss';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
-import methodModel from '@/methods/methods';
+import methodModel from '../../../../methods/methods';
 
 const Html = ({
     edit,

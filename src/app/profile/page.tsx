@@ -24,6 +24,8 @@ const Profile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  console.log(user,"dfhdgfgdfhgjh")
+
   const gallaryData = (id: any) => {
     loader(true)
     ApiClient.get(`user/detail`, { id: id }).then(res => {
@@ -120,7 +122,7 @@ const Profile = () => {
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && roles == 'brand' && <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles =='affiliate' || roles == 'brand') && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
@@ -472,7 +474,7 @@ const Profile = () => {
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand") && roles == 'brand'  && <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'brand' || roles == 'affilaite')  && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}

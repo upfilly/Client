@@ -8,7 +8,7 @@ import Html from './Html';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import { useRouter } from 'next/navigation';
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 
 const Categories = () => {
 

@@ -12,8 +12,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
-import methodModel from '@/methods/methods';
-
+import methodModel from '../../methods/methods';
 
 const Users = () => {
     const user = crendentialModel.getUser()

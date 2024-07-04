@@ -11,7 +11,7 @@ import datepipeModel from '@/models/datepipemodel';
 import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 
 export default function affilate() {
   const history = useRouter()
