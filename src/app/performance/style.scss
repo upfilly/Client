@@ -151,3 +151,24 @@ input[type=number] {
     -webkit-appearance: none;
     margin: 0;
   }  
+
+
+
+
+  .main_accordingbx  select {
+    appearance: none !important;
+    font-size: 14px;
+    -webkit-appearance: none;
+   -moz-appearance:    none;
+   appearance:         none;
+  
+  }
+
+  .graph_charts {     
+    width: 100%;
+    border: 1px solid #dfe2e6;
+    overflow: hidden;
+    border-radius: 7px;
+    margin-top: 21px;
+    background-color: #f9f9f9;
+}
