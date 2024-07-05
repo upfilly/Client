@@ -74,11 +74,11 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // if(!form?.title || !form?.brand_id || !form?.amount || !form?.commission || !form?.customer_reference
-        //     || !form?.order_date || !form?.type || !form?.title){
-        //        setSubmitted(true)
-        //        return;
-        //    }
+        if(!form?.title || !form?.destination_url || !form?.category_id || !form?.activation_date || !form?.availability_date
+            || !form?.expiration_date || !images ){
+               setSubmitted(true)
+               return;
+           }
        
         let method = 'post'
         let url = 'banner'

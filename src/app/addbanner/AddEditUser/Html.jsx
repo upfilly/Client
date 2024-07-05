@@ -116,7 +116,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         value={moment(form.availability_date).format('YYYY-MM-DD')}
                                         onChange={e => setform({ ...form, availability_date: e.target.value })}
                                     /> */}
-                                    {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
+                                    {submitted && !form?.availability_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Expiration Date<span className="star">*</span></label>
@@ -228,17 +228,14 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                 </div>
 
                                 <div className="col-md-6 mt-3">
-                                    <label className='lablefontcls'>Image</label><br></br>
+                                    <label className='lablefontcls'>Image<span className="star">*</span></label><br></br>
                                     <ImageUpload model="untrackSales" result={e => imageResult(e, 'image')} value={images} multiple={false} />
+                                    {submitted && !images ? <div className="invalid-feedback d-block">Image is Required</div> : <></>}
                                 </div>
-
-
-
                             </div>
 
 
                             <div className="text-right edit-btns">
-
                                 <button type="submit" className="btn btn-primary">Save</button>
                             </div>
                         </div>
