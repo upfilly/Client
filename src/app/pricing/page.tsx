@@ -273,7 +273,7 @@ export default function Pricing() {
                           </div>
                         </div>
                         <div className='mt-4'>
-                          {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Book a Demo</a>}
+                          {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>{!user ? history.push(`/bookingForm?planId=${itm._id}`)  : ChangePlan(itm._id)}}>Book a Demo</a>}
                           {!showCard && !itm.isUpcoming && !user?.isPayment && user && <a className='demos-button w-100 form-control book-demo'
                             // href={user ? `/cards?id=${itm._id}&price=${itm?.amount}` : `/bookingForm/${itm._id}`}
                             onClick={()=>ChangePlan(itm._id)}>Buy a Plan</a>}
@@ -284,7 +284,7 @@ export default function Pricing() {
                           )}
                           {(!showCard && !itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
                           {(showCard && itm.isUpcoming) && <span className=''></span>}
-                          {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Book a Demo</a>}
+                          {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>{!user ? history.push(`/bookingForm?planId=${itm._id}`)  : ChangePlan(itm._id)}}>Book a Demo</a>}
                           {(!showCard && itm.isUpcoming && user && !user?.isPayment && user) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Buy a Plan</a>}
                           {(!showCard && itm.isUpcoming) && user && !itm.isActive && user?.isPayment && (
                             <a className='demos-button w-100 form-control' onClick={()=>ChangePlan(itm._id)}>
