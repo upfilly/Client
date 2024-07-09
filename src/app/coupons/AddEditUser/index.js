@@ -88,16 +88,17 @@ const AddEditUser = () => {
         e.preventDefault()
         setSubmitted(true)
 
-        if(!form?.couponType || !form?.commissionType || !form?.couponCommission ||form?.startDate
-            || !form?.expirationDate 
-        ){
-            return
-        }
+        // if(!form?.couponType || !form?.commissionType || !form?.couponCommission ||form?.startDate
+        //     || !form?.expirationDate 
+        // ){
+        //     return
+        // }
         let method = 'post'
         let url = 'coupon/add'
 
         let value = {
             ...form,
+            couponCommission:10,
         }
         if(value?.media){
             value={...value , media:value?.media?.value.toString()}
@@ -106,6 +107,8 @@ const AddEditUser = () => {
         if(form?.visibility == 'Public'){
             delete value.media
         }
+
+        // delete value?.couponCommission
         
         if (value.id) {
             method = 'put'
