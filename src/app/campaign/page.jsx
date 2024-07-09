@@ -36,10 +36,10 @@ const Users = () => {
 
 
     const getData = (p = {}) => {
-        if(methodModel.permission('campaign_get')){
-            setLoader(false)
-            return
-        }
+        // if(methodModel.permission('campaign_get')){
+        //     setLoader(false)
+        //     return
+        // }
         setLoader(true)
         let filter = { ...filters, ...p }
         let url='campaign/all'
