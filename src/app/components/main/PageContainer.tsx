@@ -43,7 +43,7 @@ const PageContainer = ({ title, description, children ,settingData}: Props) => (
         {children}
         
       </div>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGP-o6totVbLLfLuC3aN0X_BRcjobHID8&libraries=places" ></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMRLNlhwKX08FU3cJhU3-Xa1oVZOam9xo&libraries=places" ></script>
     </HelmetProvider>
   </>
 );
