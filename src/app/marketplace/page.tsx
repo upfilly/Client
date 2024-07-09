@@ -379,14 +379,14 @@ export default function MarketPlace() {
                                 <p className="types_date mb-0"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>
                               </div>
 
-                              {user?.role == 'brand' && methodModel.permission('offer_invite')&& <div className="rightimg">
+                              {user?.role == 'brand' && <div className="rightimg">
                                 <div className="btn_offers d-flex justify-content-end">
                                   {data?.isSubmitted ?
                                     <button className="btn-cancel" disabled>Offer Sent</button>
                                     : 
                                     <button className="btn-cancel" onClick={() => {
                                       setModalIsOpen(true)
-                                      setid(data?._id)
+                                      setid(data?._id || data?.id)
                                       setAffiliateName(data?.addedBy_name)
                                     }}> Make Offer</button>}
                                 </div>

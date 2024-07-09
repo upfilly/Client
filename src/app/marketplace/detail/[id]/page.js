@@ -34,7 +34,9 @@ export default function MarketPlaceDetail() {
     }
 
     useEffect(() => {
-        getDetail(id)
+        if (id) {
+            getDetail(id)
+        }
     }, [id])
 
     return (
@@ -77,7 +79,7 @@ export default function MarketPlaceDetail() {
                                             :
                                             <button className="btn-cancel" onClick={() => {
                                                 setModalIsOpen(true)
-                                                setid(data?._id)
+                                                // setid(data?._id)
                                                 setAffiliateName(data?.addedBy_name)
                                             }}> Make Offer</button>}
                                     </div>

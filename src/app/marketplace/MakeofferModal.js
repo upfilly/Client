@@ -46,7 +46,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
           "comments": "",
         })
       }
-      getProductData()
+      getProductData(id)
       loader(false)
     })
   };
@@ -93,7 +93,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
               <Form.Control
                 type="text"
                 placeholder="Enter name"
-                value={affiliateName}
+                value={affiliateName || user?.fullName}
                 onChange={(e) => setform({ ...form, name: e.target.value })}
                 disabled
               />
