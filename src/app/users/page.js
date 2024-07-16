@@ -35,7 +35,7 @@ const AffiliateTeam = () => {
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data)
-                setTotal(res?.data?.total)
+                setTotal(res?.total)
             }
             setLoader(false)
         })

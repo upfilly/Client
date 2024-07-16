@@ -272,10 +272,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">URL Shortener</span>
         </ListItemLink>} */}
 
-          {/* {user && user?.role == "brand" && <ListItemLink to="/invites" data-bs-toggle="tooltip" data-bs-placement="top" title="Invites">
+          {user && user?.role == "brand" && <ListItemLink to="/trackingData" data-bs-toggle="tooltip" data-bs-placement="top" title="Invites">
           <i class="material-icons svg_iconbx">markunread</i>
-          <span className="side_head">Invites</span>
-        </ListItemLink>} */}
+          <span className="side_head">Tracking Data</span>
+        </ListItemLink>}
 
           
 
