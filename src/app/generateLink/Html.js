@@ -82,7 +82,7 @@ const Html = () => {
     }
 
     const brands = Array.from(new Set(brandData.map(item => ({
-        id: item.brand_id,
+        id: item.id,
         name: item.brand_name
     }))));
 

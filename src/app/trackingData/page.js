@@ -117,13 +117,16 @@ export default function affilate() {
   }
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
-    Object.keys(itm.urlParams).forEach(key => {
-      if (!headers.includes(key)) {
-        headers.push(key);
-      }
-    });
+    if (itm?.urlParams && typeof itm.urlParams === 'object') {
+      Object.keys(itm.urlParams).forEach(key => {
+        if (!headers.includes(key)) {
+          headers.push(key);
+        }
+      });
+    }
     return headers;
-  }, [])
+  }, []);
+  
 
 
 
@@ -145,11 +148,12 @@ export default function affilate() {
                       <thead className="thead-clr">
                         <tr>
                           {data?.data?.reduce((headers, itm) => {
+                        if (itm?.urlParams && typeof itm.urlParams === 'object') {
                             Object.keys(itm.urlParams).forEach(key => {
                               if (!headers.includes(key)) {
                                 headers.push(key);
                               }
-                            });
+                            })};
                             return headers;
                           }, []).map(key => (
                             <th key={key} scope="col">{key}</th>
@@ -169,8 +173,8 @@ export default function affilate() {
 
                       return <tr className='data_row' key={i}>
                         {uniqueKeys.map(key => {
-                          const value = itm?.urlParams[key];
-                          return <td key={key} className='name-person ml-2'>{value || "--"}</td>
+                          const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
+                          return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                         })}
                         <td className='name-person ml-2' >{itm?.data?.page}</td>
                         <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
