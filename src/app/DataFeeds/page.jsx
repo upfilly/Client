@@ -12,8 +12,7 @@ import Swal from 'sweetalert2'
 const Users = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,invite_status:'',
-        user_id:user?.id
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false, id:user?.id
     })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
@@ -23,7 +22,7 @@ const Users = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='dataset/list'
+        let url='dataset/view'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data)
