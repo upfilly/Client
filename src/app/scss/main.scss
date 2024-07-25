@@ -3271,6 +3271,11 @@ p.types_date {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .links_ancor{
@@ -3285,6 +3290,11 @@ p.types_date {
   margin-top: 10px;
   font-size: 14px;
   color: #707070;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .prices_mkrt h5{
   font-size: 16px;
