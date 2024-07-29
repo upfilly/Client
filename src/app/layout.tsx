@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <Head>
-        <script src="fprmain.js"/>
+      <head>
+        <script src="/fprmain.js"/>
         <script src="https://cdn.firstpromoter.com/fpr.js" />
-      </Head>
+      </head>
       <body className={inter.className}>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
         <GoogleOAuthProvider clientId="817638365394-413bppqmd901dl9u6ml6na7an7f02r9s.apps.googleusercontent.com">
