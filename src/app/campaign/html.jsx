@@ -55,7 +55,7 @@ const Html = ({
                         />
 
                     <article className="d-flex filterFlex phView">
-                        {isAllow('addAdmins')&&methodModel.permission('campaign_add') ? <>
+                        {methodModel.permission('campaign_add') ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
                                 Add Campaign 
                             </a>

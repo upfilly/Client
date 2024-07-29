@@ -2,7 +2,7 @@ import crendentialModel from "@/models/credential.model"
 import environment from "../environment"
 const user=crendentialModel.getUser()
 const permission=(p)=>{
-    if(user?.role=='brand'||(user?.permission_detail&& user?.permission_detail[p])){
+    if((user?.permission_detail&& user?.permission_detail[p])){
         return true
     }else{
         return false
