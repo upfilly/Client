@@ -21,6 +21,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <head>
+      <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              (function(w){
+                w.fpr=w.fpr||function(){
+                  w.fpr.q = w.fpr.q||[];
+                  w.fpr.q[arguments[0]=='set'?'unshift':'push'](arguments);
+                };
+              })(window);
+              fpr("init", {cid:"bry6ko3r"});
+              fpr("click");
+              `
+            }}
+          />
+          {/* Add the external script */}
+          <script
+            src="https://cdn.firstpromoter.com/fpr.js"
+            async
+          />
+      </head>
       <body className={inter.className}>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
         <GoogleOAuthProvider clientId="817638365394-413bppqmd901dl9u6ml6na7an7f02r9s.apps.googleusercontent.com">
