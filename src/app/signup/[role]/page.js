@@ -98,7 +98,7 @@ export default function Login() {
   const hendleSubmit = (e) => {
     setSubmitted(true)
     e.preventDefault()
-    useReferralTracking("bry6ko3r")
+    // useReferralTracking("bry6ko3r")
 
    let data;
     if(localStorage.getItem("device_token")){
