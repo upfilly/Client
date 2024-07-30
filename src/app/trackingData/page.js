@@ -4,9 +4,7 @@ import react, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
 import crendentialModel from '@/models/credential.model';
-import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
-import SelectDropdown from '../components/common/SelectDropdown';
 import datepipeModel from '@/models/datepipemodel';
 import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
@@ -32,10 +30,10 @@ export default function affilate() {
   };
 
   const getData = (p = {}) => {
-    if(!methodModel.permission('transactions_get')){
-      setLoader(false)
-      return
-    }
+    // if(!methodModel.permission('transactions_get')){
+    //   setLoader(false)
+    //   return
+    // }
     setLoader(true)
     let filter = { ...filters, ...p}
     
@@ -155,7 +153,7 @@ export default function affilate() {
                               }
                             })};
                             return headers;
-                          }, []).map(key => (
+                          }, [])?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
 
@@ -169,10 +167,10 @@ export default function affilate() {
                       </thead>
 
                   <tbody>
-                    {!loaging && data?.data.map((itm, i) => {
+                    {!loaging && data?.data?.map((itm, i) => {
 
                       return <tr className='data_row' key={i}>
-                        {uniqueKeys.map(key => {
+                        {uniqueKeys?.map(key => {
                           const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
                           return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                         })}
