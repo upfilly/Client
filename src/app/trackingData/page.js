@@ -40,7 +40,7 @@ export default function affilate() {
     ApiClient.get(`affiliatelink/all`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
-        setTotal(res?.data?.total)
+        setTotal(res?.data?.total_count)
         setLoader(false)
       }
 
