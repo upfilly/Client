@@ -10,6 +10,7 @@ import loader from '@/methods/loader';
 import crendentialModel from "../../../models/credential.model";
 import FacebookLogin from 'react-facebook-login';
 import axios from 'axios';
+import useReferralTracking from "../../firstPromoter"
 import { toast } from 'react-toastify';
 
 export default function Login() {
@@ -97,6 +98,8 @@ export default function Login() {
   const hendleSubmit = (e) => {
     setSubmitted(true)
     e.preventDefault()
+    useReferralTracking("bry6ko3r")
+
    let data;
     if(localStorage.getItem("device_token")){
       data = {
@@ -125,6 +128,7 @@ export default function Login() {
     if (role === 'affiliate') {
       if (!form?.firstName || !form?.lastName || !form?.email || !form?.password || form?.firstName?.length < 3 || form?.password?.length < 8) return
     }
+
 
     loader(true)
     ApiClient.post('register', data).then(res => {
