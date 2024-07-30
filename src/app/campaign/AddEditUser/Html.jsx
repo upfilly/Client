@@ -291,7 +291,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     </div>
                                     {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6">
+                                {/* <div className="col-md-6">
                                     <label>Target URL</label>
                                     <input
                                         type="text"
@@ -299,7 +299,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         value="https://upfilly.com/"
                                         disabled
                                     />
-                                </div>
+                                </div> */}
                                 <div className="col-md-6 mb-3">
                                     <label>Amount<span className="star">*</span></label>
                                     <input
