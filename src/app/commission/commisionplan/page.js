@@ -8,6 +8,7 @@ import loader from '@/methods/loader';
 import datepipeModel from '@/models/datepipemodel';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
+import methodModel from '@/methods/methods';
 
 export default function Commissions() {
   const user = crendentialModel.getUser()
@@ -210,7 +211,7 @@ export default function Commissions() {
                           <thead>
                             <tr>
                               <th></th>
-                              {/* <th>Affiliate</th> */}
+                              <th>Campaign Name</th>
                               <th>Type</th>
                               <th>Due</th>
                               <th>Amount</th>
@@ -227,7 +228,7 @@ export default function Commissions() {
                                 checked={selectedUser.some((user) => user.id === itm.id)}
                                 onChange={() => {
                                   if (itm?.groupDetails?.length <= 0 && !itm?.affiliate_name) {
-                                    toast.success('No affiliate in this group')
+                                    // toast.success('No affiliate in this group')
                                   } else {
                                     handleCheckboxChange(itm);
                                   }
@@ -238,6 +239,7 @@ export default function Commissions() {
                               /></td>
                               {/* {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
                               {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>} */}
+                              <td> {methodModel?.capitalizeFirstLetter(itm?.campaign_details?.name)}</td>
                               <td>{itm?.event_type}</td>
 
                               <td>{datepipeModel.date(itm.due_date)}</td>
@@ -285,6 +287,7 @@ export default function Commissions() {
                           <thead>
                             <tr>
                               <th></th>
+                              <th>Campaign Name</th>
                               <th>Type</th>
                               {/* <th>Email</th> */}
                               <th>Due</th>
@@ -313,6 +316,7 @@ export default function Commissions() {
                               /></td> : <td></td>}
                               {/* {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
                               {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>} */}
+                              <td> {methodModel?.capitalizeFirstLetter(itm?.campaign_details?.name)}</td>
                               <td>{itm?.event_type}</td>
 
                               <td>{datepipeModel.date(itm.due_date)}</td>
