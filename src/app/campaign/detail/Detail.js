@@ -80,13 +80,16 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
-                                                <ul className='ulclass'>
-                                                    <li> <div className='profiledetailscls mr-3'><b><i className='fa fa-user blue-icon mr-2'></i></b>{data?.affiliate_id?.fullName}</div>
-                                                    </li>
-                                                    <li> <div className='profiledetailscls'><b><i className='fa fa-envelope blue-icon mr-2'></i></b>{data?.affiliate_id?.email}</div></li>
-                                                </ul>
-                                            </div>
+                                            {data?.listOfAffiliates?.map((itm) => {
+
+                                                return <div className='name-dtls'>
+                                                    <ul className='ulclass'>
+                                                        <li> <div className='profiledetailscls mr-3'><b><i className='fa fa-user blue-icon mr-2'></i></b>{itm?.affiliate_id?.fullName}</div>
+                                                        </li>
+                                                        <li> <div className='profiledetailscls'><b><i className='fa fa-envelope blue-icon mr-2'></i></b>{itm?.affiliate_id?.email}</div></li>
+                                                    </ul>
+                                                </div>
+                                            })}
                                         </div>
                                     </div>
 
@@ -140,11 +143,11 @@ const Detail = (p) => {
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div className='doc_icon_width'>
-                                                    {data?.documents?.map((itm) =>
+                                                    {data?.documents?.length > 0 ? data?.documents?.map((itm) =>
                                                         <div className="">
                                                             <img src="/assets/img/document.png" className="doc_icon" onClick={() => window.open(methodModel.noImg(itm?.url))} />
                                                         </div>
-                                                    )}
+                                                    ) : "No Document"}
                                                 </div>
                                             </div>
                                         </div>
