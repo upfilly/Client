@@ -22,7 +22,7 @@ const Users = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='dataset/view'
+        let url='listDataSets'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data)
@@ -33,7 +33,7 @@ const Users = () => {
     }
 
     const uniqueKeys = new Set();
-    data?.[0]?.forEach(item => {
+    data?.forEach(item => {
         Object.keys(item).forEach(key => uniqueKeys.add(key));
     });
 
@@ -43,7 +43,7 @@ const Users = () => {
     
     const uniqueKeysArray = Array.from(uniqueKeys).map(cleanKey).sort();
 
-    const comprehensiveTemplate = data.length ? data?.[0]?.map(item => {
+    const comprehensiveTemplate = data.length ? data?.map(item => {
         const newItem = {};
         uniqueKeysArray.forEach(key => {
           newItem[key] = item[key] !== undefined ? item[key] : '--';

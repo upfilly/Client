@@ -155,7 +155,7 @@ const Html = ({
                                 {comprehensiveTemplate?.map((item, index) => (
                                     <tr key={index}>
                                         {uniqueKeysArray.map((key, idx) => (
-                                            <td className='table_dats' key={idx}>{item[key] || "--"}</td>
+                                            <td className='table_dats' key={idx}>{key == "createdAt" ? datepipeModel.date(item[key]) : key == "updatedBy" ? datepipeModel.date(item[key]) :  item[key] || "--"}</td>
                                         ))}
                                     </tr>
                                 ))}
