@@ -45,8 +45,8 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                                     displayValue="name"
                                                     placeholder="Select type"
                                                     intialValue={form?.access_type}
-                                                    result={e =>{ setform({ ...form, access_type: e.value })}}
-                                                    options={[{name:"Private",id:"private"},{name:"Public",id:"public"}]}
+                                                    result={e => { setform({ ...form, access_type: e.value }) }}
+                                                    options={[{ name: "Private", id: "private" }, { name: "Public", id: "public" }]}
                                                 />
                                             </div>
                                             {submitted && !form?.access_type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
@@ -54,7 +54,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         </div>
                                     </div>
                                 </div>
-                               {form?.access_type == "private" && <div className='col-12 col-sm-12 col-md-6'>
+                                {form?.access_type == "private" && <div className='col-12 col-sm-12 col-md-6'>
                                     <div className='form-group'>
                                         <div className="select_drop ">
                                             <label>Select Affiliate<span className='star'>*</span></label>
@@ -216,7 +216,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         </div>
 
                                         <div className="form-check">
-                                        
+
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input mr-4"

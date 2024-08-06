@@ -151,16 +151,19 @@ const Html = ({
                                     }
                                 </tr>
                             </thead>
-                            <tbody>
+                            {!loaging && <tbody>
                                 {comprehensiveTemplate?.map((item, index) => (
                                     <tr key={index}>
                                         {uniqueKeysArray.map((key, idx) => (
-                                            <td className='table_dats' key={idx}>{key == "createdAt" ? datepipeModel.date(item[key]) : key == "updatedBy" ? datepipeModel.date(item[key]) :  item[key] || "--"}</td>
+                                            <td className='table_dats' key={idx}>{key == "createdAt" ? datepipeModel.date(item[key]) : key == "updatedBy" ? datepipeModel.date(item[key]) : item[key] || "--"}</td>
                                         ))}
                                     </tr>
                                 ))}
-                            </tbody>
+                            </tbody>}
                         </table>
+                        {loaging ? <div className="text-center py-4">
+                            <img src="/assets/img/loader.gif" className="pageLoader" />
+                        </div> : <></>}
                         {!loaging && comprehensiveTemplate?.length == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
                     </div>
                 </div>
@@ -183,9 +186,7 @@ const Html = ({
                     />
                 </div>
 
-                {loaging ? <div className="text-center py-4">
-                    <img src="/assets/img/loader.gif" className="pageLoader" />
-                </div> : <></>}
+
 
                 <Modal className='invite_modal' show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
