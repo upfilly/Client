@@ -74,15 +74,23 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     </div>
                                 </div>}
                                 <div className="col-md-6 mb-3">
-                                    <label>Destination Url<span className="star">*</span></label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={form.destination_url}
-                                        onChange={e => setform({ ...form, destination_url: e.target.value })}
-                                    />
-                                    {submitted && !form?.destination_url ? <div className="invalid-feedback d-block">Destination url is Required</div> : <></>}
+                                    <label>
+                                        Destination Url<span className="star">*</span>
+                                    </label>
+                                    <div className="input-group">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={form.destination_url}
+                                            onChange={e => setform({ ...form, destination_url: e.target.value })}
+                                        />
+                                        <span className="input-group-text">fp_sid:{form?.affiliate_id}</span>
+                                    </div>
+                                    {submitted && !form?.destination_url && (
+                                        <div className="invalid-feedback d-block">Destination url is Required</div>
+                                    )}
                                 </div>
+
 
                                 <div className='col-12 col-sm-12 col-md-6'>
                                     <div className='form-group'>
