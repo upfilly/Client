@@ -94,8 +94,13 @@ const AddEditUser = () => {
        
         let value = {
             ...form,
-            image:images
+            image: images,
+        };
+        
+        if (form?.access_type === "private") {
+            value["destination_url"] = `${form?.destination_url}?fp_sid=${form?.affiliate_id}`;
         }
+        
 
         if (!value?.seo_attributes) {
             delete value?.seo_attributes
