@@ -35,6 +35,44 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     />
                                     {submitted && !form?.title ? <div className="invalid-feedback d-block">Title is Required</div> : <></>}
                                 </div>
+                                <div className='col-12 col-sm-12 col-md-6'>
+                                    <div className='form-group'>
+                                        <div className="select_drop ">
+                                            <label>Select Access Type<span className='star'>*</span></label>
+                                            <div className="select_row">
+                                                <SelectDropdown
+                                                    id="statusDropdown"
+                                                    displayValue="name"
+                                                    placeholder="Select type"
+                                                    intialValue={form?.access_type}
+                                                    result={e =>{ setform({ ...form, access_type: e.value })}}
+                                                    options={[{name:"Private",id:"private"},{name:"Public",id:"public"}]}
+                                                />
+                                            </div>
+                                            {submitted && !form?.access_type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
+
+                                        </div>
+                                    </div>
+                                </div>
+                               {form?.access_type == "private" && <div className='col-12 col-sm-12 col-md-6'>
+                                    <div className='form-group'>
+                                        <div className="select_drop ">
+                                            <label>Select Affiliate<span className='star'>*</span></label>
+                                            <div className="select_row">
+                                                <SelectDropdown
+                                                    id="statusDropdown"
+                                                    displayValue="name"
+                                                    placeholder="Select Affiliate"
+                                                    intialValue={form?.affiliate_id}
+                                                    result={e => setform({ ...form, affiliate_id: e.value })}
+                                                    options={affiliateData}
+                                                />
+                                            </div>
+                                            {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
+
+                                        </div>
+                                    </div>
+                                </div>}
                                 <div className="col-md-6 mb-3">
                                     <label>Destination Url<span className="star">*</span></label>
                                     <input
