@@ -77,14 +77,14 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                     <label>
                                         Destination Url<span className="star">*</span>
                                     </label>
-                                    <div className="input-group">
+                                    <div className="input-group  border_description">
                                         <input
                                             type="text"
                                             className="form-control"
                                             value={form.destination_url}
                                             onChange={e => setform({ ...form, destination_url: e.target.value })}
                                         />
-                                        <span className="input-group-text">fp_sid:{form?.affiliate_id}</span>
+                                        <span className="input-group-text  ">fp_sid:{form?.affiliate_id}</span>
                                     </div>
                                     {submitted && !form?.destination_url && (
                                         <div className="invalid-feedback d-block">Destination url is Required</div>
