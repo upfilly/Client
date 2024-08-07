@@ -166,13 +166,13 @@ export default function Commissions() {
 
                 <div className='col-md-12'>
                   <div className='tabs_coms_tabs'>
-                    <div className='d-flex justify-content-between align-items-center '>
-                      <div className='manin_innertabs'>
+                    <div className='d-flex justify-content-between align-items-center  gap-3 flex-wrap'>
+                      <div className='manin_innertabs inner_navtabs '>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                          <li class="nav-item">
+                          <li class="nav-item m-0">
                             <a class="nav-link navtaabs active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item m-0">
                             <a class="nav-link navtaabs" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
                           </li>
                           {/* <li class="nav-item">

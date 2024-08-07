@@ -270,7 +270,7 @@ const Html = () => {
 <div className='col-12 col-md-12 '>
                                     <div className='row'>
                                         {selectedValues.map((selected,index) => (
-                                            <div className='col-12 col-md-4' key={index}>
+                                            <div className='col-12 col-sm-6 col-md-4 mb-3 ' key={index}>
                                                 <p className='mb-0 labeltext'>{selected}:</p>
                                                 <input
                                                     type="text"
@@ -288,7 +288,7 @@ const Html = () => {
                              
                             </div>
 
-                            <div className='text-end mt-3'>
+                            <div className='text-end '>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
@@ -299,10 +299,11 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                { !selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com`}</p>}
-                                { SelectedCampaign && !selectedBrand && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?campaign=${SelectedCampaign}`}</p>}
-                                {selectedBrand && !SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}`}</p>}
-                                {selectedBrand && SelectedCampaign && <p id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</p>}
+                                
+                                { !selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com`}</div>}
+                                { SelectedCampaign && !selectedBrand && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?campaign=${SelectedCampaign}`}</div>}
+                                {selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}`}</div>}
+                                {selectedBrand && SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</div>}
                             </div>
 
                             <h6 className="link_default mt-3 mb-0"> Your Short URL Link :</h6>
@@ -312,7 +313,7 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                 <p id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</p>
+                                 <div id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</div>
                             </div>
                             {copied && <div className="">Copied!</div>}
                         </div>

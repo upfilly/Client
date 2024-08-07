@@ -163,7 +163,7 @@ p.profile_data {
 .user-profile_scroller {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 269px;
+    max-height: 269px;
     padding-right: 5px;
 }
 .user-profile_scroller::-webkit-scrollbar {

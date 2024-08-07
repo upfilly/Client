@@ -418,16 +418,17 @@ export default function affilate() {
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
-        <div className='nmain-list  mb-3'>
+        <div className='nmain-list   mb-3'>
           <div className='row align-items-center mx-0'>
             <div className='col-12 col-md-12 col-lg-12'>
 
               <div class="modal filter_modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">All Filter</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-content   ">
+                    <div class="modal-header align-items-center bg_headers ">
+                      <h2 class="modal-title fs-5" id="exampleModalLabel">All Filter</h2>
+                       <i   data-bs-dismiss="modal" aria-label="Close" class="fa fa-times clse" aria-hidden="true"></i>
+        
                     </div>
                     <div class="modal-body">
                       <div className='height_fixed'>
@@ -436,6 +437,8 @@ export default function affilate() {
                             <h2 class="accordion-header">
                               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
                                 <b className='' >Select Category Type</b>
+                                <i class="fa fa-angle-down down_typs" aria-hidden="true"></i>
+
                               </button>
                             </h2>
                             <div id="collapsebxone" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
@@ -469,6 +472,7 @@ export default function affilate() {
                             <h2 class="accordion-header">
                               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
                                 <b className='' >Select Category of Affiliate</b>
+                                <i class="fa fa-angle-down down_typs" aria-hidden="true"></i>
                               </button>
                             </h2>
                             <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
@@ -931,7 +935,8 @@ export default function affilate() {
             initialPage={filters?.page}
             onPageChange={pageChange}
             pageRangeDisplayed={6}
-            pageCount={Math.ceil(total / filters?.count)}
+          // pageCount={Math.ceil(total / filters?.count)}
+          pageCount={3}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}

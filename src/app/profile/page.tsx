@@ -88,11 +88,11 @@ const Profile = () => {
       <div className="pprofile1  edit-profile-page my-5">
         <div className='container ' >
           <div className='row'>
-            <div className="col-12 col-sm-12 col-md-12  col-lg-12">
-              <div className="form-row flex-md-column-reverse flex-lg-row">
+            <div className="col-12 col-sm-12 col-md-12  col-lg-12 px-0">
+              <div className="form-row ">
                 <div className="col-12 col-sm-12 col-md-12  col-lg-4 ">
 
-                  <div className="box_div">
+                  <div className="box_div mb-3">
                     <div className="user-profile_scroller ">
                       {assosiateUserData.map((itm: any) => {
 
@@ -117,7 +117,7 @@ const Profile = () => {
                 {data?.activeUser?.id == Id ?
                   <div className='col-12 col-sm-12 col-md-12  col-lg-8  '>
                     <div className='card p-3 rounded-3 mb-4 ' >
-                      <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
+                      <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
                         <div className='main_title_head'>
                           <h3 className=''>Basic Information </h3>
                         </div>
@@ -467,7 +467,7 @@ const Profile = () => {
                     </div>
                   </div>
                   :
-                  <div className='col-12 col-sm-12 col-md-7  col-lg-7  '>
+                  <div className='col-12 col-sm-12 col-md-7  col-lg-8  '>
                     <div className='card p-3 rounded-3 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
                         <div className='main_title_head'>

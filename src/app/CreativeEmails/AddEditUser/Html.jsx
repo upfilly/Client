@@ -279,7 +279,7 @@ const Html = () => {
                             Description<span className="star">*</span>
                           </label>
                           <div className="">
-                            <ul class="nav nav-tabs flex mb-2 d-flex justify-content-start gap-2  align-items-center border-bottom-0 p-2">
+                            <ul class="nav nav-tabs flex mb-2 d-flex justify-content-start gap-2 flex-wrap  align-items-center border-bottom-0 pb-0 pb-md-2 ">
                               <li className="nav-item flex mr-0 cursor-pointer mt-0 set_buttons">
                                 <a
                                   className={` ${form?.format=='Text'

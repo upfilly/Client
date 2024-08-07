@@ -654,7 +654,7 @@ export default function Chat() {
                                     }}
                                   >
 
-                                    <div className="d-flex  align-items-center">
+                                    <div className="d-flex gap-3 flex-wrap align-items-center">
                                       <div className="profile-img">
                                         {!itm?.isGroupChat ?
                                           itm && itm?.room_members && itm?.room_members[0]?.user_image ?
@@ -845,8 +845,8 @@ export default function Chat() {
                                     </div>
                                   </div>
                                 </div>
-
-                                <div className="msg_info person-chat hide_icon_delete b-none">
+<div className=" addbx">
+<div className="msg_info person-chat hide_icon_delete b-none">
                                   <Dropdown className="p-0">
                                     <Dropdown.Toggle className="p-0 btnremove" variant="" id="">
                                       <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -860,6 +860,8 @@ export default function Chat() {
                                   </Dropdown>
 
                                 </div>
+</div>
+                                
                               </div>
                             </li>
                           );

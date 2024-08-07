@@ -219,8 +219,8 @@ export default function MarketPlace() {
                         <p className="mb-2">Date Filter</p>
                         <p className="mb-2"><i className="fa fa-angle-down"></i></p>
                       </div>
-
-                      <div className={Datefilter ? "show_checksbox " : "hide_checksbox"}>
+<div className="set_datapicker_mb">
+<div className={Datefilter ? "show_checksbox " : "hide_checksbox"}>
                         <DatePicker
                           showIcon
                           className="dateselect"
@@ -239,6 +239,8 @@ export default function MarketPlace() {
                           dateFormat={"dd/MM/yyyy"}
                         />
                       </div>
+</div>
+                     
 
                     </div>
 
@@ -419,7 +421,8 @@ export default function MarketPlace() {
                         initialPage={filters?.page}
                         onPageChange={pageChange}
                         pageRangeDisplayed={6}
-                        pageCount={Math.ceil(total / filters?.count)}
+                        // pageCount={Math.ceil(total / filters?.count)}
+          pageCount={3}
                         previousLabel="< Previous"
                         renderOnZeroPageCount={null}
                         pageClassName={"pagination-item"}

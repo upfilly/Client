@@ -286,7 +286,12 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
   margin-top: 15px;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 0px 18px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  padding: 8px 18px;
+  border: 1px solid #bfbfbf42;
+  margin-left: 15px;
+  margin-right: 15px;
 
   >span {
     font-size: 13px;
@@ -689,16 +694,31 @@ button.btn.btn-primary.loginclass {
 
 @media(max-width:768px) {
 
+  .manin_innertabs .nav-item .nav-link{
+    width: unset  !important;
+    height:unset  !important;;
+  }
+
+  .paginationWrapper ul{
+    margin-left: auto !important;
+  }
   .pprofile1{
     padding: 20px 20px ;
   }
   .taableWrapper {
     max-height: calc(100vh - 300px);
   }
+  .decbx {
+    margin-top: -42px !important;
+}
 }
 @media (max-width:576px){
+
+  .paginationWrapper ul{
+    margin-left: unset !important;
+  }
   .decbx {
-    margin-top: -39px !important;
+    margin-top: 21px !important;
 }
 }
 
@@ -1518,7 +1538,7 @@ input.searchbar.mr-2 {
   p.mb-0 {
     // white-space: nowrap;
     // width: 180px; 
-    max-width: 180px;
+    // max-width: 180px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -2534,6 +2554,7 @@ select.form-select {
 .sidebar_main .nav-item .nav-link i {
   font-size: 20px;
   margin: 0 9px 0 0 !important;
+  vertical-align: text-top;
 }
 
 .sidebar_main.active .nav-item .nav-link i {
@@ -2718,6 +2739,8 @@ p.checkbox-option-main {
   padding: 0px;
   list-style: none;
   display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .progs_data {
@@ -3794,7 +3817,7 @@ padding: 6px 12px;
 
 .upfilly_logo {
   width: 100%;
-  max-width: 170px;
+  max-width: 113px;
 }
 @media (max-width: 768px) { 
 
@@ -4142,7 +4165,7 @@ p.revuh{
 }
 
 .set_search_icons ul.dropdown-menu.show {
-  min-width: 300px;
+  min-width: 258px;
   transform: translate(5%, 76%) ;
   padding: 5px;
   background-color: #f8f9fa;
@@ -4439,6 +4462,8 @@ p.textWrong {
 
 
 @media (max-width:992px) {
+
+
   .printit br{
     display: none;
   }
@@ -4521,6 +4546,13 @@ margin-bottom: 0px !important;
 }
 
 @media (max-width:768px){
+
+  .paginationWrapper li{
+    margin-left: auto;
+  }
+  
+
+
    .feature-text h1 {
     font-size: 20px !important;
 }
@@ -4742,7 +4774,17 @@ margin-bottom: 0px !important;
 }
 
 @media (max-width:576px) {
+  .paginationWrapper{
+    flex-direction: column;
+  }
 
+  .set_datapicker_mb .react-datepicker__month-container {
+    width: 100%;
+  }
+  
+  .set_datapicker_mb .react-datepicker {
+    margin: 0px 30px;
+  }
   .profile-edit-sec  {
     flex-direction: column;
   }
@@ -4757,9 +4799,7 @@ margin-bottom: 0px !important;
   .paginationWrapper ul li a {
     font-size: 13px;
   }
-  .paginationWrapper ul{
-    margin-left: auto;
-  }
+
   img.logo{
     width: 136px !important;
   }
@@ -5392,4 +5432,25 @@ input[type=checkbox].check_bx_input:checked + .checkbox-btn::after {
   position: absolute;
   top: 39px;
   right: 31px;
+}
+
+
+.sidebar-content-detail .page-name {
+  font-size: 14px;
+}
+
+.bg_headers {
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+}
+
+.bg_headers .modal-title {
+  color: #fff;
+}
+
+.bg_headers  .clse {
+  color: #fff;
+  font-size: 22px;
+}
+.form-check-input:focus{
+  box-shadow: unset !important;
 }

@@ -67,7 +67,7 @@
 }
 
 .profile-img {
-    margin-right: 17px;
+    // margin-right: 17px;
     position: relative;
 }
 
@@ -340,7 +340,7 @@
 .mglass {
     position: absolute;
     right: 12px;
-    top: 50%;
+    top:46%;
     transform: translateY(-50%);
     width: 15px;
 }
@@ -757,7 +757,8 @@ li.text_left {
 
 li.text_right {
     float: right;
-    width: 60%;
+    width: 100%;
+    max-width: 60%;
     position: relative;
     border-radius: 20px 0px 20px 0px;
     background: whitesmoke;
@@ -797,9 +798,9 @@ img.download_img_chat {
 }
 
 
-.bell_icon {
-    margin-right: 20px;
-}
+// .bell_icon {
+//     margin-right: 20px;
+// }
 
 .pdf_inner_layout {
     text-align: center;
@@ -863,7 +864,7 @@ span.pdficon i {
 
 
 .img_profile_u {
-    width: 100%;
+    width: 92%;
 }
 
 ul.list-info li p {
@@ -1153,4 +1154,14 @@ h3.about_head span {
     display: block;
     margin-bottom: 5px;
     background-color: #ececec;
+}
+
+@media (max-width:576px){
+    li.text_right,  li.text_left {
+        max-width: 60%;
+    }
+  
+}
+.set_navbx .nav-link {
+    padding: 1rem !important;
 }
