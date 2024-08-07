@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import methodModel from "@/methods/methods";
-import ImageUpload from "@/app/components/common/ImageUpload";
 import Layout from "@/app/components/global/layout";
 import rolesModel from "@/models/role.model";
-import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';

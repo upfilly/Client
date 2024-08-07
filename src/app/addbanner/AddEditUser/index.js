@@ -74,19 +74,33 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if(!form?.title || !form?.destination_url || !form?.category_id || !form?.activation_date || !form?.availability_date
-            || !form?.expiration_date || !images ){
-               setSubmitted(true)
-               return;
-           }
+        if(form?.access_type == "private"){
+            if(!form?.title || !form?.destination_url || !form?.category_id || !form?.activation_date || !form?.availability_date
+                || !form?.expiration_date || !images || !form?.access_type || !form?.access_type || !form?.affiliate_id){
+                   setSubmitted(true)
+                   return;
+               }
+        }else{
+            if(!form?.title || !form?.destination_url || !form?.category_id || !form?.activation_date || !form?.availability_date
+                || !form?.expiration_date || !images || !form?.access_type){
+                   setSubmitted(true)
+                   return;
+               } 
+        }
+       
        
         let method = 'post'
         let url = 'banner'
        
         let value = {
             ...form,
-            image:images
+            image: images,
+        };
+        
+        if (form?.access_type === "private") {
+            value["destination_url"] = `${form?.destination_url}?fp_sid=${form?.affiliate_id}`;
         }
+        
 
         if (!value?.seo_attributes) {
             delete value?.seo_attributes
@@ -156,7 +170,6 @@ const AddEditUser = () => {
                 if (res.success) {
                     let value=res.data
                     setDetail(value)
-                    console.log(value,"vvvvvvvvvqqqqq")
                     setform({
                         id:value?.id || value?._id,
                         "title": value?.title,
@@ -173,28 +186,32 @@ const AddEditUser = () => {
                         "mobile_creative": value?.mobile_creative
                     })
                     setImages(value?.image)
-                //     let payload = { ...defaultvalue };
-                // let oarr = Object.keys(defaultvalue);
-
-                // oarr.forEach((itm) => {
-                //     if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
-                //         payload[itm] = value[itm].id.toString();
-                //     } else {
-                //         payload[itm] = value[itm] || "";
-                //     }
-                // });
                 }
                 loader(false)
             })
         }
     }, [id])
 
-    const getData = () => {
-        let url = 'users/list'
-        ApiClient.get(url, {role:"affiliate", createBybrand_id: user?.id,}).then(res => {
+    // const getData = () => {
+    //     let url = 'users/list'
+    //     ApiClient.get(url, {role:"affiliate", createBybrand_id: user?.id,}).then(res => {
+    //         if (res.success) {
+    //             const data1 = res.data.data.filter(item => item.status === "active");
+    //             setAffiliateData(data1)
+    //         }
+    //     })
+    // }
+
+    const getData = (p = {}) => {
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                const data1 = res.data.data.filter(item => item.status === "active");
-                setAffiliateData(data1)
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setAffiliateData(manipulateData)
             }
         })
     }

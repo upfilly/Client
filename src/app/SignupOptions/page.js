@@ -19,7 +19,7 @@ export default function SignupOption() {
 
                       <div className="card-body">
                         <div className="row">
-                            <div className="col-12 col-sm-12 col-md-6" onClick={()=>history.push("/signup/affiliate")}>
+                            <div className="col-12 col-sm-12 col-md-6" onClick={()=>history.push("/track/signup/affiliate")}>
                                 <div className="miansign">
                                   <label className="center_img">
                                       <img src="./assets/img/affi.jpg" className="banesr_sizes" />

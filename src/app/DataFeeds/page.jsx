@@ -12,8 +12,7 @@ import Swal from 'sweetalert2'
 const Users = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,invite_status:'',
-        user_id:user?.id
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false, id:user?.id
     })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
@@ -23,7 +22,7 @@ const Users = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='dataset/list'
+        let url='listDataSets'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data)
@@ -33,7 +32,25 @@ const Users = () => {
         })
     }
 
+    const uniqueKeys = new Set();
+    data?.forEach(item => {
+        Object.keys(item).forEach(key => uniqueKeys.add(key));
+    });
 
+    const cleanKey = (key) => {
+        return key.replace(/[^a-zA-Z0-9 ]/g, ' ').trim().replace(/\s+/g, ' ');
+      };
+    
+    const uniqueKeysArray = Array.from(uniqueKeys).map(cleanKey).sort();
+
+    const comprehensiveTemplate = data.length ? data?.map(item => {
+        const newItem = {};
+        uniqueKeysArray.forEach(key => {
+          newItem[key] = item[key] !== undefined ? item[key] : '--';
+        });
+        return newItem;
+      }) : []
+    
     const clear = () => {
         setFilter({ ...filters, search: '', page: 1 })
         getData({ search: '', page: 1 })
@@ -73,59 +90,19 @@ const Users = () => {
         getData({ ...p , page:filters?.page+1,addedBy:user?.id})
     }
 
-    
-
     const ChangeRole = (e) => {
         setFilter({ ...filters, role: e, page: 1 })
         getData({ role: e, page: 1 })
     }
+
     const ChangeStatus = (e) => {
         setFilter({ ...filters, invite_status: e, page: 1 })
         getData({...filters, invite_status: e, page: 1 })
     }
 
-    // const statusChange=(itm)=>{
-    //     let modal='users'
-    //     let status='active'
-    //     if(itm.status=='active') status='deactive'
-
-    //     Swal.fire({
-    //         title: ``,
-    //         text: `Do you want to ${status =='active'?'Active':'Deactive'} this user`,
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#6c757d',
-    //         confirmButtonText: 'Yes'
-    //       }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             loader(true)
-    //             ApiClient.put(`change/status`,{status,id:itm.id,model:'product'}).then(res=>{
-    //                 if(res.success){
-    //                     getData({page: 1})
-    //                 }
-    //                 loader(false)
-    //             })
-    //         }
-    //       })
-    // }
-
     const view=(id)=>{
         history.push("/invites/detail/"+id)
     }
-
-    // const edit=(id)=>{
-    //     let url=`/Offers/edit/${id}`
-    //     if(role) url=`/product/${role}/edit/${id}`
-    //     history.push(url)
-    // }
-
-    // const add=()=>{
-    //     let url=`/Offers/add`
-    //     if(role) url=`/Offers/${role}/add`
-    //     history.push(url)
-    // }
-
 
     const reset=()=>{
         let filter={
@@ -137,7 +114,6 @@ const Users = () => {
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
-        // dispatch(search_success(''))
     }
 
     const sorting = (key) => {
@@ -176,6 +152,9 @@ const Users = () => {
         sorting={sorting}
         setFilter={setFilter}
         getData={getData}
+        uniqueKeys={uniqueKeys}
+        comprehensiveTemplate={comprehensiveTemplate}
+        uniqueKeysArray={uniqueKeysArray}
     />
     </>;
 };

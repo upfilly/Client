@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import PageContainer from '../../components/main/PageContainer'
+import PageContainer from '../../../components/main/PageContainer'
 import "./style.scss";
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import ApiClient from "../../../methods/api/apiClient";
+import ApiClient from "../../../../methods/api/apiClient";
 import loader from '@/methods/loader';
-import crendentialModel from "../../../models/credential.model";
+import crendentialModel from "../../../../models/credential.model";
 import FacebookLogin from 'react-facebook-login';
 import axios from 'axios';
-import useReferralTracking from "../../firstPromoter"
 import { toast } from 'react-toastify';
 
 export default function Login() {

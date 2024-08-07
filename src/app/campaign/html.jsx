@@ -55,7 +55,7 @@ const Html = ({
                         />
 
                     <article className="d-flex filterFlex phView">
-                        {isAllow('addAdmins')&&methodModel.permission('campaign_add') ? <>
+                        {methodModel.permission('campaign_add') ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
                                 Add Campaign 
                             </a>
@@ -105,6 +105,7 @@ const Html = ({
         <tr className='heading_row'>
             <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
             <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data'>Access Type</th>
             <th scope="col" className='table_data'>Amount</th>
             <th scope="col" className='table_data'>Status</th>
             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
@@ -134,20 +135,15 @@ const Html = ({
                             </h4>
                         </div>
                     </div></td>
+                    <td className='table_dats'>{itm?.access_type}</td>
                     <td className='table_dats'>{itm?.amount}</td>
-                <td className='table_dats'>   <div className={`user_hours`}>
-                    <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
+               { <td className='table_dats'>   <div className={`user_hours`}>
+                    <span className={itm?.access_type == "private" ? itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive' : ""} 
                     >
-                        {itm.status}
-                        {/* {itm.status == 'deactive' ? 'inactive' : 'active'} */}
+                        {itm?.access_type == "private" ? itm.status : "--"}
                     </span>
-                    {/* <span className={itm?.status=="accepted" ? 'contract' :itm?.status=="pending"?'pending_status':'inactive'} 
-                    style={itm?.status=="accepted"?{color:'green'}:itm?.status=="pending"?{color:'orange'}:{color:'red'}}>
-                        {itm.status}
-                    </span> */}
-                </div></td>
+                </div></td>}
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                {/* <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td> */}
 
                 {/* dropdown */}
                 <td className='table_dats'>

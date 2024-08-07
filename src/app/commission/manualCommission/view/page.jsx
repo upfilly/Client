@@ -36,7 +36,7 @@ const Manualcommission = () => {
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
-                setTotal(res.total)
+                setTotal(res?.data?.total_count)
             }
             setLoader(false)
         })

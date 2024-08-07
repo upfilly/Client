@@ -148,11 +148,12 @@ const Html = ({
                             </a>
                         </> : <></>}
 
-                            {isAllow('deleteAdmins')&&methodModel.permission('banner_delete') ? <>
-                                <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
-                                    <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                            {/* {isAllow('deleteAdmins')&&methodModel.permission('banner_delete') ? <> */}
+                                <a className='edit_icon edit-delete' onClick={() => deleteItem(itm.id || itm?._id)}>
+                                    <i className={`material-icons delete`} title='Delete'> delete</i>
                                 </a>
-                            </> : <></>}</>}
+                            {/* </> : <></>} */}
+                            </>}
                         <>
                         </>
                     </div>
