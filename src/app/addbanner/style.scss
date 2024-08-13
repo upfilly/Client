@@ -153,28 +153,3 @@ input[type=number] {
     -webkit-appearance: none;
     margin: 0;
   }  
-
-
-  .border_description {
-    border: 1px solid #d0d4da;
-    border-radius: 47px;
-}
-
-.border_description input.form-control {
-    border: unset;
-    margin-right: 2px;
-}
-
-.border_description .input-group-text {
-    background-color: #fff;
-    border: unset;
-    padding: 6px;
-    border-left: 1px solid #d0d4da;
-    font-size: 14px;
-    border-radius: 42px;
-}
-
-
-.border_description:focus {
-    border-color: #80bdff !important;
-}

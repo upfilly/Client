@@ -181,26 +181,35 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     </div>
                                     {submitted && !form?.applicable ? <div className="invalid-feedback d-block">Applicable is Required</div> : <></>}
                                 </div> */}
-
+  
                                 <div className="col-md-6 mb-3">
                                     <label>Start Date<span className="star">*</span></label>
+                                    <div className="position-relative">
+                                    <i class="fa fa-calendar-o calender_position" aria-hidden="true"></i>
+
                                     <input
                                         type="date"
-                                        className="form-control"
+                                        className="width_full"
                                         value={form.startDate}
                                         onChange={e => setform({ ...form, startDate: e.target.value })}
+                                        
                                     />
                                     {submitted && !form?.startDate ? <div className="invalid-feedback d-block">Start Date is Required</div> : <></>}
+                                    </div>
+                                   
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Expired Date<span className="star">*</span></label>
+                                    <div className="position-relative">
+                                    <i class="fa fa-calendar-o calender_position" aria-hidden="true"></i>
                                     <input
                                         type="date"
-                                        className="form-control"
+                                        className="width_full"
                                         min={form.startDate}
                                         value={form.expirationDate}
                                         onChange={e => setform({ ...form, expirationDate: e.target.value })}
                                     />
+                                     </div>
                                     {submitted && !form?.expirationDate ? <div className="invalid-feedback d-block">Expiration Date is Required</div> : <></>}
                                 </div>
 

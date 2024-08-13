@@ -34,10 +34,10 @@ const Html = () => {
     const [selectedBrand, setSelectedBrand] = useState('')
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
-    const [DestinationUrl,setDestinationUrl]=useState('')
-    const[shrtlnk,setshrtlnk] = useState('')
-  
-   const handleInputChange = (selected, value) => {
+    const [DestinationUrl, setDestinationUrl] = useState('')
+    const [shrtlnk, setshrtlnk] = useState('')
+
+    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
             ...prevState,
             [selected]: value
@@ -46,21 +46,21 @@ const Html = () => {
 
     const updateDictionary = () => {
         const updatedDict = Object.fromEntries(
-          Object.entries(inputValues).filter(([key]) => selectedValues.includes(key))
+            Object.entries(inputValues).filter(([key]) => selectedValues.includes(key))
         );
         setInputValues(updatedDict);
-      };
+    };
 
     useEffect(() => {
         updateDictionary();
-      }, [selectedValues]);
-    
+    }, [selectedValues]);
+
     const handleMultiSelectChange = (selectedOptions) => {
         setSelectedValues(selectedOptions);
-      };
+    };
 
     const getData = (p = {}) => {
-        let filter = { status: 'accepted' , addedBy:user?.id}
+        let filter = { status: 'accepted', addedBy: user?.id }
         let url = 'make-offers'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
@@ -140,18 +140,18 @@ const Html = () => {
         });
     }, []);
 
-    const generateShortLink = async(urlData) => {
-        if(urlData || url){
-        const data = await axios.post('https://shrtlnk.dev/api/v2/link',{url:urlData || url}, {
-            headers: {
-                'api-key':'eyZ0tnBPL04QueUUCl4gcFcdvaSQgRa79t9gQbWpCTxP4',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+    const generateShortLink = async (urlData) => {
+        if (urlData || url) {
+            const data = await axios.post('https://shrtlnk.dev/api/v2/link', { url: urlData || url }, {
+                headers: {
+                    'api-key': 'eyZ0tnBPL04QueUUCl4gcFcdvaSQgRa79t9gQbWpCTxP4',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }
+            )
+            setshrtlnk(data?.data?.shrtlnk)
         }
-        )
-        setshrtlnk(data?.data?.shrtlnk)
-    }
     }
 
     const handleSubmit = () => {
@@ -159,17 +159,17 @@ const Html = () => {
         //     toast.error("Please fill in all required fields.");
         //     return;
         // }
-      let base_url='https://upfilly.com/'
-        if(DestinationUrl && selectedBrand){
-           base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}`}` 
-        }else if(selectedBrand){
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}` 
-        }else if(DestinationUrl){
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}`}` 
+        let base_url = 'https://upfilly.com/'
+        if (DestinationUrl && selectedBrand) {
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}`}`
+        } else if (selectedBrand) {
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`
+        } else if (DestinationUrl) {
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}`}`
         }
 
         // loader(true);
-        ApiClient.post('get-link', { "base_url":base_url, "parameters": inputValues }).then((res) => {
+        ApiClient.post('get-link', { "base_url": base_url, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
@@ -200,114 +200,116 @@ const Html = () => {
                             <div className='row'>
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
-                                            <label>Select a Merchant</label>
-                                            <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
-                                                <option value="">Select a Merchant</option>
-                                                {brands.map(brand => (
-                                                    <option key={brand.id} value={brand.id} >{brand.name}</option>
-                                                ))}
-                                            </select>
+                                        <label>Select a Merchant</label>
+                                        <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                            <option value="">Select a Merchant</option>
+                                            {brands.map(brand => (
+                                                <option key={brand.id} value={brand.id} >{brand.name}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
-                                <div className='col-12 col-sm-6 col-md-6'>
-                                <div className='mb-3' >
-                                        <label>Destination URL</label>
+                                <div className="col-md-12 mb-3">
+                                    <label>
+                                        Destination Url<span className="star">*</span>
+                                    </label>
+                                    <div className="input-group  border_description">
                                         <input
                                             type="text"
-                                            className='form-control'
-                                            placeholder="Enter your Url"
+                                            className="form-control"
                                             value={DestinationUrl}
-                                            onChange={(e) => setDestinationUrl(e.target.value)} />
+                                            onChange={(e) => setDestinationUrl(e.target.value)}
+                                        />
+                                        {(user?.id || user?._id) && <span className="input-group-text  ">? fp_sid={user?.id || user?._id}</span>}
                                     </div>
-
                                 </div>
 
                                 <div className='col-12 col-md-12'>
-            <div className='select_parabx mb-3' >
-            <div className='mb-3' >
-                                    <label>Select Custom Parameters</label>
-                                        <div className='position-relative set_downbx '>
-                                        <MultiSelectValue
-                                            id="statusDropdown"
-                                            displayValue="label"
-                                            intialValue={selectedValues}
-                                            result={(e) => handleMultiSelectChange(e.value)}
-                                            setInputValues={setInputValues}
-                                            updateDictionary={updateDictionary}
-                                            inputValues={inputValues}
-                                            options={checkboxValues}
-                                        />
-                                        {/* <i class="fa fa-angle-down down_bx" aria-hidden="true"></i> */}
+                                    <div className='select_parabx mb-3' >
+                                        <div className='mb-3' >
+                                            <label>Select Custom Parameters</label>
+                                            <div className='position-relative set_downbx '>
+                                                <MultiSelectValue
+                                                    id="statusDropdown"
+                                                    displayValue="label"
+                                                    intialValue={selectedValues}
+                                                    result={(e) => handleMultiSelectChange(e.value)}
+                                                    setInputValues={setInputValues}
+                                                    updateDictionary={updateDictionary}
+                                                    inputValues={inputValues}
+                                                    options={checkboxValues}
+                                                />
+                                                {/* <i class="fa fa-angle-down down_bx" aria-hidden="true"></i> */}
+                                            </div>
+
                                         </div>
 
-                                    </div>
+                                        <div className='addkey mt-3  d-flex justify-content-end'>
+                                            <button className='btn btn-primary btn-sm' onClick={() => setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
+                                        </div>
+                                        <div className='row'>
+                                            <div className='col-12 col-md-12 '>
+                                                <div className='row'>
+                                                    {selectedValues.map((selected, index) => (
+                                                        <div className='col-12 col-md-4 ' key={index}>
+                                                            <div className='mb-3'>
+                                                                <p className='mb-0 labeltext'>{selected}:</p>
+                                                                <input
+                                                                    type="text"
+                                                                    className='form-control'
+                                                                    placeholder={`Input value for ${selected}`}
+                                                                    onChange={(e) => handleInputChange(selected, e.target.value)}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
 
-                                    <div className='addkey mt-3  d-flex justify-content-end'>
-                                            <button className='btn btn-primary btn-sm' onClick={()=>setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
-                                    </div>
-<div className='row'>
-<div className='col-12 col-md-12 '>
-                                    <div className='row'>
-                                        {selectedValues.map((selected,index) => (
-                                            <div className='col-12 col-md-4 ' key={index}>
-                                               <div className='mb-3'>
-                                               <p className='mb-0 labeltext'>{selected}:</p>
-                                                <input
-                                                    type="text"
-                                                    className='form-control'
-                                                    placeholder={`Input value for ${selected}`}
-                                                    onChange={(e) => handleInputChange(selected, e.target.value)}
-                                                />
-                                               </div>
                                             </div>
-                                         ))}
+                                        </div>
                                     </div>
-
-                                </div>
-</div>
-            </div>
                                 </div>
 
 
-                               
+
 
 
                             </div>
-                          
 
-                        
+
+
 
                             <div className='text-end'>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
-                          {methodModel.permission('generate_link_get') && <div className='mb-3'>
-                           <h6 className="link_default m-0"> Your Link :</h6>
+                            {methodModel.permission('generate_link_get') && <div className='mb-3'>
+                                <h6 className="link_default m-0"> Your Link :</h6>
 
-<div className="input-group my-2">
-    <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
-        <div className="input-group-text">
-            <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
-        </div>
-    </div>
-    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto  br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
-    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
-</div>
-                           </div>}
+                                <div className="input-group my-2">
+                                    <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
+                                        <div className="input-group-text">
+                                            <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                        </div>
+                                    </div>
+                                    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto  br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
+                                    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+                                </div>
+                            </div>}
                             {copied && <div className="">Copied!</div>}
 
-                           {methodModel.permission('generate_link_get')&&<div className='mb-3' >
-                           <h6 className="link_default m-0"> Your Short Link : </h6>
+                            {methodModel.permission('generate_link_get') && <div className='mb-3' >
+                                <h6 className="link_default m-0"> Your Short Link : </h6>
 
-{shrtlnk && <div className="input-group my-2">
-     <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
-         <div className="input-group-text">
-             <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
-         </div>
-     </div>
-      <p id="textShortToCopy" className="form-control gen_links br0 mb-0 heauto" >{shrtlnk}</p>
- </div> }
-                           </div>}
+                                {shrtlnk && <div className="input-group my-2">
+                                    <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
+                                        <div className="input-group-text">
+                                            <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                        </div>
+                                    </div>
+                                    <p id="textShortToCopy" className="form-control gen_links br0 mb-0 heauto" >{shrtlnk}</p>
+                                </div>}
+                            </div>}
                             {/* {copied && <div className="">Copied!</div>} */}
                         </div>
                     </div>

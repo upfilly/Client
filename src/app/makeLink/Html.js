@@ -164,11 +164,11 @@ const Html = () => {
 
       let base_url='https://upfilly.com/'
         if(DestinationUrl && selectedBrand && SelectedCampaign){
-           base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}`}` 
+           base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}` 
         }else if(DestinationUrl && selectedBrand){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}`
         }else if(DestinationUrl && SelectedCampaign){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}` 
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}` 
         }else if(SelectedCampaign && selectedBrand){
             base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`  
         }else if(SelectedCampaign){
@@ -176,7 +176,7 @@ const Html = () => {
         }else if(selectedBrand){
             base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}`  
         }else if(DestinationUrl){
-            base_url = `https://upfilly.com/?url=${`https://${DestinationUrl}`}`  
+            base_url = `https://upfilly.com/?url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}`  
         }
 
         // loader(true);
@@ -231,7 +231,24 @@ const Html = () => {
                                             </select>
                                     </div>
                                 </div>
-                                <div className='col-12 col-md-6'>
+                                <div className="col-md-6 mb-3">
+                                    <label>
+                                        Destination Url<span className="star">*</span>
+                                    </label>
+                                    <div className="input-group  border_description">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={DestinationUrl}
+                                            onChange={(e) => setDestinationUrl(e.target.value)}
+                                        />
+                                        {selectedBrand && <span className="input-group-text  ">?fp_sid={selectedBrand}</span>}
+                                    </div>
+                                    {/* {selectedBrand && (
+                                        <div className="invalid-feedback d-block">Destination url is Required</div>
+                                    )} */}
+                                </div>
+                                {/* <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
                                         <label className='mb-2' >Destination URL</label>
                                         <input
@@ -240,9 +257,10 @@ const Html = () => {
                                             placeholder="Enter your Url"
                                             value={DestinationUrl}
                                             onChange={(e) => setDestinationUrl(e.target.value)} />
+                                    {selectedBrand && <span className="input-group-text  ">? fp_sid:{selectedBrand}</span>}
                                     </div>
 
-                                </div>
+                                </div> */}
 
                                 <div className='col-12 col-md-12'>
                                     <div class="select_parabx mb-3" >

@@ -5454,3 +5454,50 @@ input[type=checkbox].check_bx_input:checked + .checkbox-btn::after {
 .form-check-input:focus{
   box-shadow: unset !important;
 }
+
+//
+
+
+.border_description {
+  border: 1px solid #d0d4da;
+  border-radius: 47px;
+}
+
+.border_description input.form-control {
+  border: unset;
+  margin-right: 2px;
+}
+
+.border_description .input-group-text {
+  background-color: #fff;
+  border: unset;
+  padding: 6px;
+  // border-left: 1px solid #d0d4da;
+  font-size: 14px;
+  border-radius: 42px;
+}
+
+
+.border_description:focus { 
+  border-color: #80bdff !important;
+} 
+ 
+.calender_position {
+  position: absolute;
+  top: 8px;
+  right: 2px;
+  font-size: 19px !important;
+  z-index: 1;
+  width: 29px;
+}
+
+input.width_full {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  background-color: transparent;
+  color: #000;
+  border-radius: 33px;
+  z-index: 13;
+  position: relative;
+}
