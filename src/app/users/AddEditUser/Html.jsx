@@ -8,8 +8,7 @@ import dynamic from 'next/dynamic';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted, images, imageResult,
-    getError, setEyes, eyes, back, }) => {
+const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) => {
 
     return <>
         <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Users" filters={''} >
@@ -87,7 +86,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                         // disabled={form?.id ? true : false}
                                         result={e => { setform({ ...form, role: e.value }) }}
                                         options={[
-                                            { id: 'affiliate', name: 'Super User' },
+                                            { id: user?.role == "affiliate" ? 'affiliate' : "brand", name: 'Super User' },
                                             { id: 'operator', name: 'Operator' },
                                             { id: 'analyzer', name: 'Analyzer' },
                                             { id: 'publisher', name: 'Publisher' },

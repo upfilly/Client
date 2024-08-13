@@ -277,6 +277,7 @@ const AddEditUser = () => {
       handleSelect={handleSelect}
       address={address}
       setForm={setform}
+      user={user}
     /></>
 }
 

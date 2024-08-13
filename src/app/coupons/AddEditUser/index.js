@@ -98,7 +98,7 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
-            couponCommission:10,
+            // couponCommission:10,
         }
         if(value?.media){
             value={...value , media:value?.media?.value.toString()}
