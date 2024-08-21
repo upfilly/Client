@@ -4,7 +4,6 @@ import ReactPaginate from 'react-paginate';
 import './style.scss';
 import methodModel from '@/methods/methods';
 import datepipeModel from '@/models/datepipemodel';
-import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';

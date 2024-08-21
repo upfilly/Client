@@ -3,15 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import ApiClient from '../../methods/api/apiClient';
 import './style.scss';
-import loader from '../../methods/loader';
 import Html from './html';
-import { userType } from '../../models/type.model';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
 
-const Users = () => {
+const EmailMessages = () => {
     const user = crendentialModel.getUser()
     const { role } = useParams()
     const [filters, setFilter] = useState({
@@ -183,4 +181,4 @@ const Users = () => {
     </>;
 };
 
-export default Users;
+export default EmailMessages;
