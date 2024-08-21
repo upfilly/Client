@@ -142,7 +142,7 @@ export default function Faq() {
                 pageRangeDisplayed={6}
                 className="pagination-item"
               // pageCount={Math.ceil(total / filters?.count)}
-          pageCount={3}
+          pageCount={2}
                 previousLabel="< Previous"
                 renderOnZeroPageCount={null}
                 pageClassName={"pagination-item"}
