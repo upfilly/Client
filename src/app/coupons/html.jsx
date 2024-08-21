@@ -96,70 +96,70 @@ const Html = ({
                 </div>
 
                 <div className='table_section'>
-                <div className="table-responsive ">
+                    <div className="table-responsive ">
 
-<table className="table table-striped table-width">
-    <thead className='table_head'>
-        <tr className='heading_row'>
-            <th scope="col" className='table_data' >Coupon Code</th>
-            <th scope="col" className='table_data' >Coupon Type</th>
-            <th scope="col" className='table_data' >Visibility</th>
-            <th scope="col" className='table_data' >Expiration Date</th>
-            {/* <th scope="col" className='table_data' onClick={e => sorting('brand_id')}>{user?.role == "brand" ? "Affiliate" : "Brand"}{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
-            <th scope="col" className='table_data'>Status</th>
-            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            {user?.role == 'brand' && <th scope="col" className='table_data'>Action</th>}
-        </tr>
-    </thead>
-    <tbody>
-        {!loaging && data && data.map((itm, i) => {
-            return <tr className='data_row' key={i}>
-                <td className='table_dats' onClick={e => view(itm.id || itm?._id)}>
+                        <table className="table table-striped table-width">
+                            <thead className='table_head'>
+                                <tr className='heading_row'>
+                                    <th scope="col" className='table_data' >Coupon Code</th>
+                                    <th scope="col" className='table_data' >Coupon Type</th>
+                                    <th scope="col" className='table_data' >Visibility</th>
+                                    <th scope="col" className='table_data' >Expiration Date</th>
+                                    {/* <th scope="col" className='table_data' onClick={e => sorting('brand_id')}>{user?.role == "brand" ? "Affiliate" : "Brand"}{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
+                                    <th scope="col" className='table_data'>Status</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    {user?.role == 'brand' && <th scope="col" className='table_data'>Action</th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {!loaging && data && data.map((itm, i) => {
+                                    return <tr className='data_row' key={i}>
+                                        <td className='table_dats' onClick={e => view(itm.id || itm?._id)}>
 
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {methodModel.capitalizeFirstLetter(itm.couponCode)}
-                            </h4>
-                        </div>
-                    </div></td>
-                <td className='table_dats'>
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
+                                                        {methodModel.capitalizeFirstLetter(itm.couponCode)}
+                                                    </h4>
+                                                </div>
+                                            </div></td>
+                                        <td className='table_dats'>
 
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {methodModel.capitalizeFirstLetter(itm?.couponType)}
-                            </h4>
-                        </div>
-                    </div></td>
-                <td className='table_dats'>
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {methodModel.capitalizeFirstLetter(itm?.visibility)}
-                            </h4>
-                        </div>
-                    </div></td>
-                    <td className='table_dats'>
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            <h4 className='user'>
-                                {datepipeModel.date(itm.expirationDate)}
-                            </h4>
-                        </div>
-                    </div></td>
-                <td className='table_dats'>   <div className={`user_hours`}>
-                    <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
-                    >
-                        {itm.status}
-                    </span>
-                </div></td>
-                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
+                                                        {methodModel.capitalizeFirstLetter(itm?.couponType)}
+                                                    </h4>
+                                                </div>
+                                            </div></td>
+                                        <td className='table_dats'>
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
+                                                        {methodModel.capitalizeFirstLetter(itm?.visibility)}
+                                                    </h4>
+                                                </div>
+                                            </div></td>
+                                        <td className='table_dats'>
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
+                                                        {datepipeModel.date(itm.expirationDate)}
+                                                    </h4>
+                                                </div>
+                                            </div></td>
+                                        <td className='table_dats'>   <div className={`user_hours`}>
+                                            <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
+                                            >
+                                                {itm.status}
+                                            </span>
+                                        </div></td>
+                                        <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
-                {/* dropdown */}
-                <td className='table_dats'>
-                    <div className="action_icons gap-3 ">
-                        {/* {user?.role == 'brand' && <>{itm?.status == 'pending' ? <div >
+                                        {/* dropdown */}
+                                        <td className='table_dats'>
+                                            <div className="action_icons gap-3 ">
+                                                {/* {user?.role == 'brand' && <>{itm?.status == 'pending' ? <div >
                             <button onClick={() => {
                                 statusChange("accepted", itm?.id || itm?._id)
                             }} className="btn btn-primary mr-2 ml-3">
@@ -173,17 +173,17 @@ const Html = ({
                                 <div className="btn btn-primary mr-2">Rejected</div> :
                                 <div className="btn btn-primary mr-2">Accepted</div>
                         }</>} */}
-                        {user?.role == 'brand' && <>
-                            <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
-                                <i className="material-icons edit" title="Edit">edit</i>
-                            </a>
-                            <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
-                                <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
-                            </a>
-                        </>
-                        }
+                                                {user?.role == 'brand' && <>
+                                                    <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
+                                                        <i className="material-icons edit" title="Edit">edit</i>
+                                                    </a>
+                                                    <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
+                                                        <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                                                    </a>
+                                                </>
+                                                }
 
-                        {/* <>
+                                                {/* <>
                             <a className='edit_icon action-btn' onClick={() => {
                                 history.push(`/chat`)
                                 localStorage.setItem("chatId", user?.role == 'brand' ? itm?.affiliate_id : itm?.brand_id)
@@ -191,20 +191,20 @@ const Html = ({
                                 <i className='fa fa-comment-o text-white'></i>
                             </a>
                         </> */}
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                })
+                                }
+                            </tbody>
+                        </table>
+                        {!loaging && total == 0 ? <div className="py-3 text-center">No Coupon Found</div> : <></>}
                     </div>
-                </td>
-
-            </tr>
-
-        })
-        }
-    </tbody>
-</table>
-{!loaging && total == 0 ? <div className="py-3 text-center">No Coupon Found</div> : <></>}
-</div>
                 </div>
 
-               
+
 
                 <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                     <span>Show {data?.length} from {total} Users</span>
@@ -214,8 +214,8 @@ const Html = ({
                         initialPage={filters?.page}
                         onPageChange={pageChange}
                         pageRangeDisplayed={6}
-                       // pageCount={Math.ceil(total / filters?.count)}
-          pageCount={3}
+                        // pageCount={Math.ceil(total / filters?.count)}
+                        pageCount={3}
                         previousLabel="< Previous"
                         renderOnZeroPageCount={null}
                         pageClassName={"pagination-item"}

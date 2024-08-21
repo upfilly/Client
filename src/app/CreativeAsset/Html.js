@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'react-bootstrap';
-import SelectDropdown from '../components/common/SelectDropdown';
+import DataFeedslisting from '../CreativeAsset/listings/page'
 import environment from '@/environment';
 
 const Html = () => {
@@ -18,6 +18,7 @@ const Html = () => {
     })
     const [show, setShow] = useState(false);
     const [file, setFile] = useState(null);
+    const [loaderData,setloaderData] = useState(false)
     const [relatedAffiliate, setAllAffiliate] = useState([])
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -57,20 +58,24 @@ const Html = () => {
 
     const handleSubmit = () => {
 
+        if(!file){
+            toast.error("Upload Csv file first")  
+            return 
+        }
+        setloaderData(true)
         const payload = {
             // addedBy: user?.id,
             // user_id: form?.user_id,
             filePath: `/documents/${file}`
         }
 
-        loader(true);
         ApiClient.post('dataset/send', payload).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
+                setloaderData(false)
                 setFile(null)
                 setForm({})
             }
-            loader(false);
         });
     };
 
@@ -88,22 +93,7 @@ const Html = () => {
                         </div>
                         <div className='card-body'>
 
-                            <div className='row'>
-                                {/* <div className="col-md-6 mb-3">
-                                    <label>Select Affiliate<span className="star">*</span></label>
-                                    <div className="select_row">
-                                        <SelectDropdown
-                                            id="statusDropdown"
-                                            displayValue="fullName"
-                                            placeholder="Select Media"
-                                            intialValue={form?.user_id}
-                                            result={e => {
-                                                setForm({ ...form, user_id: e.value })
-                                            }}
-                                            options={relatedAffiliate}
-                                        />
-                                    </div>
-                                </div> */}
+                            {!loaderData ? <div className='row'>
                                 <div className='col-md-12'>
                                     <div className='mb-3'>
                                         <label>Upload CSV File <span onClick={openModal} style={{ color: 'red' }}>(See a example)</span></label>
@@ -126,7 +116,11 @@ const Html = () => {
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> :
+                                <div className="text-center py-4">
+                                    <img src="/assets/img/loader.gif" className="pageLoader" />
+                                </div>
+                            }
 
                             <Modal show={show} onHide={handleClose} className="shadowboxmodal csv_modal">
                                 <Modal.Header className='align-items-center p-0 pb-3' closeButton>
@@ -139,11 +133,12 @@ const Html = () => {
                                 </Modal.Body>
                             </Modal>
 
-                            <div className='text-end mt-3'>
+                           {!loaderData && <div className='text-end mt-3'>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Send Data</button>
-                            </div>
+                            </div>}
                         </div>
                     </div>
+                    <DataFeedslisting file={file}/>
                 </div>
             </Layout>
         </>
