@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'react-bootstrap';
-import DataFeedslisting from '../CreativeAsset/listings/page'
+import DataFeedslisting from '../CreativeAsset/listings'
 import environment from '@/environment';
 
 const Html = () => {
