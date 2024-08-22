@@ -6,6 +6,8 @@ import './style.scss';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { useParams,useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const DataFeedslisting  = ({file}) => {
     const user = crendentialModel.getUser()
@@ -37,6 +39,30 @@ const DataFeedslisting  = ({file}) => {
             }
             setLoader(false)
         })
+    }
+
+    const deleteItem = (id) => {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+            // loader(true)
+            ApiClient.delete(`delete?model=dataset&id=${id}`).then(res => {
+                if (res.success) {
+                    toast.success(res.message)
+                    getData({page:1})
+                }
+                // loader(false)
+            })
+            }
+          })
     }
 
     const pageChange = (e) => {
@@ -111,6 +137,7 @@ const DataFeedslisting  = ({file}) => {
         sorting={sorting}
         setFilter={setFilter}
         user={user}
+        deleteItem={deleteItem}
     />
     </>;
 };

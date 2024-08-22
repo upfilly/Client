@@ -12,6 +12,7 @@ const Html = ({
     loaging,
     data,
     total,
+    deleteItem
 }) => {
 
     return (
@@ -46,7 +47,11 @@ const Html = ({
                                                     <i className="fa fa-download"></i>{" "}
 
                                                 </a>
+                                                  
                                             </div>
+                                            <span className='edit_icon' onClick={() => deleteItem(itm.id || itm._id)}>
+                                                        <i className="material-icons delete" title='Delete'> delete</i>
+                                                    </span>
                                         </div>
                                     </td>
 
