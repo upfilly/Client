@@ -16,11 +16,12 @@ const Html = ({
 }) => {
 
     return (
-        <div className='sidebar-left-content'>
-            <div className="row align-items-center">
-                    <h3 className="text-center rise">Sended Data</h3>
-            </div>
-            <div className='table_section'>
+        <div className='sidebar-left-content px-0 pt-4 '>
+            <div className=" data_details ">
+                    <h3 className="data_title rise"> <i class="fa fa-database mr-2" aria-hidden="true"></i>
+                    Sended Data</h3>
+
+                    <div className=''>
                 <div className="table-responsive ">
 
                     <table className="table table-striped table-width">
@@ -64,6 +65,8 @@ const Html = ({
                     {!loaging && total == 0 ? <div className="py-3 text-center">No Coupon Found</div> : <></>}
                 </div>
             </div>
+            </div>
+           
 
 
 
