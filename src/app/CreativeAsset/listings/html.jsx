@@ -18,10 +18,10 @@ const Html = ({
     return (
         <div className='sidebar-left-content px-0 pt-4 '>
             <div className=" data_details ">
-                    <h3 className="data_title rise"> <i class="fa fa-database mr-2" aria-hidden="true"></i>
+                    <h3 className="data_title rise pl-4"> <i class="fa fa-database mr-2" aria-hidden="true"></i>
                     Sended Data</h3>
 
-                    <div className=''>
+                    <div className='px-2 pt-2'>
                 <div className="table-responsive ">
 
                     <table className="table table-striped table-width">
@@ -45,7 +45,10 @@ const Html = ({
                                                     download="document.pdf"
                                                 >
                                                     {" "}
+                                                    <span className='edit_icon'>
                                                     <i className="fa fa-download"></i>{" "}
+                                                    </span>
+                                                    {/* <i className="fa fa-download"></i>{" "} */}
 
                                                 </a>
                                                   
