@@ -131,15 +131,16 @@ const Html = ({
                         changeCurrentPage={pageChange}
                     /> */}
                     <ReactPaginate
-        breakLabel="..."
-        // nextLabel="Next >"
-        initialPage={filters.page}
-        onPageChange={pageChange}
-        pageRangeDisplayed={5}
-        pageCount={filters.count}
-        previousLabel="< Previous"
-        renderOnZeroPageCount={null}
-      />
+                        breakLabel="..."
+                        // nextLabel="Next >"
+                        initialPage={filters.page}
+                        onPageChange={pageChange}
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={1}
+                        pageCount={Math.ceil(total / filters?.count)}
+                        previousLabel="< Previous"
+                        renderOnZeroPageCount={null}
+                    />
                 </div> : <></>
             }
 

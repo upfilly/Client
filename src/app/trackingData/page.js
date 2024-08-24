@@ -206,9 +206,9 @@ export default function affilate() {
             nextLabel="Next >"
             initialPage={filters?.page}
             onPageChange={pageChange}
-            pageRangeDisplayed={6}
-           // pageCount={Math.ceil(total / filters?.count)}
-          pageCount={2}
+            pageRangeDisplayed={2}
+                        marginPagesDisplayed={1}
+                        pageCount={Math.ceil(total / filters?.count)}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}

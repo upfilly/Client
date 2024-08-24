@@ -23,7 +23,7 @@ export default function affilate() {
   const user = crendentialModel.getUser()
   const [filters, setFilter] = useState({
     page: 0,
-    count: 10,
+    count: 4,
     role: "affiliate",
     search: '',
     // createBybrand_id: user?.id,
@@ -934,9 +934,10 @@ export default function affilate() {
             nextLabel="Next >"
             initialPage={filters?.page}
             onPageChange={pageChange}
-            pageRangeDisplayed={6}
-          // pageCount={Math.ceil(total / filters?.count)}
-          pageCount={2}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            pageCount={Math.ceil(total / filters?.count)}
+            // pageCount={2}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}
