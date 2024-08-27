@@ -67,7 +67,7 @@ const Html = ({
                                         { id: 'analyzer', name: 'Analyzer' },
                                         { id: 'publisher', name: 'Publisher' },
                                         { id: 'operator', name: 'Operator' },
-                                        { id: 'affiliate', name: 'Super User' },
+                                        { id: 'super_user', name: 'Super User' },
                                     ]}
                                 />
 

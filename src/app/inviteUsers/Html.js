@@ -114,7 +114,7 @@ const Html = () => {
                                             intialValue={form?.type}
                                             result={e => setForm({ ...form, type: e.value })}
                                             options={[
-                                                { id: 'affiliate', name: 'Super User' },
+                                                { id: 'super_user', name: 'Super User' },
                                                 { id: 'operator', name: 'Operator' },
                                                 { id: 'analyzer', name: 'Analyzer' },
                                                 { id: 'publisher', name: 'Publisher' },

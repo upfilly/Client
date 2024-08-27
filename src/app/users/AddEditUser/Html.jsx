@@ -86,7 +86,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                         // disabled={form?.id ? true : false}
                                         result={e => { setform({ ...form, role: e.value }) }}
                                         options={[
-                                            { id: user?.role == "affiliate" ? 'affiliate' : "brand", name: 'Super User' },
+                                            { id: user?.role == "affiliate" ? 'super_user' : "super_user", name: 'Super User' },
                                             { id: 'operator', name: 'Operator' },
                                             { id: 'analyzer', name: 'Analyzer' },
                                             { id: 'publisher', name: 'Publisher' },
