@@ -32,10 +32,6 @@ export default function affilate() {
   };
 
   const getData = (p = {}) => {
-    if(!methodModel.permission('transactions_get')){
-      setLoader(false)
-      return
-    }
     setLoader(true)
     let filter = { ...filters, ...p}
     

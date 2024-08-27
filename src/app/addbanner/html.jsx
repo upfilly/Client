@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 import datepipeModel from '@/models/datepipemodel';
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
@@ -148,11 +148,11 @@ const Html = ({
                             </a>
                         </> : <></>}
 
-                            {/* {isAllow('deleteAdmins')&&methodModel.permission('banner_delete') ? <> */}
+                            {isAllow('deleteAdmins') && methodModel.permission('banner_delete') ? <>
                                 <a className='edit_icon edit-delete' onClick={() => deleteItem(itm.id || itm?._id)}>
                                     <i className={`material-icons delete`} title='Delete'> delete</i>
                                 </a>
-                            {/* </> : <></>} */}
+                            </> : <></>}
                             </>}
                         <>
                         </>

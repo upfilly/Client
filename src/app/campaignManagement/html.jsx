@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 

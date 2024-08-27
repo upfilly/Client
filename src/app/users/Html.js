@@ -51,7 +51,7 @@ const Html = ({
                                         ]}
                                     />
 
-                                    {(user?.role == 'brand' || user?.role == 'affiliate' || user?.permission_detail?.user_add) && <> <a className="btn btn-primary add_users " onClick={e => add()}>
+                                    {(user?.role == 'brand' || user?.role == 'affiliate' ||  methodModel.permission("user_add")) && <> <a className="btn btn-primary add_users " onClick={e => add()}>
                                         <i className='fa fa-plus mr-1'></i> Add user
                                     </a></>}
 
@@ -109,12 +109,12 @@ const Html = ({
                                                         <td>
                                                             {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_edit) &&
                                                                 <div className='action_icons'>
-                                                                    {<a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
+                                                                    {methodModel.permission("user_edit") && <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
 
                                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                                     </a>}
 
-                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_delete) &&<a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
+                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || methodModel.permission("user_delete")) &&<a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
                                                                         <i className={`material-icons delete`} title='Delete'> delete</i>
                                                                     </a>}
                                                                     {/* <a className='edit_icon action-btn' onClick={() => {

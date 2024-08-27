@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
-import methodModel from '@/methods/methods';
-import datepipeModel from '@/models/datepipemodel';
-import SelectDropdown from "@/app/components/common/SelectDropdown";
+import methodModel from '../../methods/methods';
+import datepipeModel from '../../models/datepipemodel';
 import { useRouter } from 'next/navigation';
 
 const Html = ({
@@ -53,7 +52,7 @@ const Html = ({
                     /> */}
 
                     <article className="d-flex filterFlex phView">
-                        {user?.role == "brand" && <>
+                        {(user?.role == "brand" || methodModel.permission('coupon_add')) && <>
                             <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Coupon
                             </a>
@@ -173,7 +172,7 @@ const Html = ({
                                 <div className="btn btn-primary mr-2">Rejected</div> :
                                 <div className="btn btn-primary mr-2">Accepted</div>
                         }</>} */}
-                                                {user?.role == 'brand' && <>
+                                                {(user?.role == 'brand' || methodModel.permission('coupon_edit')) && <>
                                                     <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
                                                         <i className="material-icons edit" title="Edit">edit</i>
                                                     </a>

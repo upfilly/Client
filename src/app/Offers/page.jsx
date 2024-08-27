@@ -43,10 +43,6 @@ const Users = () => {
 
 
     const getData = (p = {}) => {
-        if(!methodModel.permission('offer_get')){
-            setLoader(false)
-            return
-        }
         setLoader(true)
         let filter = { ...filters, ...p }
         let url='product/all'

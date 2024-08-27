@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 import environment from '../../environment/index'
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -412,8 +412,6 @@ export default function affilate() {
       setselectedAffiliteid([...data])
     }
   }
-
-  console.log(selectedAffiliteid, "selectedAffiliteid")
 
   return (
     <>

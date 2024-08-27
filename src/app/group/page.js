@@ -31,10 +31,6 @@ const Categories = () => {
 
 
     const getData = (p = {}) => {
-        if(!methodModel.permission('group_get')){
-            setLoader(false)
-            return
-        }
         setLoader(true)
         let filter = { ...filters, ...p }
         let url='affiliate-groups'

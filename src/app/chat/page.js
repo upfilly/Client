@@ -64,8 +64,6 @@ export default function Chat() {
     setOfflineUserId(data?.data?.user_id);
   });
 
-  console.log(user,"user-------000000")
-
   const filteredChatList = chatList?.filter(itm => {
     if (!itm?.isGroupChat) {
       return itm?.room_members[0]?.user_name.toLowerCase().includes(searchText.toLowerCase());
