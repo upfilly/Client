@@ -48,7 +48,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {urlAllow('group') && methodModel.permission('affiliate_group')? <>
+              {(urlAllow('group') && methodModel.permission('affiliate_group'))? <>
                 <ListItemLink to="/group" data-bs-toggle="tooltip" data-bs-placement="top" title="Groups">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">groups</i>
@@ -189,7 +189,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {urlAllow('CreativeEmails') || (user?.role == "brand" || addedUser?.role == "brand")  ? <>
+              { (user?.role == "brand" || addedUser?.role == "brand")  ? <>
                 <ListItemLink to="/CreativeEmails" data-bs-toggle="tooltip" data-bs-placement="top" title="Creative Email">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">local_library</i>
