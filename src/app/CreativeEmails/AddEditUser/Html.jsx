@@ -20,6 +20,8 @@ const Html = () => {
   const history = useRouter()
   const childRef = useRef();
 
+  console.log(form,"dfgdfgdgfd======")
+
   const handleClick = () => {
     childRef.current.export_to_html();
     toast.success('Data Exported Successfully')
@@ -396,16 +398,16 @@ const Html = () => {
                 </h4>
                 <div
                   className="shadow-box border !border-grey p-2 bg-white rounded-large"
-                  dangerouslySetInnerHTML={{ __html: form?.content }}></div>
+                  dangerouslySetInnerHTML={{ __html: form?.content || form?.textContent }}></div>
                 <div className="flex justify-end gap-2 mt-3 text-right">
                   <button
                     type="button"
-                    className="!px-2.5 text-[#3C3E49] text-sm h-9 font-normal py-2.5 flex items-center justify-center gap-2 bg-[#fff] rounded-large shadow-btn hover:bg-[#F3F2F5] border border-[#D0D5DD] transition-all focus:ring-2 ring-[#F1F2F3] disabled:bg-[#F3F2F5] disabled:cursor-not-allowed"
+                    className="btn btn-secondary mr-3"
                     onClick={(e) => setTab("form")}>
                     Back
                   </button>
                   <button
-                    className="!px-4 text-sm font-normal text-white h-9 flex items-center justify-center gap-2 !bg-primary rounded-extra_large shadow-btn hover:opacity-80 transition-all focus:ring-2 ring-[#EDEBFC] disabled:bg-[#D0CAF6] disabled:cursor-not-allowed"
+                    className="btn btn-primary"
                     onClick={(e) => handleSubmit()}>
                     Save
                   </button>
