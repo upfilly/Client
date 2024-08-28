@@ -13,7 +13,7 @@ const AffiliateTeam = () => {
 
     const user = crendentialModel.getUser()
     const [filters, setFilter] = useState({
-    addedBy:user?.addedBy,page: 0, count: 10, search: '', isDeleted: false,status:''})
+    brand_id:user?.addedBy ,page: 0, count: 10, search: '', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
