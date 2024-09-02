@@ -5501,3 +5501,8 @@ input.width_full {
   z-index: 13;
   position: relative;
 }
+
+
+.input.width_full:focus-visible{
+  outline: unset !important;
+}
