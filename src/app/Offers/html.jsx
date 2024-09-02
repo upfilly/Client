@@ -107,7 +107,7 @@ const Html = ({
 
 
 
-                    {(user?.role == 'affiliate' || methodModel.permission("offer_add")) ? <>
+                    {(user?.role == 'affiliate' || methodModel.permission("marketplace_product_add")) ? <>
                         <a className="btn btn-primary set_reset" onClick={e => add()}>
                             <i className='fa fa-plus mr-1'></i>  Add Offers
                         </a>
@@ -124,7 +124,7 @@ const Html = ({
                                     <th scope="col" className='table_data'>Price ($)</th>
                                     <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    {(user?.role == 'affiliate' || methodModel.permission("offer_edit")) && <th scope="col" className='table_data'>Action</th>
+                                    {(user?.role == 'affiliate' || methodModel.permission("marketplace_product_edit")) && <th scope="col" className='table_data'>Action</th>
                                     }
                                 </tr>
                             </thead>
@@ -149,7 +149,7 @@ const Html = ({
                                         </div></td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                                         {/* dropdown */}
-                                        {methodModel.permission("offer_edit") && <td className='table_dats'>
+                                        {methodModel.permission("marketplace_product_edit") && <td className='table_dats'>
                                             <div className="action_icons">
                                                 {isAllow('editAdmins') || user?.permission_detail?.offer_edit ? <>
                                                     <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>

@@ -8,8 +8,8 @@ import ApiClient from "@/methods/api/apiClient";
 import OfferFormModal from "../../MakeofferModal";
 import loader from "@/methods/loader";
 import { useEffect, useState } from "react";
-import methodModel from "@/methods/methods";
 import datepipeModel from "@/models/datepipemodel";
+import methodModel from "../../../../methods/methods";
 
 export default function MarketPlaceDetail() {
     const history = useRouter()
@@ -72,7 +72,7 @@ export default function MarketPlaceDetail() {
                                     <p className="types_date"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>
                                 </div>
 
-                                {user?.role == 'brand' && <div className="rightimg">
+                                {(user?.role == 'brand' || methodModel.permission("make_offer_add")) && <div className="rightimg">
                                     <div className="btn_offers d-flex justify-content-end">
                                         {data?.isSubmitted ?
                                             <button className="btn-cancel" disabled>Offer Sent</button>

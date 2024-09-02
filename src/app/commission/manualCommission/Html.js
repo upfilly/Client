@@ -72,7 +72,7 @@ const Html = () => {
 
     const getData = (p = {}) => {
         // let filter = { ...filters, ...p }
-        ApiClient.get(`users/list`).then(res => {
+        ApiClient.get(`users/list?role=affiliate`).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
             }

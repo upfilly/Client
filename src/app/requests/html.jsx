@@ -131,7 +131,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
 
                 {<td className='table_dats d-flex '>
-                    {user && user?.role == "affiliate" && <>
+                    {(user && user?.role == "affiliate" || methodModel.permission("make_offer_edit")) && <>
                         {itm?.status == 'pending' ? <div >
                             <button onClick={() => {
                                 statusChange("accepted", itm?.id)
