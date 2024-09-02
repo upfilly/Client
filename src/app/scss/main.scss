@@ -5504,5 +5504,18 @@ input.width_full {
 
 
 .input.width_full:focus-visible{
-  outline: unset !important;
+  outline: 0 !important;
+}
+// .profile-card input:focus-visible {
+//   outline: none !important;
+//   border: 0 !important;
+//   box-shadow: none !important;
+// }
+  :focus-visible {
+  outline: -webkit-focus-ring-color auto 0px !important;
+
+}
+.media_row .optionListContainer { 
+z-index: 15;
+text-transform: capitalize !important; 
 }
