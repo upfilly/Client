@@ -479,9 +479,9 @@ const Profile = () => {
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
-                          <button className="btn btn-primary profiles" onClick={handleShow}>
+                          {(user?.role == "brand" || user?.role == "affiliate") && <button className="btn btn-primary profiles" onClick={handleShow}>
                             See Activity Logs
-                          </button>
+                          </button>}
                         </div>
                       </div>
                       <div className=" row align-items-center ">
