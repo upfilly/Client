@@ -233,7 +233,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             displayValue="name"
                                             placeholder="Select Type"
                                             intialValue={form?.access_type}
-                                            // disabled={(form?.status == "rejected" || !id) ? false : true}
+                                            disabled={(form?.status == "rejected" || !id) ? false : true}
                                             result={e => {
                                                 setform({ ...form, access_type: e.value })
                                             }}

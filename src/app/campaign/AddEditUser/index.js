@@ -62,6 +62,7 @@ const AddEditUser = () => {
             delete value.status
             delete value.amount
             delete value.event_type
+            delete value.brand_id
         } else {
             delete value.id
         }
