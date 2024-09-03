@@ -1,0 +1,35 @@
+.comparison-container {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.section {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.old-section {
+    border-right: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.new-section {
+    background-color: #ffffff;
+}
+
+.separator {
+    width: 1px;
+    background-color: #ddd;
+}
+
+.data-row {
+    margin-bottom: 10px;
+}
+
+.data-row strong {
+    margin-bottom: 4px;
+}

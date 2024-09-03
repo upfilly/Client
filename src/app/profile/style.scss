@@ -1,0 +1,283 @@
+button.set-filter {
+  color: #252849;
+  border: 1px solid #cbcbcb;
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-weight: 300 !important;
+  background-color: #fff;
+}
+
+select.form-select.sl.ml-3 {
+  border-radius: 50px;
+  color: #252849;
+}
+
+i.fa.fa-plus-circle.mr-2 {
+  font-size: 27px;
+}
+
+thead.thead-clr tr th {
+  background-color: #EFF2F5 !important;
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+a.ref-mail {
+  color: #00BAFF;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: auto !important;
+}
+
+p.td-set {
+  color: #252849;
+  font-family: Open Sans;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  margin-bottom: 0px;
+}
+
+span.active-button {
+  color: #00A832;
+  font-family: Open Sans;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  background-color: #00d43f29;
+  padding: 6px 10px;
+  border-radius: 50px;
+}
+
+span.Inactive-button {
+  color: #E73C3C;
+  font-family: Open Sans;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  background-color: #e73c3c21;
+  padding: 6px 10px;
+  border-radius: 50px;
+}
+
+p.name-person {
+  color: #000;
+  font-family: Open Sans;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+
+img.person-img {
+  width: 33px;
+  height: 33px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #d9dcde;
+}
+
+.checkbox-dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.dropdown-header {
+  border: 1px solid #ccc;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.checkbox-options {
+  display: none;
+  position: absolute;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.checkbox-dropdown.open .checkbox-options {
+  display: block;
+}
+
+.checkbox-options label {
+  display: block;
+  padding: 5px;
+}
+
+.checkbox-options label:hover {
+  background-color: #f0f0f0;
+}
+
+.checkbox-options label input {
+  margin-right: 5px;
+}
+
+.checkbox-dropdown p {
+  margin-top: 5px;
+}
+
+.checkbox-option-main {
+  width: 100%;
+}
+
+.checkbox-inner.checkbox-dropdown.ml_3 {
+
+  margin: 0 !important;
+  height: 38px !important;
+}
+
+.checkbox-inner .dropdown-header {
+  border-radius: 50px !important;
+}
+
+input.datepicker-field {
+  border: 1px solid #ccc;
+  height: 38px;
+  border-radius: 50px;
+}
+
+.react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
+  position: absolute;
+  box-sizing: content-box;
+  padding: 0.375rem 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 6px 10px 5px 35px !important;
+  background-color: #fff !important;
+}
+
+.filter-opt button.set-filter {
+  height: 38px;
+  border-radius: 50px !important;
+}
+
+.checkbox-inner .dropdown-header {
+  border-radius: 50px !important;
+  text-align: left;
+  padding: 0.375rem 0.75rem;
+  display: flex;
+  align-items: center;
+  overflow-y: auto;
+  height: 38px;
+  max-width: 200px;
+  min-width: 200px;
+}
+
+
+.checkbox-dropdown.open .checkbox-options {
+  display: block;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+  border: 0;
+  border-radius: 16px;
+}
+
+.checkbox-options label {
+  display: flex;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  align-items: center;
+}
+
+.checkbox-options input[type=checkbox] {
+  width: 36px;
+  height: 19px;
+}
+
+.checkbox-options input[type=checkbox]::before {
+  width: 12px;
+  height: 12px;
+  top: 3px;
+
+}
+
+.checkbox-dropdown.open .checkbox-options {
+
+  padding: 0.7rem 0.5rem;
+}
+
+.checkbox-options label:hover {
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  color: #fff;
+  cursor: pointer;
+}
+
+p.checkbox-option-main span {
+  margin: 5px 5px;
+
+}
+
+.select-option-category {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+p.checkbox-option-main {
+  display: flex;
+  margin: 0;
+  flex-wrap: wrap;
+
+}
+
+.checkbox-options {
+  width: 100%;
+}
+
+.react-datepicker__view-calendar-icon input:focus {
+  border: 1px solid #ccc !important;
+}
+
+table {
+  cursor: pointer;
+}
+
+
+// body {
+//   overflow: hidden;
+// }
+
+/* Change the color of the scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  /* Set the background color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  /* Set the color of the thumb */
+  border-radius: 6px;
+  /* Set the border radius to make it round */
+}
+
+/* Change the shape of the scrollbar in Firefox */
+/* Note: Firefox uses a different pseudo-element for styling scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+/* Change the shape of the scrollbar thumb in Firefox */
+*::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+}

@@ -190,6 +190,7 @@ const EditProfile = () => {
     delete value.category_name
     // delete value.category_id
     delete value.role
+    delete value.addedBy
 
     if (!form?.affiliate_group) {
       delete value.affiliate_group
