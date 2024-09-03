@@ -3,7 +3,7 @@ import environment from "../environment"
 const user=crendentialModel.getUser()
 
 const permission=(p)=>{
-    if (user && p) {
+    if (user && user?.permission_detail && p) {
         return user?.permission_detail[p]
     }else{
         return false
