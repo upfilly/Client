@@ -112,16 +112,16 @@ import methodModel from '../../methods/methods';
 
   return (
     <>
-      <div className='nmain-list  mb-3 main_box'>
+      <div className='nmain-list  mb-0 pt-0 main_box'>
         <div className='container-fluid'>
 
-          <div className='row'>
+          {/* <div className='row'>
             <div className='col-md-12'>
             </div>
-          </div>
+          </div> */}
           <div className='row '>
-            <div className='respon_data'>
-              <div className='table_section '>
+            <div className='respon_data px-0'>
+              <div className='table_section mt-0 '>
                 <div className='table-responsive '>
                   <table class="table table-striped ">
                     <thead className="thead-clr">
@@ -148,7 +148,7 @@ import methodModel from '../../methods/methods';
                             <a className='edit_icon action-btn' onClick={() => {
                               history.push(`/activityDetail/${itm?.id || itm?._id}`)
                             }} title="View Details">
-                              <i class="fa-solid fa-circle-chevron-right">‌</i>
+                              <i class="fa-solid fa-circle-chevron-right text-white">‌</i>
                             </a>
 
                           </td>
@@ -161,7 +161,13 @@ import methodModel from '../../methods/methods';
                   {loaging ? <div className="text-center py-4">
                     <img src="/assets/img/loader.gif" className="pageLoader" />
                   </div> : <></>}
-                  {!loaging && data?.length == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
+                  {!loaging && data?.length == 0 ? 
+                  
+                <div className='d-flex flex-column align-items-center justify-content-center'>
+                   <img src="/assets/img/no_data.jpg" className="no_data_img" />
+<div className="my-1 text-center no_data">No Data Found</div>
+                </div>
+                   : <></>}
                 </div>
               </div>
             </div>

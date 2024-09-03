@@ -47,34 +47,72 @@ const DataComparison = ({ oldData, newData, module ,type}) => {
     }
 
     return (<>
-        <h5 className='text-center'>{transformString(module)}</h5>
-        <div className="comparison-container">
-           { type != "created" && <div className="section old-section">
-                <h5>Previous Changes</h5>
+    <div className='container'>
+    <h5 className=' my-4 title_detailss'>{transformString(module)}</h5>
+        <div className="comparison-containe">
+           { type != "created" && <div className="title_newchanges">
+                <h5 className='changes_new' >Previous Changes</h5>
+                <div className="row mx-auto">
                 {Object.keys(filteredDifferences).length === 0 ? (
                     <p>No differences found.</p>
                 ) : (
+                 
                     Object.keys(filteredDifferences).map(key => (
-                        <div key={key} className="data-row">
-                            <strong>{key}:</strong> {truncateText(filteredDifferences[key].old, 50)}
+                       
+                            <div className='col-sm-6 mb-3' key={key} > 
+                            <div className='title_key'>{key}:</div> 
+                        <div className='key_ans'>
+                        {truncateText(filteredDifferences[key].old, 50)}
                         </div>
+                            </div>
+                           
+                        
                     ))
-                )}
-            </div>}
-            <div className="separator"></div>
-            <div className="section new-section">
-                <h5>New Changes</h5>
-                {Object.keys(filteredDifferences).length === 0 ? (
-                    <p>No differences found.</p>
-                ) : (
-                    Object.keys(filteredDifferences).map(key => (
-                        <div key={key} className="data-row">
-                            <strong>{key}:</strong> {truncateText(filteredDifferences[key].new, 50)}
-                        </div>
-                    ))
+             
                 )}
             </div>
+            </div>
+             }
+            {/* <div className="separator"></div> */}
+
+         <div className=' pt-4 pb-5'>
+         <div className=''>
+            <div className='title_newchanges'>
+            <h5 className='changes_new' >New Changes</h5>
+            
+        
+           
+           
+                <div className="section new-section">
+                <div className="row mx-auto">
+                {Object.keys(filteredDifferences).length === 0 ? (
+                    <p>No differences found.</p>
+                ) : (
+
+                    Object.keys(filteredDifferences).map(key => (
+                    
+                           <div className='col-sm-6 mb-3' key={key} >
+                           <div className='title_key' >{key}:</div>
+                           <h5 className='key_ans'>
+                           {truncateText(filteredDifferences[key].new, 50)}
+                           </h5>
+                           </div> 
+                          
+                          
+                      
+                    )
+                )
+                )}
+                  </div>
+            </div>
+                
+           
+            </div>
+         </div>
+         </div>
         </div>
+    </div>
+        
     </>
     );
 };
