@@ -21,18 +21,18 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     const [docLoder, setDocLoder] = useState()
 
     const EventType = [
-        {id:'lead',name:'Lead' },
-        {id:'visitor',name:'Visitor' },
-        {id:'purchase',name:'Purchase' },
+        { id: 'lead', name: 'Lead' },
+        { id: 'visitor', name: 'Visitor' },
+        { id: 'purchase', name: 'Purchase' },
         // { id: 'line-item', name: 'Line-item' }
     ]
 
-    const handleRemove = (valueToRemove,type) => {
+    const handleRemove = (valueToRemove, type) => {
         const updatedValues = (form?.event_type || []).filter((value) => String(value) !== String(valueToRemove));
         setform({ ...form, event_type: updatedValues });
     };
 
-    console.log(form,"formformform")
+    console.log(form, "formformform")
 
     const uploadImage = async (e, key) => {
         let files = e.target.files
@@ -66,21 +66,21 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     // const uploadImage = async (e, key) => {
     //     let files = e.target.files;
     //     let imgfile = Array.from(files);
-      
+
     //     setLoader(true);
-      
+
     //     const promises = imgfile.map(async (file) => {
-      
+
     //       const formData = new FormData();
     //       formData.append('file', file);
-      
+
     //       try {
     //         const res = await axios.post(`${environment?.api}/upload/image?modelName=campaign`, formData, {
     //           headers: {
     //             'Content-Type': 'multipart/form-data',
     //           },
     //         });
-      
+
     //         if (res.data.success) {
     //           let path = res.data.data.fullpath;
     //           if (form.images.length <= 10) {
@@ -100,18 +100,18 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     //         console.error('Upload error:', error);
     //       }
     //     });
-      
+
     //     try {
     //       await Promise.all(promises);
     //     } catch (error) {
     //       console.error('Multiple file upload error:', error);
-         
+
     //     }
-      
+
     //     setLoader(false);
     //     setImgLoder(false);
     //   };
-      
+
 
     const uploadVideos = async (e, key) => {
         console.log('enter');
@@ -134,11 +134,11 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                     return itm
                 })
                 if (form?.videos.length <= 9) {
-                form?.videos?.push({
-                    name: `videos/${items}`,
-                    url: `videos/${items}`
-                })
-            }
+                    form?.videos?.push({
+                        name: `videos/${items}`,
+                        url: `videos/${items}`
+                    })
+                }
             }
             i++
         }
@@ -164,12 +164,12 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
             const res = await ApiClient.postFormData(url, { file: file })
             if (res.success) {
                 let path = res?.data?.imagePath
-                if (form?.documents?.length <= 9) {    
-                form?.documents?.push({
-                    name: `documents/${path}`,
-                    url: `documents/${path}`
-                })
-            }
+                if (form?.documents?.length <= 9) {
+                    form?.documents?.push({
+                        name: `documents/${path}`,
+                        url: `documents/${path}`
+                    })
+                }
             }
             i++
         }
@@ -224,7 +224,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     />
                                     {submitted && !form?.name ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
                                 </div>
-                               
+
                                 <div className="col-md-6 mb-3">
                                     <label>Type<span className="star">*</span></label>
                                     <div className="select_row">
@@ -238,9 +238,9 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                                 setform({ ...form, access_type: e.value })
                                             }}
                                             options={[{
-                                                id:"public",name:"Public"
-                                            },{
-                                                id:"private",name:"Private"
+                                                id: "public", name: "Public"
+                                            }, {
+                                                id: "private", name: "Private"
                                             }]}
                                         />
                                     </div>
@@ -280,14 +280,14 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         {form?.event_type?.length > 0 && <div className="selected_offrs_market">
                                             {form?.event_type?.map((value, index) => (
                                                 <div className="d-flex gap-3 align-items-center btn btn-primary">
-                                                  <p className="mb-0 valus" key={index}>
-                                                    {value} 
-                                                </p>
-                                                <i className="fa fa-times close_bx" onClick={() => handleRemove(value,'remove')}></i>
+                                                    <p className="mb-0 valus" key={index}>
+                                                        {value}
+                                                    </p>
+                                                    <i className="fa fa-times close_bx" onClick={() => handleRemove(value, 'remove')}></i>
                                                 </div>
-                                                
+
                                             ))}
-                        </div>}
+                                        </div>}
                                     </div>
                                     {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
                                 </div>
@@ -316,7 +316,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             }
                                         }}
                                     />
-                     {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
+                                    {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
@@ -330,10 +330,10 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             height: 250,
                                         }}
                                     /> */}
-                                   {affiliateData && <DynamicReactQuill
+                                    {affiliateData && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
-                                       
+
                                         onChange={(newValue, editor) => {
                                             setform({ ...form, description: newValue })
                                         }}
@@ -414,13 +414,13 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     <label>Document(Max. Limit 10)  </label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
-                                           {form?.documents?.length <= 9 && <><button className="btn btn-primary upload_image">Upload Document</button>
-                                            <input type="file" className="form-control-file over_input" accept=".doc,.docx,.xml,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple={true}
-                                                // disabled={loader}
-                                                onChange={(e) => {
-                                                    setDocLoder(true)
-                                                    uploadDocument(e, 'images');
-                                                }} /></>}
+                                            {form?.documents?.length <= 9 && <><button className="btn btn-primary upload_image">Upload Document</button>
+                                                <input type="file" className="form-control-file over_input" accept=".doc,.docx,.xml,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple={true}
+                                                    // disabled={loader}
+                                                    onChange={(e) => {
+                                                        setDocLoder(true)
+                                                        uploadDocument(e, 'images');
+                                                    }} /></>}
                                             {loadDocerr && docLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
                                             <div className="imagesRow mt-4 img-wrappper">
                                                 {form?.documents && form?.documents.map((itm, i) => {
