@@ -139,7 +139,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 </div>
                                 {form?.visibility == 'Exclusive to specific affiliate' && <div className="col-md-6 mb-3">
                                     <label>Media<span className="star">*</span></label>
-                                    <div className="select_row">
+                                    <div className="select_row media_row">
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="name"

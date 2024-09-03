@@ -834,20 +834,12 @@ const Profile = () => {
                   </Modal.Header>
                   <Modal.Body>
 
-                    <div>
+                  { ActivityData?.length > 0 && <div>
                       <CompareTable
                         data={ActivityData}
                         // getData={activityLogsData}
                       />
-                      {/* {ActivityData.map((item:any, index:any) => (
-                        <DataComparison
-                          key={index}
-                          oldData={item.old_data}
-                          newData={item.data}
-                          module={item.module}
-                        />
-                      ))} */}
-                    </div>
+                    </div>}
                     {/* {ActivityData?.map((data: any) => {
                       return <div className='modal_bx'><h5 className='title_body mb-0'>{data?.message}</h5>
                         {data?.response_data?.data?.name && <>
