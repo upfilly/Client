@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Layout from '../components/global/layout/index';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'react-bootstrap';
+import CompareTable from './CompareTable'
 
 const Profile = () => {
   const history = useRouter()
@@ -24,7 +25,7 @@ const Profile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(user,"dfhdgfgdfhgjh")
+  console.log(ActivityData,"ActivityDataActivityData")
 
   const gallaryData = (id: any) => {
     loader(true)
@@ -50,7 +51,7 @@ const Profile = () => {
 
   const activityLogsData = (id: any) => {
     loader(true)
-    ApiClient.get(`getallactivities`, { addedBy: id }).then(res => {
+    ApiClient.get(`activity-logs`, {account_manager_id:user?.id, user_id:id}).then(res => {
       if (res.success) {
         setActivityData(res?.data?.data)
       }
@@ -832,7 +833,22 @@ const Profile = () => {
                     <h5 className='modal-title'>Activity Logs</h5>
                   </Modal.Header>
                   <Modal.Body>
-                    {ActivityData?.map((data: any) => {
+
+                    <div>
+                      <CompareTable
+                        data={ActivityData}
+                        // getData={activityLogsData}
+                      />
+                      {/* {ActivityData.map((item:any, index:any) => (
+                        <DataComparison
+                          key={index}
+                          oldData={item.old_data}
+                          newData={item.data}
+                          module={item.module}
+                        />
+                      ))} */}
+                    </div>
+                    {/* {ActivityData?.map((data: any) => {
                       return <div className='modal_bx'><h5 className='title_body mb-0'>{data?.message}</h5>
                         {data?.response_data?.data?.name && <>
                           <div className="d-flex align-items-center gap-3 sert ">
@@ -841,7 +857,7 @@ const Profile = () => {
                         </>}</div>
                     })
 
-                    }
+                    } */}
                     {ActivityData?.length == 0 && <div className='d-flex justify-content-center align-items-center height_fix' > <img src="/assets/img/no-data.jpg" className='n-databx' alt="" /> </div>}
                   </Modal.Body>
                 </Modal>
