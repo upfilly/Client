@@ -182,10 +182,10 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     {submitted && !form?.applicable ? <div className="invalid-feedback d-block">Applicable is Required</div> : <></>}
                                 </div> */}
   
-                                <div className="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3 main_input">
                                     <label>Start Date<span className="star">*</span></label>
                                     <div className="position-relative">
-                                    <i class="fa fa-calendar-o calender_position" aria-hidden="true"></i>
+                                    {/* <i class="fa fa-calendar-o calender_position" aria-hidden="true"></i> */}
 
                                     <input
                                         type="date"
@@ -198,10 +198,10 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     </div>
                                    
                                 </div>
-                                <div className="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3 main_input">
                                     <label>Expired Date<span className="star">*</span></label>
                                     <div className="position-relative">
-                                    <i class="fa fa-calendar-o calender_position" aria-hidden="true"></i>
+                                    {/* <i class="fa fa-calendar-o calender_position" aria-hidden="true"></i> */}
                                     <input
                                         type="date"
                                         className="width_full"

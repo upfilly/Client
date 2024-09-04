@@ -5495,11 +5495,25 @@ input.width_full {
   width: 100%;
   border: 1px solid #ccc;
   padding: 6px 12px;
-  background-color: transparent;
+  background-color: #fff;
   color: #000;
   border-radius: 33px;
   z-index: 13;
   position: relative;
+}
+
+.main_input input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url('/assets/img/calendar_field.png') no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
 }
 
 
@@ -5565,4 +5579,8 @@ img.no_data_img {
   text-transform: capitalize;
   margin-bottom: 12px;
   font-weight: 600;
+}
+.all_brder_div {
+  border: 1px solid #55afff;
+  border-radius: 6px;
 }
