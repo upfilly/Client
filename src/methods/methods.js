@@ -1,8 +1,9 @@
 import crendentialModel from "@/models/credential.model"
 import environment from "../environment"
-const user=crendentialModel.getUser()
+
 
 const permission=(p)=>{
+const user = JSON.parse(localStorage.getItem("crendentials"))
     if (user && user?.permission_detail && p) {
         return user?.permission_detail[p]
     }else{

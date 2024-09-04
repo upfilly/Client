@@ -37,6 +37,7 @@ if (typeof window !== 'undefined') {
     const logout=()=>{
         ls?.removeItem(KEY)
         ls?.removeItem('token')
+        localStorage.clear()
     }
     crendentialModel={setUser,getUser,logout}
   }

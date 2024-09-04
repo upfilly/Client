@@ -134,12 +134,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         dateFormat="MM/dd/yyyy h:mm aa"
                                         showTimeInput
                                     />
-                                    {/* <input
-                                        type="date"
-                                        className="form-control"
-                                        value={moment(form.activation_date).format('YYYY-MM-DD')}
-                                        onChange={e => setform({ ...form, activation_date: e.target.value })}
-                                    /> */}
+                                  
                                     {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Activation Date Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
@@ -156,13 +151,8 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         dateFormat="MM/dd/yyyy h:mm aa"
                                         showTimeInput
                                     />
-                                    {/* <input
-                                        type="date"
-                                        className="form-control"
-                                        value={moment(form.availability_date).format('YYYY-MM-DD')}
-                                        onChange={e => setform({ ...form, availability_date: e.target.value })}
-                                    /> */}
-                                    {submitted && !form?.availability_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
+                                
+                                    {submitted && !form?.availability_date ? <div className="invalid-feedback d-block">Availability Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Expiration Date<span className="star">*</span></label>
@@ -178,33 +168,12 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         dateFormat="MM/dd/yyyy h:mm aa"
                                         showTimeInput
                                     />
-                                    {/* <input
-                                        type="date"
-                                        className="form-control"
-                                        value={moment(form.expiration_date).format('YYYY-MM-DD')}
-                                        onChange={e => setform({ ...form, expiration_date: e.target.value })}
-                                    /> */}
-                                    {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date Date is Required</div> : <></>}
+                          
+                                    {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3 ">
                                     <label>Select : </label>
                                     <div className="select_check">
-                                        {/* <div className="form-check">
-                                            <input
-                                                type="checkbox"
-                                                className="form-check-input mr-4"
-                                                checked={form?.is_animation}
-                                                onClick={(e) =>
-                                                    setform({
-                                                        ...form,
-                                                        is_animation: !form?.is_animation,
-                                                    })
-                                                }
-                                            />
-                                            <label className="form-check-label" >
-                                                Is Animation
-                                            </label>
-                                        </div> */}
 
                                         <div className="form-check">
                                             <input
