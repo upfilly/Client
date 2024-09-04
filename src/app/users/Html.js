@@ -22,6 +22,7 @@ const Html = ({
     user,
     edit,
     deleteItem,
+    ChangeRole,
 }) => {
 
     const handleKeyPress = (event) => {
@@ -48,6 +49,21 @@ const Html = ({
                                         options={[
                                             { id: 'active', name: 'Active' },
                                             { id: 'deactive', name: 'Inactive' },
+                                        ]}
+                                    />
+
+                                    <SelectDropdown
+                                        id="statusDropdown" 
+                                        className=" "
+                                        displayValue="name"
+                                        placeholder="All Role"
+                                        intialValue={filters?.role}
+                                        result={e => { ChangeRole(e.value) }}
+                                        options={[
+                                            { id: 'super_user', name: 'Super User' },
+                                            { id: 'operator', name: 'Operator' },
+                                            { id: 'analyzer', name: 'Analyzer' },
+                                            { id: 'publisher', name: 'Publisher' },
                                         ]}
                                     />
 
@@ -98,7 +114,7 @@ const Html = ({
                                                             </div></td>
                                                         <td>{methodModel?.capitalizeFirstLetter(itm?.role)}</td>
                                                         <td className='table_dats'>   <span className={`active_btn${itm?.status}`}
-                                                        //  onClick={() => statusChange(itm)}
+                                                         onClick={() => statusChange(itm)}
                                                          >
                                                             <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
                                                                 {itm?.status == 'deactive' ? 'Inactive' : 'Active'}

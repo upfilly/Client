@@ -23,7 +23,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!form?.name || !form?.comments) {
+    if ( !form?.comments) {
       setSubmitted(true)
       return;
     }
@@ -33,6 +33,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
 
     let value = {
       ...form,
+      name:user?.fullName,
       product_id: id
     }
 
@@ -81,7 +82,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
               <Form.Control
                 type="text"
                 placeholder="Enter name"
-                value={form?.name}
+                value={form?.name || user?.fullName}
                 onChange={(e) => setform({ ...form, name: e.target.value })}
                 required
               />

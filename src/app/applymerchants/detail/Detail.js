@@ -58,7 +58,7 @@ const Detail = (p) => {
                         <div className='main_title_head profile-card card_header'>
 
                             <h3 className="  ">
-                                <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a> <span> Affiliate Details</span>
+                                <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a> <span> Merchant Details</span>
                             </h3>
 
 

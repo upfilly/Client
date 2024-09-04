@@ -31,7 +31,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                     onChange={e => setform({ ...form, firstName: e.target.value })}
 
                                 />
-                                {submitted && !form?.firstName ? <div className="invalid-feedback d-block">FirstName is Required</div> : <></>}
+                                {submitted && !form?.firstName ? <div className="invalid-feedback d-block">First Name is Required</div> : <></>}
                             </div>
 
                             <div className="col-md-6 mb-3">
@@ -43,7 +43,27 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                     onChange={e => setform({ ...form, lastName: e.target.value })}
 
                                 />
-                                {submitted && !form?.lastName ? <div className="invalid-feedback d-block">LastName is Required</div> : <></>}
+                                {submitted && !form?.lastName ? <div className="invalid-feedback d-block">Last Name is Required</div> : <></>}
+                            </div>
+
+                            <div className="col-md-6 mb-3">
+                                <label>Select Role</label>
+                                <div className="select_row">
+                                    <SelectDropdown
+                                        id="statusDropdown"
+                                        displayValue="name"
+                                        placeholder="Select Role"
+                                        intialValue={form?.role}
+                                        // disabled={form?.id ? true : false}
+                                        result={e => { setform({ ...form, role: e.value }) }}
+                                        options={[
+                                            { id: user?.role == "affiliate" ? 'super_user' : "super_user", name: 'Super User' },
+                                            { id: 'operator', name: 'Operator' },
+                                            { id: 'analyzer', name: 'Analyzer' },
+                                            { id: 'publisher', name: 'Publisher' },
+                                        ]}
+                                    />
+                                </div>
                             </div>
 
                             <div className="col-md-6 mb-3">
@@ -75,25 +95,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                 </div>
                             </div> */}
 
-                            <div className="col-md-6 mb-3">
-                                <label>Select Role</label>
-                                <div className="select_row">
-                                    <SelectDropdown
-                                        id="statusDropdown"
-                                        displayValue="name"
-                                        placeholder="Select Role"
-                                        intialValue={form?.role}
-                                        // disabled={form?.id ? true : false}
-                                        result={e => { setform({ ...form, role: e.value }) }}
-                                        options={[
-                                            { id: user?.role == "affiliate" ? 'super_user' : "super_user", name: 'Super User' },
-                                            { id: 'operator', name: 'Operator' },
-                                            { id: 'analyzer', name: 'Analyzer' },
-                                            { id: 'publisher', name: 'Publisher' },
-                                        ]}
-                                    />
-                                </div>
-                            </div>
+                            
 
                             <div className="col-md-12 mb-3">
                                 <label>Description</label>

@@ -160,7 +160,18 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         </div>
-                                       
+                                        <div className='row'>
+                                            <div className='col-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Description:</p>
+                                                </div>
+                                            </div>
+                                            <div className='col-12'>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub mb-0' style={{ margin: '0px' }} dangerouslySetInnerHTML={{ __html: data?.description }} />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 
                                 </div>

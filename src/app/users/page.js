@@ -13,7 +13,7 @@ const AffiliateTeam = () => {
 
     const user = crendentialModel.getUser()
     const [filters, setFilter] = useState({
-    brand_id:user?.addedBy ,page: 0, count: 10, search: '', isDeleted: false,status:''})
+    brand_id:user?.addedBy ,page: 0, role:'', count: 10, search: '', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
@@ -79,6 +79,11 @@ const AffiliateTeam = () => {
     const ChangeStatus = (e) => {
         setFilter({ ...filters, status: e, page: 0 })
         getData({ status: e, page: 1 })
+    }
+
+    const ChangeRole = (e) => {
+        setFilter({ ...filters, role: e, page: 0 })
+        getData({ role: e, page: 1 })
     }
 
     const filter = (p={}) => {
@@ -201,6 +206,7 @@ const AffiliateTeam = () => {
             setFilter={setFilter}
             user={user}
             history={history}
+            ChangeRole={ChangeRole}
         />
     </>;
 };
