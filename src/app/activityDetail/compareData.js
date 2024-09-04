@@ -65,12 +65,12 @@ const DataComparison = ({ oldData, newData, module, type }) => {
 
     return (
         <>
-            <div className='mb-5'>
+            <div className='my-5'>
                 <div className='container'>
                     <div className='all_brder_div'>
-                        <h5 className='title_detailss px-3'>Activity Detail</h5>
+                        <h5 className='title_detailss px-3 mb-0'>Activity Detail</h5>
                         <h5 className='title_generate text-center mb-0 pt-3'>{transformString(module)}</h5>
-                        <div className="comparison-containe pt-3 px-3">
+                        <div className="comparison-containe pt-0 px-4">
                             {type !== "created" && <div className="title_newchanges">
                                 <h5 className='changes_new'>Previous Changes</h5>
                                 <div className="row mx-auto">
@@ -89,7 +89,7 @@ const DataComparison = ({ oldData, newData, module, type }) => {
                                 </div>
                             </div>}
 
-                            <div className='pt-4 pb-5'>
+                            <div className='pt-4 pb-4'>
                                 <div className=''>
                                     <div className='title_newchanges'>
                                         <h5 className='changes_new'>New Changes</h5>
