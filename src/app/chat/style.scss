@@ -17,8 +17,8 @@
     border-bottom: 1px solid #efefef;
     margin: 10px 0;
     cursor: pointer;
-    // background: whitesmoke;
-    // border-radius: 10px;
+    background-color: whitesmoke;
+    border-radius: 10px;
 }
 
 .chat_active {
@@ -27,8 +27,8 @@
 }
 
 .persons-list li:hover {
-    transition: 0.2s ease-in;
-    box-shadow: 3px 3px 5px #fd9f8e8f;
+    background: #e4f1f9 !important;
+    border-radius: 10px;
 }
 
 
@@ -377,7 +377,7 @@ i.fa.fa-paperclip {
 
 
 i.fa.send_msg.fa-paper-plane {
-    background: #1b284d;
+    background-image: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
     padding: 15px;
     border-radius: 50px;
     color: #fff;
@@ -771,10 +771,10 @@ li.text_right {
     line-break: anywhere;
 }
 
-.chat-footer label {
-    margin: 0;
-    padding: 12px 12px 0px 9px;
-}
+// .chat-footer label {
+//     margin: 0;
+//     padding: 12px 12px 0px 9px;
+// }
 
 img.download_img_chat {
     width: 150px;
@@ -890,6 +890,9 @@ ul.list-info li h4 {
     
 }
 
+.set_message input {
+    padding-right: 52px;
+}
 .pointer-upload {
     position: absolute;
     right: 5px;
@@ -897,6 +900,10 @@ ul.list-info li h4 {
     border-radius: 50px;
     background: #eff2f5;
     height: 45px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .ellipschat img{
     border-radius: 5px !important;
