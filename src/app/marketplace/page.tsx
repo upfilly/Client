@@ -355,15 +355,20 @@ export default function MarketPlace() {
 
                     <div className="row">
                       {!loaging  && data.map((data: any, index: any) =>
-                         <div className="col-12 col-sm-12 col-md-12 col-lg-6" >
+                         <div className="col-12 col-sm-12 col-md-12 col-lg-6 mb-4" >
                         <div className="showngmkt lists_mkt">
-
+                      
                           <div className="grid_lists_mkt ">
+                          
                             <div className="subparttop d-flex align-items-center justify-content-between" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <div className="leftshead">
                                 <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
-                                <p className="types_date">Type:<span className="types_main"> {data?.opportunity_type?.map((itm: any) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p>
+                                <div className="d-flex align-items-start set_gapbx gap-2">
+                                <p className="types_dates" >Type:</p>
+                                <p className="mb-0 date_types" > <span className="types_main"> {data?.opportunity_type?.map((itm: any) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p>
                               </div>
+                              </div>
+                             
                             </div>
 
                             <div className="showin_mkt mt-4 mb-4" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
@@ -376,9 +381,21 @@ export default function MarketPlace() {
 
 
                             <div className="d-flex align-items-center justify-content-between bordertop gap-3">
-                              <div className="leftshead">
+                              <div className="d-flex align-items-center gap-2 ">
                                 {/* <h6>${data?.price}</h6> */}
-                                <p className="types_date mb-0"><span className="types_main">Start: {datepipeModel.date(data?.start_date)} End: {datepipeModel.date(data?.end_date)}</span></p>
+                                {/* <p className="types_date mb-0">
+                                  <span className="types_main">Start: {datepipeModel.date(data?.start_date)}
+                                     End: {datepipeModel.date(data?.end_date)}</span></p> */}
+
+                                     <div className="d-flex align-items-start set_gapbx gap-2">
+                                <p className="types_dates" >Start:</p>
+                                <p className="mb-0 date_types" > {datepipeModel.date(data?.start_date)}</p>
+                              </div>
+                              <div className="d-flex align-items-start set_gapbx gap-2">
+                                <p className="types_dates" >End:</p>
+                                <p className="mb-0 date_types" > {datepipeModel.date(data?.end_date)}</p>
+                              </div>
+
                               </div>
 
                               {(user?.role == 'brand' || methodModel.permission("make_offer_add")) && <div className="rightimg">

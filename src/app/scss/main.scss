@@ -3259,7 +3259,8 @@ h4.filtes_herd {
   border-radius: 10px;
   margin-bottom: 25px;
   cursor: pointer;
-  height: 314px;
+  // height: 314px;
+  height: 100%;
 }
 
 .showngmkt.lists_mkt:hover {
@@ -3283,7 +3284,7 @@ p.types_date {
 
 .leftshead h6 {
   font-size: 15px;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
 }
 
 .subparttop{
@@ -5583,4 +5584,15 @@ img.no_data_img {
 .all_brder_div {
   border: 1px solid #55afff;
   border-radius: 6px;
+}
+
+.left_arrows {
+  color: #000;
+}
+
+.offer_detail {
+  margin: 0px;
+  font-size: 18px;
+  color: #282626;
+  font-weight: 500;
 }
