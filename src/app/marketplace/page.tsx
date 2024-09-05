@@ -47,11 +47,11 @@ export default function MarketPlace() {
   const [Datefilter, setDateSate] = useState(false)
   const [showFullDescription, setShowFullDescription] = useState([]);
 
-  const toggleDescription = (index: any) => {
-    const newShowFullDescription: any = [...showFullDescription];
-    newShowFullDescription[index] = !newShowFullDescription[index];
-    setShowFullDescription(newShowFullDescription);
-  };
+  // const toggleDescription = (index: any) => {
+  //   const newShowFullDescription: any = [...showFullDescription];
+  //   newShowFullDescription[index] = !newShowFullDescription[index];
+  //   setShowFullDescription(newShowFullDescription);
+  // };
 
   const handleRemove = (valueToRemove:any) => {
         const updatedValues = placement.filter((value:any) => value !== valueToRemove);
@@ -89,22 +89,18 @@ export default function MarketPlace() {
 
   useEffect(() => {
     if (opportunity.length > 0) {
-      console.log("inn")
       setFilter({ ...filters, page: 1, sub_category_id: subCategory_id, opportunity_type: oportunityData, start_date: formattedStartDate, end_date: formattedEndDate })
       getData({ ...filters, page: 1, sub_category_id: subCategory_id, start_date: formattedStartDate, end_date: formattedEndDate, opportunity_type: oportunityData })
     }
     if (opportunity.length == 0 || placement.length == 0) {
-      console.log("inn")
       setFilter({ ...filters, page: 1, sub_category_id: subCategory_id, opportunity_type: oportunityData, placement: placementData, start_date: formattedStartDate, end_date: formattedEndDate })
       getData({ ...filters, page: 1, sub_category_id: subCategory_id, opportunity_type: oportunityData, placement: placementData, start_date: formattedStartDate, end_date: formattedEndDate, })
     }
     if (placement.length > 0) {
-      console.log("innnn")
       setFilter({ ...filters, page: 1, sub_category_id: subCategory_id, placement: placementData, start_date: formattedStartDate, end_date: formattedEndDate })
       getData({ ...filters, page: 1, sub_category_id: subCategory_id, start_date: formattedStartDate, end_date: formattedEndDate, placement: placementData })
     }
     if (subCategory_id || formattedStartDate || formattedEndDate) {
-      console.log("innnnnnnnn")
       setFilter({ ...filters, page: 1, sub_category_id: subCategory_id, start_date: formattedStartDate, end_date: formattedEndDate })
       getData({ ...filters, page: 1, sub_category_id: subCategory_id, start_date: formattedStartDate, end_date: formattedEndDate })
     }

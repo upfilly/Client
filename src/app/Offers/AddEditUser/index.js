@@ -173,12 +173,26 @@ const AddEditUser = () => {
         }
     }, [id])
 
-    const getData = () => {
-        let url = 'users/list'
-        ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+    // const getData = () => {
+    //     let url = 'users/list'
+    //     ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+    //         if (res.success) {
+    //             const data1 = res.data.data.filter(item => item.status === "active");
+    //             setAffiliateData(data1)
+    //         }
+    //     })
+    // }
+
+    const getData = (p = {}) => {
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                const data1 = res.data.data.filter(item => item.status === "active");
-                setAffiliateData(data1)
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setAffiliateData(manipulateData)
             }
         })
     }

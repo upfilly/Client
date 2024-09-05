@@ -199,7 +199,6 @@ export default function affilate() {
         setTotal(res?.data?.total)
         setLoader(false)
       }
-
     })
   };
 

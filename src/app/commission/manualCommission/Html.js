@@ -70,14 +70,27 @@ const Html = () => {
         setCommissionType(e.target.value)
     }
 
+    // const getData = (p = {}) => {
+    //     ApiClient.get(`users/list?role=affiliate`).then(res => {
+    //         if (res.success) {
+    //             setData(res?.data?.data)
+    //         }
+    //     })
+    // };
+
     const getData = (p = {}) => {
-        // let filter = { ...filters, ...p }
-        ApiClient.get(`users/list?role=affiliate`).then(res => {
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                setData(res?.data?.data)
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setData(manipulateData)
             }
         })
-    };
+    }
 
     useEffect(() => {
         getData()

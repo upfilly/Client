@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
-import methodModel from '@/methods/methods';
 import datepipeModel from '@/models/datepipemodel';
-import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -12,7 +10,6 @@ import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
-import environment from '@/environment';
 
 const Html = ({
     view,

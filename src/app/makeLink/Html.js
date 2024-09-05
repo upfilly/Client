@@ -53,13 +53,27 @@ const Html = () => {
         setSelectedValues(selectedOptions);
       };
 
-    const getData = (p = {}) => {
+    // const getData = (p = {}) => {
 
-        let filter = {role: "affiliate",isDeleted: false}
-        let url = 'users/list'
-        ApiClient.get(url, filter).then(res => {
+    //     let filter = {role: "affiliate",isDeleted: false}
+    //     let url = 'users/list'
+    //     ApiClient.get(url, filter).then(res => {
+    //         if (res.success) {
+    //             setBrandData(res?.data?.data);
+    //         }
+    //     })
+    // }
+
+    const getData = (p = {}) => {
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                setBrandData(res?.data?.data);
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setAffiliateData(manipulateData)
             }
         })
     }
