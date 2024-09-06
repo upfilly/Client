@@ -91,7 +91,7 @@ const Forgotpassword = () => {
                                         <button type="submit" className="btn btn-primary loginclass mb-2">
                                             Send
                                         </button>
-                                        <button type="submit" className="btn btn-secondary loginclass mb-2 w-100">
+                                        <button className="btn btn-secondary loginclass mb-2 w-100" onClick={()=>history.back()}>
                                             Back
                                         </button>
                                     </div>
