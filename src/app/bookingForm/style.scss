@@ -94,9 +94,12 @@ p.togel-set {
   border-radius: 50px !important;
   background-color: white !important;
 
-  font-size: 13px;
+  font-size: 13px !important;
+max-width: 100%;
 
-
+}
+.password_space{
+  padding-right: 40px !important;
 }
 
 label.label-set {
@@ -118,11 +121,14 @@ input[type=number] {
 }
 
 .eye-icon-m {
+  z-index: 9;
   position: absolute;
   right: 14px;
   top: 50%;
   transform: translateY(-50%);
+  font-size: 14px;
 }
+
 
 .checked_tbn_after {
   border-radius: 10px;
@@ -167,10 +173,7 @@ input[type=number] {
 // }
 
 
-.eye-icon-m {
-  z-index: 9;
-  position: absolute;
-}
+
 
 p.textWrong {
   text-decoration: line-through;
@@ -224,4 +227,9 @@ input#currency {
 .btn.btn-danger {
   border-radius: 50px !important;
   border: none !important;
+  font-size: 14px;
+}
+
+.pass_danger{
+  font-size: 13px;
 }

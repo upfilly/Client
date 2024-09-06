@@ -337,7 +337,7 @@ export default function MarketPlace() {
                             </div>
                            
                             {/* <button className=" btn btn-primary"> Search</button> */}
-                           { filters?.search && <button className="btn btn-secondary" onClick={(e) => reset()}> Reset</button>}
+                           { filters?.search && <button className="btn btn-primary" onClick={(e) => reset()}> Reset</button>}
                           
                           </div> 
                       
@@ -363,7 +363,7 @@ export default function MarketPlace() {
                             <div className="subparttop d-flex align-items-center justify-content-between" onClick={()=>history.push(`/marketplace/detail/${data?._id}`)}>
                               <div className="leftshead">
                                 <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
-                                <div className="d-flex align-items-start set_gapbx gap-2">
+                                <div className="d-flex align-items-start set_gapbx flex-column">
                                 <p className="types_dates" >Type:</p>
                                 <p className="mb-0 date_types" > <span className="types_main"> {data?.opportunity_type?.map((itm: any) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p>
                               </div>

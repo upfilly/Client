@@ -19,7 +19,8 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
       <div className="top_scrollbx">
         <div className="main-top">
           {urlAllow('dashboard') ? <>
-            <ListItemLink to="/dashboard" data-bs-toggle="tooltip" data-bs-placement="top" title="Dashboard">
+          
+            <ListItemLink to="/dashboard" >
               <i class="material-icons  svg_iconbx">grid_view</i>
               <span className="side_head">Dashboard </span>
             </ListItemLink>
@@ -41,7 +42,9 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <div className={`collapse dropdown-btm ${tabclass('affiliates') || tab == 'affiliates' ? 'show' : ''}`}>
 
               {urlAllow('affiliate') ? <>
+          
                 <ListItemLink to="/affiliate" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage">
+        
                   <div className="d-flex align-items-center icns_center">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
                     <span className="side_head">Manage</span>
@@ -73,7 +76,8 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </ListItemLink>
               </> : <></>}
               {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" data-bs-toggle="tooltip" data-bs-placement="top" title="Affiliate Request">
-            <div className="d-flex align-items-center icns_center">
+        
+           <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">payments</i >
               <span className="side_head">Affiliate Request</span>
             </div>
