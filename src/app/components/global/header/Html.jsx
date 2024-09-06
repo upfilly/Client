@@ -132,7 +132,7 @@ const Html = ({settingData , setShowPopup, isOpen, toggle, isOpen2, toggle2, set
                   </defs>
                 </svg>
 
-                <span className="ml-2">Subscribe to an annual plan to lock in today's pricing before December 1st, 2023!</span>
+                <span className="ml-2 subscribe_text">Subscribe to an annual plan to lock in today's pricing before December 1st, 2023!</span>
               </div>
 
               </div> : <div></div>}
