@@ -140,8 +140,6 @@ const Html = ({ settingData, setShowPopup, isOpen, toggle, isOpen2, toggle2, set
               <div className={!user ? "col-12 col-md-12 col-lg-3 col-xl-2 " : "col-12 col-md-12 px-0"}>
                 <div className="right_auth d-flex align-items-center blue-header-main justify-content-center">
                   {(!user) && <>
-                                      <span className="ml-2">Subscribe to an annual plan to lock in today's pricing before December 1st, 2023!</span>
-
                   <Link className="ml-2 mr-2" href="/SignupOptions"
                   // onClick={() => setShowPopup(true)}
                   >Sign Up</Link> /
