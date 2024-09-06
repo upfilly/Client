@@ -874,7 +874,7 @@ export default function Chat() {
                     </div>}
                   </div>
                   <div className="chat-footer">
-                    <div className=" position-relative w-100">
+                    <div className=" position-relative w-100 set_message">
                       <input
                         type="text"
                         className="form-control"

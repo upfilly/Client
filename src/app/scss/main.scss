@@ -135,7 +135,7 @@ li.pagination-item a {
 }
 
 .pprofile1 {
-  padding: 20px 30px;
+  padding: 20px;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -2704,26 +2704,31 @@ p.checkbox-option-main {
 }
 
 .billing_dtls h6 {
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 0.5px;
   margin: 0px;
 }
 
 .billing_dtls {
-  border-left: 2px solid #2271b8;
+  border: 1px solid #dfdfdf;
   padding: 10px 10px;
   background: #f7f7f7;
+  border-radius: 4px;
+  font-size: 14px;
   margin-bottom: 15px;
 }
 
 .fetch_data {
-  margin-top: 30px;
-  padding: 15px;
-  background-color: #f7f7f7;
+  border: 1px solid #dfdfdf;
+  padding: 10px 10px;
+  background: #f7f7f7;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 
 .fetch_data h4 {
-  font-size: 16px;
+  font-size: 14px;
   margin: 0px;
 }
 
@@ -5595,4 +5600,59 @@ img.no_data_img {
   font-size: 18px;
   color: #282626;
   font-weight: 500;
+}
+
+
+
+.table-responsive::-webkit-scrollbar {
+  width: 2px;
+}
+
+.table-responsive::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.table-responsive:hover::-webkit-scrollbar-thumb{
+  background: #7adbf9;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  // background: #f1f1f1;
+  background-color:#e8e9ed;
+}
+
+.headsubs {
+  color: #5c5050;
+  margin: 0;
+  padding: 0px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.headmains {
+  color: #22517a;
+  margin: 0;
+  padding: 0px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chage_profiles{
+  padding: 20px 30px;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #fff;
+  border-radius: 4px;
+}
+.chage_titles{
+  border-left: 3px solid #007bff;
+  padding-left: 4px;
+}
+.update_btns{
+  width: 150px;
 }

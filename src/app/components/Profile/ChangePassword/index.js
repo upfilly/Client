@@ -44,11 +44,11 @@ const ChangePassword = p => {
   <div className='row'>
         <div className='col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto'>
           <form
-            className="pprofile1 shadow  "
+            className=" chage_profiles shadow  "
             onSubmit={handleSubmit}
           >
-            <div className="col-md-12 mb-3">
-              <h3 className='ViewUser1 mb-4 mt-3'>Change Password</h3>
+            <div className="">
+              <h3 className='ViewUser1 chage_titles mb-4 mt-3'>Change Password</h3>
               <label>Current Password<span className="start">*</span></label>
               <div className="inputWrapper">
                 <input
@@ -64,7 +64,7 @@ const ChangePassword = p => {
               {submitted && getError('currentPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
             </div>
 
-            <div className="col-md-12 mb-3">
+            <div className="">
               <label>New Password<span className="start">*</span></label>
 
               <div className="inputWrapper">
@@ -81,7 +81,7 @@ const ChangePassword = p => {
               {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
             </div>
 
-            <div className="col-md-12 mb-3">
+            <div className="">
               <label>Confirm Password<span className="start">*</span></label>
 
               <div className="inputWrapper">
@@ -108,8 +108,8 @@ const ChangePassword = p => {
 
             </div>
 
-            <div className="col-md-12 text-right mt-3  mb-3">
-              <button type="submit" className="btn btn-primary">
+            <div className=" text-right mt-3  mb-3">
+              <button type="submit" className="btn btn-primary update_btns">
                 Update
               </button>
             </div>

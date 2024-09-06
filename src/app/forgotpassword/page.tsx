@@ -91,6 +91,9 @@ const Forgotpassword = () => {
                                         <button type="submit" className="btn btn-primary loginclass mb-2">
                                             Send
                                         </button>
+                                        <button type="submit" className="btn btn-secondary loginclass mb-2 w-100">
+                                            Back
+                                        </button>
                                     </div>
 
                                     {/* <p className='accopuntt'> Just Remember?<Link className="sign_up" href="/signup"> Sign Up</Link></p> */}
