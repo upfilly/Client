@@ -92,7 +92,7 @@ const Html = ({
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Data Feeds" filters={filters}>
             <div className='sidebar-left-content'>
-                <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 ">
+                <div className="d-flex justify-content-end align-items-center flex-wrap gap-3 ">
                     <div className='d-flex align-items-center flex-wrap gap-2'>
                         {/* <SelectDropdown
                             id="statusDropdown"

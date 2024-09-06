@@ -89,7 +89,7 @@ const Html = ({
                                             <th scope="col" className='table_data' >Tags</th>
                                             <th scope="col" className='table_data' >Status</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                            <th></th>
+                                            <th> Action</th>
                                             {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                         </tr>
                                     </thead>
@@ -135,8 +135,8 @@ const Html = ({
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                                <div className="btn btn-primary">Rejected</div> :
-                                                                <div className="btn btn-primary">Accepted</div>
+                                                                <div className="btn btn-danger"><i className='fa fa-times' ></i></div> :
+                                                                <div className="btn btn-primary"> <i class="fa fa-check" ></i> </div>
                                                         }
                                                     </>}
                                                     <>
@@ -149,10 +149,7 @@ const Html = ({
                                                         </button>
                                                     </>
 
-                                                    {/* {itm?.status == 'accepted' &&
-                <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
-                    Send Proposal
-                </button>} */}
+                                        
 
                                                 </td>}
 

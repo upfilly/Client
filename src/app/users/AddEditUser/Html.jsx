@@ -22,31 +22,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
 
                     <div className="  add_team_bx ">
                         <div className="form-row ">
-                            <div className="col-md-6 mb-3">
-                                <label>First Name<span className="star">*</span></label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={form?.firstName}
-                                    onChange={e => setform({ ...form, firstName: e.target.value })}
-
-                                />
-                                {submitted && !form?.firstName ? <div className="invalid-feedback d-block">First Name is Required</div> : <></>}
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-                                <label>Last Name<span className="star">*</span></label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={form?.lastName}
-                                    onChange={e => setform({ ...form, lastName: e.target.value })}
-
-                                />
-                                {submitted && !form?.lastName ? <div className="invalid-feedback d-block">Last Name is Required</div> : <></>}
-                            </div>
-
-                            <div className="col-md-6 mb-3">
+                        <div className="col-md-12 mb-3">
                                 <label>Select Role</label>
                                 <div className="select_row">
                                     <SelectDropdown
@@ -65,8 +41,33 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                     />
                                 </div>
                             </div>
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                                <label>First Name<span className="star">*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={form?.firstName}
+                                    onChange={e => setform({ ...form, firstName: e.target.value })}
 
-                            <div className="col-md-6 mb-3">
+                                />
+                                {submitted && !form?.firstName ? <div className="invalid-feedback d-block">First Name is Required</div> : <></>}
+                            </div>
+
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                                <label>Last Name<span className="star">*</span></label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={form?.lastName}
+                                    onChange={e => setform({ ...form, lastName: e.target.value })}
+
+                                />
+                                {submitted && !form?.lastName ? <div className="invalid-feedback d-block">Last Name is Required</div> : <></>}
+                            </div>
+
+                           
+
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
                                 <label>E-mail<span className="star">*</span></label>
                                 <input
                                     type="email"
