@@ -53,13 +53,27 @@ export default function Addcomminson() {
   }
 
 
-  const handleAffiliate = () => {
-    ApiClient.get('users/list', { status: "active", role: "affiliate", createBybrand_id: user?.id, }).then(res => {
-      if (res.success == true) {
-        setAffiliate(res?.data?.data)
-      }
+  // const handleAffiliate = () => {
+  //   ApiClient.get('users/list', { status: "active", role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+  //     if (res.success == true) {
+  //       setAffiliate(res?.data?.data)
+  //     }
+  //   })
+  // }
+
+  const handleAffiliate = (p = {}) => {
+    let url = 'getallaffiliatelisting'
+    ApiClient.get(url).then(res => {
+        if (res.success) {
+            const data = res.data
+            const filteredData = data.filter(item => item !== null);
+            const manipulateData = filteredData.map((itm)=>{return{
+                name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+            }})
+            setAffiliate(manipulateData)
+        }
     })
-  }
+}
 
   const handleSave = () => {
 

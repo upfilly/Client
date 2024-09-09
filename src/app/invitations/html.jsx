@@ -135,18 +135,18 @@ const Html = ({
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                                <div className="btn btn-danger"><i className='fa fa-times' ></i></div> :
-                                                                <div className="btn btn-primary"> <i class="fa fa-check" ></i> </div>
+                                                                <a className="edit_icon action-btn"><i className='fa fa-times text-white ' ></i></a> :
+                                                                <a className="edit_icon action-btn"> <i class="fa fa-check text-white " ></i> </a>
                                                         }
                                                     </>}
                                                     <>
-                                                        <button type='button' className='btn btn-primary circle_icons mb-0'
+                                                        <a className='edit_icon action-btn'
                                                             onClick={() => {
                                                                 history.push(`/chat`)
                                                                 localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)
                                                             }}>
-                                                            <i className='fa fa-comment-o'></i>
-                                                        </button>
+                                                            <i className='fa fa-comment-o text-white'></i>
+                                                        </a>
                                                     </>
 
                                         

@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   
   useEffect(() => {
-      if (!user) {
+      if (!user || user?.request_status == "pending" || user?.request_status == "rejected") {
           history.push('/')
       }
   }, [])

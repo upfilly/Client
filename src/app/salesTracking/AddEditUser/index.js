@@ -29,26 +29,26 @@ const AddEditUser = () => {
 
     console.log(form,"fshdjifdjifh")
     
-    const getBrandData = (p = {}) => {
-        let filter = { status: 'accepted' }
-        let url = 'make-offers'
-        ApiClient.get(url, filter).then(res => {
-            if (res.success) {
-                const uniqueBrands = new Set();
-                const filteredData = res?.data?.data.reduce((acc, item) => {
-                    if (!uniqueBrands.has(item.brand_id)) {
-                        uniqueBrands.add(item.brand_id);
-                        acc.push({
-                            id: item.brand_id,
-                            brand_name: item.brand_name
-                        });
-                    }
-                    return acc;
-                }, []);
-                setBrandData(filteredData);
-            }
-        });
-    }    
+    // const getBrandData = (p = {}) => {
+    //     let filter = { status: 'accepted' }
+    //     let url = 'make-offers'
+    //     ApiClient.get(url, filter).then(res => {
+    //         if (res.success) {
+    //             const uniqueBrands = new Set();
+    //             const filteredData = res?.data?.data.reduce((acc, item) => {
+    //                 if (!uniqueBrands.has(item.brand_id)) {
+    //                     uniqueBrands.add(item.brand_id);
+    //                     acc.push({
+    //                         id: item.brand_id,
+    //                         brand_name: item.brand_name
+    //                     });
+    //                 }
+    //                 return acc;
+    //             }, []);
+    //             setBrandData(filteredData);
+    //         }
+    //     });
+    // }    
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
@@ -164,19 +164,33 @@ const AddEditUser = () => {
         }
     }, [id])
 
-    const getData = () => {
-        let url = 'users/list'
-        ApiClient.get(url, {role:"affiliate", createBybrand_id: user?.id,}).then(res => {
+    // const getData = () => {
+    //     let url = 'users/list'
+    //     ApiClient.get(url, {role:"affiliate", createBybrand_id: user?.id,}).then(res => {
+    //         if (res.success) {
+    //             const data1 = res.data.data.filter(item => item.status === "active");
+    //             setAffiliateData(data1)
+    //         }
+    //     })
+    // }
+
+    const getData = (p = {}) => {
+        let url = 'associated/brands'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                const data1 = res.data.data.filter(item => item.status === "active");
-                setAffiliateData(data1)
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    brand_name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setBrandData(manipulateData)
             }
         })
     }
 
     useEffect(()=>{
         getData()
-        getBrandData()
+        // getBrandData()
     },[])
 
     return <>
