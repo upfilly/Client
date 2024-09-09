@@ -175,23 +175,32 @@ const Html = () => {
         //     return;
         // }
         
+        let base_url = 'https://upfilly.com/';
 
-      let base_url='https://upfilly.com/'
-        if(DestinationUrl && selectedBrand && SelectedCampaign){
-           base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}` 
-        }else if(DestinationUrl && selectedBrand){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}`
-        }else if(DestinationUrl && SelectedCampaign){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}` 
-        }else if(SelectedCampaign && selectedBrand){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`  
-        }else if(SelectedCampaign){
-            base_url = `https://upfilly.com/?campaign=${SelectedCampaign}`  
-        }else if(selectedBrand){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}`  
-        }else if(DestinationUrl){
-            base_url = `https://upfilly.com/?url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}`  
-        }
+        const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
+        const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
+        
+        const urlParams = new URLSearchParams({
+            fp_sid: selectedBrand,
+            affiliate: selectedBrand,
+            brand: user?.id
+        }).toString();
+        
+        if (DestinationUrl && selectedBrand && SelectedCampaign) {
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${formattedDestinationUrl}?${urlParams}`;
+        } else if (DestinationUrl && selectedBrand) {
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${formattedDestinationUrl}?${urlParams}`;
+        } else if (DestinationUrl && SelectedCampaign) {
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${formattedDestinationUrl}?${urlParams}`;
+        } else if (SelectedCampaign && selectedBrand) {
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`;
+        } else if (SelectedCampaign) {
+            base_url = `https://upfilly.com/?campaign=${SelectedCampaign}`;
+        } else if (selectedBrand) {
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}`;
+        } else if (DestinationUrl) {
+            base_url = `https://upfilly.com/?url=${formattedDestinationUrl}?${urlParams}`;
+        }        
 
         // loader(true);
         ApiClient.post('get-link', { "base_url":base_url, "parameters": inputValues }).then((res) => {

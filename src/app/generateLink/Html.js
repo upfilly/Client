@@ -160,13 +160,23 @@ const Html = () => {
         //     return;
         // }
         let base_url = 'https://upfilly.com/'
+        const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
+        const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
+
+        const urlParams = new URLSearchParams({
+            fp_sid: user?.id,
+            brand: selectedBrand,
+            affiliate: user?.id
+        }).toString();
+
         if (DestinationUrl && selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}&brand=${selectedBrand}&affiliate=${user?.id}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${formattedDestinationUrl}?${urlParams}`;
         } else if (selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`;
         } else if (DestinationUrl) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}&brand=${selectedBrand}&affiliate=${user?.id}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${formattedDestinationUrl}?${urlParams}`;
         }
+        
 
         // loader(true);
         ApiClient.post('get-link', { "base_url": base_url, "parameters": inputValues }).then((res) => {
