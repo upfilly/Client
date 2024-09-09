@@ -102,8 +102,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             {urlAllow('commisionplan', 'manualCommission') ? <>
               <div className="nav-item">
               <CustomTooltip text="Commissions">
-                <a className={` side_titles nav-link hoverclass affilate ${tabclass('commisions') || tab == 'commisions' ? '' : 'collapsed-m'}`} onClick={() => tabChange('commisions')}
-                   title="Commissions">
+                <a className={` side_titles nav-link hoverclass affilate ${tabclass('commisions') || tab == 'commisions' ? '' : 'collapsed-m'}`} onClick={() => tabChange('commisions')}>
                   <i class="material-icons  svg_iconbx">monetization_on</i>
                   <span className="side_head">Commissions
                   </span>
@@ -149,8 +148,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             {urlAllow('CreativeAsset', 'EmailTemplate' , 'EmailMessages' , 'DataFeeds') ? <>
               <div className="nav-item">
               <CustomTooltip text="Creative Assets">
-                <a className={` side_titles  nav-link hoverclass affilate ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? '' : 'collapsed-m'}`} onClick={() => tabChange('CreativeAssets')}
-                   title="Creative Assets">
+                <a className={` side_titles  nav-link hoverclass affilate ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? '' : 'collapsed-m'}`} onClick={() => tabChange('CreativeAssets')}>
                   <i class="material-icons  svg_iconbx">layers</i>
                   <span className="  side_head" >Creative Assets
                   </span>

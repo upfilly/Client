@@ -1,6 +1,5 @@
 
     .tooltip-text {
-    position: absolute;
     left: 30%;
     transform: translateX(-50%);
     background-color: #333;

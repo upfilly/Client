@@ -31,7 +31,8 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
         <CustomTooltip text={title}>
         <Link href={to} {...rest} className="nav-link hoverclass" />
         </CustomTooltip>
-      </div> : <div className={`nav-item main ${url.includes(to) ? 'active' : ''}`} {...rest}></div>}
+      </div> :  <CustomTooltip text={title}>
+      <div className={`nav-item main ${url.includes(to) ? 'active' : ''}`} {...rest}></div></CustomTooltip>}
     </>
     );
   };
