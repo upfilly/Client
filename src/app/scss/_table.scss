@@ -163,13 +163,17 @@ span.contract {
     color: #0063dc;
 }
 .user_hours {
-    min-width: 66px;
-    display: inline-block;
-    height: 24px;
-    padding: 0 10px; 
-    border-radius: 3px; 
-    align-items: center;
-    justify-content: center;
+    // min-width: 66px;
+    // display: inline-block;
+    // height: 24px;
+    // padding: 0 10px; 
+    // border-radius: 3px; 
+    // align-items: center;
+    // justify-content: center;
+    // text-transform: capitalize;
+    // cursor: pointer;
+    padding: 0 10px;
+    border-radius: 3px;
     text-transform: capitalize;
     cursor: pointer;
 

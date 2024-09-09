@@ -452,7 +452,7 @@ export default function BillingForm() {
                     </div>
 
                     <div className='card-body'>
-                      <div className='row'>
+                      <div className='form-row'>
                         {!user && <>
 
                           <div className='col-12 col-md-6 col-lg-6  '>
@@ -507,7 +507,7 @@ export default function BillingForm() {
                               <div className='input-group position-relative'>
                                 <input
                                   type={eyes.password ? 'text' : 'password'}
-                                  className="form-control quick-radius"
+                                  className="form-control quick-radius password_space"
                                   placeholder='Enter password'
                                   id="password"
                                   name="password"
@@ -518,7 +518,7 @@ export default function BillingForm() {
                                 </div>
 
                               </div>
-                              {passwordError && formData.password.length < 8 && <div className="text-danger">{passwordError}</div>}
+                              {passwordError && formData.password.length < 8 && <div className="text-danger pass_danger ">{passwordError}</div>}
 
                             </div>
 
@@ -529,7 +529,7 @@ export default function BillingForm() {
                               <div className='input-group position-relative'>
                                 <input
                                   type={eyes.confirmPassword ? 'text' : 'password'}
-                                  className="form-control quick-radius"
+                                  className="form-control quick-radius password_space"
                                   placeholder='confirm your password'
                                   id="confirmPassword"
                                   name="confirmPassword"
@@ -540,7 +540,7 @@ export default function BillingForm() {
                                 </div>
                               </div>
                               {confirmPasswordError && formData.password !== formData.confirmPassword && (
-                                <div className="text-danger">{confirmPasswordError}</div>
+                                <div className="text-danger pass_danger">{confirmPasswordError}</div>
                               )}
                             </div>
                           </div>
@@ -588,7 +588,7 @@ export default function BillingForm() {
                       <h4 className='card-title'>Billing Address</h4>
                     </div>
                     <div className='card-body'>
-                      <div className='row'>
+                      <div className='form-row'>
                         <div className='col-12  col-md-12'>
                           <div className='form-group'>
                             <label className='label-set'>Address </label>
@@ -655,81 +655,13 @@ export default function BillingForm() {
                         </div>
                       </div>
 
-
-                      {/* <h3 className='mt-4 mb-4'>Payment detail</h3>
-                <div className='col-12  col-md-6'>
-                  <div className="form-group">
-                    <label className='label-set'>Card Number</label>
-                    <input
-                      type="number"
-                      className="form-control quick-radius"
-                      placeholder='xxxxxxxxxxxxxxxx'
-                      id="cardNumber"
-                      name="cardNumber"
-                      value={formData.cardNumber}
-                      onChange={handleInputChange}
-                    />
-                    {summitted && !validateCardNumber(formData.cardNumber) ? <div className="invalid-feedback d-block">cardNumber is not required</div> : <></>}
-
-                  </div>
-                </div>
-                <div className='col-12  col-md-6'>
-                  <div className="form-group card-expiry">
-                    <label className='label-set'>Card Expiry</label>
-                    <DatePicker
-                      selected={startDate}
-                      className="form-control quick-radius "
-                      onChange={(date) => setStartDate(date)}
-                      dateFormat="MM/yy"
-                      placeholderText="Select Expiry Date"
-                      minDate={new Date()}
-                      showMonthYearPicker
-                      showFullMonthYearPicker
-                      showIcon
-                    />
-                    {summitted && !startDate ? <div className="invalid-feedback d-block">CardExpiry is not required</div> : <></>}
-
-                  </div>
-                </div>
-                <div className='col-12  col-md-6'>
-                  <div className="form-group">
-                    <label className='label-set'>Card CVV</label>
-                    <input
-                      type="number"
-                      className="form-control quick-radius"
-                      placeholder='xxx'
-                      id="cardCvc"
-                      name="cardCvc"
-                      value={formData.cardCvc}
-                      onChange={handleInputChange}
-                    />
-                    {summitted && !validateCVV(formData.cardCvc) ? <div className="invalid-feedback d-block">CardCvc is not required</div> : <></>}
-
-                  </div>
-                </div> */}
-
-                      {/* <div className='col-12  col-md-6'>
-                <div className="form-group">
-                  <label className='label-set'>Paypal Email</label>
-                  <input
-                    type="email"
-                    className="form-control quick-radius"
-                    id="paypal_email"
-                    name="paypal_email"
-                    value={formData.paypal_email}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                {summitted && !formData.paypal_email ? <div className="invalid-feedback d-block">Paypal email is not required</div> : <></>}
-              </div> */}
-
-                      <div className='col-md-12 '>
-                        <div className=' d-flex justify-content-center  justify-content-md-end justify-content-lg-center' >
+                     
+                        <div className='  d-flex justify-content-center gap-3  justify-content-md-end justify-content-lg-center' >
                         <button className='btn btn-primary buy-btn' onClick={handleSave}>Buy</button>
                         <button className='btn btn-danger buy-btn ml-2' onClick={() => history.back()}>Cancel</button>
                         </div>
                        
-                      </div>
+                     
                     </div>
                   </div>
               

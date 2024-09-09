@@ -27,7 +27,7 @@ b {
 
 .blog_img {
   height: 220px !important;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 // .btn:hover {
@@ -483,12 +483,12 @@ i.fa {
 
 a.edit_icon {
   border: 1px solid #DCDCDC;
-  height: 30px;
-  width: 30px;
+  height: 32px;
+  width: 32px;
   align-items: center;
   display: flex;
   justify-content: center;
-  border-radius: 5px;
+  border-radius: 36px;
 
   &:hover {
     text-decoration: none !important;
@@ -689,7 +689,7 @@ button.btn.btn-primary.loginclass {
 
 .btn-primary {
   border-radius: 50px !important;
-  border: none !important;
+  border: unset !important;
 }
 
 @media(max-width:768px) {
@@ -1677,8 +1677,6 @@ label.btn.btn-primary.edit.ml-3 {
   border: 1px solid #DCDCDC !important;
   color: #202020 !important;
   font-size: 14px !important;
-  height: 43px;
-  border-radius: 5Campaigns0px;
   font-weight: 500;
 
 }
@@ -1858,15 +1856,13 @@ input.form-control-file.over_input {
 }
 
 .views.text-end {
-  font-size: 11px;
-  background: #e2e2e2;
-  width: 83px;
+  font-size: 14px;
   padding: 2px 4px;
-
+  align-items: center;
   display: flex;
   justify-content: center;
-
   border-radius: 4px;
+  color: #000;
 }
 
 p.card-text.text-truncate p {
@@ -1882,8 +1878,7 @@ p.card-text.text-truncate p {
 }
 
 .card-shadow h4.card-title {
-  font-size: 21px;
-  margin: 18px 0 5px 0;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -1900,11 +1895,11 @@ p.card-text.text-truncate p {
   padding: 29px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 10px;
-  margin-bottom: 80px;
+  // margin-bottom: 80px;
 }
 
 .blog-padding {
-  margin-top: 80px;
+  margin-top: 40px;
 }
 
 .blogs-inner .title {
@@ -1947,9 +1942,10 @@ p.card-text.text-truncate p {
 }
 
 .buy-btn {
-  width: 120px;
+  // width: 120px;
+  width: 100%;
   padding: 10px;
-  margin: 10px 0 10px;
+  // margin: 10px 0 10px;
 }
 
 .checkbox-custom {
@@ -2987,7 +2983,7 @@ a.btn.btn-primary.edit {
 }
 
 .common-padding {
-  padding: 60px 0px;
+  padding: 40px 0px 60px;
 }
 
 .subsmal {
@@ -4107,7 +4103,7 @@ p.revuh{
 
 @media (max-width:992px){
   .user-profile_scroller {
-    height: 171px !important;
+    max-height: 171px !important;
 }
   .none_bx{
     display: block !important;
@@ -4120,9 +4116,9 @@ p.revuh{
     flex-direction: column-reverse;
   }
   //booking from css
-.select_plans {
-  font-size: 30px;
-}
+// .select_plans {
+//   font-size: 30px;
+// }
 }
 
 
@@ -4989,7 +4985,12 @@ input.mr-2.radio {
 
 //booking from css
 .select_plans {
-  font-size: 30px;
+  background-color: #eaf0fe;
+  padding: 10px;
+  font-size: 21px;
+  color: #000;
+  border-radius: 4px;
+  border: 1px solid #f0f0f0;
 }
 //header css
 .proifle_dropbx .dropdown-menu.show  a.has-icon.dropdown-item {
@@ -5655,4 +5656,143 @@ img.no_data_img {
 }
 .update_btns{
   width: 150px;
+}
+.btn-primary{
+  padding: 6px 12px !important;
+  font-size: 14px !important;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+img.no_data_im {
+  width: 300px;
+  height: 300px;
+}
+.blog_cards{
+  height: 100% !important;
+}
+
+
+.blog_cardd {
+  height: 224px;
+  border: 1px solid #d7d5d5;
+  margin: 20px;
+  border-radius: 4px;
+}
+
+.blog_cardd .blog_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog_cards .cantain_btns {
+  background-color: #dddddd;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.blog_cards .card-img-overlay {
+  position: absolute;
+  top: 19px;
+  left: 19px;
+  width: 89%;
+}
+
+// .blog_cards .carousel .control-arrow,  .blog_cards  .carousel.carousel-slider .control-arrow {
+//   transition: all .25s ease-in;
+//   opacity: 1;
+//   position: absolute;
+//   z-index: 2;
+//   background: none;
+//   border: 0;
+//   cursor: pointer;
+//   background-color: #00BCD4;
+//   width: 28px;
+//   height: 28px;
+//   border-radius: 46px;
+// }
+
+// .blog_cards .carousel .control-arrow:before,  .blog_cards  .carousel.carousel-slider .control-arrow:before {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   transform: translate(6px, 6px);
+// }
+
+.blog_cards .carousel.carousel-slider .control-arrow {
+  opacity: 7 !important;
+  background-color: #68bafe;
+  width: 24px;
+  height: 24px;
+  border-radius: 31px;
+  top: 50%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.blog_cards  .carousel .control-arrow:before, .carousel.carousel-slider .control-arrow:before{
+  margin: 0px !important;
+  border-top: 5px solid transparent !important;
+  border-bottom: 5px solid transparent !important;
+}
+.blog_cards .carousel .control-prev.control-arrow {
+  left: 7%;
+}
+
+.blog_cards .carousel .control-next.control-arrow {
+  right: 7%;
+}
+
+.blog_cards .carousel .carousel-status {
+  width: 80px;
+  position: absolute;
+  top: 75%;
+  right: 50%;
+  color: #fff;
+  background-color: #86bafd;
+  font-size: 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  height: 24px;
+  transform: translate(50%, 50%);
+  display: flex;
+  justify-content: center;
+  text-shadow: unset;
+  align-items: center;
+}
+
+.blog_cards .carousel .thumbs-wrapper{
+  display: none;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+.blogs-inner .blog_title {
+  font-size: 24px;
+}
+
+.blogs-inner .blog_title_inner {
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.blogs-inner .blog_paragraph {
+  margin-bottom: 0px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+input.form-control {
+  font-size: 14px;
 }

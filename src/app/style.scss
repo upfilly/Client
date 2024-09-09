@@ -19,7 +19,7 @@ p.desc {
 }
 
 .btn-primary {
-    border: none !important;
+    // border: none !important;
     border-radius: 50px !important;
 }
 
@@ -27,7 +27,7 @@ p.desc {
 
 .blog_img {
     height: 220px !important;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .social {
@@ -172,10 +172,12 @@ input.form-control-file.over_input {
 .bg_blue:hover {
     box-shadow: 3px 10px 10px #1b284d5c;
     border: 3px solid #fff;
+    transition: 0.8s;
 }
 
 .bg_blue {
-    border: 3px solid transparent;
+    border: 3px solid #fff;
+    transition: 0.8s;
 }
 
 
