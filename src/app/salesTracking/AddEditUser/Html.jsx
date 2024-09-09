@@ -164,10 +164,10 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                 </div>
                                 <div className="col-md-12 mb-3">
                                     <label>Description</label>
-                                   {affiliateData && <DynamicReactQuill
+                                    <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
-                                       
+
                                         onChange={(newValue, editor) => {
                                             setform({ ...form, description: newValue })
                                         }}
@@ -190,7 +190,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                             'link', 'image', 'video'
                                         ]}
                                         bounds={'.app'}
-                                    />}
+                                    />
                                 </div>
 
                                 <div className="col-md-6 mt-3">

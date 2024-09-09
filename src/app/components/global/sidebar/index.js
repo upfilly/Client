@@ -4,6 +4,7 @@ import crendentialModel from '@/models/credential.model';
 import Html from './Html';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import CustomTooltip from '../../common/Tooltip/CustomTooltip';
 
 const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
   const user = crendentialModel.getUser()
@@ -23,12 +24,13 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     customer: ['customer']
   }
 
-  const ListItemLink = ({ to, type = 'link', disabled = false, ...rest }) => {
+  const ListItemLink = ({ to, type = 'link',title, disabled = false, ...rest }) => {
     let url = pathname
     return (<>
       {type == 'link' ? <div className={`nav-item ${url.includes(to) ? 'active' : ''} ${disabled ? 'disabled' : ''}`}>
-        {/* {...rest} */}
+        <CustomTooltip text={title}>
         <Link href={to} {...rest} className="nav-link hoverclass" />
+        </CustomTooltip>
       </div> : <div className={`nav-item main ${url.includes(to) ? 'active' : ''}`} {...rest}></div>}
     </>
     );
