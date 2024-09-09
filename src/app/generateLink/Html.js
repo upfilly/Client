@@ -159,27 +159,46 @@ const Html = () => {
         //     toast.error("Please fill in all required fields.");
         //     return;
         // }
-        let base_url = 'https://upfilly.com/'
+        const base_url = 'https://upfilly.com/';
         const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
         const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
-
+        
+        const baseParams = new URLSearchParams({
+            affiliate_id: user?.id,
+            merchant_id: selectedBrand
+        });
+        
         const urlParams = new URLSearchParams({
             fp_sid: user?.id,
             brand: selectedBrand,
             affiliate: user?.id
         }).toString();
-
-        if (DestinationUrl && selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${formattedDestinationUrl}?${urlParams}`;
-        } else if (selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`;
-        } else if (DestinationUrl) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${formattedDestinationUrl}?${urlParams}`;
+        
+        let finalUrl = base_url;
+        
+        if (user?.id) {
+            finalUrl += `?affiliate_id=${user?.id}`;
         }
+        
+        if (selectedBrand) {
+            finalUrl += `&merchant_id=${selectedBrand}`;
+        }
+        
+        if (DestinationUrl) {
+            const finalDestinationUrl = formattedDestinationUrl + (urlParams ? `?${urlParams}` : '');
+            finalUrl += `&url=${encodeURIComponent(finalDestinationUrl)}`;
+        }
+        
+        if (!finalUrl.includes('?')) {
+            finalUrl += '?';
+        }
+        
+        console.log(finalUrl);
+        
         
 
         // loader(true);
-        ApiClient.post('get-link', { "base_url": base_url, "parameters": inputValues }).then((res) => {
+        ApiClient.post('get-link', { "base_url": finalUrl, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);

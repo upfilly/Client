@@ -175,35 +175,37 @@ const Html = () => {
         //     return;
         // }
         
-        let base_url = 'https://upfilly.com/';
+        const base_url = 'https://upfilly.com/';
 
         const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
         const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
-        
+
         const urlParams = new URLSearchParams({
             fp_sid: selectedBrand,
             affiliate: selectedBrand,
             brand: user?.id
         }).toString();
-        
-        if (DestinationUrl && selectedBrand && SelectedCampaign) {
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${formattedDestinationUrl}?${urlParams}`;
-        } else if (DestinationUrl && selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${formattedDestinationUrl}?${urlParams}`;
-        } else if (DestinationUrl && SelectedCampaign) {
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${formattedDestinationUrl}?${urlParams}`;
-        } else if (SelectedCampaign && selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`;
-        } else if (SelectedCampaign) {
-            base_url = `https://upfilly.com/?campaign=${SelectedCampaign}`;
-        } else if (selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}`;
-        } else if (DestinationUrl) {
-            base_url = `https://upfilly.com/?url=${formattedDestinationUrl}?${urlParams}`;
-        }        
+
+        let finalUrl = new URL(base_url);
+
+        if (selectedBrand) {
+            finalUrl.searchParams.set('affiliate_id', selectedBrand);
+        }
+
+        if (SelectedCampaign) {
+            finalUrl.searchParams.set('campaign', SelectedCampaign);
+        }
+
+        if (DestinationUrl) {
+            const destinationUrlWithParams = `${formattedDestinationUrl}?${urlParams}`;
+            finalUrl.searchParams.set('url', encodeURIComponent(destinationUrlWithParams));
+        }
+
+        const finalUrlString = finalUrl.toString();
+       
 
         // loader(true);
-        ApiClient.post('get-link', { "base_url":base_url, "parameters": inputValues }).then((res) => {
+        ApiClient.post('get-link', { "base_url":finalUrlString, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
