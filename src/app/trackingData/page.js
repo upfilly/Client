@@ -153,8 +153,12 @@ export default function affilate() {
                           }, [])?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
+                          <th scope="col" >Affiliate Id</th> 
+                          <th scope="col" >Currency</th> 
+                          <th scope="col" >Price</th> 
+                          <th scope="col" >Order Id</th> 
 
-                          <th scope="col" >Page</th>
+                          {/* <th scope="col" >Page</th> */}
                           {/* <th scope="col" onClick={e => sorting('currency')}>Currency</th>
                           <th scope="col" onClick={e => sorting('transaction_status')}>Transaction Status</th> */}
                           <th scope="col" onClick={e => sorting('createdAt')}>Creation Date</th>
@@ -163,22 +167,27 @@ export default function affilate() {
                         </tr>
                       </thead>
 
-                  <tbody>
-                    {!loaging && data?.data?.map((itm, i) => {
+                      <tbody>
+                        {!loaging && data?.data?.map((itm, i) => {
 
-                      return <tr className='data_row' key={i}>
-                        {uniqueKeys?.map(key => {
-                          const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
-                          return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
-                        })}
-                        <td className='name-person ml-2' >{itm?.data?.page}</td>
-                        <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
-                        <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td>
-                      </tr>
+                          return <tr className='data_row' key={i}>
+                            {uniqueKeys?.map(key => {
+                              const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
+                              return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
+                            })}
+                            <td className='name-person ml-2' >{itm?.affiliate_id}</td>
+                            <td className='name-person ml-2' >{itm?.currency}</td>
+                            <td className='name-person ml-2' >{itm?.price}</td>
+                            <td className='name-person ml-2' >{itm?.order_id}</td>
 
-                    })
-                    }
-                  </tbody>
+                            {/* <td className='name-person ml-2' >{itm?.data?.page}</td> */}
+                            <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
+                            <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td>
+                          </tr>
+
+                        })
+                        }
+                      </tbody>
                 </table>
                 {loaging ? <div className="text-center py-4">
                   <img src="/assets/img/loader.gif" className="pageLoader" />
