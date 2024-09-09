@@ -12,7 +12,9 @@ let crendentialModel:any={
 
     },
     logout:()=>{
-    localStorage.clear()
+    localStorage.removeItem("crendentials")
+    localStorage.removeItem("addedUser")
+    localStorage.removeItem("token")
     }
 }
 
@@ -37,7 +39,9 @@ if (typeof window !== 'undefined') {
     const logout=()=>{
         ls?.removeItem(KEY)
         ls?.removeItem('token')
-        localStorage.clear()
+        localStorage.removeItem("crendentials")
+        localStorage.removeItem("addedUser")
+        localStorage.removeItem("token")
     }
     crendentialModel={setUser,getUser,logout}
   }
