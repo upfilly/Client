@@ -154,6 +154,7 @@ export default function affilate() {
                             <th key={key} scope="col">{key}</th>
                           ))}
                           <th scope="col" >Affiliate Id</th> 
+                          <th scope="col" >Brand Id</th> 
                           <th scope="col" >Currency</th> 
                           <th scope="col" >Price</th> 
                           <th scope="col" >Order Id</th> 
@@ -176,6 +177,7 @@ export default function affilate() {
                               return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                             })}
                             <td className='name-person ml-2' >{itm?.affiliate_id}</td>
+                            <td className='name-person ml-2' >{itm?.brand_id || "--"}</td>
                             <td className='name-person ml-2' >{itm?.currency}</td>
                             <td className='name-person ml-2' >{itm?.price}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>

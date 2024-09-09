@@ -173,7 +173,7 @@ const AddEditUser = () => {
                     setform({
                         id:value?.id || value?._id,
                         "title": value?.title,
-                        "destination_url": value?.destination_url,
+                        "destination_url": `${value?.destination_url}`,
                         "description": value?.description,
                         "seo_attributes": value?.seo_attributes,
                         "category_id": value?.category_id?.id,

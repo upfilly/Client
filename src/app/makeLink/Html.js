@@ -178,11 +178,11 @@ const Html = () => {
 
       let base_url='https://upfilly.com/'
         if(DestinationUrl && selectedBrand && SelectedCampaign){
-           base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}` 
+           base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}` 
         }else if(DestinationUrl && selectedBrand){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}`
         }else if(DestinationUrl && SelectedCampaign){
-            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}` 
+            base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}&url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}` 
         }else if(SelectedCampaign && selectedBrand){
             base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`  
         }else if(SelectedCampaign){
@@ -190,7 +190,7 @@ const Html = () => {
         }else if(selectedBrand){
             base_url = `https://upfilly.com/?affiliate_id=${selectedBrand}`  
         }else if(DestinationUrl){
-            base_url = `https://upfilly.com/?url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}`}`  
+            base_url = `https://upfilly.com/?url=${`https://${DestinationUrl}?fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`}`  
         }
 
         // loader(true);

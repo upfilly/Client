@@ -161,11 +161,11 @@ const Html = () => {
         // }
         let base_url = 'https://upfilly.com/'
         if (DestinationUrl && selectedBrand) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}&brand=${selectedBrand}&affiliate=${user?.id}`}`
         } else if (selectedBrand) {
             base_url = `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`
         } else if (DestinationUrl) {
-            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}`}`
+            base_url = `https://upfilly.com/?affiliate_id=${user?.id}&url=${`https://${DestinationUrl}?fp_sid=${user?.id}&brand=${selectedBrand}&affiliate=${user?.id}`}`
         }
 
         // loader(true);
