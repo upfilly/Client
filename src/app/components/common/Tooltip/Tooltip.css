@@ -1,6 +1,13 @@
-
-    .tooltip-text {
-    left: 30%;
+.tooltip-container {
+    position: relative;
+    /* display: inline-block; */
+  }
+  
+  .tooltip-text {
+    visibility: hidden; 
+    position: absolute;
+    /* bottom: 125%; */
+    left: 50%;
     transform: translateX(-50%);
     background-color: #333;
     color: #fff;
@@ -13,7 +20,8 @@
     transition: opacity 0.3s;
   }
   
-  .tooltip-text {
+  .tooltip-container:hover .tooltip-text {
+    visibility: visible;
     opacity: 1;
   }
   
