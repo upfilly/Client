@@ -152,6 +152,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                         withPortal
                                         dateFormat={"dd/MM/yyyy"}
                                     />
+                {submitted && (startDate && endDate) ? <div className="invalid-feedback d-block">Date is Required</div> : <></>}
                                 </div>
                              
                                 <div className="select_drop col-md-6 mb-3">
@@ -244,7 +245,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                                     </span>
                                                 ))}
                                             </div>}
-                                    {submitted && !form?.opportunity_type?.length <= 0 ? (
+                                    {submitted && form?.opportunity_type?.length == 0 ? (
                                         <div className="invalid-feedback d-block">Opportunity Type is Required</div>
                                     ) : (
                                         <></>
@@ -274,8 +275,8 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                                     </span>
                                                 ))}
                                             </div>}
-                                    {submitted && !form?.category_id ? (
-                                        <div className="invalid-feedback d-block">Category is Required</div>
+                                    {submitted && form?.payment_model?.length == 0 ? (
+                                        <div className="invalid-feedback d-block">Payment Model is Required</div>
                                     ) : (
                                         <></>
                                     )}

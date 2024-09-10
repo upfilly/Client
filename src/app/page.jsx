@@ -20,7 +20,8 @@ export default function Home() {
   const [location, setLocation] = useState(null);
   const param = useSearchParams()
   const id = param.get("affiliate_id")
-  const url = param.get("url")
+  const data = param.get("url")
+  const url = decodeURIComponent(data)
   const [payload, setPayload] = useState({
     isSet: false,
   });

@@ -69,11 +69,11 @@ const Html = () => {
         ApiClient.get(url).then(res => {
             if (res.success) {
                 const data = res.data
-                const filteredData = data.filter(item => item !== null);
-                const manipulateData = filteredData.map((itm)=>{return{
+                // const filteredData = data.filter(item => item !== null);
+                const manipulateData = data.map((itm)=>{return{
                     name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
                 }})
-                setAffiliateData(manipulateData)
+                setBrandData(manipulateData)
             }
         })
     }
@@ -178,7 +178,7 @@ const Html = () => {
         const base_url = 'https://upfilly.com/';
 
         const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
-        const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
+        const formattedDestinationUrl = hasProtocol ? DestinationUrl : DestinationUrl;
 
         const urlParams = new URLSearchParams({
             fp_sid: selectedBrand,
@@ -239,7 +239,7 @@ const Html = () => {
                                             <label className='mb-2' >Select a Affiliate</label>
                                             <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
                                                 <option value="">Select a Affiliate</option>
-                                                {brands.map(brand => (
+                                                {brandData.map(brand => (
                                                     <option key={brand.id} value={brand.id} >{brand.name}</option>
                                                 ))}
                                             </select>
