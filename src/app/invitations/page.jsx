@@ -191,7 +191,7 @@ const Invitations = () => {
   // }
 
   const view = (id) => {
-    history.push("/Trackings/detail/" + id)
+    history.push("/invitations/detail/" + id)
   }
 
   const edit = (id) => {

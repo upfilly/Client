@@ -150,7 +150,6 @@ export default function Home() {
     getLocation();
   }, []);
 
-  console.log(deviceInfo,location,IP,id,"========iiiiiidddddd")
 
   useEffect(() => {
     if (id && IP) {

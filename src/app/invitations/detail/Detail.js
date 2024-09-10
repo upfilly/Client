@@ -13,7 +13,7 @@ const Detail = (p) => {
     const [data, setData] = useState()
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`tracking-customer`, { id: did }).then(res => {
+        ApiClient.get(`getInviteById`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
@@ -48,12 +48,12 @@ const Detail = (p) => {
                             <div className='row'>
                                 <div className='col-3'>
                                     <div className='userdata'>
-                                        <p className='headmain'>Affiliate Link:</p>
+                                        <p className='headmain'>Sended By:</p>
                                     </div>
                                 </div>
                                 <div className='col-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && data?.affiliate_link}</p>
+                                        <p className='headsub'>{data && data?.addedBy?.fullName}</p>
                                     </div>
                                 </div>
                             </div>
@@ -61,24 +61,36 @@ const Detail = (p) => {
                          <><div className='row'>
                                 <div className='col-3'>
                                     <div className='userdata'>
-                                        <p className='headmain'>Total Clicks:</p>
+                                        <p className='headmain'>Sender E-mail:</p>
                                     </div>
                                 </div>
                                 <div className='col-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && data?.clicks}</p>
+                                        <p className='headsub'>{data && data?.addedBy?.email}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className='row'>
                             <div className='col-3'>
                                 <div className='userdata'>
-                                    <p className='headmain'>Type:</p>
+                                    <p className='headmain'>Campaign:</p>
                                 </div>
                             </div>
                             <div className='col-9'>
                                 <div className='name-dtls'>
-                                    <p className='headsub'>{data?.type == 'returning_customer' ? 'Returning Customer' : 'New Customer'}</p>
+                                    <p className='headsub'>{data?.campaign_id?.name}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col-3'>
+                                <div className='userdata'>
+                                    <p className='headmain'>Message:</p>
+                                </div>
+                            </div>
+                            <div className='col-9'>
+                                <div className='name-dtls'>
+                                    <p className='headsub'>{data?.message}</p>
                                 </div>
                             </div>
                         </div>

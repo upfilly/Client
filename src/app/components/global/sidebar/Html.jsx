@@ -224,7 +224,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
 
-          {(methodModel.permission('marketplace_product_get') || user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers"  title="Add Offer" >
+          {(methodModel.permission('marketplace_product_add') || user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers"  title="Add Offer" >
             <i className="material-icons  svg_iconbx ListItemLink" title="product">add_shopping_cart</i>
             <span className="side_head ">Add Offer</span>
           </ListItemLink>}
