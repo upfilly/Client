@@ -32,7 +32,13 @@ export default function affilate() {
   const getData = (p = {}) => {
 
     setLoader(true)
-    let filter = { ...filters, ...p}
+    let filter ;
+
+    if(user?.role == "brand"){
+      filter = { ...filters, ...p,brand_id:user?.id}
+    }else{
+      filter = { ...filters, ...p , affiliate_id:user.id}
+    }
     
     ApiClient.get(`affiliatelink/all`, filter).then(res => {
       if (res.success) {
@@ -132,8 +138,49 @@ export default function affilate() {
        <div className='container-fluid'>
      
        <div className='row'>
-            <div className='col-md-12'>
-            </div>
+       <div className='card-header'>
+                        <div className="main_title_head d-flex justify-content-between align-items-center">
+                            <h3 className="">
+                                Tracking Affiliates
+                            </h3>
+
+                            <article className="d-flex filterFlex phView">
+                                <div className='searchInput'>
+                                    <input
+                                        type="text"
+                                        value={filters.search}
+                                        placeholder="Search"
+                                        className="form-control"
+                                        onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
+                                        // onKeyPress={handleKeyPress}
+                                    />
+                                    <i class="fa fa-search search_fa" onClick={() => {
+                                        filter()
+                                    }} aria-hidden="true"></i>
+                                </div>
+
+                                {/* <SelectDropdown
+                                    id="statusDropdown"
+                                    displayValue="name"
+                                    placeholder="All Status"
+                                    intialValue={filters.status}
+                                    result={e => { ChangeStatus(e.value) }}
+                                    options={[
+                                        {id:'pending',name:'Pending'},
+                                        {id:'accepted',name:'Accepted'},
+                                        {id:'rejected',name:'Rejected'},
+                                    ]}
+                                /> */}
+
+
+                                {filters.search ? <>
+                                    <a className="btn btn-primary" onClick={e => reset()}>
+                                        Reset
+                                    </a>
+                                </> : <></>}
+                            </article>
+                        </div>
+                    </div>
           </div>
           <div className='row '>
             <div className='respon_data'>
@@ -153,8 +200,8 @@ export default function affilate() {
                           }, [])?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
-                          <th scope="col" >Affiliate Id</th> 
-                          <th scope="col" >Brand Id</th> 
+                          <th scope="col" >Affiliate</th> 
+                          <th scope="col" >Brand</th> 
                           <th scope="col" >Currency</th> 
                           <th scope="col" >Price</th> 
                           <th scope="col" >Order Id</th> 
@@ -163,7 +210,7 @@ export default function affilate() {
                           {/* <th scope="col" onClick={e => sorting('currency')}>Currency</th>
                           <th scope="col" onClick={e => sorting('transaction_status')}>Transaction Status</th> */}
                           <th scope="col" onClick={e => sorting('createdAt')}>Creation Date</th>
-                          <th scope="col" onClick={e => sorting('updatedAt')}>Last Modified</th>
+                          {/* <th scope="col" onClick={e => sorting('updatedAt')}>Last Modified</th> */}
                           <th></th>
                         </tr>
                       </thead>
@@ -176,15 +223,15 @@ export default function affilate() {
                               const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
                               return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                             })}
-                            <td className='name-person ml-2' >{itm?.affiliate_id}</td>
-                            <td className='name-person ml-2' >{itm?.brand_id || "--"}</td>
+                            <td className='name-person ml-2' >{itm?.affiliate_name}</td>
+                            <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
                             <td className='name-person ml-2' >{itm?.currency}</td>
                             <td className='name-person ml-2' >{itm?.price}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
 
                             {/* <td className='name-person ml-2' >{itm?.data?.page}</td> */}
                             <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
-                            <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td>
+                            {/* <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td> */}
                           </tr>
 
                         })
