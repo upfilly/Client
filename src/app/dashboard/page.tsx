@@ -7,6 +7,7 @@ import "./style.scss";
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import environment from '@/environment';
+import BarChart from '../components/common/BarChart/Barchart'
 
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false)
@@ -16,7 +17,7 @@ export default function Dashboard() {
   const [campaignData,setCampaignData] = useState<any>(null)
   const [recentUser,setRecentUser] = useState<any>([])
   const [CampaignRequest , setCampaignRequest] = useState<any>(null)
-
+  const [analyticData,setAnalyticData]=useState<any>()
   
   useEffect(() => {
       if (!user || user?.request_status == "pending" || user?.request_status == "rejected") {
@@ -39,12 +40,31 @@ export default function Dashboard() {
     })
   }
   },[])
+
+  const getAnalyticsData = (p = {}) => {
+    let url = 'analytics-sales'
+    let filters;
+    if(user?.role == "affiliate"){
+      filters={affiliate_id:user?.id}
+    }else{
+      filters={brand_id:user?.id}
+    }
+    ApiClient.get(url,filters).then(res => {
+      if (res) {
+        setAnalyticData(res?.data)
+        // getData(res?.data?.id)
+      }
+    })
+  }
+
+  console.log(analyticData,"analyticDataanalyticDataanalyticData")
   
   useEffect(()=>{
     if(user){
     ApiClient.get('total-campaigns').then((data)=>{
      setCampaignData(data)
     })
+    getAnalyticsData()
   }
   },[])
 
@@ -178,7 +198,8 @@ export default function Dashboard() {
   <div className="container-fluid ">
      <div className='row '>
           <div className='col-sm-12 col-md-7 col-lg-7 col-xl-9  mb-3 '>
-            <img className='w-100' src='/assets/img/yeks.png' alt=''></img>
+            <BarChart data={analyticData?.data?.[0]}/>
+            {/* <img className='w-100' src='/assets/img/yeks.png' alt=''></img> */}
           </div>
           <div className='col-sm-12 col-md-5 col-lg-5 col-xl-3   mb-3'>
             <div className='dispost'>
