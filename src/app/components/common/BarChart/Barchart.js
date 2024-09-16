@@ -21,8 +21,8 @@ const BarChart = ({ data }) => {
       {
         label: 'Price',
         data: data?.data?.map(d => d.price),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 134, 192, 0.6)',
+        borderColor: 'rgba(75, 134, 192, 1)',
         borderWidth: 1,
       },
     ],

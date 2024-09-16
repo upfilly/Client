@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import environment from '@/environment';
 import BarChart from '../components/common/BarChart/Barchart'
+import PieChart from '../components/common/PieChart/Piechat'
 
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false)
@@ -202,7 +203,8 @@ export default function Dashboard() {
             {/* <img className='w-100' src='/assets/img/yeks.png' alt=''></img> */}
           </div>
           <div className='col-sm-12 col-md-5 col-lg-5 col-xl-3   mb-3'>
-            <div className='dispost'>
+            <PieChart data={analyticData?.data?.[0]}/>
+            {/* <div className='dispost'>
               <div className='d-flex align-items-center flex-wrap justify-content-between'>
                 <p className='tives mb-0'>Dispositives</p>
                 <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
@@ -233,7 +235,7 @@ export default function Dashboard() {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
      </div>
