@@ -47,8 +47,8 @@ const ChangePassword = p => {
             className=" chage_profiles shadow  "
             onSubmit={handleSubmit}
           >
-            <div className="">
-              <h3 className='ViewUser1 chage_titles mb-4 mt-3'>Change Password</h3>
+            <div className="mb-2">
+              <h3 className='ViewUser1 chage_titles  mt-3 mb-4'>Change Password</h3>
               <label>Current Password<span className="start">*</span></label>
               <div className="inputWrapper">
                 <input
@@ -64,7 +64,7 @@ const ChangePassword = p => {
               {submitted && getError('currentPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
             </div>
 
-            <div className="">
+            <div className="mb-2">
               <label>New Password<span className="start">*</span></label>
 
               <div className="inputWrapper">
@@ -81,7 +81,7 @@ const ChangePassword = p => {
               {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
             </div>
 
-            <div className="">
+            <div className="mb-2">
               <label>Confirm Password<span className="start">*</span></label>
 
               <div className="inputWrapper">
@@ -108,8 +108,8 @@ const ChangePassword = p => {
 
             </div>
 
-            <div className=" text-right mt-3  mb-3">
-              <button type="submit" className="btn btn-primary update_btns">
+            <div className=" text-right mt-4  mb-3">
+              <button type="submit" className="btn btn-primary update_btns w-100">
                 Update
               </button>
             </div>

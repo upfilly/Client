@@ -65,7 +65,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
 
                                 <div className='col-md-6 mb-3'>
                                     {/* <div className='mb-3' > */}
-                                        <div className='mb-2' >Select Type</div><span className="star">*</span>
+                                        <label >Select Type<span className="star">*</span></label>
                                         <SelectDropdown
                                             id="statusDropdown"
                                             displayValue="name"
