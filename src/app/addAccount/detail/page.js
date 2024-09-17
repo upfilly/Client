@@ -1046,8 +1046,8 @@ export default function addAffiliateAccount() {
                     social_security_number: e.target.value,
                   });
                   // console.log(
-                    form?.social_security_number.replaceAll("-", "")
-                  );
+                    // form?.social_security_number.replaceAll("-", "")
+                  // );
                 }}
               />
               {sumitted && !form?.social_security_number && (
