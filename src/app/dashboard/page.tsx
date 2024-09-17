@@ -58,7 +58,7 @@ export default function Dashboard() {
     })
   }
 
-  console.log(analyticData,"analyticDataanalyticDataanalyticData")
+  // console.log(analyticData,"analyticDataanalyticDataanalyticData")
   
   useEffect(()=>{
     if(user){

@@ -20,8 +20,8 @@ const ImageUpload = ({ model, result, value, multiple ,required,err}) => {
         setLoader(true)
         for await (let item of imgfile) {
             let file = files.item(i)
-            console.log("i", i)
-            console.log("file", file)
+            // console.log("i", i)
+            // console.log("file", file)
             const res = await ApiClient.postFormData('upload/image?modelName=' + model, { file: file })
             if (res.success) {
                 let image = res.data.fullpath

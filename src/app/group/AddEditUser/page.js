@@ -58,7 +58,7 @@ const AddEditUser = () => {
     const imageResult = (e, key) => {
         images[key] = e.value
         setImages(images)
-        // console.log("imageResult", e)
+        // // console.log("imageResult", e)
     }
 
     const addressResult = (e) => {

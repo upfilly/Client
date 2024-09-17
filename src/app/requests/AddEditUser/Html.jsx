@@ -22,7 +22,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
     const [docLoder, setDocLoder] = useState()
 
     const uploadImage = async (e, key) => {
-        console.log('enter');
+        // console.log('enter');
         let files = e.target.files
         let i = 0
         let imgfile = []
@@ -52,7 +52,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
     }
 
     const uploadVideos = async (e, key) => {
-        console.log('enter');
+        // console.log('enter');
         let files = e.target.files
         let i = 0
         let imgfile = []
@@ -85,7 +85,7 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
     }
 
     const uploadDocument = async (e, key) => {
-        console.log('enter');
+        // console.log('enter');
         let files = e.target.files
         let i = 0
         let imgfile = []

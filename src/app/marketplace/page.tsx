@@ -304,7 +304,7 @@ export default function MarketPlace() {
 </div>
                         {opportunity?.length > 0 && <div className="selected_offrs_market">
                            {opportunity.map((value: any,index:any) =>{ 
-                            console.log(value,"dfhnjihnj")
+                            // console.log(value,"dfhnjihnj")
                             return<span key={index}>
                               {value}<i className="fa fa-times" onClick={() => handleRemoveOpportunity(value)}></i> 
                             </span>

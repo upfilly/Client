@@ -20,7 +20,7 @@ const Html = () => {
   const history = useRouter()
   const childRef = useRef();
 
-  console.log(form,"dfgdfgdgfd======")
+  // console.log(form,"dfgdfgdgfd======")
 
   const handleClick = () => {
     childRef.current.export_to_html();

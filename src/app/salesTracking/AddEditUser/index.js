@@ -27,7 +27,7 @@ const AddEditUser = () => {
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
 
-    console.log(form,"fshdjifdjifh")
+    // console.log(form,"fshdjifdjifh")
     
     // const getBrandData = (p = {}) => {
     //     let filter = { status: 'accepted' }
@@ -130,7 +130,7 @@ const AddEditUser = () => {
                 if (res.success) {
                     let value=res.data
                     setDetail(value)
-                    console.log(value,"vvvvvvvvvqqqqq")
+                    // console.log(value,"vvvvvvvvvqqqqq")
                     setform({
                         id:value?.id || value?._id,
                         brand_id:value?.brand_id,

@@ -32,7 +32,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         setform({ ...form, event_type: updatedValues });
     };
 
-    console.log(form, "formformform")
+    // console.log(form, "formformform")
 
     const uploadImage = async (e, key) => {
         let files = e.target.files
@@ -97,14 +97,14 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     //           }
     //         }
     //       } catch (error) {
-    //         console.error('Upload error:', error);
+    //         // console.error('Upload error:', error);
     //       }
     //     });
 
     //     try {
     //       await Promise.all(promises);
     //     } catch (error) {
-    //       console.error('Multiple file upload error:', error);
+    //       // console.error('Multiple file upload error:', error);
 
     //     }
 
@@ -114,7 +114,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
 
 
     const uploadVideos = async (e, key) => {
-        console.log('enter');
+        // console.log('enter');
         let files = e.target.files
         let i = 0
         let imgfile = []
@@ -148,7 +148,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     }
 
     const uploadDocument = async (e, key) => {
-        console.log('enter');
+        // console.log('enter');
         let files = e.target.files
         let i = 0
         let imgfile = []

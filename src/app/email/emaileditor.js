@@ -13,7 +13,7 @@ const EmailEditorTemplate = ({ state, setstate }) => {
     if (unlayer) {
       unlayer.exportHtml((data) => {
         const { design, html } = data;
-        console.log('exportHtml', html);
+        // console.log('exportHtml', html);
 
         if (html) {
           setstate((prev) => ({
@@ -25,7 +25,7 @@ const EmailEditorTemplate = ({ state, setstate }) => {
         }
       });
     } else {
-      console.error('Unlayer editor not available');
+      // console.error('Unlayer editor not available');
     }
   };
 
@@ -47,7 +47,7 @@ const EmailEditorTemplate = ({ state, setstate }) => {
   };
 
   const loadSelectedDesign = (design) => {
-    console.log("loadSelectedDesign", design);
+    // console.log("loadSelectedDesign", design);
     if (emailEditorRef.current && emailEditorRef.current.editor)
       emailEditorRef.current.editor.loadDesign(design);
   };

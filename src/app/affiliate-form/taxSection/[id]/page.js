@@ -57,7 +57,7 @@ const Publish = () => {
     // loader(true)
     ApiClient.get(`user/detail?id=${id}`).then(res => {
       if (res.success) {
-        console.log(res?.data,"0000000000")
+        // console.log(res?.data,"0000000000")
         setForm({ is_us_citizen:res?.data?.tax_detail?.is_us_citizen,
         id:id,
         federal_text_classification:res?.data?.tax_detail?.federal_text_classification,
@@ -472,7 +472,7 @@ const Publish = () => {
                               ...form,
                               social_security_number: e.target.value,
                             });
-                            console.log(
+                            // console.log(
                               form?.social_security_number.replaceAll("-", "")
                             );
                           }}

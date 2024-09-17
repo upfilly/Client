@@ -25,7 +25,7 @@ const Profile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(ActivityData,"ActivityDataActivityData")
+  // console.log(ActivityData,"ActivityDataActivityData")
 
   const gallaryData = (id: any) => {
     loader(true)

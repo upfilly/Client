@@ -90,7 +90,7 @@ export default function StageSecStep() {
       setAddress(selectedAddress);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   };
 

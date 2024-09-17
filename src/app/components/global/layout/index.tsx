@@ -55,7 +55,7 @@ export default function Layout({ title, description, children , handleKeyPress, 
   }, [])
 
   // const requestPermission = async () => {
-  //   console.log("Requesting permission...");
+  //   // console.log("Requesting permission...");
   //   await Notification.requestPermission()
   //     .then((permission) => {
         // requestForToken()
@@ -67,7 +67,7 @@ export default function Layout({ title, description, children , handleKeyPress, 
         // }
   //     })
   //     .catch((error) => {
-  //       console.error("Error while requesting notification permission:", error);
+  //       // console.error("Error while requesting notification permission:", error);
   //     });
   // };
 

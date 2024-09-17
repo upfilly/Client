@@ -401,7 +401,7 @@ export default function affilate() {
     }
   }
 
-  console.log(selectedAffiliteid,"selectedAffiliteid")
+  // console.log(selectedAffiliteid,"selectedAffiliteid")
 
   return (
     <>

@@ -174,7 +174,7 @@ export default function addAffiliateAccount() {
       setAddress(selectedAddress);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   };
 
@@ -1045,7 +1045,7 @@ export default function addAffiliateAccount() {
                     ...form,
                     social_security_number: e.target.value,
                   });
-                  console.log(
+                  // console.log(
                     form?.social_security_number.replaceAll("-", "")
                   );
                 }}

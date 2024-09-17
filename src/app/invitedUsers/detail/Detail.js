@@ -25,7 +25,7 @@ const Detail = (p) => {
             })
     };
 
-    console.log(data, "=========")
+    // console.log(data, "=========")
 
     const back = () => {
         history.back()

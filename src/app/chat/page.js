@@ -56,11 +56,11 @@ export default function Chat() {
   const [filteredArray, setFilteredArray] = useState([]);
   const [searchText, setSearchText] = useState('');
   ConnectSocket.on('user-online', (data) => {
-    console.log(data,"daataaOnline")
+    // console.log(data,"daataaOnline")
     setOnlineUserId(data?.data?.user_id);
   });
   ConnectSocket.on('user-offline', (data) => {
-    console.log(data,"daataaOffline")
+    // console.log(data,"daataaOffline")
     setOfflineUserId(data?.data?.user_id);
   });
 
@@ -100,7 +100,7 @@ export default function Chat() {
       })
   })
 
-  console.log(activeUser, "activeData----------------")
+  // console.log(activeUser, "activeData----------------")
 
   const uploadGroupImage = (e) => {
     // setForm({ ...form, baseImg: e.target.value })
@@ -225,7 +225,7 @@ export default function Chat() {
       ApiClient.get(`user/detail`, { id: id }).then((res) => {
         if (res.success) {
 
-          console.log({ details: res.data });
+          // console.log({ details: res.data });
           setChatWith({ ...res.data });
         }
       });
@@ -317,7 +317,7 @@ export default function Chat() {
       if (result.isConfirmed) {
         loader(true)
         axios.put(SocketURL + url, payload).then((res) => {
-          console.log(res?.data?.success, "]]]]]]]")
+          // console.log(res?.data?.success, "]]]]]]]")
           if (res?.data?.success) {
             toast.success('Leaved Group Successfully')
             loader(false)
@@ -502,7 +502,7 @@ export default function Chat() {
       axios.post(`${SocketURL}chat/user/join-group`, payload).then((res) => {
         if (res?.data?.success) {
           const data = res.data;
-          // console.log(res?.data,"=----------")
+          // // console.log(res?.data,"=----------")
           setRoomId(res.data.data.room_id);
           userMessage(data.data.room_id,data?.room_members?.[0]?.user_id);
           joinRoom(data.data.room_id);
@@ -633,7 +633,7 @@ export default function Chat() {
                             filteredChatList?.length > 0
                               ?
                               filteredChatList?.map((itm, indx) => {
-                                console.log(itm,"itmmmmmm=====")
+                                // console.log(itm,"itmmmmmm=====")
                                 return (<>
                                  
                                   <li

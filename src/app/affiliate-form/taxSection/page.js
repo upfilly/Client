@@ -442,7 +442,7 @@ const Publish = () => {
                               ...form,
                               social_security_number: e.target.value,
                             });
-                            console.log(
+                            // console.log(
                               form?.social_security_number.replaceAll("-", "")
                             );
                           }}

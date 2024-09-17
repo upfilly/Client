@@ -95,7 +95,7 @@ export default function StageLastStep() {
       })
     } catch (error) {
       // Handle errors if the request fails
-      console.error('Error sending data:', error);
+      // console.error('Error sending data:', error);
     }
   }
 

@@ -19,7 +19,7 @@ const ActivityView = () => {
         });
       };
 
-      console.log(data,"jdgsgd")
+      // console.log(data,"jdgsgd")
 
       useEffect(()=>{
         getData()

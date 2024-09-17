@@ -123,7 +123,7 @@ export default function BillingForm() {
       setAddress(selectedLocation?.address);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   }
 

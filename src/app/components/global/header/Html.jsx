@@ -30,7 +30,7 @@ const Html = ({ settingData, setShowPopup, isOpen, toggle, isOpen2, toggle2, set
   //     const ipAddress = ipRes.data.ip;
   //     const locationRes = await axios.get(`https://ipapi.co/${ipAddress}/json/`);
   //     if (locationRes && locationRes.data) {
-  //       console.log(locationRes,"========locationRes")
+  //       // console.log(locationRes,"========locationRes")
   //       localStorage.setItem("ip", ipAddress);
   //       localStorage.setItem("location", JSON.stringify(locationRes.data));
   //     }
@@ -44,7 +44,7 @@ const Html = ({ settingData, setShowPopup, isOpen, toggle, isOpen2, toggle2, set
   useEffect(() => {
     ConnectSocket.emit("notify-message", { user_id: user?.id });
     ConnectSocket.on(`notify-message`, (data) => {
-      console.log("notify-message", data)
+      // console.log("notify-message", data)
     });
   }, [])
 
@@ -77,7 +77,9 @@ const Html = ({ settingData, setShowPopup, isOpen, toggle, isOpen2, toggle2, set
       .then((res) => {
         localStorage.setItem("ip_address", res.ip)
       })
-      .catch((error) => console.log(error, "==Ip Address Error"));
+      .catch((error) =>{ 
+        // console.log(error, "==Ip Address Error")
+      });
   };
 
   useEffect(() => {

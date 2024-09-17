@@ -81,7 +81,7 @@ const AddEditUser = () => {
       setAddress(selectedAddress);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   };
 
@@ -155,7 +155,7 @@ const AddEditUser = () => {
   const imageResult = (e, key) => {
     // images[key] = e.value
     setImages(e?.value)
-    console.log("imageResult", e)
+    // console.log("imageResult", e)
   }
 
   const addressResult = (e) => {

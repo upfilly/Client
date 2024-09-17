@@ -103,7 +103,7 @@ const Html = () => {
                 setCopied(false);
             }, 1000);
         }).catch(err => {
-            console.error('Failed to copy: ', err);
+            // console.error('Failed to copy: ', err);
         });
     };
 
@@ -115,7 +115,7 @@ const Html = () => {
                 setCopied(false);
             }, 1000);
         }).catch(err => {
-            console.error('Failed to copy: ', err);
+            // console.error('Failed to copy: ', err);
         });
     };
 
@@ -193,7 +193,7 @@ const Html = () => {
             finalUrl += '?';
         }
         
-        console.log(finalUrl);
+        // console.log(finalUrl);
         
         
 

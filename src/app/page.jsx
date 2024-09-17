@@ -52,10 +52,11 @@ export default function Home() {
         setIP(res.ip);
         // getUserLocation(data.ip, slugData);
       })
-      .catch((error) => console.log(error, "==Ip Address Error"));
+      .catch((error) =>{ 
+        // console.log(error, "==Ip Address Error");
     // const res = await axios.get("https://api.ipify.org/?format=json");
     // setIP(res.data.ip);
-  };
+  })};
 
   const setCookieValue = () => {
     Cookies.set('Upfilly_affiliate', id)
@@ -139,11 +140,11 @@ export default function Home() {
             });
           },
           error => {
-            console.error(error);
+            // console.error(error);
           }
         );
       } else {
-        console.error('Geolocation is not supported by this browser.');
+        // console.error('Geolocation is not supported by this browser.');
       }
     };
 
