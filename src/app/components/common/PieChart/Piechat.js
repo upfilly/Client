@@ -82,7 +82,7 @@ const DonutChart = ({ data }) => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '250px', height: '250px' }}>
+    <div style={{ position: 'relative', width: '250px', height: '250px', margin:'Auto' }}>
       <Pie data={chartData} options={options} />
       <div style={{
         position: 'absolute',
