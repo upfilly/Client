@@ -23,7 +23,7 @@ export default function affilate() {
   const user = crendentialModel.getUser()
   const [filters, setFilter] = useState({
     page: 0,
-    count: 4,
+    count: 10,
     role: "affiliate",
     search: '',
     // createBybrand_id: user?.id,
