@@ -210,7 +210,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           
 
-          {(methodModel.permission('commission_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/commission/addcommision"  title="Commissions">
+          {(methodModel.permission('commission_get') || user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/commission/addcommision"  title="Commissions">
             <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">local_atm</i >
               <span className="side_head">Manage Commissions</span>

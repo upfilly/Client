@@ -121,7 +121,7 @@ const Html = ({
                             <thead className='table_head'>
                                 <tr className='heading_row'>
                                     <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    <th scope="col" className='table_data'>Price ($)</th>
+                                    {/* <th scope="col" className='table_data'>Price ($)</th> */}
                                     <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {(user?.role == 'affiliate' || methodModel.permission("marketplace_product_edit")) && <th scope="col" className='table_data'>Action</th>
@@ -139,7 +139,7 @@ const Html = ({
                                                     </h4>
                                                 </div>
                                             </div></td>
-                                        <td className='table_dats'>{itm?.price}</td>
+                                        {/* <td className='table_dats'>{itm?.price}</td> */}
                                         <td className='table_dats'>   <div className={`user_hours`}>
                                             <span className={itm?.status == "active" ? 'contract capital' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
                                                 onClick={() => statusChange(itm)}
