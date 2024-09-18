@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import './style.scss';
+import methodModel from '@/methods/methods';
 
 const Html = ({
     reset,
@@ -118,7 +119,7 @@ const Html = ({
                                                     </div></td>
                                                 {/* <td className='table_dats'>{itm?.commission}</td> */}
                                                 <td className='table_dats'>{itm?.tags?.map((data) => data).join(",")}</td>
-                                                <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>
+                                                <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{methodModel.capitalizeFirstLetter(itm?.status)}</td>
                                                 {/* <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td> */}
                                                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
                                                 {<td className='table_dats d-flex set_iconstabls justify-content-center '>
@@ -135,8 +136,13 @@ const Html = ({
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                                <div className="btn btn-danger"><i className='fa fa-times' ></i></div> :
-                                                                <div className="btn btn-primary"> <i class="fa fa-check" ></i> </div>
+                                                            <div className="btn btn-danger" title="Rejected">
+                                                            <i className="fa fa-times"></i>
+                                                          </div>
+                                                          :
+                                                          <div className="btn btn-primary" title="Accepted">
+                                                            <i className="fa fa-check"></i>
+                                                          </div>
                                                         }
                                                     </>}
                                                     <>
