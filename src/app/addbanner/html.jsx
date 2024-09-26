@@ -24,8 +24,6 @@ const Html = ({
     total,
     setFilter,
     filter,
-    statusChange,
-    user,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
