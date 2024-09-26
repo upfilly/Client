@@ -23,7 +23,6 @@ const Html = ({
     edit,
     deleteItem,
     ChangeRole,
-    user
 }) => {
 
     const handleKeyPress = (event) => {
