@@ -37,6 +37,14 @@ const Html = () => {
     const [DestinationUrl, setDestinationUrl] = useState('')
     const [shrtlnk, setshrtlnk] = useState('')
 
+    const permission = (p) => {
+        if (user && user?.permission_detail && p) {
+          return user?.permission_detail[p]
+        } else {
+          return false
+        }
+      }
+
     const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
             ...prevState,
@@ -312,7 +320,7 @@ const Html = () => {
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
                             </div>
 
-                            {methodModel.permission('generate_link_get') && <div className='mb-3'>
+                            {permission('generate_link_get') && <div className='mb-3'>
                                 <h6 className="link_default m-0"> Your Link :</h6>
 
                                 <div className="input-group my-2">
@@ -327,7 +335,7 @@ const Html = () => {
                             </div>}
                             {copied && <div className="">Copied!</div>}
 
-                            {methodModel.permission('generate_link_get') && <div className='mb-3' >
+                            {permission('generate_link_get') && <div className='mb-3' >
                                 <h6 className="link_default m-0"> Your Short Link : </h6>
 
                                 {shrtlnk && <div className="input-group my-2">

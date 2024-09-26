@@ -25,6 +25,7 @@ const Html = ({
     setFilter,
     filter,
     statusChange,
+    user,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -36,6 +37,14 @@ const Html = ({
             filter();
         }
     };
+
+    const permission=(p)=>{
+        if (user && user?.permission_detail && p) {
+            return user?.permission_detail[p]
+        }else{
+            return false
+        }
+    }
 
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Banners" filters={filters}>
@@ -55,7 +64,7 @@ const Html = ({
                     />
 
                     <article className="d-flex filterFlex phView">
-                       {(user?.role == "brand" || methodModel.permission('banner_add')) && <>
+                       {(user?.role == "brand" || permission('banner_add')) && <>
                             <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Banner
                             </a>
@@ -140,7 +149,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                 {/* dropdown */}
-                {(user?.role == "brand"||methodModel.permission('banner_edit')) && <td className='table_dats'>
+                {(user?.role == "brand"||permission('banner_edit')) && <td className='table_dats'>
                     <div className="action_icons gap-3 ">
                         {<>{isAllow('editAdmins') ? <>
                             <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
@@ -148,7 +157,7 @@ const Html = ({
                             </a>
                         </> : <></>}
 
-                            {isAllow('deleteAdmins') && methodModel.permission('banner_delete') ? <>
+                            {isAllow('deleteAdmins') && permission('banner_delete') ? <>
                                 <a className='edit_icon edit-delete' onClick={() => deleteItem(itm.id || itm?._id)}>
                                     <i className={`material-icons delete`} title='Delete'> delete</i>
                                 </a>

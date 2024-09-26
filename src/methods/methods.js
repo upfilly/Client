@@ -1,14 +1,5 @@
 import crendentialModel from "@/models/credential.model"
 import environment from "../environment"
-const user=crendentialModel.getUser()
-
-const permission=(p)=>{
-    if (user && user?.permission_detail && p) {
-        return user?.permission_detail[p]
-    }else{
-        return false
-    }
-}
 
 const isTranslatePage = () => {
     let value = false
@@ -200,5 +191,5 @@ function capitalizeFirstLetter(str) {
   }
 
 
-const methodModel = {permission, capitalizeFirstLetter,userImg,route, isNumber, isRatio, find, getError, getFormError, getPrams, emailRequiredFor, emailvalidation, noImg, isTranslatePage, generatekeysArr }
+const methodModel = { capitalizeFirstLetter,userImg,route, isNumber, isRatio, find, getError, getFormError, getPrams, emailRequiredFor, emailvalidation, noImg, isTranslatePage, generatekeysArr }
 export default methodModel

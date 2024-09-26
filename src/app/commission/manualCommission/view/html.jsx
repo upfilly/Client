@@ -21,11 +21,18 @@ const Html = ({
     total,
     setFilter,
     filter,
+    user
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
-    // console.log(data, "dhsjghgfj")
+    const permission=(p)=>{
+        if (user && user?.permission_detail && p) {
+            return user?.permission_detail[p]
+        }else{
+            return false
+        }
+    }
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -52,7 +59,7 @@ const Html = ({
 
                     <article className="d-flex filterFlex phView">
                         <>
-                            {methodModel.permission('commission_add')&&<a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
+                            {permission('commission_add')&&<a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Commission
                             </a>}
                         </>

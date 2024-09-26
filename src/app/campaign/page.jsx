@@ -193,6 +193,7 @@ const Users = () => {
         total={total}
         sorting={sorting}
         setFilter={setFilter}
+        user={user}
         // statusChange={statusChange}
     />
     </>;

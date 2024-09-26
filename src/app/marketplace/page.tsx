@@ -53,6 +53,14 @@ export default function MarketPlace() {
   //   setShowFullDescription(newShowFullDescription);
   // };
 
+  const permission = (p: any) => {
+    if (user && user?.permission_detail && p) {
+      return user?.permission_detail[p]
+    } else {
+      return false
+    }
+  }
+
   const handleRemove = (valueToRemove:any) => {
         const updatedValues = placement.filter((value:any) => value !== valueToRemove);
         setPlacement(updatedValues);
@@ -394,7 +402,7 @@ export default function MarketPlace() {
 
                               </div>
 
-                              {(user?.role == 'brand' || methodModel.permission("make_offer_add")) && <div className="rightimg">
+                              {(user?.role == 'brand' || permission("make_offer_add")) && <div className="rightimg">
                                 <div className="btn_offers d-flex justify-content-end">
                                   {data?.isSubmitted ?
                                     <button className="btn-cancel" disabled>Offer Sent</button>

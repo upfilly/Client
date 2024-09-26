@@ -39,6 +39,14 @@ export default function MarketPlaceDetail() {
         }
     }, [id])
 
+    const permission=(p)=>{
+        if (user && user?.permission_detail && p) {
+            return user?.permission_detail[p]
+        }else{
+            return false
+        }
+    }
+
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
             <div className="p-80">
@@ -94,7 +102,7 @@ export default function MarketPlaceDetail() {
                              
                                 </div>
 
-                                {(user?.role == 'brand' || methodModel.permission("make_offer_add")) && <div className="rightimg">
+                                {(user?.role == 'brand' || permission("make_offer_add")) && <div className="rightimg">
                                     <div className="btn_offers d-flex justify-content-end">
                                         {data?.isSubmitted ?
                                             <button className="btn-cancel" disabled>Offer Sent</button>

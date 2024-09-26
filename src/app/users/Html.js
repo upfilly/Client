@@ -23,6 +23,7 @@ const Html = ({
     edit,
     deleteItem,
     ChangeRole,
+    user
 }) => {
 
     const handleKeyPress = (event) => {
@@ -30,6 +31,14 @@ const Html = ({
             filter();
         }
     };
+
+    const permission=(p)=>{
+        if (user && user?.permission_detail && p) {
+            return user?.permission_detail[p]
+        }else{
+            return false
+        }
+    }
 
     return (
         <>
@@ -67,7 +76,7 @@ const Html = ({
                                         ]}
                                     />
 
-                                    {(user?.role == 'brand' || user?.role == 'affiliate' ||  methodModel.permission("user_add")) && <> <a className="btn btn-primary add_users " onClick={e => add()}>
+                                    {(user?.role == 'brand' || user?.role == 'affiliate' ||  permission("user_add")) && <> <a className="btn btn-primary add_users " onClick={e => add()}>
                                         <i className='fa fa-plus mr-1'></i> Add user
                                     </a></>}
 
@@ -94,7 +103,7 @@ const Html = ({
                                                     {/* <th onClick={e => sorting('istrusted')} scope="col" className='table_data'>Trusted {filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                                     <th onClick={e => sorting('createdAt')} scope="col" className='table_data'>Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                                     <th onClick={e => sorting('updatedAt')} scope="col" className='table_data'>Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                                    {methodModel.permission("user_edit") && <th>Action</th>}
+                                                    {permission("user_edit") && <th>Action</th>}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -125,12 +134,12 @@ const Html = ({
                                                         <td>
                                                             {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_edit) &&
                                                                 <div className='action_icons'>
-                                                                    {methodModel.permission("user_edit") && <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
+                                                                    {permission("user_edit") && <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
 
                                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                                     </a>}
 
-                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || methodModel.permission("user_delete")) &&<a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
+                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || permission("user_delete")) &&<a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
                                                                         <i className={`material-icons delete`} title='Delete'> delete</i>
                                                                     </a>}
                                                                     {/* <a className='edit_icon action-btn' onClick={() => {

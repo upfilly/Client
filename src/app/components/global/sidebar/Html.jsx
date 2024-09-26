@@ -9,6 +9,14 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
     setaddedUser(JSON.parse(localStorage.getItem('addedUser')))
   }, [])
 
+  const permission = (p) => {
+    if (user && user?.permission_detail && p) {
+      return user?.permission_detail[p]
+    } else {
+      return false
+    }
+  }
+
   return (
     <div className="nav flex-column new-sidebar" component="siderbar">
 
@@ -54,7 +62,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {(urlAllow('group') && methodModel.permission('affiliate_group'))? <>
+              {(urlAllow('group') && permission('affiliate_group'))? <>
                 <ListItemLink to="/group"  title="Groups">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">groups</i>
@@ -62,7 +70,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {urlAllow('group') && methodModel.permission('affiliate_group')? <>
+              {urlAllow('group') && permission('affiliate_group')? <>
                 <ListItemLink to="/marketplace"  title="Groups">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">add_shopping_cart</i>
@@ -90,7 +98,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Sent Offers</span>
           </ListItemLink>}
 
-          {user && (user?.role == "brand" || addedUser?.role == "brand" || methodModel.permission('generate_link_add')) && <ListItemLink to="/makeLink"  title="Generate Link" >
+          {user && (user?.role == "brand" || addedUser?.role == "brand" || permission('generate_link_add')) && <ListItemLink to="/makeLink"  title="Generate Link" >
             <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
             <span className="side_head">Generate Link</span>
           </ListItemLink>}
@@ -132,7 +140,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </div>
               </ListItemLink>
             </> : <></>} */}
-              {methodModel.permission("commission_add") ? <>
+              {permission("commission_add") ? <>
                 <ListItemLink to="/commission/manualCommission/view"  title="Commissions">
                   <div className="d-flex align-items-center icns_center">
                     <i class="material-icons svg_iconbx">monetization_on</i >
@@ -160,7 +168,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             <div className={`collapse dropdown-btm ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? 'show' : ''}`}>
 
-            {(methodModel.permission('banner_get')) || (user.role == "affiliate" || addedUser?.role == "affiliate"|| user.role == "brand" || addedUser?.role == "brand")&& <ListItemLink to="/addbanner"  title="Campaign Management">
+            {(permission('banner_get')) || (user.role == "affiliate" || addedUser?.role == "affiliate"|| user.role == "brand" || addedUser?.role == "brand")&& <ListItemLink to="/addbanner"  title="Campaign Management">
             <i className="material-icons  svg_iconbx" title="Banners">collections</i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Banners" : "Banners"}</span>
           </ListItemLink>}
@@ -210,7 +218,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           
 
-          {(methodModel.permission('commission_get') || user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/commission/addcommision"  title="Commissions">
+          {(permission('commission_get') || user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/commission/addcommision"  title="Commissions">
             <div className="d-flex align-items-center icns_center">
               <i class="material-icons svg_iconbx">local_atm</i >
               <span className="side_head">Manage Commissions</span>
@@ -219,12 +227,12 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           
 
-          {(methodModel.permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign"  title="Campaign">
+          {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign"  title="Campaign">
             <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
             <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
 
-          {(methodModel.permission('marketplace_product_add') || user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers"  title="Add Offer" >
+          {(permission('marketplace_product_add') || user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers"  title="Add Offer" >
             <i className="material-icons  svg_iconbx ListItemLink" title="product">add_shopping_cart</i>
             <span className="side_head ">Add Offer</span>
           </ListItemLink>}
@@ -234,7 +242,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head ">Apply Merchants</span>
           </ListItemLink>}
 
-          {(methodModel.permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests"  title="Offer Request" >
+          {(permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests"  title="Offer Request" >
             <i className="material-icons  svg_iconbx " title="campaignManagement">business_center</i>
             <span className="side_head">Offer Request</span>
           </ListItemLink>}
@@ -244,7 +252,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Merchant Invites</span>
           </ListItemLink>}
 
-          {(methodModel.permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignManagement"  title="Campaign Management">
+          {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignManagement"  title="Campaign Management">
             <i className="material-icons  svg_iconbx" title="campaignManagement">manage_accounts</i>
             <span className="side_head">Campaign Management</span>
           </ListItemLink>}
@@ -259,7 +267,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Invited Users</span>
         </ListItemLink>} */}
 
-          {((methodModel.permission('camapaign_get')) || user?.role != "users") && <ListItemLink to="/users"  title="Add Users" >
+          {((permission('camapaign_get')) || user?.role != "users") && <ListItemLink to="/users"  title="Add Users" >
             <i className="material-icons  svg_iconbx" title="product">groups_3</i>
             <span className="side_head">Add Users</span>
           </ListItemLink>}
@@ -293,7 +301,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
           </ListItemLink>
 
-          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate" ) && ( methodModel.permission('generate_link_add')) && <ListItemLink to="/generateLink"  title="Generate Link" >
+          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate" ) && ( permission('generate_link_add')) && <ListItemLink to="/generateLink"  title="Generate Link" >
             <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
             <span className="side_head">Generate Link</span>
           </ListItemLink>}
@@ -314,7 +322,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Performance Chart</span>
           </ListItemLink>
 
-          { methodModel.permission('transactions_get') && <ListItemLink to="/payments"  title="Payments">
+          { permission('transactions_get') && <ListItemLink to="/payments"  title="Payments">
             {/* <svg className="text_black  svg_iconbx" xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
             <path d="M2.81907e-08 18.646C3.37655e-08 15.1375 1.0404 11.7078 2.98963 8.79063C4.93886 5.87344 7.70937 3.59979 10.9508 2.2572C14.1922 0.914602 17.759 0.563369 21.2001 1.24791C24.6411 1.93246 27.8019 3.62203 30.2827 6.10298C32.7635 8.58392 34.4529 11.7448 35.1373 15.1859C35.8216 18.627 35.4702 22.1937 34.1274 25.4351C32.7846 28.6765 30.5108 31.4468 27.5935 33.3959C24.6762 35.345 21.2465 36.3852 17.738 36.385C15.4085 36.385 13.1019 35.9261 10.9497 35.0347C8.79759 34.1432 6.84212 32.8365 5.19499 31.1893C3.54785 29.5421 2.2413 27.5865 1.34994 25.4343C0.458579 23.2821 -0.000131298 20.9755 2.81907e-08 18.646ZM2.048 18.646C2.0482 21.7489 2.96848 24.7821 4.69249 27.362C6.4165 29.9418 8.86679 31.9526 11.7335 33.1399C14.6003 34.3273 17.7547 34.6379 20.798 34.0325C23.8413 33.4271 26.6367 31.9329 28.8308 29.7388C31.0249 27.5447 32.5191 24.7493 33.1245 21.706C33.7299 18.6627 33.4193 15.5083 32.2319 12.6415C31.0446 9.77478 29.0339 7.32449 26.454 5.60048C23.8741 3.87648 20.8409 2.95619 17.738 2.95599C13.5768 2.95599 9.58594 4.60904 6.64349 7.55149C3.70105 10.4939 2.048 14.4847 2.048 18.646ZM16.935 28.328C16.894 27.614 16.885 27.576 16.716 27.495L16.603 27.441C15.133 26.741 15.133 26.741 14.565 26.171L14.531 26.138C13.9807 25.6542 13.5654 25.0359 13.3258 24.3435C13.0862 23.6511 13.0304 22.9084 13.164 22.188C13.2323 22.0041 13.355 21.8454 13.5158 21.733C13.6766 21.6206 13.8678 21.5599 14.064 21.559H14.113C14.769 21.559 15.113 21.967 15.224 22.878C15.2855 23.4955 15.5468 24.076 15.9682 24.5315C16.3896 24.987 16.9481 25.2926 17.5589 25.4018C18.1697 25.5111 18.7995 25.4181 19.3527 25.1369C19.9059 24.8558 20.3522 24.4018 20.624 23.844C20.9353 23.0528 20.9353 22.1731 20.624 21.382C20.3877 20.8957 20.0192 20.4858 19.5608 20.1992C19.1025 19.9125 18.5726 19.7607 18.032 19.761H17.932C16.9103 19.6908 15.9295 19.3316 15.1043 18.7252C14.279 18.1187 13.6432 17.2901 13.271 16.336C12.9608 15.4519 12.9139 14.4967 13.1359 13.5864C13.358 12.6762 13.8395 11.8499 14.522 11.208L14.559 11.171C15.125 10.608 15.125 10.608 16.593 9.90799L16.706 9.85499C16.872 9.77599 16.884 9.72899 16.929 9.01599C16.988 8.05399 17.409 7.43299 18 7.43299C18.2477 7.44281 18.4856 7.53263 18.678 7.68899C19.021 7.94699 19.121 8.22299 19.164 9.02499C19.205 9.73899 19.215 9.77699 19.383 9.85799L19.5 9.90799C20.971 10.608 20.971 10.608 21.539 11.178L21.572 11.211C22.1221 11.6947 22.5373 12.3128 22.777 13.005C23.0168 13.6971 23.073 14.4397 22.94 15.16C22.8709 15.3433 22.748 15.5014 22.5874 15.6135C22.4267 15.7256 22.2359 15.7864 22.04 15.788H21.99C21.334 15.788 20.99 15.376 20.873 14.452C20.808 13.8361 20.5443 13.2582 20.1218 12.8055C19.6992 12.3527 19.1408 12.0498 18.5309 11.9425C17.921 11.8352 17.2928 11.9294 16.7411 12.2107C16.1894 12.4921 15.7443 12.9453 15.473 13.502C15.2399 14.0381 15.1691 14.6308 15.2691 15.2068C15.3692 15.7828 15.6358 16.3168 16.036 16.743C16.5788 17.2805 17.3111 17.5829 18.075 17.585H18.16C19.1828 17.6529 20.1651 18.011 20.9917 18.6172C21.8183 19.2235 22.4549 20.0528 22.827 21.008C23.137 21.8917 23.1841 22.8463 22.9624 23.7561C22.7407 24.666 22.2598 25.492 21.578 26.134L21.539 26.174C20.975 26.742 20.975 26.742 19.499 27.442L19.392 27.494C19.226 27.572 19.214 27.62 19.169 28.333C19.102 29.433 18.787 29.86 18.056 29.86C17.325 29.86 17 29.418 16.935 28.328Z" fill="#252849" />
           </svg> */}

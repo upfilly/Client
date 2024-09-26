@@ -82,6 +82,14 @@ export default function affilate() {
     }
   };
 
+  const permission=(p)=>{
+    if (user && user?.permission_detail && p) {
+        return user?.permission_detail[p]
+    }else{
+        return false
+    }
+}
+
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
     { id: 'property_types', name: 'Property Types' },
@@ -635,7 +643,7 @@ export default function affilate() {
                       Reset
                     </a>
                   </> : <></>}
-                  {(user?.role == 'brand' || methodModel.permission('affiliate_group')) && <button disabled={selectedAffiliteid?.length <= 0} className="btn btn-primary btn_primary" onClick={() => { handleShow() }}>
+                  {(user?.role == 'brand' || permission('affiliate_group')) && <button disabled={selectedAffiliteid?.length <= 0} className="btn btn-primary btn_primary" onClick={() => { handleShow() }}>
                     <i className='fa fa-plus fa_icns' title='Invite'></i>
                   </button>}
                 </div>
@@ -676,7 +684,7 @@ export default function affilate() {
                       <td className='profile_height' >
 
                         <label className='d-flex align-items-center gap-2 pb-3 ml-3'>
-                          {methodModel.permission('affiliate_invite') && <input type='checkbox' className='form-check-input check_bx_input' checked={selectedAffiliteid?.includes(itm.id) ? true : false} disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />}
+                          {permission('affiliate_invite') && <input type='checkbox' className='form-check-input check_bx_input' checked={selectedAffiliteid?.includes(itm.id) ? true : false} disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />}
                           <span className={itm.invite_status == 'not_invited' ? "checkbox-btn" : 'disable_check'} ></span>
                           <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
                             {itm?.image ?
@@ -720,7 +728,7 @@ export default function affilate() {
                           {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                             <i className={`material-icons delete`} title='Delete'> delete</i>
                           </a> */}
-                          {(user?.role == 'brand' || methodModel.permission('affiliate_invite')) && <button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid([itm?.id]) }}>
+                          {(user?.role == 'brand' || permission('affiliate_invite')) && <button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid([itm?.id]) }}>
                             <i className='fa fa-plus fa_icns' title='Invite'></i>
                           </button>}
                           <span className='btn btn-primary btn_primary '
@@ -730,7 +738,7 @@ export default function affilate() {
                             }}>
                             <i className='fa fa-comment-o fa_icns' title='Chat'></i>
                           </span>
-                          {(user?.role == 'brand' || methodModel.permission('affiliate_group')) && <button className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
+                          {(user?.role == 'brand' || permission('affiliate_group')) && <button className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
                             <i class="fa-solid fa-people-group fa_icns" title='Add Group'></i>
                           </button>}
                         </div>

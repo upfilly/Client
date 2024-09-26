@@ -26,11 +26,22 @@ const Html = ({
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
+    
+
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             filter();
         }
     };
+
+    const permission=(p)=>{
+        if (user && user?.permission_detail && p) {
+            return user?.permission_detail[p]
+        }else{
+            return false
+        }
+    }
+    
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Send Offers" : "Offer Requests"} filters={filters}>
             <div className='sidebar-left-content main_box'>
@@ -131,7 +142,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
 
                 {<td className='table_dats d-flex '>
-                    {(user && user?.role == "affiliate" || methodModel.permission("make_offer_edit")) && <>
+                    {(user && user?.role == "affiliate" || permission("make_offer_edit")) && <>
                         {itm?.status == 'pending' ? <div >
                             <button onClick={() => {
                                 statusChange("accepted", itm?.id)

@@ -201,6 +201,7 @@ const Categories = () => {
             statusChange={statusChange}
             statusPopular={statusPopular}
             setFilter={setFilter}
+            user={user}
         />
     </>;
 };

@@ -26,7 +26,8 @@ const Html = ({
     isAllow,
     total,
     setFilter,
-    filter
+    filter,
+    user,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -36,6 +37,14 @@ const Html = ({
             filter();
         }
     };
+
+    const permission=(p)=>{
+        if (user && user?.permission_detail && p) {
+            return user?.permission_detail[p]
+        }else{
+            return false
+        }
+    }
 
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
@@ -55,7 +64,7 @@ const Html = ({
                     />
 
                     <article className="d-flex filterFlex phView">
-                        {methodModel.permission('campaign_add') ? <>
+                        {permission('campaign_add') ? <>
                             <a className="btn btn-primary" onClick={e => add()}>
                                 Add Campaign
                             </a>
@@ -148,19 +157,19 @@ const Html = ({
                                         {/* dropdown */}
                                         <td className='table_dats'>
                                             <div className="action_icons">
-                                                {isAllow('editAdmins') && methodModel.permission('campaign_edit') ? <>
+                                                {isAllow('editAdmins') && permission('campaign_edit') ? <>
                                                     <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
                                                         <i className="material-icons edit" title="Edit">edit</i>
                                                     </a>
                                                 </> : <></>}
 
-                                                {isAllow('deleteAdmins') && methodModel.permission('campaign_delete') ? <>
+                                                {isAllow('deleteAdmins') && permission('campaign_delete') ? <>
                                                     <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
                                                         <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                                                     </a>
                                                 </> : <></>}
 
-                                                {methodModel.permission('campaign_edit') && <>
+                                                {permission('campaign_edit') && <>
                                                     <a className='edit_icon action-btn' onClick={() => {
                                                         history.push(`/chat`)
                                                         localStorage.setItem("chatId", itm?.affiliate_id)

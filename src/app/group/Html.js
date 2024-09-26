@@ -21,6 +21,7 @@ const Html = ({
     data,
     total,
     setFilter,
+    user
 }) => {
 
     const handleKeyPress = (event) => {
@@ -28,6 +29,14 @@ const Html = ({
             filter();
         }
     };
+
+    const permission = (p) => {
+        if (user && user?.permission_detail && p) {
+          return user?.permission_detail[p]
+        } else {
+          return false
+        }
+      }
 
     return (
         <>
@@ -37,7 +46,7 @@ const Html = ({
                     <div className='row mx-0'>
                         <div className='col-lg-12'>
                             <div className="d-flex gap-3 flex-wrap filterFlex phView align-items-center   justify-content-end">
-                                {methodModel.permission('group_add') && <a className="btn btn-primary ms-2 " onClick={e => add()}>
+                                {permission('group_add') && <a className="btn btn-primary ms-2 " onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i> Add
                                 </a>}
                                 <SelectDropdown
@@ -112,12 +121,12 @@ const Html = ({
                                                     </td>
                                                     <td>
                                                         <div className='action_icons'>
-                                                            {methodModel.permission('group_edit')&&<a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
+                                                            {permission('group_edit')&&<a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
 
                                                                 <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                             </a>}
 
-                                                            {methodModel.permission('group_delete')&&<a className='edit_icon' onClick={() => deleteItem(itm.id)}>
+                                                            {permission('group_delete')&&<a className='edit_icon' onClick={() => deleteItem(itm.id)}>
                                                                 <i className={`material-icons delete`} title='Delete'> delete</i>
                                                             </a>}
                                                         </div>

@@ -24,6 +24,7 @@ const Html = ({
     setFilter,
     filter,
     statusChange,
+    user,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -33,6 +34,14 @@ const Html = ({
             filter();
         }
     };
+
+    const permission = (p) => {
+        if (user && user?.permission_detail && p) {
+          return user?.permission_detail[p]
+        } else {
+          return false
+        }
+      }
 
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Coupons" filters={filters}>
@@ -52,7 +61,7 @@ const Html = ({
                     /> */}
 
                     <article className="d-flex filterFlex phView">
-                        {(user?.role == "brand" || methodModel.permission('coupon_add')) && <>
+                        {(user?.role == "brand" || permission('coupon_add')) && <>
                             <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
                                 Add Coupon
                             </a>
@@ -172,7 +181,7 @@ const Html = ({
                                 <div className="btn btn-primary mr-2">Rejected</div> :
                                 <div className="btn btn-primary mr-2">Accepted</div>
                         }</>} */}
-                                                {(user?.role == 'brand' || methodModel.permission('coupon_edit')) && <>
+                                                {(user?.role == 'brand' || permission('coupon_edit')) && <>
                                                     <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
                                                         <i className="material-icons edit" title="Edit">edit</i>
                                                     </a>
