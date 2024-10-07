@@ -27,7 +27,10 @@ export default function SignupOption() {
                                   </label>
                                 </div>
                             </div>
-                            <div className="col-12 col-sm-12 col-md-6"  onClick={()=>history.push("/bookingForm")}>
+                            <div className="col-12 col-sm-12 col-md-6"  
+                            // onClick={()=>history.push("/bookingForm")}
+                            onClick={()=>history.push("/track/signup/brand")}
+                            >
                               <div className="miansign">
                                   <label className="center_img">
                                       <img src="./assets/img/brnd.jpg" className="banesr_sizes" />
