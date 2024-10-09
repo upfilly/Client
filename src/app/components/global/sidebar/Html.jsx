@@ -319,7 +319,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
 
-          <ListItemLink to="/performance"  title="Payments">
+          <ListItemLink to="/performance"  title="Performance">
             <i class="material-icons  svg_iconbx">insert_chart</i>
             <span className="side_head">Performance Chart</span>
           </ListItemLink>
@@ -332,6 +332,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <i class="material-icons  svg_iconbx">list_alt</i>
             <span className="side_head">Change Plan</span>
           </ListItemLink>} */}
+
+        <ListItemLink to="/campaignReports"  title="Campaign Report">
+            <i class="material-icons  svg_iconbx">insert_chart</i>
+            <span className="side_head">Campaign Reports</span>
+          </ListItemLink>
         </div>
       </div>
 
