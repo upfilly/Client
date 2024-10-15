@@ -3,75 +3,62 @@ import React, { useEffect, useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import './style.scss';
 import { useRouter } from 'next/navigation';
-import {Chart} from "react-google-charts";
-import { toast } from 'react-toastify';
-import loader from '@/methods/loader';
+import LineChart from '../components/common/LineChart/LineChart'
+import crendentialModel from '@/models/credential.model';
 import ApiClient from '@/methods/api/apiClient';
-import environment from '@/environment';
+import SelectDropdown from '../components/common/SelectDropdown';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Html = ({
-  view,
-  edit,
   reset,
-  ChangeStatus,
-  sorting,
-  pageChange,
-  deleteItem,
   filters,
-  loaging,
-  isAllow,
-  total,
   setFilter,
   filter,
-  statusChange,
-  getData
+  AffiliateDataId,
+  setAffiliateDataId,
+  AffiliateData,
+  setAffiliateData,
+  dateRange,
+  setDateRange,
+  start,
+  end,
 }) => {
   const history = useRouter()
+  const user = crendentialModel.getUser()
   const [activeSidebar, setActiveSidebar] = useState(false)
+  const [analyticData, setAnalyticData] = useState()
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       filter();
     }
   };
+  const isoStart = start instanceof Date ? start.toISOString() : start;
+  const isoEnd = end instanceof Date ? end.toISOString() : end;
 
-   const data = [
-    [
-      "Day",
-      "Guardians of the Galaxy",
-      // "The Avengers",
-      // "Transformers: Age of Extinction",
-    ],
-    [1, 3.8],
-    [2, 3.9],
-    [3, 2.4],
-    [4, 1.7],
-    [5, 1.9],
-    [6, 8.87],
-    [7, 7.66],
-    [8, 1.3],
-    [9, 1.9],
-    [10, 2.8],
-    [11, 5.3],
-    [12, 6.6],
-    [13, 4.8],
-    [14, 4.2],
-    [15, 3.8],
-    [25, 3.9],
-    [35, 2.4],
-    [45, 1.7],
-    [55, 1.9],
-    [65, 8.87],
-    [75, 7.66],
-    [85, 1.3],
-    [95, 1.9],
-    [105, 2.8],
-    [115, 5.3],
-    [125, 6.6],
-    [135, 4.8],
-    [145, 4.2],
-  ];
-  
-   const options = {
+  const getAnalyticsData = (p = {}) => {
+    let url = 'analytics-sales'
+
+    let filter = { ...filters , affiliate_id: AffiliateDataId , startDate: isoStart , endDate: isoEnd }
+
+    if (!AffiliateDataId) {
+      filter = { ...filters, ...p, brand_id: user?.id }
+    } else {
+      filter = { ...filters, ...p, affiliate_id: AffiliateDataId}
+    }
+
+    ApiClient.get(url, filter).then(res => {
+      if (res.success) {
+        setAnalyticData(res?.data)
+      }
+    })
+  }
+
+  useEffect(() => {
+    getAnalyticsData()
+  }, [start, end])
+
+  const options = {
     chart: {
       title: "Box Office Earnings in First Two Weeks of Opening",
       subtitle: "in millions of dollars (USD)",
@@ -81,120 +68,73 @@ const Html = ({
   return (
     <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Performance" filters={filters}>
       <div className='sidebar-left-content'>
-      
-
-      <div class="accordion" id="accordionExample">
-  <div class="accordion-item main_accordingbx">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-       Program - Daily
-      </button>
 
 
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-       <div className="program_bx">
-   <div className="row">
-   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-   <div className="selectbx1">
-   <div className="form-group">
-      <label>Performance By</label>
-      <select class="form-select" >
-  <option selected>Program</option>     
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-<i class="fa fa-caret-down down-arrAW" aria-hidden="true"></i>
-
-    </div>
-   </div>
-   </div>
-   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-   <div className="selectbx1">
-   <div className="form-group">
-      <label>Trend</label>
-      <select class="form-select" >
-  <option selected>Daily</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-<i class="fa fa-caret-down down-arrAW" aria-hidden="true"></i>
-    </div>
-   </div>
-   </div>
-   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-   <div className="selectbx1">
-   <div className="form-group">
-      <label>Date Range</label>
-      <select class="form-select" >
-  <option selected>Custom</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
-<i class="fa fa-caret-down down-arrAW" aria-hidden="true"></i>
-    </div>
-   </div>
-   </div>
-   <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-   <div className="selectbx1">
-   <div className="form-group">
-      <label>Start Date</label>
-      <input className='form-control' type="date" id="birthday" name="birthday"/>
-    </div>
-   </div>
-   </div>
-
-
-   </div>
-       </div>
+      <div className="accordion" id="accordionExample">
+      <div className="accordion-item main_accordingbx">
+        <h2 className="accordion-header">
+          <button 
+            className="accordion-button" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#collapseOne" 
+            aria-expanded="true" 
+            aria-controls="collapseOne"
+          >
+            Program - Daily
+          </button>
+        </h2>
+        <div 
+          id="collapseOne" 
+          className="accordion-collapse collapse show" 
+          data-bs-parent="#accordionExample"
+        >
+          <div className="accordion-body">
+            <div className="program_bx">
+              <div className="row">
+                <div className="col-6">
+                  <div className="selectbx1">
+                    <SelectDropdown
+                      id="statusDropdown"
+                      displayValue="name"
+                      placeholder="All Affiliates"
+                      initialValue={AffiliateDataId}
+                      result={e => { setAffiliateDataId(e.value); }}
+                      options={AffiliateData}
+                    />
+                  </div>
+                </div>
+                <div className="col-6">
+                  <div className="selectbx1">
+                    <div className="form-group">
+                      <DatePicker
+                        showIcon
+                        className="date-picker form-control"
+                        monthsShown={1}
+                        shouldCloseOnSelect={true}
+                        selectsRange={true}
+                        placeholderText="Select Date Range"
+                        startDate={start}
+                        endDate={end}
+                        onChange={(update) => {
+                          setDateRange([update[0], update[1]]);
+                        }}
+                        isClearable
+                        minDate={new Date()}
+                        // withPortal
+                        dateFormat={"dd/MM/yyyy"}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div className=" graph_charts ">
-         
-
-        <Chart
-      chartType="LineChart"
-      width="100%"
-      height="700px"
-      data={data}
-      options={options}
-    />
+          <LineChart data={analyticData?.data?.[0]} />
         </div>
       </div>
     </Layout>

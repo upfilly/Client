@@ -12,15 +12,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import ReportChart from '../components/common/AreaChart/AreaChart'
 import SelectDropdown from '../components/common/SelectDropdown';
 
-export default function CampaignReport() {
+export default function BrandReport() {
   const history = useRouter()
   const user = crendentialModel.getUser()
   const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false })
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
-  const [campaignId, setCampaignId] = useState("");
-  const [CampaignData, setCamapign] = useState([]);
+  const [affiliateData, setAffiliateData] = useState("");
+  const [AffiliateDataId, setAffiliateDataId] = useState([]);
   const [analyticData, setAnalyticData] = useState()
 
   const handleKeyPress = (event) => {
@@ -29,18 +29,18 @@ export default function CampaignReport() {
     }
   };
 
-  const getCamapignData = (p = {}) => {
-    let filter = { ...filters, ...p }
-    let url = 'campaign/all'
+  const getAffiliateData = (p = {}) => {
+    let filter = {brand_id:user?.id}
+    let url = 'getallaffiliatelisting'
     ApiClient.get(url, filter).then(res => {
       if (res.success) {
-        const data = res?.data?.data?.map((data) => {
+        const data = res?.data?.map((data) => {
           return ({
             id: data?.id || data?._id,
-            name: data?.name
+            name: data?.fullName
           })
         })
-        setCamapign(data)
+        setAffiliateData(data)
       }
     })
   }
@@ -48,13 +48,13 @@ export default function CampaignReport() {
   const getData = (p = {}) => {
 
     setLoader(true)
-    let filter;
+    let filter = { ...filters, ...p,affiliate_id:AffiliateDataId}
 
-    if (user?.role == "brand") {
-      filter = { ...filters, ...p, campaignId: campaignId }
-    } else {
-      filter = { ...filters, ...p, campaignId: campaignId }
-    }
+    // if(user?.role == "brand"){
+    //   filter = { ...filters, ...p,brand_id:user?.id}
+    // }else{
+    //   filter = { ...filters, ...p , affiliate_id:user.id}
+    // }
 
     ApiClient.get(`affiliatelink/all`, filter).then(res => {
       if (res.success) {
@@ -67,13 +67,13 @@ export default function CampaignReport() {
   };
 
   useEffect(() => {
-    getCamapignData({ page: 1 })
+    getAffiliateData({ page: 1 })
     if (user.role == 'brand') {
       getData({ page: 1 })
     } else if (user.role != 'brand') {
       getData({ page: 1 })
     }
-  }, [campaignId])
+  }, [AffiliateDataId])
 
   const pageChange = (e) => {
     setFilter({ ...filters, page: e.selected })
@@ -133,9 +133,9 @@ export default function CampaignReport() {
 
   const getAnalyticsData = () => {
     let url = 'analytics-sales'
-    let filters = { campaignId: campaignId }
+    let filter = { affiliate_id:AffiliateDataId}
 
-    ApiClient.get(url, filters).then(res => {
+    ApiClient.get(url, filter).then(res => {
       if (res) {
         setAnalyticData(res?.data)
       }
@@ -144,11 +144,11 @@ export default function CampaignReport() {
 
   useEffect(() => {
     getAnalyticsData()
-  }, [campaignId])
+  }, [AffiliateDataId])
 
   return (
     <>
-      <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Track Data" filters={filters}>
+      <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Brand Report" filters={filters}>
         <div className='nmain-list  mb-3 main_box'>
           <div className='container-fluid'>
             <ReportChart areaData={analyticData?.data?.[0]} />
@@ -162,10 +162,10 @@ export default function CampaignReport() {
                       <SelectDropdown
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="All Campaign"
-                        intialValue={campaignId}
-                        result={e => { setCampaignId(e.value) }}
-                        options={CampaignData}
+                        placeholder="All Affiliates"
+                        intialValue={AffiliateDataId}
+                        result={e => { setAffiliateDataId(e.value) }}
+                        options={affiliateData}
                       />
 
                     </div>

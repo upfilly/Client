@@ -172,3 +172,55 @@ input[type=number] {
     margin-top: 21px;
     background-color: #f9f9f9;
 }
+
+.accordion-item {
+    border: 1px solid #ddd; /* Light border around the accordion */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; /* Space between items */
+  }
+  
+  .accordion-button {
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .accordion-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  .selectbx1 {
+    margin-bottom: 20px; /* Space between select boxes */
+  }
+  
+  .form-group {
+    margin-bottom: 15px; /* Space below form groups */
+  }
+  
+  .form-control {
+    border: 1px solid #ccc; /* Input border */
+    border-radius: 5px; /* Rounded input */
+    padding: 10px; /* Padding inside input */
+    width: 100%; /* Full width */
+    transition: border-color 0.3s; /* Smooth transition */
+  }
+  
+  .form-control:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    outline: none; /* Remove outline */
+  }
+  
+  .star {
+    color: red; /* Color for required field indicator */
+  }
+  
+  .date-picker {
+    border: 1px solid #ccc; /* DatePicker border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding */
+    width: 100%; /* Full width */
+  }
+  .accordion-item.main_accordingbx {
+    overflow: unset;
+}

@@ -267,7 +267,17 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Invited Users</span>
         </ListItemLink>} */}
 
-        {(user?.role == "affiliate") && <ListItemLink to="/addAccount/detail"  title="Change Plan">
+        {(user?.role == "affiliate") && <ListItemLink to="/affiliate-report"  title="Affiliate Report">
+            <i class="material-icons  svg_iconbx">list_alt</i>
+            <span className="side_head">Report</span>
+          </ListItemLink>}
+
+          {/* {(user?.role == "brand") && <ListItemLink to="/brand-report"  title="Brand-Report">
+            <i class="material-icons  svg_iconbx">list_alt</i>
+            <span className="side_head">Brand Report</span>
+          </ListItemLink>} */}
+
+          {(user?.role == "affiliate") && <ListItemLink to="/addAccount/detail"  title="Change Plan">
             <i class="material-icons  svg_iconbx">list_alt</i>
             <span className="side_head">Add tax Detail</span>
           </ListItemLink>}
@@ -319,10 +329,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
 
-          <ListItemLink to="/performance"  title="Performance">
+         {user && (user?.role == "brand" || addedUser?.role == "brand" ) && <ListItemLink to="/performance"  title="Performance">
             <i class="material-icons  svg_iconbx">insert_chart</i>
             <span className="side_head">Performance Chart</span>
-          </ListItemLink>
+          </ListItemLink>}
 
           { permission('transactions_get') && <ListItemLink to="/payments"  title="Payments">
             <i class="material-icons  svg_iconbx">payment</i>
@@ -333,10 +343,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Change Plan</span>
           </ListItemLink>} */}
 
-        <ListItemLink to="/campaignReports"  title="Campaign Report">
+        {(user?.role == "brand" || addedUser?.role == "brand" ) && <ListItemLink to="/campaignReports"  title="Campaign Report">
             <i class="material-icons  svg_iconbx">insert_chart</i>
             <span className="side_head">Campaign Reports</span>
-          </ListItemLink>
+          </ListItemLink>}
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 Chart.register(...registerables);
 
 const ReportChart = ({areaData}) => {
+
     const monthNumberToName = (month) => {
         const months = [
           'January', 'February', 'March', 'April', 'May', 'June',
@@ -15,7 +16,7 @@ const ReportChart = ({areaData}) => {
       labels: areaData && areaData?.headers?.map(header => monthNumberToName(header.month)),
     datasets: [
       {
-        label: areaData && areaData?.summary?.map((item) => item.price),
+        label:"Price",
         data: areaData && areaData?.data?.map((item) => item.price),
         background: 'rgb(9,70,121)',
         background: 'linear-gradient(346deg, rgba(9,70,121,1) 0%, rgba(87,78,244,1) 56%, rgba(0,212,255,1) 100%)',
@@ -40,7 +41,6 @@ const options = {
 
 return (
     <div>
-        <h2>Campaign Overview</h2>
         <Line data={data} options={options} style={{height:"400px", width:"400px"}}/>
     </div>
 )
