@@ -135,15 +135,15 @@ const Html = () => {
 
     const generateShortLink = async(urlData) => {
         if(urlData || url){
-        const data = await axios.post('https://shrtlnk.dev/api/v2/link',{url:urlData || url}, {
+        const data = await axios.post('https://api.t.ly/api/v1/link/shorten',{long_url:urlData || url}, {
             headers: {
-                'api-key':'eyZ0tnBPL04QueUUCl4gcFcdvaSQgRa79t9gQbWpCTxP4',
+                'Authorization':'Bearer dgZu0yi9QvaezlVsXrQkhcPy2ecxgXKZyrQrxdL9Avq4ZA0gAxHdU3QXmn98',
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         }
         )
-        setshrtlnk(data?.data?.shrtlnk)
+        setshrtlnk(data?.data?.short_url)
     }
     }
 
@@ -162,7 +162,8 @@ const Html = () => {
     useEffect(() => {
         ApiClient.get('get-affilaite-link').then((res) => {
             if (res?.success) {
-                setUrl(res?.data?.link)
+                console.log(res?.data,"res?.datares?.datares?.data")
+                setUrl(res?.data?.[0]?.link)
             }
             loader(false);
         });
