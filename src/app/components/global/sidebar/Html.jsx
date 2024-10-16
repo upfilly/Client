@@ -168,7 +168,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             <div className={`collapse dropdown-btm ${tabclass('CreativeAssets') || tab == 'CreativeAssets' ? 'show' : ''}`}>
 
-            {(permission('banner_get')) || (user.role == "affiliate" || addedUser?.role == "affiliate"|| user.role == "brand" || addedUser?.role == "brand")&& <ListItemLink to="/addbanner"  title="Campaign Management">
+            {(user.role == "affiliate" || addedUser?.role == "affiliate"|| user.role == "brand" || addedUser?.role == "brand")&& <ListItemLink to="/addbanner"  title="Campaign Management">
             <i className="material-icons  svg_iconbx" title="Banners">collections</i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Banners" : "Banners"}</span>
           </ListItemLink>}
