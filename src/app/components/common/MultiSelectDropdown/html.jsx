@@ -19,7 +19,7 @@ const Html = ({ options,selectedValues,handleChange,displayValue,id,setSelectedV
                 onRemove={e => handleChange(e, 'remove')}
                 displayValue={displayValue}
                 id={id}
-                hideSelectedList
+                // hideSelectedList
                 showArrow
             />
             {/* {selectedValues?.length > 0 && <div>

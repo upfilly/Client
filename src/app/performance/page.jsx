@@ -15,7 +15,7 @@ const Users = () => {
     const [filters, setFilter] = useState({ isDeleted: false ,affiliate_id:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
-    const [AffiliateDataId, setAffiliateDataId] = useState("");
+    const [AffiliateDataId, setAffiliateDataId] = useState([]);
     const [AffiliateData, setAffiliateData] = useState()
     const [loaging, setLoader] = useState(true)
     const [dateRange, setDateRange] = useState([null, null]);

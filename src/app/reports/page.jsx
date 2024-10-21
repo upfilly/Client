@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
 import ReportChart from '../components/common/AreaChart/AreaChart'
 import SelectDropdown from '../components/common/SelectDropdown';
+import MultiSelectDropdown from '../components/common/MultiSelectDropdown';
 
 export default function CampaignReport() {
   const history = useRouter()
@@ -19,9 +20,11 @@ export default function CampaignReport() {
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
-  const [campaignId, setCampaignId] = useState("");
+  const [campaignId, setCampaignId] = useState([]);
   const [CampaignData, setCamapign] = useState([]);
   const [analyticData, setAnalyticData] = useState()
+
+  console.log(campaignId,"campaignIdcampaignIdcampaignId")
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -51,18 +54,17 @@ export default function CampaignReport() {
     let filter;
 
     if (user?.role == "brand") {
-      filter = { ...filters, ...p, campaignId: campaignId }
+      filter = { ...filters, ...p,brand_id:user?.id || user?._id, campaignId: campaignId.map((itm)=>itm).join(",").toString() }
     } else {
-      filter = { ...filters, ...p, campaignId: campaignId }
+      filter = { ...filters, ...p, campaignId: campaignId.map((itm)=>itm).join(",").toString() }
     }
 
-    ApiClient.get(`affiliatelink/all`, filter).then(res => {
+    ApiClient.get(`affiliatelink/report`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
         setTotal(res?.data?.total_count)
         setLoader(false)
       }
-
     })
   };
 
@@ -133,7 +135,7 @@ export default function CampaignReport() {
 
   const getAnalyticsData = () => {
     let url = 'analytics-sales'
-    let filters = { campaignId: campaignId }
+    let filters = {brand_id:user?.id || user?._id, campaignId: campaignId.map((itm)=>itm).join(",").toString() }
 
     ApiClient.get(url, filters).then(res => {
       if (res) {
@@ -159,10 +161,10 @@ export default function CampaignReport() {
                 <div className='table_section '>
                   <div className='table-responsive '>
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <SelectDropdown
+                      <MultiSelectDropdown
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="All Campaign"
+                        // placeholder="All Campaign"
                         intialValue={campaignId}
                         result={e => { setCampaignId(e.value) }}
                         options={CampaignData}
@@ -186,9 +188,9 @@ export default function CampaignReport() {
                           ))}
                           <th scope="col" >Affiliate</th>
                           <th scope="col" >Brand</th>
-                          <th scope="col" >Currency</th>
-                          <th scope="col" >Price</th>
-                          <th scope="col" >Order Id</th>
+                          {/* <th scope="col" >Currency</th> */}
+                          <th scope="col" >Revenue</th>
+                          <th scope="col" >Counts</th>
                           <th scope="col" onClick={e => sorting('createdAt')}>Creation Date</th>
                           <th></th>
                         </tr>
@@ -202,11 +204,11 @@ export default function CampaignReport() {
                               const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
                               return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                             })}
-                            <td className='name-person ml-2' >{itm?.affiliate_name}</td>
-                            <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
-                            <td className='name-person ml-2' >{itm?.currency}</td>
-                            <td className='name-person ml-2' >{itm?.price}</td>
-                            <td className='name-person ml-2' >{itm?.order_id}</td>
+                            <td className='name-person ml-2' >{itm?.affiliate_details?.fullName || "--"}</td>
+                            <td className='name-person ml-2' >{itm?.brand_details?.fullName || "--"}</td>
+                            <td className='name-person ml-2' >{itm?.revenue}</td>
+                            <td className='name-person ml-2' >{itm?.click_count}</td>
+                            {/* <td className='name-person ml-2' >{itm?.order_id}</td> */}
                             <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
                           </tr>
 

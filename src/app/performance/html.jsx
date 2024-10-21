@@ -9,6 +9,7 @@ import ApiClient from '@/methods/api/apiClient';
 import SelectDropdown from '../components/common/SelectDropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import MultiSelectDropdown from '../components/common/MultiSelectDropdown';
 
 const Html = ({
   reset,
@@ -39,12 +40,12 @@ const Html = ({
   const getAnalyticsData = (p = {}) => {
     let url = 'analytics-sales'
 
-    let filter = { ...filters , affiliate_id: AffiliateDataId , startDate: isoStart , endDate: isoEnd }
+    let filter = { ...filters , affiliate_id: AffiliateDataId.map((itm)=>itm).join(",").toString() , startDate: isoStart , endDate: isoEnd }
 
     if (!AffiliateDataId) {
       filter = { ...filters, ...p, brand_id: user?.id }
     } else {
-      filter = { ...filters, ...p, affiliate_id: AffiliateDataId}
+      filter = { ...filters, ...p, affiliate_id: AffiliateDataId.map((itm)=>itm).join(",").toString()}
     }
 
     ApiClient.get(url, filter).then(res => {
@@ -56,7 +57,7 @@ const Html = ({
 
   useEffect(() => {
     getAnalyticsData()
-  }, [start, end])
+  }, [start, end , AffiliateDataId])
 
   const options = {
     chart: {
@@ -94,14 +95,22 @@ const Html = ({
               <div className="row">
                 <div className="col-6">
                   <div className="selectbx1">
-                    <SelectDropdown
+                    {/* <SelectDropdown
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="All Affiliates"
                       initialValue={AffiliateDataId}
                       result={e => { setAffiliateDataId(e.value); }}
                       options={AffiliateData}
-                    />
+                    /> */}
+                     <MultiSelectDropdown
+                        id="statusDropdown"
+                        displayValue="name"
+                        // placeholder="All Campaign"
+                        intialValue={AffiliateDataId}
+                        result={e => { setAffiliateDataId(e.value) }}
+                        options={AffiliateData}
+                      />
                   </div>
                 </div>
                 <div className="col-6">

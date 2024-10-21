@@ -26,12 +26,12 @@ const Html = () => {
     const [selectedBrand, setSelectedBrand] = useState('')
     const [selectedValues, setSelectedValues] = useState([]);
     const [inputValues, setInputValues] = useState({});
-    const [DestinationUrl,setDestinationUrl]=useState('')
-    const [CampaignData,setCampaignData] = useState([])
-    const [SelectedCampaign,setSelectedCampaign] = useState('')
-    const [shrtlnk,setshrtlnk] = useState('')
-  
-   const handleInputChange = (selected, value) => {
+    const [DestinationUrl, setDestinationUrl] = useState('')
+    const [CampaignData, setCampaignData] = useState([])
+    const [SelectedCampaign, setSelectedCampaign] = useState('')
+    const [shrtlnk, setshrtlnk] = useState('')
+
+    const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
             ...prevState,
             [selected]: value
@@ -40,18 +40,18 @@ const Html = () => {
 
     const updateDictionary = () => {
         const updatedDict = Object.fromEntries(
-          Object.entries(inputValues).filter(([key]) => selectedValues.includes(key))
+            Object.entries(inputValues).filter(([key]) => selectedValues.includes(key))
         );
         setInputValues(updatedDict);
-      };
+    };
 
     useEffect(() => {
         updateDictionary();
-      }, [selectedValues]);
-    
+    }, [selectedValues]);
+
     const handleMultiSelectChange = (selectedOptions) => {
         setSelectedValues(selectedOptions);
-      };
+    };
 
     // const getData = (p = {}) => {
 
@@ -70,9 +70,11 @@ const Html = () => {
             if (res.success) {
                 const data = res.data
                 // const filteredData = data.filter(item => item !== null);
-                const manipulateData = data.map((itm)=>{return{
-                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
-                }})
+                const manipulateData = data.map((itm) => {
+                    return {
+                        name: itm?.fullName || itm?.firstName, id: itm?.id || itm?._id
+                    }
+                })
                 setBrandData(manipulateData)
             }
         })
@@ -98,8 +100,8 @@ const Html = () => {
     }, [url])
 
     const getCampaignData = (p = {}) => {
-        let filter = { search: '', isDeleted: false,status:'',brand_id:user?.id}
-        let url='campaign/all'
+        let filter = { search: '', isDeleted: false, status: '', brand_id: user?.id }
+        let url = 'campaign/all'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setCampaignData(res.data.data)
@@ -133,18 +135,18 @@ const Html = () => {
     };
 
 
-    const generateShortLink = async(urlData) => {
-        if(urlData || url){
-        const data = await axios.post('https://api.t.ly/api/v1/link/shorten',{long_url:urlData || url}, {
-            headers: {
-                'Authorization':'Bearer dgZu0yi9QvaezlVsXrQkhcPy2ecxgXKZyrQrxdL9Avq4ZA0gAxHdU3QXmn98',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+    const generateShortLink = async (urlData) => {
+        if (urlData || url) {
+            const data = await axios.post('https://api.t.ly/api/v1/link/shorten', { long_url: urlData || url }, {
+                headers: {
+                    'Authorization': 'Bearer dgZu0yi9QvaezlVsXrQkhcPy2ecxgXKZyrQrxdL9Avq4ZA0gAxHdU3QXmn98',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }
+            )
+            setshrtlnk(data?.data?.short_url)
         }
-        )
-        setshrtlnk(data?.data?.short_url)
-    }
     }
 
     const handleAddNew = () => {
@@ -162,7 +164,7 @@ const Html = () => {
     useEffect(() => {
         ApiClient.get('get-affilaite-link').then((res) => {
             if (res?.success) {
-                console.log(res?.data,"res?.datares?.datares?.data")
+                console.log(res?.data, "res?.datares?.datares?.data")
                 setUrl(res?.data?.[0]?.link)
             }
             loader(false);
@@ -175,7 +177,7 @@ const Html = () => {
         //     toast.error("Please fill in all required fields.");
         //     return;
         // }
-        
+
         const base_url = 'https://upfilly.com/';
 
         const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
@@ -203,10 +205,10 @@ const Html = () => {
         }
 
         const finalUrlString = finalUrl.toString();
-       
+
 
         // loader(true);
-        ApiClient.post('get-link', { "base_url":finalUrlString, "parameters": inputValues }).then((res) => {
+        ApiClient.post('get-link', { "base_url": finalUrlString, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setUrl(res?.data);
@@ -237,24 +239,24 @@ const Html = () => {
                             <div className='row'>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3'>
-                                            <label className='mb-2' >Select a Affiliate</label>
-                                            <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
-                                                <option value="">Select a Affiliate</option>
-                                                {brandData.map(brand => (
-                                                    <option key={brand.id} value={brand.id} >{brand.name}</option>
-                                                ))}
-                                            </select>
+                                        <label className='mb-2' >Select Affiliate</label>
+                                        <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                            <option value="">Select Affiliate</option>
+                                            {brandData.map(brand => (
+                                                <option key={brand.id} value={brand.id} >{brand.name}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
-                                            <label className='mb-2' >Select a Campaign</label>
-                                            <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
-                                                <option value="">Select a Campaign</option>
-                                                {CampaignData.map(item => (
-                                                    <option key={item.id || item._id} value={item.id || item._id} >{item.name}</option>
-                                                ))}
-                                            </select>
+                                        <label className='mb-2' >Select Campaign</label>
+                                        <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
+                                            <option value="">Select Campaign</option>
+                                            {CampaignData.map(item => (
+                                                <option key={item.id || item._id} value={item.id || item._id} >{item.name}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-3">
@@ -290,46 +292,46 @@ const Html = () => {
 
                                 <div className='col-12 col-md-12'>
                                     <div class="select_parabx mb-3" >
-                                    <div className='mb-3' >
-                                    <label className='mb-2'>Select Custom Parameters</label>
-                                        <MultiSelectValue
-                                            id="statusDropdown"
-                                            displayValue="label"
-                                            intialValue={selectedValues}
-                                            result={(e) => handleMultiSelectChange(e.value)}
-                                            setInputValues={setInputValues}
-                                            updateDictionary={updateDictionary}
-                                            inputValues={inputValues}
-                                            options={checkboxValues}
-                                        />
+                                        <div className='mb-3' >
+                                            <label className='mb-2'>Select Custom Parameters</label>
+                                            <MultiSelectValue
+                                                id="statusDropdown"
+                                                displayValue="label"
+                                                intialValue={selectedValues}
+                                                result={(e) => handleMultiSelectChange(e.value)}
+                                                setInputValues={setInputValues}
+                                                updateDictionary={updateDictionary}
+                                                inputValues={inputValues}
+                                                options={checkboxValues}
+                                            />
+                                        </div>
+
+                                        <div className='addkey mt-3 mb-3 d-flex justify-content-end'>
+                                            <button className='btn btn-primary btn-sm' onClick={() => setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
+                                        </div>
+
                                     </div>
 
-                                    <div className='addkey mt-3 mb-3 d-flex justify-content-end'>
-                                            <button className='btn btn-primary btn-sm' onClick={()=>setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
-                                    </div>
-
-                                </div>
-
-<div className='row'>
-<div className='col-12 col-md-12 '>
                                     <div className='row'>
-                                        {selectedValues.map((selected,index) => (
-                                            <div className='col-12 col-sm-6 col-md-4 mb-3 ' key={index}>
-                                                <p className='mb-0 labeltext'>{selected}:</p>
-                                                <input
-                                                    type="text"
-                                                    className='form-control'
-                                                    placeholder={`Input value for ${selected}`}
-                                                    onChange={(e) => handleInputChange(selected, e.target.value)}
-                                                />
+                                        <div className='col-12 col-md-12 '>
+                                            <div className='row'>
+                                                {selectedValues.map((selected, index) => (
+                                                    <div className='col-12 col-sm-6 col-md-4 mb-3 ' key={index}>
+                                                        <p className='mb-0 labeltext'>{selected}:</p>
+                                                        <input
+                                                            type="text"
+                                                            className='form-control'
+                                                            placeholder={`Input value for ${selected}`}
+                                                            onChange={(e) => handleInputChange(selected, e.target.value)}
+                                                        />
+                                                    </div>
+                                                ))}
                                             </div>
-                                         ))}
+                                        </div>
                                     </div>
                                 </div>
-</div>
-                                    </div>
-                                   
-                             
+
+
                             </div>
 
                             <div className='text-end '>
@@ -343,9 +345,9 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                
-                                { !selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com`}</div>}
-                                { SelectedCampaign && !selectedBrand && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?campaign=${SelectedCampaign}`}</div>}
+
+                                {!selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com`}</div>}
+                                {SelectedCampaign && !selectedBrand && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?campaign=${SelectedCampaign}`}</div>}
                                 {selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}`}</div>}
                                 {selectedBrand && SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</div>}
                             </div>
@@ -357,7 +359,7 @@ const Html = () => {
                                         <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                     </div>
                                 </div>
-                                 <div id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</div>
+                                <div id="textShortToCopy" className="form-control br0 mb-0 heauto" >{shrtlnk}</div>
                             </div>
                             {copied && <div className="">Copied!</div>}
                         </div>

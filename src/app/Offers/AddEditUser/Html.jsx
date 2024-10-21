@@ -231,7 +231,8 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             placeholder="Select Opportunity"
                                             intialValue={form?.opportunity_type}
                                             result={e => setform({ ...form, opportunity_type: e.value })}
-                                            options={[{ name: "Single Placement", id: "single_placement" },
+                                            options={[
+                                            { name: "Single Placement", id: "single_placement" },
                                             { name: "Package", id: "package" },
                                             { name: "Social", id: "social" },
                                             ]}
@@ -261,7 +262,8 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             placeholder="Select category"
                                             intialValue={form?.payment_model}
                                             result={e => setform({ ...form, payment_model: e.value })}
-                                            options={[{ name: "Revenue Share", id: "Rev_share" },
+                                            options={[
+                                            { name: "Revenue Share", id: "Rev_share" },
                                             { name: "Flat Fee", id: "Flat_fee" },
                                             { name: "CPA +", id: "CPA +" },
                                             { name: "CPC", id: "CPC" }]}
