@@ -41,6 +41,14 @@ const Profile = () => {
     })
   };
 
+  const copyToClipboard = (text:any) => {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Copied to clipboard: " + text);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  };
+
   const AssosiateUserData = () => {
     ApiClient.get(`getallassociatedusers`).then(res => {
       if (res.success) {
@@ -133,7 +141,7 @@ const Profile = () => {
                         </div>
                       </div>
                       {/* <hr /> */}
-                      <div className=" row align-items-center ">
+                      <div    className=" row align-items-center ">
                         <div className="col-12 col-sm-12 col-md-12">
                           <div className="row">
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6">
@@ -298,6 +306,20 @@ const Profile = () => {
 
                                   }
 
+                                </div>
+                              </div>
+                            </div>}
+
+                           {data.activeUser.role == "brand" && <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                              <div className='inputFlexs width400'>
+                                <label>Advertiser ID:</label>
+                                <div className='d-flex align-items-center'>
+                                  <p className="profile_data" id="advertiserId">{data.activeUser._id || data.activeUser.id}</p>
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => copyToClipboard(data.activeUser._id || data.activeUser.id)}>
+                                    Copy
+                                  </button>
                                 </div>
                               </div>
                             </div>}

@@ -106,10 +106,10 @@ const Html = ({
                      <MultiSelectDropdown
                         id="statusDropdown"
                         displayValue="name"
-                        // placeholder="All Campaign"
                         intialValue={AffiliateDataId}
                         result={e => { setAffiliateDataId(e.value) }}
                         options={AffiliateData}
+                        placeholder="All Affiliate"
                       />
                   </div>
                 </div>

@@ -2,12 +2,13 @@ import React from "react";
 import './style.scss';
 import Multiselect from 'multiselect-react-dropdown';
 
-const Html = ({ options,selectedValues,handleChange,displayValue,id,setSelectedValues}) => {
+const Html = ({ options,selectedValues,handleChange,displayValue,id,setSelectedValues,placeholder}) => {
 
     // const handleRemove = (valueToRemove) => {
     //     const updatedValues = selectedValues.filter(value => value.id !== valueToRemove.id);
     //     setSelectedValues(updatedValues);
     // };
+
 
     return <>
         <div className="selectDropdown">
@@ -18,6 +19,7 @@ const Html = ({ options,selectedValues,handleChange,displayValue,id,setSelectedV
                 onSelect={e => handleChange(e, 'select')}
                 onRemove={e => handleChange(e, 'remove')}
                 displayValue={displayValue}
+                placeholder={placeholder}
                 id={id}
                 // hideSelectedList
                 showArrow

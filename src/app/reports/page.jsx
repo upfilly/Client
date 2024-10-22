@@ -164,7 +164,7 @@ export default function CampaignReport() {
                       <MultiSelectDropdown
                         id="statusDropdown"
                         displayValue="name"
-                        // placeholder="All Campaign"
+                        placeholder="All Campaign"
                         intialValue={campaignId}
                         result={e => { setCampaignId(e.value) }}
                         options={CampaignData}
