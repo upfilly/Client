@@ -263,7 +263,7 @@ export default function MarketPlace() {
                         
                           id="statusDropdown"
                           displayValue="name"
-
+                          placeholder="Select"
                           intialValue={placement}
                           result={(e: any) => setPlacement(e.value)}
                           options={[{ name: "Website", id: "website" },
