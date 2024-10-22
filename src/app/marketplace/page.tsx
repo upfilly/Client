@@ -260,7 +260,6 @@ export default function MarketPlace() {
                     <div className="position-relative  downarrow">
                     <i className="fa fa-caret-down " aria-hidden="true"></i>
                         <MultiSelectDropdown
-                        
                           id="statusDropdown"
                           displayValue="name"
                           placeholder="Select"
@@ -299,7 +298,7 @@ export default function MarketPlace() {
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
-
+                          placeholder="Select"
                           intialValue={opportunity}
                           result={(e: any) => setOpportunity(e.value)}
                           options={[
