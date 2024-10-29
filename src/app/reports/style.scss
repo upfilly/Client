@@ -137,6 +137,10 @@ img.person-img {
   height: 38px !important;
 }
 
+.d-flex.justify-content-between.align-items-center.mb-2 {
+  margin-left: 26px;
+}
+
 .checkbox-inner .dropdown-header {
   border-radius: 50px !important;
 }
@@ -281,3 +285,59 @@ table {
 *::-webkit-scrollbar-thumb {
   border-radius: 6px;
 }
+
+.checkboxes {
+  display: flex;
+  // flex-wrap: wrap; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  width: 75vw;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  margin: 10px; /* Margin for spacing between items */
+  flex: 1 1 calc(33.33% - 20px); /* Three items per row, adjust for margins */
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.checkbox-item input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.checkboxes:hover {
+  border-color: #888;
+}
+
+.checkboxes input[type="checkbox"]:checked {
+  accent-color: #007bff; /* Change to your preferred color */
+}
+
+.checkboxes input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+.campaign-header {
+  font-size: 24px; /* Increase font size */
+  font-weight: bold; /* Make text bold */
+  color: #333; /* Dark gray color */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Add margin for spacing */
+  padding: 10px; /* Add padding */
+  background-color: #f0f0f0; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+

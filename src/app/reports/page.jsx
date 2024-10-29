@@ -10,8 +10,7 @@ import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
 import ReportChart from '../components/common/AreaChart/AreaChart'
-import SelectDropdown from '../components/common/SelectDropdown';
-import MultiSelectDropdown from '../components/common/MultiSelectDropdown';
+import MultiSelectDropdownWithCheckboxes from './MultiSelectDropdownWithCheckboxes';
 
 export default function CampaignReport() {
   const history = useRouter()
@@ -151,7 +150,27 @@ export default function CampaignReport() {
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Track Data" filters={filters}>
+
         <div className='nmain-list  mb-3 main_box'>
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          {/* <MultiSelectDropdown
+                        id="statusDropdown"
+                        displayValue="name"
+                        placeholder="All Campaign"
+                        intialValue={campaignId}
+                        result={e => { setCampaignId(e.value) }}
+                        options={CampaignData}
+                      /> */}
+            <h3 class="campaign-header">
+              Select Campaign
+            </h3>
+          <MultiSelectDropdownWithCheckboxes
+            options={CampaignData}
+            initialValue={campaignId}
+            onChange={(selectedValues) => setCampaignId(selectedValues)}
+          />
+
+        </div>
           <div className='container-fluid'>
             <ReportChart areaData={analyticData?.data?.[0]} />
             <div className='row'>
@@ -160,17 +179,6 @@ export default function CampaignReport() {
               <div className='respon_data'>
                 <div className='table_section '>
                   <div className='table-responsive '>
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <MultiSelectDropdown
-                        id="statusDropdown"
-                        displayValue="name"
-                        placeholder="All Campaign"
-                        intialValue={campaignId}
-                        result={e => { setCampaignId(e.value) }}
-                        options={CampaignData}
-                      />
-
-                    </div>
                     <table class="table table-striped ">
                       <thead className="thead-clr">
                         <tr>
