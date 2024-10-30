@@ -70,13 +70,13 @@ export default function Resources() {
                           <div className='imgtag_card'>
                             <img src={resource.image} className='img-fluid heighteual mb-0' alt={`Resource ${resource.id}`} />
                             <p>{resource.description}</p>
-                            <a
+                            {/* <a
                               href={resource.link}
                               className='btn btn-primary'
                               onClick={() => handleReadMoreClick(resource.id)} // Track click
                             >
                               Read More
-                            </a>
+                            </a> */}
                           </div>
                         </div>
                       </div>
