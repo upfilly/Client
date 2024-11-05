@@ -4,7 +4,6 @@ import Html from "./html";
 import methodModel from "@/methods/methods";
 
 const MultiSelectDropdown = ({intialValue,options,isSingle=false,result,displayValue='name',id,placeholder}) => {
-
     const [selectedValues,setSelectedValues]=useState([])
 
     const handleChange=(e,type)=>{
