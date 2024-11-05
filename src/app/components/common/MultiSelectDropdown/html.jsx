@@ -21,7 +21,7 @@ const Html = ({ options,selectedValues,handleChange,displayValue,id,setSelectedV
                 displayValue={displayValue}
                 placeholder={placeholder}
                 id={id}
-                // hideSelectedList
+                hideSelectedList
                 showArrow
             />
             {/* {selectedValues?.length > 0 && <div>

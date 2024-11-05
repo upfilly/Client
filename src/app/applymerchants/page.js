@@ -405,7 +405,7 @@ export default function affilate() {
 
   return (
     <>
-      <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
+      <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Merchants" filters={filters}>
         <div className='nmain-list  mb-3'>
           <div className='row align-items-center mx-0'>
             <div className='col-12 col-md-12 col-lg-12'>

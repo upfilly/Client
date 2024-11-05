@@ -52,7 +52,7 @@ export default function MarketPlaceDetail() {
             <div className="p-80">
             <div className="container">
                 <div className="col-sm-12 col-md-8 mx-auto ">
-                    <div className="d-flex gap-2 align-items-center mb-3">
+                    <div className="d-flex gap-2 align-items-center mb-3" onClick={()=>back()}>
                     <i className="fa fa-arrow-left  left_arrows  mr-0" aria-hidden="true"></i>
                         <span className="offer_detail">Offer Details</span>
                     </div>
