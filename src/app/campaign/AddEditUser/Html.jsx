@@ -277,7 +277,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             }}
                                             options={EventType}
                                         />
-                                        {form?.event_type?.length > 0 && <div className="selected_offrs_market">
+                                        {/* {form?.event_type?.length > 0 && <div className="selected_offrs_market">
                                             {form?.event_type?.map((value, index) => (
                                                 <div className="d-flex gap-3 align-items-center btn btn-primary">
                                                     <p className="mb-0 valus" key={index}>
@@ -287,7 +287,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                                 </div>
 
                                             ))}
-                                        </div>}
+                                        </div>} */}
                                     </div>
                                     {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
                                 </div>
