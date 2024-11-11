@@ -43,7 +43,7 @@ const Html = ({
     }
     
     return (
-        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Send Offers" : "Offer Requests"} filters={filters}>
+        <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Sent Offers" : "Offer Requests"} filters={filters}>
             <div className='sidebar-left-content main_box'>
                 <div className='card'>
                     <div className='card-header'>

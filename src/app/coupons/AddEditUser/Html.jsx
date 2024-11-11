@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import '../style.scss';
-import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitted, back }) => {

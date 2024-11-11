@@ -82,13 +82,13 @@ export default function affilate() {
     }
   };
 
-  const permission=(p)=>{
+  const permission = (p) => {
     if (user && user?.permission_detail && p) {
-        return user?.permission_detail[p]
-    }else{
-        return false
+      return user?.permission_detail[p]
+    } else {
+      return false
     }
-}
+  }
 
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
@@ -421,6 +421,12 @@ export default function affilate() {
     }
   }
 
+  const handleAddCampaign = () => {
+    // Trigger logic to add a new campaign (e.g., open a modal for campaign creation)
+    console.log("Open modal to add new campaign");
+  };
+  
+
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
@@ -433,8 +439,8 @@ export default function affilate() {
                   <div class="modal-content   ">
                     <div class="modal-header align-items-center bg_headers ">
                       <h2 class="modal-title fs-5" id="exampleModalLabel">All Filter</h2>
-                       <i   data-bs-dismiss="modal" aria-label="Close" class="fa fa-times clse" aria-hidden="true"></i>
-        
+                      <i data-bs-dismiss="modal" aria-label="Close" class="fa fa-times clse" aria-hidden="true"></i>
+
                     </div>
                     <div class="modal-body">
                       <div className='height_fixed'>
@@ -802,10 +808,12 @@ export default function affilate() {
                     onChange={(e) => setform({ ...form, message: e.target.value })}
                     required
                   />
-                  {submitted && !form?.message ? <div className="invalid-feedback d-block">message is Required</div> : <></>}
+                  {submitted && !form?.message ? (
+                    <div className="invalid-feedback d-block">Message is required</div>
+                  ) : null}
                 </Form.Group>
 
-                <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
+                <Form.Group className='mb-3 d-flex justify-content-between flex-column width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select Campaign</Form.Label>
                   <SelectDropdown
                     id="statusDropdown"
@@ -813,32 +821,49 @@ export default function affilate() {
                     displayValue="name"
                     placeholder="Select Campaign"
                     intialValue={form?.campaign_id}
-                    result={e => {
-                      setform({ ...form, campaign_id: e.value })
-                    }}
+                    result={e => setform({ ...form, campaign_id: e.value })}
                     options={Campaigns}
-                  /></Form.Group>
+                  />
+                  {submitted && !form?.campaign_id && (
+                    <div className="invalid-feedback d-block">Campaign is required</div>
+                  )}
+                </Form.Group>
 
-                <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
+                {/* Show 'Add Campaign' button if no campaign is selected */}
+                {Campaigns?.length == 0 && (
+                  <div className="mb-3">
+                    If you don't have campaign ?
+                    <a
+                      onClick={handleAddCampaign}
+                      className="text-blue-100 hover:text-blue-200 cursor-pointer ml-2"
+                    >
+                      Add Campaign
+                    </a>
+                  </div>
+                )}
+
+                <Form.Group className='mb-3 d-flex justify-content-between flex-column width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Tags</Form.Label>
-                  <div className=' d-flex justify-content-between gap-3 input_adds' >
+                  <div className='d-flex justify-content-between gap-3 input_adds'>
                     <Form.Control
                       type='text'
                       placeholder="Enter text"
                       value={tagInput}
                       onChange={handleTagInputChange}
                     />
-                    <Button variant="primary" onClick={handleAddTag}> <i class="fa fa-plus" aria-hidden="true"></i>
+                    <Button variant="primary" onClick={handleAddTag}>
+                      <i className="fa fa-plus" aria-hidden="true"></i>
                     </Button>
                   </div>
                 </Form.Group>
-                <div className='d-flex align-items-center  text_adds gap-2 flex-wrap' >
+
+                <div className='d-flex align-items-center text_adds gap-2 flex-wrap'>
                   {form.tags.map((tag, index) => (
                     <ul key={index} className="d-flex align-items-center gap-3 mb-2">
-                      <li> <span>{tag}</span> <i class="fa fa-times-circle ml-2" onClick={() => handleDeleteTag(index)} aria-hidden="true"></i></li>
-
-
-                      {/* <Button variant="danger" size="sm" className="ms-2" >Delete</Button> */}
+                      <li>
+                        <span>{tag}</span>
+                        <i className="fa fa-times-circle ml-2" onClick={() => handleDeleteTag(index)} aria-hidden="true"></i>
+                      </li>
                     </ul>
                   ))}
                 </div>
@@ -850,8 +875,8 @@ export default function affilate() {
                 </div>
               </Form>
             </Modal.Body>
-
           </Modal>
+
 
           <Modal show={groupShow} onHide={handleGroupClose} className="shadowboxmodal">
             <Modal.Header className='align-items-center' closeButton>
