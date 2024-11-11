@@ -298,12 +298,11 @@ export default function Login() {
             <div>
               <h6 className='mb-3'>Signing up as</h6>
               <Link className='btn btn-primary mr-3 pl-4 pr-4' onClick={handleClose} href="signup/brand">Brand</Link>
-              <Link className='btn btn-primary pl-4 pr-4' onClick={handleClose} href="/pricing">Affiliate</Link>
+              <Link className='btn btn-primary pl-4 pr-4' onClick={handleClose} href="signup/affiliate">Affiliate</Link>
             </div>
             <div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
