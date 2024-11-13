@@ -438,7 +438,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
 
 
                             <div className="text-right edit-btns">
-
                                 <button type="submit" className="btn btn-primary">Save</button>
                             </div>
                         </div>
