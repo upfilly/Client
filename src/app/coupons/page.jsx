@@ -35,7 +35,7 @@ const Coupons = () => {
         if(user?.role == 'brand'){
             filter = { ...filters, ...p }
         }else{
-            filter = { ...filters, ...p ,addedBy:user?.id}
+            filter = { ...filters, ...p ,visibility:"Public",media:user?.id || user?._id}
         }
 
         let url='coupon/getAll'
