@@ -3,20 +3,18 @@ import React, { useEffect, useState } from "react";
 import methodModel from '@/methods/methods';
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ApiClient from "@/methods/api/apiClient";
-import { toast } from "react-toastify";
 import loader from "@/methods/loader";
 import crendentialModel from "@/models/credential.model";
 import axios from "axios";
-import { Navbar, Dropdown, Button, Form, Col, Row, Modal } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { ConnectSocket } from "@/app/chat/socket";
 import environment from "@/environment";
 
 
-const Html = ({ settingData, setShowPopup, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searchHandle, search, isOpen1, searchChange, clear, Logout }) => {
+const Html = ({ settingData, Logout }) => {
   const pathname = usePathname()
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const [ip, setIP] = useState("")
   const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingForm') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate')
   const param = useSearchParams()
   const id = param.get("id")
@@ -113,10 +111,7 @@ const Html = ({ settingData, setShowPopup, isOpen, toggle, isOpen2, toggle2, set
 
   return (
     <>
-
       <div className="">
-
-
         <div className="blue_header ">
           <div className="container">
             <div className="row" >

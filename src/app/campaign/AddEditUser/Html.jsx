@@ -249,7 +249,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 {form?.access_type == "private" && <div className="col-md-6 mb-3">
                                     <label>Affiliate<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        {/* <SelectDropdown
                                             id="statusDropdown"
                                             displayValue="fullName"
                                             placeholder="Select Affiliate"
@@ -259,6 +259,17 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                                 setform({ ...form, affiliate_id: e.value })
                                             }}
                                             options={affiliateData}
+                                        /> */}
+                                        <MultiSelectValue
+                                         id="statusDropdown"
+                                         displayValue="fullName"
+                                         placeholder="Select Affiliate"
+                                         intialValue={form?.affiliate_id}
+                                         result={e => {
+                                            setform({ ...form, affiliate_id: e.value })
+                                        }}
+                                         disabled={(form?.status == "rejected" || !id) ? false : true}
+                                         options={affiliateData}
                                         />
                                     </div>
                                     {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
