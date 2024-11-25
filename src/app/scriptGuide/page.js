@@ -11,7 +11,7 @@ const TrackingGuide = () => {
       </header>
 
       <section className="content">
-        <h2 className='trackHeading'>Step 1: Setting Up Cookies</h2>
+        <h4 className='trackHeading'>Step 1: Setting Up Cookies</h4>
         <p>Cookies allow you to store data on the user's browser. Here's how to set and get cookies in your React app.</p>
 
         <div className="code-block">
@@ -41,9 +41,6 @@ function getCookie(name) {
 
         <p>This example demonstrates how to store and retrieve cookies in React. Use the <code>setCookie</code> function to store data (like affiliate ID, session data) and the <code>getCookie</code> function to retrieve this information.</p>
 
-        <h2>Step 2: Capturing URL Parameters</h2>
-        <p>You can capture query parameters from the URL and store them as cookies. Here's how to do that:</p>
-
         <div className="code-block">
           <pre>
             {`// Function to get all query parameters from the URL and set them as cookies
@@ -67,12 +64,13 @@ console.log("Query Parameters: ", queryParams);`}
 
         <p>This code captures URL parameters like <code>?affiliate=1234</code> and stores them as cookies for later use. For example, you can track affiliate IDs or campaign sources using this method.</p>
 
-        <h2 className='trackHeading'>Step 3: Sending Tracking Data to an External API</h2>
+        <h4 className='trackHeading'>Step 2: Sending Tracking Data For Upfilly</h4>
         <p>Once you have captured the necessary data (like user information, sales, or campaign data), you can send it to an external API for further processing. Here's an example using <code>XMLHttpRequest</code>:</p>
 
         <div className="code-block">
           <pre>
             {`// Sending tracking data to an external API
+            <script>
 const saleData = {
     merchant: {{1001}}, // given by upfilly after signup
     affiliate_id: getCookie("affiliate_id") || "defaultAffiliate",
@@ -95,13 +93,15 @@ xhr.onload = function () {
     }
 };
 
-xhr.send(JSON.stringify(saleData));`}
+xhr.send(JSON.stringify(saleData));
+</script>
+`}
           </pre>
         </div>
 
         <p>This code sends tracking data like the sale amount, affiliate ID, and order reference to an external server. You can adjust the endpoint <code>https://api.example.com/trackSale</code> to match your tracking API.</p>
 
-        <h2>Step 4: Verifying Tracking</h2>
+        <h4>Step 4: Verifying Tracking</h4>
         <p>After implementing tracking, it's important to verify its functionality:</p>
         <ul>
           <li><strong>Check Cookies:</strong> Open the browser's developer tools and go to the "Application" tab (Chrome) to see the cookies set on your website.</li>
