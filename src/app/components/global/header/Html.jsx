@@ -176,7 +176,12 @@ const Html = ({ settingData, Logout }) => {
         {!isDashboard &&
           <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4  ">
             <Link href="/">
-              <img src={`${environment?.api}${settingData?.logo}`} className="logo" alt="" />
+              <img
+                src={`${environment?.api}${settingData?.logo}`}
+                className="logo"
+                alt=""
+                style={{ width: '200px', height: '100px' }}
+              />
             </Link>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
