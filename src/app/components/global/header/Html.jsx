@@ -207,7 +207,9 @@ const Html = ({ settingData, Logout }) => {
                 <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/company" ? 'active' : ''}`} href="/company">Company</Link>
                 </li>
-
+                <li class="nav-item">
+                  <Link class={`nav-link ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Tracking Script</Link>
+                </li>
 
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-auto">
