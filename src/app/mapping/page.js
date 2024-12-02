@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Layout from '../components/global/layout';
-
+import "./style.scss";
 const MapAndSendData = () => {
   const originalData = [
     { id: 1, name: 'John', email: 'john@example.com' },
@@ -65,8 +65,9 @@ const MapAndSendData = () => {
 
   return (
     <Layout>
-      <div className="mapping-wrapper">
-        <h3>Map Data Keys</h3>
+  
+   <div className="mapping-wrapper">
+        <h3 className='mt-2 mb-3'>Map Data Keys</h3>
 
         <div className="mapping-container">
           {/* Left column: Source keys */}
@@ -158,6 +159,7 @@ const MapAndSendData = () => {
 
         <button onClick={sendData}>Send Mapped Data</button>
       </div>
+  
     </Layout>
   );
 };
