@@ -232,6 +232,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
 
+          {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/mapping"  title="Campaign">
+            <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
+            <span className="side_head">Map Keys</span>
+          </ListItemLink>}
+
           {(permission('marketplace_product_add') || user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers"  title="Add Offer" >
             <i className="material-icons  svg_iconbx ListItemLink" title="product">add_shopping_cart</i>
             <span className="side_head ">Add Offer</span>
