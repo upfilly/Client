@@ -69,11 +69,10 @@ export default function CampaignReport() {
 
   useEffect(() => {
     getCamapignData({ page: 1 })
-    if (user.role == 'brand') {
-      getData({ page: 1 })
-    } else if (user.role != 'brand') {
-      getData({ page: 1 })
-    }
+  }, [])
+
+  useEffect(() => {
+    getData({ page: 1 })
   }, [campaignId])
 
   const pageChange = (e) => {
@@ -153,14 +152,6 @@ export default function CampaignReport() {
 
         <div className='nmain-list  mb-3 main_box'>
         <div className="d-flex justify-content-between align-items-center mb-2">
-          {/* <MultiSelectDropdown
-                        id="statusDropdown"
-                        displayValue="name"
-                        placeholder="All Campaign"
-                        intialValue={campaignId}
-                        result={e => { setCampaignId(e.value) }}
-                        options={CampaignData}
-                      /> */}
             <h3 class="campaign-header">
               Select Campaign
             </h3>

@@ -13,10 +13,10 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back }) => {
 
-    const [loaderr, setLoader] = useState()
-    const [imgLoder, setImgLoder] = useState()
-    const [loadViderr, setVidLoader] = useState()
-    const [vidLoder, setvidLoder] = useState()
+    // const [loaderr, setLoader] = useState()
+    // const [imgLoder, setImgLoder] = useState()
+    // const [loadViderr, setVidLoader] = useState()
+    // const [vidLoder, setvidLoder] = useState()
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
 
@@ -26,126 +26,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         { id: 'purchase', name: 'Purchase' },
         // { id: 'line-item', name: 'Line-item' }
     ]
-
-    const handleRemove = (valueToRemove, type) => {
-        const updatedValues = (form?.event_type || []).filter((value) => String(value) !== String(valueToRemove));
-        setform({ ...form, event_type: updatedValues });
-    };
-
-    // console.log(form, "formformform")
-
-    const uploadImage = async (e, key) => {
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
-
-        setLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/image?modelName=campaign'
-
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.fullpath
-                if (form?.images.length <= 9) {
-                    form?.images?.push({
-                        name: `images/campaign/${path}`,
-                        url: `images/campaign/${path}`
-                    })
-                }
-            }
-            i++
-        }
-        setLoader(false)
-        setImgLoder(false)
-    }
-
-    // const uploadImage = async (e, key) => {
-    //     let files = e.target.files;
-    //     let imgfile = Array.from(files);
-
-    //     setLoader(true);
-
-    //     const promises = imgfile.map(async (file) => {
-
-    //       const formData = new FormData();
-    //       formData.append('file', file);
-
-    //       try {
-    //         const res = await axios.post(`${environment?.api}/upload/image?modelName=campaign`, formData, {
-    //           headers: {
-    //             'Content-Type': 'multipart/form-data',
-    //           },
-    //         });
-
-    //         if (res.data.success) {
-    //           let path = res.data.data.fullpath;
-    //           if (form.images.length <= 10) {
-    //             setform((prevForm) => ({
-    //               ...prevForm,
-    //               images: [
-    //                 ...prevForm.images,
-    //                 {
-    //                   name: `images/campaign/${path}`,
-    //                   url: `images/campaign/${path}`,
-    //                 },
-    //               ],
-    //             }));
-    //           }
-    //         }
-    //       } catch (error) {
-    //         // console.error('Upload error:', error);
-    //       }
-    //     });
-
-    //     try {
-    //       await Promise.all(promises);
-    //     } catch (error) {
-    //       // console.error('Multiple file upload error:', error);
-
-    //     }
-
-    //     setLoader(false);
-    //     setImgLoder(false);
-    //   };
-
-
-    const uploadVideos = async (e, key) => {
-        // console.log('enter');
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
-
-        setVidLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/video/multiple?modelName=videos'
-
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.videoPath
-                let items = path?.map((itm) => {
-                    return itm
-                })
-                if (form?.videos.length <= 9) {
-                    form?.videos?.push({
-                        name: `videos/${items}`,
-                        url: `videos/${items}`
-                    })
-                }
-            }
-            i++
-        }
-        setVidLoader(false)
-        setvidLoder(false)
-        // setVdo(false)
-    }
 
     const uploadDocument = async (e, key) => {
         // console.log('enter');
@@ -178,26 +58,11 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         // setVdo(false)
     }
 
-
-    const removeVideo = (index, key) => {
-        const filterVid = form?.videos?.length > 0 && form.videos.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, videos: filterVid })
-    }
-
     const removeDocument = (index, key) => {
         const filterVid = form?.documents?.length > 0 && form.documents.filter((data, indx) => {
             return index != indx
         })
         setform({ ...form, documents: filterVid })
-    }
-
-    const remove = (index, key) => {
-        const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
-            return index != indx
-        })
-        setform({ ...form, images: filterImg })
     }
 
     return <>
@@ -249,17 +114,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 {form?.access_type == "private" && <div className="col-md-6 mb-3">
                                     <label>Affiliate<span className="star">*</span></label>
                                     <div className="select_row">
-                                        {/* <SelectDropdown
-                                            id="statusDropdown"
-                                            displayValue="fullName"
-                                            placeholder="Select Affiliate"
-                                            intialValue={form?.affiliate_id}
-                                            disabled={(form?.status == "rejected" || !id) ? false : true}
-                                            result={e => {
-                                                setform({ ...form, affiliate_id: e.value })
-                                            }}
-                                            options={affiliateData}
-                                        /> */}
                                         <MultiSelectValue
                                          id="statusDropdown"
                                          displayValue="fullName"
@@ -288,29 +142,9 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             }}
                                             options={EventType}
                                         />
-                                        {/* {form?.event_type?.length > 0 && <div className="selected_offrs_market">
-                                            {form?.event_type?.map((value, index) => (
-                                                <div className="d-flex gap-3 align-items-center btn btn-primary">
-                                                    <p className="mb-0 valus" key={index}>
-                                                        {value}
-                                                    </p>
-                                                    <i className="fa fa-times close_bx" onClick={() => handleRemove(value, 'remove')}></i>
-                                                </div>
-
-                                            ))}
-                                        </div>} */}
                                     </div>
                                     {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
                                 </div>
-                                {/* <div className="col-md-6">
-                                    <label>Target URL</label>
-                                    <input
-                                        type="text"
-                                        className="form-control w-100"
-                                        value="https://upfilly.com/"
-                                        disabled
-                                    />
-                                </div> */}
                                 <div className="col-md-6 mb-3">
                                     <label>Amount<span className="star">*</span></label>
                                     <input
@@ -329,18 +163,23 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     />
                                     {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
                                 </div>
+                                <div className="col-md-6 mb-3">
+                                    <label>Default Campaign</label>
+                                    <div className="form-check">
+                                        <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            checked={form?.isDefault || false}
+                                            onChange={(e) => setform({ ...form, isDefault: e.target.checked })}
+                                        />
+                                        <label className="form-check-label" htmlFor="defaultCampaign">
+                                            Set this as the default campaign
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
-                                    {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
-                                        onEditorChange={(newValue, editor) => {
-                                            setform({ ...form, description: newValue })
-                                        }}
-
-                                        init={{
-                                            selector: 'textarea#autocompleter-cardmenuitem',
-                                            height: 250,
-                                        }}
-                                    /> */}
                                     {affiliateData && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
@@ -370,56 +209,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     />}
                                     {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
-                                {/* <div className='col-md-6'>
-                                    <label>Images (Max. Limit 10) </label>
-                                    <div className="form-group drag_drop">
-                                        <div className='upload_file'>
-                                           {form?.images?.length <= 9 && <><button className="btn btn-primary upload_image">Upload Image</button>
-                                            <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
-                                                // disabled={loader}
-                                                onChange={(e) => {
-                                                    setImgLoder(true)
-                                                    uploadImage(e, 'images');
-                                                }} /></>}
-                                            {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                            <div className="imagesRow mt-4 img-wrappper">
-                                                {form?.images && form?.images?.map((itm, i) => {
-                                                    return <div className="imagethumbWrapper" key={i}>
-                                                        <img src={methodModel?.noImg(itm?.url)} className="thumbnail" />
-                                                        <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
-                                                    </div>
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-
-                                {/* <div className='col-md-6'>
-                                    <label>Videos (Max. Limit 10)   </label>
-                                    <div className="form-group drag_drop">
-                                        <div className='upload_file'>
-                                           {form?.videos?.length <= 9 && <><button className="btn btn-primary upload_image">Upload Video</button>
-                                            <input type="file" className="form-control-file over_input" accept="video/*" multiple={true}
-                                                // disabled={loader}
-                                                onChange={(e) => {
-                                                    setvidLoder(true)
-                                                    uploadVideos(e, 'images');
-                                                }} /></>}
-                                            {loadViderr && vidLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                            <div className="imagesRow mt-4">
-                                                {form?.videos && form?.videos.map((itm, i) => {
-                                                    return <div className="imagethumbWrapper videowrapper" key={i}>
-                                                        <video width="150" height="100" controls className="mr-3">
-                                                            <source src={methodModel.noImg(itm?.url)} type="video/mp4">
-                                                            </source>
-                                                        </video>
-                                                        <i className="fa fa-times kliil" title="Remove" onClick={e => removeVideo(i)}></i>
-                                                    </div>
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
 
                                 <div className='col-md-6'>
                                     <label>Document(Max. Limit 10)  </label>

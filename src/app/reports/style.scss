@@ -340,4 +340,38 @@ table {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* style.scss */
+
+/* Container for the checkboxes */
+.checkboxes {
+  display: grid; /* Use CSS Grid to lay out checkboxes */
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 10px; /* Space between checkboxes */
+}
+
+/* Style for each checkbox item */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Style for the toggle button */
+.toggle-button {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+.toggle-button:hover {
+  background-color: #0056b3;
+}
+
+
 

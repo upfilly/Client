@@ -14,75 +14,12 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
 
-    const [loaderr, setLoader] = useState()
-    const [imgLoder, setImgLoder] = useState()
-    const [loadViderr, setVidLoader] = useState()
-    const [vidLoder, setvidLoder] = useState()
+    // const [loaderr, setLoader] = useState()
+    // const [imgLoder, setImgLoder] = useState()
+    // const [loadViderr, setVidLoader] = useState()
+    // const [vidLoder, setvidLoder] = useState()
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
-
-    // const uploadImage = async (e, key) => {
-    //     // console.log('enter');
-    //     let files = e.target.files
-    //     let i = 0
-    //     let imgfile = []
-    //     for (let item of files) {
-    //         imgfile.push(item)
-    //     }
-
-    //     setLoader(true)
-    //     for await (let item of imgfile) {
-    //         let file = files.item(i)
-    //         let url = 'upload/image?modelName=campaign'
-
-    //         const res = await ApiClient.postFormData(url, { file: file })
-    //         if (res.success) {
-    //             let path = res?.data?.fullpath
-    //             form?.images?.push({
-    //                 name: `images/campaign/${path}`,
-    //                 url: `images/campaign/${path}`
-    //             })
-
-    //         }
-    //         i++
-    //     }
-    //     setLoader(false)
-    //     setImgLoder(false)
-    //     // setVdo(false)
-    // }
-
-    // const uploadVideos = async (e, key) => {
-    //     // console.log('enter');
-    //     let files = e.target.files
-    //     let i = 0
-    //     let imgfile = []
-    //     for (let item of files) {
-    //         imgfile.push(item)
-    //     }
-
-    //     setVidLoader(true)
-    //     for await (let item of imgfile) {
-    //         let file = files.item(i)
-    //         let url = 'upload/video/multiple?modelName=videos'
-
-    //         const res = await ApiClient.postFormData(url, { file: file })
-    //         if (res.success) {
-    //             let path = res?.data?.videoPath
-    //             let items = path?.map((itm) => {
-    //                 return itm
-    //             })
-    //             form?.videos?.push({
-    //                 name: `videos/${items}`,
-    //                 url: `videos/${items}`
-    //             })
-
-    //         }
-    //         i++
-    //     }
-    //     setVidLoader(false)
-    //     setvidLoder(false)
-    //     // setVdo(false)
-    // }
 
     const uploadDocument = async (e, key) => {
         // console.log('enter');
@@ -114,27 +51,12 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
         // setVdo(false)
     }
 
-
-    // const removeVideo = (index, key) => {
-    //     const filterVid = form?.videos?.length > 0 && form.videos.filter((data, indx) => {
-    //         return index != indx
-    //     })
-    //     setform({ ...form, videos: filterVid })
-    // }
-
     const removeDocument = (index, key) => {
         const filterVid = form?.documents?.length > 0 && form.documents.filter((data, indx) => {
             return index != indx
         })
         setform({ ...form, documents: filterVid })
     }
-
-    // const remove = (index, key) => {
-    //     const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
-    //         return index != indx
-    //     })
-    //     setform({ ...form, images: filterImg })
-    // }
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"CampaignManagement"} filters={undefined}>
@@ -154,17 +76,6 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                         </div>
                         <div className="col-md-12 mb-3">
                             <label>Description<span className="star">*</span></label>
-                            {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
-                                onEditorChange={(newValue, editor) => {
-                                    setform({ ...form, description: newValue })
-                                }}
-
-                                init={{
-                                    selector: 'textarea#autocompleter-cardmenuitem',
-                                    height: 250,
-                                }}
-                                required
-                            /> */}
                                <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
@@ -193,56 +104,6 @@ const Html = ({ role, form, handleSubmit, setform, submitted, images, imageResul
                                         bounds={'.app'}
                                     />
                         </div>
-                        {/* <div className='col-md-6'>
-                            <label>Images </label>
-                            <div className="form-group drag_drop">
-                                <div className='upload_file'>
-                                    <button className="btn btn-primary upload_image">Upload Image</button>
-                                    <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
-                                        // disabled={loader}
-                                        onChange={(e) => {
-                                            setImgLoder(true)
-                                            uploadImage(e, 'images');
-                                        }} />
-                                    {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                    <div className="imagesRow mt-4">
-                                        {form?.images && form?.images.map((itm, i) => {
-                                            return <div className="imagethumbWrapper" key={i}>
-                                                <img src={methodModel.noImg(itm?.url)} className="thumbnail" />
-                                                <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
-                                            </div>
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
-
-                        {/* <div className='col-md-6'>
-                            <label>Videos   </label>
-                            <div className="form-group drag_drop">
-                                <div className='upload_file'>
-                                    <button className="btn btn-primary upload_image">Upload Video</button>
-                                    <input type="file" className="form-control-file over_input" accept="video/*" multiple={true}
-                                        // disabled={loader}
-                                        onChange={(e) => {
-                                            setvidLoder(true)
-                                            uploadVideos(e, 'images');
-                                        }} />
-                                    {loadViderr && vidLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                    <div className="imagesRow mt-4">
-                                        {form?.videos && form?.videos.map((itm, i) => {
-                                            return <div className="imagethumbWrapper" key={i}>
-                                                <video width="150" height="100" controls className="mr-3">
-                                                    <source src={methodModel.noImg(itm?.url)} type="video/mp4">
-                                                    </source>
-                                                </video>
-                                                <i className="fa fa-times kliil" title="Remove" onClick={e => removeVideo(i)}></i>
-                                            </div>
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
 
                         <div className='col-md-6'>
                             <label>Document   </label>
