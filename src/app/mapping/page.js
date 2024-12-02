@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
+import ApiClient from '@/methods/api/apiClient';
 const MapAndSendData = () => {
   const originalData = [
     { id: 1, name: 'John', email: 'john@example.com' },
@@ -15,7 +16,20 @@ const MapAndSendData = () => {
   const [mappings, setMappings] = useState({});
   const [mappedData, setMappedData] = useState([]);
 
-  // Function to map the data based on the mappings
+  const getData = () => {
+    let url = 'gptrack/list'
+    ApiClient.get(url).then(res => {
+      if (res.success) {
+        const data = res.data
+        console.log(data,"dhfjkdhfjk")
+      }
+    })
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
+
   const mapData = () => {
     const newData = originalData.map(item => {
       let mappedItem = {};
@@ -116,7 +130,7 @@ const MapAndSendData = () => {
         <button onClick={mapData}>Map Data</button>
 
         {/* Show the mapping as a thread */}
-        <h3>Key Mappings</h3>
+        {Object.keys(mappings).length > 0 && <h3>Key Mappings</h3>}
         <div>
           {Object.keys(mappings).length > 0 && (
             <pre className="mapping-display">
