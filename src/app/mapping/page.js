@@ -5,12 +5,13 @@ import Layout from '../components/global/layout';
 import "./style.scss";
 import ApiClient from '@/methods/api/apiClient';
 const MapAndSendData = () => {
-  const originalData = [
-    { id: 1, name: 'John', email: 'john@example.com' },
-    { id: 2, name: 'Jane', email: 'jane@example.com' }
-  ];
-
-  const targetKeys = ['userId', 'fullName', 'contact'];
+  // const originalData = [
+  //   { id: 1, name: 'John', email: 'john@example.com' },
+  //   { id: 2, name: 'Jane', email: 'jane@example.com' }
+  // ];
+  const [originalData, setOriginalData] = useState([]);
+  const targetKeys = ['affiliate','brand','campiagn','price','order_id','coupon'];
+  const removedKeys = ['_id','createdAt','updatedAt','isDeleted'];
 
   // Initial empty mapping state
   const [mappings, setMappings] = useState({});
@@ -20,8 +21,8 @@ const MapAndSendData = () => {
     let url = 'gptrack/list'
     ApiClient.get(url).then(res => {
       if (res.success) {
-        const data = res.data
-        console.log(data,"dhfjkdhfjk")
+        const data = res?.data?.data
+        setOriginalData(data)
       }
     })
   }
@@ -50,8 +51,14 @@ const MapAndSendData = () => {
     alert('Mapped Data Sent to API (simulated)');
   };
 
-  // Get all unique keys from the original data
-  const allKeys = [...new Set(originalData.flatMap(item => Object.keys(item)))];
+  const allKeys = [
+    ...new Set(
+      originalData.flatMap(item => {
+        return Object.keys(item).filter(key => !removedKeys.includes(key));
+      })
+    )
+  ];
+  
 
   // Handle dropping of keys into the target area
   const handleDrop = (targetKey) => {
@@ -81,7 +88,7 @@ const MapAndSendData = () => {
     <Layout>
   
    <div className="mapping-wrapper">
-        <h3 className='mt-2 mb-3'>Map Data Keys</h3>
+        <h3 className='mt-2 mb-3'>Mapping Keys</h3>
 
         <div className="mapping-container">
           {/* Left column: Source keys */}
@@ -130,7 +137,7 @@ const MapAndSendData = () => {
         <button onClick={mapData}>Map Data</button>
 
         {/* Show the mapping as a thread */}
-        {Object.keys(mappings).length > 0 && <h3>Key Mappings</h3>}
+        {Object.keys(mappings).length > 0 && <h3>Keys</h3>}
         <div>
           {Object.keys(mappings).length > 0 && (
             <pre className="mapping-display">
@@ -153,23 +160,33 @@ const MapAndSendData = () => {
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
-                  <th scope="col" className="table_data">ID</th>
-                  <th scope="col" className="table_data">Name</th>
-                  <th scope="col" className="table_data">Email</th>
+                  {originalData.length > 0 &&
+                    Object.keys(originalData[0])
+                      .filter(key => !removedKeys.includes(key)) // Exclude removed keys
+                      .map((key) => (
+                        <th key={key} scope="col" className="table_data">
+                          {key.charAt(0).toUpperCase() + key.slice(1)} {/* Capitalize the first letter */}
+                        </th>
+                      ))}
                 </tr>
               </thead>
               <tbody>
                 {originalData.map((item, index) => (
                   <tr className="data_row" key={index}>
-                    <td className="table_data">{item.id}</td>
-                    <td className="table_data">{item.name}</td>
-                    <td className="table_data">{item.email}</td>
+                    {Object.keys(item)
+                      .filter(key => !removedKeys.includes(key)) // Exclude removed keys
+                      .map((key) => (
+                        <td key={key} className="table_data">
+                          {item[key]}
+                        </td>
+                      ))}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
+
 
         <button onClick={sendData}>Send Mapped Data</button>
       </div>
