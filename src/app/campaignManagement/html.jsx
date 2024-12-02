@@ -17,7 +17,6 @@ const Html = ({
     total,
     filter,
     sorting,
-    sendProposal,
     setFilter,
     Tracklogin,
 }) => {
@@ -135,8 +134,8 @@ const Html = ({
                                                         </button>
                                                     </div> :
                                                         itm?.status == 'rejected' ?
-                                                            <div className="btn btn-primary">Rejected</div> :
-                                                            <div className="btn btn-primary">Accepted</div>
+                                                            <div className="btn btn-primary mr-2">Rejected</div> :
+                                                            <div className="btn btn-primary mr-2">Accepted</div>
                                                     }
                                                     <>
                                                         <button className='btn btn-primary btn_actions'
@@ -147,11 +146,6 @@ const Html = ({
                                                             <i className='fa fa-comment-o'></i>
                                                         </button>
                                                     </>
-
-                                                    {/* {itm?.status == 'accepted' &&
-                <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
-                    Send Proposal
-                </button>} */}
 
                                                 </td>
 
