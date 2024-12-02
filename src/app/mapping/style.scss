@@ -1,0 +1,136 @@
+.mapping-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h3, h4 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .mapping-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+  
+  .mapping-column {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-right: 20px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .source-column {
+    background-color: #f9f9f9;
+  }
+  
+  .target-column {
+    background-color: #f1f1f1;
+  }
+  
+  .arrow-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    width: 60px;
+  }
+  
+  .arrow {
+    font-size: 32px;
+    color: #888;
+  }
+  
+  .source-key-item, .target-key-item {
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 80%;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .source-key-item {
+    background-color: #e7f7f7;
+  }
+  
+  .target-key-item {
+    background-color: #fdfdfd;
+  }
+  
+  .target-key-item.droppable {
+    border: 2px dashed #ccc;
+  }
+  
+  .mapped-key {
+    color: green;
+    font-weight: bold;
+  }
+  
+  button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .mapping-display, .json-display {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+  
+  .table_section {
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+  
+  .table-responsive {
+    margin-top: 20px;
+  }
+  
+  .table-width {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table_head {
+    background-color: #f0f0f0;
+  }
+  
+  .table_data {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .heading_row th {
+    font-weight: bold;
+  }
+  
+  .data_row td {
+    font-size: 14px;
+  }
+  
