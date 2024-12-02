@@ -237,10 +237,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head ">Add Offer</span>
           </ListItemLink>}
 
-          {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/applymerchants"  title="Apply Merchants" >
+          {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/applymerchants"  title="Apply Merchants" >
             <i class="material-icons  svg_iconbx">account_circle</i>
             <span className="side_head ">Apply Merchants</span>
-          </ListItemLink>}
+          </ListItemLink>} */}
 
           {(permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests"  title="Offer Request" >
             <i className="material-icons  svg_iconbx " title="campaignManagement">business_center</i>
