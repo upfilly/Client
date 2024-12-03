@@ -4,32 +4,32 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
 import ApiClient from '@/methods/api/apiClient';
-const MapAndSendData = () => {
-  // const originalData = [
-  //   { id: 1, name: 'John', email: 'john@example.com' },
-  //   { id: 2, name: 'Jane', email: 'jane@example.com' }
-  // ];
-  const [originalData, setOriginalData] = useState([]);
-  const targetKeys = ['affiliate','brand','campiagn','price','order_id','coupon'];
-  const removedKeys = ['_id','createdAt','updatedAt','isDeleted'];
+import { Modal, Button, Form } from 'react-bootstrap'; // Import React-Bootstrap components
 
-  // Initial empty mapping state
+const MapAndSendData = () => {
+  const [originalData, setOriginalData] = useState([]);
+  const targetKeysInitial = ['affiliate', 'brand', 'campiagn', 'price', 'order_id', 'coupon'];
+  const removedKeys = ['_id', 'createdAt', 'updatedAt', 'isDeleted'];
+
+  const [targetKeys, setTargetKeys] = useState(targetKeysInitial);
   const [mappings, setMappings] = useState({});
   const [mappedData, setMappedData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
+  const [newTargetKey, setNewTargetKey] = useState(''); // New target key input
 
   const getData = () => {
-    let url = 'gptrack/list'
+    let url = 'gptrack/list';
     ApiClient.get(url).then(res => {
       if (res.success) {
-        const data = res?.data?.data
-        setOriginalData(data)
+        const data = res?.data?.data;
+        setOriginalData(data);
       }
-    })
-  }
+    });
+  };
 
-  useEffect(()=>{
-    getData()
-  },[])
+  useEffect(() => {
+    getData();
+  }, []);
 
   const mapData = () => {
     const newData = originalData.map(item => {
@@ -45,7 +45,6 @@ const MapAndSendData = () => {
     setMappedData(newData);
   };
 
-  // Function to send data (simulated)
   const sendData = () => {
     console.log('Mapped Data Sent:', mappedData);
     alert('Mapped Data Sent to API (simulated)');
@@ -58,36 +57,56 @@ const MapAndSendData = () => {
       })
     )
   ];
-  
 
-  // Handle dropping of keys into the target area
   const handleDrop = (targetKey) => {
     return (event) => {
       event.preventDefault();
       const sourceKey = event.dataTransfer.getData("sourceKey");
+
+      // Ensure a source key is not already mapped to another target key
       if (!mappings[sourceKey]) {
-        setMappings(prevMappings => ({
-          ...prevMappings,
-          [sourceKey]: targetKey
-        }));
+        const targetAlreadyMapped = Object.values(mappings).includes(targetKey);
+        if (targetAlreadyMapped) {
+          alert(`Target key '${targetKey}' is already mapped!`);
+        } else {
+          setMappings(prevMappings => ({
+            ...prevMappings,
+            [sourceKey]: targetKey
+          }));
+        }
       }
     };
   };
 
-  // Allow the dragged item to be dropped
   const handleDragOver = (event) => {
     event.preventDefault();
   };
 
-  // Handle the drag event for the source keys
   const handleDragStart = (event, sourceKey) => {
     event.dataTransfer.setData("sourceKey", sourceKey);
   };
 
+  const removeMapping = (sourceKey) => {
+    setMappings(prevMappings => {
+      const newMappings = { ...prevMappings };
+      delete newMappings[sourceKey];
+      return newMappings;
+    });
+  };
+
+  const addTargetKey = () => {
+    if (newTargetKey.trim() && !targetKeys.includes(newTargetKey.trim())) {
+      setTargetKeys(prevKeys => [...prevKeys, newTargetKey.trim()]);
+      setNewTargetKey(''); // Clear input field
+      setModalOpen(false); // Close the modal
+    } else {
+      alert('Please enter a unique target key');
+    }
+  };
+
   return (
     <Layout>
-  
-   <div className="mapping-wrapper">
+      <div className="mapping-wrapper">
         <h3 className='mt-2 mb-3'>Mapping Keys</h3>
 
         <div className="mapping-container">
@@ -122,13 +141,19 @@ const MapAndSendData = () => {
                 onDrop={handleDrop(targetKey)}
               >
                 <strong>{targetKey}</strong>
-                {mappings[targetKey] && (
-                  <div>
-                    <span className="mapped-key">
-                      {mappings[targetKey]} (Mapped)
-                    </span>
-                  </div>
-                )}
+                {Object.keys(mappings).map((sourceKey) => {
+                  if (mappings[sourceKey] === targetKey) {
+                    return (
+                      <div key={sourceKey}>
+                        <span className="mapped-key">
+                          {sourceKey} (Mapped)
+                        </span>
+                        <button onClick={() => removeMapping(sourceKey)}>Remove</button>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
               </div>
             ))}
           </div>
@@ -137,7 +162,7 @@ const MapAndSendData = () => {
         <button onClick={mapData}>Map Data</button>
 
         {/* Show the mapping as a thread */}
-        {Object.keys(mappings).length > 0 && <h3>Keys</h3>}
+        {Object.keys(mappings).length > 0 && <h3>Mapped Keys</h3>}
         <div>
           {Object.keys(mappings).length > 0 && (
             <pre className="mapping-display">
@@ -187,10 +212,34 @@ const MapAndSendData = () => {
           </div>
         </div>
 
-
         <button onClick={sendData}>Send Mapped Data</button>
+
+        {/* Button to open modal */}
+        <button onClick={() => setModalOpen(true)}>Add Target Key</button>
+
+        {/* React-Bootstrap Modal for adding a new target key */}
+        <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Target Key</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Control
+              type="text"
+              value={newTargetKey}
+              onChange={(e) => setNewTargetKey(e.target.value)}
+              placeholder="Enter new target key"
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={addTargetKey}>
+              Add
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-  
     </Layout>
   );
 };
