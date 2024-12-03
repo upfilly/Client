@@ -185,11 +185,11 @@ const UpFillyPage = () => {
   const history = useRouter()
 
   return (<Layout>
-    <div className="App">
+    <div className="App platforms-page">
       {/* Header Section */}
       <header className="header">
-        <h1>UpFilly: Powering Your Affiliate Success</h1>
-        <p>
+        <h1>Powering Your Affiliate Success</h1>
+        <p className='desc-pera mt-3'>
           UpFilly is your all-in-one affiliate marketing solution designed to help
           merchants and affiliates thrive. With advanced tracking, actionable insights,
           and seamless payouts, we simplify the process of building and scaling affiliate
@@ -207,26 +207,10 @@ const UpFillyPage = () => {
       </header>
 
       {/* Overview Section */}
-      <section className="overview">
-        <h2>UpFilly: Powering Your Affiliate Success</h2>
-        <p>
-          UpFilly is your all-in-one affiliate marketing solution designed to help merchants
-          and affiliates thrive. With advanced tracking, actionable insights, and seamless
-          payouts, we simplify the process of building and scaling affiliate programs. Whether
-          you’re just starting or looking to optimize, UpFilly has the tools you need to succeed.
-        </p>
-        {/* <div className="overview-visual">
-          <img src="/assets/images/dashboard-mockup.png" alt="Dashboard" />
-          <div className="icons">
-            <img src="/assets/icons/tracking-icon.svg" alt="Tracking" />
-            <img src="/assets/icons/analytics-icon.svg" alt="Analytics" />
-            <img src="/assets/icons/payouts-icon.svg" alt="Payouts" />
-          </div>
-        </div> */}
-      </section>
+    
 
       {/* Affiliate Tracking Section */}
-      <section className="affiliate-tracking">
+      <section className="affiliate-tracking mt-4">
         <h2>Track Every Click, Conversion, and Commission</h2>
         <p>
           Stay on top of your affiliate program with real-time tracking. UpFilly provides precise
@@ -287,10 +271,12 @@ const UpFillyPage = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="cta">
+ <div className="container mt-5">
+ <section className="cta last-section card_box">
         <h2>Experience the Power of UpFilly</h2>
         <button className="cta-button" onClick={()=>history.push("/SignupOptions")}>Get Started Now</button>
       </section>
+ </div>
     </div></Layout>
   );
 };

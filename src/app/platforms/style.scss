@@ -4,71 +4,83 @@
 //     padding: 0;
 //     background-color: #f9f9f9;
 //   }
-  
-  header {
-    background-color: #001f3d;
-    color: white;
-    padding: 20px;
-    text-align: center;
+  .platforms-page{
+
+    header {
+      background-color: #001f3d;
+      color: white;
+      padding: 80px 70px;
+      text-align: center;
+    }
+      
+      header h1 {
+        font-size: 36px;
+      }
+      
+      header p {
+        font-size: 18px;
+        margin: 20px 0;
+      }
+      
+      section {
+        padding: 40px 40px 0px;
+        background-color: #ffffff;
+        margin-bottom: 5px;
+      }
+      
+      section h2 {
+        font-size: 28px;
+        margin-bottom: 5px;
+      }
+      
+      section p {
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+      
+      button.cta-button {
+        background-color: #00b0ff;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      
+      button.cta-button:hover {
+        background-color: #009be5;
+      }
+      
+      /* Visuals and Icons */
+      .header-visual img,
+      .overview-visual img,
+      .tracking-visual img,
+      .analytics-visual img,
+      .payout-visual img,
+      .integrations-logos img {
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      .icons img {
+        margin: 10px;
+        width: 40px;
+        height: 40px;
+      }
+      
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+      }
+      .desc-pera {
+        color: #fff;
+    }
+    .last-section{
+      text-align: center;
+      margin: 0px 0px 50px 0px;
+      padding-bottom: 50px;
+      h2{
+        color: #000;
+      }
+    }
   }
-  
-  header h1 {
-    font-size: 36px;
-  }
-  
-  header p {
-    font-size: 18px;
-    margin: 20px 0;
-  }
-  
-  section {
-    padding: 40px;
-    background-color: #ffffff;
-    margin-bottom: 5px;
-  }
-  
-  section h2 {
-    font-size: 28px;
-    margin-bottom: 5px;
-  }
-  
-  section p {
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  
-  button.cta-button {
-    background-color: #00b0ff;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button.cta-button:hover {
-    background-color: #009be5;
-  }
-  
-  /* Visuals and Icons */
-  .header-visual img,
-  .overview-visual img,
-  .tracking-visual img,
-  .analytics-visual img,
-  .payout-visual img,
-  .integrations-logos img {
-    max-width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .icons img {
-    margin: 10px;
-    width: 40px;
-    height: 40px;
-  }
-  
-  .cta-button {
-    display: inline-block;
-    margin-top: 20px;
-  }
-  
