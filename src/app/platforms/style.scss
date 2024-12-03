@@ -45,6 +45,7 @@
         border: none;
         cursor: pointer;
         font-size: 16px;
+        border-radius: 4px;
       }
       
       button.cta-button:hover {
@@ -79,6 +80,8 @@
       text-align: center;
       margin: 0px 0px 50px 0px;
       padding-bottom: 50px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e8e9ed;
       h2{
         color: #000;
       }
