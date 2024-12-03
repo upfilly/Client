@@ -175,12 +175,43 @@ const MapAndSendData = () => {
         {/* Display mapped data */}
         {mappedData.length > 0 && (
           <div>
-            <h3>Mapped Data as JSON</h3>
-            <pre className="json-display"><p>{JSON.stringify(mappedData, null, 2)}</p></pre>
+            {mappedData.length > 0 && <h3>Mapped Data</h3>}
+            <div className="table_section">
+              <div className="table-responsive">
+                <table className="table table-striped table-width">
+                  <thead className="table_head">
+                    <tr className="heading_row">
+                      {mappedData.length > 0 &&
+                        Object.keys(mappedData[0])
+                          .filter(key => !removedKeys.includes(key)) // Exclude removed keys
+                          .map((key) => (
+                            <th key={key} scope="col" className="table_data">
+                              {key.charAt(0).toUpperCase() + key.slice(1)} {/* Capitalize the first letter */}
+                            </th>
+                          ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mappedData.map((item, index) => (
+                      <tr className="data_row" key={index}>
+                        {Object.keys(item)
+                          .filter(key => !removedKeys.includes(key)) // Exclude removed keys
+                          .map((key) => (
+                            <td key={key} className="table_data">
+                              {item[key]}
+                            </td>
+                          ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            {/* <pre className="json-display"><p>{JSON.stringify(mappedData, null, 2)}</p></pre> */}
           </div>
         )}
 
-        <h3>Original Data</h3>
+        <h3>Source Data</h3>
         <div className="table_section">
           <div className="table-responsive">
             <table className="table table-striped table-width">
