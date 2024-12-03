@@ -199,11 +199,11 @@ export default function Dashboard() {
   <div className="container-fluid ">
      <div className='row '>
           <div className='col-sm-12 col-md-7 col-lg-7 col-xl-8  mb-3 '>
-         <div className='bgDiv'>   <BarChart data={analyticData?.data?.[0]}/></div>
+         <div className='bgDiv p-2'>   <BarChart data={analyticData?.data?.[0]}/></div>
             {/* <img className='w-100' src='/assets/img/yeks.png' alt=''></img> */}
           </div>
           <div className='col-sm-12 col-md-5 col-lg-5 col-xl-4   mb-3'>
-          <div className='bgDiv'>  <PieChart data={analyticData?.data?.[0]}/></div>
+          <div className='bgDiv d-flex'>  <PieChart data={analyticData?.data?.[0]}/></div>
             {/* <div className='dispost'>
               <div className='d-flex align-items-center flex-wrap justify-content-between'>
                 <p className='tives mb-0'>Dispositives</p>
