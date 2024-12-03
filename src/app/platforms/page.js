@@ -39,7 +39,7 @@
 //                   <h1 className="text-center rise">UpFilly: Powering Your Affiliate Success</h1>
 //                   <p className="text-center printit">
 //                   UpFilly is your all-in-one affiliate marketing solution designed to help merchants and affiliates thrive.
-//                   With advanced tracking, actionable insights, and seamless payouts, we simplify the process of 
+//                   With advanced tracking, actionable insights, and seamless payouts, we simplify the process of
 //                   building and scaling affiliate programs. Whether you’re just starting or looking to optimize, UpFilly has the tools you need to succeed.
 //                   </p>
 //                 </div>
@@ -176,27 +176,29 @@
 //   );
 // }
 
-import React from 'react';
-import Layout from '../components/global/layout';
+import React from "react";
+import Layout from "../components/global/layout";
 import "./style.scss";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 // Combined component for the entire page
 const UpFillyPage = () => {
-  const history = useRouter()
+  const history = useRouter();
 
-  return (<Layout>
-    <div className="App platforms-page">
-      {/* Header Section */}
-      <header className="header">
-        <h1>Powering Your Affiliate Success</h1>
-        <p className='desc-pera mt-3'>
-          UpFilly is your all-in-one affiliate marketing solution designed to help
-          merchants and affiliates thrive. With advanced tracking, actionable insights,
-          and seamless payouts, we simplify the process of building and scaling affiliate
-          programs. Whether you’re just starting or looking to optimize, UpFilly has the
-          tools you need to succeed.
-        </p>
-        {/* <div className="header-visual">
+  return (
+    <Layout>
+      <div className="App platforms-page">
+        {/* Header Section */}
+        <header className="header">
+          <h1>Powering Your Affiliate Success</h1>
+          <p className="desc-pera mt-3">
+            UpFilly is your all-in-one affiliate marketing solution designed to
+            help merchants and affiliates thrive. With advanced tracking,
+            actionable insights, and seamless payouts, we simplify the process
+            of building and scaling affiliate programs. Whether you’re just
+            starting or looking to optimize, UpFilly has the tools you need to
+            succeed.
+          </p>
+          {/* <div className="header-visual">
           <img src="/assets/images/dashboard-mockup.png" alt="UpFilly Dashboard" />
           <div className="icons">
             <img src="/assets/icons/tracking-icon.svg" alt="Tracking" />
@@ -204,35 +206,38 @@ const UpFillyPage = () => {
             <img src="/assets/icons/payouts-icon.svg" alt="Payouts" />
           </div>
         </div> */}
-      </header>
+        </header>
+<div className="container">
 
-      {/* Overview Section */}
-    
+        {/* Overview Section */}
 
-      {/* Affiliate Tracking Section */}
-      <section className="affiliate-tracking mt-4">
-        <h2>Track Every Click, Conversion, and Commission</h2>
-        <p>
-          Stay on top of your affiliate program with real-time tracking. UpFilly provides precise
-          data on clicks, conversions, and commissions, ensuring you never miss a detail. Our advanced
-          attribution technology guarantees accurate results, while fraud protection tools keep your
-          campaigns secure.
-        </p>
-        {/* <div className="tracking-visual">
+        {/* Affiliate Tracking Section */}
+        <section className="affiliate-tracking mt-4">
+          <h2>Track Every Click, Conversion, and Commission</h2>
+          <p>
+            Stay on top of your affiliate program with real-time tracking.
+            UpFilly provides precise data on clicks, conversions, and
+            commissions, ensuring you never miss a detail. Our advanced
+            attribution technology guarantees accurate results, while fraud
+            protection tools keep your campaigns secure.
+          </p>
+          {/* <div className="tracking-visual">
           <img src="/assets/images/affiliate-tracking.png" alt="Tracking Flow" />
           <img src="/assets/icons/tracking-icon.svg" alt="Tracking" />
         </div> */}
-      </section>
+        </section>
 
-      {/* Analytics & Insights Section */}
-      <section className="analytics-insights">
-        <h2>Turn Data Into Decisions</h2>
-        <p>
-          UpFilly’s powerful analytics give you a complete overview of your affiliate program’s performance.
-          With advanced reporting and data visualization, you can identify top-performing affiliates, optimize
-          campaigns, and drive better results. Make informed decisions with insights that matter.
-        </p>
-        {/* <div className="analytics-visual">
+        {/* Analytics & Insights Section */}
+        <section className="analytics-insights">
+          <h2>Turn Data Into Decisions</h2>
+          <p>
+            UpFilly’s powerful analytics give you a complete overview of your
+            affiliate program’s performance. With advanced reporting and data
+            visualization, you can identify top-performing affiliates, optimize
+            campaigns, and drive better results. Make informed decisions with
+            insights that matter.
+          </p>
+          {/* <div className="analytics-visual">
           <img src="/assets/images/analytics-graph.png" alt="Analytics Graph" />
           <div className="icons">
             <img src="/assets/icons/analytics-icon.svg" alt="Top Affiliates" />
@@ -240,46 +245,55 @@ const UpFillyPage = () => {
             <img src="/assets/icons/analytics-icon.svg" alt="Click-Through Rates" />
           </div>
         </div> */}
-      </section>
+        </section>
 
-      {/* Payout Management Section */}
-      <section className="payout-management">
-        <h2>Simplify Affiliate Payouts</h2>
-        <p>
-          Pay your affiliates quickly and effortlessly with UpFilly’s automated payout system. Choose from
-          multiple payment methods and let us handle the rest. Whether it’s one affiliate or hundreds, UpFilly
-          ensures payments are accurate and on time, keeping your partners happy and engaged.
-        </p>
-        {/* <div className="payout-visual">
+        {/* Payout Management Section */}
+        <section className="payout-management">
+          <h2>Simplify Affiliate Payouts</h2>
+          <p>
+            Pay your affiliates quickly and effortlessly with UpFilly’s
+            automated payout system. Choose from multiple payment methods and
+            let us handle the rest. Whether it’s one affiliate or hundreds,
+            UpFilly ensures payments are accurate and on time, keeping your
+            partners happy and engaged.
+          </p>
+          {/* <div className="payout-visual">
           <img src="/assets/images/payout-completed.png" alt="Payout Completed" />
           <img src="/assets/icons/payment-options.svg" alt="Payment Options" />
         </div> */}
-      </section>
+        </section>
 
-      {/* Supported Integrations Section */}
-      <section className="supported-integrations">
-        <h2>Connect with Leading Platforms</h2>
-        <p>
-          UpFilly integrates seamlessly with platforms like Shopify, making it easy to connect your store
-          and start tracking affiliate performance. With quick onboarding and minimal setup, you’ll be up
-          and running in no time.
-        </p>
-        {/* <div className="integrations-logos">
+        {/* Supported Integrations Section */}
+        <section className="supported-integrations">
+          <h2>Connect with Leading Platforms</h2>
+          <p>
+            UpFilly integrates seamlessly with platforms like Shopify, making it
+            easy to connect your store and start tracking affiliate performance.
+            With quick onboarding and minimal setup, you’ll be up and running in
+            no time.
+          </p>
+          {/* <div className="integrations-logos">
           <img src="/assets/images/shopify-logo.svg" alt="Shopify" />
         </div>
         <img src="/assets/icons/platform-integrations.svg" alt="Integration Visual" /> */}
-      </section>
+        </section>
 
-      {/* Call to Action Section */}
- <div className="container mt-5">
- <section className="cta last-section card_box">
-        <h2>Experience the Power of UpFilly</h2>
-        <button className="cta-button" onClick={()=>history.push("/SignupOptions")}>Get Started Now</button>
-      </section>
- </div>
-    </div></Layout>
+        {/* Call to Action Section */}
+     
+          <section className="cta last-section card_box">
+            <h2>Experience the Power of UpFilly</h2>
+            <button
+              className="cta-button"
+              onClick={() => history.push("/SignupOptions")}
+            >
+              Get Started Now
+            </button>
+          </section>
+        
+</div>
+      </div>
+    </Layout>
   );
 };
 
 export default UpFillyPage;
-

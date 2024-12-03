@@ -86,18 +86,18 @@ const DonutChart = ({ data }) => {
       <Pie data={chartData} options={options} />
       <div style={{
         position: 'absolute',
-        top: '50%',
+        top: '62%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         textAlign: 'center',
-        fontSize: '16px',
+        fontSize: '10px',
         fontWeight: 'bold',
-        color: '#000'
+        color: '#333'
       }}>
         <br/>
         Total:
         <br/>
-       {totalValue.toFixed(2)}$
+    <span className='pt-2'>{totalValue.toFixed(2)}$</span>
       </div>
     </div>
   );
