@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import "./style.scss";
 import Layout from '../components/global/layout';
+import { useRouter } from 'next/navigation';
 
 const resourcesData = [
   {
@@ -33,6 +34,7 @@ const shopifyTrackingInfo = {
 };
 
 export default function Resources() {
+  const history = useRouter()
   const handleTrackResource = (resourceId) => {
     // Replace 'trackEvent' with the actual tracking function if necessary
     // trackEvent('Resource Viewed', { resourceId }); // Example tracking
@@ -47,44 +49,88 @@ export default function Resources() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+        <div className="feature-page">
+          {/* Core Features Section */}
+          <section className="core-features">
+            <header className="core-features-header">
+              <h1 className="core-features-title">Powerful Tools to Drive Your Affiliate Success</h1>
+              <h2 className="core-features-subtitle">
+                UpFilly offers everything you need to track, analyze, and optimize your affiliate program—all in one place.
+              </h2>
+            </header>
+            <div className="features-list">
+              <div className="feature-item">
+                <h3>Affiliate Tracking</h3>
+                <p>Monitor clicks, sales, and commissions in real-time, ensuring transparency and precision.</p>
+              </div>
+              <div className="feature-item">
+                <h3>Advanced Analytics</h3>
+                <p>Gain actionable insights to refine your strategies and improve campaign performance.</p>
+              </div>
+              <div className="feature-item">
+                <h3>Seamless Payouts</h3>
+                <p>Automate affiliate payments with minimal effort, keeping your partners happy and motivated.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Integrations Section */}
+          <section className="integrations">
+            <header>
+              <h2 className="section-title">Integrate Seamlessly with Your Existing Platforms</h2>
+            </header>
+            <div>
+              <h3>Shopify Integration</h3>
+              <p>Easily connect your Shopify store for precise tracking and analytics.</p>
+            </div>
+          </section>
+
+          {/* Scalability Section */}
+          <section className="scalability">
+            <header>
+              <h2 className="section-title">Built to Grow with Your Business</h2>
+            </header>
+            <div>
+              <p>UpFilly is designed to support businesses of all sizes—from startups launching their first affiliate program to enterprise-level brands managing complex networks.</p>
+              <ul>
+                <li>Affordable entry plans with no setup fees (for startups).</li>
+                <li>Robust tools to handle high-volume campaigns (enterprise-ready).</li>
+              </ul>
+            </div>
+          </section>
+
+          {/* User-Friendly Interface Section */}
+          <section className="user-interface">
+            <header>
+              <h2 className="section-title">An Intuitive Dashboard for Merchants and Affiliates</h2>
+            </header>
+            <div>
+              <p>Our dashboard is designed to be simple, yet powerful, providing all the tools you need to manage and optimize your program.</p>
+              <div>
+                <h3>For Merchants:</h3>
+                <p>Customizable branding options to align with your identity.</p>
+              </div>
+              <div>
+                <h3>For Affiliates:</h3>
+                <p>A clean interface to track earnings and access campaign insights.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Call-to-Action Section */}
+          <section className="cta">
+            <header className="cta-header">
+              <h1 className="cta-title">Explore UpFilly’s Features Today</h1>
+              <h2 className="cta-subtitle">Discover how our platform can take your affiliate marketing to the next level.</h2>
+            </header>
+            <div className="cta-buttons">
+              <button className="cta-btn primary" onClick={() => history.push("/SignupOptions")}>Get Started Now</button>
+              {/* <button className="cta-btn secondary">Learn More About Features</button> */}
+            </div>
+          </section>
+        </div>
         <div className='pricing-padding'>
           <div className='container'>
-            <div className="row align-items-center">
-              <div className='main-title text-center mb-3'>
-                <h1>Business Resources</h1>
-                <p className='printit'>
-                  Discover a wealth of tools and information designed to support your business endeavors.
-                  Whether you're a startup or an established enterprise, our curated resources can help you navigate challenges,
-                  enhance productivity, and drive growth.
-                </p>
-              </div>
-            </div>
-
-            <div className='row cpadd pt-3'>
-              <div className='col-md-12'>
-                <div className='need_contactus'>
-                  <div className='row'>
-                    {resourcesData.map(resource => (
-                      <div key={resource.id} className='col-sm-12 col-md-6 col-lg-4 col-xl-3'>
-                        <div className='card_box text-center hover_box'>
-                          <div className='imgtag_card'>
-                            <img src={resource.image} className='img-fluid heighteual mb-0' alt={`Resource ${resource.id}`} />
-                            <p>{resource.description}</p>
-                            {/* <a
-                              href={resource.link}
-                              className='btn btn-primary'
-                              onClick={() => handleReadMoreClick(resource.id)} // Track click
-                            >
-                              Read More
-                            </a> */}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Shopify Tracking App Section */}
             <div className='row cpadd pt-3'>

@@ -198,14 +198,14 @@ const Html = ({ settingData, Logout }) => {
                 {false && <>{(user?.role == "brand" || !user) && <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/pricing" ? 'active' : ''}`} href="/pricing">Pricing</Link>
                 </li>}</>}
-                <li class="nav-item">
+                {/* <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/partners" ? 'active' : ''}`} href="/partners">Partners</Link>
+                </li> */}
+                <li class="nav-item">
+                  <Link class={`nav-link ${pathname == "/resources" ? 'active' : ''}`} href="/resources">Features</Link>
                 </li>
                 <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/resources" ? 'active' : ''}`} href="/resources">Resources</Link>
-                </li>
-                <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/company" ? 'active' : ''}`} href="/company">Company</Link>
+                  <Link class={`nav-link ${pathname == "/company" ? 'active' : ''}`} href="/company">Subscriptions</Link>
                 </li>
                 <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Tracking Script</Link>

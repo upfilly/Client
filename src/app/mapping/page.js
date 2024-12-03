@@ -176,7 +176,7 @@ const MapAndSendData = () => {
         {mappedData.length > 0 && (
           <div>
             <h3>Mapped Data as JSON</h3>
-            <pre className="json-display text-center"><p>{JSON.stringify(mappedData, null, 2)}</p></pre>
+            <pre className="json-display"><p>{JSON.stringify(mappedData, null, 2)}</p></pre>
           </div>
         )}
 
