@@ -1,4 +1,5 @@
-.heighteual {
+.resource-page{
+  .heighteual {
     height: auto;
     width: 100px;
 }
@@ -6,8 +7,10 @@
 .card_box {
     border-radius: 7.588px;
     background: #FFF;
-    box-shadow: 1.50808px 6.03233px 18.097px 0px rgba(0, 0, 0, 0.25);
-    padding: 10px;
+    // box-shadow: 1.50808px 6.03233px 18.097px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e8e9ed;
+    padding: 30px 10px;
 }
 
 
@@ -99,12 +102,14 @@
   }
   
   .section-title {
-    font-size: 28px;
+    font-size: 22px;
     text-align: left;
     color: #0e0e0e;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
-  
+  h3 {
+    font-size: 20px !important;
+}
   .integrations h3 {
     font-size: 20px;
     margin-top: 20px;
@@ -151,8 +156,7 @@
   .cta {
     text-align: center;
     padding: 60px 20px;
-    margin: 40px;
-    background-color: #007BFF;
+    background-color: #001f3d;
     color: white;
   }
   
@@ -172,6 +176,16 @@
   
   .cta-buttons {
     margin-top: 40px;
+    
+  }
+  .cta-button{
+    background-color: #00b0ff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
   }
   
   .cta-btn {
@@ -184,7 +198,7 @@
   }
   
   .cta-btn.primary {
-    background-color: #28a745;
+    background-color: #00b0ff;
     color: white;
   }
   
@@ -197,3 +211,4 @@
     opacity: 0.8;
   }
   
+}

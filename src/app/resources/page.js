@@ -49,11 +49,12 @@ export default function Resources() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-        <div className="feature-page">
+        <div className="feature-page resource-page">
+      <div className='container'>
           {/* Core Features Section */}
           <section className="core-features">
             <header className="core-features-header">
-              <h1 className="core-features-title">Powerful Tools to Drive Your Affiliate Success</h1>
+              <h1 className="core-features-title mb-3">Powerful Tools to Drive Your Affiliate Success</h1>
               <h2 className="core-features-subtitle">
                 UpFilly offers everything you need to track, analyze, and optimize your affiliate program—all in one place.
               </h2>
@@ -75,7 +76,7 @@ export default function Resources() {
           </section>
 
           {/* Integrations Section */}
-          <section className="integrations">
+          <section className="scalability mt-5">
             <header>
               <h2 className="section-title">Integrate Seamlessly with Your Existing Platforms</h2>
             </header>
@@ -86,7 +87,7 @@ export default function Resources() {
           </section>
 
           {/* Scalability Section */}
-          <section className="scalability">
+          <section className="scalability my-5">
             <header>
               <h2 className="section-title">Built to Grow with Your Business</h2>
             </header>
@@ -100,7 +101,7 @@ export default function Resources() {
           </section>
 
           {/* User-Friendly Interface Section */}
-          <section className="user-interface">
+          <section className="scalability">
             <header>
               <h2 className="section-title">An Intuitive Dashboard for Merchants and Affiliates</h2>
             </header>
@@ -118,7 +119,7 @@ export default function Resources() {
           </section>
 
           {/* Call-to-Action Section */}
-          <section className="cta">
+          <section className="cta mt-5">
             <header className="cta-header">
               <h1 className="cta-title">Explore UpFilly’s Features Today</h1>
               <h2 className="cta-subtitle">Discover how our platform can take your affiliate marketing to the next level.</h2>
@@ -128,28 +129,29 @@ export default function Resources() {
               {/* <button className="cta-btn secondary">Learn More About Features</button> */}
             </div>
           </section>
-        </div>
-        <div className='pricing-padding'>
-          <div className='container'>
+          <div className='pricing-padding'>
+          
 
             {/* Shopify Tracking App Section */}
             <div className='row cpadd pt-3'>
               <div className='col-md-12'>
                 <div className='card_box text-center hover_box'>
-                  <h2>{shopifyTrackingInfo.title}</h2>
+                  <h2 className='mb-3'>{shopifyTrackingInfo.title}</h2>
                   <p>{shopifyTrackingInfo.description}</p>
-                  <ul className='list-unstyled'>
+                  <ul className='list-unstyled mb-4'>
                     {shopifyTrackingInfo.features.map((feature, index) => (
                       <li key={index}>{feature}</li>
                     ))}
                   </ul>
-                  <a href={shopifyTrackingInfo.link} className='btn btn-primary'>Learn More</a>
+                  <a href={shopifyTrackingInfo.link} className='cta-button'>Learn More</a>
                 </div>
               </div>
             </div>
 
-          </div>
         </div>
+      </div>
+        </div>
+      
       </Layout>
     </>
   );

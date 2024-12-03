@@ -279,7 +279,7 @@ const UpFillyPage = () => {
         </section>
 
         {/* Call to Action Section */}
-        <div className="container mt-5">
+     
           <section className="cta last-section card_box">
             <h2>Experience the Power of UpFilly</h2>
             <button
@@ -289,7 +289,7 @@ const UpFillyPage = () => {
               Get Started Now
             </button>
           </section>
-        </div>
+        
 </div>
       </div>
     </Layout>
