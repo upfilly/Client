@@ -136,7 +136,7 @@ const MapAndSendData = () => {
             {targetKeys.map((targetKey, index) => (
               <div
                 key={index}
-                className="target-key-item"
+                className="target-key-item position-relative"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop(targetKey)}
               >
@@ -148,7 +148,7 @@ const MapAndSendData = () => {
                         <span className="mapped-key">
                           {sourceKey} (Mapped)
                         </span>
-                        <button onClick={() => removeMapping(sourceKey)}>Remove</button>
+                        <button className='remove-btn' onClick={() => removeMapping(sourceKey)}><i class="fa fa-trash text-white" aria-hidden="true"></i></button>
                       </div>
                     );
                   }
@@ -156,11 +156,11 @@ const MapAndSendData = () => {
                 })}
               </div>
             ))}
-      <button onClick={() => setModalOpen(true)}>Add Target Key</button>
+      <button className='mapping-btns' onClick={() => setModalOpen(true)}>Add Target Key</button>
           </div>
         </div>
 
-        <button onClick={mapData}>Map Data</button>
+        <button  className='mapping-btns' onClick={mapData}>Map Data</button>
 
         {/* Show the mapping as a thread */}
         {Object.keys(mappings).length > 0 && <h3>Mapped Keys</h3>}
@@ -176,7 +176,7 @@ const MapAndSendData = () => {
         {mappedData.length > 0 && (
           <div>
             <h3>Mapped Data as JSON</h3>
-            <pre className="json-display">{JSON.stringify(mappedData, null, 2)}</pre>
+            <pre className="json-display text-center"><p>{JSON.stringify(mappedData, null, 2)}</p></pre>
           </div>
         )}
 
@@ -213,7 +213,7 @@ const MapAndSendData = () => {
           </div>
         </div>
 
-        <button onClick={sendData}>Send Mapped Data</button>
+        <button  className='mapping-btns mx-auto mt-3' onClick={sendData}>Send Mapped Data</button>
 
         {/* React-Bootstrap Modal for adding a new target key */}
         <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
@@ -221,18 +221,20 @@ const MapAndSendData = () => {
             <Modal.Title>Add New Target Key</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Control
+           <div className='target-modal my-3'>
+           <Form.Control
               type="text"
               value={newTargetKey}
               onChange={(e) => setNewTargetKey(e.target.value)}
               placeholder="Enter new target key"
             />
+           </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setModalOpen(false)}>
+            <Button  className='target-modal-btn' variant="secondary" onClick={() => setModalOpen(false)}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={addTargetKey}>
+            <Button className='target-modal-btn'  variant="primary" onClick={addTargetKey}>
               Add
             </Button>
           </Modal.Footer>

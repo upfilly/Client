@@ -73,8 +73,10 @@
   }
   
   .mapped-key {
-    color: green;
+    // color: green;
+    color: #407dfc;
     font-weight: bold;
+    font-size: 14px;
   }
   
   button {
@@ -92,6 +94,10 @@
   button:hover {
     background-color: #0056b3;
   }
+  .mapping-btns{
+    border-radius: 2px;
+    padding: 8px 20px;
+  }
   
   .mapping-display, .json-display {
     background-color: #f9f9f9;
@@ -100,6 +106,7 @@
     margin-top: 20px;
     white-space: pre-wrap;
     font-size: 14px;
+    border: 1px solid #ddd;
   }
   
   .table_section {
@@ -134,5 +141,29 @@
     font-size: 14px;
   }
   
-  
-  
+.target-modal .form-control{
+  height: 40px;
+  border-radius: 5px !important;
+}
+.target-modal-btn{
+  height: 40px;
+  width: 80px;
+  border-radius: 20px !important;
+  font-size: 15px !important;
+}
+.remove-btn{
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  color: #fff !important;
+  background: #c02e2e;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.remove-btn i{
+  font-size: 15px !important;
+}
