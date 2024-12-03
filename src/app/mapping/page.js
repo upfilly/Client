@@ -156,6 +156,7 @@ const MapAndSendData = () => {
                 })}
               </div>
             ))}
+      <button onClick={() => setModalOpen(true)}>Add Target Key</button>
           </div>
         </div>
 
@@ -213,9 +214,6 @@ const MapAndSendData = () => {
         </div>
 
         <button onClick={sendData}>Send Mapped Data</button>
-
-        {/* Button to open modal */}
-        <button onClick={() => setModalOpen(true)}>Add Target Key</button>
 
         {/* React-Bootstrap Modal for adding a new target key */}
         <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
