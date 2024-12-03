@@ -96,7 +96,7 @@
   }
   .mapping-btns{
     border-radius: 2px;
-    padding: 8px 20px;
+    padding: 6px 20px;
   }
   
   .mapping-display, .json-display {
@@ -148,7 +148,7 @@
 .target-modal-btn{
   height: 40px;
   width: 80px;
-  border-radius: 20px !important;
+  border-radius: 4px !important;
   font-size: 15px !important;
 }
 .remove-btn{
@@ -163,6 +163,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.remove-btn:hover{
+  color: #fff !important;
+  background: #c02e2e;
 }
 .remove-btn i{
   font-size: 15px !important;
