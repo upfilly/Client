@@ -27,3 +27,8 @@ footer {
   color: #fff;
   margin-top: 40px;
 }
+@media(max-width:500px){
+  .trackHeading{
+    font-size: 22px !important;
+  }
+}
