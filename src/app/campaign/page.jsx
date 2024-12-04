@@ -39,7 +39,7 @@ const Users = () => {
 
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='campaign/all'
+        let url='campaign/brand/all'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data.data)

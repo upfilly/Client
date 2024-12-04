@@ -142,10 +142,10 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Lead Campaign</p>
+                          <p className="revuh">Accepted Campaign</p>
 
                           <h3 className="dollars-t">
-                            {CampaignRequest?.leadCampaigns}
+                            {CampaignRequest?.acceptedRequestCount}
                           </h3>
                         </div>
                       </div>
@@ -164,8 +164,7 @@ export default function Dashboard() {
             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-             
-          
+
                   {user.role == "brand" ? (
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
@@ -177,10 +176,10 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Accept Campaign</p>
+                          <p className="revuh">Associate Affiliate</p>
 
                           <h3 className="dollars-t">
-                            {campaignData?.acceptedCampaigns}
+                            {campaignData?.associatedAffiliatesCount}
                           </h3>
                         </div>
                       </div>
@@ -196,10 +195,10 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Visitor Campaign</p>
+                          <p className="revuh">Pending Campaign</p>
 
                           <h3 className="dollars-t">
-                            {CampaignRequest?.visitor_campaigns}
+                            {CampaignRequest?.pendingRequestsCount}
                           </h3>
                         </div>
                       </div>
@@ -215,13 +214,13 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
+           {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
                
            
              
-                  {user.role == "brand" ? (
+                  {/* {user.role == "brand" ? (
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -240,7 +239,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </div>
-                  ) : (
+                  ) : ( */}
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -251,15 +250,15 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Purchase Campaign</p>
+                          <p className="revuh">Rejected Campaign</p>
 
                           <h3 className="dollars-t">
-                            {CampaignRequest?.purchase_campaigns}
+                            {CampaignRequest?.rejectedRequestsCount}
                           </h3>
                         </div>
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
                 </div>
                 <div className="">
                   {/* <div className='text-right'>
@@ -269,8 +268,8 @@ export default function Dashboard() {
                   <div></div>
                 </div>
               </div>
-            </div>
-            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
+            </div>}
+           {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
                   {/* <img
@@ -279,7 +278,7 @@ export default function Dashboard() {
                     alt=""
                   ></img> */}
                   
-                  {user.role == "brand" ? (
+                  {/* {user.role == "brand" ? (
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -298,7 +297,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </div>
-                  ) : (
+                  ) : ( */}
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -309,15 +308,15 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Line Campaign</p>
+                          <p className="revuh">Brands Associated</p>
 
                           <h3 className="dollars-t">
-                            {CampaignRequest?.lineItems_campaigns}
+                            {CampaignRequest?.brandsAssociatedCount}
                           </h3>
                         </div>
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
                 </div>
                 <div className="">
                   {/* <div className='text-right'>
@@ -327,7 +326,7 @@ export default function Dashboard() {
                   <div></div>
                 </div>
               </div>
-            </div>
+            </div>}
           </div>
         </div>
         <div className="mt-3">

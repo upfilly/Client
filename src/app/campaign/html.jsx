@@ -116,7 +116,7 @@ const Html = ({
                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Access Type</th>
                                     <th scope="col" className='table_data'>Amount</th>
-                                    <th scope="col" className='table_data'>Status</th>
+                                    {/* <th scope="col" className='table_data'>Status</th> */}
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                     <th scope="col" className='table_data'>Action</th>
@@ -146,12 +146,12 @@ const Html = ({
                                             </div></td>
                                         <td className='table_dats'>{itm?.access_type}</td>
                                         <td className='table_dats'>{itm?.amount}</td>
-                                        {<td className='table_dats'>   <div className={`user_hours`}>
+                                        {/* {<td className='table_dats'>   <div className={`user_hours`}>
                                             <span className={itm?.access_type == "private" ? itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive' : ""}
                                             >
                                                 {itm?.access_type == "private" ? itm.status : "--"}
                                             </span>
-                                        </div></td>}
+                                        </div></td>} */}
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                                         {/* dropdown */}
