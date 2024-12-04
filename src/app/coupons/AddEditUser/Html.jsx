@@ -38,12 +38,12 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                     {/* {submitted && !form?.couponCode ? <div className="invalid-feedback d-block">Coupon Code is Required</div> : <></>} */}
                                 </div>
                                 <div className="col-md-6 mb-3">
-                                    <label>Coupon Type</label>
+                                    <label>Type</label>
                                     <div className="select_row">
                                         <SelectDropdown
                                             id="statusDropdown"
                                             displayValue="name"
-                                            placeholder="Select Coupon Type"
+                                            placeholder="Select Type"
                                             intialValue={form?.visibility}
                                             result={e => {
                                                 setform({ ...form, visibility: e.value })

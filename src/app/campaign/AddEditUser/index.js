@@ -141,20 +141,20 @@ const AddEditUser = () => {
         }
     }, [id])
 
-    const getData = (p = {}) => {
-        let url = 'getallaffiliatelisting'
-        ApiClient.get(url).then(res => {
-            if (res.success) {
-                const data = res.data
-                const filteredData = data.filter(item => item !== null);
-                setAffiliateData(filteredData)
-            }
-        })
-    }
+    // const getData = (p = {}) => {
+    //     let url = 'getallaffiliatelisting'
+    //     ApiClient.get(url).then(res => {
+    //         if (res.success) {
+    //             const data = res.data
+    //             const filteredData = data.filter(item => item !== null);
+    //             setAffiliateData(filteredData)
+    //         }
+    //     })
+    // }
 
-    useEffect(() => {
-        getData()
-    }, [])
+    // useEffect(() => {
+    //     getData()
+    // }, [])
 
     return <>
         <Html

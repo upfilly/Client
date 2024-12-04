@@ -180,7 +180,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
 
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
-                                    {affiliateData && <DynamicReactQuill
+                                    {true && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
 
