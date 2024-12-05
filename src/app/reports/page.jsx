@@ -33,7 +33,7 @@ export default function CampaignReport() {
 
   const getCamapignData = (p = {}) => {
     let filter = { ...filters, ...p }
-    let url = 'campaign/all'
+    let url = 'campaign/brand/all'
     ApiClient.get(url, filter).then(res => {
       if (res.success) {
         const data = res?.data?.data?.map((data) => {

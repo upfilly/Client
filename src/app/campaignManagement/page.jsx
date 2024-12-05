@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import affilate from '../affiliate/page';
 
 const Users = () => {
   const user = crendentialModel.getUser()
@@ -108,7 +109,7 @@ const Users = () => {
     if (itm === 'accepted') {
       // Handle the case when the campaign is accepted
       loader(true);
-      ApiClient.put('campaign/change-status', { status: itm, id: id }).then((res) => {
+      ApiClient.put('campaign/change-status', { status: itm, id: id ,affiliate_id:user?.id || user?._id}).then((res) => {
         if (res.success) {
 
           toast.success(res.message)
@@ -140,7 +141,7 @@ const Users = () => {
           }
 
           loader(true);
-          ApiClient.put('campaign/change-status', { status: itm, id: id, reason: denialReason }).then((res) => {
+          ApiClient.put('campaign/change-status', { status: itm, id: id, affiliate_id:user?.id || user?._id , reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
               getData({ page: filters?.page + 1 });

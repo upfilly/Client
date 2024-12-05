@@ -169,6 +169,7 @@ export default function affilate() {
     e.preventDefault()
     const payload = {
       affiliate_id: selectedAffiliteid,
+      brand_id:user?.id || user?._id,
       ...form,
     }
     ApiClient.post(`addInvite`, payload).then(res => {
@@ -313,9 +314,15 @@ export default function affilate() {
   }
 
   const handleCampaign = () => {
-    ApiClient.get('campaign/all', { brand_id: user?.id }).then(res => {
+    ApiClient.get('campaign/brand/all', { brand_id: user?.id }).then(res => {
       if (res.success == true) {
-        setCampaign(res?.data?.data)
+        const data = res?.data?.data?.map((data) => {
+          return ({
+            id: data?.id || data?._id,
+            name: data?.name
+          })
+        })
+        setCampaign(data)
       }
     })
   }
@@ -422,8 +429,7 @@ export default function affilate() {
   }
 
   const handleAddCampaign = () => {
-    // Trigger logic to add a new campaign (e.g., open a modal for campaign creation)
-    console.log("Open modal to add new campaign");
+    history.push('/campaign/add')
   };
   
 

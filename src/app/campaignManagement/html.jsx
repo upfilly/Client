@@ -107,29 +107,29 @@ const Html = ({
                                     <tbody>
                                         {!loaging && data && data.map((itm, i) => {
                                             return <tr className='data_row' key={i}>
-                                                <td className='table_dats' onClick={e => view(itm.id)}>
+                                                <td className='table_dats' onClick={e => view(itm.campaign_detail?.id || itm?.campaign_detail?._id)}>
 
                                                     <div className='user_detail'>
                                                         <div className='user_name'>
                                                             <h4 className='user'>
-                                                                {methodModel.capitalizeFirstLetter(itm.name)}
+                                                                {methodModel.capitalizeFirstLetter(itm?.campaign_detail?.name)}
                                                             </h4>
                                                         </div>
                                                     </div></td>
-                                                <td className='table_dats'>{itm?.event_type.map((itm) => itm).join(",")}</td>
-                                                <td className='table_dats'>{itm?.amount}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
+                                                {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.map((itm) => itm).join(",")}</td>}
+                                                <td className='table_dats'>{itm?.campaign_detail?.amount}</td>
+                                                <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
+                                                <td className='table_dats'>{datepipeModel.date(itm?.campaign_detail?.updatedAt)}</td>
 
                                                 <td className='table_dats d-flex align-items-center '>
                                                     {itm?.status == 'pending' ? <div className='d-flex align-items-center' >
                                                         <button onClick={() => {
-                                                            statusChange("accepted", itm?.id)
-                                                            Tracklogin(itm?.campaign_unique_id)
+                                                            statusChange("accepted", itm?.id || itm?._id)
+                                                            // Tracklogin(itm?.campaign_unique_id)
                                                         }} className="btn btn-primary mr-2 btn_actions">
                                                             <i className='fa fa-check'></i>
                                                         </button>
-                                                        <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                                        <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                                             <i className='fa fa-times'></i>
                                                         </button>
                                                     </div> :

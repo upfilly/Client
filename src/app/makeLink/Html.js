@@ -101,10 +101,16 @@ const Html = () => {
 
     const getCampaignData = (p = {}) => {
         let filter = { search: '', isDeleted: false, status: '', brand_id: user?.id }
-        let url = 'campaign/all'
+        let url = 'campaign/brand/all'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                setCampaignData(res.data.data)
+                const data = res?.data?.data?.map((data) => {
+                    return ({
+                      id: data?.id || data?._id,
+                      name: data?.name
+                    })
+                  })
+                setCampaignData(data)
             }
         })
     }
