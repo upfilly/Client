@@ -211,7 +211,7 @@ const MapAndSendData = () => {
           </div>
         )}
 
-        <h3>Source Data</h3>
+        <h3 className='mt-4'>Source Data</h3>
         <div className="table_section">
           <div className="table-responsive">
             <table className="table table-striped table-width">

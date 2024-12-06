@@ -212,3 +212,40 @@
   }
   
 }
+
+@media(max-width:767px){
+  .resource-page {
+    .features-list {
+      gap: 12px;
+      margin-top: 20px;
+      flex-direction: column;
+      align-items: center;
+  }
+  .core-features-title {
+    font-size: 22px !important;
+}
+.core-features-subtitle {
+  font-size: 17px;
+}
+.core-features {
+  text-align: center;
+  padding: 20px;
+}
+.cta {
+  padding: 20px;
+}
+.cta-title {
+  font-size: 26px !important;
+}
+.cta-subtitle {
+  font-size: 17px;
+}
+.cta-buttons {
+  margin-top: 10px;
+}
+.h2, h2 {
+  font-size: 24px;
+}
+
+  }
+}

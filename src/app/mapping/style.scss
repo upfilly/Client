@@ -171,3 +171,18 @@
 .remove-btn i{
   font-size: 15px !important;
 }
+@media(max-width:550px){
+  .mapping-container {
+flex-direction: column;
+    margin-bottom: 10px;
+}
+.h3, h3 {
+  font-size:  20px !important;
+}
+.mapping-btns{
+  margin: auto;
+}
+.source-key-item, .target-key-item {
+  width: 100%;
+}
+}
