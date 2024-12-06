@@ -86,16 +86,31 @@
     }
   }
 }
-@media (max-width: 500px) {
-  .platforms-page .header {
-    padding: 30px;
-
-    h1 {
+@media (max-width: 767px) {
+  .platforms-page {
+    header {
+      padding: 20px !important;
+    }
+    header h1 {
       font-size: 30px !important;
     }
     header p {
+      font-size: 16px;
+    }
+    section {
+      padding: 10px;
+      margin-bottom: 0px;
+    }
+    section h2 {
+      font-size: 22px;
+    }
+    section p {
       font-size: 15px;
-      margin: 20px 0;
+      margin-bottom: 0px;
+    }
+    button.cta-button {
+      padding: 15px 20px;
+      font-size: 12px;
     }
   }
 }
