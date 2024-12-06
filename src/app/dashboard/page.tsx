@@ -75,7 +75,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user) {
-      ApiClient.get("campaign-request").then((data) => {
+      let filter;
+      if(user?.role == "affiliate"){
+        filter={affiliate_id:user?.id || user?._id}
+      }else{
+        filter={brand_id:user?.id || user?._id}
+      }
+      ApiClient.get("campaign-request",filter).then((data) => {
         setCampaignRequest(data);
       });
     }
