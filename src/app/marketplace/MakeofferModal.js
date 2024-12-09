@@ -34,6 +34,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
     let value = {
       ...form,
       name:user?.fullName,
+      brand_id:user?.id || user?._id,
       product_id: id
     }
 
