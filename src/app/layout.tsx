@@ -23,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <body className={inter.className} >
+      <script src="assets/js/setcookies.js"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
         <GoogleOAuthProvider clientId="817638365394-413bppqmd901dl9u6ml6na7an7f02r9s.apps.googleusercontent.com">
           {children}</GoogleOAuthProvider>

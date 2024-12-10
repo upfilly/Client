@@ -158,7 +158,7 @@ const Html = ({
                                         <td className='table_dats'>
                                             <div className="action_icons">
                                                 {isAllow('editAdmins') && permission('campaign_edit') ? <>
-                                                    <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
+                                                    <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm._id)}>
                                                         <i className="material-icons edit" title="Edit">edit</i>
                                                     </a>
                                                 </> : <></>}
