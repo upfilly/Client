@@ -81,7 +81,7 @@ export default function Dashboard() {
       }else{
         filter={brand_id:user?.id || user?._id}
       }
-      ApiClient.get("campaign-request",filter).then((data) => {
+      ApiClient.get("dashboard/campaign-request",filter).then((data) => {
         setCampaignRequest(data);
       });
     }
