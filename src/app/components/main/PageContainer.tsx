@@ -34,7 +34,7 @@ const PageContainer = ({ title, description, children ,settingData}: Props) => (
           <script src="https://editor.unlayer.com/embed.js"></script>
           <script src="fprmain.js"/>
           <script src="https://cdn.firstpromoter.com/fpr.js" />
-          <script src="assets/js/setcookies.js"/>
+          {/* <script src="assets/js/setcookies.js"/> */}
         </Helmet>
         {/* <Script
           id="googlemaps"
