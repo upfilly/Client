@@ -9,7 +9,7 @@ import '../style.scss';
 import dynamic from 'next/dynamic';
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 
-const Html = ({ submitted, form, handleSubmit, setform, back }) => {
+const Html = ({ submitted, form, handleSubmit, setform, back ,id}) => {
 
     const defaultAffiliateFunction = () => {
         loader(true)
@@ -71,6 +71,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                             displayValue="name"
                                             placeholder="Select Type"
                                             intialValue={form?.group_type}
+                                            disabled={id ? true : false}
                                             result={e => setform({ ...form, group_type: e.value })}
                                             options={[
                                                 { id: 'affiliate', name: 'Affiliate' },

@@ -68,6 +68,7 @@ export const affilliateGrouptype={
     id: "",
     group_name: "",
     commision:"",
+    group_type:"",
     isDefaultAffiliateGroup:false,
     isArchive:false,
     isPreRegisterLeads:false,

@@ -13,7 +13,9 @@ const AddEditUser = () => {
     const {id} = useParams();
     const [images, setImages] = useState({ image: '' });
     const defaultvalue = affilliateGrouptype
-    const [form, setform] = useState({group_name: "",
+    const [form, setform] = useState({
+    group_name: "",
+    group_type:"",
     // commision:"",
     // isDefaultAffiliateGroup:false,
     isArchive:false,isPreRegisterLeads:false})
@@ -39,7 +41,9 @@ const AddEditUser = () => {
         if (value.id) {
             method = 'put'
             url = 'affiliate-group'
-            // delete value?.cat_type
+            delete value?.commision
+            delete value?.isDefaultAffiliateGroup
+            delete value?.group_type
         } else {
             delete value.id
         }
@@ -106,6 +110,7 @@ const AddEditUser = () => {
              addressResult={addressResult}
              handleSubmit={handleSubmit}
              imageResult={imageResult}
+             id={id}
         />
     </>
 }
