@@ -139,6 +139,7 @@ const SendPreviousRequest = async (campaign,brand) => {
   ApiClient.post('campaign-request',data).then(res => {
       if (res.success == true) {
         toast.success(res?.message)
+        getPreviousData({ role, page: 1 })
       }
       loader(false)
   })

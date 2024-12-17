@@ -152,12 +152,13 @@ const Html = ({
                                                 <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
                                                 <td className='table_dats d-flex align-items-center'>
                                                     <button className='btn btn-primary btn_actions'
+                                                    title="Send request"
                                                         onClick={() => {
                                                             SendPreviousRequest(itm?.id || itm?._id,itm?.brand_id)
                                                             // history.push(`/chat`);
                                                             // localStorage.setItem("chatId", itm?.brand_id);
                                                         }}>
-                                                        <i className='fa fa-comment-o'></i>
+                                                        <i class="fa-solid fa-code-pull-request"></i>
                                                     </button>
                                                 </td>
                                             </tr>
