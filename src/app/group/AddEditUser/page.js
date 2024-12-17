@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import ApiClient from '@/methods/api/apiClient';
-import methodModel from '@/methods/methods';
 import Html from "./Html";
 import { toast } from "react-toastify";
 import { useParams, useRouter } from "next/navigation";

@@ -66,7 +66,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user) {
-      ApiClient.get("total-campaigns").then((data) => {
+      let filter
+      if(user?.role == "brand"){
+        filter = {brand_id:user?.id || user?._id}
+      }
+      ApiClient.get("total-campaigns",filter).then((data) => {
         setCampaignData(data);
       });
       getAnalyticsData();
