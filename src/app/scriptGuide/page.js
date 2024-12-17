@@ -62,7 +62,7 @@ console.log("Query Parameters: ", queryParams);`}
           </pre>
         </div>
 
-        <p>This code captures URL parameters like <code>?affiliate=1234</code> and stores them as cookies for later use. For example, you can track affiliate IDs or campaign sources using this method.</p>
+        <p>This code captures URL parameters like <code>?abcd=1234</code> and stores them as cookies for later use. For example, you can track affiliate IDs or campaign sources using this method.</p>
 <hr></hr>
         <h4 className='trackHeading text-left'>Step 2: Sending Tracking Data For Upfilly</h4>
         <p>Once you have captured the necessary data (like user information, sales, or campaign data), you can send it to an external API for further processing. Here's an example using <code>XMLHttpRequest</code>:</p>
