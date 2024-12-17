@@ -94,7 +94,7 @@ const Html = ({
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {(!loaging && activeTab == "new")? filteredData.map((itm, i) => (
+                                        {(!loaging && activeTab == "new")? data.map((itm, i) => (
                                             <tr className='data_row' key={i}>
                                                 <td className='table_dats' onClick={e => view(itm.campaign_detail?.id || itm?.campaign_detail?._id)}>
                                                     <div className='user_detail'>
@@ -110,7 +110,7 @@ const Html = ({
                                                 <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm?.campaign_detail?.updatedAt)}</td>
                                                 <td className='table_dats d-flex align-items-center'>
-                                                    {itm?.status === 'pending' ? (
+                                                    {itm?.status == 'pending' ? (
                                                         <div className='d-flex align-items-center'>
                                                             <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                 <i className='fa fa-check'></i>
@@ -119,7 +119,7 @@ const Html = ({
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div>
-                                                    ) : itm?.status === 'rejected' ? (
+                                                    ) : itm?.status == 'rejected' ? (
                                                         <div className="btn btn-primary mr-2">Rejected</div>
                                                     ) : (
                                                         <div className="btn btn-primary mr-2">Accepted</div>

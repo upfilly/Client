@@ -17,7 +17,7 @@ const AddEditUser = () => {
   const user = crendentialModel.getUser()
   const [image, setImages] = useState('');
   const defaultvalue = userType
-  const [form, setform] = useState({email:'',role:'',brand_id:user?.id})
+  const [form, setform] = useState({email:'',role:'',brand_id:user?.id || user?._id})
   const [permissions, setPermissions] = useState({})
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false)
@@ -189,7 +189,7 @@ const AddEditUser = () => {
 
     if (id) {
       loader(true)
-      ApiClient.get(`getinviteuser?user_id=${id}&brand_id=${user?.role == 'brand' ? user?.id : ''}`).then(res => {
+      ApiClient.get(`getinviteuser?user_id=${id}&brand_id=${user?.role == 'brand' ? user?.id || user?._id : ''}`).then(res => {
         if (res.success) {
           let value = res.data
           setDetail(value)
