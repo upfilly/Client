@@ -11,54 +11,14 @@ const TrackingGuide = () => {
       </header>
 
       <section className="content mb-5">
-        <h4 className='trackHeading text-left'>Step 1: Setting Up Cookies</h4>
-        <p>Cookies allow you to store data on the user's browser. Here's how to set and get cookies in your React app.</p>
+        <h4 className='trackHeading text-left'>Step 1: Setting Master Script</h4>
+        <p>Cookies allow you to store data on the user's browser. Here's how to set and get cookies in your web app.</p>
 
         <div className="code-block">
           <pre>
-            {`// Function to set a cookie with a specified name, value, and expiration time (in days)
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Set expiration date
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/"; // Set cookie with path /
-}
-
-// Function to get a cookie by name
-function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.indexOf(name + "=") == 0) {
-            return cookie.substring(name.length + 1, cookie.length); // Return cookie value
-        }
-    }
-    return "";
-}`}
-          </pre>
-        </div>
-
-        <p>This example demonstrates how to store and retrieve cookies in React. Use the <code>setCookie</code> function to store data (like affiliate ID, session data) and the <code>getCookie</code> function to retrieve this information.</p>
-
-        <div className="code-block">
-          <pre>
-            {`// Function to get all query parameters from the URL and set them as cookies
-function getQueryParams() {
-    const params = {};
-    const queryString = window.location.search.slice(1); // Remove '?' from the start
-    const urlParams = new URLSearchParams(queryString);
-    urlParams.forEach((value, name) => {
-        params[name] = value;
-        // Set each query parameter as a cookie
-        setCookie(name, value, 30); // Set cookie with 30 days expiration
-    });
-    return params;
-}
-
-// Example usage
-const queryParams = getQueryParams();  // Get query parameters from the URL and set them as cookies
-console.log("Query Parameters: ", queryParams);`}
+            {`// tracking your parameter data
+            <script src="https://tracking.upfilly.com/" type="text/javascript" defer="defer"></script>
+`}
           </pre>
         </div>
 
@@ -69,39 +29,39 @@ console.log("Query Parameters: ", queryParams);`}
 
         <div className="code-block">
           <pre>
-            {`// Sending tracking data to an external API
+            {`// Sending tracking data to an external
             <script>
-const saleData = {
-    merchant: {{1001}}, // given by upfilly after signup
-    affiliate_id: getCookie("affiliate_id") || "defaultAffiliate",
-    amount: parseFloat(getCookie("totalAmount") || 0).toFixed(2),
-    channel: getCookie("source") || "defaultChannel",
-    currency: getCookie("currency") || "USD",
-    orderRef: getCookie("order_id") || "defaultOrder",
-    voucher: getCookie("voucher") || "noVoucher"
-};
+           const saleData = {
+            merchant: {{1001}}, // given by upfilly after signup
+            affiliate_id: getCookie("affiliate_id") || "defaultAffiliate", // value not in cookies then implement this script where it get 
+            amount: parseFloat(getCookie("totalAmount") || 0).toFixed(2),  // value not in cookies then implement this script where it get 
+            channel: getCookie("source") || "defaultChannel",  // value not in cookies then implement this script where it get 
+            currency: getCookie("currency") || "USD",  // value not in cookies then implement this script where it get 
+            orderRef: getCookie("order_id") || "defaultOrder",  // value not in cookies then implement this script where it get 
+            voucher: getCookie("voucher") || "noVoucher",  // value not in cookies then implement this script where it get 
+            };
 
-const xhr = new XMLHttpRequest();
-xhr.open("POST", "https://api.example.com/trackSale", true);
-xhr.setRequestHeader("Content-Type", "application/json");
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://api.example.com/trackSale", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
 
-xhr.onload = function () {
-    if (xhr.status >= 200 && xhr.status < 300) {
-        console.log("Sale data successfully sent.");
-    } else {
-        console.error("Error sending sale data: " + xhr.statusText);
-    }
-};
+            xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+            console.log("Sale data successfully sent.");
+            } else {
+           console.error("Error sending sale data: " + xhr.statusText);
+           }
+           };
 
-xhr.send(JSON.stringify(saleData));
-</script>
+           xhr.send(JSON.stringify(saleData));
+           </script>
 `}
           </pre>
         </div>
 
         <p>This code sends tracking data like the sale amount, affiliate ID, and order reference to an external server. You can adjust the endpoint <code>https://api.example.com/trackSale</code> to match your tracking API.</p>
         <hr></hr>
-        <h4>Step 4: Verifying Tracking</h4>
+        <h4>Step 3: Verifying Tracking</h4>
         <p>After implementing tracking, it's important to verify its functionality:</p>
         <ul>
           <li><strong>Check Cookies:</strong> Open the browser's developer tools and go to the "Application" tab (Chrome) to see the cookies set on your website.</li>
