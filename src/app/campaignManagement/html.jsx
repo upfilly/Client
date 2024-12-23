@@ -57,7 +57,7 @@ const Html = ({
                                 Campaign Management
                             </h3>
                             {/* Tab Navigation */}
-                            <div className="tabs">
+                             {/* <div className="tabs">
                                 {['new', 'previous'].map((tab) => (
                                     <button
                                         key={tab}
@@ -67,7 +67,7 @@ const Html = ({
                                         {tab === 'new' ? 'New Campaign' : 'Previous Campaign'}
                                     </button>
                                 ))}
-                            </div>
+                            </div>*/}
 
                         </div>
                     </div>
