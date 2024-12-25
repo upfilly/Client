@@ -164,15 +164,15 @@ const Html = ({
                                                 </> : <></>}
 
                                                 {isAllow('deleteAdmins') && permission('campaign_delete') ? <>
-                                                    <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
-                                                        <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                                                    <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm._id)}>
+                                                        <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'>delete</i>
                                                     </a>
                                                 </> : <></>}
 
                                                 {permission('campaign_edit') && <>
                                                     <a className='edit_icon action-btn' onClick={() => {
                                                         history.push(`/chat`)
-                                                        localStorage.setItem("chatId", itm?.affiliate_id)
+                                                        // localStorage.setItem("chatId", itm?.affiliate_id)
                                                     }}>
                                                         <i className='fa fa-comment-o text-white'></i>
                                                     </a>

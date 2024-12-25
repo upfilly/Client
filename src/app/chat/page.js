@@ -25,6 +25,7 @@ export default function Chat() {
   const [chat, setChat] = useState([]);
   const [picLoader, setPicLoader] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [settingData, setSettingData] = useState([])
   const [id, setId] = useState("")
   const [chatMsg, setChatMsg] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -68,13 +69,21 @@ export default function Chat() {
     if (!itm?.isGroupChat) {
       return itm?.room_members[0]?.user_name.toLowerCase().includes(searchText.toLowerCase());
     } else {
-      return itm?.room_name.toLowerCase().includes(searchText.toLowerCase());
+      return itm?.room_name?.toLowerCase().includes(searchText.toLowerCase());
     }
   });
 
   useEffect(() => {
     ConnectSocket.connect()
   }, [])
+
+  useEffect(() => {
+    ApiClient.get('settings').then(res => {
+      if (res.success) {
+        setSettingData(res?.data)
+      }
+    })
+}, [])
 
   useEffect(() => {
     filterArrays();
@@ -582,7 +591,7 @@ export default function Chat() {
 
   return (
     <>
-      <Header />
+      <Header settingData={settingData}/>
       <PageContainer title="Chat" description="Chat">
 
         <div className="container chat-bg-main">
