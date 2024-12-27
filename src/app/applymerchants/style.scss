@@ -1,0 +1,418 @@
+button.set-filter {
+    color: #252849;
+    border: 1px solid #cbcbcb;
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-weight: 300 !important;
+    background-color: #fff;
+}
+select.form-select.sl.ml-3 {
+    border-radius: 50px;
+    color: #252849;
+}
+i.fa.fa-plus-circle.mr-2 {
+    font-size: 27px;
+}
+thead.thead-clr tr th {
+    background-color: #EFF2F5 !important;
+    color: #000;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+}
+a.ref-mail {
+    color: #00BAFF;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: auto !important;
+}
+p.td-set {
+    color: #252849;
+    font-family: Open Sans;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+span.active-button {
+    color: #00A832;
+    font-family: Open Sans;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    background-color: #00d43f29;
+    padding: 6px 10px;
+    border-radius: 50px;
+}
+span.Inactive-button {
+    color: #E73C3C;
+    font-family: Open Sans;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    background-color: #e73c3c21;
+    padding: 6px 10px;
+    border-radius: 50px;}
+p.name-person{
+    color: #000;
+    font-family: Open Sans;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+img.person-img {
+  width: 33px;
+  height: 33px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #d9dcde;
+}
+
+.checkbox-dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .dropdown-header {
+    border: 1px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .checkbox-options {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 1;
+    max-height: 230px;
+    overflow-y: auto;
+  }
+
+  .text-sm{
+    font-size: 14px !important;
+  }
+  
+  
+  .checkbox-dropdown.open .checkbox-options {
+    display: block;
+  }
+  
+  .checkbox-options label {
+    display: block;
+    padding: 5px;
+  }
+  
+  .checkbox-options label:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .checkbox-options label input {
+    margin-right: 5px;
+  }
+  
+  .checkbox-dropdown p {
+    margin-top: 5px;
+  }
+  .checkbox-option-main{
+    width: 100%;
+  }
+
+  .checkbox-inner.checkbox-dropdown.ml_3 {
+
+    margin: 0 !important;
+    height: 38px !important;
+}
+
+.checkbox-inner .dropdown-header {
+  border-radius: 50px !important;
+}
+
+input.datepicker-field {
+    border: 1px solid #ccc;
+    height: 38px;
+    border-radius: 50px;
+}
+
+.react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
+  position: absolute;
+  box-sizing: content-box;
+  padding: 0.375rem 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.react-datepicker__view-calendar-icon input {
+  padding: 6px 10px 5px 35px !important;
+  background-color: #fff !important;
+}
+
+.filter-opt button.set-filter {
+  height: 38px;
+  border-radius: 50px !important;
+}
+
+.checkbox-inner .dropdown-header {
+  border-radius: 50px !important;
+  text-align: left;
+  padding: 0.375rem 0.75rem;
+  display: flex;
+  align-items: center;
+  overflow-y: auto;
+  height: 38px;
+  max-width: 180px;
+  min-width: 180px;
+}
+
+
+.checkbox-dropdown.open .checkbox-options {
+  display: block;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  border: 0;
+  border-radius: 16px;
+}
+.checkbox-options label {
+  display: flex;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  align-items: center;
+}
+.checkbox-options input[type=checkbox] {
+  width: 36px;
+  height: 19px;
+}
+.checkbox-options input[type=checkbox]::before {
+  width: 12px;
+  height: 12px;
+  top: 3px;
+
+}
+
+.checkbox-dropdown.open .checkbox-options {
+  
+  padding: 0.7rem 0.5rem;
+}
+
+.checkbox-options label:hover{
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  color: #fff;
+  cursor: pointer;
+}
+
+p.checkbox-option-main span {
+  margin: 5px 5px;
+
+}
+.select-option-category {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+p.checkbox-option-main {
+  display: flex;
+  margin: 0;
+  flex-wrap: wrap;
+ 
+}
+
+.checkbox-options{
+  width: 100%;
+}
+
+.react-datepicker__view-calendar-icon input:focus{
+  border: 1px solid #ccc !important;
+}
+
+table.table.table-striped {
+  cursor: pointer;
+}
+
+input.datepicker-field {
+  width: 244px;
+}
+
+.donabsolute{
+  position: absolute;
+  right: 10px;
+}
+
+// body{
+//   overflow: hidden !important;
+// }
+.action_icons {
+gap: 12px;
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+}
+
+.newselectmulti{
+  border-radius: 50px !important;
+  text-align: left;
+  padding: 5px 5px;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  min-width: 188px;
+  width: 100% !important;
+  border: 1px solid #ccc;
+}
+
+.newselectmulti .checkbox-option-main span {
+  font-size: 12px;
+  background-color: rgb(235, 233, 233);
+  border-radius: 50px;
+  padding: 8px 8px;
+}
+
+.text_adds ul {
+  list-style: none;
+  border: 1px solid #c1c1c1;
+  padding: 3px 8px;
+  border-radius: 9px;
+  background-color: rgba(193, 193, 193, 0.6196078431);
+  color: #000;
+  text-transform: capitalize;
+  font-size: 12px;
+  font-weight: 500;
+}
+.text_adds ul .fa {
+  color: #242424ab;
+}
+.input_adds button {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+//filter css 
+.filter_modal .modal-dialog {
+  max-width: 350px;
+  margin: 0px;
+  margin-left: auto;
+}
+.filter_ullist {
+  padding: 0px;
+  list-style: none;
+  margin: 0px;
+}
+.filter_ullist li {
+  margin-bottom: 12px;
+}
+
+.filter_ullist .form-check label {font-size: 14px;font-weight: 500;}
+
+.shw_more {
+  color: #007bff !important;
+  font-weight: 400;
+}
+.filter_modal .btn-outline-secondary {
+  color: #007bff !important;
+  border-color: unset;
+  border-radius: 40px !important;
+  font-size: 14px;
+}
+
+.filter_modal .btn-outline-secondary:hover {
+  color: #fff !important;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  border-color: unset;
+}
+.filter_modal .accordion-button:not(.collapsed) {
+  color: #ffffff;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  box-shadow: unset !important;
+  border: unset !important;
+  font-size: 14px !important;
+  display: flex;
+  padding: 8px;
+  border-radius: 6px;
+  justify-content: space-between;
+}
+.filter_modal .accordion-button::after{
+  display: none;
+}
+.down_typs{
+  font-size: 18px;
+}
+
+.filter_modal  .accordion-item {
+  color: #000;
+  background-color: #f1f1f1b5;
+  border: 0px;
+  // border-bottom: 1px solid #000;
+ 
+}
+
+.filter_modal .modal-body {
+  background-color: #f1f1f1b5;
+}
+.filter_modal  .accordion-button::after {
+  margin-left: 10px !important;
+}
+.filter_modal .accordion-header button {
+  padding-left: 0px;
+}
+.filter_modal .accordion-item:last-of-type .accordion-button.collapsed{
+   // border-radius: unset;
+   color: #ffffff;
+   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+   box-shadow: unset !important;
+   border: unset !important;
+   font-size: 14px !important;
+   display: flex;
+   padding: 8px;
+   margin-bottom: 12px;
+   justify-content: space-between;
+   border-radius: 6px;
+}
+.filter_modal .accordion-body {
+  padding-left: 5px;
+}
+// .filter_modal  .modal-content {
+//   height: 100vh;
+// }
+.filter_modal .modal-header {
+  border-bottom: 1px solid #c3c3c3;
+}
+.filter_modal  .modal-footer {
+  border-top: 1px solid #c3c3c3;
+  background-color: #f1f1f1b5;
+}
+.filter_modal .modal-content{
+  min-height: 100vh;
+}
+.btn_primary {width: 30px;height: 30px;}
+
+.btn_primary .fa_icns {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    padding: 4px 4px;
+    justify-content: center;
+}
+.show_morebx {
+  font-size: 12px;
+}
+.profile_height .show_morebx {
+  position: absolute;
+  bottom: 2px;
+  border-radius: 4px;
+  border: 1px solid #8aacfd;
+  left: 33px;
+  background-color: #f0f2f5;
+  padding: 0px 6px;
+}
+
+
+.profile_height {
+  height: 68px;
+  position: relative;
+}

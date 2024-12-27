@@ -13,6 +13,7 @@ const Detail = (p) => {
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
+    const [copied, setCopied] = useState(false);
     const getDetail = (did) => {
         loader(true)
         ApiClient.get(`campaign`, { id: did }).then(res => {
@@ -26,6 +27,16 @@ const Detail = (p) => {
     const back = () => {
         history.back()
     }
+
+    const handleCopyLink = () => {
+        const link = `https://upfilly.com?affiliate_id=${user?.id || user?._id}&url=${user?.website}`;
+        navigator.clipboard.writeText(link).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    };
 
     useEffect(() => {
         getDetail(id)
@@ -165,7 +176,23 @@ const Detail = (p) => {
                                 </div>
                             </div>
 
-
+                            <div className='row'>
+                                <div className='col-3'>
+                                    <div className='userdata'>
+                                        <p className='headmain'>Campaign Link:</p>
+                                    </div>
+                                </div>
+                                <div className='col-9'>
+                                    <div className='name-dtls'>
+                                        <p className='headsub'>
+                                            <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}`}</span>
+                                            <button onClick={handleCopyLink} className='btn btn-primary ml-1'>
+                                                {copied ? 'Copied!' : 'Copy Link'}
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>

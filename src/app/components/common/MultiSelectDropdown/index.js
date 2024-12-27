@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import Html from "./html";
 import methodModel from "@/methods/methods";
 
-const MultiSelectDropdown = ({intialValue,options,isSingle=false,result,displayValue='name',id}) => {
-
+const MultiSelectDropdown = ({intialValue,options,isSingle=false,result,displayValue='name',id,placeholder}) => {
     const [selectedValues,setSelectedValues]=useState([])
 
     const handleChange=(e,type)=>{
@@ -63,6 +62,7 @@ const MultiSelectDropdown = ({intialValue,options,isSingle=false,result,displayV
         options={options}
         selectedValues={selectedValues}
         handleChange={handleChange}
+        placeholder={placeholder}
         />
     </>
 }

@@ -17,8 +17,8 @@
     border-bottom: 1px solid #efefef;
     margin: 10px 0;
     cursor: pointer;
-    // background: whitesmoke;
-    // border-radius: 10px;
+    background-color: whitesmoke;
+    border-radius: 10px;
 }
 
 .chat_active {
@@ -27,8 +27,8 @@
 }
 
 .persons-list li:hover {
-    transition: 0.2s ease-in;
-    box-shadow: 3px 3px 5px #fd9f8e8f;
+    background: #e4f1f9 !important;
+    border-radius: 10px;
 }
 
 
@@ -67,7 +67,7 @@
 }
 
 .profile-img {
-    margin-right: 17px;
+    // margin-right: 17px;
     position: relative;
 }
 
@@ -340,7 +340,7 @@
 .mglass {
     position: absolute;
     right: 12px;
-    top: 50%;
+    top:46%;
     transform: translateY(-50%);
     width: 15px;
 }
@@ -377,7 +377,7 @@ i.fa.fa-paperclip {
 
 
 i.fa.send_msg.fa-paper-plane {
-    background: #1b284d;
+    background-image: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
     padding: 15px;
     border-radius: 50px;
     color: #fff;
@@ -420,12 +420,30 @@ button.p-0.dropdown-toggle.btn:hover {
 }
 
 .persons-list {
-    max-height: 350px;
+    max-height: 299px;
     overflow-y: auto;
     height: 100%;
-    min-height: 350px;
-    overflow-y: auto;
     padding: 0;
+}
+
+.persons-list::-webkit-scrollbar {
+    width: 2px;
+}
+
+.persons-list:-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.persons-list::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+.persons-list:hover::-webkit-scrollbar-thumb{
+    background:#60adf1;
+}
+
+.persons-list::-webkit-scrollbar-track {
+    background-color: #cce1f1;
 }
 
 .conversations #accordion .card .btn-link {
@@ -739,7 +757,8 @@ li.text_left {
 
 li.text_right {
     float: right;
-    width: 60%;
+    width: 100%;
+    max-width: 60%;
     position: relative;
     border-radius: 20px 0px 20px 0px;
     background: whitesmoke;
@@ -752,10 +771,10 @@ li.text_right {
     line-break: anywhere;
 }
 
-.chat-footer label {
-    margin: 0;
-    padding: 12px 12px 0px 9px;
-}
+// .chat-footer label {
+//     margin: 0;
+//     padding: 12px 12px 0px 9px;
+// }
 
 img.download_img_chat {
     width: 150px;
@@ -779,9 +798,9 @@ img.download_img_chat {
 }
 
 
-.bell_icon {
-    margin-right: 20px;
-}
+// .bell_icon {
+//     margin-right: 20px;
+// }
 
 .pdf_inner_layout {
     text-align: center;
@@ -845,7 +864,7 @@ span.pdficon i {
 
 
 .img_profile_u {
-    width: 100%;
+    width: 92%;
 }
 
 ul.list-info li p {
@@ -871,6 +890,9 @@ ul.list-info li h4 {
     
 }
 
+.set_message input {
+    padding-right: 52px;
+}
 .pointer-upload {
     position: absolute;
     right: 5px;
@@ -878,6 +900,10 @@ ul.list-info li h4 {
     border-radius: 50px;
     background: #eff2f5;
     height: 45px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .ellipschat img{
     border-radius: 5px !important;
@@ -1089,8 +1115,7 @@ h3.about_head span {
     font-weight: 400;
 }
 
-.chat-body-detail::-webkit-scrollbar,
-.persons-list::-webkit-scrollbar {
+.chat-body-detail::-webkit-scrollbar {
     width: 0;
     /* This will hide the scrollbar */
 }
@@ -1136,4 +1161,14 @@ h3.about_head span {
     display: block;
     margin-bottom: 5px;
     background-color: #ececec;
+}
+
+@media (max-width:576px){
+    li.text_right,  li.text_left {
+        max-width: 60%;
+    }
+  
+}
+.set_navbx .nav-link {
+    padding: 1rem !important;
 }

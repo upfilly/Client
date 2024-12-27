@@ -68,10 +68,10 @@ img.logo {
 }
 
 .right_side {
-    height: 100vh;
-    display: flex;
+    // height: 100vh;
+    // display: flex;
     position: relative;
-    justify-content: center;
+    // justify-content: center;
 }
 p.accopunt {
     text-align: right;
@@ -94,14 +94,12 @@ a.sign_up {
     font-weight: 600;
     font-size: 14px;
 }
-h3.text-left.lgtext {
-    font-weight: 600;
-    font-size: 24px;
-}
+
 .bginput { 
     border-radius: 20px !important;
     border: 1px solid #E8E8E8;
-    height: 50px;
+    height: 38px;
+    font-size: 14px !important;
 }
 a.text-primary:hover, a.text-primary:focus {
     color: #ff3d22 !important;

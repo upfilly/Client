@@ -136,13 +136,14 @@ export default function Faq() {
               <span>Show {filters?.count} from {total} Users</span>
               <ReactPaginate
                 breakLabel="..."
-                nextLabel="next >"
+                nextLabel="Next >"
                 initialPage={filters?.page}
                 onPageChange={pageChange}
-                pageRangeDisplayed={6}
                 className="pagination-item"
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={1}
                 pageCount={Math.ceil(total / filters?.count)}
-                previousLabel="< previous"
+                previousLabel="< Previous"
                 renderOnZeroPageCount={null}
                 pageClassName={"pagination-item"}
                 activeClassName={"pagination-item-active"}

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import ApiClient from '@/methods/api/apiClient';
-import methodModel from '@/methods/methods';
 import Html from "./Html";
 import { toast } from "react-toastify";
 import { useParams, useRouter } from "next/navigation";
@@ -13,9 +12,11 @@ const AddEditUser = () => {
     const {id} = useParams();
     const [images, setImages] = useState({ image: '' });
     const defaultvalue = affilliateGrouptype
-    const [form, setform] = useState({group_name: "",
-    commision:"",
-    isDefaultAffiliateGroup:false,
+    const [form, setform] = useState({
+    group_name: "",
+    group_type:"",
+    // commision:"",
+    // isDefaultAffiliateGroup:false,
     isArchive:false,isPreRegisterLeads:false})
     const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
     const [submitted, setSubmitted] = useState(false)
@@ -23,14 +24,14 @@ const AddEditUser = () => {
     const [detail, setDetail] = useState()
     const formValidation = [
         { key: 'group_name', required: true },
-        { key: 'commision', required: true },
+        // { key: 'commision', required: true },
     ]
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setSubmitted(true)
-        let invalid = methodModel.getFormError(formValidation, form)
-        if (invalid) return
+        // let invalid = methodModel.getFormError(formValidation, form)
+        if (!form?.group_name || !form?.group_type) return
         let method = 'post'
         let url = 'affiliate-group'
         let value = {
@@ -39,7 +40,9 @@ const AddEditUser = () => {
         if (value.id) {
             method = 'put'
             url = 'affiliate-group'
-            // delete value?.cat_type
+            delete value?.commision
+            delete value?.isDefaultAffiliateGroup
+            delete value?.group_type
         } else {
             delete value.id
         }
@@ -58,7 +61,7 @@ const AddEditUser = () => {
     const imageResult = (e, key) => {
         images[key] = e.value
         setImages(images)
-        // console.log("imageResult", e)
+        // // console.log("imageResult", e)
     }
 
     const addressResult = (e) => {
@@ -106,6 +109,7 @@ const AddEditUser = () => {
              addressResult={addressResult}
              handleSubmit={handleSubmit}
              imageResult={imageResult}
+             id={id}
         />
     </>
 }

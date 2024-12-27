@@ -4,6 +4,7 @@ import crendentialModel from '@/models/credential.model';
 import Html from './Html';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import CustomTooltip from '../../common/Tooltip/CustomTooltip';
 
 const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
   const user = crendentialModel.getUser()
@@ -13,22 +14,25 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
   const [stab, setstab] = useState(false)
   const menus = {
     user: ['roles', 'users'],
-    commisions: ['commisionplan', 'addcommision'],
+    commisions: ['commisionplan','manualCommission'],
     catalogue: ['types', 'categories', 'category/'],
-    affiliates: ['affiliate', 'group'],
+    affiliates: ['affiliate', 'group','marketplace', 'EmailTemplate','appliedjobs','requests','makeLink'],
+    CreativeAssets: ['CreativeAsset','EmailMessages','DataFeeds','CreativeEmails','addbanner'],
     api: ['bookingSystem', 'pos', 'reviews', 'accounting-system'],
     geo: ['continents', 'countries', 'regions', 'cities'],
     dynamicPricing: ['dynamicprice'],
     customer: ['customer']
   }
 
-  const ListItemLink = ({ to, type = 'link', disabled = false, ...rest }) => {
+  const ListItemLink = ({ to, type = 'link',title, disabled = false, ...rest }) => {
     let url = pathname
     return (<>
       {type == 'link' ? <div className={`nav-item ${url.includes(to) ? 'active' : ''} ${disabled ? 'disabled' : ''}`}>
-        {/* {...rest} */}
+        <CustomTooltip text={title}>
         <Link href={to} {...rest} className="nav-link hoverclass" />
-      </div> : <div className={`nav-item main ${url.includes(to) ? 'active' : ''}`} {...rest}></div>}
+        </CustomTooltip>
+      </div> :  <CustomTooltip text={title}>
+      <div className={`nav-item main ${url.includes(to) ? 'active' : ''}`} {...rest}></div></CustomTooltip>}
     </>
     );
   };

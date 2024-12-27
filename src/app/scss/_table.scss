@@ -138,12 +138,13 @@ img.user_imgs {
     border-bottom: 1px solid #E8E8E8;
 }
 .user_detail {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
 }
 h4.user {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     margin: 0px;
     color: #202020;
@@ -162,13 +163,17 @@ span.contract {
     color: #0063dc;
 }
 .user_hours {
-    min-width: 66px;
-    display: inline-block;
-    height: 24px;
-    padding: 0 10px; 
-    border-radius: 3px; 
-    align-items: center;
-    justify-content: center;
+    // min-width: 66px;
+    // display: inline-block;
+    // height: 24px;
+    // padding: 0 10px; 
+    // border-radius: 3px; 
+    // align-items: center;
+    // justify-content: center;
+    // text-transform: capitalize;
+    // cursor: pointer;
+    padding: 0 10px;
+    border-radius: 3px;
     text-transform: capitalize;
     cursor: pointer;
 
@@ -233,7 +238,7 @@ i.fa.fa-phone {
   background: #fff;
   padding: 12px !important;
   border-radius: 12px;
-  margin-top: 32px;
+  margin-top: 22px;
   box-shadow: 0px 0px 2px #cccccc40 !important;
 }
 th.table_data {

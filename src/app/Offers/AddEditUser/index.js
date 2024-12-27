@@ -18,9 +18,9 @@ const AddEditUser = () => {
         name: "",
         description: "",
         image: [],
-        price: '',
+        payment_model:[],
         category_id: "",
-        sub_category_id: "",
+        sub_category_id: null,
         opportunity_type: [],
         placement: [],
         start_date: "",
@@ -75,7 +75,7 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!form?.description || !form?.name || !form?.price ) {
+        if (!form?.description || !form?.name || !form?.category_id || form?.opportunity_type?.length <= 0 || form?.payment_model?.length <= 0 || form?.placement?.length <= 0) {
             setSubmitted(true)
             return;
         }
@@ -173,12 +173,26 @@ const AddEditUser = () => {
         }
     }, [id])
 
-    const getData = () => {
-        let url = 'users/list'
-        ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+    // const getData = () => {
+    //     let url = 'users/list'
+    //     ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+    //         if (res.success) {
+    //             const data1 = res.data.data.filter(item => item.status === "active");
+    //             setAffiliateData(data1)
+    //         }
+    //     })
+    // }
+
+    const getData = (p = {}) => {
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                const data1 = res.data.data.filter(item => item.status === "active");
-                setAffiliateData(data1)
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setAffiliateData(manipulateData)
             }
         })
     }

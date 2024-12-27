@@ -13,13 +13,13 @@ export const requestForToken = async () => {
       if (currentToken) {
         localStorage.setItem('device_token', currentToken);
 
-        console.log('current token for client: ', currentToken);
+        // console.log('current token for client: ', currentToken);
       } else {
-        console.log('No registration token available. Request permission to generate one.');
+        // console.log('No registration token available. Request permission to generate one.');
       }
     })
     .catch((err) => {
-      console.log('An error occurred while retrieving token. ', err);
+      // console.log('An error occurred while retrieving token. ', err);
     });
 };
 
@@ -27,9 +27,9 @@ export const requestForToken = async () => {
 export const message = (history) => {
 
   let messaging = getMessaging(firebaseApp)
-   console.log(messaging,"messaging===")
+   // console.log(messaging,"messaging===")
   return onMessage(messaging, (payload) => {
-    console.log(payload,"messaging===12345")
+    // console.log(payload,"messaging===12345")
     const notificationTitle = payload?.notification?.body;
     // let rout = payload?.data['gcm.notification.type'] == "proposal" ? '/proposallisting' : '/mycontract'
     toast.success(notificationTitle, { onClick: function () { history.push(rout) }, })

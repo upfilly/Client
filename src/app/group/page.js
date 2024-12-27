@@ -8,6 +8,7 @@ import Html from './Html';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import { useRouter } from 'next/navigation';
+import methodModel from '../../methods/methods';
 
 const Categories = () => {
 
@@ -56,7 +57,7 @@ const Categories = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -97,7 +98,7 @@ const Categories = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -122,7 +123,7 @@ const Categories = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -200,6 +201,7 @@ const Categories = () => {
             statusChange={statusChange}
             statusPopular={statusPopular}
             setFilter={setFilter}
+            user={user}
         />
     </>;
 };

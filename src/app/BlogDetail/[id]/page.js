@@ -37,16 +37,19 @@ export default function BlogDetail() {
     <>
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
           <>
-            <div class="container-fluid p-0">
+           <section className="blog_section" >
+           <div class="container">
               <div className="row">
-                <div class="col-md-12 mx-auto p-0">
+              <div class="col-md-12 ">
+                <div className="blog_cols">
+                
                   <a className="overflowTitle" href="/Blog">
                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                   </a>
                   <h3 className="overflowTitle">
                     {methodModel.capitalizeFirstLetter(data?.title)}
                   </h3>
-                  <Carousel showIndicators={false} className="blog_bg">
+                  <Carousel showIndicators={false} className="blog_bg banner_blogs">
                     {data?.image ? (
                       data.image.map((images) => (
                         <>
@@ -55,8 +58,8 @@ export default function BlogDetail() {
                               {data?.blog_type_id?.name}
                             </a>
                           </div>
-                          <div key={images.id}>
-                            <img src={methodModel.userImg(images)} />
+                          <div className="blog_banners"  key={images.id}>
+                            <img className="image_blogs" src={methodModel.userImg(images)} />
                           </div>
                         </>
                       ))
@@ -67,46 +70,42 @@ export default function BlogDetail() {
                     )}
                   </Carousel>
                 </div>
+                </div>
               </div>
             </div>
            <div className="blog-padding">
            <div className="container">
               <div className="row">
-                <div class="col-md-9">
+                <div class="col-12 col-sm-12  col-md-8 mb-4">
                 <div className="blogs-inner">
-                <h3>{methodModel.capitalizeFirstLetter(data?.sub_title)}</h3>
-                  <h5 className="title">{data?.meta_title}</h5>
+                <h3 className="blog_title" >{methodModel.capitalizeFirstLetter(data?.sub_title)}</h3>
+                  <h5 className=" blog_title_inner ">{data?.meta_title}</h5>
                   <p
-                    className="paragraph"
+                    className="blog_paragraph"
                     dangerouslySetInnerHTML={{ __html: data?.description }}
                   />
                 </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-12 col-sm-12  col-md-4 mb-4">
                   <div className="categories">
-                    <h3 className="">Categories</h3>
-                    <div className="categories-inner">
-                      <span>Best Blogs</span>
-                      <span>Best</span>
-                      <span>Blogs</span>
-                      <span>Best Blogs</span>
-                      <span>Best Blogs</span>
-                      <span>Best Blogs</span>
-                    </div>
+                    <h3 className="categories_titles">Categories</h3>
+                    <ul className="categories-inner">
+                      <li className="cate_lists" >Best Blogs</li>
+                      <li className="cate_lists" >Best</li>
+                      <li className="cate_lists" >Blogs</li>
+                      <li className="cate_lists" >Best Blogs</li>
+                      <li className="cate_lists" >Best Blogs</li>
+                      <li className="cate_lists" >Best Blogs</li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
            </div>
+           </section>
           </>
 
-        {/* {loaging ? (
-          <div className="text-center py-4">
-            <img src="/assets/img/loader.gif" className="pageLoader" />
-          </div>
-        ) : (
-          <></>
-        )} */}
+    
       </Layout>
     </>
   );

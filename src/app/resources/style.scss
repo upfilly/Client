@@ -1,4 +1,5 @@
-.heighteual {
+.resource-page{
+  .heighteual {
     height: auto;
     width: 100px;
 }
@@ -6,8 +7,10 @@
 .card_box {
     border-radius: 7.588px;
     background: #FFF;
-    box-shadow: 1.50808px 6.03233px 18.097px 0px rgba(0, 0, 0, 0.25);
-    padding: 10px;
+    // box-shadow: 1.50808px 6.03233px 18.097px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e8e9ed;
+    padding: 30px 10px;
 }
 
 
@@ -17,7 +20,7 @@
 }
 
 .cpadd {
-    padding: 60px 0px;
+    padding: 60px 0px 0px;
 }
 
 .hover_box {
@@ -37,4 +40,175 @@
 
 .hover_box p {
     font-size: 14px;
+}
+
+/* FeaturePage.css */
+
+.feature-page {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Core Features Section */
+  .core-features {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .core-features-header {
+    margin-bottom: 40px;
+  }
+  
+  .core-features-title {
+    font-size: 36px;
+    margin: 0;
+  }
+  
+  .core-features-subtitle {
+    font-size: 20px;
+    color: #0e0e0e;
+  }
+  
+  .features-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  .feature-item {
+    width: 250px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-item h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+  
+  .feature-item p {
+    font-size: 14px;
+    color: #0e0e0e;
+  }
+  
+  /* Integrations Section */
+  .integrations {
+    padding: 40px 20px;
+    background-color: #fff;
+  }
+  
+  .section-title {
+    font-size: 22px;
+    text-align: left;
+    color: #0e0e0e;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 20px !important;
+}
+  .integrations h3 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  
+  .integrations p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Scalability Section */
+  .scalability {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .scalability ul {
+    padding-left: 20px;
+  }
+  
+  .scalability li {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  /* User-Friendly Interface Section */
+  .user-interface {
+    padding: 40px 20px;
+    background-color: #fff;
+  }
+  
+  .user-interface h3 {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  .user-interface p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Call-to-Action Section */
+  .cta {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #001f3d;
+    color: white;
+  }
+  
+  .cta-header {
+    margin-bottom: 40px;
+  }
+  
+  .cta-title {
+    font-size: 36px;
+    margin: 0;
+  }
+  
+  .cta-subtitle {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  
+  .cta-buttons {
+    margin-top: 40px;
+    
+  }
+  .cta-button{
+    background-color: #00b0ff;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .cta-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .cta-btn.primary {
+    background-color: #00b0ff;
+    color: white;
+  }
+  
+  .cta-btn.secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .cta-btn:hover {
+    opacity: 0.8;
+  }
+  
 }

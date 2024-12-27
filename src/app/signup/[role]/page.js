@@ -8,8 +8,9 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import ApiClient from "../../../methods/api/apiClient";
 import loader from '@/methods/loader';
 import crendentialModel from "../../../models/credential.model";
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
+import useReferralTracking from "../../firstPromoter"
 import { toast } from 'react-toastify';
 
 export default function Login() {
@@ -24,6 +25,8 @@ export default function Login() {
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
   const referralCode = param.get("referral_code") || ''
+  const BrandId = param.get("b_id") || null
+  const invite_email = param.get("invite_email") || null
   const history = useRouter()
   const user = crendentialModel.getUser()
 
@@ -38,6 +41,7 @@ export default function Login() {
 
   useEffect(() => {
     getData();
+    setForm({...form,"email":invite_email})
   }, []);
 
   useEffect(() => {
@@ -94,6 +98,8 @@ export default function Login() {
   const hendleSubmit = (e) => {
     setSubmitted(true)
     e.preventDefault()
+    // useReferralTracking("bry6ko3r")
+
    let data;
     if(localStorage.getItem("device_token")){
       data = {
@@ -101,7 +107,8 @@ export default function Login() {
         role: role,
         device_token:localStorage.getItem("device_token"),
         campaign_unique_id:code,
-        referral_code:referralCode
+        referral_code:referralCode,
+        createdByBrand:BrandId,
       };
     }else{
       data = {
@@ -109,7 +116,8 @@ export default function Login() {
         role: role,
         device_token:'',
         campaign_unique_id:code,
-        referral_code:referralCode
+        referral_code:referralCode,
+        createdByBrand:BrandId,
       };
     }
 
@@ -120,6 +128,7 @@ export default function Login() {
     if (role === 'affiliate') {
       if (!form?.firstName || !form?.lastName || !form?.email || !form?.password || form?.firstName?.length < 3 || form?.password?.length < 8) return
     }
+
 
     loader(true)
     ApiClient.post('register', data).then(res => {
@@ -167,10 +176,11 @@ export default function Login() {
 
     
     <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
-      <div className="container-fluid p-0 bg-black">
+      <div className='card_parent bg-black'>
+      <div className="container">
         {/* <a className="p-3 d-block text-white" href="/">Back</a> */}
-        <div className="row align-items-center mx-auto">
-          <div className="col-lg-4 col-md-7 p-0 mx-auto">
+        <div className="row align-items-center ">
+          <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
             <div className='right_side'>
               <form
                 className="centerLogin"
@@ -180,8 +190,8 @@ export default function Login() {
                 <div className="text-center mb-2">
                   <h3 className="text-center lgtext">Register Now </h3>
                 </div>
-                <div className="d-flex">
-                  <div className="col-md-6 p-1">
+                <div className="form-row">
+                  <div className="col-12 col-sm-12 col col-md-6 ">
                     <div className="mb-3">
                       <input
                         type="First Name"
@@ -195,8 +205,9 @@ export default function Login() {
                       {submitted && form?.firstName && form?.firstName?.length < 3 && <p className='text-danger'>Required minimum length minimum 3</p>}
                     </div>
                   </div>
-                  <div className="col-md-6 p-1">
-                    <input
+                  <div className="col-12 col-sm-12 col col-md-6 ">
+                 <div className='mb-3' >
+                 <input
                       type="text"
                       className="form-control mb-0 bginput"
                       placeholder={role === 'brand' ? 'Brand Name' : 'Last Name'}
@@ -206,6 +217,7 @@ export default function Login() {
                           setForm({ ...form, lastName: e.target.value })
                       }}
                     />
+                 </div>
                   </div>
                 </div>
                 <div className="mb-3">
@@ -242,10 +254,10 @@ export default function Login() {
                   <button type="submit" className="btn btn-primary loginclass mb-2" >
                     Create Account
                   </button>
-                  <p className='text-center'>By signing up, you agree to our Terms and Privacy Policy</p>
+                  <p className='text-center mb-2'>By signing up, you agree to our Terms and Privacy Policy</p>
                 </div>
 
-                <div className="text-center or mt-3 mb-1">
+                <div className="text-center or mt-2 mb-1 orbx">
                   OR
                 </div>
                 <button className='btn btn-outline-white' type='button' onClick={googleLogin}>
@@ -262,17 +274,18 @@ export default function Login() {
                     className="p-0"
                     appId="425676736552748"
                     fields="name,email,picture"
-                    textButton={<button className='btn btn-outline-white' type='button'>
-                      <svg className='facebook_right' xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none">
-                        <path d="M11.438 31.08H6.13803C5.97129 31.08 5.81135 31.0139 5.69326 30.8962C5.57517 30.7785 5.50856 30.6187 5.50803 30.452V17.557H1.46203C1.29494 17.557 1.1347 17.4906 1.01655 17.3725C0.898406 17.2543 0.832031 17.0941 0.832031 16.927V11.817C0.832561 11.6503 0.899169 11.4905 1.01726 11.3728C1.13535 11.2551 1.29529 11.189 1.46203 11.189H5.51503V7.661C5.43491 6.68612 5.55764 5.70521 5.87548 4.78013C6.19332 3.85504 6.69938 3.00584 7.36175 2.28607C8.02411 1.56629 8.82843 0.991558 9.72397 0.5981C10.6195 0.204642 11.5869 0.000995435 12.565 0H17C17.0835 0.000308738 17.1661 0.0171726 17.243 0.0496149C17.3199 0.0820572 17.3896 0.129434 17.448 0.189C17.5074 0.248241 17.5541 0.318965 17.5852 0.396852C17.6163 0.47474 17.6312 0.558155 17.629 0.642V5.415C17.6285 5.58174 17.5619 5.74147 17.4438 5.85918C17.3257 5.9769 17.1658 6.043 16.999 6.043H14.287C12.415 6.043 12.072 6.773 12.072 8.21V11.195H16.811C16.9778 11.195 17.1377 11.2611 17.2558 11.3788C17.3739 11.4965 17.4405 11.6563 17.441 11.823V16.936C17.441 17.0187 17.4247 17.1007 17.3931 17.1771C17.3614 17.2535 17.315 17.323 17.2565 17.3815C17.198 17.44 17.1286 17.4864 17.0521 17.518C16.9757 17.5497 16.8938 17.566 16.811 17.566H12.073V30.448C12.0736 30.5314 12.0575 30.6141 12.0257 30.6912C11.994 30.7683 11.9472 30.8383 11.8881 30.8972C11.8289 30.956 11.7587 31.0025 11.6814 31.0338C11.6042 31.0652 11.5214 31.0809 11.438 31.08Z" fill="#4285F4" />
-                      </svg>
-                      Sign In With Facebook
-                    </button>}
+                    render={(renderProps) => (
+                      <button className='btn btn-outline-white font_set' type='button' onClick={renderProps.onClick}>
+                        <svg className='facebook_right' xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none">
+                          <path d="M11.438 31.08H6.13803C5.97129 31.08 5.81135 31.0139 5.69326 30.8962C5.57517 30.7785 5.50856 30.6187 5.50803 30.452V17.557H1.46203C1.29494 17.557 1.1347 17.4906 1.01655 17.3725C0.898406 17.2543 0.832031 17.0941 0.832031 16.927V11.817C0.832561 11.6503 0.899169 11.4905 1.01726 11.3728C1.13535 11.2551 1.29529 11.189 1.46203 11.189H5.51503V7.661C5.43491 6.68612 5.55764 5.70521 5.87548 4.78013C6.19332 3.85504 6.69938 3.00584 7.36175 2.28607C8.02411 1.56629 8.82843 0.991558 9.72397 0.5981C10.6195 0.204642 11.5869 0.000995435 12.565 0H17C17.0835 0.000308738 17.1661 0.0171726 17.243 0.0496149C17.3199 0.0820572 17.3896 0.129434 17.448 0.189C17.5074 0.248241 17.5541 0.318965 17.5852 0.396852C17.6163 0.47474 17.6312 0.558155 17.629 0.642V5.415C17.6285 5.58174 17.5619 5.74147 17.4438 5.85918C17.3257 5.9769 17.1658 6.043 16.999 6.043H14.287C12.415 6.043 12.072 6.773 12.072 8.21V11.195H16.811C16.9778 11.195 17.1377 11.2611 17.2558 11.3788C17.3739 11.4965 17.4405 11.6563 17.441 11.823V16.936C17.441 17.0187 17.4247 17.1007 17.3931 17.1771C17.3614 17.2535 17.315 17.323 17.2565 17.3815C17.198 17.44 17.1286 17.4864 17.0521 17.518C16.9757 17.5497 16.8938 17.566 16.811 17.566H12.073V30.448C12.0736 30.5314 12.0575 30.6141 12.0257 30.6912C11.994 30.7683 11.9472 30.8383 11.8881 30.8972C11.8289 30.956 11.7587 31.0025 11.6814 31.0338C11.6042 31.0652 11.5214 31.0809 11.438 31.08Z" fill="#4285F4" />
+                        </svg>
+                        Sign In With Facebook
+                      </button>)}
                     buttonStyle={{ border: "none", background: "none" }}
                     callback={e => FaceBookLoginHandler(e)} />
                 </div>
-                <p className='text-center border-top pt-3 mb-1 mt-2'>Already have an account?</p>
-                <Link className='btn btn-outline-white' type='button' href='/login'>
+                <p className='text-center border-top pt-2 mb-1 mt-2 account_bx'>Already have an account?</p>
+                <Link className='btn btn-outline-white mb-0' type='button' href='/login'>
                   Login Here
                 </Link>
               </form>
@@ -297,7 +310,7 @@ export default function Login() {
                   </div>
 
                   <div>
-                    <button type="button" class="btn btn-primary pr-5 pl-5" onClick={() => handleClick()} >Ok</button>
+                    <button type="button" class="btn btn-primary " onClick={() => handleClick()} >Ok</button>
 
                   </div>
                 </div>
@@ -309,6 +322,8 @@ export default function Login() {
 
         )}
       </div>
+      </div>
+      
     </PageContainer>
   )
 }

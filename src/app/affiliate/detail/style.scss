@@ -202,3 +202,24 @@ input.form-control-file.over_input {
     border-top: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+.billing_dtls {
+    border: 1px solid #dfdfdf;
+    padding: 10px 10px;
+    background: #f7f7f7;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.boxfas {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    background-color: #8aacfd;
+}
+

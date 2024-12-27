@@ -23,7 +23,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!form?.name || !form?.comments) {
+    if ( !form?.comments) {
       setSubmitted(true)
       return;
     }
@@ -33,6 +33,8 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
 
     let value = {
       ...form,
+      name:user?.fullName,
+      brand_id:user?.id || user?._id,
       product_id: id
     }
 
@@ -43,27 +45,37 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
         setModalIsOpen(false)
         setform({
           "name": "",
-          "sent_to": "",
-          "sent_from": "",
-          "description": "",
           "comments": "",
-          "affiliate_id": ""
         })
       }
-      getProductData()
+      getProductData(id)
       loader(false)
     })
   };
 
-  const getData = () => {
-    let url = 'users/list'
-    ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
-      if (res.success) {
-        const data1 = res.data.data.filter(item => item.status === "active");
-        setAffiliateData(data1)
-      }
+  // const getData = () => {
+  //   let url = 'users/list'
+  //   ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+  //     if (res.success) {
+  //       const data1 = res.data.data.filter(item => item.status === "active");
+  //       setAffiliateData(data1)
+  //     }
+  //   })
+  // }
+
+  const getData = (p = {}) => {
+    let url = 'getallaffiliatelisting'
+    ApiClient.get(url).then(res => {
+        if (res.success) {
+            const data = res.data
+            const filteredData = data.filter(item => item !== null);
+            const manipulateData = filteredData.map((itm)=>{return{
+                name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+            }})
+            setAffiliateData(manipulateData)
+        }
     })
-  }
+}
 
   useEffect(() => {
     getData()
@@ -75,35 +87,35 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
        Make Offer
       </Button> */}
       <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='align-items-center'>
           <Modal.Title>Send Offer</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicEmail">
+            <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicEmail">
               <Form.Label>Sender Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter name"
-                value={form?.name}
+                value={form?.name || user?.fullName}
                 onChange={(e) => setform({ ...form, name: e.target.value })}
                 required
               />
               {submitted && !form?.name ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
             </Form.Group>
 
-            <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicEmail">
+            <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicEmail">
               <Form.Label>Reciever Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter name"
-                value={affiliateName}
+                value={affiliateName || user?.fullName}
                 onChange={(e) => setform({ ...form, name: e.target.value })}
                 disabled
               />
             </Form.Group>
 
-            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicName">
+            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicName">
               <Form.Label>Send To</Form.Label>
               <Form.Control
                 type="email"
@@ -114,7 +126,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
               />
             </Form.Group> */}
 
-            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label' controlId="formBasicName">
+            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicName">
               <Form.Label>Send From</Form.Label>
               <Form.Control
                 type="email"
@@ -125,7 +137,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
               />
             </Form.Group> */}
 
-            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label selectlabel'  controlId="formBasicText">
+            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2 selectlabel'  controlId="formBasicText">
               <Form.Label>Select affiliate</Form.Label>
             <SelectDropdown
               id="statusDropdown"
@@ -139,7 +151,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
               options={affiliateData}
             /></Form.Group> */}
 
-            <Form.Group className='mb-3 d-flex justify-content-between width_label selectlabel' controlId="formBasicText">
+            <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2 selectlabel' controlId="formBasicText">
               <Form.Label>comments</Form.Label>
               <Form.Control
                 as="textarea"

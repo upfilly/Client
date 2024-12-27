@@ -39,14 +39,16 @@ const ChangePassword = p => {
 
   return (
     <>
-      <div className='row'>
-        <div className='col-lg-9 mx-auto mb-4 mt-4'>
+<section className='change_passwordbx' >
+  <div className='container'>
+  <div className='row'>
+        <div className='col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto'>
           <form
-            className="pprofile1 shadow mb-4 mt-4 form-row py-3 w-50 mx-auto "
+            className=" chage_profiles shadow  "
             onSubmit={handleSubmit}
           >
-            <div className="col-md-12 mb-3">
-              <h3 className='ViewUser1 mb-4 mt-3'>Change Password</h3>
+            <div className="mb-2">
+              <h3 className='ViewUser1 chage_titles  mt-3 mb-4'>Change Password</h3>
               <label>Current Password<span className="start">*</span></label>
               <div className="inputWrapper">
                 <input
@@ -62,7 +64,7 @@ const ChangePassword = p => {
               {submitted && getError('currentPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
             </div>
 
-            <div className="col-md-12 mb-3">
+            <div className="mb-2">
               <label>New Password<span className="start">*</span></label>
 
               <div className="inputWrapper">
@@ -79,7 +81,7 @@ const ChangePassword = p => {
               {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
             </div>
 
-            <div className="col-md-12 mb-3">
+            <div className="mb-2">
               <label>Confirm Password<span className="start">*</span></label>
 
               <div className="inputWrapper">
@@ -106,14 +108,16 @@ const ChangePassword = p => {
 
             </div>
 
-            <div className="col-md-12 text-right mt-3  mb-3">
-              <button type="submit" className="btn btn-primary">
+            <div className=" text-right mt-4  mb-3">
+              <button type="submit" className="btn btn-primary update_btns w-100">
                 Update
               </button>
             </div>
           </form>
         </div>
       </div>
+  </div>
+</section>
     </>
   );
 };

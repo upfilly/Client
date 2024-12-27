@@ -25,6 +25,7 @@ export default function Chat() {
   const [chat, setChat] = useState([]);
   const [picLoader, setPicLoader] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [settingData, setSettingData] = useState([])
   const [id, setId] = useState("")
   const [chatMsg, setChatMsg] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -49,13 +50,40 @@ export default function Chat() {
       "role": "admin"
     }]
   });
+  const [onlineUserId, setOnlineUserId] = useState(null);
+  const [offlineUserId, setOfflineUserId] = useState(null);
   const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
   const [submitGroup, setSummitGroup] = useState(false)
   const [filteredArray, setFilteredArray] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  ConnectSocket.on('user-online', (data) => {
+    // console.log(data,"daataaOnline")
+    setOnlineUserId(data?.data?.user_id);
+  });
+  ConnectSocket.on('user-offline', (data) => {
+    // console.log(data,"daataaOffline")
+    setOfflineUserId(data?.data?.user_id);
+  });
+
+  const filteredChatList = chatList?.filter(itm => {
+    if (!itm?.isGroupChat) {
+      return itm?.room_members[0]?.user_name.toLowerCase().includes(searchText.toLowerCase());
+    } else {
+      return itm?.room_name?.toLowerCase().includes(searchText.toLowerCase());
+    }
+  });
 
   useEffect(() => {
     ConnectSocket.connect()
   }, [])
+
+  useEffect(() => {
+    ApiClient.get('settings').then(res => {
+      if (res.success) {
+        setSettingData(res?.data)
+      }
+    })
+}, [])
 
   useEffect(() => {
     filterArrays();
@@ -81,7 +109,7 @@ export default function Chat() {
       })
   })
 
-  console.log(activeUser, "activeData----------------")
+  // console.log(activeUser, "activeData----------------")
 
   const uploadGroupImage = (e) => {
     // setForm({ ...form, baseImg: e.target.value })
@@ -206,7 +234,7 @@ export default function Chat() {
       ApiClient.get(`user/detail`, { id: id }).then((res) => {
         if (res.success) {
 
-          console.log({ details: res.data });
+          // console.log({ details: res.data });
           setChatWith({ ...res.data });
         }
       });
@@ -292,13 +320,13 @@ export default function Chat() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
       confirmButtonText: 'Yes, Leave it!'
     }).then((result) => {
       if (result.isConfirmed) {
         loader(true)
         axios.put(SocketURL + url, payload).then((res) => {
-          console.log(res?.data?.success, "]]]]]]]")
+          // console.log(res?.data?.success, "]]]]]]]")
           if (res?.data?.success) {
             toast.success('Leaved Group Successfully')
             loader(false)
@@ -314,7 +342,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (!activeUser) {
-      setActiveData(chatList[0])
+      setActiveData(chatWith)
     };
   }, [chat]);
 
@@ -385,7 +413,7 @@ export default function Chat() {
 
   useEffect(() => {
     ConnectSocket.on(`delete-message`, (data) => {
-      userMessage(data?.data?.room_id)
+      userMessage(data?.data?.room_id,data?.data?.user_id)
       getChatList()
     });
   }, [])
@@ -393,7 +421,6 @@ export default function Chat() {
   useEffect(() => {
     ConnectSocket.emit("user-online", { user_id: user?.id });
     ConnectSocket.on(`user-online`, (data) => {
-      console.log("user-online", data)
       const newdata = data?.data?.user_id;
       setIsOnline(true);
       setStatus(newdata);
@@ -460,10 +487,10 @@ export default function Chat() {
     setChatMsg("");
   };
 
-  const userMessage = (roomuid) => {
+  const userMessage = (roomuid,u_id) => {
     axios
       .get(
-        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${user?.id}&login_user_id=${user?.id}`
+        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${u_id || id}&login_user_id=${user?.id}`
       )
       .then((res) => {
         if (res?.data.success) {
@@ -484,8 +511,9 @@ export default function Chat() {
       axios.post(`${SocketURL}chat/user/join-group`, payload).then((res) => {
         if (res?.data?.success) {
           const data = res.data;
+          // // console.log(res?.data,"=----------")
           setRoomId(res.data.data.room_id);
-          userMessage(data.data.room_id);
+          userMessage(data.data.room_id,data?.room_members?.[0]?.user_id);
           joinRoom(data.data.room_id);
           localStorage.setItem("roomId", data.data.room_id)
           // loader(false);
@@ -526,14 +554,13 @@ export default function Chat() {
     });
     loader(false)
     handleClose()
-
   }
 
 
   const addMember = () => {
     const payload = {
-      "group_id": activeData?.room_id,
-      "admin_id": activeData?.user_id,
+      "group_id": activeData?.room_id || roomId,
+      "admin_id": activeData?.user_id || activeData?._id || activeData?.id,
       "users": addMembers?.updatedUsers
     }
 
@@ -564,16 +591,14 @@ export default function Chat() {
 
   return (
     <>
-      <Header />
+      <Header settingData={settingData}/>
       <PageContainer title="Chat" description="Chat">
-
-
 
         <div className="container chat-bg-main">
           <div className="chat-bg">
             <div className="row">
               <div className="col-lg-4">
-                <div className="conversations">
+                <div className="conversations mb-4">
                   <div className="card p-0">
                     <div className="card-header pl-0 pr-0 p-0" id="headingOne">
                       <div  className="pointer">
@@ -591,13 +616,15 @@ export default function Chat() {
                         <div className="form-group position-relative">
                           <input
                             type="text"
-                            value={filters?.search}
+                            // value={filters?.search}
                             placeholder="Search"
                             className="from-control search_design"
                             id="searchright"
-                            onChange={(e) =>
-                              filter({ search: e.target.value })
-                            }
+                            value={searchText}
+                            onChange={e => setSearchText(e.target.value)}
+                            // onChange={(e) =>
+                            //   filter({ search: e.target.value })
+                            // }
                           />
                           <span className="mglass">
                             {" "}
@@ -612,28 +639,29 @@ export default function Chat() {
                       <div className="card-body p-0">
                         <ul className="persons-list">
                           {
-                            chatList?.length > 0
+                            filteredChatList?.length > 0
                               ?
-                              chatList?.map((itm, indx) => {
+                              filteredChatList?.map((itm, indx) => {
+                                // console.log(itm,"itmmmmmm=====")
                                 return (<>
-                                  {/* {itm?.room_members?.map((data) => { */}
+                                 
                                   <li
                                     className={itm?.room_id == roomId ? "person-list-inner chat_active" : "person-list-inner"}
                                     key={indx}
                                     onClick={isImage ? "" : () => {
-                                      // setid(data?.user_id)
+                                    
                                       setActiveData(itm)
                                       localStorage.setItem("roomId", itm?.room_id)
                                       handleUserId(itm?.user_id)
-                                      userMessage(itm?.room_id);
+                                      userMessage(itm?.room_id,itm?.room_members[0]?.user_id);
                                       setRoomId(itm?.room_id)
                                       joinRoom(itm?.room_id);
                                       getGroupListMember(itm?.room_id)
-                                      // // history.push('chat')
+                                  
                                     }}
                                   >
 
-                                    <div className="d-flex  align-items-center">
+                                    <div className="d-flex gap-3 flex-wrap align-items-center">
                                       <div className="profile-img">
                                         {!itm?.isGroupChat ?
                                           itm && itm?.room_members && itm?.room_members[0]?.user_image ?
@@ -659,7 +687,7 @@ export default function Chat() {
                                               height={50}
                                               width={50}
                                             />}
-                                        {!itm?.room_name && itm && itm?.room_members && itm?.room_members[0]?.isOnline ? <i
+                                        {!itm?.room_name && itm && itm?.room_members && itm?.room_members[0]?.isOnline == 'true' || itm?.room_members[0]?.user_id == onlineUserId ? <i
                                           className="fa fa-circle circle_icon"
                                           aria-hidden="true"
                                         /> : ""}
@@ -682,7 +710,7 @@ export default function Chat() {
                                     </div>
 
                                   </li>
-                                  {/* // })} */}
+                                  
                                 </>);
                               })
                               : <div className="text-center">
@@ -721,7 +749,7 @@ export default function Chat() {
                             {" "}
                             {activeData?.room_name ? methodModel?.capitalizeFirstLetter(activeData?.room_name) : methodModel?.capitalizeFirstLetter(activeUser?.[0]?.user_name)}
                           </h5>
-                          {!activeData?.room_name ? <span>{activeUser?.[0]?.isOnline ? "online" : "offline"}</span> :
+                          {!activeData?.room_name ? <span>{activeUser?.[0]?.isOnline == 'true' || activeUser?.[0]?.user_id == onlineUserId  ? "online" : "offline"}</span> :
                             <>{chatMembers?.length >= 2 && <span>{chatMembers?.length} members</span>}</>
                           }
                         </div>
@@ -824,8 +852,8 @@ export default function Chat() {
                                     </div>
                                   </div>
                                 </div>
-
-                                <div className="msg_info person-chat hide_icon_delete b-none">
+<div className=" addbx">
+<div className="msg_info person-chat hide_icon_delete b-none">
                                   <Dropdown className="p-0">
                                     <Dropdown.Toggle className="p-0 btnremove" variant="" id="">
                                       <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -839,6 +867,8 @@ export default function Chat() {
                                   </Dropdown>
 
                                 </div>
+</div>
+                                
                               </div>
                             </li>
                           );
@@ -853,7 +883,7 @@ export default function Chat() {
                     </div>}
                   </div>
                   <div className="chat-footer">
-                    <div className=" position-relative w-100">
+                    <div className=" position-relative w-100 set_message">
                       <input
                         type="text"
                         className="form-control"
@@ -929,7 +959,7 @@ export default function Chat() {
                         {picLoader ?
                           <div className="text-success text-center top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
                           : <div>
-                            <label className="btn btn-primary btn-sm edit">
+                            <label className="btn btn-primary">
                               <input
                                 id="bannerImage"
                                 type="file"
@@ -937,10 +967,11 @@ export default function Chat() {
                                 accept="image/*"
                                 // value={form.baseImg ? form.baseImg : ''}
                                 onChange={(e) => { uploadGroupImage(e) }}
-                              />{group.image ? 'Change' : 'Upload'} Image</label>
+                              /> <i class="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>
+                              {group.image ? 'Change' : 'Upload'} Image</label>
                           </div>}
                         <div>
-                          {group.image ? <label className="btn btn-sm bgdanger  ml-2 btn-primary text-white delete" onClick={e => setGroup({ ...group, image: "" })}>Remove Image</label> : <></>}
+                          {group.image ? <label className="btn btn-secondary" onClick={e => setGroup({ ...group, image: "" })}>Remove Image</label> : <></>}
                         </div>
                         {/* <input type="hidden" name='image' required value={form.image} /> */}
                         {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}

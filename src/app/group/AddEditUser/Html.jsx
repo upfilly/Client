@@ -3,10 +3,13 @@ import ApiClient from '@/methods/api/apiClient';
 import Swal from "sweetalert2";
 import loader from '@/methods/loader';
 import Layout from "@/app/components/global/layout";
-import { Editor } from "@tinymce/tinymce-react";
+// import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
+import dynamic from 'next/dynamic';
+import SelectDropdown from "@/app/components/common/SelectDropdown";
 
-const Html = ({ submitted, form, handleSubmit, setform, back }) => {
+const Html = ({ submitted, form, handleSubmit, setform, back ,id}) => {
 
     const defaultAffiliateFunction = () => {
         loader(true)
@@ -18,7 +21,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result?.isConfirmed) {
@@ -59,14 +62,33 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                     />
                                     {submitted && !form?.group_name ? <div className="invalid-feedback d-block">Group name is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6 mb-3">
+
+                                <div className='col-md-6 mb-3'>
+                                    {/* <div className='mb-3' > */}
+                                        <label >Select Type<span className="star">*</span></label>
+                                        <SelectDropdown
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Type"
+                                            intialValue={form?.group_type}
+                                            disabled={id ? true : false}
+                                            result={e => setform({ ...form, group_type: e.value })}
+                                            options={[
+                                                { id: 'affiliate', name: 'Affiliate' },
+                                                { id: 'banner', name: 'Banner' },
+                                            ]}
+                                        />
+                                    {/* </div> */}
+                                    {submitted && !form?.group_type ? <div className="invalid-feedback d-block">Group Type is Required</div> : <></>}
+                                </div>
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Commision<span className="star">*</span></label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={form?.commision}
                                         onChange={e => setform({ ...form, commision: e.target.value })}
-                                    />
+                                    /> */}
                                     {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.commision ? form?.commision : ''} className='tuncketcls'
                                         onEditorChange={(newValue, editor) => {
                                             setform({ ...form, commision: newValue })
@@ -77,9 +99,9 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                             height: 250,
                                         }}
                                     /> */}
-                                    {submitted && !form?.commision ? <div className="invalid-feedback d-block">Commision is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3 ml-3">
+                                    {/* {submitted && !form?.commision ? <div className="invalid-feedback d-block">Commision is Required</div> : <></>}
+                                </div> */}
+                                {/* <div className="col-md-6 mb-3 ml-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={form?.isDefaultAffiliateGroup} onChange={e => {
                                             setform({ ...form, isDefaultAffiliateGroup: !form.isDefaultAffiliateGroup })
@@ -89,7 +111,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back }) => {
                                         }} />
                                         <label class="form-check-label" for="flexSwitchCheckChecked">Set Default Group</label>
                                     </div>
-                                </div>
+                                </div> */}
                                 {/* <div className="col-md-6 mb-3 ml-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={form?.isPreRegisterLeads} onChange={e => {

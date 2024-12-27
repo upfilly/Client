@@ -10,40 +10,50 @@ import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import affilate from '../affiliate/page';
 
 const Users = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id })
+  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
+  const [previousfilters, setPreviousFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
+  const [previousdata, setPreviousData] = useState([])
+  const [previoustotal, setPreviousTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
-  const [ip,setIP]=useState("")
   const history = useRouter()
-console.log(ip,"dcuhdbhuc")
 
   useEffect(() => {
     if (user) {
       // setFilter({ ...filters ,role})
       getData({ role, page: 1 })
+      getPreviousData({ role, page: 1 })
     }
   }, [role])
-
-  useEffect(() => {
-    if (user?.role == 'affiliate' && !user?.account_id) {
-        history.push('/addAccount/detail')
-    }
-}, [])
 
 
   const getData = (p = {}) => {
     setLoader(true)
     let filter = { ...filters, ...p }
-    let url = 'campaign/all'
+    let url = 'campaign/affiliate/all'
     ApiClient.get(url, filter).then(res => {
       if (res.success) {
         setData(res?.data?.data)
         setTotal(res?.data?.total_count)
+      }
+      setLoader(false)
+    })
+  }
+
+  const getPreviousData = (p = {}) => {
+    setLoader(true)
+    let filter = { ...previousfilters, ...p }
+    let url = 'campaign-request/public-campaigns'
+    ApiClient.get(url, filter).then(res => {
+      if (res.success) {
+        setPreviousData(res?.data?.data)
+        setPreviousTotal(res?.data?.total_count)
       }
       setLoader(false)
     })
@@ -84,8 +94,15 @@ console.log(ip,"dcuhdbhuc")
     getData({ page: e.selected + 1 })
   }
 
+  const pagePreviousChange = (e) => {
+    setPreviousFilter({ ...previousfilters, page: e.selected })
+    getPreviousData({ page: e.selected + 1 })
+  }
+
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
+    setPreviousFilter({ ...previousfilters, page: e.selected })
+    getData({ ...p, page: filters?.page + 1 })
     getData({ ...p, page: filters?.page + 1 })
   }
 
@@ -98,25 +115,41 @@ console.log(ip,"dcuhdbhuc")
     getData({ status: e, page: 1 })
   }
 
-  const Tracklogin = async (campaign_unique_id) => {
-    loader(true)
-    const data ={
-      campaign_unique_id:campaign_unique_id,
-      event_type:"purchase",
-      ip_address:localStorage.getItem('ip_address')
-    }
-    ApiClient.post('tracking',data).then(res => {
-        if (res.success == true) {
-        }
-        loader(false)
-    })
+//   const Tracklogin = async (campaign_unique_id) => {
+//     loader(true)
+//     const data ={
+//       campaign_unique_id:campaign_unique_id,
+//       event_type:"purchase",
+//       ip_address:localStorage.getItem('ip_address')
+//     }
+//     ApiClient.post('tracking',data).then(res => {
+//         if (res.success == true) {
+//         }
+//         loader(false)
+//     })
+// };
+
+const SendPreviousRequest = async (campaign,brand) => {
+  loader(true)
+  const data ={
+    "campaign_id":campaign,
+    "brand_id":brand,
+    "affiliate_id":user?.id || user?._id
+  }
+  ApiClient.post('campaign-request',data).then(res => {
+      if (res.success == true) {
+        toast.success(res?.message)
+        getPreviousData({ role, page: 1 })
+      }
+      loader(false)
+  })
 };
 
   const statusChange = (itm, id) => {
     if (itm === 'accepted') {
       // Handle the case when the campaign is accepted
       loader(true);
-      ApiClient.put('campaign/change-status', { status: itm, id: id }).then((res) => {
+      ApiClient.put('campaign/change-status', { status: itm, id: id ,affiliate_id:user?.id || user?._id}).then((res) => {
         if (res.success) {
 
           toast.success(res.message)
@@ -148,7 +181,7 @@ console.log(ip,"dcuhdbhuc")
           }
 
           loader(true);
-          ApiClient.put('campaign/change-status', { status: itm, id: id, reason: denialReason }).then((res) => {
+          ApiClient.put('campaign/change-status', { status: itm, id: id, affiliate_id:user?.id || user?._id , reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
               getData({ page: filters?.page + 1 });
@@ -244,6 +277,8 @@ console.log(ip,"dcuhdbhuc")
     filter({ sortBy, key, sorder, page })
   }
 
+  console.log(data,"datadatadata")
+
   return <><Html
     setFilter={setFilter}
     filter={filter}
@@ -264,7 +299,12 @@ console.log(ip,"dcuhdbhuc")
     statusChange={statusChange}
     sorting={sorting}
     sendProposal={sendProposal}
-    Tracklogin={Tracklogin}
+    // Tracklogin={Tracklogin}
+    previousdata={previousdata}
+    previoustotal={previoustotal}
+    previousfilters={previousfilters}
+    pagePreviousChange={pagePreviousChange}
+    SendPreviousRequest={SendPreviousRequest}
   />
   </>;
 };

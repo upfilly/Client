@@ -78,11 +78,11 @@ export default function Blog() {
   return (
     <>
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-        <div class="container  blogs-sect">
-          <div class="row">
-          <h1>Blogs</h1>
-            <div className='col-md-12 text-right'>
-              <div class="form-group has-search position-relative w-25 ml-auto">
+      <div className='blogs-sect'>
+      <div class="container  ">
+        <div className='d-flex align-items-center justify-content-between mb-4'>
+        <h3 className='blog_title mb-0' >Blogs</h3>
+          <div class="form-group mb-0">
                 {/* <i class="fa fa-search form-control-feedback"></i> */}
                 <input type="search" className="form-control roundedInput"   placeholder="Search" value={filters?.search}  onChange={e => filter({ search: e.target.value, page: 1 })} />
                 {filters?.search ? <>
@@ -91,19 +91,22 @@ export default function Blog() {
                   </a> */}
                 </> : <></>}
               </div>
-            </div>
+        </div>
+          <div class="row">
+        
+           
             {!loaging && data?.data?.map((itm) =>
               // eslint-disable-next-line react/jsx-key
               <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-4" >
-                <div class="card card-shadow">
+                <div class="card card-shadow blog_cards">
                   <Carousel showIndicators={false}>
                     {itm?.image?.length > 0 ? (
                       itm.image.map((images) => (
                         <div key={images.id}>
                           <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.id)}>
-                            <a class="btn btn-light btn-sm">{itm.category_name}</a>
+                            <a class="cantain_btns">{itm.category_name}</a>
                           </div>
-                          <div>
+                          <div className='blog_cardd'  >
                             <img className='blog_img' src={methodModel.userImg(images)} />
                           </div>
                         </div>
@@ -111,9 +114,9 @@ export default function Blog() {
                     ) : (
                       <div>
                         <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.id)}>
-                          <a class="btn btn-light btn-sm" >{itm.category_name}</a>
+                          <a class="cantain_btns" >{itm.category_name}</a>
                         </div>
-                        <div>
+                        <div className='blog_cardd' >
                           <img className='blog_img' src="/assets/img/noimage.jpg" alt="Static Image" />
                         </div>
                       </div>
@@ -136,7 +139,8 @@ export default function Blog() {
                    
                   </div>
                   <div class="card-footer text-muted d-flex justify-content-between align-items-center  bg-transparent border-top-0 read-more-btn">
-                  <div class="views text-end">{datepipeModel.date(itm?.createdAt)}
+                  <div class="views text-end"> <i class="fa fa-clock-o mr-2 " aria-hidden="true"></i>
+                  {datepipeModel.date(itm?.createdAt)}
                     </div>
                   <Link href={`BlogDetail/${itm?.id}`} class="btn btn-primary ">Read More</Link>
                    
@@ -144,19 +148,25 @@ export default function Blog() {
                 </div>
               </div>)}
           </div>
-          {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
+          {!loaging && total == 0 ? 
+          
+        <div className='no_datashow d-flex justify-content-center align-items-center flex-column'>
+        <img src='/assets/img/no_data.jpg' className='no_data_im' />
+<div className="py-1 text-center">No Data</div> 
+        </div>: <></>}
 
           <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
             <span>Show {filters?.count} from {total} Users</span>
             <ReactPaginate
               breakLabel="..."
-              nextLabel="next >"
+              nextLabel="Next >"
               initialPage={filters?.page}
               onPageChange={pageChange}
-              pageRangeDisplayed={6}
               className="pagination-item"
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
               pageCount={Math.ceil(total / filters?.count)}
-              previousLabel="< previous"
+              previousLabel="< Previous"
               renderOnZeroPageCount={null}
               pageClassName={"pagination-item"}
               activeClassName={"pagination-item-active"}
@@ -167,6 +177,9 @@ export default function Blog() {
             <img src="/assets/img/loader.gif" className="pageLoader" />
           </div> : <></>}
         </div>
+      </div>
+      
+       
         </Layout>
     </>
   );

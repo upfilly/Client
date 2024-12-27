@@ -29,19 +29,19 @@ const Html = ({ setToggle, toggle, options, selectedValues, handleChange, displa
                         onClick={() => setToggle(!toggle)}
                         className="btn btn-primary dropdown-toggle removeBg"
                         type="button"
-                        id={"dropdownMenuButton" + id}
+                        id={"dropdownMenuButton" + id }
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                     >
-                        {selectedValues ? methodModel.find(options, selectedValues, 'id')?.[displayValue] || placeholder : placeholder}
+                        {selectedValues ? methodModel.find(options, selectedValues, 'id' || '_id')?.[displayValue] || placeholder : placeholder}
                     </button>
                     <div className={`dropdown-menu shadow bg_hover ${toggle ? 'show active' : ''}`} aria-labelledby={"dropdownMenuButton" + id}>
                         <a className={selectedValues === '' ? 'dropdown-item active' : 'dropdown-item'} onClick={() => handleChange('')}>{placeholder}</a>
                         {options && options.map((itm) => (
                             <a
                                 className={selectedValues === itm.id ? 'dropdown-item active' : 'dropdown-item'}
-                                onClick={() => handleChange(itm.id)}
+                                onClick={() => handleChange(itm.id )}
                                 key={itm.id}
                             >
                                 {itm[displayValue]}

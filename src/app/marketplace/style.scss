@@ -71,3 +71,38 @@
     color: #999;
   }
   
+
+  .arrowpoint{
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+
+  .search_market {
+    // width: 250px !important;
+    max-width: 100% !important;
+    padding-right: 33px !important;
+}
+.schbx {
+  position: absolute;
+  font-size: 14px !important;
+  top: 12px;
+  right: 12px;
+  color: #595a5a;
+}
+
+.types_dates{
+  font-size: 13px;
+  color: #454444;
+  font-weight: 600;
+  margin: 0px;
+  height: auto;
+}
+
+.date_types {
+  font-size: 13px;
+  color: #6a6565;
+  margin: 0px;
+  height: auto;
+  text-transform: capitalize;
+}

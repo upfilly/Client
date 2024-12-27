@@ -4,6 +4,7 @@ import Html from './Html';
 import { useRouter } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
 import axios from 'axios';
+import { ConnectSocket } from '@/app/chat/socket';
 
 const Header = ({setShowPopup,settingData}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +37,16 @@ const Header = ({setShowPopup,settingData}) => {
   const searchChange = (e) => {
     setSearch(e)
   }
+
+  useEffect(() => {
+    if (user?.id) {
+      ConnectSocket.emit('user-online', { user_id: user?.id });
+      return () => {
+
+        ConnectSocket.emit('user-offline', { user_id: user?.id });
+      }
+    }
+  }, [])
 
 
   const clear = () => {

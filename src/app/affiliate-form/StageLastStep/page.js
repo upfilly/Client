@@ -40,6 +40,7 @@ export default function StageLastStep() {
   const [step1, setStep1] = useState(null)
   const [step2, setStep2] = useState(null)
   const [step3, setStep3] = useState(null)
+  const [taxDetail, settaxDetail] = useState(null)
   const [isLoader, setisLoader] = useState(false)
 
   const handleGoBack = () => {
@@ -62,9 +63,12 @@ export default function StageLastStep() {
     const parsedData2 = storedData2 ? JSON.parse(storedData2) : null;
     const storedData3 = localStorage.getItem("step3");
     const parsedData3 = storedData3 ? JSON.parse(storedData3) : null;
+    const taxDetailData = localStorage.getItem('tax_detail')
+    const tax_detail3 = taxDetailData ? JSON.parse(taxDetailData) : null;
     setStep1(parsedData1)
     setStep2(parsedData2)
     setStep3(parsedData3)
+    settaxDetail(tax_detail3)
   }, [])
 
   useEffect(() => {
@@ -145,10 +149,30 @@ export default function StageLastStep() {
         billing_frequency: step3?.billing_frequency,
         payment_method: step3?.payment_method,
         tax_detail: step3?.tax_detail,
-        device_token:device_token
+        device_token:device_token?.device_token,
+        is_us_citizen:taxDetail?.is_us_citizen,
+        federal_text_classification:taxDetail?.federal_text_classification,
+        tax_classification:taxDetail?.tax_classification,
+        tax_name:taxDetail?.tax_name,
+        trade_name:taxDetail?.trade_name,
+        ein:taxDetail?.ein,
+        social_security_number:taxDetail?.social_security_number,
+        consent_agreed:taxDetail?.consent_agreed,
+        signature:taxDetail?.image,
+        signature_date:taxDetail?.signature_date,
         // ...step3,
         // isSetPasswordManually: formData?.setPasswordManually ,
       }
+      if(data?.tax_classification == 'business'){
+        delete data?.tax_name,
+        delete data?.social_security_number
+      }
+
+      if(data?.tax_classification == 'individual'){
+        delete data?.federal_text_classification
+        // delete data?.social_security_number
+      }
+
       if (!step1?.affiliate_group) {
         delete data?.affiliate_group
       }
@@ -221,7 +245,7 @@ export default function StageLastStep() {
 
     } catch (error) {
       // Handle errors if the request fails
-      console.error('Error sending data:', error);
+      // console.error('Error sending data:', error);
     }
   }
 
@@ -235,7 +259,7 @@ export default function StageLastStep() {
                 <div className='d-flex align-items-center'>
                   <button className='genral-buttons' onClick={()=> router.push(`/affiliate-form/StageFirstStep`)}><span className="rank mr-2">01</span>General</button>
                   <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/StageSecStep`)}><span className="rank mr-2">02</span>Address</button>
-                  {/* <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/StageThirdStep`)}><span className="rank mr-2">03</span>Billing</button> */}
+                  <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/taxSection`)}><span className="rank mr-2">03</span> Tax Detail</button>
                   <button className='genral-buttons ml-3' onClick={()=> router.push(`/affiliate-form/StageLastStep`)}><span className="rank mr-2">03</span>User</button>
                 </div>
               </div>
@@ -250,7 +274,7 @@ export default function StageLastStep() {
                   <div className='row mx-0 mt-4'>
                     <div className='col-md-3'>
                       <div class="form-group">
-                        <label className='label-set' >First Name  </label>
+                        <label className='label-set' >First Name <span className="star">*</span> </label>
                         <input type="text" placeholder='Your First Name' className="form-control " id="exampleFormControlInput1" value={formData.firstName}
                           name="firstName" onChange={handleInputChange} />
                         {submitted && !formData?.firstName ? <div className="invalid-feedback d-block">FirstName is Required</div> : <></>}
@@ -258,7 +282,7 @@ export default function StageLastStep() {
                     </div>
                     <div className='col-md-3'>
                       <div class="form-group">
-                        <label className='label-set' >Last Name  </label>
+                        <label className='label-set' >Last Name <span className="star">*</span> </label>
                         <input type="text" placeholder='Your Last Name' className="form-control " id="exampleFormControlInput1" name="lastName"
                           value={formData.lastName}
                           onChange={handleInputChange} />
@@ -286,7 +310,7 @@ export default function StageLastStep() {
 
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Title  </label>
+                        <label className='label-set' >Title<span className="star">*</span>  </label>
                         <input type="text" placeholder='Title' className="form-control " id="exampleFormControlInput1" name="title"
                           value={formData.title}
                           onChange={handleInputChange} />
@@ -321,7 +345,7 @@ export default function StageLastStep() {
                     </div>
                     <div className='col-md-6'>
                       <div className="form-group">
-                        <label className='label-set'>Email</label>
+                        <label className='label-set'>Email<span className="star">*</span></label>
                         <input
                           type="email"
                           placeholder='Your Email'
@@ -336,7 +360,7 @@ export default function StageLastStep() {
                     </div>
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Language  </label>
+                        <label className='label-set' >Language<span className="star">*</span>  </label>
                         <SelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -364,7 +388,7 @@ export default function StageLastStep() {
 
                     <div className='col-md-6'>
                       <div class="form-group">
-                        <label className='label-set' >Instant Messaging  </label>
+                        <label className='label-set' >Instant Messaging<span className="star">*</span>  </label>
                         <SelectDropdown
                           id="statusDropdown"
                           displayValue="name"

@@ -9,7 +9,7 @@ import ApiClient from "../../methods/api/apiClient";
 import loader from '@/methods/loader';
 import crendentialModel from "../../models/credential.model";
 import { requestForToken } from '../firebase/function';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
 
 export default function Login() {
@@ -51,6 +51,7 @@ export default function Login() {
           }
           // toast.success(res.message)
           localStorage.setItem('token', res.data.access_token)
+          localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
           history.push(url);
@@ -82,6 +83,7 @@ export default function Login() {
           }
           // toast.success(res.message)
           localStorage.setItem('token', res.data.access_token)
+          localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
           history.push(url);
@@ -161,13 +163,14 @@ export default function Login() {
         // toast.success(res.message)
         localStorage.setItem('token', res.data.access_token)
         crendentialModel.setUser(res.data)
+        localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
 
         let url = '/dashboard'
-        if (!res?.data?.account_id && res?.data?.role == 'affiliate') {
-          history.push('/addAccount/detail')
-        } else {
+        // if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
+        //   history.push('/addAccount/detail')
+        // } else {
           history.push(url)
-        }
+        // }
        ;
       }
       loader(false)
@@ -183,7 +186,7 @@ export default function Login() {
       <div className='card_parent'>
       <div className="container ">
 
-<div className="row align-items-center mx-auto">
+<div className="form-row align-items-center mx-auto">
   {/* <div className="col-md-4 px-0">
     <div className='banner_img'>
       <div className='logo_img'>
@@ -194,7 +197,7 @@ export default function Login() {
       </div> 
     </div>
   </div> */}
-  <div className="col-md-5 mx-auto">
+  <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
     <div className='right_side'>
 
       <form
@@ -232,18 +235,18 @@ export default function Login() {
           <button type="submit" className="btn btn-primary loginclass mb-2 mt-1">
             Login
           </button>
-          <div className='d-flex mt-2'>
-            <label className='d-flex align-items-center mb-0'><input type="radio" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2 radio" /><span className=' '>Keep me logged</span></label>
+          <div className='d-flex flex-wrap  justify-content-between  mt-2'>
+            <label className='d-flex align-items-center mb-0'><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2" /><span className='forbx '>Keep me logged</span></label>
 
-            <Link href="/forgotpassword" className="text-primary ml-auto text-black">Forgot Password</Link>
+            <Link href="/forgotpassword" className="text-primary  forbx text-black">Forgot Password</Link>
           </div>
 
 
         </div>
-        <div className="text-center or mt-3 mb-1">
+        <div className="text-center or mt-2 mb-1 orbx">
           OR
         </div>
-        <button className='btn btn-outline-white' type='button'
+        <button className='btn btn-outline-white font_set' type='button'
           onClick={e => googleLogin()}
         >
           <svg className='google_right' xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
@@ -260,19 +263,20 @@ export default function Login() {
           className="p-0"
           appId="425676736552748"
           fields="name,email,picture"
-          textButton={<button className='btn btn-outline-white' type='button'>
+          render={(renderProps) => (
+          <button className='btn btn-outline-white font_set' type='button' onClick={renderProps.onClick}>
             <svg className='facebook_right' xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none">
               <path d="M11.438 31.08H6.13803C5.97129 31.08 5.81135 31.0139 5.69326 30.8962C5.57517 30.7785 5.50856 30.6187 5.50803 30.452V17.557H1.46203C1.29494 17.557 1.1347 17.4906 1.01655 17.3725C0.898406 17.2543 0.832031 17.0941 0.832031 16.927V11.817C0.832561 11.6503 0.899169 11.4905 1.01726 11.3728C1.13535 11.2551 1.29529 11.189 1.46203 11.189H5.51503V7.661C5.43491 6.68612 5.55764 5.70521 5.87548 4.78013C6.19332 3.85504 6.69938 3.00584 7.36175 2.28607C8.02411 1.56629 8.82843 0.991558 9.72397 0.5981C10.6195 0.204642 11.5869 0.000995435 12.565 0H17C17.0835 0.000308738 17.1661 0.0171726 17.243 0.0496149C17.3199 0.0820572 17.3896 0.129434 17.448 0.189C17.5074 0.248241 17.5541 0.318965 17.5852 0.396852C17.6163 0.47474 17.6312 0.558155 17.629 0.642V5.415C17.6285 5.58174 17.5619 5.74147 17.4438 5.85918C17.3257 5.9769 17.1658 6.043 16.999 6.043H14.287C12.415 6.043 12.072 6.773 12.072 8.21V11.195H16.811C16.9778 11.195 17.1377 11.2611 17.2558 11.3788C17.3739 11.4965 17.4405 11.6563 17.441 11.823V16.936C17.441 17.0187 17.4247 17.1007 17.3931 17.1771C17.3614 17.2535 17.315 17.323 17.2565 17.3815C17.198 17.44 17.1286 17.4864 17.0521 17.518C16.9757 17.5497 16.8938 17.566 16.811 17.566H12.073V30.448C12.0736 30.5314 12.0575 30.6141 12.0257 30.6912C11.994 30.7683 11.9472 30.8383 11.8881 30.8972C11.8289 30.956 11.7587 31.0025 11.6814 31.0338C11.6042 31.0652 11.5214 31.0809 11.438 31.08Z" fill="#4285F4" />
             </svg>
             Sign In With Facebook
-          </button>}
+          </button>)}
           buttonStyle={{ border: "none", background: "none" }}
           callback={e => FaceBookLoginHandler(e)} />
         </div>
 
 
-        <p className='text-center border-top pt-3 mb-1 mt-2'>Don't have an account?</p>
-        <Link className='btn btn-outline-white' type='button' href="/SignupOptions" >
+        <p className='text-center font_set border-top pt-2 mb-1 mt-2 account_ptag'>Don't have an account?</p>
+        <Link className='btn btn-outline-white mb-0 font_set' type='button' href="/SignupOptions" >
           Register Now
         </Link>
       </form>
@@ -294,12 +298,11 @@ export default function Login() {
             <div>
               <h6 className='mb-3'>Signing up as</h6>
               <Link className='btn btn-primary mr-3 pl-4 pr-4' onClick={handleClose} href="signup/brand">Brand</Link>
-              <Link className='btn btn-primary pl-4 pr-4' onClick={handleClose} href="/pricing">Affiliate</Link>
+              <Link className='btn btn-primary pl-4 pr-4' onClick={handleClose} href="signup/affiliate">Affiliate</Link>
             </div>
             <div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

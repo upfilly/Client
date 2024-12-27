@@ -68,170 +68,170 @@ const Detail = (p) => {
 
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 <div className='affilate-detals'>
 
                                     <div className='billing_dtls'>
                                         <h6>User Information</h6>
                                     </div>
 
-                                    <div className='row'>
-                                        <div className='col-3'>
+                                    <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Name:</p>
+                                                <p className='headmains'>Name:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.fullName)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.fullName)}</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className='row'>
-                                        <div className='col-3'>
+                                    <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Email:</p>
+                                                <p className='headmains'>Email:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.email)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.email)}</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {data?.title && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.title && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Title:</p>
+                                                <p className='headmains'>Title:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
                                             </div>
                                         </div>
                                     </div>}
 
-                                    {data?.language && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.language && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Language:</p>
+                                                <p className='headmains'>Language:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.language)}</p>
-                                            </div>
-                                        </div>
-                                    </div>}
-
-
-                                    {data?.time_zone && <div className='row'>
-                                        <div className='col-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Time zone:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.time_zone)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.language)}</p>
                                             </div>
                                         </div>
                                     </div>}
 
 
-                                    {data?.tax_detail && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.time_zone && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Tax Details:</p>
+                                                <p className='headmains'>Time zone:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.tax_detail)}</p>
-                                            </div>
-                                        </div>
-                                    </div>}
-
-                                    {data?.mobileNo && <div className='row'>
-                                        <div className='col-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Mobile Number:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.mobileNo)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.time_zone)}</p>
                                             </div>
                                         </div>
                                     </div>}
 
 
-                                    {data?.work_phone && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.tax_detail && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Work Number:</p>
+                                                <p className='headmains'>Tax Details:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.work_phone)}</p>
+                                                {/* <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.tax_detail)}</p> */}
                                             </div>
                                         </div>
                                     </div>}
 
-                                    {data?.description && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.mobileNo && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Description:</p>
+                                                <p className='headmains'>Mobile Number:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.description)}</p>
-                                            </div>
-                                        </div>
-                                    </div>}
-
-                                    {data?.affiliate_group_name && <div className='row'>
-                                        <div className='col-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Affiliate group:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.affiliate_group_name)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.mobileNo)}</p>
                                             </div>
                                         </div>
                                     </div>}
 
 
-                                    {data?.parter_manager_name && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.work_phone && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Partner Manager:</p>
+                                                <p className='headmains'>Work Number:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.parter_manager_name)}</p>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.work_phone)}</p>
                                             </div>
                                         </div>
                                     </div>}
 
-                                    {data?.images && <div className='row'>
-                                        <div className='col-3'>
+                                    {data?.description && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Image:</p>
+                                                <p className='headmains'>Description:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                            <div className='name-dtls'>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.description)}</p>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+                                    {data?.affiliate_group_name && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                            <div className='userdata'>
+                                                <p className='headmains'>Affiliate group:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                            <div className='name-dtls'>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.affiliate_group_name)}</p>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+
+                                    {data?.parter_manager_name && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                            <div className='userdata'>
+                                                <p className='headmains'>Partner Manager:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                            <div className='name-dtls'>
+                                                <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.parter_manager_name)}</p>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+                                    {data?.images && <div className='row align-items-center mb-3 mx-auto '>
+                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                            <div className='userdata'>
+                                                <p className='headmains'>Image:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                             <div className='name-dtls'>
 
-                                                <p className='headsub'> <img src={methodModel.noImg(data?.images)} className="w170" /></p>
+                                                <p className='headsubs'> <img src={methodModel.noImg(data?.images)} className="w170" /></p>
                                             </div>
                                         </div>
                                     </div>}
@@ -239,60 +239,154 @@ const Detail = (p) => {
                                 </div>
                             </div>
 
-                            <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 {<div className='billing_dtls'>
                                     <h6>Billing Detail</h6>
                                 </div>
                                 }
 
-                                {data?.default_invoice_setting && <div className='row'>
-                                    <div className='col-3'>
+                                {data?.default_invoice_setting && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                         <div className='userdata'>
-                                            <p className='headmain'>Default Invoice:</p>
+                                            <p className='headmains'>Default Invoice:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                         <div className='name-dtls'>
-                                            <p className='headsub'>{data?.default_invoice_setting}</p>
+                                            <p className='headsubs'>{data?.default_invoice_setting}</p>
                                         </div>
                                     </div>
                                 </div>}
 
-                                {data?.billing_frequency && <div className='row'>
-                                    <div className='col-3'>
+                                {data?.billing_frequency && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                         <div className='userdata'>
-                                            <p className='headmain'>Billing Frequency:</p>
+                                            <p className='headmains'>Billing Frequency:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                         <div className='name-dtls'>
-                                            <p className='headsub'>{data?.billing_frequency}</p>
+                                            <p className='headsubs'>{data?.billing_frequency}</p>
                                         </div>
                                     </div>
                                 </div>}
 
-                                {data?.address && <div className='row'>
-                                    <div className='col-3'>
+                                {data?.address && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                         <div className='userdata'>
-                                            <p className='headmain'>Address:</p>
+                                            <p className='headmains'>Address:</p>
                                         </div>
                                     </div>
-                                    <div className='col-9'>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                         <div className='name-dtls'>
-                                            <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.address)}</p>
+                                            <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.address)}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+                            </div>
+
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
+                                <div className='billing_dtls'>
+                                    <h6>Tax Detail</h6>
+                                </div>
+
+                                {data?.tax_detail?.tax_name && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Tax Name:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data?.tax_detail?.tax_name}</p>
                                         </div>
                                     </div>
                                 </div>}
 
+                                {data?.tax_detail?.tax_classification && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Tax Classification:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data?.tax_detail?.tax_classification}</p>
+                                        </div>
+                                    </div>
+                                </div>}
 
+                               <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Us Citizen:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data && data?.tax_detail?.is_us_citizen ? 'Yes' : 'No'}</p>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                {data?.tax_detail?.federal_text_classification && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Federal Text Classification:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data && data?.tax_detail?.federal_text_classification}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                                {data?.tax_detail?.trade_name && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Trade Name:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data && data?.tax_detail?.trade_name}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                               {data?.tax_detail?.social_security_number && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Social Security Number:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data && data?.tax_detail?.social_security_number}</p>
+                                        </div>
+                                    </div>
+                                </div>}
+
+                               {data?.tax_detail?.signature_date && <div className='row align-items-center mb-3 mx-auto '>
+                                    <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
+                                        <div className='userdata'>
+                                            <p className='headmains'>Signature Date:</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
+                                        <div className='name-dtls'>
+                                            <p className='headsubs'>{data && data?.tax_detail?.signature_date}</p>
+                                        </div>
+                                    </div>
+                                </div>}
                             </div>
 
                             <div className='col-sm-12 col-md-12'>
                                 <div className='fetch_data'>
                                     <div className='track_head' onClick={() => setShowStatus(!showStatus)}>
                                         <h4 > Track Affiliate Status</h4>
-                                        <i className={`fa ${showStatus ? 'fa-minus' : 'fa-plus'}`}></i>
+                                        <i className={`fa ${showStatus ? 'fa-minus boxfas' : 'fa-plus boxfas'}`}></i>
 
                                     </div>
 
@@ -301,8 +395,8 @@ const Detail = (p) => {
                                         <div className='NoProgressHeading'>
                                             <h3>No Progress</h3>
                                         </div>
-                                        : <div className=' '>
-                                            <div className='table-responsive table_section mt-3'>
+                                        : <div className='table_section mt-3 '>
+                                            <div className='table-responsive '>
                                                 <table className='table table-striped'>
                                                     <thead>
                                                         <tr>

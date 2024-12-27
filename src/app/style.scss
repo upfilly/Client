@@ -6,10 +6,11 @@
 }
 
 h2.heding_main {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 600;
     margin-bottom: 0px;
     color: #000 !important;
+    max-width: 400px;
 }
 
 p.desc {
@@ -18,26 +19,15 @@ p.desc {
 }
 
 .btn-primary {
-    border: none !important;
+    // border: none !important;
     border-radius: 50px !important;
 }
 
-.btn.btn-outline-primary {
-    border-radius: 50px;
-    color: #000 !important;
-    border: 1px solid #000;
-    padding: 9px 20px;
-    font-size: 14px;
-}
 
-.btn.btn-outline-primary:hover {
-    background: transparent;
-    color: #000 !important;
-}
 
 .blog_img {
     height: 220px !important;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .social {
@@ -79,7 +69,7 @@ ul.tool_list li {
 }
 
 .pl_section {
-    padding-left: 5rem !important;
+    padding-left: 5rem;
 }
 
 img.check_list {
@@ -106,6 +96,7 @@ img.check_list {
     background-repeat: no-repeat;
     border-radius: 30px;
     margin-top: 6rem;
+    position: relative;
 }
 
 button.btn.btn-blue {
@@ -181,8 +172,36 @@ input.form-control-file.over_input {
 .bg_blue:hover {
     box-shadow: 3px 10px 10px #1b284d5c;
     border: 3px solid #fff;
+    transition: 0.8s;
 }
 
 .bg_blue {
-    border: 3px solid transparent;
+    border: 3px solid #fff;
+    transition: 0.8s;
 }
+
+
+.btn-secondary {
+    border-radius: 50px !important;
+}
+
+
+
+.btn.btn-secondary:hover {
+    border: 1px solid transparent !important;
+}
+
+
+  .fb_reset button.swal2-cancel.swal2-styled.swal2-default-outline {
+    background-color: rgb(133 127 127) !important;
+  }
+  .fb_reset div:where(.swal2-container) h2:where(.swal2-title){
+    font-size: 24px !important;
+  }
+  .fb_reset div:where(.swal2-container) .swal2-html-container{
+    font-size: 16px !important;
+  }
+.swal2-cancel.swal2-styled.swal2-default-outline{
+    background-color: #6c757d !important;
+}
+  

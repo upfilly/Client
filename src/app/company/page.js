@@ -15,118 +15,85 @@ export default function Company() {
         name={undefined}
         filters={undefined}
       >
-        <div className="company-page pricing-padding">
-          <div className="container  ">
-            <div className="row align-items-center ">
-              <div className="col-md-12">
-                <div className='main-title text-center'>
-                  <h1 className=''>Company</h1>
-                  <p className=' printit'>Lorem Ipsum is simply dummy text of the printing and typesetting  <br /> industry. Lorem Ipsum has been the industry's standard </p>
-                </div>
+        <div className="managed-subscriptions">
+          {/* Overview Section */}
+          <section className="overview">
+            <header className="overview-header">
+              <h1 className="overview-title">Take the Hassle Out of Managing Your Affiliate Program</h1>
+              <h2 className="overview-subtitle">
+                Let our team of specialists handle your affiliate program, so you can focus on growing your business.
+              </h2>
+            </header>
+            <p className="overview-text">
+              Our Managed Subscriptions service is designed to provide expert guidance and hands-on management for your affiliate network. From strategy to execution, we ensure your program performs at its best.
+            </p>
+          </section>
+
+          {/* What’s Included Section */}
+          <section className="whats-included">
+            <header>
+              <h2 className="section-title">What’s Included in Managed Subscriptions?</h2>
+            </header>
+            <div className="included-list">
+              <div className="included-item">
+                <h3>Dedicated Affiliate Specialist</h3>
+                <p>Your personal expert to manage and optimize your program.</p>
+              </div>
+              <div className="included-item">
+                <h3>Weekly Strategy Calls</h3>
+                <p>Regular discussions to align on goals, share insights, and refine strategies.</p>
+              </div>
+              <div className="included-item">
+                <h3>Comprehensive Reports</h3>
+                <p>Detailed analysis of affiliate performance, campaign success, and growth opportunities.</p>
               </div>
             </div>
+          </section>
 
-            <div className="row align-items-center mb-5 pt-4">
-              <div class="col-lg-6 ">
-                <div className="feature-left">
-                  <img className="img-fluid" src="assets/img/company-feature-one.png" />
-                </div>
+          {/* Pricing Options Section */}
+          <section className="pricing-options">
+            <header>
+              <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
+            </header>
+            <div className="pricing-table">
+              <div className="pricing-option">
+                <h3>Standard Package</h3>
+                <p>Fixed monthly fee for full-service management.</p>
               </div>
-              <div className="col-lg-6  ">
-                <div className="feature-text">
-                  <h1 class="text-black mb-0">Enhance your <br /> Business Outcomes</h1>
-                  <p className="border-common"></p>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged.
-                  </p>
-                  <a href="#" className="blue-btn btn btn-primary">
-                    Get in touch
-                  </a>
-                </div>
+              <div className="pricing-option">
+                <h3>Hybrid Package</h3>
+                <p>Monthly fee + a small commission percentage tied to program performance.</p>
               </div>
-
-            </div>
-
-            <div className="row align-items-center pt-4">
-              <div className="col-lg-6  ">
-                <div className="feature-text">
-                  <h1 class="text-black mb-0">
-                    Optimise your business growth operating model
-                  </h1>
-                  <p className="border-common"></p>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. It has survived not only five centuries,
-                    but also the leap into electronic typesetting, remaining
-                    essentially unchanged.
-                  </p>
-                  <a href="#" className="blue-btn btn btn-primary">
-                    Get in touch
-                  </a>
-                </div>
-              </div>
-              <div class="col-lg-6  ">
-                <div className="feature-left">
-                  <img className="img-fluid" src="assets/img/company-feature-two.png" />
-                </div>
+              <div className="pricing-option">
+                <h3>Custom Requests</h3>
+                <p>Tailored plans to align with your specific business requirements.</p>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="conatiner-fluid">
-            <div className="border-blue"></div>
-          </div>
+          {/* Benefits Section */}
+          <section className="benefits">
+            <header>
+              <h2 className="section-title">Why Choose Managed Subscriptions?</h2>
+            </header>
+            <ul className="benefits-list">
+              <li>Save Time and Resources: Let us handle the heavy lifting while you focus on scaling your business.</li>
+              <li>Optimize Performance: Benefit from expert strategies tailored to your goals.</li>
+              <li>Clear and Transparent Reporting: Gain detailed insights into affiliate activity and campaign outcomes.</li>
+            </ul>
+          </section>
 
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="expertise">
-                  <h3 className="main-head">Our Expertise</h3 >
-                  <ul>
-                    <li>
-                      <img src="assets/img/arrow-left.svg" />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.{" "}
-                    </li>
-                    <li>
-                      <img src="assets/img/arrow-left.svg" />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.{" "}
-                    </li>
-                    <li>
-                      <img src="assets/img/arrow-left.svg" />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.{" "}
-                    </li>
-                    <li>
-                      <img src="assets/img/arrow-left.svg" />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.{" "}
-                    </li>
-                    <li>
-                      <img src="assets/img/arrow-left.svg" />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.{" "}
-                    </li>
-                    <li>
-                      <img src="assets/img/arrow-left.svg" />
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.{" "}
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          {/* Call-to-Action Section */}
+          <section className="cta">
+            <header>
+              <h1 className="cta-title">Let Our Experts Manage Your Affiliate Program</h1>
+              <h2 className="cta-subtitle">Maximize your affiliate marketing success with the help of our dedicated specialists.</h2>
+            </header>
+            <div className="cta-buttons">
+              <button className="cta-btn primary">Get Started with Managed Subscriptions</button>
+              <button className="cta-btn secondary">Contact Us for a Custom Plan</button>
             </div>
-          </div>
+          </section>
         </div>
       </Layout>
     </>

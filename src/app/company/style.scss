@@ -1,43 +1,168 @@
-.feature-left img {
-    width: 100%;
-}
+/* ManagedSubscriptions.css */
 
-.border-blue {
-    height: 49px;
-    margin: 10px 0 50px;
-    background: #00BAFF;
-}
-
-.expertise ul li {
-    list-style: none;
-    border-bottom: 1px solid #D9D9D9;
-    display: inline-block;
-    padding: 7px 0;
-    font-size: 18px;
-}
-
-.expertise ul li img {
-    width: 17px;
-    margin: 0 10px 0 0;
-}
-
-.expertise {
-    margin: 0 0 150px 0;
-}
-
-.expertise ul {
+.managed-subscriptions {
+    font-family: Arial, sans-serif;
+    margin: 0;
     padding: 0;
-    margin: 20px 0 0 0;
-}
-
-.feature-text h1 {
+  }
+  
+  /* Overview Section */
+  .overview {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .overview-header {
+    margin-bottom: 40px;
+  }
+  
+  .overview-title {
     font-size: 36px;
-    font-style: normal;
-    font-weight: 500;
-}
-
-
-.feature-left img {
-    aspect-ratio: 3/3;
-    object-fit: contain;
-}
+    margin: 0;
+  }
+  
+  .overview-subtitle {
+    font-size: 20px;
+    color: #777;
+  }
+  
+  .overview-text {
+    font-size: 16px;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* What’s Included Section */
+  .whats-included {
+    padding: 40px 20px;
+    background-color: #fff;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    text-align: left;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .included-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  
+  .included-item {
+    width: 250px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .included-item h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+  
+  .included-item p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Pricing Options Section */
+  .pricing-options {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .pricing-table {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  .pricing-option {
+    width: 250px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pricing-option h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+  
+  .pricing-option p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Benefits Section */
+  .benefits {
+    padding: 40px 20px;
+    background-color: #fff;
+  }
+  
+  .benefits-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .benefits-list li {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  /* Call-to-Action Section */
+  .cta {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #007BFF;
+    color: white;
+  }
+  
+  .cta-header {
+    margin-bottom: 40px;
+  }
+  
+  .cta-title {
+    font-size: 36px;
+    margin: 0;
+  }
+  
+  .cta-subtitle {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  
+  .cta-buttons {
+    margin-top: 40px;
+  }
+  
+  .cta-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .cta-btn.primary {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .cta-btn.secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .cta-btn:hover {
+    opacity: 0.8;
+  }
+  

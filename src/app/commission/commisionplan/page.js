@@ -8,6 +8,7 @@ import loader from '@/methods/loader';
 import datepipeModel from '@/models/datepipemodel';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
+import methodModel from '@/methods/methods';
 
 export default function Commissions() {
   const user = crendentialModel.getUser()
@@ -28,7 +29,6 @@ export default function Commissions() {
     amount_type: itm?.amount_type,
     event_type: itm?.event_type
   }))
-
 
   const idsAndAmountFromAffiliate = affiliateData?.map((data) => ({
     commission_id: data?.id,
@@ -167,14 +167,14 @@ export default function Commissions() {
 
                 <div className='col-md-12'>
                   <div className='tabs_coms_tabs'>
-                    <div className='d-flex justify-content-between align-items-center '>
-                      <div className='manin_innertabs'>
+                    <div className='d-flex justify-content-between align-items-center  gap-3 flex-wrap'>
+                      <div className='manin_innertabs inner_navtabs '>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                          <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
+                          <li class="nav-item m-0">
+                            <a class="nav-link navtaabs active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Due Commissions</a>
                           </li>
-                          <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
+                          <li class="nav-item m-0">
+                            <a class="nav-link navtaabs" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">All Commissions</a>
                           </li>
                           {/* <li class="nav-item">
                             <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">All Commissions</a>
@@ -206,11 +206,12 @@ export default function Commissions() {
                     <div class="tab-content" id="myTabContent">
                       {/* first tab start */}
                       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <table className='table table-striped  '>
+                      <div className='table-responsive' >
+                      <table className='table table-striped  '>
                           <thead>
                             <tr>
                               <th></th>
-                              <th>Affiliate</th>
+                              <th>Campaign Name</th>
                               <th>Type</th>
                               <th>Due</th>
                               <th>Amount</th>
@@ -227,7 +228,7 @@ export default function Commissions() {
                                 checked={selectedUser.some((user) => user.id === itm.id)}
                                 onChange={() => {
                                   if (itm?.groupDetails?.length <= 0 && !itm?.affiliate_name) {
-                                    toast.success('No affiliate in this group')
+                                    // toast.success('No affiliate in this group')
                                   } else {
                                     handleCheckboxChange(itm);
                                   }
@@ -236,8 +237,9 @@ export default function Commissions() {
                                   }
                                 }}
                               /></td>
-                              {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
-                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>}
+                              {/* {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
+                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>} */}
+                              <td> {methodModel?.capitalizeFirstLetter(itm?.campaign_details?.name)}</td>
                               <td>{itm?.event_type}</td>
 
                               <td>{datepipeModel.date(itm.due_date)}</td>
@@ -276,6 +278,7 @@ export default function Commissions() {
                         </table>
                         {pendingData?.data?.length <= 0 && <div className='py-3 text-center'>No Data Found</div>}
                       </div>
+                      </div>
                       {/* second tab start */}
                       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
@@ -284,10 +287,12 @@ export default function Commissions() {
                           <thead>
                             <tr>
                               <th></th>
-                              <th>Affiliate</th>
+                              <th>Campaign Name</th>
+                              <th>Type</th>
                               {/* <th>Email</th> */}
                               <th>Due</th>
-                              <th>Count</th>
+                              {/* <th>Count</th> */}
+                              <th>Ammout</th>
                               <th>Status</th>
 
                             </tr>
@@ -300,7 +305,7 @@ export default function Commissions() {
                                 checked={selectedUser.some((user) => user.id === itm.id)}
                                 onChange={() => {
                                   if (itm?.groupDetails?.length <= 0) {
-                                    toast.success('No affiliate in this group')
+                                    toast.error('No affiliate in this group')
                                   } else {
                                     handleCheckboxChange(itm);
                                   }
@@ -309,13 +314,16 @@ export default function Commissions() {
                                   }
                                 }}
                               /></td> : <td></td>}
-                              {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
-                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>}
-                              {/* <td>contact@email.com</td> */}
+                              {/* {itm?.affiliate_group_name && <td> <img className='fgsdafsd' width="20" src='../assets/img/plus-p.png' onClick={() => handleRowClick(index)} style={{ cursor: 'pointer' }} /> {itm?.affiliate_group_name}(gr)</td>}
+                              {itm?.affiliate_name && <td> {itm?.affiliate_name}</td>} */}
+                              <td> {methodModel?.capitalizeFirstLetter(itm?.campaign_details?.name)}</td>
+                              <td>{itm?.event_type}</td>
 
                               <td>{datepipeModel.date(itm.due_date)}</td>
 
                               <td>${itm?.amount}</td>
+                              {/* <td></td> */}
+
 
                               <td><span class={itm?.status=="pending"?"pending_status":"contract"}>{itm?.status}</span></td>
                             </tr>

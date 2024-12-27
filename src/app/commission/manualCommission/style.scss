@@ -1,0 +1,148 @@
+.width_menu {
+    width: 100%;
+    max-width: 397px;
+    transform: translate(715px, 38px) !important;
+
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+
+  .select_parabx .search-wrapper.searchWrapper {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-right: 35px !important;
+}
+
+.labeltext{
+  font-size: 14px;
+}
+
+.label{
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+//gourav css
+
+
+.gen_links {
+  width: 100%;
+  max-width: 100% !important;
+}
+.btn-primary{
+  font-size: 14px;
+}
+.select_parabx {
+  padding: 20px;
+  border: 1px solid #d0d4da;
+  border-radius: 12px;
+  background-color: #f7f7f7;
+
+}
+.select_parabx .search-wrapper {
+  background-color: #fff;
+}
+.select_parabx .search-wrapper .chip {
+  margin-bottom: 0px;
+}
+
+.set_downbx .down_bx {
+  position: absolute;
+  top: 14px;
+  color: #afa9a9;
+  right: 14px;
+}
+
+//generate link css
+.select_parabx .search-wrapper .searchBox {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 12px;
+  max-width: 274px;
+  width: 100%;
+}
+
+.select_parabx .search-wrapper.searchWrapper {
+  border-radius: 10px !important;
+}
+.select_parabx .search-wrapper .searchBox::placeholder {
+  color: #afa3a3 !important;
+}
+.btn-primary{
+  font-size: 14px !important;
+}
+.upload_filebx {position: relative;}
+
+.upload_filebx .file_input {
+    position: absolute;
+    opacity: 0;
+    width: 129px;
+    display: inline-block;
+    left: 0;
+    height: 33px;
+}
+
+
+.upload_csvfile {
+  position: relative;
+}
+
+.upload_csvfile .removeCross {
+  position: absolute;
+  top: -4px;
+  left: 102px;
+  color: #fff;
+  background-color: #68bafe;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.upload_csvfile img.thumbnail {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #eeeff6;
+  object-fit: contain;
+}
+

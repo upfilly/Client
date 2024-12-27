@@ -9,9 +9,9 @@ tr.deactive{
     width: 80px !important;
     border-radius: 3px;
     margin-right: 1rem;
-    height: 70px !important;
+    height: 80px !important;
     object-fit: cover;
-    margin-bottom: 1.3rem;
+    margin: 0 auto;
 }
 
 .imagethumbWrapper.videowrapper {
@@ -84,12 +84,8 @@ input.form-control-file.over_input {
     top: -7px;
   }
 
-.img-wrappper .imagethumbWrapper .fa-times {
-    right: 8px;
-    top: -7px;
-}
+
 .searchInput{
-    margin-left: 10px;
     position: relative;
   }
   .search_fa {
@@ -100,6 +96,7 @@ input.form-control-file.over_input {
   }
   .searchInput input {
     padding-right: 35px;
+    max-width: 240px;
   }
 
   i.material-icons.diabled {
@@ -152,3 +149,26 @@ input[type=number] {
     -webkit-appearance: none;
     margin: 0;
   }  
+
+
+  .imagethumbWrapper {
+    border: 1px solid #d3d0d0;
+    margin: 5px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.img-wrappper .imagethumbWrapper .fa-times {
+    right: -7px;
+    top: -7px;
+}
+//gourav csss
+
+
+
+.searchInput i {
+    position: absolute;
+    top: 18px;
+    right: 13px;
+    font-size: 14px;
+}

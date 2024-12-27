@@ -2,9 +2,6 @@ i.fa.fa-plus-circle.mr-2 {
     font-size: 27px;
 }
 
-.manin_innertabs ul li {
-    margin-right: 10px !important;
-}
 
 .manin_innertabs ul {
     border: none !important;
@@ -19,8 +16,8 @@ i.fa.fa-plus-circle.mr-2 {
 
 
 .manin_innertabs .nav-tabs .nav-link.active {
-color: #ffffff !important;
-    background-color: #000;
+    color: #ffffff !important;
+    background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
     border: 1px solid #dfd2d2 !important;
 }
 
@@ -28,7 +25,16 @@ color: #ffffff !important;
     color: #d86bd6 !important;
 }
 
-.sidebar_main.active a.nav-link {
+// .sidebar_main.active a.nav-link {
+//     width: 100% !important;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     text-align: center;
+// }
+
+
+.sidebar_main.active a.nav-link.navtaabs {
     width: 100% !important;
     display: flex;
     justify-content: center;

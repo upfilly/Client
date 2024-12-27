@@ -44,16 +44,16 @@ const Detail = (p) => {
 
                     <div className='card-body'>
                         <div className='row'>
-                            <div className='col-lg-12'>
+                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 <div className='campaine_detls_wrapper'>
 
                                     <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Name:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.name)}</p>
                                             </div>
@@ -61,12 +61,12 @@ const Detail = (p) => {
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Description:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0' dangerouslySetInnerHTML={{ __html: data?.description }} />
                                             </div>
@@ -74,29 +74,32 @@ const Detail = (p) => {
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Affiliate detail:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
-                                            <div className='name-dtls'>
-                                                <ul className='ulclass'>
-                                                    <li> <div className='profiledetailscls mr-3'><b><i className='fa fa-user blue-icon mr-2'></i></b>{data?.affiliate_id?.fullName}</div>
-                                                    </li>
-                                                    <li> <div className='profiledetailscls'><b><i className='fa fa-envelope blue-icon mr-2'></i></b>{data?.affiliate_id?.email}</div></li>
-                                                </ul>
-                                            </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            {data?.listOfAffiliates?.map((itm) => {
+
+                                                return <div className='name-dtls'>
+                                                    <ul className='ulclass'>
+                                                        <li> <div className='profiledetailscls mr-3'><b><i className='fa fa-user blue-icon mr-2'></i></b>{itm?.affiliate_id?.fullName}</div>
+                                                        </li>
+                                                        <li> <div className='profiledetailscls'><b><i className='fa fa-envelope blue-icon mr-2'></i></b>{itm?.affiliate_id?.email}</div></li>
+                                                    </ul>
+                                                </div>
+                                            })}
                                         </div>
                                     </div>
 
-                                    <div className='row'>
-                                        <div className='col-3'>
+                                    {/* <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Images:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div>
                                                     {data?.images?.map((itm) =>
@@ -107,16 +110,15 @@ const Detail = (p) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
-
-                                    <div className='row'>
-                                        <div className='col-3'>
+                                    {/* <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Videos:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p>
                                                     {data?.videos?.map((itm) =>
@@ -130,22 +132,22 @@ const Detail = (p) => {
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className='row'>
-                                        <div className='col-3'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Documents:</p>
                                             </div>
                                         </div>
-                                        <div className='col-9'>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div className='doc_icon_width'>
-                                                    {data?.documents?.map((itm) =>
+                                                    {data?.documents?.length > 0 ? data?.documents?.map((itm) =>
                                                         <div className="">
                                                             <img src="/assets/img/document.png" className="doc_icon" onClick={() => window.open(methodModel.noImg(itm?.url))} />
                                                         </div>
-                                                    )}
+                                                    ) : "No Document"}
                                                 </div>
                                             </div>
                                         </div>

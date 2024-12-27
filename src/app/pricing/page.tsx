@@ -75,6 +75,7 @@ export default function Pricing() {
       if (res.success == true) {
         crendentialModel?.setUser(res?.data)
         localStorage.setItem('token', res.data.access_token)
+        localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
         // let url = '/dashboard'
         // history.push(url);
         // window.location.assign('')
@@ -129,11 +130,19 @@ export default function Pricing() {
     }
   });
 
-  const sortedData = filteredPlans?.sort((a: any, b: any) => {
-    if (a.isUpcoming == b.isUpcoming) {
-      return b.amount - a.amount;
-    }
-    return a.isUpcoming ? -1 : 1;
+  // const sortedData = filteredPlans?.sort((a: any, b: any) => {
+  //   if (a.isUpcoming == b.isUpcoming) {
+  //     return b.amount - a.amount;
+  //   }
+  //   return a.isUpcoming ? -1 : 1;
+  // })
+
+  const sortedData = filteredPlans.sort((a: any, b: any) => {
+    if (a.recommended === 'Y' && b.recommended === 'N') return -1;
+    if (a.recommended === 'N' && b.recommended === 'Y') return 1;
+    // console.log(a,b,"-------=====aaaa")
+
+    return b.amount - a.amount;
   })
 
   const ChangePlan=(id:any)=>{
@@ -148,7 +157,8 @@ export default function Pricing() {
       ApiClient.post('create/session', data1).then(res => {
         if (res.success == true) {
           loader(false)
-           window.open(res?.data?.url)
+          window.location.href = res?.data?.url
+          //  window.open(res?.data?.url)
   }})}
       
 
@@ -171,8 +181,9 @@ export default function Pricing() {
                 <p className='text-center printit'>Lorem Ipsum is simply dummy text of the printing and typesetting  <br /> industry. Lorem Ipsum has been the industry's standard </p>
 
               </div>
-              <div className='row'>
-                <div className="col-md-12 mb-5 mt-4">
+              <div className=''>
+          <div className="row">
+          <div className="col-md-12 mb-5 mt-4">
                   <div className="monthalu_plan d-flex">
                     <h3>Monthly Plan</h3>
                     <label className="switch">
@@ -186,8 +197,9 @@ export default function Pricing() {
                     <h3>Annual Plan</h3>
                   </div>
                 </div>
+          </div>
 
-
+          <div className="row">
                 {sortedData?.map((itm: any) => {
                   const activePlans: any = data.filter((plan: any) => plan.isActive);
                   const upcomingDate = new Date(itm?.upcoming_date)
@@ -211,10 +223,11 @@ export default function Pricing() {
                   }
 
                   const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
-
+                  
                   return (
-                    <div className="col-md-4 mt-4" key={itm._id}>
-                      <div className={itm.recommended === "Y" && !user?.isPayment ? "card quicksf p-4" : "card quickss p-4 h-100"}>
+                  
+                     <div className=" col-12 col-sm-12 col-md-6 col-lg-4 mt-4" key={itm._id}>
+                      <div className={itm.recommended === "Y" && !user?.isPayment ? "card quicksf card_height p-4" : "card card_height quickss p-4 h-100"}>
                         <div className='card_highjt'>
                           <div className='d-flex justify-content-between align-items-center'>
                             {(itm?.isUpcoming && showCard) && <div className="avtive_badges"><p className='mb-0 upcoming-plan'>Upcoming Plan <span className='d-block date-activeplan'>{`(${datepipeModel.date(itm?.upcoming_date)})`}</span> </p>
@@ -248,9 +261,9 @@ export default function Pricing() {
                           <p className={itm.recommended === "Y" && !user?.isPayment ? 'includes-plan locks' : 'includes-plan '}>Plan includes</p>
                           <div className='plan-features'>
                             {itm.features.map((feature: any) => (
-                              <div className='d-flex align-items-center mt-3' key={feature.id}>
+                              <div className='d-flex align-items-center mt-3 flex_list' key={feature.id}>
                                 <img
-                                  className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks' : 'checkss '}
+                                  className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks check_list' : 'checkss check_list '}
                                   src={itm.recommended === "Y" && !user?.isPayment ? '/assets/img/checkmark.png' : '/assets/img/check.png'}
                                   alt=''
                                 ></img>
@@ -260,7 +273,7 @@ export default function Pricing() {
                           </div>
                         </div>
                         <div className='mt-4'>
-                          {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Book a Demo</a>}
+                          {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>{!user ? history.push(`/bookingForm?planId=${itm._id}`)  : ChangePlan(itm._id)}}>Book a Demo</a>}
                           {!showCard && !itm.isUpcoming && !user?.isPayment && user && <a className='demos-button w-100 form-control book-demo'
                             // href={user ? `/cards?id=${itm._id}&price=${itm?.amount}` : `/bookingForm/${itm._id}`}
                             onClick={()=>ChangePlan(itm._id)}>Buy a Plan</a>}
@@ -271,7 +284,7 @@ export default function Pricing() {
                           )}
                           {(!showCard && !itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
                           {(showCard && itm.isUpcoming) && <span className=''></span>}
-                          {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Book a Demo</a>}
+                          {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>{!user ? history.push(`/bookingForm?planId=${itm._id}`)  : ChangePlan(itm._id)}}>Book a Demo</a>}
                           {(!showCard && itm.isUpcoming && user && !user?.isPayment && user) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Buy a Plan</a>}
                           {(!showCard && itm.isUpcoming) && user && !itm.isActive && user?.isPayment && (
                             <a className='demos-button w-100 form-control' onClick={()=>ChangePlan(itm._id)}>
@@ -282,10 +295,11 @@ export default function Pricing() {
                         </div>
                       </div>
                     </div>
+                   
                   )
-
+                 
                 })}
-
+                </div>
               </div>
             </div>
 
@@ -315,13 +329,15 @@ export default function Pricing() {
             <div className="bg_tracked pricing-padding">
               <div className="row align-items-center">
                 <div className="col-md-6 ">
+<div className="mb-4">
+  
+<h1 className='customers'>Customers <br />tracked in 2023 <br />more than +3Mi </h1>
+                  {(user?.role == "affiliate" || !user) && <Link className=' btn btn-light ' href="/pricing">Book a Demo</Link>}
 
-                  <h1>Customers <br />tracked in 2023 <br />more than +3Mi </h1>
-                  {(user?.role == "affiliate" || !user) && <Link className='demo-button w-50 btn btn-white book-demos' href="/pricing">Book a Demo</Link>}
-
+</div>
                 </div>
                 <div className="col-md-6">
-                  <div className="bg-white text-black p-4">
+                  <div className="bg-white text-black p-4 ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="43" height="41" viewBox="0 0 43 41" fill="none">
                       <path opacity="0.15" d="M24.42 38.8719V31.7199C24.4199 31.489 24.4653 31.2604 24.5536 31.047C24.6419 30.8337 24.7713 30.6398 24.9346 30.4765C25.0979 30.3133 25.2917 30.1838 25.5051 30.0955C25.7184 30.0072 25.9471 29.9618 26.178 29.9619C29.64 29.9619 31.524 26.4109 31.786 19.4009H26.177C25.7116 19.4007 25.2653 19.2159 24.936 18.8871C24.6066 18.5583 24.4211 18.1123 24.42 17.6469V2.53193C24.42 2.30111 24.4655 2.07255 24.5538 1.85932C24.6422 1.64609 24.7717 1.45235 24.935 1.28919C25.0982 1.12602 25.292 0.996621 25.5053 0.908382C25.7186 0.820144 25.9472 0.774795 26.178 0.774926H41.128C41.5941 0.774926 42.0411 0.960007 42.3707 1.28948C42.7004 1.61895 42.8857 2.06585 42.886 2.53193V17.6419C42.9164 20.7263 42.579 23.8034 41.881 26.8079C41.286 29.394 40.229 31.8514 38.761 34.0619C37.4058 36.0763 35.5886 37.7374 33.461 38.9069C31.2171 40.0832 28.7131 40.6758 26.18 40.6299C25.949 40.6302 25.7201 40.5849 25.5066 40.4967C25.2931 40.4085 25.0991 40.279 24.9356 40.1157C24.7722 39.9525 24.6425 39.7586 24.554 39.5451C24.4655 39.3317 24.42 39.103 24.42 38.8719ZM1.757 29.9589C1.29119 29.9589 0.84444 30.1439 0.514967 30.4732C0.185494 30.8025 0.000265403 31.2491 2.84602e-07 31.7149V38.8729C0.000530323 39.3386 0.185876 39.785 0.51532 40.114C0.844764 40.4431 1.29136 40.6279 1.757 40.6279C4.28982 40.6738 6.79343 40.0812 9.037 38.9049C11.1651 37.7362 12.9825 36.0749 14.337 34.0599C15.8059 31.8493 16.8632 29.3915 17.458 26.8049C18.1547 23.7996 18.4904 20.7218 18.458 17.6369V2.53093C18.4577 2.06485 18.2724 1.61795 17.9427 1.28848C17.6131 0.959006 17.1661 0.773926 16.7 0.773926H1.757C1.2911 0.774191 0.84435 0.959388 0.514906 1.28883C0.185462 1.61828 0.000265229 2.06502 2.84602e-07 2.53093V17.6369C-0.000131085 17.8677 0.0452181 18.0963 0.133457 18.3096C0.221696 18.5229 0.351094 18.7167 0.51426 18.88C0.677426 19.0432 0.87116 19.1727 1.08439 19.2611C1.29763 19.3494 1.52618 19.3949 1.757 19.3949H7.286C7.028 26.4069 5.171 29.9589 1.757 29.9589Z" fill="black" />
                     </svg>
@@ -342,12 +358,12 @@ export default function Pricing() {
 
             <div className='syas pricing-padding'>
               <div className='main-title text-center'>
-                <h1 className=' '>What Customers Say About Us</h1>
+                <h1 className='abouts mb-0 '>What Customers Say About Us</h1>
               </div>
 
               <div className='row'>
-                <div className='col-md-4'>
-                  <div className='card set-bg p-4'>
+                <div className=' col-12 col-sm-12  col-md-6 col-lg-4'>
+                  <div className='card set-bg p-4 mb-4'>
                     <div>
                       <i className="fa fa-quote-right df" aria-hidden="true"></i>
                     </div>
@@ -366,8 +382,8 @@ export default function Pricing() {
                     </div>
                   </div>
                 </div>
-                <div className='col-md-4'>
-                  <div className='card set-bg p-4'>
+                <div className=' col-12 col-sm-12  col-md-6 col-lg-4'>
+                  <div className='card set-bg p-4 mb-4'>
                     <div>
                       <i className="fa fa-quote-right df" aria-hidden="true"></i>
                     </div>
@@ -386,8 +402,8 @@ export default function Pricing() {
                     </div>
                   </div>
                 </div>
-                <div className='col-md-4'>
-                  <div className='card set-bg p-4'>
+                <div className=' col-12 col-sm-12  col-md-6 col-lg-4'>
+                  <div className='card set-bg p-4 mb-4'>
                     <div>
                       <i className="fa fa-quote-right df" aria-hidden="true"></i>
                     </div>
@@ -410,8 +426,8 @@ export default function Pricing() {
             </div>
 
             <div className='last-sec pricing-padding'>
-              <div className='main-title text-center'>
-                <h1 className=' '>Frequent Asked Questions</h1>
+              <div className='main-title text-center mb-0'>
+                <h1 className='customers mb-0'>Frequent Asked Questions</h1>
               </div>
 
               <div className="accordion " id="accordionExample">
@@ -517,7 +533,7 @@ export default function Pricing() {
                   </div>
 
                   <div>
-                    <button type="button" className="btn btn-primary pr-5 pl-5" onClick={() => setShowPopup(false)} >Ok</button>
+                    <button type="button" className="btn btn-primary" onClick={() => setShowPopup(false)} >Ok</button>
                   </div>
                 </div>
 

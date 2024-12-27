@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import methodModel from '@/methods/methods';
 
-
 const EditProfile = () => {
   const history = useRouter()
   const user = crendentialModel.getUser()
@@ -37,17 +36,18 @@ const EditProfile = () => {
     country:"",
     city:"",
     pincode:"",
-    // payment_method: '',
     accountholder_name: "",
     routing_number: "",
     account_number: "",
     ssn_number: '',
     company_name: "",
+    affiliate_type:'',
+    cat_type:''
     // dob:''
   });
   const [picLoader,setPicLoader]=useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState([])
   const [changeSubCategory, setChangeSubCategory] = useState('')
   const [address, setAddress] = useState(form?.address);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -74,8 +74,29 @@ const EditProfile = () => {
     { key: 'mobileNo', minLength: 10 },
     { key: 'gender', required:true },
     { key: 'dialCode', minLength:1 },
-    { key: 'category_id', required:true },
+    // { key: 'affiliate_type', required:true },
+    // { key: 'category_id', required:true },
+    // { key: 'sub_category_id', required:true },
+    // { key: 'sub_child_category_id', required:true },
   ]
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedSubSubcategory, setSelectedSubSubcategory] = useState('');
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setSelectedSubcategory('');
+    setSelectedSubSubcategory('');
+  };
+
+  const handleSubcategoryChange = (e) => {
+    setSelectedSubcategory(e.target.value);
+    setSelectedSubSubcategory('');
+  };
+
+  const handleSubsubcategoryChange = (e) => {
+    setSelectedSubSubcategory(e.target.value);
+  };
   
   useEffect(() => {
     if (!form?.dialCode) {
@@ -102,7 +123,7 @@ const EditProfile = () => {
 
   const gallaryData = () => {
     loader(true)
-    ApiClient.get(`user/detail`, { id: user.id }).then(res => {
+    ApiClient.get(`user/detail`, { id: user?.activeUser?.id }).then(res => {
       if (res.success) {
         // setForm(res.data)
         let value = res.data
@@ -130,6 +151,7 @@ const EditProfile = () => {
     if(form?.dialCode == "") return
     if(form?.mobileNo == "") return
     if (invalid) return
+    if(user?.role == 'affiliate' && !form?.affiliate_type)return
 
     let value = {
       ...form,
@@ -145,16 +167,37 @@ const EditProfile = () => {
       accountholder_name: formData?.accountholder_name,
       routing_number: formData?.routing_number,
       account_number: formData?.account_number,
-      ssn_number:formData?.ssn_number,
+      ssn_number: formData?.ssn_number,
       company_name: formData?.company_name,
+      sub_category_id: selectedSubcategory,
+      sub_child_category_id: selectedSubSubcategory,
+      category_id: selectedCategory,
+      // cat_type:form?.cat_type
       // dob: formatedDob,
+    }
+    if(!value?.cat_type){
+      delete value?.cat_type
+    }
+    if(!value?.sub_category_id){
+      delete value?.sub_category_id
+    }
+    if(!value?.category_id){
+      delete value?.category_id
+    }
+    if(!value?.sub_child_category_id){
+      delete value?.sub_child_category_id
     }
     delete value.category_name
     // delete value.category_id
     delete value.role
+    delete value.addedBy
 
-    if(!form?.affiliate_group){
+    if (!form?.affiliate_group) {
       delete value.affiliate_group
+    }
+
+    if (user?.role != "affiliate"){
+      delete value.affiliate_type
     }
 
     loader(true)
@@ -207,7 +250,7 @@ const EditProfile = () => {
       setAddress(selectedAddress);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   };
 
@@ -234,12 +277,10 @@ const EditProfile = () => {
     }, []);
 
   const getCategory = (p = {}) => {
-    // let filter = { ...filters, ...p }
-    let url = 'main-category/all'
+    let url = 'categoryWithSub'
     ApiClient.get(url).then(res => {
       if (res.success) {
-        const data = res.data.data.filter(item => item.status === "active");
-
+        const data = res.data.data
         setCategory(data)
       }
     })
@@ -297,7 +338,14 @@ const EditProfile = () => {
         dob={dob}
         setDOB={setDOB}
         handleDateChange={handleDateChange}
-        // pageLoad={pageLoad}
+        user={user}
+        handleCategoryChange={handleCategoryChange}
+        handleSubcategoryChange={handleSubcategoryChange}
+        handleSubsubcategoryChange={handleSubsubcategoryChange}
+        selectedCategory={selectedCategory}
+        selectedSubcategory={selectedSubcategory}
+        selectedSubSubcategory={selectedSubSubcategory}
+        history={history}
       />
     </>
   );

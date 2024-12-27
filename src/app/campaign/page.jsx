@@ -12,7 +12,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
-
+import methodModel from '../../methods/methods';
 
 const Users = () => {
     const user = crendentialModel.getUser()
@@ -36,9 +36,10 @@ const Users = () => {
 
 
     const getData = (p = {}) => {
+
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='campaign/all'
+        let url='campaign/brand/all'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data.data)
@@ -62,7 +63,7 @@ const Users = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -110,7 +111,7 @@ const Users = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -192,6 +193,7 @@ const Users = () => {
         total={total}
         sorting={sorting}
         setFilter={setFilter}
+        user={user}
         // statusChange={statusChange}
     />
     </>;

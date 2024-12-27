@@ -15,49 +15,74 @@ export default function Addcomminson() {
   const user = crendentialModel.getUser()
   const [affiliateGroup, setAffiliategroup] = useState([])
   const [affiliate, setAffiliate] = useState([])
-
+  const [CampaignData, setCampaignData] = useState()
   const [errors, setError] = useState(false)
   const [formData, setFormData] = useState({
     "event_type": "",
     "amount_type": "",
     "amount": '',
-    "affiliate_group": "",
-    "time_frame_type": '',
-    "time_frame": '',
-    "affiliate_id": "",
+    // "time_frame_type": '',
+    // "time_frame": '',
+    "campaign": "",
+    "date": ""
   });
 
   const handleAffiliateGroup = () => {
-
     ApiClient.get('affiliate-groups', { status: "active" }).then(res => {
-
       if (res.success == true) {
         setAffiliategroup(res?.data?.data)
       }
     })
   }
 
-  const handleAffiliate = () => {
+  function getCurrentDate() {
+    const today = new Date();
+    let month = String(today.getMonth() + 1);
+    let day = String(today.getDate());
+    const year = today.getFullYear();
 
-    ApiClient.get('users/list', { status: "active" ,role: "affiliate",createBybrand_id: user?.id, }).then(res => {
+    // Add leading zero if month or day is a single digit
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
 
-      if (res.success == true) {
-        setAffiliate(res?.data?.data)
-      }
-    })
+    return `${year}-${month}-${day}`;
   }
+
+
+  // const handleAffiliate = () => {
+  //   ApiClient.get('users/list', { status: "active", role: "affiliate", createBybrand_id: user?.id, }).then(res => {
+  //     if (res.success == true) {
+  //       setAffiliate(res?.data?.data)
+  //     }
+  //   })
+  // }
+
+  const handleAffiliate = (p = {}) => {
+    let url = 'getallaffiliatelisting'
+    ApiClient.get(url).then(res => {
+        if (res.success) {
+            const data = res.data
+            const filteredData = data.filter(item => item !== null);
+            const manipulateData = filteredData.map((itm)=>{return{
+                name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+            }})
+            setAffiliate(manipulateData)
+        }
+    })
+}
 
   const handleSave = () => {
 
-    if (!formData?.event_type || !formData?.time_frame_type || !formData?.time_frame || !formData?.amount_type) {
+    if (!formData?.event_type || !formData?.date || !formData?.amount_type || !formData?.campaign) {
       setError(true)
       return;
     }
-
     loader(true)
-
     ApiClient.post('commission', formData).then(res => {
-
       if (res.success == true) {
         router.push(`/commission/commisionplan`)
       }
@@ -65,9 +90,26 @@ export default function Addcomminson() {
     })
   }
 
+  const getCampaignData = (p = {}) => {
+    let filter = { search: '', isDeleted: false, status: '', brand_id: user?.id }
+    let url = 'campaign/brand/all'
+    ApiClient.get(url, filter).then(res => {
+      if (res.success) {
+        const data = res?.data?.data?.map((data) => {
+          return ({
+            id: data?.id || data?._id,
+            name: data?.name
+          })
+        })
+        setCampaignData(data)
+      }
+    })
+  }
+
   useEffect(() => {
     handleAffiliateGroup()
     handleAffiliate()
+    getCampaignData()
   }, [])
 
   const handleCheckboxChange = (type) => {
@@ -87,29 +129,23 @@ export default function Addcomminson() {
   const handlePaymentTimeFrameChange = (e) => {
     setFormData({
       ...formData,
-      time_frame: e.target.value,
+      date: e.target.value,
     });
   };
 
-  const handleAdditionalOptionChange = (option) => {
-    setFormData({
-      ...formData,
-      time_frame_type: formData.selectedAdditionalOption === option ? "" : option,
-    });
-  };
-
-
+  // const handleAdditionalOptionChange = (option) => {
+  //   setFormData({
+  //     ...formData,
+  //     time_frame_type: formData.selectedAdditionalOption === option ? "" : option,
+  //   });
+  // };
 
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name="Commissions" filters={undefined}>
-
-
-
         <div className="">
           <div className="sidebar-left-content">
             <div className='top_bar_btns'>
-
               <div className=' row'>
 
                 <div className='col-md-12'>
@@ -122,11 +158,8 @@ export default function Addcomminson() {
 
               </div>
 
-
-
-
               <div className=' row mt-4'>
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic'>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/1.png' alt=''></img>
@@ -138,7 +171,7 @@ export default function Addcomminson() {
 
                   </div>
 
-                  {["lead", "visitor" , "purchase" ,"line-item"].map((type, index) => (
+                  {["lead", "visitor", "purchase"].map((type, index) => (
                     <div className="col-md-12" key={index}>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
@@ -157,11 +190,11 @@ export default function Addcomminson() {
                       </div>
                     </div>
                   ))}
-{errors && !formData?.event_type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
+                  {errors && !formData?.event_type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
 
                 </div>
 
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic '>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/2.png' alt=''></img>
@@ -174,10 +207,10 @@ export default function Addcomminson() {
 
                   <div className='row'>
                     <div className='col-md-12'>
-                      <div className='checkbox_ipt'>
+                      <div className='checkbox_ipt mt-0'>
                         <div className="">
                           <div className="">
-                            <label className="">
+                            <label className="w-100">
                               <input
                                 className="form-control"
                                 type="text"
@@ -198,7 +231,7 @@ export default function Addcomminson() {
                       </div>
                     </div>
 
-                    <div className='col-md-12'>
+                    {formData?.event_type != 'lead' && <div className='col-md-12'>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
                           <div className="checkboxes__item">
@@ -215,7 +248,7 @@ export default function Addcomminson() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div>}
 
                     <div className='col-md-12'>
                       <div className='checkbox_ipt'>
@@ -239,7 +272,7 @@ export default function Addcomminson() {
                   </div>
                 </div>
 
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic'>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/3.png' alt=''></img>
@@ -254,7 +287,29 @@ export default function Addcomminson() {
                     <div className='col-md-12'>
                       <div className='checkbox_ipt position-relative'>
                         <div className='slect_drop'>
-                          {formData.time_frame_type !== "day" ? <select
+
+                          <input
+                            type='date'
+                            className='form-control'
+                            onChange={handlePaymentTimeFrameChange}
+                            value={formData.date || ""}
+                            min={getCurrentDate()}
+                          />
+
+                          {/* <select
+                            className='form-control'
+                            onChange={handlePaymentTimeFrameChange}
+                            value={formData.time_frame || ""}
+                          >
+                            <option value="">select</option>
+                            <option value="0">Immediately, no delay</option>
+                            <option value="1">1 day after purchase</option>
+                            <option value="2">2 days after purchase</option>
+                            <option value="2">3 days after purchase</option>
+                            <option value="3">4 days after purchase</option>
+                          </select> */}
+
+                          {/* {formData.time_frame_type !== "day" ? <select
                             className='form-control'
                             onChange={handlePaymentTimeFrameChange}
                             value={formData.time_frame || ""}
@@ -262,28 +317,28 @@ export default function Addcomminson() {
                             <option value="">select</option>
                             <option value="0">Immediately, no delay</option>
                             <option value="1">1 month after purchase</option>
-                            <option value="2">2 month after purchase</option>
-                            <option value="3">3 month after purchase</option>
-                          </select>:
-                          <select
-                          className='form-control'
-                          onChange={handlePaymentTimeFrameChange}
-                          value={formData.time_frame || ""}
-                        >
-                          <option value="">select</option>
-                          <option value="0">Immediately, no delay</option>
-                          <option value="1">1 day after purchase</option>
-                          <option value="2">2 day after purchase</option>
-                          <option value="2">3 day after purchase</option>
-                          <option value="3">4 day after purchase</option>
-                        </select>
-                          }
-                          {errors && !formData?.time_frame ? <div className="invalid-feedback d-block">Time Frame is Required</div> : <></>}
+                            <option value="2">2 months after purchase</option>
+                            <option value="3">3 months after purchase</option>
+                          </select> :
+                            <select
+                              className='form-control'
+                              onChange={handlePaymentTimeFrameChange}
+                              value={formData.time_frame || ""}
+                            >
+                              <option value="">select</option>
+                              <option value="0">Immediately, no delay</option>
+                              <option value="1">1 day after purchase</option>
+                              <option value="2">2 days after purchase</option>
+                              <option value="2">3 days after purchase</option>
+                              <option value="3">4 days after purchase</option>
+                            </select>
+                          } */}
+                          {errors && !formData?.date ? <div className="invalid-feedback d-block">Date is Required</div> : <></>}
                         </div>
                       </div>
                     </div>
 
-                    <div className='col-md-12'>
+                    {/* <div className='col-md-12'>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
                           <div className="checkboxes__item">
@@ -317,24 +372,22 @@ export default function Addcomminson() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
-                  {errors && !formData?.time_frame_type ? <div className="invalid-feedback d-block">Time Frame Type is Required</div> : <></>}
+                  {/* {errors && !formData?.time_frame_type ? <div className="invalid-feedback d-block">Time Frame Type is Required</div> : <></>} */}
                 </div>
 
 
-                <div className='col-md-3 mb-3'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3'>
                   <div className='fixi-ic'>
                     <div className='d-flex align-items-center'>
                       <img className='fixi-boxx-commsion' src='/assets/img/4.png' alt=''></img>
                       <div className='ml-2 addcomminson'>
                         <p className='revuh m-0'>Who</p>
-                        <h3 className='dollars-t'>Choose affilate group</h3>
+                        <h3 className='dollars-t'>Choose Campaign</h3>
                       </div>
                     </div>
-
                   </div>
-
 
                   <div className='row'>
                     <div className='col-md-12'>
@@ -344,32 +397,32 @@ export default function Addcomminson() {
                             className='form-control'
                             onChange={(e) => {
                               const selectedValue = e.target.value;
-                              const selectedOption = e.target.options[e.target.selectedIndex];
-                              console.log(selectedOption.dataset,"jbdchdbchj")
+                              // const selectedOption = e.target.options[e.target.selectedIndex];
+                              setFormData({ ...formData, campaign: selectedValue });
 
-                              if (selectedOption.dataset.group == "true") {
-                                setFormData({ ...formData, affiliate_group: selectedValue, affiliate_id: null });
-                              } else {
-                                setFormData({ ...formData, affiliate_group: null, affiliate_id: selectedValue });
-                              }
+                              // if (selectedOption.dataset.group == "true") {
+                              //   setFormData({ ...formData, affiliate_group: selectedValue, affiliate_id: null });
+                              // } else {
+                              //   setFormData({ ...formData, affiliate_group: null, affiliate_id: selectedValue });
+                              // }
                             }}
-                            value={formData.affiliate_group || formData.affiliate_id || ""}
+                            value={formData.campaign || formData.campaign || ""}
                           >
-                            <option value="" disabled style={{ color: "black" }}>Select an affiliate group</option>
-                            {affiliateGroup.map((itm, index) => (
+                            <option value=""  style={{ color: "black" }}>Select an Campaign</option>
+                            {CampaignData?.map((itm, index) => (
                               <option key={`group_${index}`} value={itm?.id} data-group>
-                                {itm?.group_name}
+                                {itm?.name}
                               </option>
                             ))}
-                            <option value="" disabled style={{ color: "black" }}>Select affiliate</option>
+                            {/* <option value="" disabled style={{ color: "black" }}>Select affiliate</option>
                             {affiliate.map((itm, index) => (
                               <option key={`affiliate_${index}`} value={itm?.id}>
                                 {itm?.fullName}
                               </option>
-                            ))}
+                            ))} */}
                           </select>
-                          {(errors && !formData?.affiliate_group && !formData?.affiliate_id) ? (
-                            <div className="invalid-feedback d-block">Affiliate or Affiliate group is Required</div>
+                          {(errors && !formData?.campaign) ? (
+                            <div className="invalid-feedback d-block">Campaign is Required</div>
                           ) : (
                             <></>
                           )}
@@ -380,26 +433,16 @@ export default function Addcomminson() {
                     <div className='col-md-12'>
                       <div className='checkbox_ipt position-relative'>
                         <div className='addfile_commison'>
-                          <Link href="/group/add" className='m-0'
+                          <Link href="/campaign" className='m-0'
                           //  data-bs-toggle="modal" 
                           //  data-bs-target="#comminsion"
-                          > <img className='w28' src='../assets/img/plus-p.png' /> Add new Affiliate Group</Link>
+                          > <img className='w28' src='../assets/img/plus-p.png' /> Add New Campaign</Link>
                         </div>
                       </div>
                     </div>
-
-
                   </div>
-
                 </div>
-
-
-
               </div>
-
-
-
-
             </div>
           </div>
         </div>

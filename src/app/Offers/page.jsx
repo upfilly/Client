@@ -10,6 +10,7 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
+import methodModel from '../../methods/methods';
 
 const Users = () => {
     const user = crendentialModel.getUser()
@@ -32,12 +33,6 @@ const Users = () => {
             getData({role, page: 1 })
         }
     }, [role])
-
-    useEffect(() => {
-        if (user?.role == 'affiliate' && !user?.account_id) {
-            history.push('/addAccount/detail')
-        }
-    }, [])
 
     useEffect(() => {
         if (startDate && endDate) {
@@ -74,7 +69,7 @@ const Users = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -122,7 +117,7 @@ const Users = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
           }).then((result) => {
             if (result.isConfirmed) {
@@ -209,6 +204,7 @@ const Users = () => {
         setDateRange={setDateRange}
         startDate={startDate}
         endDate={endDate}
+        user={user}
     />
     </>;
 };

@@ -123,7 +123,7 @@ export default function BillingForm() {
       setAddress(selectedLocation?.address);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   }
 
@@ -236,7 +236,8 @@ export default function BillingForm() {
         ApiClient.post('create/session', data1).then(res => {
           if (res.success == true) {
             loader(false)
-            window.open(res?.data?.url)
+            window.location.href = res?.data?.url
+            // window.open(res?.data?.url)
             // toast.success(res.message)
             // const data2 = {
             //   "user_id": res?.data?.user_id,
@@ -317,12 +318,12 @@ export default function BillingForm() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-        <div className='main-affiliate mt-3 mb-3'>
+        <div className='main-affiliate mt-3 mb-0 pt-0'>
           <div className='container'>
 
             <div>
-              <img src="/assets/img/logo.png" className='mx-auto mb-5 pointer' onClick={() => history.push('/')} />
-              <h2 className='text-center mb-4'> Select a plan</h2>
+              <img src="/assets/img/logo.png" className='mx-auto mb-4 pointer logo' onClick={() => history.push('/')} />
+              <h2 className='text-center mb-0 select_plans'> Select a plan</h2>
             </div>
 
           </div>
@@ -349,7 +350,7 @@ export default function BillingForm() {
                     </div> */}
 
                     <div>
-                      <button type="button" class="btn btn-primary pr-5 pl-5" onClick={() => handleClick()} >Ok</button>
+                      <button type="button" class="btn btn-primary " onClick={() => handleClick()} >Ok</button>
                     </div>
                   </div>
 
@@ -364,15 +365,15 @@ export default function BillingForm() {
         <section className='common-padding'>
           <div className='container'>
             <div className='row'>
-              <div className='col-12 col-md-8'>
-                <div className='card p-0'>
+              <div className='col-12 col-md-12 col-lg-12 col-xl-8'>
+                <div className='card p-0 mb-4'>
                   <div className='card-header '>
                     <h3 className='mb-0 card-title'>Account <span className='subsmal'>Select a plan</span></h3>
                   </div>
                   <div className='card-body'>
 
 
-                    <div className='row px-2'>
+                    <div className='row '>
                       {FilterData?.map((itm) => {
                         const calculateDiscountedAmount = (amount, discountDetails) => {
                           if (!discountDetails || !discountDetails.discount_type) {
@@ -393,7 +394,7 @@ export default function BillingForm() {
 
                         const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
 
-                        return <label htmlFor={`exampleRadios${itm._id}`} className='col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-4 pr-0'> <div class={selectedId == itm?._id ? "checked_tbn" : "checked_tbn_after"} >
+                        return <label htmlFor={`exampleRadios${itm._id}`} className=' col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 mb-4'> <div class={selectedId == itm?._id ? "checked_tbn" : "checked_tbn_after"} >
                           <div className='sub-opt form-check pl-0' >
 
 
@@ -443,52 +444,54 @@ export default function BillingForm() {
                 </div>
               </div>
 
-              <div className='col-12 col-md-4'>
-                <div className='row'>
+              <div className='col-12 col-md-12 col-lg-12 col-xl-4'>
+               
                   <div className='card p-0 mb-4'>
                     <div className='card-header'>
                       <h4 className='card-title'>Basic Information</h4>
                     </div>
 
                     <div className='card-body'>
-                      <div className='row'>
+                      <div className='form-row'>
                         {!user && <>
 
-                          <div className='col-12 col-md-6 pr-0 '>
+                          <div className='col-12 col-md-6 col-lg-6  '>
                             <div className="form-group">
                               <label className='label-set'>First Name</label>
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your first name'
+                                placeholder='Enter first name'
                                 id="firstName"
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleInputChange} />
-                              {summitted && !formData.firstName ? <div className="invalid-feedback d-block">FirstName is required</div> : <></>}
+                              {summitted && !formData.firstName ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
 
                             </div>
-                          </div><div className='col-12 col-md-6'>
+                          </div>
+                          <div className='col-12 col-md-6 col-lg-6'>
                             <div className="form-group">
                               <label className='label-set'>Last Name </label>
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your last name'
+                                placeholder='Enter last name'
                                 id="lastName"
                                 name="lastName"
                                 value={formData.lastName}
                                 onChange={handleInputChange} />
-                              {summitted && !formData.lastName ? <div className="invalid-feedback d-block">LastName is required</div> : <></>}
+                              {summitted && !formData.lastName ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
 
                             </div>
-                          </div><div className='col-12 col-md-12 pr-0'>
+                          </div>
+                          <div className='col-12 col-md-6 col-lg-12 '>
                             <div className="form-group">
                               <label className='label-set'>Email </label>
                               <input
                                 type="email"
                                 className="form-control quick-radius"
-                                placeholder='Enter your email'
+                                placeholder='Enter email'
                                 id="email"
                                 name="email"
                                 value={formData.email}
@@ -497,27 +500,14 @@ export default function BillingForm() {
 
                             </div>
                           </div>
-                          {/* <div className='col-12 col-md-6'>
-                      <div class="form-group">
-                        <label className='label-set' >Payment Method <img className='sad-img' src='/assets/img/information-button.png' alt=''></img> </label>
-                        <select class="form-select " aria-label="Default select example" name='payment_method' value={formData?.payment_method}
-                          onChange={handleInputChange}>
-                          <option selected>Select your payment method</option>
-                          <option value="stripe">Stripe</option>
-                          <option value="account detail">Account detail</option>
-                        </select>
-                        {summitted && !formData?.payment_method ? <div className="invalid-feedback d-block">Payment method is Required</div> : <></>}
-                      </div>
-                    </div> */}
-
-
-                          <div className='col-12 col-md-12'>
+                        
+                          <div className='col-12 col-md-6 col-lg-12'>
                             <div className="form-group">
-                              <label className='label-set'>Password <img className='sad-img' src='/assets/img/information-button.png' alt='' /></label>
+                              <label className='label-set'>Password </label>
                               <div className='input-group position-relative'>
                                 <input
                                   type={eyes.password ? 'text' : 'password'}
-                                  className="form-control quick-radius"
+                                  className="form-control quick-radius password_space"
                                   placeholder='Enter password'
                                   id="password"
                                   name="password"
@@ -528,17 +518,18 @@ export default function BillingForm() {
                                 </div>
 
                               </div>
-                              {passwordError && formData.password.length < 8 && <div className="text-danger">{passwordError}</div>}
+                              {passwordError && formData.password.length < 8 && <div className="text-danger pass_danger ">{passwordError}</div>}
 
                             </div>
 
-                          </div><div className='col-12 col-md-12'>
+                          </div>
+                          <div className='col-12 col-md-6 col-lg-12'>
                             <div className="form-group">
-                              <label className='label-set'>confirm Password <img className='sad-img' src='/assets/img/information-button.png' alt='' /></label>
+                              <label className='label-set'>confirm Password </label>
                               <div className='input-group position-relative'>
                                 <input
                                   type={eyes.confirmPassword ? 'text' : 'password'}
-                                  className="form-control quick-radius"
+                                  className="form-control quick-radius password_space"
                                   placeholder='confirm your password'
                                   id="confirmPassword"
                                   name="confirmPassword"
@@ -549,31 +540,31 @@ export default function BillingForm() {
                                 </div>
                               </div>
                               {confirmPasswordError && formData.password !== formData.confirmPassword && (
-                                <div className="text-danger">{confirmPasswordError}</div>
+                                <div className="text-danger pass_danger">{confirmPasswordError}</div>
                               )}
                             </div>
                           </div>
 
-                          <div className='col-12 col-md-6 pr-0'>
+                          <div className='col-12 col-md-6 col-lg-6 '>
                             <div className="form-group">
                               <label className='label-set'>Website  </label>
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your website'
+                                placeholder='Enter website'
                                 id="website"
                                 name="website"
                                 value={formData.website}
                                 onChange={handleInputChange} />
                             </div>
                           </div>
-                          <div className='col-12 col-md-6'>
+                          <div className='col-12 col-md-6 col-lg-6'>
                             <div className="form-group">
                               <label className='label-set'>Currency </label>
                               <input
                                 type="text"
                                 className="form-control quick-radius"
-                                placeholder='Enter your currency'
+                                placeholder='Enter currency'
                                 id="currency"
                                 name="currency"
                                 value={formData.currency}
@@ -597,7 +588,7 @@ export default function BillingForm() {
                       <h4 className='card-title'>Billing Address</h4>
                     </div>
                     <div className='card-body'>
-                      <div className='row'>
+                      <div className='form-row'>
                         <div className='col-12  col-md-12'>
                           <div className='form-group'>
                             <label className='label-set'>Address </label>
@@ -646,99 +637,34 @@ export default function BillingForm() {
                         <div className='col-12  col-md-6'>
                           <div class="form-group">
                             <label className='label-set'>Country </label>
-                            <input placeholder='Enter your country' type="text" value={selectedLocation?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
+                            <input placeholder='Enter country' type="text" value={selectedLocation?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                           </div>
                         </div>
 
-                        <div className='col-md-6 pl-0'>
+                        <div className='col-md-6'>
                           <div class="form-group">
                             <label className='label-set'>City </label>
-                            <input placeholder='Enter your city' type="text" value={selectedLocation?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
+                            <input placeholder='Enter city' type="text" value={selectedLocation?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
                           </div>
                         </div>
                         <div className='col-md-12'>
                           <div class="form-group">
                             <label className='label-set'>Postal Code  </label>
-                            <input placeholder='Enter your postal code' type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
+                            <input placeholder='Enter postal code' type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
                           </div>
                         </div>
                       </div>
 
-
-                      {/* <h3 className='mt-4 mb-4'>Payment detail</h3>
-                <div className='col-12  col-md-6'>
-                  <div className="form-group">
-                    <label className='label-set'>Card Number</label>
-                    <input
-                      type="number"
-                      className="form-control quick-radius"
-                      placeholder='xxxxxxxxxxxxxxxx'
-                      id="cardNumber"
-                      name="cardNumber"
-                      value={formData.cardNumber}
-                      onChange={handleInputChange}
-                    />
-                    {summitted && !validateCardNumber(formData.cardNumber) ? <div className="invalid-feedback d-block">cardNumber is not required</div> : <></>}
-
-                  </div>
-                </div>
-                <div className='col-12  col-md-6'>
-                  <div className="form-group card-expiry">
-                    <label className='label-set'>Card Expiry</label>
-                    <DatePicker
-                      selected={startDate}
-                      className="form-control quick-radius "
-                      onChange={(date) => setStartDate(date)}
-                      dateFormat="MM/yy"
-                      placeholderText="Select Expiry Date"
-                      minDate={new Date()}
-                      showMonthYearPicker
-                      showFullMonthYearPicker
-                      showIcon
-                    />
-                    {summitted && !startDate ? <div className="invalid-feedback d-block">CardExpiry is not required</div> : <></>}
-
-                  </div>
-                </div>
-                <div className='col-12  col-md-6'>
-                  <div className="form-group">
-                    <label className='label-set'>Card CVV</label>
-                    <input
-                      type="number"
-                      className="form-control quick-radius"
-                      placeholder='xxx'
-                      id="cardCvc"
-                      name="cardCvc"
-                      value={formData.cardCvc}
-                      onChange={handleInputChange}
-                    />
-                    {summitted && !validateCVV(formData.cardCvc) ? <div className="invalid-feedback d-block">CardCvc is not required</div> : <></>}
-
-                  </div>
-                </div> */}
-
-                      {/* <div className='col-12  col-md-6'>
-                <div className="form-group">
-                  <label className='label-set'>Paypal Email</label>
-                  <input
-                    type="email"
-                    className="form-control quick-radius"
-                    id="paypal_email"
-                    name="paypal_email"
-                    value={formData.paypal_email}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                {summitted && !formData.paypal_email ? <div className="invalid-feedback d-block">Paypal email is not required</div> : <></>}
-              </div> */}
-
-                      <div className='col-md-12  d-flex justify-content-center'>
+                     
+                        <div className='  d-flex justify-content-center gap-3  justify-content-md-end justify-content-lg-center' >
                         <button className='btn btn-primary buy-btn' onClick={handleSave}>Buy</button>
                         <button className='btn btn-danger buy-btn ml-2' onClick={() => history.back()}>Cancel</button>
-                      </div>
+                        </div>
+                       
+                     
                     </div>
                   </div>
-                </div>
+              
               </div>
             </div>
           </div>

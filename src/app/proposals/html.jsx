@@ -90,72 +90,75 @@ const Html = ({
 
                     <div className='card-body'>
                         <div className='propos_data'>
-                            <div className="table-responsive table_section mt-0">
+                           <div className='table_section mt-0' >
+                           <div className="table-responsive ">
 
-                                <table className="table table-striped">
-                                    <thead className='table_head'>
-                                        <tr className='heading_row'>
-                                            <th scope="col" class="table_data" onClick={e => sorting('addedBy_name')}>Sender Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                            {user?.role == "affiliate" && <th scope="col" className='table_data'> Status</th>}
-                                            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                            <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                            {/* <th scope="col" className='table_data'>Status</th> */}
+<table className="table table-striped">
+    <thead className='table_head'>
+        <tr className='heading_row'>
+            <th scope="col" class="table_data" onClick={e => sorting('addedBy_name')}>Sender Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            {user?.role == "affiliate" && <th scope="col" className='table_data'> Status</th>}
+            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+            {/* <th scope="col" className='table_data'>Status</th> */}
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {!loaging && data && data.map((itm, i) => {
-                                            return <tr className='data_row' key={i}>
-                                                <td className='table_dats' onClick={e => view(itm.id)}>
+        </tr>
+    </thead>
+    <tbody>
+        {!loaging && data && data.map((itm, i) => {
+            return <tr className='data_row' key={i}>
+                <td className='table_dats' onClick={e => view(itm.id)}>
 
-                                                    <div className='user_detail'>
-                                                        <div className='user_name'>
-                                                            <h4 className='user'>
-                                                                {methodModel.capitalizeFirstLetter(itm?.addedBy_name)}
-                                                            </h4>
-                                                        </div>
-                                                    </div></td>
-                                                {user?.role == "affiliate" && <td className='table_dats'>{itm?.status}</td>}
-                                                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
+                    <div className='user_detail'>
+                        <div className='user_name'>
+                            <h4 className='user'>
+                                {methodModel.capitalizeFirstLetter(itm?.addedBy_name)}
+                            </h4>
+                        </div>
+                    </div></td>
+                {user?.role == "affiliate" && <td className='table_dats'>{itm?.status}</td>}
+                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
 
-                                                {user.role == "brand" && <td className='table_dats'>
-                                                    {itm?.status == 'pending' ? <div >
-                                                        <button onClick={() => statusChange("accepted", itm?.id)} className="btn btn-primary">
-                                                            Accept
-                                                        </button>
-                                                        <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-primary ms-2">
-                                                            Deny
-                                                        </button>
-                                                    </div> :
-                                                        itm?.status == 'rejected' ?
-                                                            <div className="btn btn-primary">Rejected</div> :
-                                                            <div className="btn btn-primary">Accepted</div>
-                                                    }
-                                                </td>}
+                {user.role == "brand" && <td className='table_dats'>
+                    {itm?.status == 'pending' ? <div >
+                        <button onClick={() => statusChange("accepted", itm?.id)} className="btn btn-primary">
+                            Accept
+                        </button>
+                        <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-primary ms-2">
+                            Deny
+                        </button>
+                    </div> :
+                        itm?.status == 'rejected' ?
+                            <div className="btn btn-primary">Rejected</div> :
+                            <div className="btn btn-primary">Accepted</div>
+                    }
+                </td>}
 
-                                            </tr>
+            </tr>
 
-                                        })
-                                        }
-                                    </tbody>
-                                </table>
+        })
+        }
+    </tbody>
+</table>
+{!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
 
+</div>
+                           </div>
 
-                            </div>
-
-                            {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
+                          
 
                             <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                                 <span>Show {data?.length} from {total} campaignManagement</span>
                                 <ReactPaginate
                                     breakLabel="..."
-                                    nextLabel="next >"
+                                    nextLabel="Next >"
                                     initialPage={filters?.page}
                                     onPageChange={pageChange}
-                                    pageRangeDisplayed={6}
+                                    pageRangeDisplayed={2}
+                                    marginPagesDisplayed={1}
                                     pageCount={Math.ceil(total / filters?.count)}
-                                    previousLabel="< previous"
+                                    previousLabel="< Previous"
                                     renderOnZeroPageCount={null}
                                     pageClassName={"pagination-item"}
                                     activeClassName={"pagination-item-active"}

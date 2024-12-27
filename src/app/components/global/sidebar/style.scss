@@ -219,23 +219,26 @@ a.col_side.collapsess.collapsed i.material-icons.mr-2 {
     width: 100%;
     padding: 20px;
     border-bottom: 1px solid #e2e2e2;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 99;
 }
 
 
 
 .sidebar-left-content {
-    padding: 35px 30px 30px;
+    padding:20px;
 }
 
-.table-responsive {
-    overflow-y: auto;
-    height: 590px;
-    padding: 0 !important;
-}
+// .table-responsive {
+//     overflow-y: auto;
+//     height: 590px;
+//     padding: 0 !important;
+// }
 
-.table-responsive::-webkit-scrollbar {
-    width: 2px;
-}
+// .table-responsive::-webkit-scrollbar {
+//     width: 2px;
+// }
 
 
 // .left_sidebar {
@@ -254,7 +257,8 @@ a.col_side.collapsess.collapsed i.material-icons.mr-2 {
 }
 
 .new-sidebar .hoverclass:hover {
-    padding: 14px 13px !important;
+    // padding: 14px 13px !important;
+    padding: 10px 12px !important;
     font-weight: 300;
     line-height: 20px;
     color: rgb(255, 255, 255) !important;
@@ -357,13 +361,13 @@ a.nav-link.hoverclass i {
     color: #fff !important;
 }
 
-.sidebar_main.active a.nav-link.hoverclass span {
-    display: none;
-}
+// .sidebar_main.active a.nav-link.hoverclass span {
+//     display: none;
+// }
 
 .sidebar_main.active .left_sidebar {
     width: 90px;
-
+    // border-right: 1px solid #e2e2e2;
 }
 
 .sidebar_main.active .new-sidebar .sidees span {
@@ -418,10 +422,11 @@ a.nav-link.hoverclass:hover span {
 
 img.cross-hide {
     width: 16px;
+    margin-left: 13px;
 }
 
 .nmain-list {
-    padding: 35px 0 0 0;
+    padding-top: 20px;
 }
 
 .main-affiliate {
@@ -437,23 +442,32 @@ img.cross-hide {
     display: block;
 }
 
-.collapse.dropdown-btm.show {
-    margin-left: 20px;
+.sidebar_main.active  .icns_center{
+    justify-content: center;
 }
+
+
+
 
 .fontsize20 {
     font-size: 18px !important;
-    position: relative;
+    position: relative ;
     top: 3px;
 }
 
+
+
+
 .sidebar_main.active a.nav-link.hoverclass span {
-    display: none !IMPORTANT;
+    display: none ;
 }
 
 
 .sidebar_main.active .left_sidebar .collapse.dropdown-btm.show {
-    margin-left: 0px !important;
+    margin-left: 0px ;
+}
+.sidebar_main .left_sidebar  .collapse.dropdown-btm.show {
+    margin-left: 20px ;
 }
 
 
@@ -494,3 +508,45 @@ img.cross-hide {
 .sidebar_main.active .text_black {
     margin-right: 0px !important;
 }
+
+// gourav css start 
+
+
+
+
+
+
+
+
+ 
+.sidebar_main.active .svg_iconbx {
+    width: unset !important;
+  }
+
+  .sidebar_main.active .main-top{
+margin: 0px auto ;
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }

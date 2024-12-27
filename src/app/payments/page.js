@@ -11,7 +11,7 @@ import datepipeModel from '@/models/datepipemodel';
 import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
-import methodModel from '@/methods/methods';
+import methodModel from '../../methods/methods';
 
 export default function affilate() {
   const history = useRouter()
@@ -44,12 +44,6 @@ export default function affilate() {
 
     })
   };
-
-  useEffect(() => {
-    if (user?.role == 'affiliate' && !user?.account_id) {
-        history.push('/addAccount/detail')
-    }
-}, [])
 
   useEffect(() => {
 
@@ -123,11 +117,13 @@ export default function affilate() {
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Payments" filters={filters}>
-        <div className='nmain-list  mb-3'>
-          <div className='row mx-0'>
+        <div className='nmain-list  mb-3 main_box'>
+       <div className='container-fluid'>
+     
+       <div className='row'>
             <div className='col-md-12'>
-              <div className='d-flex = justify-content-end'>
-                <div className='d-flex'>
+              <div className='d-flex flex-wrap gap-2 all_flexbx justify-content-end'>
+              
                   {/* <div className='searchInput'>
                     <input
                       type="text"
@@ -142,7 +138,7 @@ export default function affilate() {
                     }} aria-hidden="true"></i>
                   </div> */}
 
-                  <div className='ms-2'>
+                  <div className=''>
                    {user?.role == 'brand' ? <SelectDropdown
                       id="statusDropdown"
                       displayValue="name"
@@ -166,7 +162,7 @@ export default function affilate() {
                       ]}
                     />}
                   </div>
-                  <div className='ms-2'>
+                  <div className=''>
                     <SelectDropdown
                       id="statusDropdown"
                       displayValue="name"
@@ -181,19 +177,20 @@ export default function affilate() {
 
 
                   {filters?.search || filters.transaction_status || filters.transaction_type ? <>
-                    <a className="btn btn-primary ms-3  " onClick={e => reset()}>
+                    <a className="btn btn-primary  " onClick={e => reset()}>
                       Reset
                     </a>
                   </> : <></>}
-                </div>
+              
 
 
               </div>
             </div>
           </div>
-          <div className='row mx-0 mt-3'>
+          <div className='row '>
             <div className='respon_data'>
-              <div className='table-responsive table_section mt-3'>
+              <div className='table_section '>
+              <div className='table-responsive '>
                 <table class="table table-striped ">
                   <thead class="thead-clr">
                     <tr >
@@ -222,8 +219,8 @@ export default function affilate() {
                         <td className='name-person ml-2'  >{itm?.currency}</td>
                         {/* <td className='name-person ml-2'  >{itm?.transaction_id}</td> */}
                         <td className='name-person ml-2'  >{itm?.transaction_status}</td>
-                        <td className='table_dats' >{datepipeModel.date(itm?.createdAt)}</td>
-                        <td className='table_dats' >{datepipeModel.date(itm?.updatedAt)}</td>
+                        <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
+                        <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td>
 
                       </tr>
 
@@ -233,26 +230,31 @@ export default function affilate() {
                 </table>
                 {loaging ? <div className="text-center py-4">
                   <img src="/assets/img/loader.gif" className="pageLoader" />
-                </div> : <></>}
-
+                </div> : <></>} 
+                {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
+              </div>
               </div>
             </div>
           </div>
 
-        </div>
+         
+       </div>
 
-        {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
+        </div>
+        
+      
 
         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
           <span>Show {data?.length} from {total} Users</span>
           <ReactPaginate
             breakLabel="..."
-            nextLabel="next >"
+            nextLabel="Next >"
             initialPage={filters?.page}
             onPageChange={pageChange}
-            pageRangeDisplayed={6}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}
-            previousLabel="< previous"
+            previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}
             activeClassName={"pagination-item-active"}

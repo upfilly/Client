@@ -60,7 +60,7 @@ const Types = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
           }).then((result:any) => {
             if (result.isConfirmed) {
@@ -101,7 +101,7 @@ const Types = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
           }).then((result:any) => {
             if (result.isConfirmed) {

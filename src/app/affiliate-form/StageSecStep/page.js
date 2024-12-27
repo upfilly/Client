@@ -46,7 +46,7 @@ export default function StageSecStep() {
 
       //   if (res.success == true) {
       localStorage.setItem("step2", JSON.stringify(data))
-      router.push(`/affiliate-form/StageLastStep`)
+      router.push(`/affiliate-form/taxSection`)
       // }
       //    loader(false)
       // })
@@ -90,7 +90,7 @@ export default function StageSecStep() {
       setAddress(selectedAddress);
       sendLocationToApi(selectedLocation);
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   };
 
@@ -134,7 +134,7 @@ export default function StageSecStep() {
                 <div className='d-flex align-items-center'>
                   <button className='genral-buttons'><span className="rank mr-2">01</span>General</button>
                   <button className='genral-buttons ml-3'><span className="rank mr-2">02</span>Address</button>
-                  {/* <button className='genral-button ml-3'><span className="ranks mr-2">03</span>Billing</button> */}
+                  <button className='genral-button ml-3' ><span className="ranks mr-2">03</span> Tax Detail</button>
                   <button className='genral-button ml-3'><span className="ranks mr-2">03</span>User</button>
                 </div>
               </div>
@@ -159,7 +159,7 @@ export default function StageSecStep() {
                   <div className='row mx-0 '>
                     {/* { enableAddress &&    */}
                     <><div className='col-md-6'>
-                      <label className='label-set'>Address1</label>
+                      <label className='label-set'>Address1<span className="star">*</span></label>
 
                       {!stateAutocomplete && <PlacesAutocomplete
                         value={address}
@@ -167,8 +167,8 @@ export default function StageSecStep() {
                         onSelect={handleSelect}
                       >
                         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
-                            <input className="form-control "
+                          <div className='address_search'>
+                            <input className="form-control " 
 
                               {...getInputProps({
                                 placeholder: 'Enter an address...',
@@ -177,22 +177,28 @@ export default function StageSecStep() {
                                 // value:addressData
                               })} />
                             {/* {(inputFocused && address?.length > 0) && <div className='shadow p-3'> */}
+                             <div className='location_search'>
                             {loading && <div>Loading...</div>}
                             {suggestions?.map((suggestion) => {
                               const style = {
                                 backgroundColor: suggestion.active ? '#41b6e6' : '#fff',
 
                               };
+                             
                               return (
-                                <div className='location_address'
+                               
+                                  <div className='location_address'
                                   {...getSuggestionItemProps(suggestion, {
                                     style,
                                   })}
                                 >
                                   <i class="fa-solid fa-location-dot mr-1"></i>{suggestion.description}
                                 </div>
+                             
                               );
+                             
                             })}
+                             </div>
                             {/* </div>} */}
                           </div>
                         )}
@@ -212,26 +218,26 @@ export default function StageSecStep() {
                       </div>
                       <div className='col-md-3'>
                         <div class="form-group">
-                          <label className='label-set'>State  </label>
+                          <label className='label-set'>State <span className="star">*</span> </label>
                           <input type="text" placeholder='Your State' value={selectedLocation?.state} onChange={(e) => setSelectedLocation({ ...selectedLocation, state: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                           {submitted && !selectedLocation?.state ? <div className="invalid-feedback d-block">State is Required</div> : <></>}
                         </div>
                       </div><div className='col-md-3'>
                         <div class="form-group">
-                          <label className='label-set'>City  </label>
+                          <label className='label-set'>City <span className="star">*</span> </label>
                           <input type="text" placeholder='Your City' value={selectedLocation?.city} onChange={(e) => setSelectedLocation({ ...selectedLocation, city: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                           {submitted && !selectedLocation?.city ? <div className="invalid-feedback d-block">City is Required</div> : <></>}
                         </div>
                       </div><div className='col-md-3'>
                         <div class="form-group">
-                          <label className='label-set'>Postal Code  </label>
+                          <label className='label-set'>Postal Code<span className="star">*</span>  </label>
                           <input type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                     {submitted && !selectedLocation?.pincode ? <div className="invalid-feedback d-block">Pincode is Required</div> : <></>}
                         </div>
                       </div></>
                     {/* } */}
 
-                    <div className='col-md-12 mt-4 mb-2'>
+                    <div className='col-md-12 mt-4 mb-2 text-right'>
                       <button className='back-btns' onClick={handleGoBack}>Back</button>
                       {enableAddress ? <button className='btn btn-primary login ml-3' onClick={handleSave}>Save & Continue</button> :
                         <button className='btn btn-primary login ml-3' onClick={handleEnableData}>Save & Continue</button>}

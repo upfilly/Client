@@ -126,7 +126,7 @@ export default function StageThirdStep() {
   }
 
   const uploadDocument = async (e, key) => {
-    console.log('enter');
+    // console.log('enter');
     let files = e.target.files
     let i = 0
     let imgfile = []

@@ -6,19 +6,18 @@ import Layout from '../../components/global/layout';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import SelectDropdown from '@/app/components/common/SelectDropdown';
-import loader from '@/methods/loader';
 import crendentialModel from '@/models/credential.model';
 
 export default function StageFirstStep() {
   const router = useRouter()
   const user = crendentialModel.getUser()
   const [accountExecutive, setAccountExecutive] = useState([])
-  const [passwordError, setPasswordError] = useState('');
+  // const [passwordError, setPasswordError] = useState('');
   const [submitted, setSubmitted] = useState(false)
   const [partnerManager, setPartnerManager] = useState([])
   const [affiliateGroup, setAffiliategroup] = useState([])
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [eyes, setEyes] = useState({ password: false, confirmPassword: false, currentPassword: false });
+  // const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  // const [eyes, setEyes] = useState({ password: false, confirmPassword: false, currentPassword: false });
   const [formData, setFormData] = useState({
     firstName: '',
     // email: '',
@@ -26,10 +25,10 @@ export default function StageFirstStep() {
     // account_executive_id: '',
     reffering_affiliate: user?.email,
     affiliate_code: '',
-    referredBy: '',
+    // referredBy: '',
     labels: '',
     status: '',
-    currency:'usd',
+    // currency:'usd',
     // allow_notification: false,
     // is_enable_mediacost: false,
     affiliate_group: "",
@@ -67,10 +66,10 @@ export default function StageFirstStep() {
       firstName: formData?.firstName,
       // parter_manager_id: formData?.parter_manager_id,
       // account_executive_id: formData?.account_executive_id,
-      refferedBy: formData?.referredBy,
+      // refferedBy: formData?.referredBy,
       labels: formData?.labels,
       status: formData?.status,
-      currency: formData?.currency,
+      // currency: formData?.currency,
       // allow_notification: formData?.allow_notification,
       // is_enable_mediacost: formData?.is_enable_mediacost,
       affiliate_group: formData?.affiliate_group,
@@ -161,8 +160,8 @@ export default function StageFirstStep() {
                 <div className='d-flex align-items-center'>
                   <button className='genral-buttons'><span className="rank mr-2">01</span>General</button>
                   <button className='genral-button ml-3'><span className="ranks mr-2">02</span>Address</button>
-                  {/* <button className='genral-button ml-3'><span className="ranks mr-2">03</span>Billing</button> */}
-                  <button className='genral-button ml-3'><span className="ranks mr-2">03</span>User</button>
+                  <button className='genral-button ml-3'><span className="ranks mr-2">03</span> Tax Detail</button>
+                  <button className='genral-button ml-3'><span className="ranks mr-2">04</span>User</button>
                 </div>
               </div>
             </div>
@@ -173,7 +172,7 @@ export default function StageFirstStep() {
                   <div className='row mx-0 mt-4'>
                     <div className='col-md-6'>
                       <div className="form-group">
-                        <label className='label-set'>Name </label>
+                        <label className='label-set'>Name<span className="star">*</span> </label>
                         <input
                           type="text"
                           placeholder='Your Name'
@@ -241,7 +240,7 @@ export default function StageFirstStep() {
                         />
                       </div>
                     </div>
-                    <div className='col-md-6'>
+                    {/* <div className='col-md-6'>
                       <div className="form-group">
                         <label className='label-set'>Referred By </label>
                         <SelectDropdown
@@ -256,7 +255,7 @@ export default function StageFirstStep() {
                           ]}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className='col-md-6'>
                       <div className="form-group">
                         <label className='label-set'>Labels </label>
@@ -301,7 +300,7 @@ export default function StageFirstStep() {
                     </div>
                     <div className='col-md-6'>
                       <div className="form-group">
-                        <label className='label-set'>Status</label>
+                        <label className='label-set'>Status<span className="star">*</span></label>
                         <SelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -317,7 +316,7 @@ export default function StageFirstStep() {
              {submitted && !formData?.status ? <div className="invalid-feedback d-block">Status is Required</div> : <></>}
                       </div>
                     </div>
-                    <div className='col-md-6'>
+                    {/* <div className='col-md-6'>
                       <div className="form-group">
                         <label className='label-set'>Currency </label>
                         <input
@@ -331,7 +330,7 @@ export default function StageFirstStep() {
                           disabled
                         />
                       </div>
-                    </div>
+                    </div> */}
                     {/* <div className='col-md-6'>
                       <div className='form-group'>
                         <label className='label-set'>

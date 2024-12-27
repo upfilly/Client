@@ -47,9 +47,10 @@ const Forgotpassword = () => {
     return (
         <>
             <PageContainer title='Forgot Password' description='Forgot Password' settingData={settingData}>
-                <div className="container-fluid p-0 bg-black">
+               <div className='card_parent' >
+               <div className="container-fluid p-0 bg-black">
                     <div className="row align-items-center mx-auto">
-                        <div className="col-md-4 p-0 mx-auto">
+                        <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto">
                             {/* <div className='banner_img'>
                                 <div className='logo_img'>
                                     <Image src="/assets/img/logo.png" alt='Logo' width="300" height="55" className='logo' />
@@ -87,8 +88,11 @@ const Forgotpassword = () => {
 
                                     <div className="buttons">
 
-                                        <button type="submit" className="btn btn-primary loginclass mb-4">
+                                        <button type="submit" className="btn btn-primary loginclass mb-2">
                                             Send
+                                        </button>
+                                        <button className="btn btn-secondary loginclass mb-2 w-100" onClick={()=>history.back()}>
+                                            Back
                                         </button>
                                     </div>
 
@@ -102,6 +106,7 @@ const Forgotpassword = () => {
 
                     </div>
                 </div>
+               </div>
             </PageContainer>
         </>
     );

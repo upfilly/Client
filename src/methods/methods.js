@@ -1,3 +1,4 @@
+import crendentialModel from "@/models/credential.model"
 import environment from "../environment"
 
 const isTranslatePage = () => {

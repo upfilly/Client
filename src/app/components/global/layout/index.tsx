@@ -12,7 +12,7 @@ import crendentialModel from '@/models/credential.model';
 import { usePathname, useRouter } from 'next/navigation';
 import {requestForToken , message} from '../../../firebase/function'
 import PageContainer from '../../main/PageContainer';
-import Link from 'next/link';
+
 type Props = {
   description?: string;
   children: any;
@@ -25,15 +25,19 @@ declare const localStorage: any
 
 export default function Layout({ title, description, children , handleKeyPress, setFilter, reset ,filter ,name ,filters}: Props) {
   let user: any = crendentialModel.getUser()
-  const [activeSidebar, setActiveSidebar] = useState(false)
-  const [settingData, setSettingData] = useState([])
   const history: any = useRouter()
   const pathname = usePathname()
+  const [activeSidebar, setActiveSidebar] = useState(false)
+  const [settingData, setSettingData] = useState([])
   const [showPopup, setShowPopup] = useState(false)
-  const isDashboard = pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') || pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') || 
+  const isDashboard = pathname.includes('/requestCampaigns') || pathname.includes('/mapping') || pathname.includes('/reports') || pathname.includes('/brand-report') || pathname.includes('/affiliate-report') || pathname.includes('/trackingData') || pathname.includes('/performance') || pathname.includes('/CreativeEmails') || pathname.includes('/EmailMessages') || pathname.includes('/DataFeeds') ||
+                      pathname.includes('/CreativeAsset') || pathname.includes('/EmailTemplate') ||pathname.includes('/coupons') || pathname.includes('/appliedjobs') || pathname.includes('/applymerchants') || pathname.includes('/invitedUsers') || pathname.includes('/addbanner') || pathname.includes('/invitations') || 
+                      pathname.includes('/inviteUsers') || pathname.includes('/users') || pathname.includes('/salesTracking') || pathname.includes('makeLink') || pathname.includes('/generateLink') || pathname.includes('/Trackings') || pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') || 
+                      pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') || 
                       pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') || pathname.includes('/group')|| pathname.includes('/commission') || pathname.includes('/payments') || pathname.includes('/chat')
-  const isAuthenticate = pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') ||
+  const isAuthenticate = pathname.includes('/reports') || pathname.includes('/brand-report') || pathname.includes('/affiliate-report') || pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') ||
                          pathname.includes('/profile') || pathname.includes('/payments') || pathname.includes('/proposals') || pathname.includes('/commission')
+  
   useEffect(() => {
     if (user) {
       ApiClient.get('user/detail', { id: user.id }).then(res => {
@@ -55,7 +59,7 @@ export default function Layout({ title, description, children , handleKeyPress, 
   }, [])
 
   // const requestPermission = async () => {
-  //   console.log("Requesting permission...");
+  //   // console.log("Requesting permission...");
   //   await Notification.requestPermission()
   //     .then((permission) => {
         // requestForToken()
@@ -67,7 +71,7 @@ export default function Layout({ title, description, children , handleKeyPress, 
         // }
   //     })
   //     .catch((error) => {
-  //       console.error("Error while requesting notification permission:", error);
+  //       // console.error("Error while requesting notification permission:", error);
   //     });
   // };
 
@@ -88,13 +92,13 @@ export default function Layout({ title, description, children , handleKeyPress, 
     }
   }, [])
 
-  useEffect(() => {
-    if (isAuthenticate) {
-      if (!user?.isPayment && user?.role == "brand") {
-        history.push('/pricing')
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (isAuthenticate) {
+  //     if (!user?.isPayment && user?.role == "brand") {
+  //       history.push('/pricing')
+  //     }
+  //   }
+  // }, [])
 
   const logo = () => {
     let value = '/assets/img/logo.png'
