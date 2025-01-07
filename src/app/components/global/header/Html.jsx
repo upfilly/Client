@@ -195,9 +195,11 @@ const Html = ({ settingData, Logout }) => {
                     class={`nav-link ${pathname == "/platforms" ? 'active' : ''}`}
                     href="/platforms">Platform</Link>
                 </li>
-                {false && <>{(user?.role == "brand" || !user) && <li class="nav-item">
+                {/* {false && */}
+                 <>{(user?.role == "brand" || !user) && <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/pricing" ? 'active' : ''}`} href="/pricing">Pricing</Link>
-                </li>}</>}
+                </li>}</>
+                {/* } */}
                 {/* <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/partners" ? 'active' : ''}`} href="/partners">Partners</Link>
                 </li> */}

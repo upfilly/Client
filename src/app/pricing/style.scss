@@ -419,3 +419,53 @@ p.textWrong {
     color: #226ed1 !important;
     border: 1px solid transparent !important;
 }
+
+/* Styles for the main content and the keys */
+
+.includes-plan {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .locks {
+    color: red;
+  }
+  
+  .plan-features {
+    margin-top: 20px;
+  }
+  
+  .checkss {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .check_list {
+    filter: grayscale(1);
+  }
+  
+  .ipsi {
+    font-size: 14px;
+  }
+  
+  .ml-3 {
+    margin-left: 10px;
+  }
+  
+  .additional-info {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .info-item {
+    margin-bottom: 10px;
+  }
+  
+  .info-item strong {
+    color: #555;
+  }
+  

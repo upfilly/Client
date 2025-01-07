@@ -50,9 +50,14 @@ export default function BillingForm() {
     status: ''
   })
   const [selectedId, setSelectedId] = useState(id || null);
-
   const FilterData = data.filter(event => !event.isUpcoming);
+  const [offers,setOffers] = useState([])
+  const [selectedOffer, setSelectedOffer] = useState(null);
+  const specialOfferPrice = offers?.filter((itm)=>itm?._id == selectedOffer)?.[0]?.amount
 
+  const handleSpecialOfferChange = (id) => {
+    setSelectedOffer((prevSelected) => (prevSelected === id ? null : id));
+  };
 
   const handleRadioChange = (itemId) => {
     setSelectedId(itemId);
@@ -300,7 +305,7 @@ export default function BillingForm() {
   const getData = (p = {}) => {
     setLoader(true)
     if (!user) {
-      let filter = { ...filters, ...p }
+      let filter = { ...filters, ...p ,category:"Network"}
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
@@ -311,7 +316,22 @@ export default function BillingForm() {
     }
   }
 
+  const getOfferData = (p = {}) => {
+    setLoader(true)
+    if (!user) {
+      let filter = { ...filters, ...p ,category:"Managed Services"}
+      let url = 'subscription-plan/all'
+      ApiClient.get(url, filter).then(res => {
+        if (res) {
+          setOffers(res?.data?.data)
+          setLoader(false)
+        }
+      })
+    }
+  }
+
   useEffect(() => {
+    getOfferData()
     getData()
   }, [])
 
@@ -327,10 +347,6 @@ export default function BillingForm() {
             </div>
 
           </div>
-
-
-
-
 
           {showPopup && (
 
@@ -413,13 +429,27 @@ export default function BillingForm() {
                           </div>
                           <div className='opt-main_cate'>
                             <ul className='opt-category plan-featuress pl-0'>
+                              <div className='additional-info'>
+                                <div className='info-item'>
+                                  <strong>Basket Value Charge:</strong> {itm.basket_value_charge}
+                                </div>
+                                <div className='info-item'>
+                                  <strong>Commission Override:</strong> {itm.commission_override}
+                                </div>
+                                <div className='info-item'>
+                                  <strong>Bonus Override:</strong> {itm.bonus_override}
+                                </div>
+                                <div className='info-item'>
+                                  <strong>Allowed Total Revenue:</strong> {itm.allowed_total_revenue}
+                                </div>
+                              </div>
                               {itm?.features?.map((feature) => (
                                 <li className='d-flex align-items-center' key={feature.id}>
-                                  <img
+                                 {itm.features?.[0]?.feature_name && <img
                                     className='checkss'
                                     src='/assets/img/check.png'
                                     alt=''
-                                  ></img>
+                                  ></img>}
                                   <p className='ipsi ml-2 mb-0'>{feature.feature_name}</p>
                                 </li>
                               ))}
@@ -445,6 +475,28 @@ export default function BillingForm() {
               </div>
 
               <div className='col-12 col-md-12 col-lg-12 col-xl-4'>
+
+                <div className='card p-0 mb-4'>
+                  <div className='card-header'>
+                    <h4 className='card-title'>Special Offers</h4>
+                  </div>
+                  <div className='card-body'>
+                    {offers.map((offer) => (
+                      <div key={offer.id} className="form-check">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id={`specialOfferCheckbox-${offer._id}`}
+                          checked={selectedOffer === offer._id}
+                          onChange={() => handleSpecialOfferChange(offer._id)}
+                        />
+                        <label className="form-check-label" htmlFor={`specialOfferCheckbox-${offer._id}`}>
+                          {offer.name}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                
                   <div className='card p-0 mb-4'>
                     <div className='card-header'>

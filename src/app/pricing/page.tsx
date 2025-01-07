@@ -10,6 +10,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import datepipeModel from '@/models/datepipemodel';
 import loader from '@/methods/loader';
 import methodModel from '@/methods/methods';
+import { toast } from 'react-toastify';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 export default function Pricing() {
   const user = crendentialModel.getUser()
@@ -29,7 +31,17 @@ export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<any>(false)
   const param = useSearchParams()
   const id = param.get("id")
+  const [show, setShow] = useState(false);
+  const [offers,setOffers] = useState<any>([])
+  const [selectedOffer, setSelectedOffer] = useState(null);
+  const handleClose = () => { setShow(false) };
+  const handleShow = () => setShow(true);
 
+  const specialOfferPrice = offers?.filter((itm:any)=>itm?._id == selectedOffer)?.[0]?.amount
+
+  const handleSpecialOfferChange = (id:any) => {
+    setSelectedOffer((prevSelected) => (prevSelected === id ? null : id));
+  };
 
   const getContentData = (p = {}) => {
     let url = 'content'
@@ -41,7 +53,7 @@ export default function Pricing() {
     })
   }
 
-  const getFaq = (id:any) => {
+  const getFaq = (id: any) => {
     let url = 'faq/all'
     ApiClient.get(url, { content_id: id }).then(res => {
       if (res.success) {
@@ -51,7 +63,20 @@ export default function Pricing() {
     })
   }
 
+  const getOfferData = (p = {}) => {
+    setLoader(true)
+      let filter = { category:"Managed Services"}
+      let url = 'subscription-plan/all'
+      ApiClient.get(url, filter).then(res => {
+        if (res) {
+          setOffers(res?.data?.data)
+          setLoader(false)
+        }
+      })
+  }
+
   useEffect(() => {
+    getOfferData()
     getContentData()
   }, [])
 
@@ -75,7 +100,7 @@ export default function Pricing() {
       if (res.success == true) {
         crendentialModel?.setUser(res?.data)
         localStorage.setItem('token', res.data.access_token)
-        localStorage.setItem('addedUser',JSON.stringify(res?.data?.addedBy))
+        localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
         // let url = '/dashboard'
         // history.push(url);
         // window.location.assign('')
@@ -98,7 +123,7 @@ export default function Pricing() {
   const getData = (p = {}) => {
     setLoader(true)
     if (!user) {
-      let filter = { ...filters, ...p }
+      let filter = { ...filters, ...p, category: "Network" }
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
@@ -110,7 +135,7 @@ export default function Pricing() {
     }
 
     if (user) {
-      let filter = { ...filters, ...p, userId: user?.id }
+      let filter = { ...filters, ...p, userId: user?.id, category: "Network" }
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
@@ -137,30 +162,45 @@ export default function Pricing() {
   //   return a.isUpcoming ? -1 : 1;
   // })
 
-  const sortedData = filteredPlans.sort((a: any, b: any) => {
+  const sortedData = filteredPlans?.sort((a: any, b: any) => {
     if (a.recommended === 'Y' && b.recommended === 'N') return -1;
     if (a.recommended === 'N' && b.recommended === 'Y') return 1;
-    // console.log(a,b,"-------=====aaaa")
 
-    return b.amount - a.amount;
-  })
+    return a.amount - b.amount;
+  });
 
-  const ChangePlan=(id:any)=>{
+
+  const ChangePlan = (dat: any) => {
     const data1 = {
       // "card_number": formData?.cardNumber,
       // "exp_month": month,
       // "exp_year": year,
-      "plan_id":id,
-      "user_id": user?.id,
+      // "plan_id":id,
+      // "user_id": user?.id,
       // "cvc": formData?.cardCvc
+      "network_plan_amount": dat?.amount,
+      "managed_services_plan_amount": 0,
+      "interval": "month",
+      "interval_count": dat?.interval_count,
+      "isSpecial": false,
+      "planId": dat?.id || dat?._id,
+      "promoId": "",
+      "special_plan_id": null
     }
-      ApiClient.post('create/session', data1).then(res => {
-        if (res.success == true) {
-          loader(false)
+    // ApiClient.post('create/session', data1).then(res => {
+    ApiClient.post('subscribe', data1).then(res => {
+      if (res.success == true) {
+        loader(false)
+        if (dat?.amount == 0) {
+          toast.success(res?.message)
+          getData()
+        } else {
           window.location.href = res?.data?.url
-          //  window.open(res?.data?.url)
-  }})}
-      
+        }
+        //  window.open(res?.data?.url)
+      }
+    })
+  }
 
   useEffect(() => {
     getData()
@@ -182,62 +222,62 @@ export default function Pricing() {
 
               </div>
               <div className=''>
-          <div className="row">
-          <div className="col-md-12 mb-5 mt-4">
-                  <div className="monthalu_plan d-flex">
-                    <h3>Monthly Plan</h3>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={selectedPlan}
-                        onChange={() => setSelectedPlan(!selectedPlan)}
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                    <h3>Annual Plan</h3>
+                <div className="row">
+                  <div className="col-md-12 mb-5 mt-4">
+                    <div className="monthalu_plan d-flex">
+                      <h3>Monthly Plan</h3>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={selectedPlan}
+                          onChange={() => setSelectedPlan(!selectedPlan)}
+                        />
+                        <span className="slider round"></span>
+                      </label>
+                      <h3>Annual Plan</h3>
+                    </div>
                   </div>
                 </div>
-          </div>
 
-          <div className="row">
-                {sortedData?.map((itm: any) => {
-                  const activePlans: any = data.filter((plan: any) => plan.isActive);
-                  const upcomingDate = new Date(itm?.upcoming_date)
-                  const currentDate = new Date()
-                  const showCard = (upcomingDate >= currentDate);
-                  const calculateDiscountedAmount = (amount: any, discountDetails: any) => {
-                    if (!discountDetails || !discountDetails.discount_type) {
+                <div className="row">
+                  {sortedData?.map((itm: any) => {
+                    const activePlans: any = data.filter((plan: any) => plan.isActive);
+                    const upcomingDate = new Date(itm?.upcoming_date)
+                    const currentDate = new Date()
+                    const showCard = (upcomingDate >= currentDate);
+                    const calculateDiscountedAmount = (amount: any, discountDetails: any) => {
+                      if (!discountDetails || !discountDetails.discount_type) {
+                        return amount;
+                      }
+
+                      if (discountDetails.discount_type === 'flat') {
+                        return amount - discountDetails.amount_value;
+                      }
+
+                      if (discountDetails.discount_type === 'percentage') {
+                        const percentageValue = (amount * discountDetails.amount_value) / 100;
+                        return amount - percentageValue;
+                      }
+
                       return amount;
                     }
 
-                    if (discountDetails.discount_type === 'flat') {
-                      return amount - discountDetails.amount_value;
-                    }
+                    const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
 
-                    if (discountDetails.discount_type === 'percentage') {
-                      const percentageValue = (amount * discountDetails.amount_value) / 100;
-                      return amount - percentageValue;
-                    }
+                    return (
 
-                    return amount;
-                  }
+                      <div className=" col-12 col-sm-12 col-md-6 col-lg-4 mt-4" key={itm._id}>
+                        <div className={itm.recommended === "Y" && !user?.isPayment ? "card quicksf card_height p-4" : "card card_height quickss p-4 h-100"}>
+                          <div className='card_highjt'>
+                            <div className='d-flex justify-content-between align-items-center'>
+                              {(itm?.isUpcoming && showCard) && <div className="avtive_badges"><p className='mb-0 upcoming-plan'>Upcoming Plan <span className='d-block date-activeplan'>{`(${datepipeModel.date(itm?.upcoming_date)})`}</span> </p>
 
-                  const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
-                  
-                  return (
-                  
-                     <div className=" col-12 col-sm-12 col-md-6 col-lg-4 mt-4" key={itm._id}>
-                      <div className={itm.recommended === "Y" && !user?.isPayment ? "card quicksf card_height p-4" : "card card_height quickss p-4 h-100"}>
-                        <div className='card_highjt'>
-                          <div className='d-flex justify-content-between align-items-center'>
-                            {(itm?.isUpcoming && showCard) && <div className="avtive_badges"><p className='mb-0 upcoming-plan'>Upcoming Plan <span className='d-block date-activeplan'>{`(${datepipeModel.date(itm?.upcoming_date)})`}</span> </p>
-
-                            </div>}
-                            {itm.recommended === "Y" && !user?.isPayment && <div className="avtive_badges">MOST POPULAR</div>}
-                            <div>
-                              <h1 className={itm.recommended === "Y" && !user?.isPayment ? 'triel-city locks' : 'triel-city '}>{methodModel.capitalizeFirstLetter(itm.name)}</h1>
-                            </div>
-                            {itm.payment_type === "recurring" && (
+                              </div>}
+                              {itm.recommended === "Y" && !user?.isPayment && <div className="avtive_badges">MOST POPULAR</div>}
+                              <div>
+                                <h1 className={itm.recommended === "Y" && !user?.isPayment ? 'triel-city locks' : 'triel-city '}>{methodModel.capitalizeFirstLetter(itm.name)}</h1>
+                              </div>
+                              {/* {itm.payment_type === "recurring" && ( */}
                               <div className='text-end'>
                                 <div className='text_wrong d-flex justify-content-between align-items-center'>
                                   {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
@@ -245,60 +285,75 @@ export default function Pricing() {
                                 </div>
                                 <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.billing_frequency} month</p>
                               </div>
-                            )}
-                            {itm.payment_type === "trial" && (
-                              <div className='text-end'>
-                                <div className='text_wrong d-flex justify-content-between align-items-center'>
-                                  {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
-                                  <p className={itm.recommended === "Y" && !user?.isPayment ? 'dollarf-sec locks' : 'dollarf-sec '}>${discountedAmount}</p>
+                              {/* )} */}
+                              {itm.payment_type === "trial" && (
+                                <div className='text-end'>
+                                  <div className='text_wrong d-flex justify-content-between align-items-center'>
+                                    {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
+                                    <p className={itm.recommended === "Y" && !user?.isPayment ? 'dollarf-sec locks' : 'dollarf-sec '}>${discountedAmount}</p>
+                                  </div>
+                                  <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.trial_period_days} days</p>
                                 </div>
-                                <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.trial_period_days} days</p>
-                              </div>
-                            )}
-                          </div>
+                              )}
+                            </div>
 
-                          <hr className='bgs'></hr>
-                          <p className={itm.recommended === "Y" && !user?.isPayment ? 'includes-plan locks' : 'includes-plan '}>Plan includes</p>
-                          <div className='plan-features'>
-                            {itm.features.map((feature: any) => (
-                              <div className='d-flex align-items-center mt-3 flex_list' key={feature.id}>
-                                <img
-                                  className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks check_list' : 'checkss check_list '}
-                                  src={itm.recommended === "Y" && !user?.isPayment ? '/assets/img/checkmark.png' : '/assets/img/check.png'}
-                                  alt=''
-                                ></img>
-                                <p className={itm.recommended === "Y" && !user?.isPayment ? 'ipsi ml-3 locks' : 'ipsi ml-3 '}>{methodModel.capitalizeFirstLetter(feature.feature_name)}</p>
+                            <hr className='bgs'></hr>
+                            <p className={itm.recommended === "Y" && !user?.isPayment ? 'includes-plan locks' : 'includes-plan '}>Plan includes</p>
+                            <div className='additional-info'>
+                              <div className='info-item'>
+                                <strong>Basket Value Charge:</strong> {itm.basket_value_charge}
                               </div>
-                            ))}
+                              <div className='info-item'>
+                                <strong>Commission Override:</strong> {itm.commission_override}
+                              </div>
+                              <div className='info-item'>
+                                <strong>Bonus Override:</strong> {itm.bonus_override}
+                              </div>
+                              <div className='info-item'>
+                                <strong>Allowed Total Revenue:</strong> {itm.allowed_total_revenue}
+                              </div>
+                            </div>
+                            {<div className='plan-features'>
+                              {itm.features.map((feature: any) => (
+                                <div className='d-flex align-items-center mt-3 flex_list' key={feature.id}>
+                                  {itm.features?.[0]?.feature_name && <img
+                                    className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks check_list' : 'checkss check_list '}
+                                    src={itm.recommended === "Y" && !user?.isPayment ? '/assets/img/checkmark.png' : '/assets/img/check.png'}
+                                    alt=''
+                                  ></img>}
+                                  <p className={itm.recommended === "Y" && !user?.isPayment ? 'ipsi ml-3 locks' : 'ipsi ml-3 '}>{methodModel.capitalizeFirstLetter(feature.feature_name)}</p>
+                                </div>
+                              ))}
+                            </div>}
+
                           </div>
-                        </div>
-                        <div className='mt-4'>
-                          {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>{!user ? history.push(`/bookingForm?planId=${itm._id}`)  : ChangePlan(itm._id)}}>Book a Demo</a>}
-                          {!showCard && !itm.isUpcoming && !user?.isPayment && user && <a className='demos-button w-100 form-control book-demo'
-                            // href={user ? `/cards?id=${itm._id}&price=${itm?.amount}` : `/bookingForm/${itm._id}`}
-                            onClick={()=>ChangePlan(itm._id)}>Buy a Plan</a>}
-                          {!showCard && !itm.isUpcoming && user && !itm.isActive && user?.isPayment && (
-                            <a className='demos-button w-100 form-control' onClick={()=>ChangePlan(itm._id)}>
-                              {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
-                            </a>
-                          )}
-                          {(!showCard && !itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
-                          {(showCard && itm.isUpcoming) && <span className=''></span>}
-                          {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={()=>{!user ? history.push(`/bookingForm?planId=${itm._id}`)  : ChangePlan(itm._id)}}>Book a Demo</a>}
-                          {(!showCard && itm.isUpcoming && user && !user?.isPayment && user) && <a className='demos-button w-100 form-control book-demo' onClick={()=>ChangePlan(itm._id)}>Buy a Plan</a>}
-                          {(!showCard && itm.isUpcoming) && user && !itm.isActive && user?.isPayment && (
-                            <a className='demos-button w-100 form-control' onClick={()=>ChangePlan(itm._id)}>
-                              {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
-                            </a>
-                          )}
-                          {(!showCard && itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
+                          <div className='mt-4'>
+                            {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={() => { !user ? history.push(`/bookingForm?planId=${itm._id}`) : ChangePlan(itm) }}>Book a Demo</a>}
+                            {!showCard && !itm.isUpcoming && !user?.isPayment && user && <a className='demos-button w-100 form-control book-demo'
+                              // href={user ? `/cards?id=${itm._id}&price=${itm?.amount}` : `/bookingForm/${itm._id}`}
+                              onClick={() => ChangePlan(itm)}>Buy a Plan</a>}
+                            {!showCard && !itm.isUpcoming && user && !itm.isActive && user?.isPayment && (
+                              <a className='demos-button w-100 form-control' onClick={() => ChangePlan(itm)}>
+                                {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
+                              </a>
+                            )}
+                            {(!showCard && !itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
+                            {(showCard && itm.isUpcoming) && <span className=''></span>}
+                            {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={() => { !user ? history.push(`/bookingForm?planId=${itm._id}`) : ChangePlan(itm) }}>Book a Demo</a>}
+                            {(!showCard && itm.isUpcoming && user && !user?.isPayment && user) && <a className='demos-button w-100 form-control book-demo' onClick={() => ChangePlan(itm)}>Buy a Plan</a>}
+                            {(!showCard && itm.isUpcoming) && user && !itm.isActive && user?.isPayment && (
+                              <a className='demos-button w-100 form-control' onClick={() => ChangePlan(itm)}>
+                                {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
+                              </a>
+                            )}
+                            {(!showCard && itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                   
-                  )
-                 
-                })}
+
+                    )
+
+                  })}
                 </div>
               </div>
             </div>
@@ -329,12 +384,12 @@ export default function Pricing() {
             <div className="bg_tracked pricing-padding">
               <div className="row align-items-center">
                 <div className="col-md-6 ">
-<div className="mb-4">
-  
-<h1 className='customers'>Customers <br />tracked in 2023 <br />more than +3Mi </h1>
-                  {(user?.role == "affiliate" || !user) && <Link className=' btn btn-light ' href="/pricing">Book a Demo</Link>}
+                  <div className="mb-4">
 
-</div>
+                    <h1 className='customers'>Customers <br />tracked in 2023 <br />more than +3Mi </h1>
+                    {(user?.role == "affiliate" || !user) && <Link className=' btn btn-light ' href="/pricing">Book a Demo</Link>}
+
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <div className="bg-white text-black p-4 ">
@@ -545,6 +600,33 @@ export default function Pricing() {
         )}
       </div>
 
+      {/* special Offer */}
+      {/* <Modal show={show} onHide={handleClose} className="shadowboxmodal">
+        <Modal.Header className='align-items-center' closeButton>
+          <h5 className='modal-title'>Select Special Offers</h5>
+        </Modal.Header>
+        <Modal.Body>
+          {offers.map((offer:any) => (
+            <div key={offer._id} className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id={`specialOfferCheckbox-${offer._id}`}
+                checked={selectedOffer === offer._id}
+                onChange={() => handleSpecialOfferChange(offer._id)}
+              />
+              <label className="form-check-label" htmlFor={`specialOfferCheckbox-${offer._id}`}>
+                {offer.name}
+              </label>
+            </div>
+          ))}
+          <div className='d-flex align-items-center justify-content-end'>
+            <button className='' onClick={()=>ChangePlan()}>
+              Buy Plan
+            </button>
+          </div>
+        </Modal.Body>
+      </Modal> */}
     </Layout>
   );
 }

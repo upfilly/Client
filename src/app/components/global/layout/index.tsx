@@ -92,13 +92,13 @@ export default function Layout({ title, description, children , handleKeyPress, 
     }
   }, [])
 
-  // useEffect(() => {
-  //   if (isAuthenticate) {
-  //     if (!user?.isPayment && user?.role == "brand") {
-  //       history.push('/pricing')
-  //     }
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (isAuthenticate) {
+      if (!user?.isPayment && user?.role == "brand") {
+        history.push('/pricing')
+      }
+    }
+  }, [])
 
   const logo = () => {
     let value = '/assets/img/logo.png'
