@@ -227,7 +227,7 @@ export default function Home() {
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
       <div className='container-fluid pl-4 pr-4'>
         <div className="main-section">
-          <div className="row align-items-center flex-lg-row flex-column-reverse  flex-md-row ">
+          <div className="row align-items-center flex-lg-row flex-column-reverse flex-md-row ">
             <div className="col-md-6 ">
               <div className='pl_section ' >
                 <h2 className='heding_main'>Revolutionize Your Affiliate Marketing with UpFilly</h2>
@@ -250,7 +250,7 @@ export default function Home() {
           <div className="row">
             <div className="col-md-8 mx-auto">
               <p className='text-center social '>Trusted by industry leaders and best-in-class brands</p>
-              <div className="d-flex  align-items-center flex-wrap gap-4  justify-content-center ">
+              <div className="d-flex align-items-center flex-wrap gap-4 justify-content-center ">
                 <img src="/assets/img/social5.png" alt="" className='social_img' />
                 <img src="/assets/img/social1.png" alt="" className='social_img' />
                 <img src="/assets/img/social6.png" alt="" className='social_img' />
@@ -274,7 +274,7 @@ export default function Home() {
         <div className="row">
 
           <div className="col-12 col-sm-12 col-md-6 col-lg-4">
-            <div className="bg_blue p-4  mb-4">
+            <div className="bg_blue p-4 mb-4">
               <h4 className='affiliatebx' >Managed<br />Subscriptions</h4>
               <p className='text-white para_affiliate'>Let our specialists handle your affiliate program with weekly calls</p>
 
@@ -354,30 +354,29 @@ export default function Home() {
           <div className="row align-items-center flex-column-reverse flex-md-row">
 
 
-
-            <div className="col-12  col-sm-12 col-md-6 col-lg-5" >
+            <div className="col-12 col-sm-12 col-md-6 col-lg-5" >
               <div className="mb-4 lens_details prbx">
                 <h1 className='text-black set_lensbx'>Use a Lens <br /> Performance</h1>
                 <p>Getting Started is Simple</p>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Understand Buyers</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Attribute User Activity</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Utilize CRM Stages</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Measure Organic</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
               </div>
             </div>
-            <div className="col-12  col-sm-12 col-md-6 col-lg-7 ">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-7 ">
               <div className="mb-4">
                 <img src="/assets/img/lens.png" className='img-fluid' alt="" />
               </div>
@@ -389,29 +388,28 @@ export default function Home() {
         <div className='my-5'>
           <div className="row align-items-center">
 
-
-            <div className="col-12  col-sm-12 col-md-6 col-lg-5 col-12  col-sm-12 col-md-6 col-lg-7">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-5 col-12 col-sm-12 col-md-6 col-lg-7">
               <div className="mb-4">
                 <img src="/assets/img/scale.png" className='img-fluid' alt="" />
               </div>
             </div>
-            <div className="col-12  col-sm-12 col-md-6 col-lg-5 ">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-5 ">
               <div className="mb-4 lens_details plbx">
-                <h1 className='text-black set_lensbx '>Scale The Right  <br /> Channels</h1>
+                <h1 className='text-black set_lensbx '>Scale The Right <br /> Channels</h1>
                 <p>Let Us Handle Your Affiliate Program for You</p>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>A dedicated affiliate marketing specialist.</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Weekly calls to strategize and optimize performance.</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Comprehensive performance reports.</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Hands-on campaign management.</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
@@ -424,38 +422,36 @@ export default function Home() {
           <div className="row align-items-center flex-column-reverse flex-md-row">
 
 
-
-            <div className="col-12  col-sm-12 col-md-6 col-lg-5">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-5">
               <div className="mb-4 lens_details prbx">
                 <h1 className='text-black set_lensbx'>Simplify Your <br /> Growth</h1>
                 <p>Why Choose UpFilly?</p>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Expert-Led Campaigns</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Streamlined Operations</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Integrated and Scalable</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
-                <div className="d-flex justify-content-between border-bottom  mt-3 pt-2 mb-3 pb-3 flex_list">
+                <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                   <b>Measure Organic</b>
                   <img src="/assets/img/check.png" className='check_list' alt="" />
                 </div>
               </div>
 
             </div>
-            <div className="col-12  col-sm-12 col-md-6 col-lg-7">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-7">
               <div className="mb-4">
                 <img src="/assets/img/grow.png" className='img-fluid' alt="" />
               </div>
             </div>
           </div>
         </div>
-
 
         <div className="bg_tracked">
           <div className="row align-items-center">
@@ -513,7 +509,7 @@ export default function Home() {
           <div className="row align-items-center">
             <div className="col-md-6 ">
               <div className="pl-0 pl-sm-0 pl-lg-5 ">
-                <h1 class="customers" >Give Your  <br />Growth Goals  <br />The Right tools </h1>
+                <h1 class="customers" >Give Your <br />Growth Goals <br />The Right tools </h1>
                 <p>Join UpFilly today and unlock the full potential of your affiliate marketing program with expert guidance. </p>
                 {(user?.role == "brand" || !user) && <a className='btn btn-blue-new' href="/pricing">Book a Demo</a>}
               </div>
@@ -552,7 +548,6 @@ export default function Home() {
                   <><p>No Question for now</p></>
                 }
               </div>
-
 
 
             </div>
