@@ -1,0 +1,144 @@
+// style.scss
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 20px;
+}
+
+/* Layout Container */
+.guide-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Common Title and Subtitle Styles */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Affiliate Guide */
+.affiliate-guide-container {
+  background-color: #eaf4fc;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.affiliate-guide-container ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+.affiliate-guide-container li {
+  margin-bottom: 15px;
+}
+
+.affiliate-guide-container h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #2980b9;
+}
+
+.affiliate-guide-container ul {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.affiliate-guide-container ul li {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Merchant Guide */
+.merchant-guide-container {
+  background-color: #fff9e6;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.merchant-guide-container ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+.merchant-guide-container li {
+  margin-bottom: 15px;
+}
+
+.merchant-guide-container h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #f39c12;
+}
+
+.merchant-guide-container ul {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.merchant-guide-container ul li {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Managed Subscriptions Section */
+.managed-subscriptions-container {
+  background-color: #f7f7f7;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.managed-subscriptions-container h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #e67e22;
+}
+
+.managed-subscriptions-container ul {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.managed-subscriptions-container ul li {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .guide-container {
+    gap: 20px;
+  }
+
+  .title, .subtitle {
+    font-size: 1.8rem;
+  }
+
+  .affiliate-guide-container, .merchant-guide-container {
+    padding: 20px;
+  }
+}

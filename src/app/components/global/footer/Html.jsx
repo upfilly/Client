@@ -39,7 +39,8 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
               <li className="mb-3"><Link href="/company"><b>Company</b></Link></li>
               <li><Link href="/aboutus">About Us</Link></li>
               <li><Link href="/partners">Partners</Link></li>
-              <li><Link href="/contactUs">Contact Us</Link></li>
+              <li><Link href="/signup-guide">Affilite/Brand Guide</Link></li>
+              {/* <li><Link href="/contactUs">Contact Us</Link></li> */}
             </ul>
           </div>
           <div className=" col-12 col-sm-12  col-md-2">

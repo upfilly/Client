@@ -6,30 +6,62 @@ const PrivacyPolicy = () => {
 
     return (
         <Layout>
-
-            <div className='pricing-padding'>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-md-12'>
-                            <div className='wrapper_pages'>
-                                <div className='heaidng-common'>
-                                    <h2>Privacy Policy</h2>
-                                </div>
-                                <div className='descrp_text mt-4'>
-                                    <p> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-
-                                    <p> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-
-
-                                    <p> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-
-                                </div>
-                                <p> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="privacy-policy-container">
+                <header className="header">
+                    <h1>Privacy Policy</h1>
+                </header>
+                <section className="section">
+                    <h2>Introduction</h2>
+                    <p>
+                        Welcome to Upfilly. Your privacy is important to us. This Privacy Policy explains how we collect,
+                        use, and safeguard your personal information when you visit our website.
+                    </p>
+                </section>
+                <section className="section">
+                    <h2>Information We Collect</h2>
+                    <p>
+                        We may collect personal information such as your name, email address, and IP address when you interact
+                        with our site. We also use cookies to enhance your experience and analyze website usage.
+                    </p>
+                </section>
+                <section className="section">
+                    <h2>How We Use Your Information</h2>
+                    <p>
+                        Your information helps us to improve our site, respond to inquiries, and personalize your experience. We do
+                        not sell or share your information with third parties without your consent, except as required by law.
+                    </p>
+                </section>
+                <section className="section">
+                    <h2>Cookies</h2>
+                    <p>
+                        We use cookies to enhance your experience. A cookie is a small file stored on your device that helps us
+                        analyze website traffic and track usage patterns. You can choose to disable cookies through your browser settings.
+                    </p>
+                </section>
+                <section className="section">
+                    <h2>Data Security</h2>
+                    <p>
+                        We implement appropriate security measures to protect your personal information from unauthorized access,
+                        alteration, or destruction.
+                    </p>
+                </section>
+                <section className="section">
+                    <h2>Your Rights</h2>
+                    <p>
+                        You have the right to access, correct, or delete your personal data. If you wish to exercise any of these rights,
+                        please contact us using the details provided on our website.
+                    </p>
+                </section>
+                <section className="section">
+                    <h2>Changes to This Policy</h2>
+                    <p>
+                        We may update this Privacy Policy from time to time. Any changes will be posted on this page, and the updated
+                        policy will take effect immediately upon posting.
+                    </p>
+                </section>
+                {/* <footer className="footer">
+                    <p>&copy; 2025 Upfilly. All rights reserved.</p>
+                </footer> */}
             </div>
 
         </Layout>)

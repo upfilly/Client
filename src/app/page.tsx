@@ -243,7 +243,7 @@ export default function Home() {
           <div className="row align-items-center">
             <div className="col-md-6 pl-5">
               <h1>Customers <br />tracked in 2023 <br />more than +3Mi </h1>
-              {(user?.role == "brand" || !user) && <a className='btn btn-white' href="/pricing">Book a Demo</a>}
+              {(user?.role == "brand" || !user) && <button className='btn btn-white' onClick={()=>history.push("/pricing")}>Book a Demo</button>}
             </div>
             <div className="col-md-6">
               <div className="bg-white text-black p-4">
@@ -251,12 +251,12 @@ export default function Home() {
                   <path opacity="0.15" d="M24.42 38.8719V31.7199C24.4199 31.489 24.4653 31.2604 24.5536 31.047C24.6419 30.8337 24.7713 30.6398 24.9346 30.4765C25.0979 30.3133 25.2917 30.1838 25.5051 30.0955C25.7184 30.0072 25.9471 29.9618 26.178 29.9619C29.64 29.9619 31.524 26.4109 31.786 19.4009H26.177C25.7116 19.4007 25.2653 19.2159 24.936 18.8871C24.6066 18.5583 24.4211 18.1123 24.42 17.6469V2.53193C24.42 2.30111 24.4655 2.07255 24.5538 1.85932C24.6422 1.64609 24.7717 1.45235 24.935 1.28919C25.0982 1.12602 25.292 0.996621 25.5053 0.908382C25.7186 0.820144 25.9472 0.774795 26.178 0.774926H41.128C41.5941 0.774926 42.0411 0.960007 42.3707 1.28948C42.7004 1.61895 42.8857 2.06585 42.886 2.53193V17.6419C42.9164 20.7263 42.579 23.8034 41.881 26.8079C41.286 29.394 40.229 31.8514 38.761 34.0619C37.4058 36.0763 35.5886 37.7374 33.461 38.9069C31.2171 40.0832 28.7131 40.6758 26.18 40.6299C25.949 40.6302 25.7201 40.5849 25.5066 40.4967C25.2931 40.4085 25.0991 40.279 24.9356 40.1157C24.7722 39.9525 24.6425 39.7586 24.554 39.5451C24.4655 39.3317 24.42 39.103 24.42 38.8719ZM1.757 29.9589C1.29119 29.9589 0.84444 30.1439 0.514967 30.4732C0.185494 30.8025 0.000265403 31.2491 2.84602e-07 31.7149V38.8729C0.000530323 39.3386 0.185876 39.785 0.51532 40.114C0.844764 40.4431 1.29136 40.6279 1.757 40.6279C4.28982 40.6738 6.79343 40.0812 9.037 38.9049C11.1651 37.7362 12.9825 36.0749 14.337 34.0599C15.8059 31.8493 16.8632 29.3915 17.458 26.8049C18.1547 23.7996 18.4904 20.7218 18.458 17.6369V2.53093C18.4577 2.06485 18.2724 1.61795 17.9427 1.28848C17.6131 0.959006 17.1661 0.773926 16.7 0.773926H1.757C1.2911 0.774191 0.84435 0.959388 0.514906 1.28883C0.185462 1.61828 0.000265229 2.06502 2.84602e-07 2.53093V17.6369C-0.000131085 17.8677 0.0452181 18.0963 0.133457 18.3096C0.221696 18.5229 0.351094 18.7167 0.51426 18.88C0.677426 19.0432 0.87116 19.1727 1.08439 19.2611C1.29763 19.3494 1.52618 19.3949 1.757 19.3949H7.286C7.028 26.4069 5.171 29.9589 1.757 29.9589Z" fill="black" />
                 </svg>
 
-                <p className='mt-4 mb-4 pb-4 border-bottom'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
+                <p className='mt-4 mb-4 pb-4 border-bottom'>“Our tracking capabilities have enabled us to better understand customer behaviors, driving tailored solutions and strategies for success. Over 3 million customers have been tracked in 2023, and we continue to refine our approach to ensure even greater insights in the future.”</p>
                 <div className="d-flex align-items-center">
                   <img src='/assets/img/person.jpg' className='icon_user' alt="" />
                   <div className='ml-2 line_height_user'>
-                    <b>Person Name</b> <br />
-                    <small>City Location</small>
+                    <b>John Doe</b> <br />
+                    <small>Data Analyst, Global Insights Corp.</small>
                   </div>
                 </div>
               </div>
@@ -264,9 +264,10 @@ export default function Home() {
           </div>
         </div>
 
+
         <div className="row mt-5 pt-5">
           <div className="col-md-12 text-center mb-4">
-            <h2>What Customers Say About Us</h2>
+            <h2>What Our Affiliates Are Saying</h2>
           </div>
           <div className="col-md-4">
             <div className="bgGray_about text-black p-4">
@@ -274,12 +275,12 @@ export default function Home() {
                 <path opacity="0.15" d="M24.42 38.8719V31.7199C24.4199 31.489 24.4653 31.2604 24.5536 31.047C24.6419 30.8337 24.7713 30.6398 24.9346 30.4765C25.0979 30.3133 25.2917 30.1838 25.5051 30.0955C25.7184 30.0072 25.9471 29.9618 26.178 29.9619C29.64 29.9619 31.524 26.4109 31.786 19.4009H26.177C25.7116 19.4007 25.2653 19.2159 24.936 18.8871C24.6066 18.5583 24.4211 18.1123 24.42 17.6469V2.53193C24.42 2.30111 24.4655 2.07255 24.5538 1.85932C24.6422 1.64609 24.7717 1.45235 24.935 1.28919C25.0982 1.12602 25.292 0.996621 25.5053 0.908382C25.7186 0.820144 25.9472 0.774795 26.178 0.774926H41.128C41.5941 0.774926 42.0411 0.960007 42.3707 1.28948C42.7004 1.61895 42.8857 2.06585 42.886 2.53193V17.6419C42.9164 20.7263 42.579 23.8034 41.881 26.8079C41.286 29.394 40.229 31.8514 38.761 34.0619C37.4058 36.0763 35.5886 37.7374 33.461 38.9069C31.2171 40.0832 28.7131 40.6758 26.18 40.6299C25.949 40.6302 25.7201 40.5849 25.5066 40.4967C25.2931 40.4085 25.0991 40.279 24.9356 40.1157C24.7722 39.9525 24.6425 39.7586 24.554 39.5451C24.4655 39.3317 24.42 39.103 24.42 38.8719ZM1.757 29.9589C1.29119 29.9589 0.84444 30.1439 0.514967 30.4732C0.185494 30.8025 0.000265403 31.2491 2.84602e-07 31.7149V38.8729C0.000530323 39.3386 0.185876 39.785 0.51532 40.114C0.844764 40.4431 1.29136 40.6279 1.757 40.6279C4.28982 40.6738 6.79343 40.0812 9.037 38.9049C11.1651 37.7362 12.9825 36.0749 14.337 34.0599C15.8059 31.8493 16.8632 29.3915 17.458 26.8049C18.1547 23.7996 18.4904 20.7218 18.458 17.6369V2.53093C18.4577 2.06485 18.2724 1.61795 17.9427 1.28848C17.6131 0.959006 17.1661 0.773926 16.7 0.773926H1.757C1.2911 0.774191 0.84435 0.959388 0.514906 1.28883C0.185462 1.61828 0.000265229 2.06502 2.84602e-07 2.53093V17.6369C-0.000131085 17.8677 0.0452181 18.0963 0.133457 18.3096C0.221696 18.5229 0.351094 18.7167 0.51426 18.88C0.677426 19.0432 0.87116 19.1727 1.08439 19.2611C1.29763 19.3494 1.52618 19.3949 1.757 19.3949H7.286C7.028 26.4069 5.171 29.9589 1.757 29.9589Z" fill="black" />
               </svg>
 
-              <p className='mt-4 mb-4 pb-4 borderbottom'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
+              <p className='mt-4 mb-4 pb-4 borderbottom'>“As an affiliate marketer, I’ve worked with many companies, but partnering with this brand has been a game-changer. Their products practically sell themselves because of the high quality and the demand they generate. The affiliate program is also easy to use, and the commissions are incredibly rewarding. It's truly a win-win situation for anyone in the affiliate marketing business!”</p>
               <div className="d-flex align-items-center">
-                <img src='/assets/img/person.jpg' className='icon_user' alt="" />
+                <img src='/assets/img/person.jpg' className='icon_user' alt="Affiliate Image" />
                 <div className='ml-2 line_height_user'>
-                  <b>Person Name</b> <br />
-                  <small>City Location</small>
+                  <b>John Doe</b> <br />
+                  <small>Top Affiliate Marketer</small>
                 </div>
               </div>
             </div>
@@ -290,12 +291,12 @@ export default function Home() {
                 <path opacity="0.15" d="M24.42 38.8719V31.7199C24.4199 31.489 24.4653 31.2604 24.5536 31.047C24.6419 30.8337 24.7713 30.6398 24.9346 30.4765C25.0979 30.3133 25.2917 30.1838 25.5051 30.0955C25.7184 30.0072 25.9471 29.9618 26.178 29.9619C29.64 29.9619 31.524 26.4109 31.786 19.4009H26.177C25.7116 19.4007 25.2653 19.2159 24.936 18.8871C24.6066 18.5583 24.4211 18.1123 24.42 17.6469V2.53193C24.42 2.30111 24.4655 2.07255 24.5538 1.85932C24.6422 1.64609 24.7717 1.45235 24.935 1.28919C25.0982 1.12602 25.292 0.996621 25.5053 0.908382C25.7186 0.820144 25.9472 0.774795 26.178 0.774926H41.128C41.5941 0.774926 42.0411 0.960007 42.3707 1.28948C42.7004 1.61895 42.8857 2.06585 42.886 2.53193V17.6419C42.9164 20.7263 42.579 23.8034 41.881 26.8079C41.286 29.394 40.229 31.8514 38.761 34.0619C37.4058 36.0763 35.5886 37.7374 33.461 38.9069C31.2171 40.0832 28.7131 40.6758 26.18 40.6299C25.949 40.6302 25.7201 40.5849 25.5066 40.4967C25.2931 40.4085 25.0991 40.279 24.9356 40.1157C24.7722 39.9525 24.6425 39.7586 24.554 39.5451C24.4655 39.3317 24.42 39.103 24.42 38.8719ZM1.757 29.9589C1.29119 29.9589 0.84444 30.1439 0.514967 30.4732C0.185494 30.8025 0.000265403 31.2491 2.84602e-07 31.7149V38.8729C0.000530323 39.3386 0.185876 39.785 0.51532 40.114C0.844764 40.4431 1.29136 40.6279 1.757 40.6279C4.28982 40.6738 6.79343 40.0812 9.037 38.9049C11.1651 37.7362 12.9825 36.0749 14.337 34.0599C15.8059 31.8493 16.8632 29.3915 17.458 26.8049C18.1547 23.7996 18.4904 20.7218 18.458 17.6369V2.53093C18.4577 2.06485 18.2724 1.61795 17.9427 1.28848C17.6131 0.959006 17.1661 0.773926 16.7 0.773926H1.757C1.2911 0.774191 0.84435 0.959388 0.514906 1.28883C0.185462 1.61828 0.000265229 2.06502 2.84602e-07 2.53093V17.6369C-0.000131085 17.8677 0.0452181 18.0963 0.133457 18.3096C0.221696 18.5229 0.351094 18.7167 0.51426 18.88C0.677426 19.0432 0.87116 19.1727 1.08439 19.2611C1.29763 19.3494 1.52618 19.3949 1.757 19.3949H7.286C7.028 26.4069 5.171 29.9589 1.757 29.9589Z" fill="black" />
               </svg>
 
-              <p className='mt-4 mb-4 pb-4 borderbottom'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
+              <p className='mt-4 mb-4 pb-4 borderbottom'>“Joining this affiliate program has been one of the best decisions I’ve made. The marketing tools they provide make promoting products easy, and the dedicated support team is always there to help with any issues. I've been able to increase my income significantly in just a few months, thanks to their fantastic products and excellent conversion rates.”</p>
               <div className="d-flex align-items-center">
-                <img src='/assets/img/person.jpg' className='icon_user' alt="" />
+                <img src='/assets/img/person.jpg' className='icon_user' alt="Affiliate Image" />
                 <div className='ml-2 line_height_user'>
-                  <b>Person Name</b> <br />
-                  <small>City Location</small>
+                  <b>Jane Smith</b> <br />
+                  <small>Affiliate Partner</small>
                 </div>
               </div>
             </div>
@@ -306,17 +307,18 @@ export default function Home() {
                 <path opacity="0.15" d="M24.42 38.8719V31.7199C24.4199 31.489 24.4653 31.2604 24.5536 31.047C24.6419 30.8337 24.7713 30.6398 24.9346 30.4765C25.0979 30.3133 25.2917 30.1838 25.5051 30.0955C25.7184 30.0072 25.9471 29.9618 26.178 29.9619C29.64 29.9619 31.524 26.4109 31.786 19.4009H26.177C25.7116 19.4007 25.2653 19.2159 24.936 18.8871C24.6066 18.5583 24.4211 18.1123 24.42 17.6469V2.53193C24.42 2.30111 24.4655 2.07255 24.5538 1.85932C24.6422 1.64609 24.7717 1.45235 24.935 1.28919C25.0982 1.12602 25.292 0.996621 25.5053 0.908382C25.7186 0.820144 25.9472 0.774795 26.178 0.774926H41.128C41.5941 0.774926 42.0411 0.960007 42.3707 1.28948C42.7004 1.61895 42.8857 2.06585 42.886 2.53193V17.6419C42.9164 20.7263 42.579 23.8034 41.881 26.8079C41.286 29.394 40.229 31.8514 38.761 34.0619C37.4058 36.0763 35.5886 37.7374 33.461 38.9069C31.2171 40.0832 28.7131 40.6758 26.18 40.6299C25.949 40.6302 25.7201 40.5849 25.5066 40.4967C25.2931 40.4085 25.0991 40.279 24.9356 40.1157C24.7722 39.9525 24.6425 39.7586 24.554 39.5451C24.4655 39.3317 24.42 39.103 24.42 38.8719ZM1.757 29.9589C1.29119 29.9589 0.84444 30.1439 0.514967 30.4732C0.185494 30.8025 0.000265403 31.2491 2.84602e-07 31.7149V38.8729C0.000530323 39.3386 0.185876 39.785 0.51532 40.114C0.844764 40.4431 1.29136 40.6279 1.757 40.6279C4.28982 40.6738 6.79343 40.0812 9.037 38.9049C11.1651 37.7362 12.9825 36.0749 14.337 34.0599C15.8059 31.8493 16.8632 29.3915 17.458 26.8049C18.1547 23.7996 18.4904 20.7218 18.458 17.6369V2.53093C18.4577 2.06485 18.2724 1.61795 17.9427 1.28848C17.6131 0.959006 17.1661 0.773926 16.7 0.773926H1.757C1.2911 0.774191 0.84435 0.959388 0.514906 1.28883C0.185462 1.61828 0.000265229 2.06502 2.84602e-07 2.53093V17.6369C-0.000131085 17.8677 0.0452181 18.0963 0.133457 18.3096C0.221696 18.5229 0.351094 18.7167 0.51426 18.88C0.677426 19.0432 0.87116 19.1727 1.08439 19.2611C1.29763 19.3494 1.52618 19.3949 1.757 19.3949H7.286C7.028 26.4069 5.171 29.9589 1.757 29.9589Z" fill="black" />
               </svg>
 
-              <p className='mt-4 mb-4 pb-4 borderbottom'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived.</p>
+              <p className='mt-4 mb-4 pb-4 borderbottom'>“I've been promoting affiliate products for years, but this program truly stands out. The earnings potential is incredible, and the marketing resources they offer are top-notch. I love how easy it is to track performance and optimize my campaigns for better results. I’m excited for continued growth with this partnership!”</p>
               <div className="d-flex align-items-center">
-                <img src='/assets/img/person.jpg' className='icon_user' alt="" />
+                <img src='/assets/img/person.jpg' className='icon_user' alt="Affiliate Image" />
                 <div className='ml-2 line_height_user'>
-                  <b>Person Name</b> <br />
-                  <small>City Location</small>
+                  <b>Alex Brown</b> <br />
+                  <small>Affiliate Marketer</small>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
 
         <div className="bg_goal">
           <div className="row align-items-center">
