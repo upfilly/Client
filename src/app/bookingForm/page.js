@@ -53,7 +53,8 @@ export default function BillingForm() {
   const FilterData = data.filter(event => !event.isUpcoming);
   const [offers,setOffers] = useState([])
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const specialOfferPrice = offers?.filter((itm)=>itm?._id == selectedOffer)?.[0]?.amount
+  const specialOfferPrice = offers?.filter((itm)=>itm?._id == selectedOffer)
+  const seletedplandata = data?.filter((dat)=>dat?._id == selectedId)
 
   const handleSpecialOfferChange = (id) => {
     setSelectedOffer((prevSelected) => (prevSelected === id ? null : id));
@@ -63,6 +64,8 @@ export default function BillingForm() {
     setSelectedId(itemId);
     // history.push(`/bookingForm?planId=${itemId}`)
   };
+
+  console.log(seletedplandata,"seletedplandataseletedplandata")
 
   function isValidEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
@@ -156,12 +159,6 @@ export default function BillingForm() {
       return;
     }
 
-    // Validate card number, CVV, and expiry date
-    // if (!validateCardNumber(formData.cardNumber)) {
-    //   Setsummitted(true);
-    //   return;
-    // }
-
     // Validate password
     if (!formData.password || formData.password.length < 8) {
       setPasswordError('Password must be at least 8 characters');
@@ -175,53 +172,41 @@ export default function BillingForm() {
 
     loader(true)
 
-    let data;
-    if (localStorage.getItem("device_token")) {
-      data = {
-        role: "brand",
-        email: formData?.email,
-        firstName: formData?.firstName,
-        lastName: formData?.lastName,
-        password: formData?.password,
-        address: selectedLocation?.address,
-        country: selectedLocation?.country,
-        state: selectedLocation?.state,
-        city: selectedLocation?.city,
-        pincode: selectedLocation?.pincode,
-        // payment_method: formData?.payment_method,
-        device_token: localStorage.getItem("device_token")
-      }
-    } else {
-      data = {
-        role: "brand",
-        email: formData?.email,
-        firstName: formData?.firstName,
-        lastName: formData?.lastName,
-        password: formData?.password,
-        address: selectedLocation?.address,
-        country: selectedLocation?.country,
-        state: selectedLocation?.state,
-        city: selectedLocation?.city,
-        pincode: selectedLocation?.pincode,
-        // payment_method: formData?.payment_method,
-        device_token: ''
-      }
-    }
+    let data = {
+      role: "brand",
+      email: formData?.email,
+      firstName: formData?.firstName,
+      lastName: formData?.lastName,
+      password: formData?.password,
+      address: selectedLocation?.address,
+      country: selectedLocation?.country,
+      state: selectedLocation?.state,
+      city: selectedLocation?.city,
+      pincode: selectedLocation?.pincode,
+      plan_id: selectedId,
+      network_plan_amount:seletedplandata?.[0]?.amount,
+      managed_services_plan_amount: specialOfferPrice?.[0]?.amount,
+      special_plan_id:selectedOffer,
+      isSpecial: false,
+      interval: "month",
+      interval_count: seletedplandata?.[0]?.interval_count,
+      device_token: localStorage.getItem("device_token") || ''
+    };
 
-    ApiClient.post('register', data).then(res => {
+    ApiClient.post('register/brand', data).then(res => {
       let userId = res?.data?.id
       const inputDate = new Date(startDate);
       const month = String(inputDate.getMonth() + 1).padStart(2, '0');
       const year = String(inputDate.getFullYear()).slice(-2)
 
-      const data1 = {
-        // "card_number": formData?.cardNumber,
-        // "exp_month": month,
-        // "exp_year": year,
-        "plan_id": selectedId,
-        "user_id": res?.data?.id,
-        // "cvc": formData?.cardCvc
-      }
+      // const data1 = {
+      //   // "card_number": formData?.cardNumber,
+      //   // "exp_month": month,
+      //   // "exp_year": year,
+      //   "plan_id": selectedId,
+      //   "user_id": res?.data?.id,
+      //   // "cvc": formData?.cardCvc
+      // }
 
       if (res.success == true) {
         setFormData({
@@ -238,56 +223,57 @@ export default function BillingForm() {
           cardCvc: '',
           paypal_email: ''
         })
-        ApiClient.post('create/session', data1).then(res => {
-          if (res.success == true) {
-            loader(false)
-            window.location.href = res?.data?.url
-            // window.open(res?.data?.url)
-            // toast.success(res.message)
-            // const data2 = {
-            //   "user_id": res?.data?.user_id,
-            //   "card_id": res?.data?.card_id,
-            //   "id": selectedId
-            // }
-            // ApiClient.post('subscribe', data2).then(res => {
-            //   if (res.success == true) {
+        window.location.href = res?.data?.url
+        // ApiClient.post('create/session', data1).then(res => {
+        //   if (res.success == true) {
+        //     loader(false)
+        //     window.location.href = res?.data?.url
+        //     // window.open(res?.data?.url)
+        //     // toast.success(res.message)
+        //     // const data2 = {
+        //     //   "user_id": res?.data?.user_id,
+        //     //   "card_id": res?.data?.card_id,
+        //     //   "id": selectedId
+        //     // }
+        //     // ApiClient.post('subscribe', data2).then(res => {
+        //     //   if (res.success == true) {
 
-            //     setFormData({
-            //       status: 'Active',
-            //       currency: '',
-            //       firstName: '',
-            //       lastName: '',
-            //       email: '',
-            //       website: '',
-            //       password: '',
-            //       confirmPassword: '',
-            //       address: '',
-            //       cardNumber: '',
-            //       cardExpiry: '',
-            //       cardCvc: '',
-            //       paypal_email: ''
-            //     })
-            //     setShowPopup(true)
-            //     loader(false)
-            //   } else {
-            //     ApiClient.delete(`destroy/user?id=${userId}`).then(res => {
-            //       if (res.success) {
-            //         toast.error("Payment cannot complete...")
-            //       }
-            //       loader(false)
-            //     })
-            //   }
-            // })
-          } else {
-            loader(false)
-            // ApiClient.delete(`destroy/user?id=${userId}`).then(res => {
-            //   if (res.success) {
-            //     toast.error("Payment cannot complete...")
-            //   }
-            //   loader(false)
-            // })
-          }
-        })
+        //     //     setFormData({
+        //     //       status: 'Active',
+        //     //       currency: '',
+        //     //       firstName: '',
+        //     //       lastName: '',
+        //     //       email: '',
+        //     //       website: '',
+        //     //       password: '',
+        //     //       confirmPassword: '',
+        //     //       address: '',
+        //     //       cardNumber: '',
+        //     //       cardExpiry: '',
+        //     //       cardCvc: '',
+        //     //       paypal_email: ''
+        //     //     })
+        //     //     setShowPopup(true)
+        //     //     loader(false)
+        //     //   } else {
+        //     //     ApiClient.delete(`destroy/user?id=${userId}`).then(res => {
+        //     //       if (res.success) {
+        //     //         toast.error("Payment cannot complete...")
+        //     //       }
+        //     //       loader(false)
+        //     //     })
+        //     //   }
+        //     // })
+        //   } else {
+        //     loader(false)
+        //     // ApiClient.delete(`destroy/user?id=${userId}`).then(res => {
+        //     //   if (res.success) {
+        //     //     toast.error("Payment cannot complete...")
+        //     //   }
+        //     //   loader(false)
+        //     // })
+        //   }
+        // })
 
       }
 
