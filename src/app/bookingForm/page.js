@@ -9,6 +9,7 @@ import loader from '@/methods/loader';
 import crendentialModel from '@/models/credential.model';
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from '../components/global/layout';
+import { toast } from 'react-toastify';
 
 export default function BillingForm() {
   const param = useSearchParams()
@@ -185,8 +186,8 @@ export default function BillingForm() {
       pincode: selectedLocation?.pincode,
       plan_id: selectedId,
       network_plan_amount:seletedplandata?.[0]?.amount,
-      managed_services_plan_amount: specialOfferPrice?.[0]?.amount,
-      special_plan_id:selectedOffer,
+      managed_services_plan_amount:seletedplandata?.[0]?.amount == 0 ? 0 : specialOfferPrice?.[0]?.amount,
+      special_plan_id:seletedplandata?.[0]?.amount == 0 ? null : selectedOffer,
       isSpecial: false,
       interval: "month",
       interval_count: seletedplandata?.[0]?.interval_count,
@@ -212,6 +213,7 @@ export default function BillingForm() {
         setFormData({
           status: 'Active',
           firstName: '',
+          currency: 'USD',
           lastName: '',
           email: '',
           website: '',
@@ -223,7 +225,13 @@ export default function BillingForm() {
           cardCvc: '',
           paypal_email: ''
         })
-        window.location.href = res?.data?.url
+        if (seletedplandata?.[0]?.amount == 0) {
+          loader(false)
+          toast.success("Your account is created check your E-mail")
+          history.push("/")
+        } else {
+          window.location.href = res?.data?.url
+        }
         // ApiClient.post('create/session', data1).then(res => {
         //   if (res.success == true) {
         //     loader(false)
@@ -462,7 +470,7 @@ export default function BillingForm() {
 
               <div className='col-12 col-md-12 col-lg-12 col-xl-4'>
 
-                <div className='card p-0 mb-4'>
+                {seletedplandata?.[0]?.amount != 0 && <div className='card p-0 mb-4'>
                   <div className='card-header'>
                     <h4 className='card-title'>Special Offers</h4>
                   </div>
@@ -482,7 +490,7 @@ export default function BillingForm() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div>}
                
                   <div className='card p-0 mb-4'>
                     <div className='card-header'>
