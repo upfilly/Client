@@ -10,6 +10,8 @@ import crendentialModel from '@/models/credential.model';
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from '../components/global/layout';
 import { toast } from 'react-toastify';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default function BillingForm() {
   const param = useSearchParams()
@@ -17,6 +19,7 @@ export default function BillingForm() {
   const user = crendentialModel.getUser()
   const history = useRouter()
   const [showPopup, setShowPopup] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const [aloader, setLoader] = useState(true)
   const [formData, setFormData] = useState({
     status: 'Active',
@@ -56,6 +59,9 @@ export default function BillingForm() {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const specialOfferPrice = offers?.filter((itm)=>itm?._id == selectedOffer)
   const seletedplandata = data?.filter((dat)=>dat?._id == selectedId)
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
 
   const handleSpecialOfferChange = (id) => {
     setSelectedOffer((prevSelected) => (prevSelected === id ? null : id));
@@ -496,231 +502,287 @@ export default function BillingForm() {
                   </div>
                 </div>}
                
-                  <div className='card p-0 mb-4'>
-                    <div className='card-header'>
-                      <h4 className='card-title'>Basic Information</h4>
-                    </div>
-
-                    <div className='card-body'>
-                      <div className='form-row'>
-                        {!user && <>
-
-                          <div className='col-12 col-md-6 col-lg-6  '>
-                            <div className="form-group">
-                              <label className='label-set'>First Name</label>
-                              <input
-                                type="text"
-                                className="form-control quick-radius"
-                                placeholder='Enter first name'
-                                id="firstName"
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleInputChange} />
-                              {summitted && !formData.firstName ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
-
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-6 col-lg-6'>
-                            <div className="form-group">
-                              <label className='label-set'>Last Name </label>
-                              <input
-                                type="text"
-                                className="form-control quick-radius"
-                                placeholder='Enter last name'
-                                id="lastName"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleInputChange} />
-                              {summitted && !formData.lastName ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
-
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-6 col-lg-12 '>
-                            <div className="form-group">
-                              <label className='label-set'>Email </label>
-                              <input
-                                type="email"
-                                className="form-control quick-radius"
-                                placeholder='Enter email'
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange} />
-                              {summitted && !isValidEmail(formData?.email) ? <div className="invalid-feedback d-block">Email is required</div> : <></>}
-
-                            </div>
-                          </div>
-                        
-                          <div className='col-12 col-md-6 col-lg-12'>
-                            <div className="form-group">
-                              <label className='label-set'>Password </label>
-                              <div className='input-group position-relative'>
-                                <input
-                                  type={eyes.password ? 'text' : 'password'}
-                                  className="form-control quick-radius password_space"
-                                  placeholder='Enter password'
-                                  id="password"
-                                  name="password"
-                                  value={formData.password}
-                                  onChange={handleInputChange} />
-                                <div className='eye-icon-m'>
-                                  <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
-                                </div>
-
-                              </div>
-                              {passwordError && formData.password.length < 8 && <div className="text-danger pass_danger ">{passwordError}</div>}
-
-                            </div>
-
-                          </div>
-                          <div className='col-12 col-md-6 col-lg-12'>
-                            <div className="form-group">
-                              <label className='label-set'>confirm Password </label>
-                              <div className='input-group position-relative'>
-                                <input
-                                  type={eyes.confirmPassword ? 'text' : 'password'}
-                                  className="form-control quick-radius password_space"
-                                  placeholder='confirm your password'
-                                  id="confirmPassword"
-                                  name="confirmPassword"
-                                  value={formData.confirmPassword}
-                                  onChange={handleInputChange} />
-                                <div className='eye-icon-m'>
-                                  <i className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
-                                </div>
-                              </div>
-                              {confirmPasswordError && formData.password !== formData.confirmPassword && (
-                                <div className="text-danger pass_danger">{confirmPasswordError}</div>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className='col-12 col-md-6 col-lg-6 '>
-                            <div className="form-group">
-                              <label className='label-set'>Website  </label>
-                              <input
-                                type="text"
-                                className="form-control quick-radius"
-                                placeholder='Enter website'
-                                id="website"
-                                name="website"
-                                value={formData.website}
-                                onChange={handleInputChange} />
-                            </div>
-                          </div>
-                          <div className='col-12 col-md-6 col-lg-6'>
-                            <div className="form-group">
-                              <label className='label-set'>Currency </label>
-                              <input
-                                type="text"
-                                className="form-control quick-radius"
-                                placeholder='Enter currency'
-                                id="currency"
-                                name="currency"
-                                value={formData.currency}
-                                onChange={handleInputChange} />
-
-                              {summitted && !formData.currency ? <div className="invalid-feedback d-block">Currency is required</div> : <></>}
-
-                            </div>
-
-                          </div>
-                        </>
-                        }
-                      </div>
-                    </div>
-
-
+                <div className='card p-0 mb-4'>
+                  <div className='card-header'>
+                    <h4 className='card-title'>Basic Information</h4>
                   </div>
 
-                  <div className='card p-0 mb-4'>
-                    <div className='card-header'>
-                      <h4 className='card-title'>Billing Address</h4>
-                    </div>
-                    <div className='card-body'>
-                      <div className='form-row'>
-                        <div className='col-12  col-md-12'>
-                          <div className='form-group'>
-                            <label className='label-set'>Address </label>
+                  <div className='card-body'>
+                    <div className='form-row'>
+                      {!user && <>
 
-                            {!aloader ? <PlacesAutocomplete
+                        <div className='col-12 col-md-6 col-lg-6  '>
+                          <div className="form-group">
+                            <label className='label-set'>First Name</label>
+                            <input
+                              type="text"
+                              className="form-control quick-radius"
+                              placeholder='Enter first name'
+                              id="firstName"
+                              name="firstName"
+                              value={formData.firstName}
+                              onChange={handleInputChange} />
+                            {summitted && !formData.firstName ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
+
+                          </div>
+                        </div>
+                        <div className='col-12 col-md-6 col-lg-6'>
+                          <div className="form-group">
+                            <label className='label-set'>Last Name </label>
+                            <input
+                              type="text"
+                              className="form-control quick-radius"
+                              placeholder='Enter last name'
+                              id="lastName"
+                              name="lastName"
+                              value={formData.lastName}
+                              onChange={handleInputChange} />
+                            {summitted && !formData.lastName ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
+
+                          </div>
+                        </div>
+                        <div className='col-12 col-md-6 col-lg-12 '>
+                          <div className="form-group">
+                            <label className='label-set'>Email </label>
+                            <input
+                              type="email"
+                              className="form-control quick-radius"
+                              placeholder='Enter email'
+                              id="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange} />
+                            {summitted && !isValidEmail(formData?.email) ? <div className="invalid-feedback d-block">Email is required</div> : <></>}
+
+                          </div>
+                        </div>
+
+                        <div className='col-12 col-md-6 col-lg-12'>
+                          <div className="form-group">
+                            <label className='label-set'>Password </label>
+                            <div className='input-group position-relative'>
+                              <input
+                                type={eyes.password ? 'text' : 'password'}
+                                className="form-control quick-radius password_space"
+                                placeholder='Enter password'
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange} />
+                              <div className='eye-icon-m'>
+                                <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
+                              </div>
+
+                            </div>
+                            {passwordError && formData.password.length < 8 && <div className="text-danger pass_danger ">{passwordError}</div>}
+
+                          </div>
+
+                        </div>
+                        <div className='col-12 col-md-6 col-lg-12'>
+                          <div className="form-group">
+                            <label className='label-set'>confirm Password </label>
+                            <div className='input-group position-relative'>
+                              <input
+                                type={eyes.confirmPassword ? 'text' : 'password'}
+                                className="form-control quick-radius password_space"
+                                placeholder='confirm your password'
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleInputChange} />
+                              <div className='eye-icon-m'>
+                                <i className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
+                              </div>
+                            </div>
+                            {confirmPasswordError && formData.password !== formData.confirmPassword && (
+                              <div className="text-danger pass_danger">{confirmPasswordError}</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className='col-12 col-md-6 col-lg-6 '>
+                          <div className="form-group">
+                            <label className='label-set'>Website  </label>
+                            <input
+                              type="text"
+                              className="form-control quick-radius"
+                              placeholder='Enter website'
+                              id="website"
+                              name="website"
+                              value={formData.website}
+                              onChange={handleInputChange} />
+                          </div>
+                        </div>
+                        <div className='col-12 col-md-6 col-lg-6'>
+                          <div className="form-group">
+                            <label className='label-set'>Currency </label>
+                            <input
+                              type="text"
+                              className="form-control quick-radius"
+                              placeholder='Enter currency'
+                              id="currency"
+                              name="currency"
+                              value={formData.currency}
+                              onChange={handleInputChange} />
+
+                            {summitted && !formData.currency ? <div className="invalid-feedback d-block">Currency is required</div> : <></>}
+
+                          </div>
+
+                        </div>
+                      </>
+                      }
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div className='card p-0 mb-4'>
+                  <div className='card-header'>
+                    <h4 className='card-title'>Billing Address</h4>
+                  </div>
+                  <div className='card-body'>
+                    <div className='form-row'>
+                      <div className='col-12 col-md-12'>
+                        <div className='form-group'>
+                          <label className='label-set'>Address </label>
+                          {!aloader ? (
+                            <PlacesAutocomplete
                               value={address}
                               onChange={handleChange}
                               onSelect={handleSelect}
                             >
                               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div>
-                                  <input className="form-control quick-radius"
-
+                                  <input
+                                    className="form-control quick-radius"
                                     {...getInputProps({
                                       placeholder: 'Enter an address...',
                                       onFocus: () => setInputFocused(true),
                                       onBlur: () => setInputFocused(false),
-                                      // value:addressData
-                                    })} />
-                                  {/* {inputFocused && address.length > 0 && <div className='shadow p-3'> */}
+                                    })}
+                                  />
                                   {loading && <div>Loading...</div>}
-
-
-                                  {suggestions?.map((suggestion) => {
-                                    const style = {
-                                      // backgroundColor: suggestion.active ? '#41b6e6' : '#fff',
-                                    };
-                                    return (
-                                      <div className='suggested'>
-                                        <div className='location_address'
-                                          {...getSuggestionItemProps(suggestion, {
-                                            style,
-                                          })}
-                                        >
-                                          <i class="fa-solid fa-location-dot mr-1"></i> {suggestion.description}
-                                        </div>
+                                  {suggestions?.map((suggestion) => (
+                                    <div className='suggested'>
+                                      <div
+                                        className='location_address'
+                                        {...getSuggestionItemProps(suggestion)}
+                                      >
+                                        <i className="fa-solid fa-location-dot mr-1"></i> {suggestion.description}
                                       </div>
-                                    );
-                                  })}
+                                    </div>
+                                  ))}
                                 </div>
-
                               )}
-                            </PlacesAutocomplete> : ""}
-                          </div>
-                        </div>
-                        <div className='col-12  col-md-6'>
-                          <div class="form-group">
-                            <label className='label-set'>Country </label>
-                            <input placeholder='Enter country' type="text" value={selectedLocation?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
-                          </div>
-                        </div>
-
-                        <div className='col-md-6'>
-                          <div class="form-group">
-                            <label className='label-set'>City </label>
-                            <input placeholder='Enter city' type="text" value={selectedLocation?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
-                          </div>
-                        </div>
-                        <div className='col-md-12'>
-                          <div class="form-group">
-                            <label className='label-set'>Postal Code  </label>
-                            <input placeholder='Enter postal code' type="text" value={selectedLocation?.pincode} onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
-                          </div>
+                            </PlacesAutocomplete>
+                          ) : ""}
                         </div>
                       </div>
 
-                     
-                        <div className='  d-flex justify-content-center gap-3  justify-content-md-end justify-content-lg-center' >
-                        <button className='btn btn-primary buy-btn' onClick={handleSave}>Buy</button>
-                        <button className='btn btn-danger buy-btn ml-2' onClick={() => history.back()}>Cancel</button>
+                      {/* Country, City, Postal Code Fields */}
+                      <div className='col-12 col-md-6'>
+                        <div className="form-group">
+                          <label className='label-set'>Country</label>
+                          <input
+                            type="text"
+                            value={selectedLocation?.country}
+                            className="form-control quick-radius"
+                            disabled
+                          />
                         </div>
-                       
-                     
+                      </div>
+
+                      <div className='col-md-6'>
+                        <div className="form-group">
+                          <label className='label-set'>City</label>
+                          <input
+                            type="text"
+                            value={selectedLocation?.city}
+                            className="form-control quick-radius"
+                            disabled
+                          />
+                        </div>
+                      </div>
+
+                      <div className='col-md-12'>
+                        <div className="form-group">
+                          <label className='label-set'>Postal Code</label>
+                          <input
+                            type="text"
+                            value={selectedLocation?.pincode}
+                            onChange={(e) => setSelectedLocation({ ...selectedLocation, pincode: e.target.value })}
+                            className="form-control quick-radius"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Terms and Conditions Checkbox */}
+                    <div className="form-row">
+                      <div className="col-12">
+                        <div className="form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="termsCheck"
+                            checked={isTermsAccepted}
+                            onChange={() => setIsTermsAccepted(!isTermsAccepted)}
+                          />
+                          <label className="form-check-label" htmlFor="termsCheck">
+                            I agree to the <a href="/termsconditions" target="_blank">terms and conditions</a> and 
+                            <a href="#"  onClick={handleShowModal}> aggreement</a>.
+                          </label>
+                          {summitted && !isTermsAccepted && (
+                            <div className="invalid-feedback d-block">You must agree to the terms and conditions.</div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className='d-flex justify-content-center gap-3 justify-content-md-end justify-content-lg-center'>
+                      <button
+                        className='btn btn-primary buy-btn'
+                        onClick={handleSave}
+                        disabled={!isTermsAccepted}
+                      >
+                        Buy
+                      </button>
+                      <button className='btn btn-danger buy-btn ml-2' onClick={() => history.back()}>
+                        Cancel
+                      </button>
                     </div>
                   </div>
+                </div>
               
               </div>
             </div>
           </div>
-
-
         </section>
+
+        {/* Modal for Terms and Conditions with Google Docs Viewer */}
+        <Modal show={showModal} onHide={handleCloseModal} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>Upfilly Agreement.</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <iframe
+                src={`/assets/img/AffiliateAgreemnet.pdf`}
+                style={{ width: "100%", height: "500px" }}
+                frameBorder="0"
+              ></iframe>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
       </Layout>
     </>
