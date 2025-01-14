@@ -424,17 +424,21 @@ export default function BillingForm() {
                           <div className='opt-main_cate'>
                             <ul className='opt-category plan-featuress pl-0'>
                               <div className='additional-info'>
-                                <div className='info-item'>
-                                  <strong>Basket Value Charge:</strong> {itm.basket_value_charge}
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Basket Value Charge:</strong> 
+                                  <p className='mb-0'>{itm.basket_value_charge}</p>
                                 </div>
-                                <div className='info-item'>
-                                  <strong>Commission Override:</strong> {itm.commission_override}
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Commission Override:</strong> 
+                                  <p className='mb-0'>{itm.commission_override}</p>
                                 </div>
-                                <div className='info-item'>
-                                  <strong>Bonus Override:</strong> {itm.bonus_override}
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Bonus Override:</strong>
+                                  <p className='mb-0'> {itm.bonus_override}</p>
                                 </div>
-                                <div className='info-item'>
-                                  <strong>Allowed Total Revenue:</strong> {itm.allowed_total_revenue}
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Allowed Total Revenue:</strong> 
+                                  <p className='mb-0'>{itm.allowed_total_revenue}</p>
                                 </div>
                               </div>
                               {itm?.features?.map((feature) => (

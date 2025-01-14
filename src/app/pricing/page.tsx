@@ -300,17 +300,21 @@ export default function Pricing() {
                             <hr className='bgs'></hr>
                             <p className={itm.recommended === "Y" && !user?.isPayment ? 'includes-plan locks' : 'includes-plan '}>Plan includes</p>
                             <div className='additional-info'>
-                              <div className='info-item'>
-                                <strong>Basket Value Charge:</strong> {itm.basket_value_charge}
+                              <div className='info-item d-flex align-items-center justify-content-between'>
+                                <strong>Basket Value Charge:</strong> 
+                                <p className='mb-0'>{itm.basket_value_charge}</p>
                               </div>
-                              <div className='info-item'>
-                                <strong>Commission Override:</strong> {itm.commission_override}
+                              <div className='info-item d-flex align-items-center justify-content-between'>
+                                <strong>Commission Override:</strong>
+                                <p className='mb-0'>{itm.commission_override}</p> 
                               </div>
-                              <div className='info-item'>
-                                <strong>Bonus Override:</strong> {itm.bonus_override}
+                              <div className='info-item d-flex align-items-center justify-content-between'>
+                                <strong>Bonus Override:</strong>
+                                <p className='mb-0'>{itm.bonus_override}</p> 
                               </div>
-                              <div className='info-item'>
-                                <strong>Allowed Total Revenue:</strong> {itm.allowed_total_revenue}
+                              <div className='info-item d-flex align-items-center justify-content-between'>
+                                <strong>Allowed Total Revenue:</strong> 
+                                <p className='mb-0'>{itm.allowed_total_revenue}</p>
                               </div>
                             </div>
                             {<div className='plan-features'>

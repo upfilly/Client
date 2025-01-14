@@ -2302,8 +2302,12 @@ p.checkbox-option-main span {
 
 ul.opt-category img.checkss {
   width: 14px;
+  height: 14px;
+  object-fit: contain;
 }
-
+.info-item {
+  text-wrap: nowrap;
+}
 .opt-main-cate {
   display: flex;
   justify-content: space-between;
@@ -3001,11 +3005,11 @@ ul.tool_list {
 
 p.ipsi {
   color: #252849;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
   margin-bottom: 0px;
-  line-height: 20px;
-  // white-space: nowrap;
+  line-height: 15px;
+  text-wrap: wrap;
 }
 
 .opt-category {
