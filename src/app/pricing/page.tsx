@@ -302,19 +302,19 @@ export default function Pricing() {
                             <div className='additional-info'>
                               <div className='info-item d-flex align-items-center justify-content-between'>
                                 <strong>Basket Value Charge:</strong> 
-                                <p className='mb-0'>{itm.basket_value_charge}</p>
+                                <p className='mb-0'>{itm.basket_value_charge}%</p>
                               </div>
                               <div className='info-item d-flex align-items-center justify-content-between'>
                                 <strong>Commission Override:</strong>
-                                <p className='mb-0'>{itm.commission_override}</p> 
+                                <p className='mb-0'>{itm.commission_override}%</p> 
                               </div>
                               <div className='info-item d-flex align-items-center justify-content-between'>
                                 <strong>Bonus Override:</strong>
-                                <p className='mb-0'>{itm.bonus_override}</p> 
+                                <p className='mb-0'>{itm.bonus_override}%</p> 
                               </div>
                               <div className='info-item d-flex align-items-center justify-content-between'>
                                 <strong>Allowed Total Revenue:</strong> 
-                                <p className='mb-0'>{itm.allowed_total_revenue}</p>
+                                <p className='mb-0'>{itm.allowed_total_revenue}$</p>
                               </div>
                             </div>
                             {<div className='plan-features'>
