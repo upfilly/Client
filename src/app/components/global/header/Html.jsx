@@ -75,7 +75,7 @@ const Html = ({ settingData, Logout }) => {
       .then((res) => {
         localStorage.setItem("ip_address", res.ip)
       })
-      .catch((error) =>{ 
+      .catch((error) => {
         // console.log(error, "==Ip Address Error")
       });
   };
@@ -137,9 +137,9 @@ const Html = ({ settingData, Logout }) => {
               <div className={!user ? "col-12 col-md-12 col-lg-3 col-xl-2 " : "col-12 col-md-12 px-0"}>
                 <div className="right_auth d-flex align-items-center blue-header-main justify-content-center">
                   {(!user) && <>
-                  <Link className="ml-2 mr-2" href="/SignupOptions"
-                  // onClick={() => setShowPopup(true)}
-                  >Sign Up</Link> /
+                    <Link className="ml-2 mr-2" href="/SignupOptions"
+                    // onClick={() => setShowPopup(true)}
+                    >Sign Up</Link> /
                     <Link className="ml-2 mr-2" href="/login">Sign In</Link></>}
                   {user && <>
                     {(user?.request_status != "accepted") && <span className="text-danger">Your account cannot be verified by the admin, and as a result, you will not be able to access the dashboard.</span>}
@@ -155,7 +155,7 @@ const Html = ({ settingData, Logout }) => {
                         {(user?.request_status == "accepted") && <Dropdown.Item className="has-icon" onClick={() => history.push('/dashboard')}><i class="fa fa-dashboard mr-2 " /> My DashBoard</Dropdown.Item>
                         }
                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2 " /> Profile</Dropdown.Item>
-                        {(user?.request_status == "accepted") &&<Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}><i class="fa-solid fa-chart-simple mr-2 "></i> MarketPlace</Dropdown.Item>}                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
+                        {(user?.request_status == "accepted") && <Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}><i class="fa-solid fa-chart-simple mr-2 "></i> MarketPlace</Dropdown.Item>}                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
                         <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout</Dropdown.Item>
 
                       </Dropdown.Menu>
@@ -196,7 +196,7 @@ const Html = ({ settingData, Logout }) => {
                     href="/platforms">Platform</Link>
                 </li>
                 {/* {false && */}
-                 <>{(user?.role == "brand" || !user) && <li class="nav-item">
+                <>{(user?.role == "brand" || !user) && <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/pricing" ? 'active' : ''}`} href="/pricing">Pricing</Link>
                 </li>}</>
                 {/* } */}
@@ -209,9 +209,9 @@ const Html = ({ settingData, Logout }) => {
                 <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/company" ? 'active' : ''}`} href="/company">Subscriptions</Link>
                 </li>
-                <li class="nav-item">
+                {(user?.role == "brand" || !user) && <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Script</Link>
-                </li>
+                </li> }
 
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-auto">

@@ -1,8 +1,11 @@
 import React from 'react';
 import './style.css';
 import Layout from '../components/global/layout';
+import crendentialModel from '@/models/credential.model';
 
 const TrackingGuide = () => {
+  const user = crendentialModel.getUser()
+  
   return (<Layout>
     <div className="container">
       <header className="header">
@@ -23,7 +26,7 @@ const TrackingGuide = () => {
         </div>
 
         <p>This code captures URL parameters like <code>?abcd=1234</code> and stores them as cookies for later use. For example, you can track affiliate IDs or campaign sources using this method.</p>
-<hr></hr>
+        <hr></hr>
         <h4 className='trackHeading text-left'>Step 2: Sending Tracking Data For Upfilly</h4>
         <p>Once you have captured the necessary data (like user information, sales, or campaign data), you can send it to an external API for further processing. Here's an example using <code>XMLHttpRequest</code>:</p>
 
@@ -32,7 +35,7 @@ const TrackingGuide = () => {
             {`// Sending tracking data to an external
             <script>
            const saleData = {
-            merchant: {{1001}}, // given by upfilly after signup
+            merchant: {{${user?.id || user?._id || "1001"}}}, // given by upfilly after signup
             affiliate_id: getCookie("affiliate_id") || "defaultAffiliate", // value not in cookies then implement this script where it get 
             amount: parseFloat(getCookie("totalAmount") || 0).toFixed(2),  // value not in cookies then implement this script where it get 
             channel: getCookie("source") || "defaultChannel",  // value not in cookies then implement this script where it get 
@@ -74,7 +77,7 @@ const TrackingGuide = () => {
         <p>Created by [Your Name]. Follow these steps to implement tracking in your React app.</p>
       </footer> */}
     </div>
-    </Layout>
+  </Layout>
   );
 };
 

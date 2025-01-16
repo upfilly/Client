@@ -246,7 +246,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="my-5">
+        {/* <div className="my-5">
           <div className="row">
             <div className="col-md-8 mx-auto">
               <p className='text-center social '>Trusted by industry leaders and best-in-class brands</p>
@@ -259,7 +259,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="container ">
         <div className="my-5 mobile-pl ">
