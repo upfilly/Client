@@ -14,10 +14,12 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
   const [stab, setstab] = useState(false)
   const menus = {
     user: ['roles', 'users'],
+    partnermanagement: ['requests','campaignManagement','invitations'],
+    communication: ['EmailMessages'],
     commisions: ['commisionplan','manualCommission'],
     catalogue: ['types', 'categories', 'category/'],
-    affiliates: ['affiliate', 'group','marketplace', 'EmailTemplate','appliedjobs','requests','makeLink'],
-    CreativeAssets: ['CreativeAsset','EmailMessages','DataFeeds','CreativeEmails','addbanner'],
+    affiliates: ['affiliate', 'group','marketplace', 'EmailTemplate','appliedjobs','makeLink'],
+    CreativeAssets: ['CreativeAsset','DataFeeds','CreativeEmails','addbanner','coupons'],
     api: ['bookingSystem', 'pos', 'reviews', 'accounting-system'],
     geo: ['continents', 'countries', 'regions', 'cities'],
     dynamicPricing: ['dynamicprice'],

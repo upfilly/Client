@@ -155,7 +155,8 @@ const Html = ({ settingData, Logout }) => {
                         {(user?.request_status == "accepted") && <Dropdown.Item className="has-icon" onClick={() => history.push('/dashboard')}><i class="fa fa-dashboard mr-2 " /> My DashBoard</Dropdown.Item>
                         }
                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2 " /> Profile</Dropdown.Item>
-                        {(user?.request_status == "accepted") &&<Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}><i class="fa-solid fa-chart-simple mr-2 "></i> MarketPlace</Dropdown.Item>}                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
+                        {/* {(user?.request_status == "accepted") &&<Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}><i class="fa-solid fa-chart-simple mr-2 "></i> MarketPlace</Dropdown.Item>}                        */}
+                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
                         <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout</Dropdown.Item>
 
                       </Dropdown.Menu>
@@ -209,9 +210,9 @@ const Html = ({ settingData, Logout }) => {
                 <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/company" ? 'active' : ''}`} href="/company">Subscriptions</Link>
                 </li>
-                <li class="nav-item">
+                {(user?.role == "brand" || !user) && <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Script</Link>
-                </li>
+                </li>}
 
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-auto">

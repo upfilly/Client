@@ -30,13 +30,13 @@ export default function Layout({ title, description, children , handleKeyPress, 
   const [activeSidebar, setActiveSidebar] = useState(false)
   const [settingData, setSettingData] = useState([])
   const [showPopup, setShowPopup] = useState(false)
-  const isDashboard = pathname.includes('/requestCampaigns') || pathname.includes('/mapping') || pathname.includes('/reports') || pathname.includes('/brand-report') || pathname.includes('/affiliate-report') || pathname.includes('/trackingData') || pathname.includes('/performance') || pathname.includes('/CreativeEmails') || pathname.includes('/EmailMessages') || pathname.includes('/DataFeeds') ||
-                      pathname.includes('/CreativeAsset') || pathname.includes('/EmailTemplate') ||pathname.includes('/coupons') || pathname.includes('/appliedjobs') || pathname.includes('/applymerchants') || pathname.includes('/invitedUsers') || pathname.includes('/addbanner') || pathname.includes('/invitations') || 
-                      pathname.includes('/inviteUsers') || pathname.includes('/users') || pathname.includes('/salesTracking') || pathname.includes('makeLink') || pathname.includes('/generateLink') || pathname.includes('/Trackings') || pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') || 
-                      pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') || 
-                      pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') || pathname.includes('/group')|| pathname.includes('/commission') || pathname.includes('/payments') || pathname.includes('/chat')
+  const isDashboard = pathname.includes('/marketplace') || pathname.includes('/requestCampaigns') || pathname.includes('/mapping') || pathname.includes('/reports') || pathname.includes('/brand-report') || pathname.includes('/affiliate-report') || pathname.includes('/trackingData') || pathname.includes('/performance') || pathname.includes('/CreativeEmails') || pathname.includes('/EmailMessages') || pathname.includes('/DataFeeds') ||
+    pathname.includes('/CreativeAsset') || pathname.includes('/EmailTemplate') || pathname.includes('/coupons') || pathname.includes('/appliedjobs') || pathname.includes('/applymerchants') || pathname.includes('/invitedUsers') || pathname.includes('/addbanner') || pathname.includes('/invitations') ||
+    pathname.includes('/inviteUsers') || pathname.includes('/users') || pathname.includes('/salesTracking') || pathname.includes('makeLink') || pathname.includes('/generateLink') || pathname.includes('/Trackings') || pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') ||
+    pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') ||
+    pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') || pathname.includes('/group') || pathname.includes('/commission') || pathname.includes('/payments') || pathname.includes('/chat')
   const isAuthenticate = pathname.includes('/reports') || pathname.includes('/brand-report') || pathname.includes('/affiliate-report') || pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') ||
-                         pathname.includes('/profile') || pathname.includes('/payments') || pathname.includes('/proposals') || pathname.includes('/commission')
+    pathname.includes('/profile') || pathname.includes('/payments') || pathname.includes('/proposals') || pathname.includes('/commission')
   
   useEffect(() => {
     if (user) {

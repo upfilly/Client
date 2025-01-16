@@ -147,6 +147,8 @@ export default function Pricing() {
     }
   }
 
+  console.log(data,"aaaaassss")
+
   const filteredPlans = data?.filter((item: any) => {
     if (!selectedPlan) {
       return item?.interval_count === 1;
@@ -163,11 +165,12 @@ export default function Pricing() {
   // })
 
   const sortedData = filteredPlans?.sort((a: any, b: any) => {
-    if (a.recommended === 'Y' && b.recommended === 'N') return -1;
-    if (a.recommended === 'N' && b.recommended === 'Y') return 1;
-
+    // if (a.recommended === 'Y' && b.recommended === 'N') return -1;
+    // if (a.recommended === 'N' && b.recommended === 'Y') return 1;
     return a.amount - b.amount;
   });
+
+  console.log(sortedData,"sortedDatasortedData")
 
 
   const ChangePlan = (dat: any) => {
