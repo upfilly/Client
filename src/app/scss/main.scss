@@ -951,6 +951,9 @@ input.searchbar.mr-2 {
 .d-flex.justify-content-between.align-items-center {
   flex-wrap: wrap;
 }
+.set-header-icon {
+  height: 61px !important;
+}
 
 @media only screen and (min-width:1200px) and (max-width:1400px) {
   .dropdown.addDropdown.chnageses {
