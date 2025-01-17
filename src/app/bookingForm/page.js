@@ -181,6 +181,7 @@ export default function BillingForm() {
 
     let data = {
       role: "brand",
+      request_status:"accepted",
       email: formData?.email,
       firstName: formData?.firstName,
       lastName: formData?.lastName,
