@@ -2536,7 +2536,7 @@ select.form-select {
   height: 61px;
   display: flex;
   justify-content: flex-start;
-  padding-bottom: 14px;
+  padding-bottom: 0px;
 }
 
 .main-dashboards {
@@ -2544,7 +2544,7 @@ select.form-select {
 }
 
 .main-top {
-  padding: 12px 0 0 0;
+  padding: 12px 12px 0 0;
 }
 
 .sidebar_main.active .toggle-img {
@@ -4141,7 +4141,7 @@ p.revuh{
   width: 290px;
   background: #fff;
   height: 100vh;
-  padding: 20px 10px;
+  padding: 0px 10px;
   transition: 0.5s ease-in-out;
  
 }
@@ -5091,7 +5091,7 @@ input.mr-2.radio {
   width: 290px;
   background: #fff;
   height: 100vh;
-  padding: 20px 10px;
+  padding: 0px 10px;
   transition: 0.5s ease-in-out;
   z-index: 999 !important;
   position: fixed;

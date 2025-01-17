@@ -13,6 +13,7 @@ import MultiSelectDropdown from "../components/common/MultiSelectDropdown";
 import methodModel from "@/methods/methods";
 import crendentialModel from "@/models/credential.model";
 import { useRouter } from "next/navigation";
+import { FaFilter } from "react-icons/fa";
 
 export default function MarketPlace() {
   const user = crendentialModel.getUser()
@@ -170,7 +171,7 @@ export default function MarketPlace() {
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
       <>
-        <section className="p-80">
+        <section className="mapping-wrapper">
           <div className="container">
             <div className="row">
               {/* <div className="col-12 col-sm-12 col-md-6 col-lg-4 ">
@@ -331,7 +332,7 @@ export default function MarketPlace() {
                 </div>
               </div> */}
 
-              <div class="modal filter_modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal filter_modal fade p-0" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content   ">
                     <div class="modal-header align-items-center bg_headers ">
@@ -508,7 +509,9 @@ export default function MarketPlace() {
                 <div className="lists_marketplace">
                   <div className="job-searchbar gap-2 flex-wrap">
                   <div className='filter-opt'>
-                    <button className='set-filter' type="button" class="set-filter abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
+                    <button className='set-filter' type="button" class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                       <FaFilter className="mr-2" />
+                      Filter</button>
                   </div>                   
                    <h4 className="mb-0">{total} Results Found</h4>
 
