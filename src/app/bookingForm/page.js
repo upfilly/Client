@@ -691,7 +691,6 @@ export default function BillingForm() {
                             type="text"
                             value={selectedLocation?.country}
                             className="form-control quick-radius"
-                            disabled
                           />
                         </div>
                       </div>
@@ -703,7 +702,6 @@ export default function BillingForm() {
                             type="text"
                             value={selectedLocation?.city}
                             className="form-control quick-radius"
-                            disabled
                           />
                         </div>
                       </div>
