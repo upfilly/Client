@@ -42,6 +42,18 @@ const Html = ({
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
+    const [copySuccess, setCopySuccess] = useState("");
+
+    const copyToClipboard = (url) => {
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                setCopySuccess("URL copied to clipboard!");
+                setTimeout(() => setCopySuccess(""), 2000)
+            })
+            .catch((err) => {
+                console.error("Failed to copy URL: ", err);
+            });
+    };
 
     const handleEmailChange = (e) => {
         const email = e.target.value;
@@ -138,22 +150,40 @@ const Html = ({
 
                 <div className='table_section'>
                     <div className="table-responsive ">
-
                         <table className="table table-striped table-width">
                             <thead className='table_head'>
                                 <tr className='heading_row'>
                                     {uniqueKeysArray?.map((itm) => {
                                         return <th scope="col" className='table_data'>{itm}</th>
-                                    })
-                                    }
+                                    })}
+                                    <th scope="col" className='table_data'>Share URL</th>
                                 </tr>
                             </thead>
                             {!loaging && <tbody>
                                 {comprehensiveTemplate?.map((item, index) => (
                                     <tr key={index}>
                                         {uniqueKeysArray.map((key, idx) => (
-                                            <td className='table_dats' key={idx}>{key == "createdAt" ? datepipeModel.date(item[key]) : key == "updatedBy" ? datepipeModel.date(item[key]) : item[key] || "--"}</td>
+                                            <td className='table_dats' key={idx}>
+                                                {key == "createdAt" ? datepipeModel.date(item[key]) :
+                                                    key == "updatedBy" ? datepipeModel.date(item[key]) : item[key] || "--"}
+                                            </td>
                                         ))}
+                                        {/* Add Share URL cell here */}
+                                        <td className='table_dats'>
+                                        <div className="d-flex align-items-center">
+                                            <a href={`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url)}`} target="_blank" rel="noopener noreferrer">
+                                                Share URL
+                                            </a>
+                                            <button 
+                                                className="btn btn-link ms-2" 
+                                                onClick={() => copyToClipboard(`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url)}`)}
+                                                title="Copy URL"
+                                            >
+                                                Copy
+                                            </button>
+                                        </div>
+                                        {copySuccess && <div className="text-success mt-2">{copySuccess}</div>} {/* Show feedback message */}
+                                    </td>
                                     </tr>
                                 ))}
                             </tbody>}
@@ -164,7 +194,6 @@ const Html = ({
                         {!loaging && comprehensiveTemplate?.length == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
                     </div>
                 </div>
-
 
 
                 <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
