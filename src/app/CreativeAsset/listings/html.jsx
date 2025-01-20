@@ -65,7 +65,7 @@ const Html = ({
                             }
                         </tbody>
                     </table>
-                    {!loaging && total == 0 ? <div className="py-3 text-center">No Coupon Found</div> : <></>}
+                    {!loaging && total == 0 ? <div className="py-3 text-center">No Data Found</div> : <></>}
                 </div>
             </div>
             </div>

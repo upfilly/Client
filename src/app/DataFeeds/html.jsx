@@ -151,14 +151,14 @@ const Html = ({
                 <div className='table_section'>
                     <div className="table-responsive ">
                         <table className="table table-striped table-width">
-                            <thead className='table_head'>
+                          { total != 0 && <thead className='table_head'>
                                 <tr className='heading_row'>
                                     {uniqueKeysArray?.map((itm) => {
                                         return <th scope="col" className='table_data'>{itm}</th>
                                     })}
                                     <th scope="col" className='table_data'>Share URL</th>
                                 </tr>
-                            </thead>
+                            </thead>}
                             {!loaging && <tbody>
                                 {comprehensiveTemplate?.map((item, index) => (
                                     <tr key={index}>
@@ -176,7 +176,7 @@ const Html = ({
                                             </a>
                                             <button 
                                                 className="btn btn-link ms-2" 
-                                                onClick={() => copyToClipboard(`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url)}`)}
+                                                onClick={() => copyToClipboard(`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url || item.productURL)}`)}
                                                 title="Copy URL"
                                             >
                                                 Copy
