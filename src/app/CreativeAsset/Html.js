@@ -104,8 +104,6 @@ const Html = () => {
         fetchCSV();
       }, []);
 
-      console.log(csvData,"csvDatacsvDatacsvData")
-
     return (
         <>
             <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Data Feeds" filters={''} >
