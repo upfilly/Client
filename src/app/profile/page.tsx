@@ -11,6 +11,8 @@ import Layout from '../components/global/layout/index';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'react-bootstrap';
 import CompareTable from './CompareTable'
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const Profile = () => {
   const history = useRouter()
@@ -21,6 +23,7 @@ const Profile = () => {
   const [ActivityData, setActivityData] = useState<any>([])
   const [assosiateUserData, setAssosiateUserData] = useState([])
   const [switchUser,setSwitchUser] = useState<any>(null)
+  const [bankData,setBankData] = useState<any>([])
   const [roles, setRoles] = useState<any>('')
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -66,6 +69,57 @@ const Profile = () => {
     })
   };
 
+  const retriveAccountData = () => {
+    loader(true)
+    ApiClient.get(`account/retrieve`, {userId:user?.id || user?._id}).then(res => {
+      if (res.success) {
+        setBankData(res?.data)
+      }
+    })
+  };
+
+  const GenerateAddAcountLink = () => {
+    loader(true)
+    ApiClient.post(`account/create`, {
+      "email": user?.email,
+      "businessName": user?.fullName,
+      "country": "US"
+    }).then(res => {
+      if (res.success) {
+        window.location.href = res?.data?.url;
+        // console.log(res?.data?.url,"popopopop")
+      }
+    })
+  };
+
+  const handleDelete = (id: any) => {
+    // Show confirmation modal
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Proceed with deletion if confirmed
+        ApiClient.delete(`account/delete?accountId=${id}`).then(res => {
+          if (res.success) {
+            retriveAccountData();
+            toast.success("Account deleted successfully.");
+          }
+        }).catch(error => {
+          toast.error("Failed to delete account.");
+        });
+      } else {
+        // If canceled
+        toast.info("Account deletion canceled.");
+      }
+    });
+  };
+
   const handleSwitchUser = (id: any) => {
     loader(true)
     ApiClient.put(`changeactiveuser`, { id: id }).then(res => {
@@ -78,8 +132,8 @@ const Profile = () => {
     })
   }
 
-  useEffect(
-    () => {
+  useEffect(() => {
+    retriveAccountData()
       if (user) {
         gallaryData(user?.id || user?._id);
         AssosiateUserData()
@@ -87,8 +141,7 @@ const Profile = () => {
         // activityLogsData(user?.activeUser?.id || user?.id || user?._id)
         setRoles(user?.activeUser?.role)
       }
-    },
-    []
+    },[]
   );
 
 
@@ -487,6 +540,64 @@ const Profile = () => {
                         }
 
                       </div>
+                    </div>
+                    <div className='card p-3 rounded-3 mb-4 ' >
+                      <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
+                        <div className='main_title_head'>
+                          <h3 className=''>Accounts</h3>
+                        </div>
+                        <div className='d-flex gap-3 align-items-center' >
+                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles =='affiliate' || roles == 'brand') && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
+                            <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
+                            Add Account
+                          </button>}
+                        </div>
+                      </div>
+                      
+                      {bankData?.bank_name && <div className="bank-details-container">
+                        <h2 className="bank-details-header">Bank Details</h2>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Bank Name:</span>
+                          <span className="bank-details-value">{bankData.bank_name}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Account Holder:</span>
+                          <span className="bank-details-value">{bankData.accountHolderName || 'N/A'}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Account Status:</span>
+                          <span className="bank-details-value">{bankData.accountStatus}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Account Number:</span>
+                          <span className="bank-details-value">XXXX-XXXX-{bankData.bankAccountNumber}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Routing Number:</span>
+                          <span className="bank-details-value">{bankData.routingNumber}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Country:</span>
+                          <span className="bank-details-value">{bankData.country}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Currency:</span>
+                          <span className="bank-details-value">{bankData.currency}</span>
+                        </div>
+                        <div className="bank-details-row">
+                          <span className="bank-details-label">Transfer Status:</span>
+                          <span className="bank-details-value">{bankData.transfer === 'inactive' ? 'Inactive' : 'Active'}</span>
+                        </div>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDelete(bankData.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>}
+
+                      {!bankData?.bank_name && <div className="py-3 text-center">No Account Found
+                      </div>}
                     </div>
                   </div>
                   :

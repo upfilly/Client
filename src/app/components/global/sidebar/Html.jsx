@@ -43,7 +43,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               <div className="nav-item">
                 <CustomTooltip text="Partner Management">
                   <a className={` side_titles  nav-link hoverclass affilate ${tabclass('partnermanagement') || tab == 'partnermanagement' ? '' : 'collapsed-m'}`} onClick={() => tabChange('partnermanagement')} >
-                    <i class="material-icons  svg_iconbx">account_circle</i>
+                    <i class="material-icons  svg_iconbx">group_work</i>
                     <span className="  side_head" >Partner Management
                     </span>
                     <i className="fa fa-angle-down fontsize20" aria-hidden="true"></i>
@@ -77,7 +77,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               <div className="nav-item">
                 <CustomTooltip text="Partner Management">
                   <a className={` side_titles  nav-link hoverclass affilate ${tabclass('communication') || tab == 'communication' ? '' : 'collapsed-m'}`} onClick={() => tabChange('communication')} >
-                    <i class="material-icons  svg_iconbx">account_circle</i>
+                    <i class="material-icons  svg_iconbx">border_color</i>
                     <span className="  side_head" >Communication
                     </span>
                     <i className="fa fa-angle-down fontsize20" aria-hidden="true"></i>
@@ -357,7 +357,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
         </ListItemLink>} */}
 
           {(user?.role == "affiliate") && <ListItemLink to="/affiliate-report" title="Affiliate Report">
-            <i class="material-icons  svg_iconbx">list_alt</i>
+            <i class="material-icons  svg_iconbx">summarize</i>
             <span className="side_head">Report</span>
           </ListItemLink>}
 

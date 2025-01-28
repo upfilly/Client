@@ -278,3 +278,44 @@ img.n-databx {
     max-width: 200px;
     object-fit: contain;
 }
+.bank-details-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .bank-details-header {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .bank-details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .bank-details-label {
+    font-weight: bold;
+  }
+  
+  .bank-details-value {
+    font-style: italic;
+  }
+  
+  .delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-button:hover {
+    background-color: #ff1a1a;
+  }
+  
