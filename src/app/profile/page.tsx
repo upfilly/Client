@@ -541,7 +541,7 @@ const Profile = () => {
 
                       </div>
                     </div>
-                    <div className='card p-3 rounded-3 mb-4 ' >
+                   {user?.role == "affiliate" && <div className='card p-3 rounded-3 mb-4 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
                         <div className='main_title_head'>
                           <h3 className=''>Accounts</h3>
@@ -598,7 +598,7 @@ const Profile = () => {
 
                       {!bankData?.bank_name && <div className="py-3 text-center">No Account Found
                       </div>}
-                    </div>
+                    </div>}
                   </div>
                   :
                   <div className='col-12 col-sm-12 col-md-7  col-lg-8  '>
