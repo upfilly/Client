@@ -115,15 +115,15 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     <label>Affiliate<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
-                                         id="statusDropdown"
-                                         displayValue="fullName"
-                                         placeholder="Select Affiliate"
-                                         intialValue={form?.affiliate_id}
-                                         result={e => {
-                                            setform({ ...form, affiliate_id: e.value })
-                                        }}
-                                         disabled={(form?.status == "rejected" || !id) ? false : true}
-                                         options={affiliateData}
+                                            id="statusDropdown"
+                                            displayValue="fullName"
+                                            placeholder="Select Affiliate"
+                                            intialValue={form?.affiliate_id}
+                                            result={e => {
+                                                setform({ ...form, affiliate_id: e.value })
+                                            }}
+                                            disabled={(form?.status == "rejected" || !id) ? false : true}
+                                            options={affiliateData}
                                         />
                                     </div>
                                     {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
@@ -145,7 +145,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     </div>
                                     {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
                                 </div>
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Amount<span className="star">*</span></label>
                                     <input
                                         className="form-control"
@@ -162,8 +162,8 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         }}
                                     />
                                     {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
-                                </div>
-                                <div className="col-md-6 mb-3">
+                                </div> */}
+                                <div className="col-md-12 mb-3">
                                     <label>Default Campaign</label>
                                     <div className="form-check">
                                         <input

@@ -126,7 +126,7 @@ const Html = ({
                             <tbody>
                                 {!loaging && data && data.map((itm, i) => {
                                     return <tr className='data_row' key={i}>
-                                        <td className='table_dats' onClick={e => view(itm.id)}>
+                                        <td className='table_dats' onClick={e => view(itm.id || itm._id)}>
 
                                             <div className='user_detail'>
                                                 <div className='user_name'>
