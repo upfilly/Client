@@ -9,8 +9,6 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
-import axios from 'axios';
-import affilate from '../affiliate/page';
 
 const Users = () => {
   const user = crendentialModel.getUser()
@@ -99,10 +97,15 @@ const Users = () => {
     getPreviousData({ page: e.selected + 1 })
   }
 
+  // const filter = (p = {}) => {
+  //   setFilter({ ...filters, ...p })
+  //   setPreviousFilter({ ...previousfilters, page: e.selected })
+  //   getData({ ...p, page: filters?.page + 1 })
+  //   getData({ ...p, page: filters?.page + 1 })
+  // }
+
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    setPreviousFilter({ ...previousfilters, page: e.selected })
-    getData({ ...p, page: filters?.page + 1 })
     getData({ ...p, page: filters?.page + 1 })
   }
 

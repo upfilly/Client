@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import ApiClient from '@/methods/api/apiClient';
-import loader from '@/methods/loader';
 import './style.scss'
-import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import 'react-quill/dist/quill.snow.css';
-import { useRouter } from 'next/navigation';
 import { Modal } from 'react-bootstrap';
 import DataFeedslisting from '../CreativeAsset/listings'
 import environment from '@/environment';
 import Papa from 'papaparse';
+import crendentialModel from '@/models/credential.model';
 
 const Html = () => {
     const user = crendentialModel.getUser()
-    const history = useRouter()
-    const [form, setForm] = useState({})
     const [csvData, setCsvData] = useState([]);
     const [show, setShow] = useState(false);
     const [file, setFile] = useState(null);
-    const [loaderData,setloaderData] = useState(false)
+    const [loaderData, setloaderData] = useState(false)
     const [relatedAffiliate, setAllAffiliate] = useState([])
+    const [error, setError] = useState("");
+    const [selectedOption, setSelectedOption] = useState('csv');
+    const [url, setUrl] = useState('');
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -32,6 +31,19 @@ const Html = () => {
     const openModal = () => {
         handleShow()
     }
+
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+        setFile(null);
+        setUrl('');
+        setError('');
+    };
+
+    const handleUrlChange = (e) => {
+        const urlValue = e.target.value;
+        setUrl(urlValue);
+        setError("");
+    };
 
     const allGetAffiliate = (p = {}) => {
         let url = 'getallaffiliatelisting'
@@ -53,56 +65,75 @@ const Html = () => {
         })
     };
 
-    useEffect(() => {
-        allGetAffiliate()
-    }, [])
-
     const handleSubmit = () => {
-
-        if(!file){
-            toast.error("Upload Csv file first")  
-            return 
+        const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w .-]*)*\/?$/;
+        if (selectedOption == "csv") {
+            if (!file) {
+                setError("Upload Csv file first")
+                return
+            }
+        } else {
+            if (!url || !urlPattern.test(url)) {
+                setError("Please enter a valid URL.");
+                return
+            }
         }
+
+
         setloaderData(true)
-        const payload = {
+
+        let payload = {
             // addedBy: user?.id,
             // user_id: form?.user_id,
-            filePath: `/documents/${file}`
+            "brand_id": user?.id || user?._id,
+            "type": "csv",
+            "filePath": `/documents/${file}`,
+        }
+
+        if (url) {
+            payload = {
+                // addedBy: user?.id,
+                // user_id: form?.user_id,
+                "brand_id": user?.id || user?._id,
+                "type": "url",
+                "url": url,
+            }
         }
 
         ApiClient.post('dataset/send', payload).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setloaderData(false)
+                fetchCSV()
                 setFile(null)
-                setForm({})
+                // setForm({})
             }
         });
     };
 
-    useEffect(() => {
-        // Fetch the CSV file from the public directory
-        const fetchCSV = async () => {
-          try {
+    const fetchCSV = async () => {
+        try {
             const response = await fetch('/searchspring.csv');
             if (!response.ok) {
-              throw new Error('File not found');
+                throw new Error('File not found');
             }
-            
+
             const text = await response.text();
             Papa.parse(text, {
-              complete: (result) => {
-                setCsvData(result.data);
-              },
-              header: true,
-              skipEmptyLines: true,
+                complete: (result) => {
+                    setCsvData(result.data);
+                },
+                header: true,
+                skipEmptyLines: true,
             });
-          } catch (err) {
-          }
-        };
-    
+        } catch (err) {
+        }
+    };
+
+    useEffect(() => {
         fetchCSV();
-      }, []);
+        allGetAffiliate();
+    }, []);
 
     return (
         <>
@@ -117,30 +148,88 @@ const Html = () => {
                         </div>
                         <div className='card-body'>
 
-                            {!loaderData ? <div className='row'>
-                                <div className='col-md-12'>
-                                    <div className='mb-3'>
-                                        <label>Upload CSV File <span onClick={openModal} style={{ color: 'red' }}>(See a example)</span></label>
-                                        <div className="form-group drag_drop">
-                                            <div className='upload_filebx'>
-                                                {!file && <><button className="btn btn-primary upload_image">Upload CSV File</button>
-                                                    <input type="file" className="form-control file_input" accept=".csv" multiple={false}
-                                                        onChange={(e) => {
-                                                            handleFileChange(e);
-                                                        }} /></>}
-                                                <div className="imagesRow">
-                                                    <div className="upload_csvfile">
-                                                        {!file ? null : <a href={`${environment?.api}/documents/${file}`}><img src={`/assets/img/document.png`} className="thumbnail" /></a>}
-                                                        {!file ? null : <div className="removeCross" onClick={() => setFile('')}><i class="fa fa-times csv_close" aria-hidden="true"></i>
-                                                        </div>}
-                                                    </div>
-                                                </div>
+                            {!loaderData ?
+                                <div className='row'>
+                                    <div className='col-md-12'>
+                                        <div className='mb-3 options'>
+                                            <label>Choose an option:</label>
+                                            <div className="form-check">
+                                                <input
+                                                    type="radio"
+                                                    id="uploadCsv"
+                                                    name="fileOption"
+                                                    value="csv"
+                                                    checked={selectedOption === 'csv'}
+                                                    onChange={handleOptionChange}
+                                                    className="form-check-input"
+                                                />
+                                                <label htmlFor="uploadCsv" className="form-check-label">Upload CSV</label>
+                                            </div>
+                                            <div className="form-check">
+                                                <input
+                                                    type="radio"
+                                                    id="enterUrl"
+                                                    name="fileOption"
+                                                    value="url"
+                                                    checked={selectedOption === 'url'}
+                                                    onChange={handleOptionChange}
+                                                    className="form-check-input"
+                                                />
+                                                <label htmlFor="enterUrl" className="form-check-label">Enter URL</label>
                                             </div>
                                         </div>
+
+                                        {selectedOption === 'csv' ? (
+                                            <div className="mb-3">
+                                                <label>Upload CSV File <span onClick={openModal} style={{ color: 'red' }}>(See an example)</span></label>
+                                                <div className="form-group drag_drop">
+                                                    <div className='upload_filebx'>
+                                                        {!file && (
+                                                            <>
+                                                                <button className="btn btn-primary upload_image">Upload CSV File</button>
+                                                                <input
+                                                                    type="file"
+                                                                    className="form-control file_input"
+                                                                    accept=".csv"
+                                                                    multiple={false}
+                                                                    onChange={handleFileChange}
+                                                                />
+                                                            </>
+                                                        )}
+                                                        <div className="imagesRow">
+                                                            <div className="upload_csvfile">
+                                                                {!file ? null : (
+                                                                    <a href={`${environment?.api}/documents/${file}`}>
+                                                                        <img src={`/assets/img/document.png`} className="thumbnail" />
+                                                                    </a>
+                                                                )}
+                                                                {!file ? null : (
+                                                                    <div className="removeCross" onClick={() => setFile('')}>
+                                                                        <i className="fa fa-times csv_close" aria-hidden="true"></i>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {error && <p style={{ color: "red" }}>{error}</p>}
+                                            </div>
+                                        ) : (
+                                            <div className="mb-3">
+                                                <label>Enter URL</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Enter the URL here"
+                                                    value={url}
+                                                    onChange={handleUrlChange}
+                                                />
+                                                {error && <p style={{ color: "red" }}>{error}</p>}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-
-                            </div> :
+                                :
                                 <div className="text-center py-4">
                                     <img src="/assets/img/loader.gif" className="pageLoader" />
                                 </div>
@@ -197,12 +286,12 @@ const Html = () => {
                                 </Modal.Body>
                             </Modal>
 
-                           {!loaderData && <div className='text-end mt-3'>
+                            {!loaderData && <div className='text-end mt-3'>
                                 <button type="button" class="btn btn-primary" onClick={handleSubmit} >Send Data</button>
                             </div>}
                         </div>
                     </div>
-                    <DataFeedslisting file={file}/>
+                    <DataFeedslisting file={file} loaderData={loaderData}/>
                 </div>
             </Layout>
         </>

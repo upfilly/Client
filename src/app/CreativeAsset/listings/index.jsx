@@ -5,33 +5,33 @@ import ApiClient from '../../../methods/api/apiClient';
 import './style.scss';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
-import { useParams,useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
-const DataFeedslisting  = ({file}) => {
+const DataFeedslisting = ({ file , loaderData}) => {
     const user = crendentialModel.getUser()
-    const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false,status:''})
+    const { role } = useParams()
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false, status: '' })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
-    const history=useRouter()
-    
+    const history = useRouter()
+
 
     useEffect(() => {
         if (user) {
             // setFilter({ ...filters ,page: filters?.page + 1 ,role})
-            getData({role, page: 1 })
+            getData({ role, page: 1 })
         }
-    }, [file])
+    }, [file,loaderData])
 
 
     const getData = (p = {}) => {
         setLoader(true)
-        let  filter = { ...filters, ...p ,addedBy:user?.id}
+        let filter = { ...filters, ...p, addedBy: user?.id }
 
-        let url='dataset/list'
+        let url = 'dataset/list'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data)
@@ -51,18 +51,18 @@ const DataFeedslisting  = ({file}) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-            // loader(true)
-            ApiClient.delete(`delete?model=dataset&id=${id}`).then(res => {
-                if (res.success) {
-                    toast.success(res.message)
-                    getData({page:1})
-                }
-                // loader(false)
-            })
+                // loader(true)
+                ApiClient.delete(`delete?model=dataset&id=${id}`).then(res => {
+                    if (res.success) {
+                        toast.success(res.message)
+                        getData({ page: 1 })
+                    }
+                    // loader(false)
+                })
             }
-          })
+        })
     }
 
     const pageChange = (e) => {
@@ -70,9 +70,9 @@ const DataFeedslisting  = ({file}) => {
         getData({ page: e.selected + 1 })
     }
 
-    const filter = (p={}) => {
-        setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+    const filter = (p = {}) => {
+        setFilter({ ...filters, ...p })
+        getData({ ...p, page: filters?.page + 1 })
     }
 
     const ChangeRole = (e) => {
@@ -84,19 +84,19 @@ const DataFeedslisting  = ({file}) => {
         getData({ status: e, page: 1 })
     }
 
-    const view=(id)=>{
-        history.push("/coupons/detail/"+id)
+    const view = (id) => {
+        history.push("/coupons/detail/" + id)
     }
 
-    const edit=(id)=>{
-        let url=`/coupons/edit/${id}`
-        if(role) url=`/coupons/${role}/edit/${id}`
+    const edit = (id) => {
+        let url = `/coupons/edit/${id}`
+        if (role) url = `/coupons/${role}/edit/${id}`
         history.push(url)
     }
 
-    const add=()=>{
-        let url=`/coupons/add`
-        if(role) url=`/coupons/${role}/add`
+    const add = () => {
+        let url = `/coupons/add`
+        if (role) url = `/coupons/${role}/add`
         history.push(url)
     }
 
@@ -112,11 +112,11 @@ const DataFeedslisting  = ({file}) => {
         }
 
         let sortBy = `${key} ${sorder}`;
-        filter({ sortBy, key, sorder  })
+        filter({ sortBy, key, sorder })
     }
 
-    const isAllow=(key='')=>{
-        
+    const isAllow = (key = '') => {
+
         return true
     }
 
@@ -142,4 +142,4 @@ const DataFeedslisting  = ({file}) => {
     </>;
 };
 
-export default DataFeedslisting ;
+export default DataFeedslisting;

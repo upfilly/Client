@@ -2,37 +2,26 @@ import React, { useState } from 'react';
 import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
-import datepipeModel from '@/models/datepipemodel';
-import { useRouter } from 'next/navigation';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
+import environment from '@/environment';
 
 const Html = ({
-    view,
-    edit,
     reset,
-    ChangeStatus,
-    sorting,
     pageChange,
-    deleteItem,
     filters,
     loaging,
     data,
-    isAllow,
     total,
     setFilter,
     filter,
-    statusChange,
     getData,
-    uniqueKeys,
     comprehensiveTemplate,
     uniqueKeysArray,
 }) => {
-    const history = useRouter()
+    console.log(data,"nbnbnbnbn")
+
     const [activeSidebar, setActiveSidebar] = useState(false)
     const [show, setShow] = useState(false);
     const [form, setform] = useState({
@@ -43,6 +32,8 @@ const Html = ({
     const handleShow = () => setShow(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [copySuccess, setCopySuccess] = useState("");
+
+
 
     const copyToClipboard = (url) => {
         navigator.clipboard.writeText(url)
@@ -151,41 +142,61 @@ const Html = ({
                 <div className='table_section'>
                     <div className="table-responsive ">
                         <table className="table table-striped table-width">
-                          { total != 0 && <thead className='table_head'>
+                            {total != 0 && <thead className='table_head'>
                                 <tr className='heading_row'>
-                                    {uniqueKeysArray?.map((itm) => {
+                                    {/* {uniqueKeysArray?.map((itm) => {
                                         return <th scope="col" className='table_data'>{itm}</th>
-                                    })}
-                                    <th scope="col" className='table_data'>Share URL</th>
+                                    })} */}
+                                    <th scope="col" className='table_data'>Brand Name</th>
+                                    <th scope="col" className='table_data'>Type</th>
+                                    <th scope="col" className='table_data'>Action</th>
+                                    {/* <th scope="col" className='table_data'>Share URL</th> */}
                                 </tr>
                             </thead>}
-                            {!loaging && <tbody>
-                                {comprehensiveTemplate?.map((item, index) => (
-                                    <tr key={index}>
-                                        {uniqueKeysArray.map((key, idx) => (
+                            { <tbody>
+                                {/* {comprehensiveTemplate?.map((item, index) => ( */}
+                                    {/* {uniqueKeysArray.map((key, idx) => (
                                             <td className='table_dats' key={idx}>
                                                 {key == "createdAt" ? datepipeModel.date(item[key]) :
                                                     key == "updatedBy" ? datepipeModel.date(item[key]) : item[key] || "--"}
                                             </td>
-                                        ))}
-                                        {/* Add Share URL cell here */}
-                                        <td className='table_dats'>
+                                        ))} */}
+                                {!loaging && data && data.map((itm, i) => {
+                                    return <tr className='data_row' key={i}>
+                                        <td className='table_dats'>{itm?.brand_id?.fullName}</td>
+                                        <td className='table_dats'>{itm?.url ? "URL" : "CSV"}</td>
+                                        {itm?.url ? <td className='table_dats'>
+                                            <a href={itm?.url} target="_blank" rel="noopener noreferrer">
+                                                {itm?.url?.slice(0, 40)}
+                                            </a>
+                                        </td> :
+                                            <td className='table_dats'>
+                                                <a href={`${environment?.api}${itm?.filePath}`} target="_blank" rel="noopener noreferrer">
+                                                    {`${environment?.api}${itm?.filePath}`}
+                                                </a>
+                                            </td>}
+
+                                    </tr>
+
+                                })
+                                }
+
+                                    {/* <td className='table_dats'>
                                         <div className="d-flex align-items-center">
                                             <a href={`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url)}`} target="_blank" rel="noopener noreferrer">
                                                 Share URL
                                             </a>
-                                            <button 
-                                                className="btn btn-link ms-2" 
+                                            <button
+                                                className="btn btn-link ms-2"
                                                 onClick={() => copyToClipboard(`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url || item.productURL)}`)}
                                                 title="Copy URL"
                                             >
                                                 Copy
                                             </button>
                                         </div>
-                                        {copySuccess && <div className="text-success mt-2">{copySuccess}</div>} {/* Show feedback message */}
-                                    </td>
-                                    </tr>
-                                ))}
+                                        {copySuccess && <div className="text-success mt-2">{copySuccess}</div>}
+                                    </td> */}
+                                {/* // ))} */}
                             </tbody>}
                         </table>
                         {loaging ? <div className="text-center py-4">
@@ -213,38 +224,6 @@ const Html = ({
                     />
                 </div>
 
-
-
-                <Modal className='invite_modal' show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title className='mb-0 fs14'>Send Invite</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form.Group className='d-flex justify-content-between align-items-center width_label' controlId="formBasicEmail">
-
-                            <Form.Control
-                                type="email"
-                                placeholder="Enter Email"
-                                value={form.email}
-                                onChange={handleEmailChange}
-                                isInvalid={!isValidEmail}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter a valid email address.
-                            </Form.Control.Feedback>
-                            {submitted && !form?.email ? <div className="invalid-feedback d-block">email is Required</div> : <></>}
-                        </Form.Group>
-
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={(e) => handleSubmit(e)}>
-                            Send
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
             </div>
         </Layout>
     );
