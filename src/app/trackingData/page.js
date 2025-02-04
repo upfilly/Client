@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from 'sweetalert2';
 import loader from '@/methods/loader';
+import PaymentModal from './paymodal'
 import { toast } from 'react-toastify';
 
 export default function affilate() {
@@ -23,9 +24,24 @@ export default function affilate() {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [associateId, setAssociateId] = useState("");
   const [calculatedAmount, setCalculatedAmount] = useState(100)
 
-  const handleShow = () => setShowModal(true);
+  console.log(user,"klklklklklklklkl")
+
+  const handleShow = (price,commission,commission_type,id) =>{
+    setAssociateId(id)
+    if(commission_type == "percentage"){
+      const CalPrice = price*commission/100
+      setCalculatedAmount(CalPrice)
+      setShowModal(true)
+    }else{
+      const CalPrice = price - commission
+      setCalculatedAmount(CalPrice)
+      setShowModal(true)
+    }
+  };
+
   const handleClose = () => setShowModal(false);
 
   const handleKeyPress = (event) => {
@@ -299,8 +315,9 @@ export default function affilate() {
                                 </div>
                               ) : itm?.commission_status == 'rejected' ? (
                                 <div className="btn btn-primary mr-2">Rejected</div>
-                              ) : (
-                                <div className="btn btn-primary mr-2">Pay Now</div>
+                              ) : (<>
+                                {itm?.commission_paid != "paid" && <div className="btn btn-primary mr-2" onClick={()=>handleShow(itm?.price,itm?.campaign_details?.commission,itm?.campaign_details?.commission_type,itm?.id || itm?._id)}>Pay Now</div>}
+                                </>
                               )}
                             </td>
                             {/* <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td> */}
@@ -342,6 +359,15 @@ export default function affilate() {
             activeClassName={"pagination-item-active"}
           />
         </div>
+        <PaymentModal
+        showModal={showModal} 
+        setShowModal={setShowModal}
+        calculatedAmount={calculatedAmount}
+        setCalculatedAmount={setCalculatedAmount}
+        handleShow={handleShow}
+        handleClose={handleClose}
+        associateId={associateId}
+        />
       </Layout>
     </>
   );
