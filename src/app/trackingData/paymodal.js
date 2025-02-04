@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 const PaymentModal = ({ showModal, setShowModal, calculatedAmount, handleShow, handleClose ,associateId}) => {
 
     const payToAdmin = () => {
-        ApiClient.post('pay/commission/to/admin', { commission:calculatedAmount , brandAssociateId:associateId}).then((res) => {
+        ApiClient.post('pay/commission/to/admin', { commission:calculatedAmount?.toFixed(2) , brandAssociateId:associateId}).then((res) => {
             if (res.success) {
-                
+                window.open(res.data.url,"_self")
             }
         });
     }
