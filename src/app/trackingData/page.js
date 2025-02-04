@@ -316,7 +316,7 @@ export default function affilate() {
                               ) : itm?.commission_status == 'rejected' ? (
                                 <div className="btn btn-primary mr-2">Rejected</div>
                               ) : (<>
-                                {itm?.commission_paid != "paid" && <div className="btn btn-primary mr-2" onClick={()=>handleShow(itm?.price,itm?.campaign_details?.commission,itm?.campaign_details?.commission_type,itm?.id || itm?._id)}>Pay Now</div>}
+                                {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={()=>handleShow(itm?.price,itm?.campaign_details?.commission,itm?.campaign_details?.commission_type,itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
                                 </>
                               )}
                             </td>
