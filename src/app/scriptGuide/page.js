@@ -22,7 +22,7 @@ const TrackingGuide = () => {
         <div className="code-block">
           <pre>
             {`// tracking your parameter data
-            <script src="https://tracking.upfilly.com/" type="text/javascript" defer="defer"></script>
+            <script src="https://script.upfilly.com/" type="text/javascript" defer="defer"></script>
 `}
           </pre>
         </div>
