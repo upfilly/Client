@@ -57,7 +57,7 @@ const Html = ({
                                 Campaign Management
                             </h3>
                             {/* Tab Navigation */}
-                             {/* <div className="tabs">
+                            {/* <div className="tabs">
                                 {['new', 'previous'].map((tab) => (
                                     <button
                                         key={tab}
@@ -83,86 +83,100 @@ const Html = ({
                                             <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
                                                 Event Type {filters?.sorder === "asc" ? "↑" : "↓"}
                                             </th>
-                                            <th scope="col" className='table_data'>Amount($)</th>
+                                            <th scope="col" className='table_data'>Commission</th>
+                                            <th scope="col" className='table_data'>Status</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>
                                                 Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
                                             </th>
-                                            <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>
+                                            {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>
                                                 Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
-                                            </th>
+                                            </th> */}
                                             <th scope="col" className='table_data'>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {(!loaging && activeTab == "new")? data.map((itm, i) => (
-                                            <tr className='data_row' key={i}>
-                                                <td className='table_dats' onClick={e => view(itm.campaign_detail?.id || itm?.campaign_detail?._id)}>
-                                                    <div className='user_detail'>
-                                                        <div className='user_name'>
-                                                            <h4 className='user'>
-                                                                {methodModel.capitalizeFirstLetter(itm?.campaign_detail?.name)}
-                                                            </h4>
+                                        {(!loaging && activeTab == "new") ? data.map((itm, i) => {
+
+                                            if (itm?.campaign_detail?.commission == "0") {
+                                                return
+                                            }
+
+                                            return (
+                                                <tr className='data_row' key={i}>
+                                                    <td className='table_dats' onClick={e => view(itm.campaign_detail?.id || itm?.campaign_detail?._id)}>
+                                                        <div className='user_detail'>
+                                                            <div className='user_name'>
+                                                                <h4 className='user'>
+                                                                    {methodModel.capitalizeFirstLetter(itm?.campaign_detail?.name)}
+                                                                </h4>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
-                                                <td className='table_dats'>{itm?.campaign_detail?.amount}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm?.campaign_detail?.updatedAt)}</td>
-                                                <td className='table_dats d-flex align-items-center'>
-                                                    {itm?.status == 'pending' ? (
-                                                        <div className='d-flex align-items-center'>
-                                                            <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
-                                                                <i className='fa fa-check'></i>
-                                                            </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
-                                                                <i className='fa fa-times'></i>
-                                                            </button>
-                                                        </div>
-                                                    ) : itm?.status == 'rejected' ? (
-                                                        <div className="btn btn-primary mr-2">Rejected</div>
-                                                    ) : (
-                                                        <div className="btn btn-primary mr-2">Accepted</div>
-                                                    )}
-                                                    <button className='btn btn-primary btn_actions'
-                                                        onClick={() => {
-                                                            history.push(`/chat`);
-                                                            localStorage.setItem("chatId", itm?.brand_id);
-                                                        }}>
-                                                        <i className='fa fa-comment-o'></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        )) : (
+                                                    </td>
+                                                    {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
+                                                    <td className='table_dats'>{itm?.campaign_detail?.commission} {itm?.campaign_detail?.commission_type == "percentage" ? "%" : "$"}</td>
+                                                    {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
+                                                    <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
+                                                        <span className={!itm?.isActive ? "inactive" : "contract"}>
+                                                            {!itm?.isActive ? 'Inactive' : 'Active'}
+                                                        </span>
+                                                    </span></td>
+                                                    <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
+                                                    {/* <td className='table_dats'>{datepipeModel.date(itm?.campaign_detail?.updatedAt)}</td> */}
+                                                    <td className='table_dats d-flex align-items-center'>
+                                                        {itm?.status == 'pending' ? (
+                                                            <div className='d-flex align-items-center'>
+                                                                <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                                    <i className='fa fa-check'></i>
+                                                                </button>
+                                                                <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                                                    <i className='fa fa-times'></i>
+                                                                </button>
+                                                            </div>
+                                                        ) : itm?.status == 'rejected' ? (
+                                                            <div className="btn btn-primary mr-2">Rejected</div>
+                                                        ) : (
+                                                            <div className="btn btn-primary mr-2">Accepted</div>
+                                                        )}
+                                                        <button className='btn btn-primary btn_actions'
+                                                            onClick={() => {
+                                                                history.push(`/chat`);
+                                                                localStorage.setItem("chatId", itm?.brand_id);
+                                                            }}>
+                                                            <i className='fa fa-comment-o'></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }) : (
                                             <>
-                                            {!loaging && filteredData.map((itm, i) => (
-                                            <tr className='data_row' key={i}>
-                                                <td className='table_dats' onClick={e => view(itm?.id || itm?._id)}>
-                                                    <div className='user_detail'>
-                                                        <div className='user_name'>
-                                                            <h4 className='user'>
-                                                                {methodModel.capitalizeFirstLetter(itm?.name)}
-                                                            </h4>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                {itm?.event_type && <td className='table_dats'>{itm?.event_type.join(",")}</td>}
-                                                <td className='table_dats'>{itm?.amount}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
-                                                <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
-                                                <td className='table_dats d-flex align-items-center'>
-                                                    <button className='btn btn-primary btn_actions'
-                                                    title="Send request"
-                                                        onClick={() => {
-                                                            SendPreviousRequest(itm?.id || itm?._id,itm?.brand_id)
-                                                            // history.push(`/chat`);
-                                                            // localStorage.setItem("chatId", itm?.brand_id);
-                                                        }}>
-                                                        <i class="fa-solid fa-code-pull-request"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                {!loaging && filteredData.map((itm, i) => (
+                                                    <tr className='data_row' key={i}>
+                                                        <td className='table_dats' onClick={e => view(itm?.id || itm?._id)}>
+                                                            <div className='user_detail'>
+                                                                <div className='user_name'>
+                                                                    <h4 className='user'>
+                                                                        {methodModel.capitalizeFirstLetter(itm?.name)}
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        {itm?.event_type && <td className='table_dats'>{itm?.event_type.join(",")}</td>}
+                                                        <td className='table_dats'>{itm?.amount}</td>
+                                                        <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
+                                                        <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
+                                                        <td className='table_dats d-flex align-items-center'>
+                                                            <button className='btn btn-primary btn_actions'
+                                                                title="Send request"
+                                                                onClick={() => {
+                                                                    SendPreviousRequest(itm?.id || itm?._id, itm?.brand_id)
+                                                                    // history.push(`/chat`);
+                                                                    // localStorage.setItem("chatId", itm?.brand_id);
+                                                                }}>
+                                                                <i class="fa-solid fa-code-pull-request"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
                                             </>
                                         )}
                                     </tbody>

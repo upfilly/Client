@@ -172,7 +172,6 @@ export const campaignType={
 export const addCampaignType = {
     id:'',
     name: "",
-    amount: "",
     description: "",
     images: [],
     access_type:'',

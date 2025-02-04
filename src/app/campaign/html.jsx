@@ -38,10 +38,10 @@ const Html = ({
         }
     };
 
-    const permission=(p)=>{
+    const permission = (p) => {
         if (user && user?.permission_detail && p) {
             return user?.permission_detail[p]
-        }else{
+        } else {
             return false
         }
     }
@@ -115,12 +115,11 @@ const Html = ({
                                     <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Access Type</th>
-                                    <th scope="col" className='table_data'>Amount</th>
-                                    {/* <th scope="col" className='table_data'>Status</th> */}
+                                    <th scope="col" className='table_data'>Commission</th>
+                                    <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                     <th scope="col" className='table_data'>Action</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -145,13 +144,14 @@ const Html = ({
                                                 </div>
                                             </div></td>
                                         <td className='table_dats'>{itm?.access_type}</td>
-                                        <td className='table_dats'>{itm?.amount}</td>
+                                        <td className='table_dats'>{itm?.commission || "--"} {itm?.commission_type == "percentage" ? "%" : "$"}</td>
                                         {/* {<td className='table_dats'>   <div className={`user_hours`}>
                                             <span className={itm?.access_type == "private" ? itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive' : ""}
                                             >
                                                 {itm?.access_type == "private" ? itm.status : "--"}
                                             </span>
                                         </div></td>} */}
+                                        <td className='table_dats'>{(itm?.commission == "0" || !itm?.commission) ? "No Commission Added" : "Added Commission"}</td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                                         {/* dropdown */}

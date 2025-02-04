@@ -74,6 +74,19 @@ const Detail = (p) => {
                                     </div>
 
                                     <div className='row'>
+                                        <div className='col-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Commission:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && data?.commission}{data?.commission_type == "percentage" ? "%" : "$"}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Affiliate detail:</p>

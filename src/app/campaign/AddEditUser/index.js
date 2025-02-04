@@ -16,7 +16,7 @@ const AddEditUser = () => {
     const [form, setform] = useState({
         id: "",
         name: "",
-        amount: "",
+        // amount: "",
         description: "",
         images: [],
         documents: [],
@@ -51,7 +51,7 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
-            brand_id:user?.id
+            brand_id: user?.id
         }
         delete value.status
         if (value.id) {
@@ -143,7 +143,7 @@ const AddEditUser = () => {
 
     const getData = (p = {}) => {
         let url = 'getallaffiliatelisting'
-        ApiClient.get(url,{brand_id:user?.id || user?._id}).then(res => {
+        ApiClient.get(url, { brand_id: user?.id || user?._id }).then(res => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);

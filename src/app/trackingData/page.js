@@ -1,20 +1,20 @@
 'use client'
-
 import react, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
 import crendentialModel from '@/models/credential.model';
 import ApiClient from '@/methods/api/apiClient';
-import datepipeModel from '@/models/datepipemodel';
 import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
-import methodModel from '../../methods/methods';
+import Swal from 'sweetalert2';
+import loader from '@/methods/loader';
+import { toast } from 'react-toastify';
 
 export default function affilate() {
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const [filters, setFilter] = useState({ page: 0,  count: 10, search: '', isDeleted: false})
+  const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false })
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -22,6 +22,11 @@ export default function affilate() {
   const [endDate, setEndDate] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [calculatedAmount, setCalculatedAmount] = useState(100)
+
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -32,14 +37,14 @@ export default function affilate() {
   const getData = (p = {}) => {
 
     setLoader(true)
-    let filter ;
+    let filter;
 
-    if(user?.role == "brand"){
-      filter = { ...filters, ...p,brand_id:user?.id}
-    }else{
-      filter = { ...filters, ...p , affiliate_id:user.id}
+    if (user?.role == "brand") {
+      filter = { ...filters, ...p, brand_id: user?.id }
+    } else {
+      filter = { ...filters, ...p, affiliate_id: user.id }
     }
-    
+
     ApiClient.get(`affiliatelink/all`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
@@ -52,12 +57,12 @@ export default function affilate() {
 
   useEffect(() => {
 
-    if (user.role == 'brand' ) {
+    if (user.role == 'brand') {
       getData({ page: 1 })
-    } else if (user.role != 'brand'){
+    } else if (user.role != 'brand') {
       getData({ page: 1 })
     }
-   
+
   }, [])
 
   const pageChange = (e) => {
@@ -88,6 +93,52 @@ export default function affilate() {
     setFilter({ ...filters, transaction_status: e })
     getData({ transaction_status: e, page: 1, user_id: user?.id })
   }
+
+  const statusChange = (itm, id) => {
+    if (itm === 'accepted') {
+      // loader(true);
+      ApiClient.put('update/commission/status', { commission_status: itm, id: id }).then((res) => {
+        if (res.success) {
+
+          toast.success(res.message)
+          getData({ page: filters?.page + 1 });
+        }
+        // loader(false);
+      });
+    } else {
+      Swal.fire({
+     
+        html: `
+         <h2 style="" class="modal-title-main pt-0">Deny Commission</h2>
+            <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
+              <textarea type="text" id="denialReason" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
+            `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Deny',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const denialReason = document.getElementById('denialReason').value;
+
+          if (denialReason.trim() === '') {
+            Swal.fire('Error', 'Please enter a reason for deny', 'error');
+            return;
+          }
+
+          loader(true);
+          ApiClient.put('update/commission/status', { commission_status: itm, id: id, reason: denialReason }).then((res) => {
+            if (res.success) {
+              toast.success(res.message)
+              getData({ page: filters?.page + 1 });
+            }
+            loader(false);
+          });
+        }
+      });
+    }
+  };
 
   const reset = () => {
     let filter = {
@@ -127,7 +178,7 @@ export default function affilate() {
     }
     return headers;
   }, []);
-  
+
 
 
 
@@ -135,31 +186,31 @@ export default function affilate() {
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Track Data" filters={filters}>
         <div className='nmain-list  mb-3 main_box'>
-       <div className='container-fluid'>
-     
-       <div className='row'>
-       <div className='card-header'>
-                        <div className="main_title_head d-flex justify-content-between align-items-center">
-                            <h3 className="">
-                                Tracking Affiliates
-                            </h3>
+          <div className='container-fluid'>
 
-                            <article className="d-flex filterFlex phView">
-                                <div className='searchInput'>
-                                    <input
-                                        type="text"
-                                        value={filters.search}
-                                        placeholder="Search"
-                                        className="form-control"
-                                        onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
-                                        // onKeyPress={handleKeyPress}
-                                    />
-                                    <i class="fa fa-search search_fa" onClick={() => {
-                                        filter()
-                                    }} aria-hidden="true"></i>
-                                </div>
+            <div className='row'>
+              <div className='card-header'>
+                <div className="main_title_head d-flex justify-content-between align-items-center">
+                  <h3 className="">
+                    Tracking Affiliates
+                  </h3>
 
-                                {/* <SelectDropdown
+                  <article className="d-flex filterFlex phView">
+                    <div className='searchInput'>
+                      <input
+                        type="text"
+                        value={filters.search}
+                        placeholder="Search"
+                        className="form-control"
+                        onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
+                      // onKeyPress={handleKeyPress}
+                      />
+                      <i class="fa fa-search search_fa" onClick={() => {
+                        filter()
+                      }} aria-hidden="true"></i>
+                    </div>
+
+                    {/* <SelectDropdown
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All Status"
@@ -173,45 +224,48 @@ export default function affilate() {
                                 /> */}
 
 
-                                {filters.search ? <>
-                                    <a className="btn btn-primary" onClick={e => reset()}>
-                                        Reset
-                                    </a>
-                                </> : <></>}
-                            </article>
-                        </div>
-                    </div>
-          </div>
-          <div className='row '>
-            <div className='respon_data'>
-              <div className='table_section '>
-              <div className='table-responsive '>
-                <table class="table table-striped ">
+                    {filters.search ? <>
+                      <a className="btn btn-primary" onClick={e => reset()}>
+                        Reset
+                      </a>
+                    </> : <></>}
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div className='row '>
+              <div className='respon_data'>
+                <div className='table_section '>
+                  <div className='table-responsive '>
+                    <table class="table table-striped ">
                       <thead className="thead-clr">
                         <tr>
                           {data?.data?.reduce((headers, itm) => {
-                        if (itm?.urlParams && typeof itm.urlParams === 'object') {
-                            Object.keys(itm.urlParams).forEach(key => {
-                              if (!headers.includes(key)) {
-                                headers.push(key);
-                              }
-                            })};
+                            if (itm?.urlParams && typeof itm.urlParams === 'object') {
+                              Object.keys(itm.urlParams).forEach(key => {
+                                if (!headers.includes(key)) {
+                                  headers.push(key);
+                                }
+                              })
+                            };
                             return headers;
                           }, [])?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
-                          <th scope="col" >Affiliate</th> 
-                          <th scope="col" >Brand</th> 
-                          <th scope="col" >Currency</th> 
-                          <th scope="col" >Price</th> 
-                          <th scope="col" >Order Id</th> 
-
+                          <th scope="col" >Affiliate</th>
+                          <th scope="col" >Brand</th>
+                          <th scope="col" >Currency</th>
+                          <th scope="col" >Price</th>
+                          <th scope="col" >Order Id</th>
+                          <th scope="col" >Commission</th>
+                          <th scope="col" >Commission Status</th>
+                          <th scope="col" >Payment Status</th>
                           {/* <th scope="col" >Page</th> */}
                           {/* <th scope="col" onClick={e => sorting('currency')}>Currency</th>
                           <th scope="col" onClick={e => sorting('transaction_status')}>Transaction Status</th> */}
-                          <th scope="col" onClick={e => sorting('createdAt')}>Creation Date</th>
+                          {/* <th scope="col" onClick={e => sorting('createdAt')}>Creation Date</th> */}
                           {/* <th scope="col" onClick={e => sorting('updatedAt')}>Last Modified</th> */}
-                          <th></th>
+                          <th>Action</th>
                         </tr>
                       </thead>
 
@@ -228,31 +282,49 @@ export default function affilate() {
                             <td className='name-person ml-2' >{itm?.currency}</td>
                             <td className='name-person ml-2' >{itm?.price}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
-
+                            <td className='name-person ml-2' >{itm?.campaign_details?.commission}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
+                            <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
+                            <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             {/* <td className='name-person ml-2' >{itm?.data?.page}</td> */}
-                            <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td>
+                            {/* <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td> */}
+                            <td className='table_dats d-flex align-items-center'>
+                              {itm?.commission_status == 'pending' ? (
+                                <div className='d-flex align-items-center'>
+                                  <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                    <i className='fa fa-check'></i>
+                                  </button>
+                                  <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                    <i className='fa fa-times'></i>
+                                  </button>
+                                </div>
+                              ) : itm?.commission_status == 'rejected' ? (
+                                <div className="btn btn-primary mr-2">Rejected</div>
+                              ) : (
+                                <div className="btn btn-primary mr-2">Pay Now</div>
+                              )}
+                            </td>
                             {/* <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td> */}
                           </tr>
 
                         })
                         }
                       </tbody>
-                </table>
-                {loaging ? <div className="text-center py-4">
-                  <img src="/assets/img/loader.gif" className="pageLoader" />
-                </div> : <></>} 
-                {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
-              </div>
+                    </table>
+                    {loaging ? <div className="text-center py-4">
+                      <img src="/assets/img/loader.gif" className="pageLoader" />
+                    </div> : <></>}
+                    {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
+                  </div>
+                </div>
               </div>
             </div>
+
+
           </div>
 
-         
-       </div>
-
         </div>
-        
-      
+
+
 
         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
           <span>Show {data?.length} from {total} Users</span>
@@ -262,8 +334,8 @@ export default function affilate() {
             initialPage={filters?.page}
             onPageChange={pageChange}
             pageRangeDisplayed={2}
-                        marginPagesDisplayed={1}
-                        pageCount={Math.ceil(total / filters?.count)}
+            marginPagesDisplayed={1}
+            pageCount={Math.ceil(total / filters?.count)}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}

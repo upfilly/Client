@@ -74,6 +74,32 @@ const Detail = (p) => {
                             <div className='row'>
                                 <div className='col-3'>
                                     <div className='userdata'>
+                                        <p className='headmain'>Commission:</p>
+                                    </div>
+                                </div>
+                                <div className='col-9'>
+                                    <div className='name-dtls'>
+                                        <p className='headsub'>{data && data?.commission}{data?.commission_type == "percentage" ? "%" : "$"}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='row'>
+                                <div className='col-3'>
+                                    <div className='userdata'>
+                                        <p className='headmain'>Name:</p>
+                                    </div>
+                                </div>
+                                <div className='col-9'>
+                                    <div className='name-dtls'>
+                                        <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.name)}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='row'>
+                                <div className='col-3'>
+                                    <div className='userdata'>
                                         <p className='headmain'>Description:</p>
                                     </div>
                                 </div>
