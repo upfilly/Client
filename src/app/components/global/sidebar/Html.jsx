@@ -395,7 +395,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Marketting">
             <i class="material-icons svg_iconbx">markunread</i>
-            <span className="side_head">Affiliate Marketting</span>
+            <span className="side_head">Affiliate Marketing stats</span>
           </ListItemLink>}
 
 

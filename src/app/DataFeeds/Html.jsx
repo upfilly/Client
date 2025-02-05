@@ -5,7 +5,7 @@ import './style.scss';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
-import environment from '@/environment';
+import environment from '../../environment';
 
 const Html = ({
     reset,

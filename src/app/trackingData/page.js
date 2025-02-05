@@ -31,16 +31,47 @@ export default function affilate() {
 
   const handleShow = (price,commission,commission_type,id) =>{
     setAssociateId(id)
-    if(commission_type == "percentage"){
-      const CalPrice = price*commission/100
-      setCalculatedAmount(CalPrice)
-      setShowModal(true)
-    }else{
-      const CalPrice = price - commission
-      setCalculatedAmount(CalPrice)
-      setShowModal(true)
-    }
+    calculateCommission(commission_type, price, commission)
+    // if(commission_type == "percentage"){
+    //   const CalPrice = price*commission/100
+    //   setCalculatedAmount(CalPrice)
+    //   setShowModal(true)
+    // }else{
+    //   const CalPrice = price - commission
+    //   setCalculatedAmount(CalPrice)
+    //   setShowModal(true)
+    // }
   };
+
+  function calculateCommission(commission_type, price, commission) {
+    let CalPrice;
+    
+    if (commission_type === "percentage") {
+      CalPrice = price * commission / 100;
+    } else {
+      CalPrice = price - commission;
+    }
+
+    const finalPrice = CalPrice*user?.plan_id?.commission_override/100 
+  
+    setCalculatedAmount(finalPrice + CalPrice);
+    setShowModal(true);
+  }
+
+  function calculatetotalCommission(commission_type, price, commission) {
+    let CalPrice;
+
+    if (commission_type === "percentage") {
+      CalPrice = price * commission / 100;
+    } else {
+      CalPrice = price - commission;
+    }
+
+    const finalPrice = CalPrice*user?.plan_id?.commission_override/100
+
+    return (finalPrice + CalPrice).toFixed(2)
+  }
+  
 
   const handleClose = () => setShowModal(false);
 
@@ -208,7 +239,7 @@ export default function affilate() {
               <div className='card-header'>
                 <div className="main_title_head d-flex justify-content-between align-items-center">
                   <h3 className="">
-                    Tracking Affiliates
+                    Affiliates Marketing Stats
                   </h3>
 
                   <article className="d-flex filterFlex phView">
@@ -274,6 +305,7 @@ export default function affilate() {
                           <th scope="col" >Price</th>
                           <th scope="col" >Order Id</th>
                           <th scope="col" >Commission</th>
+                          <th scope="col" >Commission paid</th>
                           <th scope="col" >Commission Status</th>
                           <th scope="col" >Payment Status</th>
                           {/* <th scope="col" >Page</th> */}
@@ -299,6 +331,7 @@ export default function affilate() {
                             <td className='name-person ml-2' >{itm?.price}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
                             <td className='name-person ml-2' >{itm?.campaign_details?.commission}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
+                            <td className='name-person ml-2' >{calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}$</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             {/* <td className='name-person ml-2' >{itm?.data?.page}</td> */}

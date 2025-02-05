@@ -547,7 +547,7 @@ const Profile = () => {
                           <h3 className=''>Accounts</h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles =='affiliate' || roles == 'brand') && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
+                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles =='affiliate' || roles == 'brand') && !bankData?.bank_name  && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Add Account
                           </button>}
