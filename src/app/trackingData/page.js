@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import loader from '@/methods/loader';
 import PaymentModal from './paymodal'
 import { toast } from 'react-toastify';
+import SelectDropdown from '../components/common/SelectDropdown';
 
 export default function affilate() {
   const history = useRouter()
@@ -19,15 +20,11 @@ export default function affilate() {
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [associateId, setAssociateId] = useState("");
   const [calculatedAmount, setCalculatedAmount] = useState(100)
-
-  console.log(user,"klklklklklklklkl")
+  const [upfillyAmount, setUpfillyAmount] = useState(100)
 
   const handleShow = (price,commission,commission_type,id) =>{
     setAssociateId(id)
@@ -53,7 +50,7 @@ export default function affilate() {
     }
 
     const finalPrice = CalPrice*user?.plan_id?.commission_override/100 
-  
+    setUpfillyAmount(finalPrice)
     setCalculatedAmount(finalPrice + CalPrice);
     setShowModal(true);
   }
@@ -136,9 +133,9 @@ export default function affilate() {
     filter({ sortBy, key, sorder })
   }
 
-  const ChangeStatus = (e) => {
-    setFilter({ ...filters, transaction_status: e })
-    getData({ transaction_status: e, page: 1, user_id: user?.id })
+  const ChangeStatus = (e,key) => {
+    setFilter({ ...filters, [key]: e })
+    getData({ [key]: e, page: 1, user_id: user?.id })
   }
 
   const statusChange = (itm, id) => {
@@ -197,9 +194,7 @@ export default function affilate() {
       count: 5,
       transaction_type: ''
     }
-    setStartDate("");
-    setEndDate("");
-    setSelectedOptions([])
+
     setIsOpen(false)
     setFilter({ ...filters, ...filter })
     getData({ ...filter })
@@ -257,19 +252,31 @@ export default function affilate() {
                       }} aria-hidden="true"></i>
                     </div>
 
-                    {/* <SelectDropdown
-                                    id="statusDropdown"
-                                    displayValue="name"
-                                    placeholder="All Status"
-                                    intialValue={filters.status}
-                                    result={e => { ChangeStatus(e.value) }}
-                                    options={[
-                                        {id:'pending',name:'Pending'},
-                                        {id:'accepted',name:'Accepted'},
-                                        {id:'rejected',name:'Rejected'},
-                                    ]}
-                                /> */}
+                    <SelectDropdown
+                      id="statusDropdown"
+                      displayValue="name"
+                      placeholder="Paid Status"
+                      intialValue={filters.commission_status}
+                      result={e => { ChangeStatus(e.value,"commission_status") }}
+                      options={[
+                        { id: 'pending', name: 'Pending' },
+                        { id: 'paid', name: 'Paid' },
+                        { id: 'unpaid', name: 'unPaid' },
+                      ]}
+                    />
 
+                    <SelectDropdown
+                      id="statusDropdown"
+                      displayValue="name"
+                      placeholder="Commission Status"
+                      intialValue={filters.commission_paid}
+                      result={e => { ChangeStatus(e.value,"commission_paid") }}
+                      options={[
+                        { id: 'pending', name: 'Pending' },
+                        { id: 'accepted', name: 'Accepted' },
+                        { id: 'rejected', name: 'Rejected' },
+                      ]}
+                    />
 
                     {filters.search ? <>
                       <a className="btn btn-primary" onClick={e => reset()}>
@@ -302,17 +309,12 @@ export default function affilate() {
                           <th scope="col" >Affiliate</th>
                           <th scope="col" >Brand</th>
                           <th scope="col" >Currency</th>
-                          <th scope="col" >Price</th>
+                          <th scope="col" >Currency</th>
                           <th scope="col" >Order Id</th>
                           <th scope="col" >Commission</th>
                           <th scope="col" >Commission paid</th>
                           <th scope="col" >Commission Status</th>
                           <th scope="col" >Payment Status</th>
-                          {/* <th scope="col" >Page</th> */}
-                          {/* <th scope="col" onClick={e => sorting('currency')}>Currency</th>
-                          <th scope="col" onClick={e => sorting('transaction_status')}>Transaction Status</th> */}
-                          {/* <th scope="col" onClick={e => sorting('createdAt')}>Creation Date</th> */}
-                          {/* <th scope="col" onClick={e => sorting('updatedAt')}>Last Modified</th> */}
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -334,8 +336,6 @@ export default function affilate() {
                             <td className='name-person ml-2' >{calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}$</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
-                            {/* <td className='name-person ml-2' >{itm?.data?.page}</td> */}
-                            {/* <td className='name-person ml-2' >{datepipeModel.date(itm?.createdAt)}</td> */}
                             <td className='table_dats d-flex align-items-center'>
                               {itm?.commission_status == 'pending' ? (
                                 <div className='d-flex align-items-center'>
@@ -353,7 +353,6 @@ export default function affilate() {
                                 </>
                               )}
                             </td>
-                            {/* <td className='name-person ml-2' >{datepipeModel.date(itm?.updatedAt)}</td> */}
                           </tr>
 
                         })
@@ -400,6 +399,8 @@ export default function affilate() {
         handleShow={handleShow}
         handleClose={handleClose}
         associateId={associateId}
+        user={user}
+        upfillyAmount={upfillyAmount}
         />
       </Layout>
     </>
