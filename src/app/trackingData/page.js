@@ -187,12 +187,12 @@ export default function affilate() {
   const reset = () => {
     let filter = {
       user_id: user?.id,
-      transaction_status: '',
       role: '',
       search: '',
       page: 1,
       count: 5,
-      transaction_type: ''
+      commission_paid: '',
+      commission_status:''
     }
 
     setIsOpen(false)
@@ -260,8 +260,9 @@ export default function affilate() {
                       result={e => { ChangeStatus(e.value,"commission_status") }}
                       options={[
                         { id: 'pending', name: 'Pending' },
-                        { id: 'paid', name: 'Paid' },
-                        { id: 'unpaid', name: 'unPaid' },
+                        { id: 'accepted', name: 'Accepted' },
+                        { id: 'rejected', name: 'Rejected' },
+                        
                       ]}
                     />
 
@@ -273,12 +274,12 @@ export default function affilate() {
                       result={e => { ChangeStatus(e.value,"commission_paid") }}
                       options={[
                         { id: 'pending', name: 'Pending' },
-                        { id: 'accepted', name: 'Accepted' },
-                        { id: 'rejected', name: 'Rejected' },
+                        { id: 'paid', name: 'Paid' },
+                        { id: 'unpaid', name: 'unPaid' },
                       ]}
                     />
 
-                    {filters.search ? <>
+                    {filters.search || filters.commission_paid || filters.commission_status ? <>
                       <a className="btn btn-primary" onClick={e => reset()}>
                         Reset
                       </a>
@@ -333,7 +334,7 @@ export default function affilate() {
                             <td className='name-person ml-2' >{itm?.price}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
                             <td className='name-person ml-2' >{itm?.campaign_details?.commission}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
-                            <td className='name-person ml-2' >{calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}$</td>
+                            <td className='name-person ml-2' >${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             <td className='table_dats d-flex align-items-center'>

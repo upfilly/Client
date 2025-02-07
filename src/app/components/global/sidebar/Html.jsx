@@ -394,7 +394,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
         </ListItemLink>} */}
 
           {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Marketting">
-            <i class="material-icons svg_iconbx">markunread</i>
+            <i class="material-icons svg_iconbx">compare_arrows</i>
             <span className="side_head">Affiliate Marketing stats</span>
           </ListItemLink>}
 
@@ -422,6 +422,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <i class="material-icons  svg_iconbx">insert_chart</i>
             <span className="side_head">Performance Chart</span>
           </ListItemLink>}
+
+          <ListItemLink to="/notifications" title="Payments">
+            <i class="material-icons  svg_iconbx">notifications_active</i>
+            <span className="side_head">Notification</span>
+          </ListItemLink>
 
           {permission('transactions_get') && <ListItemLink to="/payments" title="Payments">
             <i class="material-icons  svg_iconbx">payment</i>

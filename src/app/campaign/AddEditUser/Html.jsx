@@ -22,7 +22,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
 
     const EventType = [
         { id: 'lead', name: 'Lead' },
-        { id: 'visitor', name: 'Visitor' },
+        // { id: 'visitor', name: 'Visitor' },
         { id: 'purchase', name: 'Purchase' },
         // { id: 'line-item', name: 'Line-item' }
     ]

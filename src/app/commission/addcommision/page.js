@@ -171,7 +171,7 @@ export default function Addcomminson() {
 
                   </div>
 
-                  {["lead", "visitor", "purchase"].map((type, index) => (
+                  {["lead", "purchase"].map((type, index) => (
                     <div className="col-md-12" key={index}>
                       <div className='checkbox_ipt'>
                         <div className="checkboxes__row">
