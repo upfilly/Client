@@ -18,11 +18,8 @@ const Html = ({
     filter,
     sorting,
     setFilter,
-    Tracklogin,
     previousdata,
     previoustotal,
-    previousfilters,
-    pagePreviousChange,
     SendPreviousRequest
 }) => {
     const history = useRouter()
@@ -46,6 +43,11 @@ const Html = ({
             filter();
         }
     };
+
+    const handleCountChange = (count) => {
+        setFilter({ ...filters, count: count, page: 1 });
+        getData({ count: count, page: 1 });
+      };
 
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
@@ -78,7 +80,10 @@ const Html = ({
                                     <thead className='table_head'>
                                         <tr className='heading_row'>
                                             <th scope="col" className="table_data" onClick={e => sorting('name')}>
-                                                Name {filters?.sorder === "asc" ? "↑" : "↓"}
+                                               Campaign Name {filters?.sorder === "asc" ? "↑" : "↓"}
+                                            </th>
+                                            <th scope="col" className="table_data" onClick={e => sorting('name')}>
+                                               Brand Name {filters?.sorder === "asc" ? "↑" : "↓"}
                                             </th>
                                             <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
                                                 Event Type {filters?.sorder === "asc" ? "↑" : "↓"}
@@ -97,9 +102,9 @@ const Html = ({
                                     <tbody>
                                         {(!loaging && activeTab == "new") ? data.map((itm, i) => {
 
-                                            if (itm?.campaign_detail?.commission == "0") {
-                                                return
-                                            }
+                                            // if (!itm?.campaign_detail?.commission) {
+                                            //     return
+                                            // }
 
                                             return (
                                                 <tr className='data_row' key={i}>
@@ -112,6 +117,7 @@ const Html = ({
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    {itm?.brand_detail?.fullName && <td className='table_dats'>{itm?.brand_detail?.fullName}</td>}
                                                     {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
                                                     <td className='table_dats'>{itm?.campaign_detail?.commission} {itm?.campaign_detail?.commission_type == "percentage" ? "%" : "$"}</td>
                                                     {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
@@ -186,7 +192,7 @@ const Html = ({
                             </div>
                         </div>
 
-                        {activeTab == 'previous' && <div className={`paginationWrapper ${!loaging && previoustotal > previousfilters?.count ? '' : 'd-none'}`}>
+                        {/* {activeTab == 'previous' && <div className={`paginationWrapper ${!loaging && previoustotal > previousfilters?.count ? '' : 'd-none'}`}>
                             <span>Show {previousdata?.length} from {previoustotal} campaigns</span>
                             <ReactPaginate
                                 breakLabel="..."
@@ -218,11 +224,41 @@ const Html = ({
                                 pageClassName={"pagination-item"}
                                 activeClassName={"pagination-item-active"}
                             />
-                        </div>}
+                        </div>} */}
 
-                        {loaging && <div className="text-center py-4">
+                        {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
+
+                        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                            <span>Show <select
+                                className="form-control"
+                                onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                value={filters.count}
+                            >
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                                <option value={150}>150</option>
+                                <option value={200}>200</option>
+                            </select> from {total} Users</span>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Next >"
+                                initialPage={filters?.page}
+                                onPageChange={pageChange}
+                                pageRangeDisplayed={2}
+                                marginPagesDisplayed={1}
+                                pageCount={Math.ceil(total / filters?.count)}
+                                // pageCount={2}
+                                previousLabel="< Previous"
+                                renderOnZeroPageCount={null}
+                                pageClassName={"pagination-item"}
+                                activeClassName={"pagination-item-active"}
+                            />
+                        </div>
+
+                        {loaging ? <div className="text-center py-4">
                             <img src="/assets/img/loader.gif" className="pageLoader" />
-                        </div>}
+                        </div> : <></>}
                     </div>
                 </div>
             </div>

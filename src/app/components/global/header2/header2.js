@@ -178,9 +178,15 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                 <div class="dropdown-menu overflow_hight p-0">
                                     <div className="dropdown_header">
                                         <span class="triangle"></span>
-                                        <span className="noti_head w-100 pt-0 d-flex justify-content-between align-items-center"><span>Notifications</span> <span className="clear_btn" onClick={() => updateNotifications()}>Clear</span></span>
+                                        <span className="noti_head w-100 pt-0 d-flex justify-content-between align-items-center">
+                                        <span>Notifications</span> 
+                                        <div>
+                                        <span className="clear_btn m-2" onClick={() => updateNotifications()}>Clear</span>
+                                        <span className="view_btn" onClick={() => history.push("notifications")}>View All</span></div>
+                                        </span>
                                     </div>
-                                    {unreadNotification?.length > 0 ? <div className="noti_scroll_data">
+                                    {unreadNotification?.length > 0 ? 
+                                    <div className="noti_scroll_data">
                                         {unreadNotification.map((itm) => (<div onClick={() => {
                                             updateSingleNotifications(itm?.id)
                                             if (itm?.type == 'message') {
@@ -208,7 +214,8 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                             </div>
                                         </div>))
                                         }
-                                    </div> :
+                                    </div> 
+                                    :
                                         <div className='no_Notification'>No Notification</div>
                                     }
                                 </div>
