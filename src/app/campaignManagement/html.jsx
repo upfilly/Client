@@ -123,7 +123,7 @@ const Html = ({
                                                     {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
                                                     <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
                                                         <span className={!itm?.isActive ? "inactive" : "contract"}>
-                                                            {!itm?.isActive ? 'Inactive' : 'Active'}
+                                                            {!itm?.isActive ? 'Not Joined' : 'Joined'}
                                                         </span>
                                                     </span></td>
                                                     <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>

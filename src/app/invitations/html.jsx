@@ -86,7 +86,8 @@ const Html = ({
                                         <tr className='heading_row'>
                                             <th scope="col" class="table_data" >Merchnat Name</th>
                                             <th scope="col" class="table_data" >Message</th>
-                                            {/* <th scope="col" className='table_data' >Commission</th> */}
+                                            <th scope="col" className='table_data' >Brand Name</th>
+                                            <th scope="col" className='table_data' >Campaign Name</th>
                                             <th scope="col" className='table_data' >Tags</th>
                                             <th scope="col" className='table_data' >Status</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
@@ -98,7 +99,7 @@ const Html = ({
                                         {!loaging && data && data.map((itm, i) => {
                                             return <tr className='data_row' key={i}>
                                                 <td className='table_dats'
-                                                onClick={()=>view(itm?.id || itm?._id)}
+                                                    onClick={() => view(itm?.id || itm?._id)}
                                                 >
                                                     <div className='user_detail'>
                                                         <div className='user_name'>
@@ -117,10 +118,10 @@ const Html = ({
                                                             </h4>
                                                         </div>
                                                     </div></td>
-                                                {/* <td className='table_dats'>{itm?.commission}</td> */}
-                                                <td className='table_dats'>{itm?.tags?.map((data) => data).join(",")}</td>
+                                                <td className='table_dats'>{itm?.brand_details?.fullName}</td>
+                                                <td className='table_dats'>{itm?.campaign_detail?.name}</td>
+                                                <td className='table_dats'>{itm?.tags?.map((data) => data).join(",") || "--"}</td>
                                                 <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{methodModel.capitalizeFirstLetter(itm?.status)}</td>
-                                                {/* <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td> */}
                                                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
                                                 {<td className='table_dats d-flex set_iconstabls justify-content-center '>
                                                     {user && user?.role == "affiliate" && <>
@@ -136,13 +137,13 @@ const Html = ({
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                            <div className="btn btn-danger" title="Rejected">
-                                                            <i className="fa fa-times"></i>
-                                                          </div>
-                                                          :
-                                                          <div className="btn btn-primary" title="Accepted">
-                                                            <i className="fa fa-check"></i>
-                                                          </div>
+                                                                <div className="btn btn-danger" title="Rejected">
+                                                                    <i className="fa fa-times"></i>
+                                                                </div>
+                                                                :
+                                                                <div className="btn btn-primary" title="Accepted">
+                                                                    <i className="fa fa-check"></i>
+                                                                </div>
                                                         }
                                                     </>}
                                                     <>
@@ -155,7 +156,7 @@ const Html = ({
                                                         </button>
                                                     </>
 
-                                        
+
 
                                                 </td>}
 

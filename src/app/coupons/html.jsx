@@ -110,6 +110,7 @@ const Html = ({
                                 <tr className='heading_row'>
                                     <th scope="col" className='table_data' >Coupon Code</th>
                                     <th scope="col" className='table_data' >Coupon Type</th>
+                                    <th scope="col" className="table_data">Brand Name</th>
                                     <th scope="col" className='table_data' >Visibility</th>
                                     <th scope="col" className='table_data' >Expiration Date</th>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('brand_id')}>{user?.role == "brand" ? "Affiliate" : "Brand"}{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
@@ -136,6 +137,15 @@ const Html = ({
                                                 <div className='user_name'>
                                                     <h4 className='user'>
                                                         {methodModel.capitalizeFirstLetter(itm?.couponType)}
+                                                    </h4>
+                                                </div>
+                                            </div></td>
+                                            <td className='table_dats'>
+
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
+                                                        {methodModel.capitalizeFirstLetter(itm?.addedByDetails?.fullName)}
                                                     </h4>
                                                 </div>
                                             </div></td>

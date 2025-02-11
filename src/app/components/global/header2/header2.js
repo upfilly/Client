@@ -22,7 +22,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
         '/commission/commisionplan',
         '/commission/addcommision',
         '/campaign',
-        '/payments', '/product','/campaignManagement'
+        '/payments', '/product', '/campaignManagement', '/addbanner', '/coupons'
     ];
 
     const isDashboard = validPaths.includes(pathname);
@@ -179,43 +179,43 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                     <div className="dropdown_header">
                                         <span class="triangle"></span>
                                         <span className="noti_head w-100 pt-0 d-flex justify-content-between align-items-center">
-                                        <span>Notifications</span> 
-                                        <div>
-                                        <span className="clear_btn m-2" onClick={() => updateNotifications()}>Clear</span>
-                                        <span className="view_btn" onClick={() => history.push("notifications")}>View All</span></div>
+                                            <span>Notifications</span>
+                                            <div>
+                                                <span className="clear_btn m-2" onClick={() => updateNotifications()}>Clear</span>
+                                                <span className="view_btn" onClick={() => history.push("notifications")}>View All</span></div>
                                         </span>
                                     </div>
-                                    {unreadNotification?.length > 0 ? 
-                                    <div className="noti_scroll_data">
-                                        {unreadNotification.map((itm) => (<div onClick={() => {
-                                            updateSingleNotifications(itm?.id)
-                                            if (itm?.type == 'message') {
-                                                history.push("/chat")
-                                            } else if (itm?.type == 'make_offer') {
-                                                history.push("/requests")
-                                            } else {
-                                                if (user?.role !== 'brand') {
-                                                    history.push("/campaignManagement")
+                                    {unreadNotification?.length > 0 ?
+                                        <div className="noti_scroll_data">
+                                            {unreadNotification.map((itm) => (<div onClick={() => {
+                                                updateSingleNotifications(itm?.id)
+                                                if (itm?.type == 'message') {
+                                                    history.push("/chat")
+                                                } else if (itm?.type == 'make_offer') {
+                                                    history.push("/requests")
                                                 } else {
-                                                    history.push("/campaign")
+                                                    if (user?.role !== 'brand') {
+                                                        history.push("/campaignManagement")
+                                                    } else {
+                                                        history.push("/campaign")
+                                                    }
                                                 }
-                                            }
-                                        }}>
-                                            <div className='messagetext'>
-                                                <div className='mb-3 bgblue'>
-                                                    <h3 className='noti_head'>{itm?.type == 'message' ? "" : itm?.type == 'make_offer' ? "Offer Request" : "Campaign"}</h3>
-                                                    <span>{itm?.type == 'message' ?
-                                                        <p className='noti_text_msg'>You have a message from {itm?.addedBy_name?.slice(0, 10)}...</p>
-                                                        : itm?.type == 'make_offer' ? " " : <p className='noti_text_chat'>{itm?.message?.slice(0, 50)}</p>}</span>
-                                                    {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message?.slice(0, 50)} </p>}
-                                                    {itm?.type == 'make_offer' && <p className='noti_text_chat'>{itm?.message} </p>}
-                                                    <p className='noti_date_chat'>{datepipeModel.datetime(itm?.createdAt)}</p>
+                                            }}>
+                                                <div className='messagetext'>
+                                                    <div className='mb-3 bgblue'>
+                                                        <h3 className='noti_head'>{itm?.type == 'message' ? "" : itm?.type == 'make_offer' ? "Offer Request" : "Campaign"}</h3>
+                                                        <span>{itm?.type == 'message' ?
+                                                            <p className='noti_text_msg'>You have a message from {itm?.addedBy_name?.slice(0, 10)}...</p>
+                                                            : itm?.type == 'make_offer' ? " " : <p className='noti_text_chat'>{itm?.message?.slice(0, 50)}</p>}</span>
+                                                        {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message?.slice(0, 50)} </p>}
+                                                        {itm?.type == 'make_offer' && <p className='noti_text_chat'>{itm?.message} </p>}
+                                                        <p className='noti_date_chat'>{datepipeModel.datetime(itm?.createdAt)}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>))
-                                        }
-                                    </div> 
-                                    :
+                                            </div>))
+                                            }
+                                        </div>
+                                        :
                                         <div className='no_Notification'>No Notification</div>
                                     }
                                 </div>
