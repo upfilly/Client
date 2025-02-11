@@ -20,8 +20,6 @@ const Html = ({
     comprehensiveTemplate,
     uniqueKeysArray,
 }) => {
-    console.log(data,"nbnbnbnbn")
-
     const [activeSidebar, setActiveSidebar] = useState(false)
     const [show, setShow] = useState(false);
     const [form, setform] = useState({
@@ -33,7 +31,15 @@ const Html = ({
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [copySuccess, setCopySuccess] = useState("");
 
-
+    const downloadCsv = (csv) => {
+        ApiClient.get("csv",{"csv_url":`${csv}`}).then(res => {
+            if (res.success) {
+                const file = res?.data;
+                // const fileURL = URL.createObjectURL(file);
+                window.open(file);
+            }
+        })
+    }
 
     const copyToClipboard = (url) => {
         navigator.clipboard.writeText(url)
@@ -170,10 +176,10 @@ const Html = ({
                                                 {itm?.url?.slice(0, 40)}
                                             </a>
                                         </td> :
-                                            <td className='table_dats'>
-                                                <a href={`${environment?.api}${itm?.filePath}`} target="_blank" rel="noopener noreferrer">
-                                                    {`${environment?.api}${itm?.filePath}`}
-                                                </a>
+                                            <td className='table_dats' >
+                                                <button onClick={()=>downloadCsv(itm?.filePath)} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                                                    Click here
+                                                </button>
                                             </td>}
 
                                     </tr>
