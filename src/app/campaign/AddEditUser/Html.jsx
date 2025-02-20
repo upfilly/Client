@@ -136,6 +136,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     <div className="select_row">
                                         <MultiSelectValue
                                             id="statusDropdown"
+                                            singleSelect={true}
                                             displayValue="name"
                                             placeholder="Select Type"
                                             intialValue={form?.event_type}
@@ -154,45 +155,45 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     <label>Amount/Percentage Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
-                                            id="amountPercentageDropdown"
+                                            id="amount_typeDropdown"
                                             displayValue="name"
                                             placeholder="Select Amount or Percentage"
-                                            intialValue={form?.amountPercentage}
+                                            intialValue={form?.commission_type}
                                             result={e => {
-                                                setform({ ...form, amountPercentage: e.value });
+                                                setform({ ...form, commission_type: e.value });
                                             }}
                                             options={[{ id: "percentage", name: "Percentage" }, { id: "amount", name: "Amount" }]}
                                         />
                                     </div>
-                                    {submitted && !form?.amountPercentage && <div className="invalid-feedback d-block">Amount/Percentage Type is Required</div>}
+                                    {submitted && !form?.commission_type && <div className="invalid-feedback d-block">Amount/Percentage Type is Required</div>}
                                 </div>
 
                                 {/* Conditionally Render the Input Field for Amount or Percentage */}
-                                {form?.amountPercentage === "percentage" && (
+                                {form?.commission_type === "percentage" && (
                                     <div className="col-md-6 mb-3">
                                         <label>Percentage<span className="star">*</span></label>
                                         <input
                                             type="number"
                                             className="form-control"
-                                            value={form?.percentage || ''}
-                                            onChange={e => setform({ ...form, percentage: e.target.value })}
+                                            value={form?.commission || ''}
+                                            onChange={e => setform({ ...form, commission: e.target.value })}
                                             placeholder="Enter Percentage"
                                         />
-                                        {submitted && !form?.percentage && <div className="invalid-feedback d-block">Percentage is Required</div>}
+                                        {submitted && !form?.commission && <div className="invalid-feedback d-block">Percentage is Required</div>}
                                     </div>
                                 )}
 
-                                {form?.amountPercentage === "amount" && (
+                                {form?.commission_type === "amount" && (
                                     <div className="col-md-6 mb-3">
                                         <label>Amount<span className="star">*</span></label>
                                         <input
                                             type="number"
                                             className="form-control"
-                                            value={form?.amount || ''}
-                                            onChange={e => setform({ ...form, amount: e.target.value })}
+                                            value={form?.commission || ''}
+                                            onChange={e => setform({ ...form, commission: e.target.value })}
                                             placeholder="Enter Amount"
                                         />
-                                        {submitted && !form?.amount && <div className="invalid-feedback d-block">Amount is Required</div>}
+                                        {submitted && !form?.commission && <div className="invalid-feedback d-block">Amount is Required</div>}
                                     </div>
                                 )}
 
