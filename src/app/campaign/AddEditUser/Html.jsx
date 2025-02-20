@@ -69,15 +69,18 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
                 <div className="sidebar-left-content">
-                    <div className=" pprofile1 card card-shadow p-4">
+                    <div className="pprofile1 card card-shadow p-4">
                         <div className="">
                             <div className="main_title_head profile-card">
-
                                 <h3 className='VieUser'>
-                                    <a to="/campaign" onClick={e => back()}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
-                                    {form && form.id ? 'Edit' : 'Add'} Campaign</h3>
-                                <hr></hr>
+                                    <a to="/campaign" onClick={e => back()}>
+                                        <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i>
+                                    </a>
+                                    {form && form.id ? 'Edit' : 'Add'} Campaign
+                                </h3>
+                                <hr />
                             </div>
+
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
                                     <label>Name<span className="star">*</span></label>
@@ -87,7 +90,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         value={form.name}
                                         onChange={e => setform({ ...form, name: e.target.value })}
                                     />
-                                    {submitted && !form?.name ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
+                                    {submitted && !form?.name && <div className="invalid-feedback d-block">Name is Required</div>}
                                 </div>
 
                                 <div className="col-md-6 mb-3">
@@ -98,36 +101,36 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             displayValue="name"
                                             placeholder="Select Type"
                                             intialValue={form?.access_type}
-                                            disabled={(form?.status == "rejected" || !id) ? false : true}
+                                            disabled={form?.status === "rejected" || !id ? false : true}
                                             result={e => {
-                                                setform({ ...form, access_type: e.value })
+                                                setform({ ...form, access_type: e.value });
                                             }}
-                                            options={[{
-                                                id: "public", name: "Public"
-                                            }, {
-                                                id: "private", name: "Private"
-                                            }]}
+                                            options={[{ id: "public", name: "Public" }, { id: "private", name: "Private" }]}
                                         />
                                     </div>
-                                    {submitted && !form?.access_type ? <div className="invalid-feedback d-block">Access Type is Required</div> : <></>}
+                                    {submitted && !form?.access_type && <div className="invalid-feedback d-block">Access Type is Required</div>}
                                 </div>
-                                {form?.access_type == "private" && <div className="col-md-6 mb-3">
-                                    <label>Affiliate<span className="star">*</span></label>
-                                    <div className="select_row">
-                                        <MultiSelectValue
-                                            id="statusDropdown"
-                                            displayValue="fullName"
-                                            placeholder="Select Affiliate"
-                                            intialValue={form?.affiliate_id}
-                                            result={e => {
-                                                setform({ ...form, affiliate_id: e.value })
-                                            }}
-                                            disabled={(form?.status == "rejected" || !id) ? false : true}
-                                            options={affiliateData}
-                                        />
+
+                                {form?.access_type === "private" && (
+                                    <div className="col-md-6 mb-3">
+                                        <label>Affiliate<span className="star">*</span></label>
+                                        <div className="select_row">
+                                            <MultiSelectValue
+                                                id="statusDropdown"
+                                                displayValue="fullName"
+                                                placeholder="Select Affiliate"
+                                                intialValue={form?.affiliate_id}
+                                                result={e => {
+                                                    setform({ ...form, affiliate_id: e.value });
+                                                }}
+                                                disabled={form?.status === "rejected" || !id ? false : true}
+                                                options={affiliateData}
+                                            />
+                                        </div>
+                                        {submitted && !form?.affiliate_id && <div className="invalid-feedback d-block">Affiliate is Required</div>}
                                     </div>
-                                    {submitted && !form?.affiliate_id ? <div className="invalid-feedback d-block">Affiliate is Required</div> : <></>}
-                                </div>}
+                                )}
+
                                 <div className="col-md-6 mb-3">
                                     <label>Event Type:<span className="star">*</span></label>
                                     <div className="select_row">
@@ -138,31 +141,61 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             intialValue={form?.event_type}
                                             disabled={!id}
                                             result={e => {
-                                                setform({ ...form, event_type: e.value })
+                                                setform({ ...form, event_type: e.value });
                                             }}
                                             options={EventType}
                                         />
                                     </div>
-                                    {submitted && !form?.event_type ? <div className="invalid-feedback d-block">Event type is Required</div> : <></>}
+                                    {submitted && !form?.event_type && <div className="invalid-feedback d-block">Event type is Required</div>}
                                 </div>
-                                {/* <div className="col-md-6 mb-3">
-                                    <label>Amount<span className="star">*</span></label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="0"
-                                        name="amount"
-                                        value={form?.amount}
-                                        onChange={(e) => {
-                                            const enteredValue = e.target.value;
-                                            const regex = /^[0-9]*$/;
-                                            if (enteredValue === '' || regex.test(enteredValue)) {
-                                                setform({ ...form, amount: enteredValue });
-                                            }
-                                        }}
-                                    />
-                                    {submitted && !form?.amount ? <div className="invalid-feedback d-block">Amount is Required</div> : <></>}
-                                </div> */}
+
+                                {/* New Dropdown for Percentage or Amount */}
+                                <div className="col-md-6 mb-3">
+                                    <label>Amount/Percentage Type<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="amountPercentageDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Amount or Percentage"
+                                            intialValue={form?.amountPercentage}
+                                            result={e => {
+                                                setform({ ...form, amountPercentage: e.value });
+                                            }}
+                                            options={[{ id: "percentage", name: "Percentage" }, { id: "amount", name: "Amount" }]}
+                                        />
+                                    </div>
+                                    {submitted && !form?.amountPercentage && <div className="invalid-feedback d-block">Amount/Percentage Type is Required</div>}
+                                </div>
+
+                                {/* Conditionally Render the Input Field for Amount or Percentage */}
+                                {form?.amountPercentage === "percentage" && (
+                                    <div className="col-md-6 mb-3">
+                                        <label>Percentage<span className="star">*</span></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={form?.percentage || ''}
+                                            onChange={e => setform({ ...form, percentage: e.target.value })}
+                                            placeholder="Enter Percentage"
+                                        />
+                                        {submitted && !form?.percentage && <div className="invalid-feedback d-block">Percentage is Required</div>}
+                                    </div>
+                                )}
+
+                                {form?.amountPercentage === "amount" && (
+                                    <div className="col-md-6 mb-3">
+                                        <label>Amount<span className="star">*</span></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={form?.amount || ''}
+                                            onChange={e => setform({ ...form, amount: e.target.value })}
+                                            placeholder="Enter Amount"
+                                        />
+                                        {submitted && !form?.amount && <div className="invalid-feedback d-block">Amount is Required</div>}
+                                    </div>
+                                )}
+
                                 <div className="col-md-12 mb-3">
                                     <label>Default Campaign</label>
                                     <div className="form-check">
@@ -170,7 +203,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             type="checkbox"
                                             className="form-check-input"
                                             checked={form?.isDefault || false}
-                                            onChange={(e) => setform({ ...form, isDefault: e.target.checked })}
+                                            onChange={e => setform({ ...form, isDefault: e.target.checked })}
                                         />
                                         <label className="form-check-label" htmlFor="defaultCampaign">
                                             Set this as the default campaign
@@ -183,7 +216,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     {true && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
-
                                         onChange={(newValue, editor) => {
                                             setform({ ...form, description: newValue })
                                         }}
@@ -207,21 +239,29 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         ]}
                                         bounds={'.app'}
                                     />}
-                                    {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
+                                    {submitted && !form?.description && <div className="invalid-feedback d-block">Description is Required</div>}
                                 </div>
 
                                 <div className='col-md-6'>
-                                    <label>Document(Max. Limit 10)  </label>
+                                    <label>Document(Max. Limit 10)</label>
                                     <div className="form-group drag_drop">
                                         <div className='upload_file'>
-                                            {form?.documents?.length <= 9 && <><button className="btn btn-primary upload_image">Upload Document</button>
-                                                <input type="file" className="form-control-file over_input" accept=".doc,.docx,.xml,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple={true}
-                                                    // disabled={loader}
-                                                    onChange={(e) => {
-                                                        setDocLoder(true)
-                                                        uploadDocument(e, 'images');
-                                                    }} /></>}
-                                            {loadDocerr && docLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
+                                            {form?.documents?.length <= 9 && (
+                                                <>
+                                                    <button className="btn btn-primary upload_image">Upload Document</button>
+                                                    <input
+                                                        type="file"
+                                                        className="form-control-file over_input"
+                                                        accept=".doc,.docx,.xml,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                        multiple={true}
+                                                        onChange={(e) => {
+                                                            setDocLoder(true)
+                                                            uploadDocument(e, 'images');
+                                                        }}
+                                                    />
+                                                </>
+                                            )}
+                                            {loadDocerr && docLoder && <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>}
                                             <div className="imagesRow mt-4 img-wrappper">
                                                 {form?.documents && form?.documents.map((itm, i) => {
                                                     return <div className="imagethumbWrapper cover" key={i}>
@@ -233,9 +273,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
 
                             <div className="text-right edit-btns">
                                 <button type="submit" className="btn btn-primary">Save</button>

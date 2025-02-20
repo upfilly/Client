@@ -494,9 +494,7 @@ export default function affilate() {
                             </h2>
                             <div id="collapsebx1" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
-                                {/* ///////////////////////////////////////////////////////////////////////////////// */}
 
-                                {/* ///////////////////////////////////////////////////////////////////////////////// */}
                                 <ul className='filter_ullist' >
                                   {category.map(category => (
                                     <li key={category._id} >
