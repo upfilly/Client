@@ -13,12 +13,16 @@ const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back }) => {
 
-    // const [loaderr, setLoader] = useState()
-    // const [imgLoder, setImgLoder] = useState()
-    // const [loadViderr, setVidLoader] = useState()
-    // const [vidLoder, setvidLoder] = useState()
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
+    const [subSubCategories, setSubSubCategories] = useState([]);
+    const categoryTypes = [
+        { id: 'promotional_models', name: 'Promotional Models' },
+        { id: 'property_types', name: 'Property Types' },
+        { id: 'advertiser_categories', name: 'Advertiser Categories' },
+    ]
 
     const EventType = [
         { id: 'lead', name: 'Lead' },
@@ -28,7 +32,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     ]
 
     const uploadDocument = async (e, key) => {
-        // console.log('enter');
         let files = e.target.files
         let i = 0
         let imgfile = []
@@ -64,6 +67,50 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         })
         setform({ ...form, documents: filterVid })
     }
+
+    const handleCategoryTypeChange = (selectedCategoryType) => {
+        getCategory(selectedCategoryType)
+        setSubCategories([]);
+        setSubSubCategories([]);
+    };
+
+    const getCategory = (categoryType) => {
+        let url = `categoryWithSub?page&count&search&cat_type=${categoryType}&status=active`;
+        if (categoryType) {
+            ApiClient.get(url).then((res) => {
+                if (res.success) {
+                    // const data = res.data.data;
+                    const category = res.data.data.map((dat) => {
+                        return ({
+                            id: dat?._id,
+                            name: dat?.parent_cat_name,
+                            subCategories: dat?.subCategories
+                        })
+                    })
+                    setCategories(category);
+                }
+            });
+        }
+    };
+
+    const handleCategoryChange = (selectedCategoryId) => {
+        const filteredSubCategories = categories.find(cat => cat.id === selectedCategoryId)?.subCategories || [];
+        console.log(filteredSubCategories, "klklklk")
+        setSubCategories(filteredSubCategories);
+        setSubSubCategories([]);
+    };
+
+    const handleSubCategoryChange = (selectedSubCategoryId) => {
+        const filteredSubSubCategories = subCategories.find(sub => sub.id === selectedSubCategoryId)?.subchildcategory || [];
+        console.log(filteredSubSubCategories, "klklkll")
+        const SubSubCategories = filteredSubSubCategories.map((dat) => {
+            return ({
+                id: dat?._id || dat?.id,
+                name: dat?.name,
+            })
+        })
+        setSubSubCategories(SubSubCategories);
+    };
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
@@ -210,6 +257,101 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             Set this as the default campaign
                                         </label>
                                     </div>
+                                </div>
+
+                                {/* Category Type Dropdown */}
+                                <div className="col-md-6 mb-3">
+                                    <label>Category Type<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="categoryTypeDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Category Type"
+                                            intialValue={form?.category_type}
+                                            result={e => {
+                                                setform({ ...form, category_type: e.value });
+                                                handleCategoryTypeChange(e.value);
+                                            }}
+                                            options={categoryTypes}
+                                        />
+                                    </div>
+                                    {submitted && !form?.category_type && <div className="invalid-feedback d-block">Category Type is Required</div>}
+                                </div>
+
+                                {/* Category Dropdown */}
+                               {categories?.length > 0 && <div className="col-md-6 mb-3">
+                                    <label>Category<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="categoryDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Category"
+                                            intialValue={form?.category}
+                                            result={e => {
+                                                setform({ ...form, category: e.value });
+                                                handleCategoryChange(e.value);
+                                            }}
+                                            options={categories}
+                                        />
+                                    </div>
+                                    {submitted && !form?.category && <div className="invalid-feedback d-block">Category is Required</div>}
+                                </div>}
+
+                                {/* Sub Category Dropdown */}
+                                {subCategories?.length > 0 && <div className="col-md-6 mb-3">
+                                    <label>Sub Category<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="subCategoryDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Sub Category"
+                                            intialValue={form?.sub_category}
+                                            result={e => {
+                                                setform({ ...form, sub_category: e.value });
+                                                handleSubCategoryChange(e.value);
+                                            }}
+                                            options={subCategories}
+                                        />
+                                    </div>
+                                    {submitted && !form?.sub_category && <div className="invalid-feedback d-block">Sub Category is Required</div>}
+                                </div>}
+
+                                {/* Sub Sub Category Dropdown */}
+                               {subSubCategories?.length > 0 && <div className="col-md-6 mb-3">
+                                    <label>Sub Sub Category<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown
+                                            id="subSubCategoryDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Sub Sub Category"
+                                            intialValue={form?.sub_child_category}
+                                            result={e => {
+                                                setform({ ...form, sub_child_category: e.value });
+                                            }}
+                                            options={subSubCategories}
+                                        />
+                                    </div>
+                                    {submitted && !form?.sub_child_category && <div className="invalid-feedback d-block">Sub Sub Category is Required</div>}
+                                </div>}
+
+                                {/* Region Dropdown */}
+                                <div className="col-md-6 mb-3">
+                                    <label>Region<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <MultiSelectValue
+                                            id="subSubCategoryDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Region"
+                                            intialValue={form?.region}
+                                            result={e => {
+                                                setform({ ...form, region: e.value });
+                                            }}
+                                            options={[{ id: "Africa", name: "Africa" }, { id: "Asia", name: "Asia" }, { id: "Europe", name: "Europe" },
+                                            { id: "North America", name: "North America" }, { id: "Oceania", name: "Oceania" }
+                                            ]}
+                                        />
+                                    </div>
+                                    {submitted && !form?.region && <div className="invalid-feedback d-block">Region is Required</div>}
                                 </div>
 
                                 <div className="col-md-12 mb-3">
