@@ -365,69 +365,11 @@ export default function affilate() {
     }
   }, [selectedOptions])
 
-  const edit = (id) => {
-    let url = `/affiliate-form/StageFirstStep/${id}`
-    // if(role) url=`/users/${role}/edit/${id}`
-    history.push(url)
-  }
-
-  const statusChange = (itm) => {
-    let status = 'active'
-    if (itm.status == 'active') status = 'deactive'
-
-    Swal.fire({
-      title: ``,
-      text: `Do you want to ${status == 'active' ? 'Activate' : 'Deactivate'} this Affiliate`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Yes'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        loader(true)
-        ApiClient.put(`change/status`, { status, id: itm._id, model: 'users' }).then(res => {
-          if (res.success) {
-            getData({ page: filters?.page + 1 })
-          }
-          loader(false)
-        })
-      }
-    })
-  }
-
-  const handleCleanData = () => {
-    localStorage.removeItem('stepFirst');
-    localStorage.removeItem('step2');
-    localStorage.removeItem('step3');
-  }
-
   const clear = () => {
     setFilter({ ...filters, search: '', page: 0 })
     getData({ search: '', page: 1 })
   }
 
-  const deleteItem = (id) => {
-
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        ApiClient.delete(`delete?model=users&id=${id}`).then(res => {
-          if (res.success) {
-            toast.success(res.message)
-            clear()
-          }
-        })
-      }
-    })
-  }
   const MultiSelectAffliates = (add, id) => {
     let data = selectedAffiliteid
     if (add) {

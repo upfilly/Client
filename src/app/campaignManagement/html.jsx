@@ -226,7 +226,7 @@ const Html = ({
                             />
                         </div>} */}
 
-                        {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
+                        {/* {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>} */}
 
                         <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
                             <span>Show <select
