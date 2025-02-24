@@ -21,7 +21,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
     const categoryTypes = [
         { id: 'promotional_models', name: 'Promotional Models' },
         { id: 'property_types', name: 'Property Types' },
-        { id: 'advertiser_categories', name: 'Advertiser Categories' },
+        // { id: 'advertiser_categories', name: 'Advertiser Categories' },
     ]
 
     const EventType = [
@@ -183,7 +183,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     <div className="select_row">
                                         <MultiSelectValue
                                             id="statusDropdown"
-                                            singleSelect={true}
+                                            // singleSelect={true}
                                             displayValue="name"
                                             placeholder="Select Type"
                                             intialValue={form?.event_type}
@@ -282,7 +282,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                {categories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <MultiSelectValue
                                             id="categoryDropdown"
                                             displayValue="name"
                                             placeholder="Select Category"
@@ -294,14 +294,14 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={categories}
                                         />
                                     </div>
-                                    {submitted && !form?.category && <div className="invalid-feedback d-block">Category is Required</div>}
+                                    {/* {submitted && !form?.category && <div className="invalid-feedback d-block">Category is Required</div>} */}
                                 </div>}
 
                                 {/* Sub Category Dropdown */}
                                 {subCategories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Sub Category<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <MultiSelectValue
                                             id="subCategoryDropdown"
                                             displayValue="name"
                                             placeholder="Select Sub Category"
@@ -313,14 +313,14 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={subCategories}
                                         />
                                     </div>
-                                    {submitted && !form?.sub_category && <div className="invalid-feedback d-block">Sub Category is Required</div>}
+                                    {/* {submitted && !form?.sub_category && <div className="invalid-feedback d-block">Sub Category is Required</div>} */}
                                 </div>}
 
                                 {/* Sub Sub Category Dropdown */}
                                {subSubCategories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Sub Sub Category<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <MultiSelectValue
                                             id="subSubCategoryDropdown"
                                             displayValue="name"
                                             placeholder="Select Sub Sub Category"
@@ -331,7 +331,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={subSubCategories}
                                         />
                                     </div>
-                                    {submitted && !form?.sub_child_category && <div className="invalid-feedback d-block">Sub Sub Category is Required</div>}
+                                    {/* {submitted && !form?.sub_child_category && <div className="invalid-feedback d-block">Sub Sub Category is Required</div>} */}
                                 </div>}
 
                                 {/* Region Dropdown */}
