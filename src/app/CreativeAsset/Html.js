@@ -72,12 +72,13 @@ const Html = () => {
                 setError("Upload Csv file first")
                 return
             }
-        } else {
-            if (!url || !urlPattern.test(url)) {
-                setError("Please enter a valid URL.");
-                return
-            }
         }
+        //  else {
+        //     if (!url || !urlPattern.test(url)) {
+        //         setError("Please enter a valid URL.");
+        //         return
+        //     }
+        // }
 
 
         setloaderData(true)

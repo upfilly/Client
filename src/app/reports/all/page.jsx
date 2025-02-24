@@ -41,11 +41,11 @@ const CustomCard = ({ title, children }) => (
 export default function AnalyticsDashboard() {
     const [dateFilter, setdateFilter] = useState([
         {
-          startDate: "",
-          endDate: "",
-          key: "selection",
+            startDate: "",
+            endDate: "",
+            key: "selection",
         },
-      ]);
+    ]);
     const [handleDateFilter, sethandleDateFilter] = useState(false);
     const handleDateChange = (dates) => {
         const [start, end] = dates;
@@ -66,7 +66,7 @@ export default function AnalyticsDashboard() {
                 </aside>
 
                 <main className="main-content">
-                    <div className="controls">
+                    <div className='d-flex'>
                         <span
                             class="form-select position-relactive  date_select"
                             onClick={(e) => sethandleDateFilter(!handleDateFilter)}
@@ -80,6 +80,13 @@ export default function AnalyticsDashboard() {
                                 )}`
                                 : "Select Date Range"}
                         </span>
+                        <select className="dropdown ml-3 bg-white border-class">
+                            <option>Gross (Before corrections)</option>
+                            <option>Net (After corrections)</option>
+                        </select>
+                    </div>
+                    <div className="controls mt-2">
+
                         {handleDateFilter && <DateRangePicker
                             onChange={(item) => {
                                 setdateFilter([
@@ -99,10 +106,7 @@ export default function AnalyticsDashboard() {
                             startDatePlaceholder="Date"
                             endDatePlaceholder="Date"
                         />}
-                        <select className="dropdown">
-                            <option>Gross (Before corrections)</option>
-                            <option>Net (After corrections)</option>
-                        </select>
+
                     </div>
 
                     <div className="cards-grid">

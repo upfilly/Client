@@ -172,8 +172,9 @@ const Html = ({
                                         <td className='table_dats'>{itm?.brand_id?.fullName}</td>
                                         <td className='table_dats'>{itm?.url ? "URL" : "CSV"}</td>
                                         {itm?.url ? <td className='table_dats'>
-                                            <a href={itm?.url} target="_blank" rel="noopener noreferrer">
-                                                {itm?.url?.slice(0, 40)}
+                                            <a href={`${environment?.api}/url_docs/${itm?.url}`} target="_blank" rel="noopener noreferrer">
+                                                {/* {itm?.url?.slice(0, 40)} */}
+                                                Click here
                                             </a>
                                         </td> :
                                             <td className='table_dats' >
