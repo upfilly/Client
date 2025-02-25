@@ -6,7 +6,7 @@ import methodModel from '../../methods/methods';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
-
+import { FaFilter } from "react-icons/fa";
 const Html = ({
     view,
     reset,
@@ -98,12 +98,14 @@ const Html = ({
 
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
-            <div className='nmain-list mb-3'>
-                <div className='card'>
-                    <div className='card-header'>
+            <div className='mapping-wrapper'>
+            <div className='row'>
+                <div className='col-12 col-sm-12 col-md-6 col-lg-12'>
+                <div className='lists_marketplace'>
+                    <div className='set-border-top'>
                         <div className="main_title_head d-flex justify-content-flex-start align-items-center">
                             <div className='filter_camp mr-2'>
-                                <button className='set-filter' type="button" class="set-filter abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
+                                <button className='btn btn-primary d-flex align-items-center' type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal"><FaFilter className="mr-2" /> Filter</button>
                             </div>
                             <h3 className="">
                                 Campaign Management
@@ -123,7 +125,7 @@ const Html = ({
 
                         </div>
                     </div>
-                    <div className='card-body'>
+                    <div className='mt-5'>
                         <div className='table_section mt-0'>
                             <div className="table-responsive">
                                 <table className="table table-striped">
@@ -458,14 +460,15 @@ const Html = ({
                                     </div>
                                 </div>
                             </div>
-                            <div className="modal-footer gap-3">
+                            <div className="modal-footer gap-3"> 
                                 <button type="button" className="btn btn-outline-secondary m-0" data-bs-dismiss="modal" onClick={reset}>Clear all Filter</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
+</div>
+            </div>
             </div>
         </Layout>
     );
