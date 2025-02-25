@@ -308,6 +308,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     previousfilters={previousfilters}
     pagePreviousChange={pagePreviousChange}
     SendPreviousRequest={SendPreviousRequest}
+    getData={getData}
   />
   </>;
 };

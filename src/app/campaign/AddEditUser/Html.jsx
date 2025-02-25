@@ -8,11 +8,12 @@ import '../style.scss';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
+import axios from "axios";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back }) => {
-
+    const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
     const [categories, setCategories] = useState([]);
@@ -23,6 +24,8 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         { id: 'property_types', name: 'Property Types' },
         // { id: 'advertiser_categories', name: 'Advertiser Categories' },
     ]
+
+    console.log(countries, "countriescountries")
 
     const EventType = [
         { id: 'lead', name: 'Lead' },
@@ -93,24 +96,56 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         }
     };
 
-    const handleCategoryChange = (selectedCategoryId) => {
-        const filteredSubCategories = categories.find(cat => cat.id === selectedCategoryId)?.subCategories || [];
-        console.log(filteredSubCategories, "klklklk")
+    const handleCategoryChange = (selectedCategoryIds) => {
+        const filteredSubCategories = categories
+            .filter(cat => selectedCategoryIds.includes(cat.id))
+            .flatMap(cat => cat.subCategories);
+
+        console.log(filteredSubCategories, "klklklk");
         setSubCategories(filteredSubCategories);
         setSubSubCategories([]);
     };
 
-    const handleSubCategoryChange = (selectedSubCategoryId) => {
-        const filteredSubSubCategories = subCategories.find(sub => sub.id === selectedSubCategoryId)?.subchildcategory || [];
-        console.log(filteredSubSubCategories, "klklkll")
+    const handleSubCategoryChange = (selectedSubCategoryIds) => {
+        const filteredSubSubCategories = subCategories
+            .filter(sub => selectedSubCategoryIds.includes(sub.id))
+            .flatMap(sub => sub.subchildcategory);
+
+        console.log(filteredSubSubCategories, "klklkll");
+
         const SubSubCategories = filteredSubSubCategories.map((dat) => {
-            return ({
+            return {
                 id: dat?._id || dat?.id,
                 name: dat?.name,
-            })
-        })
+            };
+        });
+
         setSubSubCategories(SubSubCategories);
     };
+
+    const fetchCountriesByRegions = async (regions) => {
+        try {
+            const countries = await Promise.all(
+                regions.map(async (region) => {
+                    const response = await axios.get(
+                        `https://restcountries.com/v3.1/region/${region}`
+                    );
+                    return response.data.map((country) => ({
+                        label: country.name.common,
+                        id: country.name.common,
+                    }));
+                })
+            );
+
+            // Flatten the array of country arrays and return
+            setCountries(countries.flat());
+        } catch (error) {
+            console.error('Error fetching countries:', error);
+            return [];
+        }
+    };
+
+
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
@@ -279,7 +314,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 </div>
 
                                 {/* Category Dropdown */}
-                               {categories?.length > 0 && <div className="col-md-6 mb-3">
+                                {categories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -317,7 +352,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 </div>}
 
                                 {/* Sub Sub Category Dropdown */}
-                               {subSubCategories?.length > 0 && <div className="col-md-6 mb-3">
+                                {subSubCategories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Sub Sub Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -345,6 +380,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             intialValue={form?.region}
                                             result={e => {
                                                 setform({ ...form, region: e.value });
+                                                fetchCountriesByRegions(e.value)
                                             }}
                                             options={[{ id: "Africa", name: "Africa" }, { id: "Asia", name: "Asia" }, { id: "Europe", name: "Europe" },
                                             { id: "North America", name: "North America" }, { id: "Oceania", name: "Oceania" }
@@ -353,6 +389,25 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     </div>
                                     {submitted && !form?.region && <div className="invalid-feedback d-block">Region is Required</div>}
                                 </div>
+
+                                {/* Region Dropdown */}
+                                {form?.region?.length > 0 && <div className="col-md-12 mb-3">
+                                    <label>Countrys<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <MultiSelectValue
+                                            id="subSubCategoryDropdown"
+                                            displayValue="label"
+                                            placeholder="Select Country"
+                                            intialValue={form?.region_continents}
+                                            result={e => {
+                                                setform({ ...form, region_continents: e.value });
+                                                // fetchCountriesByRegions(e.value)
+                                            }}
+                                            options={countries}
+                                        />
+                                    </div>
+                                    {submitted && !form?.region_continents && <div className="invalid-feedback d-block">Region is Required</div>}
+                                </div>}
 
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>

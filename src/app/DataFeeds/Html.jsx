@@ -32,7 +32,7 @@ const Html = ({
     const [copySuccess, setCopySuccess] = useState("");
 
     const downloadCsv = (csv) => {
-        ApiClient.get("csv",{"csv_url":`${csv}`}).then(res => {
+        ApiClient.get("csv", { "csv_url": `${csv}` }).then(res => {
             if (res.success) {
                 const file = res?.data;
                 // const fileURL = URL.createObjectURL(file);
@@ -159,9 +159,9 @@ const Html = ({
                                     {/* <th scope="col" className='table_data'>Share URL</th> */}
                                 </tr>
                             </thead>}
-                            { <tbody>
+                            {<tbody>
                                 {/* {comprehensiveTemplate?.map((item, index) => ( */}
-                                    {/* {uniqueKeysArray.map((key, idx) => (
+                                {/* {uniqueKeysArray.map((key, idx) => (
                                             <td className='table_dats' key={idx}>
                                                 {key == "createdAt" ? datepipeModel.date(item[key]) :
                                                     key == "updatedBy" ? datepipeModel.date(item[key]) : item[key] || "--"}
@@ -172,15 +172,23 @@ const Html = ({
                                         <td className='table_dats'>{itm?.brand_id?.fullName}</td>
                                         <td className='table_dats'>{itm?.url ? "URL" : "CSV"}</td>
                                         {itm?.url ? <td className='table_dats'>
-                                            <a href={`${environment?.api}/url_docs/${itm?.url}`} target="_blank" rel="noopener noreferrer">
-                                                {/* {itm?.url?.slice(0, 40)} */}
-                                                Click here
+                                            <a href={`${environment?.api}/${itm?.url}`} target="_blank" rel="noopener noreferrer">
+                                                CSV
+                                            </a>
+                                            <a className='ml-4' href={`${environment?.api}/${itm?.xml}`} target="_blank" rel="noopener noreferrer">
+                                                XML
                                             </a>
                                         </td> :
                                             <td className='table_dats' >
-                                                <button onClick={()=>downloadCsv(itm?.filePath)} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                                                {/* <button onClick={()=>downloadCsv(itm?.filePath)} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
                                                     Click here
-                                                </button>
+                                                </button> */}
+                                                <a href={`${environment?.api}/${itm?.filePath}`} target="_blank" rel="noopener noreferrer">
+                                                    CSV
+                                                </a>
+                                                <a className='ml-4' href={`${environment?.api}/${itm?.xml}`} target="_blank" rel="noopener noreferrer">
+                                                    XML
+                                                </a>
                                             </td>}
 
                                     </tr>
@@ -188,7 +196,7 @@ const Html = ({
                                 })
                                 }
 
-                                    {/* <td className='table_dats'>
+                                {/* <td className='table_dats'>
                                         <div className="d-flex align-items-center">
                                             <a href={`https://upfilly.com?affiliate_id=66d9a1b2231607c158aa25ae&url=${encodeURIComponent(item.url)}`} target="_blank" rel="noopener noreferrer">
                                                 Share URL

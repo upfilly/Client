@@ -113,6 +113,13 @@ export default function AnalyticsDashboard() {
                         <CustomCard title="Revenue Over Time">
                             <ReactECharts option={lineChartOption} className="chart" />
                         </CustomCard>
+                        <CustomCard title="Clicks">
+                            <ReactECharts option={lineChartOption} className="chart" />
+                        </CustomCard>
+                        <CustomCard title="Actions">
+                            <ReactECharts option={lineChartOption} className="chart" />
+                        </CustomCard>
+
                     </div>
                 </main>
             </div>

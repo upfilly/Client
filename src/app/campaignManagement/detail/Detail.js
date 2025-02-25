@@ -74,25 +74,12 @@ const Detail = (p) => {
                             <div className='row'>
                                 <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                     <div className='userdata'>
-                                        <p className='headmain'>Category:</p>
+                                        <p className='headmain'>Category :</p>
                                     </div>
                                 </div>
                                 <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category?.name || "--")}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='row'>
-                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                    <div className='userdata'>
-                                        <p className='headmain'>Category type:</p>
-                                    </div>
-                                </div>
-                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                    <div className='name-dtls'>
-                                        <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_type|| "--")}</p>
+                                        <p className='headsub'>{data && data?.category?.map((itm) => itm?.name)?.join(",")}</p>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +92,7 @@ const Detail = (p) => {
                                 </div>
                                 <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.sub_category?.name|| "--")}</p>
+                                        <p className='headsub'>{data && data?.sub_category?.map((itm) => itm?.name)?.join(",")}</p>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +105,20 @@ const Detail = (p) => {
                                 </div>
                                 <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.sub_child_category?.name || "--")}</p>
+                                        <p className='headsub'>{data && data?.sub_child_category?.map((itm) => itm?.name)?.join(",")}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='row'>
+                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                    <div className='userdata'>
+                                        <p className='headmain'>Regions:</p>
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                    <div className='name-dtls'>
+                                        <p className='headsub'>{data && data?.region?.map((itm) => itm)?.join(",")}</p>
                                     </div>
                                 </div>
                             </div>
