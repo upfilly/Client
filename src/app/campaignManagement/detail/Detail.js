@@ -29,7 +29,7 @@ const Detail = (p) => {
     }
 
     const handleCopyLink = () => {
-        const link = `https://upfilly.com?affiliate_id=${user?.id || user?._id}&url=${user?.website}`;
+        const link = `https://upfilly.com?affiliate_id=${user?.id || user?._id}&url=${user?.website}&brand_id=${data?.addedBy}`;
         navigator.clipboard.writeText(link).then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
@@ -263,7 +263,7 @@ const Detail = (p) => {
                                 <div className='col-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>
-                                            <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}`}</span>
+                                            <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}&brand_id=${data?.addedBy}`}</span>
                                             <button onClick={handleCopyLink} className='btn btn-primary ml-1'>
                                                 {copied ? 'Copied!' : 'Copy Link'}
                                             </button>

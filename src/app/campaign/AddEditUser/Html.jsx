@@ -12,7 +12,7 @@ import axios from "axios";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back }) => {
+const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back ,errors, setErrors,validate}) => {
     const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
@@ -172,7 +172,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         value={form.name}
                                         onChange={e => setform({ ...form, name: e.target.value })}
                                     />
-                                    {submitted && !form?.name && <div className="invalid-feedback d-block">Name is Required</div>}
+                                    {submitted && !form?.name && <div className="invalid-feedback d-block">{errors?.name}</div>}
                                 </div>
 
                                 <div className="col-md-6 mb-3">
@@ -190,7 +190,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={[{ id: "public", name: "Public" }, { id: "private", name: "Private" }]}
                                         />
                                     </div>
-                                    {submitted && !form?.access_type && <div className="invalid-feedback d-block">Access Type is Required</div>}
+                                    {submitted && !form?.access_type && <div className="invalid-feedback d-block">{errors?.access_type}</div>}
                                 </div>
 
                                 {form?.access_type === "private" && (
@@ -209,7 +209,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                                 options={affiliateData}
                                             />
                                         </div>
-                                        {submitted && !form?.affiliate_id && <div className="invalid-feedback d-block">Affiliate is Required</div>}
+                                        {submitted && !form?.affiliate_id && <div className="invalid-feedback d-block">{errors?.affiliate_id}</div>}
                                     </div>
                                 )}
 
@@ -229,11 +229,25 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={EventType}
                                         />
                                     </div>
-                                    {submitted && !form?.event_type && <div className="invalid-feedback d-block">Event type is Required</div>}
+                                    {submitted && !form?.event_type && <div className="invalid-feedback d-block">{errors?.event_type}</div>}
                                 </div>
 
+                                {form?.event_type?.includes("lead") && (
+                                    <div className="col-md-6 mb-3">
+                                        <label>Lead Amount<span className="star">*</span></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={form?.lead_amount || ''}
+                                            onChange={e => setform({ ...form, lead_amount: e.target.value })}
+                                            placeholder="Enter Lead Amount"
+                                        />
+                                        {submitted && !form?.lead_amount && <div className="invalid-feedback d-block">{errors?.lead_amount}</div>}
+                                    </div>
+                                )}
+
                                 {/* New Dropdown for Percentage or Amount */}
-                                <div className="col-md-6 mb-3">
+                                {form?.event_type?.includes("purchase") && <div className="col-md-6 mb-3">
                                     <label>Amount/Percentage Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
@@ -247,11 +261,11 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={[{ id: "percentage", name: "Percentage" }, { id: "amount", name: "Amount" }]}
                                         />
                                     </div>
-                                    {submitted && !form?.commission_type && <div className="invalid-feedback d-block">Amount/Percentage Type is Required</div>}
-                                </div>
+                                    {submitted && !form?.commission_type && <div className="invalid-feedback d-block">{errors?.commission_type}</div>}
+                                </div>}
 
                                 {/* Conditionally Render the Input Field for Amount or Percentage */}
-                                {form?.commission_type === "percentage" && (
+                                {(form?.commission_type === "percentage" && form?.event_type?.includes("purchase")) && (
                                     <div className="col-md-6 mb-3">
                                         <label>Percentage<span className="star">*</span></label>
                                         <input
@@ -261,11 +275,11 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             onChange={e => setform({ ...form, commission: e.target.value })}
                                             placeholder="Enter Percentage"
                                         />
-                                        {submitted && !form?.commission && <div className="invalid-feedback d-block">Percentage is Required</div>}
+                                        {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
                                     </div>
                                 )}
 
-                                {form?.commission_type === "amount" && (
+                                {(form?.commission_type === "amount" && form?.event_type?.includes("purchase")) && (
                                     <div className="col-md-6 mb-3">
                                         <label>Amount<span className="star">*</span></label>
                                         <input
@@ -275,7 +289,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             onChange={e => setform({ ...form, commission: e.target.value })}
                                             placeholder="Enter Amount"
                                         />
-                                        {submitted && !form?.commission && <div className="invalid-feedback d-block">Amount is Required</div>}
+                                        {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
                                     </div>
                                 )}
 
@@ -310,7 +324,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={categoryTypes}
                                         />
                                     </div>
-                                    {submitted && !form?.category_type && <div className="invalid-feedback d-block">Category Type is Required</div>}
+                                    {submitted && !form?.category_type && <div className="invalid-feedback d-block">{errors?.category_type}</div>}
                                 </div>
 
                                 {/* Category Dropdown */}
@@ -387,7 +401,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             ]}
                                         />
                                     </div>
-                                    {submitted && !form?.region && <div className="invalid-feedback d-block">Region is Required</div>}
+                                    {submitted && !form?.region && <div className="invalid-feedback d-block">{errors?.region}</div>}
                                 </div>
 
                                 {/* Region Dropdown */}
@@ -406,7 +420,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={countries}
                                         />
                                     </div>
-                                    {submitted && !form?.region_continents && <div className="invalid-feedback d-block">Region is Required</div>}
+                                    {submitted && !form?.region_continents && <div className="invalid-feedback d-block">{errors?.region_continents}</div>}
                                 </div>}
 
                                 <div className="col-md-12 mb-3">

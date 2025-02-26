@@ -22,7 +22,12 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
         '/commission/commisionplan',
         '/commission/addcommision',
         '/campaign',
-        '/payments', '/product', '/campaignManagement', '/addbanner', '/coupons'
+        '/payments',
+        '/product',
+        '/campaignManagement',
+        '/CreativeEmails',
+        '/addbanner',
+        '/coupons'
     ];
 
     const isDashboard = validPaths.includes(pathname);

@@ -42,12 +42,13 @@ const TrackingGuide = () => {
             amount: parseFloat(getCookie("totalAmount") || 0).toFixed(2),  // value not in cookies then implement this script where it get 
             channel: getCookie("source") || "defaultChannel",  // value not in cookies then implement this script where it get 
             currency: getCookie("currency") || "USD",  // value not in cookies then implement this script where it get 
+            lead_id: getCookie("order_id") || "defaultOrder",  // value not in cookies then implement this script where it get
             orderRef: getCookie("order_id") || "defaultOrder",  // value not in cookies then implement this script where it get 
             voucher: getCookie("voucher") || "noVoucher",  // value not in cookies then implement this script where it get 
             };
 
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://api.example.com/trackSale", true);
+            xhr.open("POST", "https://api.upfilly.com/affiliatelink", true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onload = function () {

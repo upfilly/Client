@@ -32,16 +32,42 @@ const AddEditUser = () => {
     const history = useRouter()
     const [emailLoader, setEmailLoader] = useState(false)
     const [emailErr, setEmailErr] = useState('')
+    const [errors, setErrors] = useState({});
     const [detail, setDetail] = useState()
+
+    console.log(errors,"nmnmnmnmn")
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
     }
 
+    const validate = () => {
+        let formErrors = {};
+        if (!form.name) formErrors.name = 'Name is required';
+        if (!form.access_type) formErrors.access_type = 'Access Type is required';
+        if (!form.event_type || form.event_type.length === 0) formErrors.event_type = 'Event Type is required';
+        if (form.event_type?.includes("lead") && !form.lead_amount) formErrors.lead_amount = 'Lead Amount is required';
+        if (!form.commission_type) formErrors.commission_type = 'Amount/Percentage Type is required';
+        if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
+        if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
+        if (!form.category_type) formErrors.category_type = 'Category Type is required';
+        // if (!form.category) formErrors.category = 'Category is required';
+        if (!form.description) formErrors.description = 'Description is required';
+        if (!form.region) formErrors.region = 'Region is required';
+        if (!form.region_continents || form.region_continents.length === 0) formErrors.region_continents = 'Countries are required';
+
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!form?.description || !form?.name || !form?.event_type) {
+        // if (!form?.description || !form?.name || !form?.event_type) {
+            
+        // }
+
+        if (!validate()) {
             setSubmitted(true)
             return;
         }
@@ -176,6 +202,9 @@ const AddEditUser = () => {
             imageResult={imageResult}
             getError={getError}
             affiliateData={affiliateData}
+            errors={errors} 
+            setErrors={setErrors}
+            validate={validate}
         />
     </>
 }

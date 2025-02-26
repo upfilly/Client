@@ -19,6 +19,7 @@ export default function Home() {
   const [location, setLocation] = useState(null);
   const param = useSearchParams()
   const id = param.get("affiliate_id")
+  const brandId = param.get("brand_id")
   const data = param.get("url")
   const url = decodeURIComponent(data)
   const [payload, setPayload] = useState({
@@ -177,6 +178,7 @@ export default function Home() {
     if (id && IP) {
       const data1 = {
         "affiliate_id": id,
+        "brand_id":brandId,
         "affiliate_link": window?.location?.href,
         "ip_address": IP,
         "device": deviceInfo?.deviceType,
