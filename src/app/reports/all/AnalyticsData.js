@@ -10,25 +10,31 @@ const CustomCard = ({ title, children }) => (
 );
 
 const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
-  const revenueData = data?.[0]?.revenue || [];
-  const actionData = data?.[0]?.actions || [];
-  const clickData = clicks?.[0]?.clicks || [];
-  const revenueData2 = data2?.[0]?.revenue || [];
-  const actionData2 = data2?.[0]?.actions || [];
-  const clickData2 = clicks2?.[0]?.clicks || [];
+  const { selection1, selection2 } = state;
 
+  // Helper function to format date strings
   const formatDates = (data) => {
     return data.map(item => `${item._id.year}-${item._id.month}-${item._id.day}`);
   };
 
-  const revenueDates = formatDates(revenueData);
-  const revenuePrices = revenueData.map(item => item.price);
+  // Since data is already filtered, we can directly map it to chart variables
+  const revenueData1 = data?.[0]?.revenue || [];
+  const actionData1 = data?.[0]?.actions || [];
+  const clickData1 = clicks?.[0]?.clicks || [];
 
-  const actionDates = formatDates(actionData);
-  const actionCounts = actionData.map(item => item.action);
+  const revenueData2 = data2?.[0]?.revenue || [];
+  const actionData2 = data2?.[0]?.actions || [];
+  const clickData2 = clicks2?.[0]?.clicks || [];
 
-  const clickDates = formatDates(clickData);
-  const clickCounts = clickData.map(item => item.count);
+  // Format the filtered data for each chart
+  const revenueDates1 = formatDates(revenueData1);
+  const revenuePrices1 = revenueData1.map(item => item.price);
+
+  const actionDates1 = formatDates(actionData1);
+  const actionCounts1 = actionData1.map(item => item.action);
+
+  const clickDates1 = formatDates(clickData1);
+  const clickCounts1 = clickData1.map(item => item.count);
 
   const revenueDates2 = formatDates(revenueData2);
   const revenuePrices2 = revenueData2.map(item => item.price);
@@ -39,6 +45,14 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
   const clickDates2 = formatDates(clickData2);
   const clickCounts2 = clickData2.map(item => item.count);
 
+  // Format the dynamic legend labels using the selected date ranges
+  const formatLegendLabel = (selection) => {
+    const startDate = selection.startDate.toLocaleDateString();
+    const endDate = selection.endDate.toLocaleDateString();
+    return `${startDate} - ${endDate}`;
+  };
+
+  // Chart options for Revenue, Actions, and Clicks with blue color scheme
   const revenueChartOption = {
     title: {
       text: 'Revenue Over Time Comparison',
@@ -46,9 +60,17 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     tooltip: {
       trigger: 'axis',
     },
+    legend: {
+      data: [
+        `${formatLegendLabel(selection1)}`,
+        `${formatLegendLabel(selection2)}`
+      ],
+      bottom: 0, // Place legend below x-axis
+      left: 'center', // Center the legend
+    },
     xAxis: {
       type: 'category',
-      data: revenueDates,
+      data: revenueDates1,
       boundaryGap: false,
     },
     yAxis: {
@@ -56,8 +78,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     },
     series: [
       {
-        name: 'Revenue Selection 1',
-        data: revenuePrices,
+        name: `${formatLegendLabel(selection1)}`,
+        data: revenuePrices1,
         type: 'line',
         smooth: true,
         areaStyle: {},
@@ -65,11 +87,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#33cc99',
+          color: '#1E90FF', // Blue color
         },
       },
       {
-        name: 'Revenue Selection 2',
+        name: `${formatLegendLabel(selection2)}`,
         data: revenuePrices2,
         type: 'line',
         smooth: true,
@@ -78,7 +100,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#ff6600',
+          color: '#4682B4', // Lighter blue color
         },
       },
     ],
@@ -91,9 +113,17 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     tooltip: {
       trigger: 'axis',
     },
+    legend: {
+      data: [
+        `${formatLegendLabel(selection1)}`,
+        `${formatLegendLabel(selection2)}`
+      ],
+      bottom: 0, // Place legend below x-axis
+      left: 'center', // Center the legend
+    },
     xAxis: {
       type: 'category',
-      data: actionDates,
+      data: actionDates1,
       boundaryGap: false,
     },
     yAxis: {
@@ -101,8 +131,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     },
     series: [
       {
-        name: 'Actions Selection 1',
-        data: actionCounts,
+        name: `${formatLegendLabel(selection1)}`,
+        data: actionCounts1,
         type: 'line',
         smooth: true,
         areaStyle: {},
@@ -110,11 +140,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#33cc99',
+          color: '#1E90FF', // Blue color
         },
       },
       {
-        name: 'Actions Selection 2',
+        name: `${formatLegendLabel(selection2)}`,
         data: actionCounts2,
         type: 'line',
         smooth: true,
@@ -123,7 +153,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#ff6600',
+          color: '#4682B4', // Lighter blue color
         },
       },
     ],
@@ -136,9 +166,17 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     tooltip: {
       trigger: 'axis',
     },
+    legend: {
+      data: [
+        `${formatLegendLabel(selection1)}`,
+        `${formatLegendLabel(selection2)}`
+      ],
+      bottom: 0, // Place legend below x-axis
+      left: 'center', // Center the legend
+    },
     xAxis: {
       type: 'category',
-      data: clickDates,
+      data: clickDates1,
       boundaryGap: false,
     },
     yAxis: {
@@ -146,8 +184,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     },
     series: [
       {
-        name: 'Clicks Selection 1',
-        data: clickCounts,
+        name: `${formatLegendLabel(selection1)}`,
+        data: clickCounts1,
         type: 'line',
         smooth: true,
         areaStyle: {},
@@ -155,11 +193,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#33cc99',
+          color: '#1E90FF', // Blue color
         },
       },
       {
-        name: 'Clicks Selection 2',
+        name: `${formatLegendLabel(selection2)}`,
         data: clickCounts2,
         type: 'line',
         smooth: true,
@@ -168,7 +206,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#ff6600',
+          color: '#4682B4', // Lighter blue color
         },
       },
     ],
