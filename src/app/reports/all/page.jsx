@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { addDays } from 'date-fns';
 import ReactECharts from 'echarts-for-react';
 import Layout from '@/app/components/global/layout';
 import { DateRangePicker } from "react-date-range";
@@ -9,6 +10,8 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker styles
 import './AnalyticsDashboard.scss';
+import ApiClient from '@/methods/api/apiClient';
+import AnalyticsChartData from './AnalyticsData'
 
 const lineChartOption = {
     xAxis: {
@@ -31,27 +34,75 @@ const lineChartOption = {
     ]
 };
 
-const CustomCard = ({ title, children }) => (
-    <div className="custom-card">
-        <h2 className="custom-card-title">{title}</h2>
-        {children}
-    </div>
-);
+
 
 export default function AnalyticsDashboard() {
-    const [dateFilter, setdateFilter] = useState([
-        {
-            startDate: "",
-            endDate: "",
-            key: "selection",
+    const [state, setState] = useState({
+        selection1: {
+            startDate: addDays(new Date(), -6),
+            endDate: new Date(),
+            key: 'selection1'
         },
-    ]);
-    const [handleDateFilter, sethandleDateFilter] = useState(false);
-    const handleDateChange = (dates) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
+        selection2: {
+            startDate: addDays(new Date(), 1),
+            endDate: addDays(new Date(), 7),
+            key: 'selection2'
+        }
+    });
+    const [data, setData] = useState()
+    const [data2, setData2] = useState()
+    const [clicks, setClicks] = useState()
+    const [clicks2, setClicks2] = useState()
+    const [handleDateFilter, setHandleDateFilter] = useState(false);
+
+    // const handleDateChange = (ranges) => {
+    //     if (ranges.selection1 && ranges.selection2) {
+    //         setDateFilter([ranges.selection1, ranges.selection2]);
+    //     }
+    // };
+
+    const getAnalyticsData = (p = {}) => {
+        let filter = { ...p }
+        let url = 'analytics-reports'
+        ApiClient.get(url, filter).then(res => {
+            if (res.success) {
+                setData2(res?.data?.data2)
+                setData(res?.data?.data)
+                console.log(res?.data, "oppppoppopopo")
+            }
+        })
+    }
+
+    const getClicksAnalyticsData = (p = {}) => {
+        let filter = { ...p }
+        let url = 'analytics-click'
+        ApiClient.get(url, filter).then(res => {
+            if (res.success) {
+                setClicks2(res?.data?.data2)
+                setClicks(res?.data?.data)
+                console.log(res?.data, "oppppoppopopo")
+            }
+        })
+    }
+
+    useEffect(() => {
+        getClicksAnalyticsData({
+            // startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
+            // endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
+            // affiliate_id: "",
+            // brand_id: "",
+            // startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            // endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+        })
+        getAnalyticsData({
+            // startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
+            // endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
+            // affiliate_id: "",
+            // brand_id: "",
+            // startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            // endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+        })
+    }, [state])
 
     return (
         <Layout>
@@ -68,59 +119,45 @@ export default function AnalyticsDashboard() {
                 <main className="main-content">
                     <div className='d-flex'>
                         <span
-                            class="form-select position-relactive  date_select"
-                            onClick={(e) => sethandleDateFilter(!handleDateFilter)}
-                            onBlur={(e) => sethandleDateFilter(false)}
+                            className="form-select position-relative date_select"
+                            onClick={(e) => setHandleDateFilter(!handleDateFilter)}
+                            onBlur={(e) => setHandleDateFilter(false)}
                         >
-                            {dateFilter?.[0]?.startDate || dateFilter?.[0]?.endDate
-                                ? `${moment(dateFilter?.[0]?.startDate).format(
-                                    "MMMM DD, YYYY"
-                                )} - ${moment(dateFilter?.[0]?.endDate).format(
-                                    "MMMM DD, YYYY"
-                                )}`
-                                : "Select Date Range"}
+                            {
+                                state?.selection1?.startDate || state?.selection1?.endDate || state?.selection2?.startDate || state?.selection2?.endDate
+                                    ? `${moment(state?.selection1?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection1?.endDate).format("MMMM DD, YYYY")} && ${moment(state?.selection2?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection2?.endDate).format("MMMM DD, YYYY")}`
+                                    : "Select Date Range"
+                            }
                         </span>
                         <select className="dropdown ml-3 bg-white border-class">
                             <option>Gross (Before corrections)</option>
                             <option>Net (After corrections)</option>
                         </select>
                     </div>
+
                     <div className="controls mt-2">
-
-                        {handleDateFilter && <DateRangePicker
-                            onChange={(item) => {
-                                setdateFilter([
-                                    {
-                                        startDate: item.selection.startDate,
-                                        endDate: item.selection.endDate,
-                                        key: "selection",
+                        {handleDateFilter && (
+                            <DateRangePicker
+                                onChange={item => setState({ ...state, ...item })}
+                                showSelectionPreview={true}
+                                moveRangeOnFirstSelection={false}
+                                months={2}
+                                ranges={[state.selection1, state.selection2]}
+                                direction="horizontal"
+                                ariaLabels={{
+                                    dateInput: {
+                                        selection1: { startDate: "start date input of selction 1", endDate: "end date input of selction 1" },
+                                        selection2: { startDate: "start date input of selction 2", endDate: "end date input of selction 2" }
                                     },
-                                ]);
-                            }}
-                            showSelectionPreview={true}
-                            moveRangeOnFirstSelection={false}
-                            months={2}
-                            ranges={dateFilter}
-                            direction="horizontal"
-                            className="rounded"
-                            startDatePlaceholder="Date"
-                            endDatePlaceholder="Date"
-                        />}
-
+                                    monthPicker: "month picker",
+                                    yearPicker: "year picker",
+                                    prevButton: "previous month button",
+                                    nextButton: "next month button",
+                                }}
+                            />
+                        )}
                     </div>
-
-                    <div className="cards-grid">
-                        <CustomCard title="Revenue Over Time">
-                            <ReactECharts option={lineChartOption} className="chart" />
-                        </CustomCard>
-                        <CustomCard title="Clicks">
-                            <ReactECharts option={lineChartOption} className="chart" />
-                        </CustomCard>
-                        <CustomCard title="Actions">
-                            <ReactECharts option={lineChartOption} className="chart" />
-                        </CustomCard>
-
-                    </div>
+                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={state}/>
                 </main>
             </div>
         </Layout>
