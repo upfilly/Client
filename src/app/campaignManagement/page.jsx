@@ -247,18 +247,18 @@ const SendPreviousRequest = async (campaign,brand) => {
   }
 
 
-  const reset = () => {
-    let filter = {
-      status: '',
-      role: '',
-      search: '',
-      page: 1,
-      count: 5
-    }
-    setFilter({ ...filters, ...filter })
-    getData({ ...filter })
-    // dispatch(search_success(''))
-  }
+  // const reset = () => {
+  //   let filter = {
+  //     status: '',
+  //     role: '',
+  //     search: '',
+  //     page: 1,
+  //     count: 5
+  //   }
+  //   setFilter({ ...filters, ...filter })
+  //   getData({ ...filter })
+  //   // dispatch(search_success(''))
+  // }
 
   const isAllow = (key = '') => {
 
@@ -286,7 +286,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     setFilter={setFilter}
     filter={filter}
     isAllow={isAllow}
-    reset={reset}
+    // reset={reset}
     add={add}
     view={view}
     edit={edit}

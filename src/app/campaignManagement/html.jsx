@@ -8,10 +8,11 @@ import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import { FaFilter } from "react-icons/fa";
 import MultiSelectValue from '../components/common/MultiSelectValue';
+import axios from 'axios';
 
 const Html = ({
     view,
-    reset,
+    // reset,
     statusChange,
     pageChange,
     filters,
@@ -51,6 +52,24 @@ const Html = ({
             prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
         );
     };
+
+    const reset = () => {
+        let filter = {
+          status: '',
+          role: '',
+          search: '',
+          page: 1,
+          count: 5
+        }
+        setFilter({ ...filters, ...filter })
+        setSelectedCategory([]);
+        setSelectedSubCategory([]);
+        setSelectedSubSubCategory([]);
+        setSelectedRegion([]);
+        setSelectedCountries([]);
+        getData({ ...filter })
+        // dispatch(search_success(''))
+      }
 
     const getCategory = (p = {}) => {
         let url = `categoryWithSub?page&count&search&cat_type=${categoryType?.map((dat) => dat).join(",")}&status=active`;
@@ -99,8 +118,6 @@ const Html = ({
                     }));
                 })
             );
-
-            // Flatten the array of country arrays and return
             setCountries(countries.flat());
         } catch (error) {
             console.error('Error fetching countries:', error);
@@ -122,16 +139,23 @@ const Html = ({
         }
     }, [activeTab]);
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchCountriesByRegions(selectedRegion)
-    },[selectedRegion])
+    }, [selectedRegion])
 
     useEffect(() => {
         getCategory()
     }, [categoryType])
 
     useEffect(() => {
-        getData({ page: 1, region: selectedRegion?.map((dat) => dat).join(","), category_type: categoryType?.map((dat) => dat).join(","), category: selectedCategory?.map((dat) => dat).join(","), sub_category: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category: selectedSubSubCategory?.map((dat) => dat).join(",") })
+        getData({
+            page: 1, region: selectedRegion?.map((dat) => dat).join(","),
+            category_type: categoryType?.map((dat) => dat).join(","),
+            category: selectedCategory?.map((dat) => dat).join(","),
+            sub_category: selectedSubCategory?.map((dat) => dat).join(","),
+            countries: selectedCountries?.map((dat) => dat).join(","),
+            sub_child_category: selectedSubSubCategory?.map((dat) => dat).join(",")
+        })
     }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory, selectedRegion])
 
     const handleKeyPress = (event) => {
@@ -527,15 +551,16 @@ const Html = ({
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header">
                                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxRegion" aria-expanded="true" aria-controls="collapsebxRegion">
-                                                            <b>Select Region</b>
+                                                            <b>Select Country</b>
                                                             <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
                                                         </button>
                                                     </h2>
                                                     <div id="collapsebxRegion" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
+                                                        <div className="accordion-body pading">
                                                             <ul className="filter_ullist">
-                                                                
+
                                                                 <MultiSelectValue
+                                                                className="select-c"
                                                                     id="subSubCategoryDropdown"
                                                                     displayValue="label"
                                                                     placeholder="Select Country"

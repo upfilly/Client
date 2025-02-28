@@ -335,3 +335,16 @@ input.form-control-file.over_input {
     color: white;
     font-weight: bold;
 }
+
+.pading{
+  ul.optionContainer {
+    position: absolute !important;
+    bottom: 47px !important;
+    background: #fff !important;
+  }
+}
+
+.accordion-body.pading {
+  padding-left: 0px;
+  padding-right: 0px;
+}
