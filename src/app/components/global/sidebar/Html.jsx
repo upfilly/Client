@@ -316,10 +316,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Campaign Request</span>
           </ListItemLink>} */}
 
-          {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/mapping" title="Map data">
+          {/* {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/mapping" title="Map data">
             <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
             <span className="side_head">Map Keys</span>
-          </ListItemLink>}
+          </ListItemLink>} */}
 
           {(permission('marketplace_product_add') || user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/Offers" title="Add Offer" >
             <i className="material-icons  svg_iconbx ListItemLink" title="product">add_shopping_cart</i>
@@ -356,10 +356,10 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Invited Users</span>
         </ListItemLink>} */}
 
-          {(user?.role == "affiliate") && <ListItemLink to="/affiliate-report" title="Affiliate Report">
+          {/* {(user?.role == "affiliate") && <ListItemLink to="/affiliate-report" title="Affiliate Report">
             <i class="material-icons  svg_iconbx">summarize</i>
             <span className="side_head">Report</span>
-          </ListItemLink>}
+          </ListItemLink>} */}
 
           {/* {(user?.role == "brand") && <ListItemLink to="/brand-report"  title="Brand-Report">
             <i class="material-icons  svg_iconbx">list_alt</i>
@@ -418,7 +418,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
 
-          {(user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/reports/all" title="Report">
+          {<ListItemLink to="/reports/all" title="Report">
             <i class="material-icons  svg_iconbx">insert_chart</i>
             <span className="side_head">Reports</span>
           </ListItemLink>}

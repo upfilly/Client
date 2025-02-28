@@ -98,6 +98,16 @@
   padding: 10px;
 }
 
+.search-wrapper.searchWrapper{
+  border-radius: 2px !important;
+  margin-left:2px;
+  width: 299px;
+}
+
+input#statusDropdown_input {
+  color: black;
+}
+
 /* Make the charts responsive */
 @media screen and (max-width: 768px) {
   .cards-grid {

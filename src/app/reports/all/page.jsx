@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { addDays } from 'date-fns';
-import ReactECharts from 'echarts-for-react';
 import Layout from '@/app/components/global/layout';
 import { DateRangePicker } from "react-date-range";
 import moment from "moment";
@@ -12,31 +11,11 @@ import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker styles
 import './AnalyticsDashboard.scss';
 import ApiClient from '@/methods/api/apiClient';
 import AnalyticsChartData from './AnalyticsData'
-
-const lineChartOption = {
-    xAxis: {
-        type: 'category',
-        data: ['Feb 20, 2025', 'Feb 21, 2025']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [
-        {
-            data: [938, 50],
-            type: 'line',
-            smooth: true,
-            areaStyle: { color: 'rgba(74, 144, 226, 0.4)' },
-            lineStyle: { color: '#4A90E2', width: 3 },
-            symbol: 'circle',
-            symbolSize: 10
-        }
-    ]
-};
-
-
+import MultiSelectValue from '@/app/components/common/MultiSelectValue';
+import crendentialModel from '@/models/credential.model';
 
 export default function AnalyticsDashboard() {
+    const user = crendentialModel.getUser()
     const [state, setState] = useState({
         selection1: {
             startDate: addDays(new Date(), -6),
@@ -54,12 +33,39 @@ export default function AnalyticsDashboard() {
     const [clicks, setClicks] = useState()
     const [clicks2, setClicks2] = useState()
     const [handleDateFilter, setHandleDateFilter] = useState(false);
+    const [affiliateData, setAffiliateData] = useState();
+    const [selectedAffiliate,setSelectedAffiliate] = useState();
+    const [selectedBrand,setSelectedBrand] = useState();
+    const [brands,setBrands] = useState();
 
-    // const handleDateChange = (ranges) => {
-    //     if (ranges.selection1 && ranges.selection2) {
-    //         setDateFilter([ranges.selection1, ranges.selection2]);
-    //     }
-    // };
+    console.log(selectedBrand,"associated/brands")
+
+    const getBrandData = (p = {}) => {
+        let url = 'associated/brands'
+        ApiClient.get(url).then(res => {
+            if (res.success) {
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                setBrands(filteredData)
+            }
+        })
+    }
+
+    const getData = (p = {}) => {
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url, { brand_id: user?.id || user?._id }).then(res => {
+            if (res.success) {
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                setAffiliateData(filteredData)
+            }
+        })
+    }
+
+    useEffect(() => {
+        getData()
+        getBrandData()
+    }, [])
 
     const getAnalyticsData = (p = {}) => {
         let filter = { ...p }
@@ -87,22 +93,22 @@ export default function AnalyticsDashboard() {
 
     useEffect(() => {
         getClicksAnalyticsData({
-            // startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
-            // endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
-            // affiliate_id: "",
-            // brand_id: "",
-            // startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
-            // endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
+            endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
+            affiliate_id: "",
+            brand_id: "",
+            startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
-            // startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
-            // endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
-            // affiliate_id: "",
-            // brand_id: "",
-            // startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
-            // endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
+            endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
+            affiliate_id: "",
+            brand_id: "",
+            startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
         })
-    }, [state])
+    }, [state,selectedAffiliate,selectedBrand])
 
     return (
         <Layout>
@@ -129,10 +135,30 @@ export default function AnalyticsDashboard() {
                                     : "Select Date Range"
                             }
                         </span>
-                        <select className="dropdown ml-3 bg-white border-class">
-                            <option>Gross (Before corrections)</option>
-                            <option>Net (After corrections)</option>
-                        </select>
+
+                        {user.role == "brand" ?
+                            <MultiSelectValue
+                                id="statusDropdown"
+                                displayValue="fullName"
+                                placeholder="Select Affiliate"
+                                singleSelect={true}
+                                intialValue={selectedBrand}
+                                result={e => {
+                                    setSelectedBrand(e.value);
+                                }}
+                                options={brands}
+                            />
+                            : <MultiSelectValue
+                                id="statusDropdown"
+                                displayValue="fullName"
+                                placeholder="Select Affiliate"
+                                singleSelect={true}
+                                intialValue={selectedAffiliate}
+                                result={e => {
+                                    setSelectedAffiliate(e.value);
+                                }}
+                                options={affiliateData}
+                            />}
                     </div>
 
                     <div className="controls mt-2">
