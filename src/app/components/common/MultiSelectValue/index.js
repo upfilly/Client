@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Html from "./html";
 import methodModel from "@/methods/methods";
 
-const MultiSelectValue = ({intialValue,options,isSingle=false,result,displayValue='name',id,name,singleSelect}) => {
+const MultiSelectValue = ({intialValue,options,isSingle=false,result,displayValue='name',id,name,singleSelect,placeholder}) => {
 
     const [selectedValues,setSelectedValues]=useState([])
 
@@ -59,6 +59,7 @@ const MultiSelectValue = ({intialValue,options,isSingle=false,result,displayValu
         <Html
         id={id}
         displayValue={displayValue}
+        placeholder={placeholder}
         options={options}
         selectedValues={selectedValues}
         handleChange={handleChange}

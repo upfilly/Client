@@ -7,7 +7,7 @@ import { DateRangePicker } from "react-date-range";
 import moment from "moment";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker styles
+import 'react-datepicker/dist/react-datepicker.css';
 import './AnalyticsDashboard.scss';
 import ApiClient from '@/methods/api/apiClient';
 import AnalyticsChartData from './AnalyticsData'
@@ -34,11 +34,20 @@ export default function AnalyticsDashboard() {
     const [clicks2, setClicks2] = useState()
     const [handleDateFilter, setHandleDateFilter] = useState(false);
     const [affiliateData, setAffiliateData] = useState();
-    const [selectedAffiliate,setSelectedAffiliate] = useState();
-    const [selectedBrand,setSelectedBrand] = useState();
-    const [brands,setBrands] = useState();
+    const [selectedAffiliate, setSelectedAffiliate] = useState();
+    const [selectedBrand, setSelectedBrand] = useState();
+    const [brands, setBrands] = useState();
 
-    console.log(selectedBrand,"associated/brands")
+    const isFilterApplied = () => {
+        return (
+            selectedAffiliate ||
+            selectedBrand ||
+            state.selection1.startDate !== addDays(new Date(), -6) ||
+            state.selection1.endDate !== new Date() ||
+            state.selection2.startDate !== addDays(new Date(), 1) ||
+            state.selection2.endDate !== addDays(new Date(), 7)
+        );
+    };
 
     const getBrandData = (p = {}) => {
         let url = 'associated/brands'
@@ -74,7 +83,6 @@ export default function AnalyticsDashboard() {
             if (res.success) {
                 setData2(res?.data?.data2)
                 setData(res?.data?.data)
-                console.log(res?.data, "oppppoppopopo")
             }
         })
     }
@@ -86,7 +94,6 @@ export default function AnalyticsDashboard() {
             if (res.success) {
                 setClicks2(res?.data?.data2)
                 setClicks(res?.data?.data)
-                console.log(res?.data, "oppppoppopopo")
             }
         })
     }
@@ -95,20 +102,37 @@ export default function AnalyticsDashboard() {
         getClicksAnalyticsData({
             startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
             endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
-            affiliate_id:selectedAffiliate || "",
-            brand_id:selectedBrand || "",
+            affiliate_id: selectedAffiliate || "",
+            brand_id: selectedBrand || "",
             startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
             endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
             startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
             endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
-            affiliate_id:selectedAffiliate || "",
-            brand_id:selectedBrand || "",
+            affiliate_id: selectedAffiliate || "",
+            brand_id: selectedBrand || "",
             startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
             endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
         })
-    }, [state,selectedAffiliate,selectedBrand])
+    }, [state, selectedAffiliate, selectedBrand])
+
+    const resetFilters = () => {
+        setState({
+            selection1: {
+                startDate: addDays(new Date(), -6),
+                endDate: new Date(),
+                key: 'selection1'
+            },
+            selection2: {
+                startDate: addDays(new Date(), 1),
+                endDate: addDays(new Date(), 7),
+                key: 'selection2'
+            }
+        });
+        setSelectedAffiliate(null);
+        setSelectedBrand(null);
+    };
 
     return (
         <Layout>
@@ -117,8 +141,8 @@ export default function AnalyticsDashboard() {
                     <h1 className="sidebar-title">Insights</h1>
                     <nav className="sidebar-nav">
                         <button className="sidebar-button">Program Overview</button>
-                        <button className="sidebar-button">Performance</button>
-                        <button className="sidebar-button">Customer Analysis</button>
+                        {/* <button className="sidebar-button">Performance</button>
+                        <button className="sidebar-button">Customer Analysis</button> */}
                     </nav>
                 </aside>
 
@@ -140,7 +164,7 @@ export default function AnalyticsDashboard() {
                             <MultiSelectValue
                                 id="statusDropdown"
                                 displayValue="fullName"
-                                placeholder="Select Affiliate"
+                                placeholder="Select Brand"
                                 singleSelect={true}
                                 intialValue={selectedBrand}
                                 result={e => {
@@ -183,7 +207,17 @@ export default function AnalyticsDashboard() {
                             />
                         )}
                     </div>
-                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={state}/>
+
+                    <div className="reset-filters-container">
+                        {isFilterApplied() && (
+                            <button className="reset-button" onClick={resetFilters}>
+                                Reset Filters
+                            </button>
+                        )}
+                    </div>
+
+
+                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={state} />
                 </main>
             </div>
         </Layout>

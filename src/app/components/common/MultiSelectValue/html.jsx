@@ -2,12 +2,13 @@ import React from "react";
 import './style.scss';
 import Multiselect from 'multiselect-react-dropdown';
 
-const Html = ({ options,selectedValues,handleChange,displayValue,id,name,singleSelect}) => {
+const Html = ({ options,selectedValues,handleChange,displayValue,id,name,singleSelect,placeholder}) => {
     return <>
         <div className="selectDropdown">
             <Multiselect
                 options={options}
                 singleSelect={singleSelect || false}
+                placeholder={placeholder}
                 selectedValues={selectedValues}
                 onSelect={e => handleChange(e,'select')}
                 onRemove={e => handleChange(e,'remove')}

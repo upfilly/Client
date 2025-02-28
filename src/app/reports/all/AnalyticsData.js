@@ -31,7 +31,6 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
   const actionData2 = data2?.[0]?.actions || [];
   const clickData2 = clicks2?.[0]?.clicks || [];
 
-  // Format the filtered data for each chart
   const revenueDates1 = formatDates(revenueData1);
   const revenuePrices1 = getChartData(revenueData1, revenueDates1);
 
@@ -86,7 +85,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     yAxis: {
       type: 'value',
       axisLabel: {
-        show: false, // Hide the Y-axis values
+        show: false,
       },
     },
     series: [
@@ -100,7 +99,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#1E90FF', // Blue color
+          color: '#1E90FF',
         },
       },
       {
@@ -113,12 +112,12 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#4682B4', // Lighter blue color
+          color: '#4682B4',
         },
       },
     ],
   };
-  
+
   const actionsChartOption = {
     title: {
       text: 'Actions Comparison',
@@ -131,8 +130,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
         `${formatLegendLabel(selection1)}`,
         `${formatLegendLabel(selection2)}`
       ],
-      bottom: 0, // Place legend below x-axis
-      left: 'center', // Center the legend
+      bottom: 0,
+      left: 'center',
     },
     xAxis: {
       type: 'category',
@@ -142,7 +141,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     yAxis: {
       type: 'value',
       axisLabel: {
-        show: false, // Hide the Y-axis values
+        show: false,
       },
     },
     series: [
@@ -156,7 +155,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#1E90FF', // Blue color
+          color: '#1E90FF',
         },
       },
       {
@@ -169,12 +168,12 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#4682B4', // Lighter blue color
+          color: '#4682B4',
         },
       },
     ],
   };
-  
+
   const clicksChartOption = {
     title: {
       text: 'Clicks Comparison',
@@ -187,8 +186,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
         `${formatLegendLabel(selection1)}`,
         `${formatLegendLabel(selection2)}`
       ],
-      bottom: 0, // Place legend below x-axis
-      left: 'center', // Center the legend
+      bottom: 0,
+      left: 'center',
     },
     xAxis: {
       type: 'category',
@@ -198,7 +197,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     yAxis: {
       type: 'value',
       axisLabel: {
-        show: false, // Hide the Y-axis values
+        show: false,
       },
     },
     series: [
@@ -212,7 +211,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#1E90FF', // Blue color
+          color: '#1E90FF',
         },
       },
       {
@@ -225,11 +224,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
           width: 2,
         },
         itemStyle: {
-          color: '#4682B4', // Lighter blue color
+          color: '#4682B4',
         },
       },
     ],
-  };  
+  };
 
   return (
     <div className="cards-grid">
