@@ -20,8 +20,6 @@ const Html = () => {
   const history = useRouter()
   const childRef = useRef();
 
-  // console.log(form,"dfgdfgdgfd======")
-
   const handleClick = () => {
     childRef.current.export_to_html();
     toast.success('Data Exported Successfully')
@@ -45,7 +43,7 @@ const Html = () => {
     let value = {
       ...form,id:id
     };
-    if (id) {
+    if (id && id != "add") {
       method = "put";
       url = `emailtemplate`;
     } else {
