@@ -106,6 +106,7 @@ const Html = () => {
                 toast.success(res?.message)
                 setloaderData(false)
                 fetchCSV()
+                setUrl("")
                 setFile(null)
                 // setForm({})
             }
