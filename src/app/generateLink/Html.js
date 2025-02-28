@@ -68,22 +68,16 @@ const Html = () => {
     };
 
     const getData = (p = {}) => {
-        let filter = { status: 'accepted', addedBy: user?.id }
-        let url = 'make-offers'
-        ApiClient.get(url, filter).then(res => {
+        // let filter = { status: 'accepted', addedBy: user?.id }
+        let url = 'associated/brands'
+        ApiClient.get(url).then(res => {
             if (res.success) {
-                const uniqueBrands = new Set();
-                const filteredData = res?.data?.data.reduce((acc, item) => {
-                    if (!uniqueBrands.has(item.brand_id)) {
-                        uniqueBrands.add(item.brand_id);
-                        acc.push({
-                            id: item.brand_id,
-                            brand_name: item.brand_name
-                        });
-                    }
-                    return acc;
-                }, []);
-                setBrandData(filteredData);
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm)=>{return{
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                }})
+                setBrandData(manipulateData)
                 generateShortLink(url)
             }
         })
@@ -91,7 +85,7 @@ const Html = () => {
 
     const brands = Array.from(new Set(brandData.map(item => ({
         id: item.id,
-        name: item.brand_name
+        name: item.name
     }))));
 
     const handleBrandChange = event => {

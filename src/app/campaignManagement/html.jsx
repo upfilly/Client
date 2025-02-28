@@ -7,6 +7,7 @@ import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import { FaFilter } from "react-icons/fa";
+import MultiSelectValue from '../components/common/MultiSelectValue';
 
 const Html = ({
     view,
@@ -33,15 +34,17 @@ const Html = ({
     const [selectedCategory, setSelectedCategory] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState([]);
     const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
-    const [selectedRegion,setSelectedRegion] = useState([]);
+    const [selectedRegion, setSelectedRegion] = useState([]);
     const [category, setCategory] = useState([])
+    const [countries, setCountries] = useState([]);
+    const [selectedCountries, setSelectedCountries] = useState([]);
     const regions = [
         { id: "Africa", name: "Africa" },
         { id: "Asia", name: "Asia" },
         { id: "Europe", name: "Europe" },
         { id: "North America", name: "North America" },
         { id: "Oceania", name: "Oceania" }
-    ];    
+    ];
 
     const handleCategoryTypeChange = (id) => {
         setCategoryType(prev =>
@@ -83,6 +86,28 @@ const Html = ({
         );
     };
 
+    const fetchCountriesByRegions = async (regions) => {
+        try {
+            const countries = await Promise.all(
+                regions.map(async (region) => {
+                    const response = await axios.get(
+                        `https://restcountries.com/v3.1/region/${region}`
+                    );
+                    return response.data.map((country) => ({
+                        label: country.name.common,
+                        id: country.name.common,
+                    }));
+                })
+            );
+
+            // Flatten the array of country arrays and return
+            setCountries(countries.flat());
+        } catch (error) {
+            console.error('Error fetching countries:', error);
+            return [];
+        }
+    };
+
     const categoryTypes = [
         { id: 'promotional_models', name: 'Promotional Models' },
         { id: 'property_types', name: 'Property Types' },
@@ -97,13 +122,17 @@ const Html = ({
         }
     }, [activeTab]);
 
+    useEffect(()=>{
+        fetchCountriesByRegions(selectedRegion)
+    },[selectedRegion])
+
     useEffect(() => {
         getCategory()
     }, [categoryType])
 
     useEffect(() => {
-        getData({ page: 1 ,region:selectedRegion?.map((dat)=>dat).join(",") ,category_type:categoryType?.map((dat)=>dat).join(","),category:selectedCategory?.map((dat)=>dat).join(","),sub_category:selectedSubCategory?.map((dat)=>dat).join(","),sub_child_category:selectedSubSubCategory?.map((dat)=>dat).join(",")})
-      }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory,selectedRegion])
+        getData({ page: 1, region: selectedRegion?.map((dat) => dat).join(","), category_type: categoryType?.map((dat) => dat).join(","), category: selectedCategory?.map((dat) => dat).join(","), sub_category: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category: selectedSubSubCategory?.map((dat) => dat).join(",") })
+    }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory, selectedRegion])
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -487,6 +516,37 @@ const Html = ({
                                                                         </div>
                                                                     </li>
                                                                 ))}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Country Filter */}
+                                            <div className="accordion" id="accordionExample">
+                                                <div className="accordion-item">
+                                                    <h2 className="accordion-header">
+                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxRegion" aria-expanded="true" aria-controls="collapsebxRegion">
+                                                            <b>Select Region</b>
+                                                            <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapsebxRegion" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            <ul className="filter_ullist">
+                                                                
+                                                                <MultiSelectValue
+                                                                    id="subSubCategoryDropdown"
+                                                                    displayValue="label"
+                                                                    placeholder="Select Country"
+                                                                    intialValue={selectedCountries}
+                                                                    result={e => {
+                                                                        setSelectedCountries(e.value);
+                                                                        // fetchCountriesByRegions(e.value)
+                                                                    }}
+                                                                    options={countries}
+                                                                />
+
                                                             </ul>
                                                         </div>
                                                     </div>
