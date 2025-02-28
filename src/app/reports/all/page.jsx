@@ -95,16 +95,16 @@ export default function AnalyticsDashboard() {
         getClicksAnalyticsData({
             startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
             endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
-            affiliate_id: "",
-            brand_id: "",
+            affiliate_id:selectedAffiliate || "",
+            brand_id:selectedBrand || "",
             startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
             endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
             startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
             endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
-            affiliate_id: "",
-            brand_id: "",
+            affiliate_id:selectedAffiliate || "",
+            brand_id:selectedBrand || "",
             startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
             endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
         })
@@ -131,12 +131,12 @@ export default function AnalyticsDashboard() {
                         >
                             {
                                 state?.selection1?.startDate || state?.selection1?.endDate || state?.selection2?.startDate || state?.selection2?.endDate
-                                    ? `${moment(state?.selection1?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection1?.endDate).format("MMMM DD, YYYY")} && ${moment(state?.selection2?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection2?.endDate).format("MMMM DD, YYYY")}`
+                                    ? `${moment(state?.selection1?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection1?.endDate).format("MMMM DD, YYYY")} ⇆ ${moment(state?.selection2?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection2?.endDate).format("MMMM DD, YYYY")}`
                                     : "Select Date Range"
                             }
                         </span>
 
-                        {user.role == "brand" ?
+                        {user.role != "brand" ?
                             <MultiSelectValue
                                 id="statusDropdown"
                                 displayValue="fullName"

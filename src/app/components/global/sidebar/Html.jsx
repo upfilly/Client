@@ -1,4 +1,3 @@
-import methodModel from "@/methods/methods";
 import React, { useEffect, useState } from "react";
 import CustomTooltip from "../../common/Tooltip/CustomTooltip"
 
@@ -381,6 +380,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             <span className="side_head">Add Users</span>
           </ListItemLink>} */}
 
+          {<ListItemLink to="/reports/all" title="Report">
+            <i class="material-icons  svg_iconbx">insert_chart</i>
+            <span className="side_head">Reports</span>
+          </ListItemLink>}
+
           {<ListItemLink to="/salesTracking" title="Untracked Sales">
             <i className="material-icons  svg_iconbx" title="untracked sales">
               real_estate_agent</i>
@@ -417,11 +421,6 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
   
           <span className="side_head">Trackings</span>
         </ListItemLink>} */}
-
-          {<ListItemLink to="/reports/all" title="Report">
-            <i class="material-icons  svg_iconbx">insert_chart</i>
-            <span className="side_head">Reports</span>
-          </ListItemLink>}
 
           {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/performance" title="Performance">
             <i class="material-icons  svg_iconbx">insert_chart</i>
