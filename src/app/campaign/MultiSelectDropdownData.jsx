@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
 import './MultiSelectDropdownData.css';
 
-const MultiSelectDropdown = ({ data }) => {
-  const [selectedItems, setSelectedItems] = useState({
-    categories: [],
-    subCategories: [],
-    subSubCategories: [],
-  });
-
+const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   console.log(selectedItems,"selectedItemsselectedItems")
 
-  const handleCategoryChange = (category, subcategory, subSubCategory, checked) => {
-    const value = { category, subcategory, subSubCategory };
+  const handleCategoryChange = (category, subcategory, subSubCategoryId, checked) => {
+    const value = { category, subcategory, subSubCategoryId };
 
     setSelectedItems((prevState) => {
       let newCategories = [...prevState.categories];
       let newSubCategories = [...prevState.subCategories];
       let newSubSubCategories = [...prevState.subSubCategories];
-
-      console.log(newCategories,"newCategories")
-      console.log(newSubCategories,"newSubCategories")
-      console.log(newSubSubCategories,"newSubSubCategories")
 
       if (category && checked) {
         newCategories.push(category);
@@ -31,27 +21,25 @@ const MultiSelectDropdown = ({ data }) => {
         subCategoriesForCategory.forEach((subCategory) => {
           newSubCategories.push(subCategory.id);
           subCategory.subchildcategory.forEach((subSubCategory) => {
-            newSubSubCategories.push(subSubCategory.name);
+            newSubSubCategories.push(subSubCategory._id);
           });
         });
       }
 
-      // If subcategory is checked, select all subsubcategories
       if (subcategory && checked) {
         newSubCategories.push(subcategory);
         const subCategory = data
           .flatMap((item) => item.subCategories)
           .find((item) => item.id === subcategory);
         subCategory.subchildcategory.forEach((subSubCategory) => {
-          newSubSubCategories.push(subSubCategory.name);
+          newSubSubCategories.push(subSubCategory._id);
         });
       }
 
-      // If unchecked, remove the respective categories/subcategories/subsubcategories
       if (!checked) {
         if (category) newCategories = newCategories.filter((item) => item !== category);
         if (subcategory) newSubCategories = newSubCategories.filter((item) => item !== subcategory);
-        if (subSubCategory) newSubSubCategories = newSubSubCategories.filter((item) => item !== subSubCategory);
+        if (subSubCategoryId) newSubSubCategories = newSubSubCategories.filter((item) => item !== subSubCategoryId);
       }
 
       return { categories: newCategories, subCategories: newSubCategories, subSubCategories: newSubSubCategories };
@@ -60,10 +48,9 @@ const MultiSelectDropdown = ({ data }) => {
 
   const handleSelectAll = (checked) => {
     if (checked) {
-      // Select all categories, subcategories, and subsubcategories
       const allCategories = data.map((parentCategory) => parentCategory._id);
       const allSubCategories = data.flatMap((parentCategory) => parentCategory.subCategories.map((subCategory) => subCategory.id));
-      const allSubSubCategories = data.flatMap((parentCategory) => parentCategory.subCategories.flatMap((subCategory) => subCategory.subchildcategory.map((subSubCategory) => subSubCategory.name)));
+      const allSubSubCategories = data.flatMap((parentCategory) => parentCategory.subCategories.flatMap((subCategory) => subCategory.subchildcategory.map((subSubCategory) => subSubCategory._id)));
       setSelectedItems({
         categories: allCategories,
         subCategories: allSubCategories,
@@ -78,20 +65,28 @@ const MultiSelectDropdown = ({ data }) => {
     }
   };
 
+  const handleRemoveAll = () => {
+    setSelectedItems({
+      categories: [],
+      subCategories: [],
+      subSubCategories: [],
+    });
+  };
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
   const renderSubcategories = (categoryId, subcategory) => {
     return subcategory.subchildcategory.map((subSubCategory, index) => (
-      <div key={index} style={{ paddingLeft: '20px' }}>
+      <div key={subSubCategory._id} style={{ paddingLeft: '40px' }}>
         <input
           type="checkbox"
-          id={`${categoryId}-${subcategory.id}-${subSubCategory.name}`}
-          onChange={(e) => handleCategoryChange(categoryId, subcategory.id, subSubCategory.name, e.target.checked)}
-          checked={selectedItems.subSubCategories.includes(subSubCategory.name)}
+          id={`${categoryId}-${subcategory.id}-${subSubCategory._id}`}
+          onChange={(e) => handleCategoryChange(categoryId, subcategory.id, subSubCategory._id, e.target.checked)}
+          checked={selectedItems.subSubCategories.includes(subSubCategory._id)}
         />
-        <label htmlFor={`${categoryId}-${subcategory.id}-${subSubCategory.name}`}>{subSubCategory.name}</label>
+        <label htmlFor={`${categoryId}-${subcategory.id}-${subSubCategory._id}`}>{subSubCategory.name}</label>
       </div>
     ));
   };
@@ -143,14 +138,19 @@ const MultiSelectDropdown = ({ data }) => {
               onChange={handleSearchChange}
               className="search-input"
             />
-            <div>
-              <input
-                type="checkbox"
-                id="selectAll"
-                onChange={(e) => handleSelectAll(e.target.checked)}
-                checked={selectedItems.categories.length === data.length}
-              />
-              <label htmlFor="selectAll">Select All</label>
+            <div className="select-options">
+              <div className="select-option">
+                <input
+                  type="checkbox"
+                  id="selectAll"
+                  onChange={(e) => handleSelectAll(e.target.checked)}
+                  checked={selectedItems.categories.length === data.length}
+                />
+                <span htmlFor="selectAll">Select All</span>
+              </div>
+                <div className="select-option dst">
+                  <span onClick={handleRemoveAll}>Remove All</span>
+                </div>
             </div>
             {renderCategories()}
           </div>

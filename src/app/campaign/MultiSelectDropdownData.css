@@ -68,7 +68,7 @@
   
   /* Subcategory and sub-subcategory styles (nested elements) */
   .dropdown-item .nested {
-    padding-left: 20px;
+    padding-left: 40px;
   }
 
 .dropdown_main input[type=checkbox], input[type=radio] {
@@ -88,7 +88,7 @@
     font-size: 14px;
     font-weight: bold;
     display: inline-block;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
   }
   
   /* Styling for when the dropdown menu is opened */
@@ -97,7 +97,7 @@
   }
 
   .remove-all-btn {
-    margin-top: 10px;
+    /* margin-top: 10px; */
     background-color: red;
     color: white;
     border: none;
@@ -108,6 +108,19 @@
   .remove-all-btn:hover {
     background-color: darkred;
   }
+
+.select-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 10px; */
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+}
+
   
   
   /* Styling for the dropdown when it's closed (hidden by default) */

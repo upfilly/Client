@@ -12,6 +12,11 @@ const AddEditUser = () => {
     const { role, id } = useParams()
     const user = crendentialModel.getUser()
     const [images, setImages] = useState({ image: '' });
+    const [selectedItems, setSelectedItems] = useState({
+        categories: [],
+        subCategories: [],
+        subSubCategories: [],
+    });
     const defaultvalue = addCampaignType
     const [form, setform] = useState({
         id: "",
@@ -35,7 +40,7 @@ const AddEditUser = () => {
     const [errors, setErrors] = useState({});
     const [detail, setDetail] = useState()
 
-    console.log(errors,"nmnmnmnmn")
+    console.log(errors, "nmnmnmnmn")
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
@@ -47,9 +52,9 @@ const AddEditUser = () => {
         if (!form.access_type) formErrors.access_type = 'Access Type is required';
         if (!form.event_type || form.event_type.length === 0) formErrors.event_type = 'Event Type is required';
         if (form.event_type?.includes("lead") && !form.lead_amount) formErrors.lead_amount = 'Lead Amount is required';
-        if (!form.commission_type) formErrors.commission_type = 'Amount/Percentage Type is required';
-        if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
-        if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
+        // if (!form.commission_type) formErrors.commission_type = 'Amount/Percentage Type is required';
+        // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
+        // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
         if (!form.category_type) formErrors.category_type = 'Category Type is required';
         // if (!form.category) formErrors.category = 'Category is required';
         if (!form.description) formErrors.description = 'Description is required';
@@ -64,7 +69,7 @@ const AddEditUser = () => {
         e.preventDefault()
 
         // if (!form?.description || !form?.name || !form?.event_type) {
-            
+
         // }
 
         if (!validate()) {
@@ -77,7 +82,12 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
-            brand_id: user?.id
+            commission_type:"percentage",
+            commission:"1",
+            category: selectedItems?.categories,
+            sub_category: selectedItems?.subCategories,
+            sub_child_category: selectedItems?.subSubCategories,
+            brand_id: user?.id || user?._id,
         }
         delete value.status
         if (value.id) {
@@ -202,9 +212,11 @@ const AddEditUser = () => {
             imageResult={imageResult}
             getError={getError}
             affiliateData={affiliateData}
-            errors={errors} 
+            errors={errors}
             setErrors={setErrors}
             validate={validate}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
         />
     </>
 }

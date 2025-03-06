@@ -12,7 +12,7 @@ import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back ,errors, setErrors,validate}) => {
+const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back ,errors,selectedItems, setSelectedItems}) => {
     const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
@@ -24,8 +24,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         { id: 'property_types', name: 'Property Types' },
         // { id: 'advertiser_categories', name: 'Advertiser Categories' },
     ]
-
-    console.log(countries, "countriescountries")
 
     const EventType = [
         { id: 'lead', name: 'Lead' },
@@ -330,7 +328,10 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 <div className="col-md-6 mb-3">
                                     <label>Select Category<span className="star">*</span></label>
                                     <div className="drops">
-                                        <MultiSelectDropdownData data={categories} />
+                                        <MultiSelectDropdownData data={categories} 
+                                        selectedItems={selectedItems} 
+                                        setSelectedItems={setSelectedItems}
+                                        />
                                     </div>
                                 </div>
 
