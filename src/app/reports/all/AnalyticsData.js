@@ -55,6 +55,17 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     return `${startDate} - ${endDate}`;
   };
 
+  const calculatePercentageDifference = (value1, value2) => {
+    
+    if (value1 === 0 || !value1) {
+      return value2 > 0 ? '∞%' : '0%';
+    }
+  
+    const diff = Math.abs(value2 || 0 - value1 || 0);
+    const percentageDiff = (diff / value1) * 100;
+    return `${percentageDiff.toFixed(2)}%`;
+  };
+
   const revenueChartOption = {
     title: {
       text: 'Revenue Over Time Comparison',
@@ -64,7 +75,13 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       formatter: function (params) {
         let tooltipContent = '';
         params.forEach(item => {
-          tooltipContent += `<div>${item.seriesName}: $${item.data}</div>`;
+          const value1 = item.data;
+          const value2 = params[1]?.data;
+          const percentageDifference = calculatePercentageDifference(value1, value2)
+          
+          tooltipContent += `
+            <div>${item.seriesName}: $${value1} (${percentageDifference})</div>
+          `;
         });
         return tooltipContent;
       },
@@ -117,13 +134,26 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       },
     ],
   };
-
+  
   const actionsChartOption = {
     title: {
       text: 'Actions Comparison',
     },
     tooltip: {
       trigger: 'axis',
+      formatter: function (params) {
+        let tooltipContent = '';
+        params.forEach(item => {
+          const value1 = item.data;
+          const value2 = params[1]?.data;  // Get the data for the second chart
+          const percentageDifference = calculatePercentageDifference(value1, value2)
+          
+          tooltipContent += `
+            <div>${item.seriesName}: ${value1} (${percentageDifference})</div>
+          `;
+        });
+        return tooltipContent;
+      },
     },
     legend: {
       data: [
@@ -172,7 +202,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
         },
       },
     ],
-  };
+  }; 
 
   const clicksChartOption = {
     title: {
@@ -180,6 +210,19 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
     },
     tooltip: {
       trigger: 'axis',
+      formatter: function (params) {
+        let tooltipContent = '';
+        params.forEach(item => {
+          const value1 = item.data;
+          const value2 = params[1]?.data;
+          const percentageDifference = calculatePercentageDifference(value1, value2)
+          
+          tooltipContent += `
+            <div>${item.seriesName}: ${value1} (${percentageDifference})</div>
+          `;
+        });
+        return tooltipContent;
+      },
     },
     legend: {
       data: [
@@ -228,7 +271,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
         },
       },
     ],
-  };
+  };  
 
   return (
     <div className="cards-grid">
