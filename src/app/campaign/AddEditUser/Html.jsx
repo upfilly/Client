@@ -7,7 +7,6 @@ import '../style.scss';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import MultiSelectDropdownData from "../MultiSelectDropdownData";
-
 import axios from "axios";
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
@@ -232,13 +231,6 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     </div>
                                     {submitted && !form?.event_type && <div className="invalid-feedback d-block">{errors?.event_type}</div>}
                                 </div>
-                                <div className="col-md-6 mb-3">
-                                <label>Select Category<span className="star">*</span></label>
-                                <div className="drops">
-                        <MultiSelectDropdownData data={categories}/>
-
-                        </div>
-                                </div>
 
                                 {form?.event_type?.includes("lead") && (
                                     <div className="col-md-6 mb-3">
@@ -335,8 +327,15 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                     {submitted && !form?.category_type && <div className="invalid-feedback d-block">{errors?.category_type}</div>}
                                 </div>
 
+                                <div className="col-md-6 mb-3">
+                                    <label>Select Category<span className="star">*</span></label>
+                                    <div className="drops">
+                                        <MultiSelectDropdownData data={categories} />
+                                    </div>
+                                </div>
+
                                 {/* Category Dropdown */}
-                                {categories?.length > 0 && <div className="col-md-6 mb-3">
+                                {/* {categories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -351,11 +350,10 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={categories}
                                         />
                                     </div>
-                                    {/* {submitted && !form?.category && <div className="invalid-feedback d-block">Category is Required</div>} */}
-                                </div>}
+                                </div>} */}
 
                                 {/* Sub Category Dropdown */}
-                                {subCategories?.length > 0 && <div className="col-md-6 mb-3">
+                                {/* {subCategories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Sub Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -370,11 +368,10 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={subCategories}
                                         />
                                     </div>
-                                    {/* {submitted && !form?.sub_category && <div className="invalid-feedback d-block">Sub Category is Required</div>} */}
-                                </div>}
+                                </div>} */}
 
                                 {/* Sub Sub Category Dropdown */}
-                                {subSubCategories?.length > 0 && <div className="col-md-6 mb-3">
+                                {/* {subSubCategories?.length > 0 && <div className="col-md-6 mb-3">
                                     <label>Sub Sub Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -388,8 +385,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                             options={subSubCategories}
                                         />
                                     </div>
-                                    {/* {submitted && !form?.sub_child_category && <div className="invalid-feedback d-block">Sub Sub Category is Required</div>} */}
-                                </div>}
+                                </div>} */}
 
                                 {/* Region Dropdown */}
                                 <div className="col-md-6 mb-3">

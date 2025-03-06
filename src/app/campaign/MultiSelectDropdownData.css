@@ -95,6 +95,20 @@
   .dropdown.open .dropdown-menu {
     display: block;
   }
+
+  .remove-all-btn {
+    margin-top: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .remove-all-btn:hover {
+    background-color: darkred;
+  }
+  
   
   /* Styling for the dropdown when it's closed (hidden by default) */
   /* .dropdown .dropdown-menu {
@@ -107,7 +121,4 @@
       max-height: 200px;
     }
   }
-  
-  
-  
   

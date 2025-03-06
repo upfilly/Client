@@ -8,8 +8,10 @@ const MultiSelectDropdown = ({ data }) => {
     subSubCategories: [],
   });
 
-  const [isOpen, setIsOpen] = useState(false); // Dropdown visibility
-  const [searchTerm, setSearchTerm] = useState(""); // Search term state
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  console.log(selectedItems,"selectedItemsselectedItems")
 
   const handleCategoryChange = (category, subcategory, subSubCategory, checked) => {
     const value = { category, subcategory, subSubCategory };
@@ -19,7 +21,10 @@ const MultiSelectDropdown = ({ data }) => {
       let newSubCategories = [...prevState.subCategories];
       let newSubSubCategories = [...prevState.subSubCategories];
 
-      // If category is checked, select all subcategories and subsubcategories
+      console.log(newCategories,"newCategories")
+      console.log(newSubCategories,"newSubCategories")
+      console.log(newSubSubCategories,"newSubSubCategories")
+
       if (category && checked) {
         newCategories.push(category);
         const subCategoriesForCategory = data.find((item) => item._id === category).subCategories;
