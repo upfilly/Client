@@ -47,8 +47,17 @@ const Html = ({
         let url='coupon/getAll'
         let payload ={media:user?.id,csv:"yes",visibility:"Public",}
         ApiClient.get(url, payload).then(res => {
-            if (res.success) {
-                
+            if (res) {
+                const xmlContent = res;
+    
+                const blob = new Blob([xmlContent], { type: 'application/xml' });
+    
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+    
+                link.download = 'CouponsXml.csv';
+    
+                link.click(); 
             }
         })
     };
