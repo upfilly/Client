@@ -4,11 +4,12 @@ import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
 import '../style.scss';
-// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-import MultiSelectValue from "@/app/components/common/MultiSelectValue";
+import MultiSelectDropdownData from "../MultiSelectDropdownData";
+
 import axios from "axios";
+import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -83,14 +84,14 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
             ApiClient.get(url).then((res) => {
                 if (res.success) {
                     // const data = res.data.data;
-                    const category = res.data.data.map((dat) => {
-                        return ({
-                            id: dat?._id,
-                            name: dat?.parent_cat_name,
-                            subCategories: dat?.subCategories
-                        })
-                    })
-                    setCategories(category);
+                    // const category = res.data.data.map((dat) => {
+                    //     return ({
+                    //         id: dat?._id,
+                    //         name: dat?.parent_cat_name,
+                    //         subCategories: dat?.subCategories
+                    //     })
+                    // })
+                    setCategories(res.data.data);
                 }
             });
         }
@@ -230,6 +231,13 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         />
                                     </div>
                                     {submitted && !form?.event_type && <div className="invalid-feedback d-block">{errors?.event_type}</div>}
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                <label>Select Category<span className="star">*</span></label>
+                                <div className="drops">
+                        <MultiSelectDropdownData data={categories}/>
+
+                        </div>
                                 </div>
 
                                 {form?.event_type?.includes("lead") && (
@@ -491,9 +499,12 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 <button type="submit" className="btn btn-primary">Save</button>
                             </div>
                         </div>
+                       
                     </div>
                 </div>
+             
             </form>
+            
         </Layout>
     </>
 }

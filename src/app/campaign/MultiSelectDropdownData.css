@@ -1,0 +1,113 @@
+/* MultiSelectDropdownData.css */
+
+/* Basic styling for the dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  /* Styling the dropdown button */
+  .dropdown-toggle {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  /* Dropdown menu that appears on button click */
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Styling for search input */
+  .search-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Individual dropdown items (categories, subcategories, etc.) */
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  
+  /* Style for the checkboxes */
+  .dropdown-item input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2); /* Increase checkbox size for better visibility */
+  }
+  
+  /* Labels for categories, subcategories, and sub-subcategories */
+  .dropdown-item label {
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* Subcategory and sub-subcategory styles (nested elements) */
+  .dropdown-item .nested {
+    padding-left: 20px;
+  }
+
+.dropdown_main input[type=checkbox], input[type=radio] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+.removeBg {
+    border: 1px solid #ccc !important;
+}
+  
+  /* Styling for the "Select All" checkbox */
+  #selectAll {
+    margin-right: 10px;
+  }
+  
+  #selectAll + label {
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for when the dropdown menu is opened */
+  .dropdown.open .dropdown-menu {
+    display: block;
+  }
+  
+  /* Styling for the dropdown when it's closed (hidden by default) */
+  /* .dropdown .dropdown-menu {
+    display: none;
+  } */
+  
+  /* Adjustments for mobile devices */
+  @media (max-width: 768px) {
+    .dropdown-menu {
+      max-height: 200px;
+    }
+  }
+  
+  
+  
+  
