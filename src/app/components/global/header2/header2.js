@@ -241,7 +241,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                     <Dropdown.Menu>
                                         <Dropdown.Item className="has-icon" onClick={() => history.push('/')}><i class="fa fa-dashboard mr-2 " /> Home</Dropdown.Item>
                                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2" /> Profile</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}> <i class="fa-solid fa-chart-simple mr-2"></i> MarketPlace</Dropdown.Item>
+                                        {/* <Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}> <i class="fa-solid fa-chart-simple mr-2"></i> MarketPlace</Dropdown.Item> */}
                                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
                                         <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout</Dropdown.Item>
 

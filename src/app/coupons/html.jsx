@@ -13,18 +13,15 @@ const Html = ({
     reset,
     add,
     user,
-    ChangeStatus,
     sorting,
     pageChange,
     deleteItem,
     filters,
     loaging,
     data,
-    isAllow,
     total,
     setFilter,
     filter,
-    statusChange,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
