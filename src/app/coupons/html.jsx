@@ -55,7 +55,7 @@ const Html = ({
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
     
-                link.download = 'CouponsXml.csv';
+                link.download = 'Coupons.csv';
     
                 link.click(); 
             }
