@@ -411,7 +411,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
 
                                 {/* Region Dropdown */}
                                 {form?.region?.length > 0 && <div className="col-md-12 mb-3">
-                                    <label>Countrys<span className="star">*</span></label>
+                                    <label>Countries<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
                                             id="subSubCategoryDropdown"

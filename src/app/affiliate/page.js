@@ -4,7 +4,6 @@ import react, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
 import crendentialModel from '@/models/credential.model';
-import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
 import SelectDropdown from '../components/common/SelectDropdown';
 import datepipeModel from '@/models/datepipemodel';
@@ -12,7 +11,7 @@ import ReactPaginate from 'react-paginate';
 import { useRouter } from 'next/navigation';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Swal from 'sweetalert2';
+import { Dropdown, DropdownButton, DropdownItem } from 'react-bootstrap';
 import methodModel from '../../methods/methods';
 import environment from '../../environment/index'
 import { Modal, Button, Form } from 'react-bootstrap';
@@ -175,6 +174,12 @@ export default function affilate() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (form?.campaign_id || form?.message) {
+      setSubmitted(true)
+      return
+    }
+
     const payload = {
       affiliate_id: selectedAffiliteid,
       brand_id: user?.id || user?._id,
@@ -231,7 +236,7 @@ export default function affilate() {
   };
 
   const getCategory = (p = {}) => {
-    let url = `categoryWithSub?page&count&search&cat_type=${categoryType?.map((dat)=>dat).join(",")}&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=${categoryType?.map((dat) => dat).join(",")}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data.data;
@@ -245,7 +250,7 @@ export default function affilate() {
   }, [])
 
   useEffect(() => {
-    getData({ page: 1 ,cat_type:categoryType?.map((dat)=>dat).join(","),category_id:selectedCategory?.map((dat)=>dat).join(","),sub_category_id:selectedSubCategory?.map((dat)=>dat).join(","),sub_child_category_id:selectedSubSubCategory?.map((dat)=>dat).join(",")})
+    getData({ page: 1, cat_type: categoryType?.map((dat) => dat).join(","), category_id: selectedCategory?.map((dat) => dat).join(","), sub_category_id: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category_id: selectedSubSubCategory?.map((dat) => dat).join(",") })
   }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory])
 
   useEffect(() => {
@@ -615,9 +620,23 @@ export default function affilate() {
                       Reset
                     </a>
                   </> : <></>}
-                  {(user?.role == 'brand' || permission('affiliate_group')) && <button disabled={selectedAffiliteid?.length <= 0} className="btn btn-primary btn_primary" onClick={() => { handleShow() }}>
-                    <i className='fa fa-plus fa_icns' title='Invite'></i>
-                  </button>}
+                  {(user?.role == 'brand' || permission('affiliate_group')) && (
+                    <>
+                      {selectedAffiliteid?.length > 1 && (
+                        <DropdownButton
+                          variant="primary"
+                          id="dropdown-basic-button"
+                          title={<>Action</>}
+                          className=""
+                        >
+                          <Dropdown.Item as="button" onClick={() => handleShow()}>
+                            Send multiple invites to affiliates
+                          </Dropdown.Item>
+                          {/* You can add more items here if needed */}
+                        </DropdownButton>
+                      )}
+                    </>
+                  )}
                 </div>
 
               </div>
