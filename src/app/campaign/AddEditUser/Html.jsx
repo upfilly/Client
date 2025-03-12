@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import methodModel from "@/methods/methods";
 import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
@@ -12,7 +12,7 @@ import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back ,errors,selectedItems, setSelectedItems}) => {
+const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back, errors, selectedItems, setSelectedItems }) => {
     const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
@@ -75,23 +75,21 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         setSubSubCategories([]);
     };
 
-    const getCategory = (categoryType) => {
-        let url = `categoryWithSub?page&count&search&cat_type=${categoryType}&status=active`;
-        if (categoryType) {
-            ApiClient.get(url).then((res) => {
-                if (res.success) {
-                    // const data = res.data.data;
-                    // const category = res.data.data.map((dat) => {
-                    //     return ({
-                    //         id: dat?._id,
-                    //         name: dat?.parent_cat_name,
-                    //         subCategories: dat?.subCategories
-                    //     })
-                    // })
-                    setCategories(res.data.data);
-                }
-            });
-        }
+    const getCategory = () => {
+        let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
+        ApiClient.get(url).then((res) => {
+            if (res.success) {
+                // const data = res.data.data;
+                // const category = res.data.data.map((dat) => {
+                //     return ({
+                //         id: dat?._id,
+                //         name: dat?.parent_cat_name,
+                //         subCategories: dat?.subCategories
+                //     })
+                // })
+                setCategories(res.data.data);
+            }
+        });
     };
 
     const handleCategoryChange = (selectedCategoryIds) => {
@@ -143,7 +141,9 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
         }
     };
 
-
+    useEffect(() => {
+        getCategory()
+    }, [])
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
@@ -307,7 +307,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 </div>
 
                                 {/* Category Type Dropdown */}
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Category Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
@@ -323,14 +323,15 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                         />
                                     </div>
                                     {submitted && !form?.category_type && <div className="invalid-feedback d-block">{errors?.category_type}</div>}
-                                </div>
+                                </div> */}
 
                                 <div className="col-md-6 mb-3">
                                     <label>Select Category<span className="star">*</span></label>
                                     <div className="drops">
-                                        <MultiSelectDropdownData data={categories} 
-                                        selectedItems={selectedItems} 
-                                        setSelectedItems={setSelectedItems}
+                                        <MultiSelectDropdownData
+                                            data={categories}
+                                            selectedItems={selectedItems}
+                                            setSelectedItems={setSelectedItems}
                                         />
                                     </div>
                                 </div>
@@ -496,12 +497,12 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back 
                                 <button type="submit" className="btn btn-primary">Save</button>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
-             
+
             </form>
-            
+
         </Layout>
     </>
 }

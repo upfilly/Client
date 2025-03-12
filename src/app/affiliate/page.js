@@ -127,7 +127,7 @@ export default function affilate() {
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
     { id: 'property_types', name: 'Property Types' },
-    { id: 'advertiser_categories', name: 'Advertiser Categories' },
+    // { id: 'advertiser_categories', name: 'Advertiser Categories' },
   ]
 
   const handleCountChange = (count) => {

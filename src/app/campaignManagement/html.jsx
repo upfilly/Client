@@ -72,7 +72,7 @@ const Html = ({
       }
 
     const getCategory = (p = {}) => {
-        let url = `categoryWithSub?page&count&search&cat_type=${categoryType?.map((dat) => dat).join(",")}&status=active`;
+        let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
         ApiClient.get(url).then((res) => {
             if (res.success) {
                 const data = res.data.data;
@@ -407,7 +407,7 @@ const Html = ({
                                                             <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
                                                         </button>
                                                     </h2>
-                                                    <div id="collapsebxone" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                                    {/* <div id="collapsebxone" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                                         <div className="accordion-body">
                                                             <ul className="filter_ullist">
                                                                 {categoryTypes.map(category1 => (
@@ -428,7 +428,7 @@ const Html = ({
                                                                 ))}
                                                             </ul>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
 
