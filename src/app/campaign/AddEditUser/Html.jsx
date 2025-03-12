@@ -327,7 +327,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
 
                                 <div className="col-md-6 mb-3">
                                     <label>Select Category<span className="star">*</span></label>
-                                    <div className="drops">
+                                    <div className="drops category-input">
                                         <MultiSelectDropdownData
                                             data={categories}
                                             selectedItems={selectedItems}

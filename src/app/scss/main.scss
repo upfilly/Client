@@ -30,6 +30,23 @@ b {
   object-fit: contain;
 }
 
+
+.category-input{
+  span.dropdown-toggle {
+    background: #fff;
+    border: 1px solid #ccc;
+    color: grey;
+    border-radius: 50px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dropdown-menu {
+    padding: 15px;
+}
+}
+
 // .btn:hover {
 //   border: none !important;
 //   color: #fff !important;
