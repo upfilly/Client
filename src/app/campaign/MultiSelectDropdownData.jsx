@@ -44,7 +44,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
         newSubCategories.push(subcategoryId);
         const subCategory = data
           .flatMap((item) => item.subCategories)
-          .find((item) => item.id === subCategory);
+          .find((item) => item.id === subcategoryId);
         subCategory.subchildcategory.forEach((subSubCategory) => {
           newSubSubCategories.push(subSubCategory._id);
         });
