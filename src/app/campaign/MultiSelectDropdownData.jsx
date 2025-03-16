@@ -97,7 +97,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
             checked={selectedItems.subSubCategories.includes(subSub._id)}
             onChange={(e) => handleSelection(categoryId, subcategoryId, subSub._id, e.target.checked)}
           />
-          <label>{subSub.name}</label>
+          <label className="ml-2">{subSub.name}</label>
         </div>
       ))}
     </div>

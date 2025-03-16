@@ -136,6 +136,15 @@ input#statusDropdown_input {
   }
 }
 
+.rdrStaticRangeLabel {
+  display: block;
+  outline: 0;
+  line-height: 18px;
+  padding: 10px 20px;
+  text-align: left;
+  color: black;
+}
+
 
 /* Make the charts responsive */
 @media screen and (max-width: 768px) {
@@ -143,3 +152,22 @@ input#statusDropdown_input {
       grid-template-columns: 1fr; /* One column on smaller screens */
   }
 }
+
+.rdrDateDisplay {
+  display: flex;
+  align-items: center;
+}
+
+.rdrDateInput:first-of-type::after {
+  content: '→'; /* This inserts the arrow */
+  position: absolute;
+  top: 50%;
+  color: #3d91ff; /* Adjust the arrow color */
+  transform: translateY(-50%);
+}
+
+.rdrDateInput {
+  position: relative;
+  margin: 2px;
+}
+
