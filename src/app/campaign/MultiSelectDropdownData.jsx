@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MultiSelectDropdownData.css";
 
 const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
@@ -28,34 +28,99 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
       let newCategories = [...prevState.categories];
       let newSubCategories = [...prevState.subCategories];
       let newSubSubCategories = [...prevState.subSubCategories];
-
-      if (categoryId && checked) {
-        newCategories.push(categoryId);
-        const subCategoriesForCategory = data.find((item) => item._id === categoryId).subCategories;
-        subCategoriesForCategory.forEach((subCategory) => {
-          newSubCategories.push(subCategory.id);
-          subCategory.subchildcategory.forEach((subSubCategory) => {
-            newSubSubCategories.push(subSubCategory._id);
-          });
+  
+      if (categoryId && !subcategoryId && !subSubCategoryId) {
+        if (checked) {
+          newCategories.push(categoryId);
+          const categoryData = data.find((item) => item._id === categoryId);
+          if (categoryData && categoryData.subCategories) {
+            categoryData.subCategories.forEach((subCategory) => {
+              if (!newSubCategories.includes(subCategory.id)) {
+                newSubCategories.push(subCategory.id);
+              }
+              if (subCategory.subchildcategory) {
+                subCategory.subchildcategory.forEach((subSubCategory) => {
+                  if (!newSubSubCategories.includes(subSubCategory._id)) {
+                    newSubSubCategories.push(subSubCategory._id);
+                  }
+                });
+              }
+            });
+          }
+        } else {
+          newCategories = newCategories.filter((item) => item !== categoryId);
+          const categoryData = data.find((item) => item._id === categoryId);
+          if (categoryData && categoryData.subCategories) {
+            categoryData.subCategories.forEach((subCategory) => {
+              newSubCategories = newSubCategories.filter((item) => item !== subCategory.id);
+              if (subCategory.subchildcategory) {
+                subCategory.subchildcategory.forEach((subSubCategory) => {
+                  newSubSubCategories = newSubSubCategories.filter((item) => item !== subSubCategory._id);
+                });
+              }
+            });
+          }
+        }
+      } else if (subSubCategoryId) {
+        if (checked) {
+          newSubSubCategories.push(subSubCategoryId);
+        } else {
+          newSubSubCategories = newSubSubCategories.filter((item) => item !== subSubCategoryId);
+        }
+      } else if (subcategoryId) {
+        if (checked) {
+          newSubCategories.push(subcategoryId);
+          const subCategoryData = data
+            .flatMap((item) => item.subCategories)
+            .find((item) => item.id === subcategoryId);
+          if (subCategoryData && subCategoryData.subchildcategory) {
+            subCategoryData.subchildcategory.forEach((subSub) => {
+              if (!newSubSubCategories.includes(subSub._id)) {
+                newSubSubCategories.push(subSub._id);
+              }
+            });
+          }
+        } else {
+          newSubCategories = newSubCategories.filter((item) => item !== subcategoryId);
+          const subCategoryData = data
+            .flatMap((item) => item.subCategories)
+            .find((item) => item.id === subcategoryId);
+          if (subCategoryData && subCategoryData.subchildcategory) {
+            subCategoryData.subchildcategory.forEach((subSub) => {
+              newSubSubCategories = newSubSubCategories.filter((item) => item !== subSub._id);
+            });
+          }
+        }
+      }
+  
+      // Logic to automatically select category if all subcategories are selected
+      data.forEach((category) => {
+        const allSubSelected = category.subCategories.every(
+          (sub) =>
+            newSubCategories.includes(sub.id) &&
+            sub.subchildcategory.every((subSub) => newSubSubCategories.includes(subSub._id))
+        );
+        if (allSubSelected && !newCategories.includes(category._id)) {
+          newCategories.push(category._id);
+        } else if (!allSubSelected && newCategories.includes(category._id)) {
+          newCategories = newCategories.filter((id) => id !== category._id);
+        }
+      });
+  
+      // Logic to automatically select subcategory if all subsubcategories are selected
+      data
+        .flatMap((category) => category.subCategories)
+        .forEach((subCategory) => {
+          if (subCategory.subchildcategory) {
+            const allSubSubSelected = subCategory.subchildcategory.every((subSub) => newSubSubCategories.includes(subSub._id));
+            if (allSubSubSelected && !newSubCategories.includes(subCategory.id)) {
+              newSubCategories.push(subCategory.id);
+            } else if (!allSubSubSelected && newSubCategories.includes(subCategory.id)) {
+              newSubCategories = newSubCategories.filter((id) => id !== subCategory.id);
+            }
+          }
         });
-      }
-
-      if (subcategoryId && checked) {
-        newSubCategories.push(subcategoryId);
-        const subCategory = data
-          .flatMap((item) => item.subCategories)
-          .find((item) => item.id === subcategoryId);
-        subCategory.subchildcategory.forEach((subSubCategory) => {
-          newSubSubCategories.push(subSubCategory._id);
-        });
-      }
-
-      if (!checked) {
-        if (categoryId) newCategories = newCategories.filter((item) => item !== categoryId);
-        if (subcategoryId) newSubCategories = newSubCategories.filter((item) => item !== subcategoryId);
-        if (subSubCategoryId) newSubSubCategories = newSubSubCategories.filter((item) => item !== subSubCategoryId);
-      }
-
+  
       return { categories: newCategories, subCategories: newSubCategories, subSubCategories: newSubSubCategories };
     });
   };
@@ -79,23 +144,35 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
     }
   };
 
-  // Remove All Handler
   const handleRemoveAll = () => {
     setSelectedItems({ categories: [], subCategories: [], subSubCategories: [] });
   };
 
-  // Search Handler
   const handleSearch = (e) => setSearchTerm(e.target.value.toLowerCase());
 
-  // Render Sub-Subcategories
+  // Logic to check if some subcategories or subsubcategories are selected
+  const isIndeterminate = (parentId, type) => {
+    let selected = [];
+    if (type === 'category') {
+      selected = data.find((category) => category._id === parentId)?.subCategories || [];
+    } else if (type === 'subcategory') {
+      selected = data
+        .flatMap((category) => category.subCategories)
+        .find((subcategory) => subcategory.id === parentId)?.subchildcategory || [];
+    }
+
+    return selected.some((item) => selectedItems.subSubCategories.includes(item._id)) && !selected.every((item) => selectedItems.subSubCategories.includes(item._id));
+  };
+
   const renderSubSubcategories = (categoryId, subcategoryId, subSubCategories) => (
     <div className={`sub-subcategory-container ${expandedSubCategories[subcategoryId] ? "open" : ""}`} style={{ marginLeft: "30px" }}>
       {subSubCategories.map((subSub) => (
-        <div key={subSub._id} className="">
+        <div key={subSub._id} className="ml-5">
           <input
+            className="form-check-input"
             type="checkbox"
             checked={selectedItems.subSubCategories.includes(subSub._id)}
-            onChange={(e) => handleSelection(categoryId, subcategoryId, subSub._id, e.target.checked)}
+            onChange={(e) => handleSelection("", subcategoryId, subSub._id, e.target.checked)}
           />
           <label className="ml-2">{subSub.name}</label>
         </div>
@@ -103,46 +180,41 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
     </div>
   );
 
-  // Render Subcategories
   const renderSubcategories = (categoryId, subCategories) => (
     <div className="subcategory-dropdown">
       {subCategories.map((sub) => (
         <div key={sub.id} className="subcategory-container" style={{ marginLeft: "15px" }}>
-          <div className="dropdown-item" onClick={() => toggleSubCategory(sub.id)}>
+          <div className="dropdown-item" >
             <input
               type="checkbox"
               checked={selectedItems.subCategories.includes(sub.id)}
-              onChange={(e) => handleSelection(categoryId, sub.id, "", e.target.checked)}
+              indeterminate={isIndeterminate(categoryId, 'category')}
+              onChange={(e) => handleSelection("", sub.id, "", e.target.checked)}
             />
-            <label>{sub.name}</label>
+            <label onClick={() => toggleSubCategory(sub.id)}>{sub.name}</label>
           </div>
 
-          {/* Render Sub-Subcategories */}
           {expandedSubCategories[sub.id] && renderSubSubcategories(categoryId, sub.id, sub.subchildcategory)}
         </div>
       ))}
     </div>
   );
 
-  // Render Categories
   const renderCategories = () => {
     return data
       .filter((cat) => cat.parent_cat_name.toLowerCase().includes(searchTerm))
       .map((category) => (
         <div key={category._id} className="category-container">
-          <div className="dropdown-item" onClick={() => toggleCategory(category._id)}>
+          <div className="dropdown-item" >
             <input
               type="checkbox"
               checked={selectedItems.categories.includes(category._id)}
+              indeterminate={isIndeterminate(category._id, 'subcategory')}
               onChange={(e) => handleSelection(category._id, "", "", e.target.checked)}
             />
-            <label>{category.parent_cat_name}</label>
-            {/* {category.subCategories.length > 0 && (
-              <span className="toggle-icon">{expandedCategories[category._id] ? "▲" : "▼"}</span>
-            )} */}
+            <label onClick={() => toggleCategory(category._id)}>{category.parent_cat_name}</label>
           </div>
 
-          {/* Render Subcategories */}
           {expandedCategories[category._id] && renderSubcategories(category._id, category.subCategories)}
         </div>
       ));
@@ -156,12 +228,11 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
       {isOpen && (
         <div className="dropdown-menu">
-          {/* Search Bar */}
           <input type="text" placeholder="Search Categories..." value={searchTerm} onChange={handleSearch} className="search-input" />
 
-          {/* Select & Remove Options */}
           <div className="select-actions">
             <input
+              className="form-check-input"
               type="checkbox"
               id="selectAll"
               onChange={(e) => handleSelectAll(e.target.checked)}
