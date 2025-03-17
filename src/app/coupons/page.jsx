@@ -14,7 +14,7 @@ import Swal from 'sweetalert2'
 const Coupons = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:''})
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
@@ -42,7 +42,7 @@ const Coupons = () => {
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data.data)
-                setTotal(res.total)
+                setTotal(res?.data?.total_count)
             }
             setLoader(false)
         })

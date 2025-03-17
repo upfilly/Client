@@ -6,6 +6,7 @@ import methodModel from '../../methods/methods';
 import datepipeModel from '../../models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
+import SelectDropdown from '../components/common/SelectDropdown';
 
 const Html = ({
     view,
@@ -22,6 +23,7 @@ const Html = ({
     total,
     setFilter,
     filter,
+    ChangeStatus
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -90,6 +92,17 @@ const Html = ({
                                 Add Coupon
                             </a>
                         </>}
+                        <SelectDropdown
+                            id="statusDropdown" className="mr-2 "
+                            displayValue="name"
+                            placeholder="All Status"
+                            intialValue={filters?.status}
+                            result={e => { ChangeStatus(e.value) }}
+                            options={[
+                                { id: 'Enabled', name: 'Enabled' },
+                                { id: 'Expired', name: 'Expired' },
+                            ]}
+                        />
 
                         {filters.status ? <>
                             <a className="btn btn-primary" onClick={e => reset()}>
@@ -171,7 +184,7 @@ const Html = ({
                                         </td>
                                         <td className='table_dats'>
                                             <div className={`user_hours`}>
-                                                <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}>
+                                                <span className={itm?.status == "Enabled" ? 'contract' : itm?.status == "Expired" ? 'inactive' : 'pending_status'}>
                                                     {itm.status}
                                                 </span>
                                             </div>
