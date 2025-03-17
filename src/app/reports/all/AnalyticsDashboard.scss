@@ -159,7 +159,7 @@ input#statusDropdown_input {
 }
 
 .rdrDateInput:first-of-type::after {
-  content: '→'; /* This inserts the arrow */
+  content: '->'; /* This inserts the arrow */
   position: absolute;
   top: 50%;
   color: #3d91ff; /* Adjust the arrow color */
