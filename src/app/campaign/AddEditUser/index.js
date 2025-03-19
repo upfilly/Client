@@ -23,9 +23,9 @@ const AddEditUser = () => {
         name: "",
         // amount: "",
         description: "",
-        images: [],
+        // images: [],
         documents: [],
-        videos: [],
+        // videos: [],
         affiliate_id: null,
         status: "",
         access_type: "",
@@ -40,7 +40,7 @@ const AddEditUser = () => {
     const [errors, setErrors] = useState({});
     const [detail, setDetail] = useState()
 
-    console.log(errors, "nmnmnmnmn")
+    console.log(selectedItems, "nmnmnmnmn")
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
@@ -52,10 +52,10 @@ const AddEditUser = () => {
         if (!form.access_type) formErrors.access_type = 'Access Type is required';
         if (!form.event_type || form.event_type.length === 0) formErrors.event_type = 'Event Type is required';
         if (form.event_type?.includes("lead") && !form.lead_amount) formErrors.lead_amount = 'Lead Amount is required';
-        // if (!form.commission_type) formErrors.commission_type = 'Amount/Percentage Type is required';
+        if (!form.campaign_type) formErrors.campaign_type = 'Campaign Type is required';
         // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
         // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
-        if (!form.category_type) formErrors.category_type = 'Category Type is required';
+        // if (!form.category_type) formErrors.category_type = 'Category Type is required';
         // if (!form.category) formErrors.category = 'Category is required';
         if (!form.description) formErrors.description = 'Description is required';
         if (!form.region) formErrors.region = 'Region is required';
@@ -151,26 +151,51 @@ const AddEditUser = () => {
         }
     }
 
+
+    console.log(form,"klklklklklklkl")
+
     useEffect(() => {
         setSubmitted(false)
-
         if (id) {
             loader(true)
             ApiClient.get("campaign", { id }).then(res => {
                 if (res.success) {
-                    let value = res.data
+                    const value = res.data
+                    console.log(value, "oopopopopop")
                     setDetail(value)
-                    let payload = { ...defaultvalue };
-                    let oarr = Object.keys(defaultvalue);
+                    // let payload = { ...defaultvalue };
+                    // let oarr = Object.keys(defaultvalue);
 
-                    oarr.forEach((itm) => {
-                        if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
-                            payload[itm] = value[itm].id.toString();
-                        } else {
-                            payload[itm] = value[itm] || "";
-                        }
-                    });
-                    setform({ ...payload })
+                    // oarr.forEach((itm) => {
+                    //     if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
+                    //         payload[itm] = value[itm].id.toString();
+                    //     } else {
+                    //         payload[itm] = value[itm] || "";
+                    //     }
+                    // });
+                    setform({
+                        id: value?.id || value?._id,
+                        name: value?.name,
+                        isDefault:value?.isDefault,
+                        commission:value?.commission,
+                        commission_type:value?.commission_type,
+                        lead_amount:value?.lead_amount,
+                        access_type: value?.access_type,
+                        description: value?.description,
+                        documents: value?.documents,
+                        affiliate_id: value?.affiliate_id,
+                        status: value?.status,
+                        access_type: value?.access_type,
+                        event_type: value?.event_type,
+                        region:value?.region,
+                        region_continents:value?.region_continents
+
+                    })
+                    setSelectedItems({
+                        categories: value?.category?.map((dat)=>dat?.id),
+                        subCategories: value?.sub_category?.map((dat)=>dat?.id),
+                        subSubCategories: value?.sub_child_category?.map((dat)=>dat?.id),
+                    })
                 }
                 loader(false)
             })

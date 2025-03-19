@@ -230,6 +230,28 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                     {submitted && !form?.event_type && <div className="invalid-feedback d-block">{errors?.event_type}</div>}
                                 </div>
 
+                                <div className="col-md-6 mb-3">
+                                    <label>Campaign Type:<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <MultiSelectValue
+                                            id="statusDropdown"
+                                            singleSelect={true}
+                                            displayValue="name"
+                                            placeholder="Select Type"
+                                            intialValue={form?.campaign_type}
+                                            disabled={!id ? false : true}
+                                            result={e => {
+                                                setform({ ...form, campaign_type: e.value });
+                                            }}
+                                            options={[
+                                                { id: 'manual', name: 'Manual' },
+                                                { id: 'Automatic', name: 'Automatic' },
+                                            ]}
+                                        />
+                                    </div>
+                                    {submitted && !form?.campaign_type && <div className="invalid-feedback d-block">{errors?.campaign_type}</div>}
+                                </div>
+
                                 {form?.event_type?.includes("lead") && (
                                     <div className="col-md-6 mb-3">
                                         <label>Lead Amount<span className="star">*</span></label>
@@ -237,6 +259,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                             type="number"
                                             className="form-control"
                                             value={form?.lead_amount || ''}
+                                            disabled={!id ? false : true}
                                             onChange={e => setform({ ...form, lead_amount: e.target.value })}
                                             placeholder="Enter Lead Amount"
                                         />
@@ -253,6 +276,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                             displayValue="name"
                                             placeholder="Select Amount or Percentage"
                                             intialValue={form?.commission_type}
+                                            disabled={!id ? false : true}
                                             result={e => {
                                                 setform({ ...form, commission_type: e.value });
                                             }}
@@ -270,6 +294,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                             type="number"
                                             className="form-control"
                                             value={form?.commission || ''}
+                                            disabled={!id ? false : true}
                                             onChange={e => setform({ ...form, commission: e.target.value })}
                                             placeholder="Enter Percentage"
                                         />
@@ -284,6 +309,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                             type="number"
                                             className="form-control"
                                             value={form?.commission || ''}
+                                            disabled={!id ? false : true}
                                             onChange={e => setform({ ...form, commission: e.target.value })}
                                             placeholder="Enter Amount"
                                         />
@@ -434,9 +460,9 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                     {true && <DynamicReactQuill
                                         theme="snow"
                                         value={form?.description ? form?.description : ''}
-                                        onChange={(newValue, editor) => {
-                                            setform({ ...form, description: newValue })
-                                        }}
+                                        onChange={(newValue) => setform((prev) => ({ ...prev, description: newValue }))
+                                            // setform({ ...form, description: newValue })
+                                        }
                                         className='tuncketcls'
                                         modules={{
                                             toolbar: [
