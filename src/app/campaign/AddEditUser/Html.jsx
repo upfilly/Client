@@ -245,7 +245,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                             }}
                                             options={[
                                                 { id: 'manual', name: 'Manual' },
-                                                { id: 'Automatic', name: 'Automatic' },
+                                                { id: 'automatic', name: 'Automatic' },
                                             ]}
                                         />
                                     </div>

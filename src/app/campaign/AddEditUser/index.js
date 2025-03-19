@@ -84,6 +84,7 @@ const AddEditUser = () => {
             ...form,
             commission_type:"percentage",
             commission:"1",
+            campaign_type:form?.campaign_type?.[0],
             category: selectedItems?.categories,
             sub_category: selectedItems?.subCategories,
             sub_child_category: selectedItems?.subSubCategories,
@@ -99,6 +100,10 @@ const AddEditUser = () => {
             delete value.amount
             delete value.event_type
             delete value.brand_id
+            delete value.commission
+            delete value.commission_type
+            delete value.lead_amount
+            delete value.region_continents
         } else {
             delete value.id
         }
