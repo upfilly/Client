@@ -175,7 +175,7 @@ export default function affilate() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (form?.campaign_id || form?.message) {
+    if (!form?.campaign_id || !form?.message) {
       setSubmitted(true)
       return
     }
