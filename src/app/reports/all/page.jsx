@@ -23,8 +23,8 @@ export default function AnalyticsDashboard() {
             key: 'selection1'
         },
         selection2: {
-            startDate: addDays(new Date(), 1),
-            endDate: addDays(new Date(), 7),
+            startDate: addDays(new Date(), -31),
+            endDate: addDays(new Date(), -47),
             key: 'selection2'
         }
     });
@@ -192,6 +192,7 @@ export default function AnalyticsDashboard() {
                                 showSelectionPreview={true}
                                 moveRangeOnFirstSelection={false}
                                 months={2}
+                                maxDate={new Date()}
                                 ranges={[state.selection1, state.selection2]}
                                 direction="horizontal"
                                 ariaLabels={{
