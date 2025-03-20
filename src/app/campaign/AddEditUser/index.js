@@ -17,6 +17,9 @@ const AddEditUser = () => {
         subCategories: [],
         subSubCategories: [],
     });
+    const [selectedRegionItems, setSelectedRegionItems]= useState({
+        regions: [], countries: []
+    })
     const defaultvalue = addCampaignType
     const [form, setform] = useState({
         id: "",
@@ -247,6 +250,8 @@ const AddEditUser = () => {
             validate={validate}
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
+            selectedRegionItems={selectedRegionItems} 
+            setSelectedRegionItems={setSelectedRegionItems}
         />
     </>
 }

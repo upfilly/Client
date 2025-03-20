@@ -196,32 +196,60 @@ const SendPreviousRequest = async (campaign,brand) => {
     }
   };
 
-  const sendProposal = (brand_id) => {
-    Swal.fire({
+  // const sendProposal = (brand_id) => {
+  //   Swal.fire({
    
+  //     html: `
+  //          <h2 style="" class="modal-title-main">Send proposal</h2>
+  //           <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Proposal Description :<p/>
+  //             <textarea type="text" id="description" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
+  //           `,  
+  //     // icon: 'success',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Send',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       const descriptionData = document.getElementById('description').value;
+
+  //       if (descriptionData.trim() === '') {
+  //         Swal.fire('Error', 'Please enter a description', 'error');
+  //         return;
+  //       }
+
+  //       loader(true);
+  //       ApiClient.post('proposal', { "brand_id": brand_id, description: descriptionData }).then((res) => {
+  //         if (res.success) {
+  //           toast.success(res.message)
+  //           getData({ page: filters?.page + 1 });
+  //         }
+  //         loader(false);
+  //       });
+  //     }
+  //   });
+  // }
+
+  const sendRequest = (brand_id, campaign_id) => {
+    Swal.fire({
       html: `
-           <h2 style="" class="modal-title-main">Send proposal</h2>
-            <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Proposal Description :<p/>
-              <textarea type="text" id="description" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
-            `,  
-      // icon: 'success',
+        <h2 class="modal-title-main">Send Request</h2>
+        <p class="text-center mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Are you sure you want to send the request?</p>
+      `,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Send',
     }).then((result) => {
       if (result.isConfirmed) {
-        const descriptionData = document.getElementById('description').value;
-
-        if (descriptionData.trim() === '') {
-          Swal.fire('Error', 'Please enter a description', 'error');
-          return;
-        }
-
         loader(true);
-        ApiClient.post('proposal', { "brand_id": brand_id, description: descriptionData }).then((res) => {
+        ApiClient.post('campaign-request', {
+          "campaign_id": campaign_id,
+          "brand_id": brand_id,
+          "affiliate_id": user?.id || user?._id
+        }).then((res) => {
           if (res.success) {
-            toast.success(res.message)
+            toast.success(res.message);
             getData({ page: filters?.page + 1 });
           }
           loader(false);
@@ -229,6 +257,7 @@ const SendPreviousRequest = async (campaign,brand) => {
       }
     });
   }
+  
 
   const view = (id) => {
     history.push("/campaignManagement/detail/" + id)
@@ -301,7 +330,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     total={total}
     statusChange={statusChange}
     sorting={sorting}
-    sendProposal={sendProposal}
+    // sendProposal={sendProposal}
     // Tracklogin={Tracklogin}
     previousdata={previousdata}
     previoustotal={previoustotal}
@@ -309,6 +338,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     pagePreviousChange={pagePreviousChange}
     SendPreviousRequest={SendPreviousRequest}
     getData={getData}
+    sendRequest={sendRequest}
   />
   </>;
 };

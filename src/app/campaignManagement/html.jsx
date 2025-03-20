@@ -26,6 +26,7 @@ const Html = ({
     previoustotal,
     getData,
     SendPreviousRequest,
+    sendRequest,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false);
@@ -244,7 +245,7 @@ const Html = ({
                                                             </td>
                                                             {itm?.brand_detail?.fullName && <td className='table_dats'>{itm?.brand_detail?.fullName}</td>}
                                                             {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
-                                                            <td className='table_dats'>{itm?.campaign_detail?.commission} {itm?.campaign_detail?.commission_type == "percentage" ? "%" : "$"}</td>
+                                                            <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : `$${itm?.campaign_detail?.commission}`}</td>
                                                             {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
                                                                 <span className={!itm?.isActive ? "inactive" : "contract"}>
@@ -256,7 +257,7 @@ const Html = ({
                                                             <td className='table_dats d-flex align-items-center'>
                                                                 {itm?.status == 'pending' ? (
                                                                     <div className='d-flex align-items-center'>
-                                                                        <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                                        <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                             <i className='fa fa-check'></i>
                                                                         </button>
                                                                         <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
@@ -401,12 +402,12 @@ const Html = ({
                                             {/* Category Type Filter */}
                                             <div className="accordion" id="accordionExample">
                                                 <div className="accordion-item">
-                                                    <h2 className="accordion-header">
+                                                    {/* <h2 className="accordion-header">
                                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
                                                             <b>Select Category Type</b>
                                                             <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
                                                         </button>
-                                                    </h2>
+                                                    </h2> */}
                                                     {/* <div id="collapsebxone" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                                         <div className="accordion-body">
                                                             <ul className="filter_ullist">

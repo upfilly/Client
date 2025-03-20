@@ -7,12 +7,13 @@ import '../style.scss';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import MultiSelectDropdownData from "../MultiSelectDropdownData";
+import MultiSelectRegionDropdown from "../MultiSelectRegion"
 import axios from "axios";
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back, errors, selectedItems, setSelectedItems }) => {
+const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionItems, handleSubmit, setform, submitted, back, errors, selectedItems, setSelectedItems }) => {
     const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
@@ -416,7 +417,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                 </div>} */}
 
                                 {/* Region Dropdown */}
-                                <div className="col-md-6 mb-3">
+                                {/* <div className="col-md-6 mb-3">
                                     <label>Region<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -434,10 +435,17 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                         />
                                     </div>
                                     {submitted && !form?.region && <div className="invalid-feedback d-block">{errors?.region}</div>}
-                                </div>
+                                </div> */}
+                                <div className="col-md-6 mb-3">
+                                    <label>Select Country<span className="star">*</span></label>
+                                    <div className="drops category-input">
+                                        <MultiSelectRegionDropdown
+                                            selectedItems={selectedRegionItems}
+                                            setSelectedItems={setSelectedRegionItems}
+                                        /></div></div>
 
                                 {/* Region Dropdown */}
-                                {form?.region?.length > 0 && <div className="col-md-12 mb-3">
+                                {/* {form?.region?.length > 0 && <div className="col-md-12 mb-3">
                                     <label>Countries<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
@@ -453,7 +461,7 @@ const Html = ({ id, form, affiliateData, handleSubmit, setform, submitted, back,
                                         />
                                     </div>
                                     {submitted && !form?.region_continents && <div className="invalid-feedback d-block">{errors?.region_continents}</div>}
-                                </div>}
+                                </div>} */}
 
                                 <div className="col-md-12 mb-3">
                                     <label>Description<span className="star">*</span></label>
