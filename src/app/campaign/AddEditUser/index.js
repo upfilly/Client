@@ -43,7 +43,7 @@ const AddEditUser = () => {
     const [errors, setErrors] = useState({});
     const [detail, setDetail] = useState()
 
-    console.log(selectedItems, "nmnmnmnmn")
+    console.log(selectedRegionItems, "nmnmnmnmn")
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
@@ -61,8 +61,8 @@ const AddEditUser = () => {
         // if (!form.category_type) formErrors.category_type = 'Category Type is required';
         // if (!form.category) formErrors.category = 'Category is required';
         if (!form.description) formErrors.description = 'Description is required';
-        if (!form.region) formErrors.region = 'Region is required';
-        if (!form.region_continents || form.region_continents.length === 0) formErrors.region_continents = 'Countries are required';
+        if (selectedRegionItems?.regions.length == 0) formErrors.region = 'Country is required';
+        if (selectedItems?.categories.length == 0) formErrors.categories = 'Categories is required';
 
         setErrors(formErrors);
         return Object.keys(formErrors).length === 0;
@@ -74,6 +74,7 @@ const AddEditUser = () => {
         // if (!form?.description || !form?.name || !form?.event_type) {
 
         // }
+        console.log(validate(),"opoppop")
 
         if (!validate()) {
             setSubmitted(true)
@@ -85,8 +86,10 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
-            commission_type:"percentage",
-            commission:"1",
+            // commission_type:"percentage",
+            // commission:"1",
+            region:selectedRegionItems?.regions,
+            region_continents:selectedRegionItems?.countries,
             campaign_type:form?.campaign_type?.[0],
             category: selectedItems?.categories,
             sub_category: selectedItems?.subCategories,

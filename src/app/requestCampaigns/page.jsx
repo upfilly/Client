@@ -92,11 +92,11 @@ const Users = () => {
     getData({ status: e, page: 1 })
   }
 
-  const statusChange = (itm, id) => {
+  const statusChange = (itm,affiliate_id, id) => {
     if (itm === 'accepted') {
       // Handle the case when the campaign is accepted
       loader(true);
-      ApiClient.put('campaign-request/change-status', { status: itm, id: id ,id:id}).then((res) => {
+      ApiClient.put('campaign-request/change-status', { status: itm,affiliate_id:affiliate_id, id: id}).then((res) => {
         if (res.success) {
 
           toast.success(res.message)

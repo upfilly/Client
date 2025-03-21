@@ -56,11 +56,11 @@ const Html = ({
 
     const reset = () => {
         let filter = {
-          status: '',
-          role: '',
-          search: '',
-          page: 1,
-          count: 5
+            status: '',
+            role: '',
+            search: '',
+            page: 1,
+            count: 5
         }
         setFilter({ ...filters, ...filter })
         setSelectedCategory([]);
@@ -70,7 +70,7 @@ const Html = ({
         setSelectedCountries([]);
         getData({ ...filter })
         // dispatch(search_success(''))
-      }
+    }
 
     const getCategory = (p = {}) => {
         let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
@@ -210,9 +210,13 @@ const Html = ({
                                                     </th>
                                                     <th scope="col" className="table_data" onClick={e => sorting('name')}>
                                                         Brand Name {filters?.sorder === "asc" ? "↑" : "↓"}
+
+                                                    </th>
+                                                    <th scope="col" className="table_data" onClick={e => sorting('name')}>
+                                                        Campaign Type
                                                     </th>
                                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
-                                                        Event Type {filters?.sorder === "asc" ? "↑" : "↓"}
+                                                        Event Type
                                                     </th>
                                                     <th scope="col" className='table_data'>Commission</th>
                                                     <th scope="col" className='table_data'>Status</th>
@@ -244,12 +248,13 @@ const Html = ({
                                                                 </div>
                                                             </td>
                                                             {itm?.brand_detail?.fullName && <td className='table_dats'>{itm?.brand_detail?.fullName}</td>}
+                                                            {<td className='table_dats'>{itm?.campaign_type || "--"}</td>}
                                                             {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
                                                             <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : `$${itm?.campaign_detail?.commission}`}</td>
                                                             {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
                                                                 <span className={!itm?.isActive ? "inactive" : "contract"}>
-                                                                    {!itm?.isActive ? 'Not Joined' : 'Joined'}
+                                                                    {!itm?.isActive ? 'Pending' : 'Joined'}
                                                                 </span>
                                                             </span></td>
                                                             <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
@@ -257,16 +262,17 @@ const Html = ({
                                                             <td className='table_dats d-flex align-items-center'>
                                                                 {itm?.status == 'pending' ? (
                                                                     <div className='d-flex align-items-center'>
-                                                                        <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                                        <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?._id,itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                             <i className='fa fa-check'></i>
                                                                         </button>
                                                                         <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                                                             <i className='fa fa-times'></i>
                                                                         </button>
                                                                     </div>
-                                                                ) : itm?.status == 'rejected' ? (
-                                                                    <div className="btn btn-primary mr-2">Rejected</div>
-                                                                ) : (
+                                                                ) : itm?.status == 'rejected' ? 
+                                                                    <div className="btn btn-primary mr-2">Rejected</div>:
+                                                                    itm?.status == 'requested' ?
+                                                                    <div className="btn btn-primary mr-2">Request Sent</div>: (
                                                                     <div className="btn btn-primary mr-2">Accepted</div>
                                                                 )}
                                                                 <button className='btn btn-primary btn_actions'
@@ -561,7 +567,7 @@ const Html = ({
                                                             <ul className="filter_ullist">
 
                                                                 <MultiSelectValue
-                                                                className="select-c"
+                                                                    className="select-c"
                                                                     id="subSubCategoryDropdown"
                                                                     displayValue="label"
                                                                     placeholder="Select Country"

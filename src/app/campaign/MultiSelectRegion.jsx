@@ -63,8 +63,9 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
     <div className="subcategory-dropdown">
       {countries.map((country, index) => (
         <div key={index} className="subcategory-container" style={{ marginLeft: "15px" }}>
-          <div className="dropdown-item">
+          <div className="ml-5">
             <input
+              className="form-check-input"
               type="checkbox"
               checked={selectedItems.countries.includes(country)}
               onChange={(e) => handleSelection(region, country, e.target.checked)}

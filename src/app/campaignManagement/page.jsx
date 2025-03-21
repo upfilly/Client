@@ -230,7 +230,7 @@ const SendPreviousRequest = async (campaign,brand) => {
   //   });
   // }
 
-  const sendRequest = (brand_id, campaign_id) => {
+  const sendRequest = (id,brand_id, campaign_id) => {
     Swal.fire({
       html: `
         <h2 class="modal-title-main">Send Request</h2>
@@ -244,6 +244,7 @@ const SendPreviousRequest = async (campaign,brand) => {
       if (result.isConfirmed) {
         loader(true);
         ApiClient.post('campaign-request', {
+          "id":id,
           "campaign_id": campaign_id,
           "brand_id": brand_id,
           "affiliate_id": user?.id || user?._id

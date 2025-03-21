@@ -93,6 +93,14 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
         });
     };
 
+    const handleNumericInput = (e, fieldName) => {
+        const value = e.target.value;
+    
+        if (/^\d*\.?\d*$/.test(value)) {
+          setform({ ...form, [fieldName]: value });
+        }
+      };
+
     const handleCategoryChange = (selectedCategoryIds) => {
         const filteredSubCategories = categories
             .filter(cat => selectedCategoryIds.includes(cat.id))
@@ -257,11 +265,12 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     <div className="col-md-6 mb-3">
                                         <label>Lead Amount<span className="star">*</span></label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             className="form-control"
                                             value={form?.lead_amount || ''}
                                             disabled={!id ? false : true}
-                                            onChange={e => setform({ ...form, lead_amount: e.target.value })}
+                                            // onChange={e => setform({ ...form, lead_amount: e.target.value })}
+                                            onChange={(e) => handleNumericInput(e, 'lead_amount')}
                                             placeholder="Enter Lead Amount"
                                         />
                                         {submitted && !form?.lead_amount && <div className="invalid-feedback d-block">{errors?.lead_amount}</div>}
@@ -292,11 +301,12 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     <div className="col-md-6 mb-3">
                                         <label>Percentage<span className="star">*</span></label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             className="form-control"
                                             value={form?.commission || ''}
                                             disabled={!id ? false : true}
-                                            onChange={e => setform({ ...form, commission: e.target.value })}
+                                            // onChange={e => setform({ ...form, commission: e.target.value })}
+                                            onChange={(e) => handleNumericInput(e, 'commission')}
                                             placeholder="Enter Percentage"
                                         />
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
@@ -307,11 +317,12 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     <div className="col-md-6 mb-3">
                                         <label>Amount<span className="star">*</span></label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             className="form-control"
                                             value={form?.commission || ''}
                                             disabled={!id ? false : true}
-                                            onChange={e => setform({ ...form, commission: e.target.value })}
+                                            // onChange={e => setform({ ...form, commission: e.target.value })}
+                                            onChange={(e) => handleNumericInput(e, 'commission')}
                                             placeholder="Enter Amount"
                                         />
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
@@ -361,6 +372,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                             setSelectedItems={setSelectedItems}
                                         />
                                     </div>
+                                    {submitted && selectedItems?.categories?.length == 0 && <div className="invalid-feedback d-block">{errors?.categories}</div>}
                                 </div>
 
                                 {/* Category Dropdown */}
@@ -442,7 +454,10 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                         <MultiSelectRegionDropdown
                                             selectedItems={selectedRegionItems}
                                             setSelectedItems={setSelectedRegionItems}
-                                        /></div></div>
+                                        />
+                                    </div>
+                                    {submitted && selectedRegionItems?.regions?.length == 0 && <div className="invalid-feedback d-block">{errors?.region}</div>}
+                                </div>
 
                                 {/* Region Dropdown */}
                                 {/* {form?.region?.length > 0 && <div className="col-md-12 mb-3">

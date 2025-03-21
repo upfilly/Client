@@ -53,7 +53,7 @@ const Html = ({
                                             <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
                                                 Event Type {filters?.sorder === "asc" ? "↑" : "↓"}
                                             </th>
-                                            <th scope="col" className='table_data'>Amount($)</th>
+                                            <th scope="col" className='table_data'>Commission</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>
                                                 Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
                                             </th>
@@ -76,16 +76,16 @@ const Html = ({
                                                     </div>
                                                 </td>
                                                 {itm?.campaign_details?.event_type && <td className='table_dats'>{itm?.campaign_details?.event_type.join(",")}</td>}
-                                                <td className='table_dats'>{itm?.campaign_details?.amount}</td>
+                                                <td className='table_dats'>{itm?.campaign_details?.commission || "--"} {itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm.campaign_details?.createdAt)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm?.campaign_details?.updatedAt)}</td>
                                                 <td className='table_dats d-flex align-items-center'>
                                                     {itm?.status === 'pending' ? (
                                                         <div className='d-flex align-items-center'>
-                                                            <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                            <button onClick={() => statusChange("accepted",itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                                            <button onClick={() => statusChange("rejected",itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div>
