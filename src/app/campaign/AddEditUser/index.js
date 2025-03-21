@@ -204,6 +204,7 @@ const AddEditUser = () => {
                         isDefault: value?.isDefault,
                         commission: value?.commission,
                         commission_type: value?.commission_type,
+                        campaign_type:[value?.campaign_type],
                         lead_amount: value?.lead_amount,
                         access_type: value?.access_type,
                         description: value?.description,
@@ -220,6 +221,10 @@ const AddEditUser = () => {
                         categories: value?.category?.map((dat) => dat?.id),
                         subCategories: value?.sub_category?.map((dat) => dat?.id),
                         subSubCategories: value?.sub_child_category?.map((dat) => dat?.id),
+                    })
+                    setSelectedRegionItems({
+                        regions: value?.region,
+                        countries: value?.region_continents,
                     })
                 }
                 loader(false)
