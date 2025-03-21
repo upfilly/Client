@@ -96,6 +96,20 @@ const AddEditUser = () => {
             sub_child_category: selectedItems?.subSubCategories,
             brand_id: user?.id || user?._id,
         }
+        if (!form.event_type?.includes("purchase")) {
+            value = {
+                ...form,
+                commission_type: "percentage",
+                commission: "1",
+                region: selectedRegionItems?.regions,
+                region_continents: selectedRegionItems?.countries,
+                campaign_type: form?.campaign_type?.[0],
+                category: selectedItems?.categories,
+                sub_category: selectedItems?.subCategories,
+                sub_child_category: selectedItems?.subSubCategories,
+                brand_id: user?.id || user?._id,
+            }
+        }
         delete value.status
         if (value.id) {
             method = 'put'
