@@ -20,6 +20,17 @@
   width: 100%;
   text-align: left;
 }
+.category-input span.dropdown-toggle {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: grey;
+  border-radius: 50px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: break-spaces;
+}
 
 /* Dropdown menu that appears on button click */
 .dropdown-menu {
