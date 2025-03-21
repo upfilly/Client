@@ -311,7 +311,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
           </ListItemLink>}
 
           {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requestCampaigns"  title="Campaign">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
+            <i className="material-icons  svg_iconbx" title="campaignManagement">alarm_add</i>
             <span className="side_head">Campaign Request</span>
           </ListItemLink>}
 
