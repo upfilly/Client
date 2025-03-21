@@ -86,8 +86,8 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
-            commission_type: "percentage",
-            commission: "1",
+            // commission_type: "percentage",
+            // commission: "1",
             region: selectedRegionItems?.regions,
             region_continents: selectedRegionItems?.countries,
             campaign_type: form?.campaign_type?.[0],
