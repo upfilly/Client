@@ -17,7 +17,7 @@ import methodModel from '../../methods/methods';
 const Users = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:'',brand_id:user?.id})
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:'',brand_id:user?.id})
     const [data, setData] = useState([])
     const [tab, setTab] = useState('list')
     const [total, setTotal] = useState(0)

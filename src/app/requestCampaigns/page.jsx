@@ -9,13 +9,11 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import { useParams, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
-import axios from 'axios';
-import affilate from '../affiliate/page';
 
 const Users = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', brand_id: user?.id || user?._id})
+  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', brand_id: user?.id || user?._id })
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -92,11 +90,10 @@ const Users = () => {
     getData({ status: e, page: 1 })
   }
 
-  const statusChange = (itm,affiliate_id, id) => {
+  const statusChange = (itm, affiliate_id, id) => {
     if (itm === 'accepted') {
-      // Handle the case when the campaign is accepted
       loader(true);
-      ApiClient.put('campaign-request/change-status', { status: itm,affiliate_id:affiliate_id, id: id}).then((res) => {
+      ApiClient.put('campaign/change-status', { status: itm, affiliate_id: affiliate_id, id: id }).then((res) => {
         if (res.success) {
 
           toast.success(res.message)
@@ -105,9 +102,8 @@ const Users = () => {
         loader(false);
       });
     } else {
-      // Handle the case when the campaign is denied
       Swal.fire({
-     
+
         html: `
          <h2 style="" class="modal-title-main pt-0">Deny Campaign</h2>
             <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
@@ -128,7 +124,7 @@ const Users = () => {
           }
 
           loader(true);
-          ApiClient.put('campaign/change-status', { status: itm, id: id,reason: denialReason }).then((res) => {
+          ApiClient.put('campaign/change-status', { status: itm, affiliate_id: affiliate_id, id: id, reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
               getData({ page: filters?.page + 1 });
@@ -142,12 +138,12 @@ const Users = () => {
 
   const sendProposal = (brand_id) => {
     Swal.fire({
-   
+
       html: `
            <h2 style="" class="modal-title-main">Send proposal</h2>
             <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Proposal Description :<p/>
               <textarea type="text" id="description" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
-            `,  
+            `,
       // icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -224,7 +220,7 @@ const Users = () => {
     filter({ sortBy, key, sorder, page })
   }
 
-  console.log(data,"datadatadata")
+  console.log(data, "datadatadata")
 
   return <><Html
     setFilter={setFilter}

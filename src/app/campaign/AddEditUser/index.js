@@ -17,7 +17,7 @@ const AddEditUser = () => {
         subCategories: [],
         subSubCategories: [],
     });
-    const [selectedRegionItems, setSelectedRegionItems]= useState({
+    const [selectedRegionItems, setSelectedRegionItems] = useState({
         regions: [], countries: []
     })
     const defaultvalue = addCampaignType
@@ -55,7 +55,7 @@ const AddEditUser = () => {
         if (!form.access_type) formErrors.access_type = 'Access Type is required';
         if (!form.event_type || form.event_type.length === 0) formErrors.event_type = 'Event Type is required';
         if (form.event_type?.includes("lead") && !form.lead_amount) formErrors.lead_amount = 'Lead Amount is required';
-        if (!form.campaign_type) formErrors.campaign_type = 'Campaign Type is required';
+        if (form.event_type?.includes("purchase") && !form.campaign_type) formErrors.campaign_type = 'Campaign Type is required';
         // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
         // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
         // if (!form.category_type) formErrors.category_type = 'Category Type is required';
@@ -74,7 +74,7 @@ const AddEditUser = () => {
         // if (!form?.description || !form?.name || !form?.event_type) {
 
         // }
-        console.log(validate(),"opoppop")
+        console.log(validate(), "opoppop")
 
         if (!validate()) {
             setSubmitted(true)
@@ -88,9 +88,9 @@ const AddEditUser = () => {
             ...form,
             // commission_type:"percentage",
             // commission:"1",
-            region:selectedRegionItems?.regions,
-            region_continents:selectedRegionItems?.countries,
-            campaign_type:form?.campaign_type?.[0],
+            region: selectedRegionItems?.regions,
+            region_continents: selectedRegionItems?.countries,
+            campaign_type: form?.campaign_type?.[0],
             category: selectedItems?.categories,
             sub_category: selectedItems?.subCategories,
             sub_child_category: selectedItems?.subSubCategories,
@@ -163,7 +163,7 @@ const AddEditUser = () => {
     }
 
 
-    console.log(form,"klklklklklklkl")
+    console.log(form, "klklklklklklkl")
 
     useEffect(() => {
         setSubmitted(false)
@@ -187,10 +187,10 @@ const AddEditUser = () => {
                     setform({
                         id: value?.id || value?._id,
                         name: value?.name,
-                        isDefault:value?.isDefault,
-                        commission:value?.commission,
-                        commission_type:value?.commission_type,
-                        lead_amount:value?.lead_amount,
+                        isDefault: value?.isDefault,
+                        commission: value?.commission,
+                        commission_type: value?.commission_type,
+                        lead_amount: value?.lead_amount,
                         access_type: value?.access_type,
                         description: value?.description,
                         documents: value?.documents,
@@ -198,14 +198,14 @@ const AddEditUser = () => {
                         status: value?.status,
                         access_type: value?.access_type,
                         event_type: value?.event_type,
-                        region:value?.region,
-                        region_continents:value?.region_continents
+                        region: value?.region,
+                        region_continents: value?.region_continents
 
                     })
                     setSelectedItems({
-                        categories: value?.category?.map((dat)=>dat?.id),
-                        subCategories: value?.sub_category?.map((dat)=>dat?.id),
-                        subSubCategories: value?.sub_child_category?.map((dat)=>dat?.id),
+                        categories: value?.category?.map((dat) => dat?.id),
+                        subCategories: value?.sub_category?.map((dat) => dat?.id),
+                        subSubCategories: value?.sub_child_category?.map((dat) => dat?.id),
                     })
                 }
                 loader(false)
@@ -253,7 +253,7 @@ const AddEditUser = () => {
             validate={validate}
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
-            selectedRegionItems={selectedRegionItems} 
+            selectedRegionItems={selectedRegionItems}
             setSelectedRegionItems={setSelectedRegionItems}
         />
     </>
