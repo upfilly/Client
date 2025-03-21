@@ -3,7 +3,7 @@ import "./MultiSelectDropdownData.css";
 import { regionData } from "./AddEditUser/regionCountries";
 
 const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
-    const data = regionData
+  const data = regionData;
   const [isOpen, setIsOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +21,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
     setSelectedItems((prevState) => {
       let newSelectedRegions = [...prevState.regions];
       let newSelectedCountries = [...prevState.countries];
-      
+
       if (checked) {
         if (!newSelectedRegions.includes(region)) {
           newSelectedRegions.push(region);
@@ -45,7 +45,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
       .filter((region) => region.toLowerCase().includes(searchTerm))
       .map((region) => (
         <div key={region} className="category-container">
-          <div className="dropdown-item" >
+          <div className="dropdown-item">
             <input
               type="checkbox"
               checked={selectedItems.regions.includes(region)}
@@ -77,15 +77,40 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
     </div>
   );
 
+  const getSelectedValuesText = () => {
+    // Combine selected regions and countries into a string
+    const selectedRegionsText = selectedItems.regions.join(", ");
+    const selectedCountriesText = selectedItems.countries.join(", ");
+    let displayText = "Select Regions";
+
+    if (selectedRegionsText) {
+      displayText = selectedRegionsText;
+    }
+    if (selectedCountriesText) {
+      if (displayText !== "Select Regions") {
+        displayText += " - "; // Add separator between regions and countries
+      }
+      displayText += selectedCountriesText;
+    }
+
+    return displayText || "Select Regions";
+  };
+
   return (
     <div className="dropdown-container show-drop">
       <span onClick={toggleDropdown} className="dropdown-toggle">
-        Select Regions
+        {getSelectedValuesText()}
       </span>
 
       {isOpen && (
         <div className="dropdown-menu">
-          <input type="text" placeholder="Search Regions..." value={searchTerm} onChange={handleSearch} className="search-input" />
+          <input
+            type="text"
+            placeholder="Search Regions..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search-input"
+          />
 
           <div className="select-actions">
             <input

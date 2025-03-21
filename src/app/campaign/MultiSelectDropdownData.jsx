@@ -28,7 +28,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
       let newCategories = [...prevState.categories];
       let newSubCategories = [...prevState.subCategories];
       let newSubSubCategories = [...prevState.subSubCategories];
-  
+
       if (categoryId && !subcategoryId && !subSubCategoryId) {
         if (checked) {
           newCategories.push(categoryId);
@@ -92,7 +92,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
           }
         }
       }
-  
+
       // Logic to automatically select category if all subcategories are selected
       data.forEach((category) => {
         const allSubSelected = category.subCategories.every(
@@ -106,7 +106,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
           newCategories = newCategories.filter((id) => id !== category._id);
         }
       });
-  
+
       // Logic to automatically select subcategory if all subsubcategories are selected
       data
         .flatMap((category) => category.subCategories)
@@ -120,7 +120,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
             }
           }
         });
-  
+
       return { categories: newCategories, subCategories: newSubCategories, subSubCategories: newSubSubCategories };
     });
   };
@@ -220,10 +220,50 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
       ));
   };
 
+  const getSelectedCategoryNames = () => {
+    return selectedItems.categories
+      .map((categoryId) => {
+        const category = data.find((cat) => cat._id === categoryId);
+        return category ? category.parent_cat_name : "";
+      })
+      .filter((name) => name) // Filter out any empty values
+      .join(", ");
+  };
+
+  const getSelectedSubCategoryNames = () => {
+    return selectedItems.subCategories
+      .map((subcategoryId) => {
+        const subCategory = data
+          .flatMap((category) => category.subCategories)
+          .find((sub) => sub.id === subcategoryId);
+        return subCategory ? subCategory.name : "";
+      })
+      .filter((name) => name) // Filter out any empty values
+      .join(", ");
+  };
+
+  const getSelectedSubSubCategoryNames = () => {
+    return selectedItems.subSubCategories
+      .map((subSubCategoryId) => {
+        const subSubCategory = data
+          .flatMap((category) =>
+            category.subCategories.flatMap((sub) =>
+              sub.subchildcategory.filter((subSub) => subSub._id === subSubCategoryId)
+            )
+          )
+          .find((subSub) => subSub._id === subSubCategoryId);
+        return subSubCategory ? subSubCategory.name : "";
+      })
+      .filter((name) => name) // Filter out any empty values
+      .join(", ");
+  };
+
   return (
     <div className="dropdown-container show-drop">
       <span onClick={toggleDropdown} className="dropdown-toggle">
-        Select Categories
+        {getSelectedCategoryNames() || "Select Categories"}{" "}
+        {getSelectedSubCategoryNames() && `| ${getSelectedSubCategoryNames()}`}
+        {getSelectedSubSubCategoryNames() && `| ${getSelectedSubSubCategoryNames()}`}
       </span>
 
       {isOpen && (
