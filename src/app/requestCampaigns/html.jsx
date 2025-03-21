@@ -72,6 +72,7 @@ const Html = ({
                                                             <h4 className='user'>
                                                                 {methodModel.capitalizeFirstLetter(itm?.campaign_details?.name)}
                                                             </h4>
+                                                            
                                                         </div>
                                                     </div>
                                                 </td>
