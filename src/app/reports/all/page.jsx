@@ -38,6 +38,10 @@ export default function AnalyticsDashboard() {
     const [selectedAffiliate, setSelectedAffiliate] = useState();
     const [selectedBrand, setSelectedBrand] = useState();
     const [brands, setBrands] = useState();
+    const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
+    const [compDates, setCompDates] = useState([new Date(), new Date()]);
+    const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
+    console.log(baseDates,compDates,"jkjkjkjkllkjjkljkljkjkl")
 
     const isFilterApplied = () => {
         return (
@@ -101,22 +105,42 @@ export default function AnalyticsDashboard() {
 
     useEffect(() => {
         getClicksAnalyticsData({
-            startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
-            endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
+            startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+            endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
             affiliate_id: selectedAffiliate || "",
             brand_id: selectedBrand || "",
-            startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
-            endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
+            endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
-            startDate: moment(state?.selection1?.startDate).format("YYYY-MM-DD"),
-            endDate: moment(state?.selection1?.endDate).format("YYYY-MM-DD"),
+            startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+            endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
             affiliate_id: selectedAffiliate || "",
             brand_id: selectedBrand || "",
-            startDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
-            endDate2: moment(state?.selection2?.endDate).format("YYYY-MM-DD"),
+            startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
+            endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
     }, [state, selectedAffiliate, selectedBrand])
+
+    const ApplyDateFilter = () => {
+        getClicksAnalyticsData({
+            startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+            endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+            // affiliate_id: selectedAffiliate || "",
+            // brand_id: selectedBrand || "",
+            startDate2:comparisonPeriod == 'none' ? "" : moment(compDates?.[0]).format("YYYY-MM-DD"),
+            endDate2: comparisonPeriod == 'none' ? "" : moment(compDates?.[1]).format("YYYY-MM-DD"),
+        })
+        getAnalyticsData({
+            startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+            endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+            // affiliate_id: selectedAffiliate || "",
+            // brand_id: selectedBrand || "",
+            startDate2:comparisonPeriod == 'none' ? "" : moment(compDates?.[0]).format("YYYY-MM-DD"),
+            endDate2:comparisonPeriod == 'none' ? "" : moment(compDates?.[1]).format("YYYY-MM-DD"),
+        })
+        setHandleDateFilter(false)
+    }
 
     const resetFilters = () => {
         setState({
@@ -155,8 +179,8 @@ export default function AnalyticsDashboard() {
                             onBlur={(e) => setHandleDateFilter(false)}
                         >
                             {
-                                state?.selection1?.startDate || state?.selection1?.endDate || state?.selection2?.startDate || state?.selection2?.endDate
-                                    ? `${moment(state?.selection1?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection1?.endDate).format("MMMM DD, YYYY")} ⇆ ${moment(state?.selection2?.startDate).format("MMMM DD, YYYY")} - ${moment(state?.selection2?.endDate).format("MMMM DD, YYYY")}`
+                                baseDates?.[0] || baseDates?.[1] || compDates?.[0] || compDates?.[1]
+                                    ? comparisonPeriod == 'none' ? `${moment(baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}` : `${moment(baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")} ⇆ ${moment(compDates?.[0]).format("MMMM DD, YYYY")} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
                                     : "Select Date Range"
                             }
                         </span>
@@ -208,7 +232,7 @@ export default function AnalyticsDashboard() {
                                 }}
                             />
                         )} */}
-                        <CustomDatePicker/>
+                       { handleDateFilter && <CustomDatePicker baseDates={baseDates} setBaseDates={setBaseDates} compDates={compDates} setCompDates={setCompDates} setHandleDateFilter={setHandleDateFilter} ApplyDateFilter={ApplyDateFilter} comparisonPeriod={comparisonPeriod} setComparisonPeriod={setComparisonPeriod}/>}
                     </div>
 
                     <div className="reset-filters-container">

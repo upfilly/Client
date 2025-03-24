@@ -50,7 +50,7 @@ const Html = ({
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-between align-items-center">
-                    <SelectDropdown
+                    {/* <SelectDropdown
                         id="statusDropdown"
                         displayValue="name"
                         placeholder="All Status"
@@ -61,7 +61,7 @@ const Html = ({
                             { id: 'accepted', name: 'Accepted' },
                             { id: 'rejected', name: 'Rejected' },
                         ]}
-                    />
+                    /> */}
 
                     <article className="d-flex filterFlex phView">
                         {permission('campaign_add') ? <>

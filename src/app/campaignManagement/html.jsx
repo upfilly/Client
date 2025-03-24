@@ -27,6 +27,7 @@ const Html = ({
     getData,
     SendPreviousRequest,
     sendRequest,
+    ChangeStatus,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false);
@@ -197,6 +198,19 @@ const Html = ({
                                 ))}
                             </div>*/}
 
+                                    <SelectDropdown
+                                        id="statusDropdown"
+                                        displayValue="name"
+                                        placeholder="All Status"
+                                        intialValue={filters.status}
+                                        result={e => { ChangeStatus(e.value) }}
+                                        options={[
+                                            { id: 'pending', name: 'Pending' },
+                                            { id: 'accepted', name: 'Accepted' },
+                                            { id: 'rejected', name: 'Rejected' },
+                                        ]}
+                                    />
+
                                 </div>
                             </div>
                             <div className='mt-5'>
@@ -213,7 +227,7 @@ const Html = ({
 
                                                     </th>
                                                     <th scope="col" className="table_data" onClick={e => sorting('name')}>
-                                                    Affiliate Approval
+                                                        Affiliate Approval
                                                     </th>
                                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
                                                         Event Type
@@ -262,19 +276,19 @@ const Html = ({
                                                             <td className='table_dats d-flex align-items-center'>
                                                                 {itm?.status == 'pending' ? (
                                                                     <div className='d-flex align-items-center'>
-                                                                        <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?._id,itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                                        <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?._id, itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                             <i className='fa fa-check'></i>
                                                                         </button>
                                                                         <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                                                             <i className='fa fa-times'></i>
                                                                         </button>
                                                                     </div>
-                                                                ) : itm?.status == 'rejected' ? 
-                                                                    <div className="btn btn-primary mr-2">Rejected</div>:
+                                                                ) : itm?.status == 'rejected' ?
+                                                                    <div className="btn btn-primary mr-2">Rejected</div> :
                                                                     itm?.status == 'requested' ?
-                                                                    <div className="btn btn-primary mr-2">Request Sent</div>: (
-                                                                    <div className="btn btn-primary mr-2">Accepted</div>
-                                                                )}
+                                                                        <div className="btn btn-primary mr-2">Request Sent</div> : (
+                                                                            <div className="btn btn-primary mr-2">Accepted</div>
+                                                                        )}
                                                                 <button className='btn btn-primary btn_actions'
                                                                     onClick={() => {
                                                                         history.push(`/chat`);

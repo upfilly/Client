@@ -44,11 +44,11 @@ const getDateRange = (option) => {
     }
 };
 
-const CustomDatePicker = () => {
+const CustomDatePicker = ({baseDates, setBaseDates,compDates, setCompDates,setHandleDateFilter,ApplyDateFilter,comparisonPeriod, setComparisonPeriod}) => {
     const [basePeriod, setBasePeriod] = useState("custom");
-    const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
-    const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
-    const [compDates, setCompDates] = useState([new Date(), new Date()]);
+    // const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
+    // const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
+    // const [compDates, setCompDates] = useState([new Date(), new Date()]);
 
     const handlePeriodChange = (option, type) => {
         const [start, end] = getDateRange(option);
@@ -127,25 +127,28 @@ const CustomDatePicker = () => {
             </div>
             <div className="date-picker-wrapper">
                 <div className="d-flex gap-3">
-                <DateRange
-                    ranges={[{ startDate: baseDates[0], endDate: baseDates[1], key: "selection" }]}
-                    onChange={(ranges) => setBaseDates([ranges.selection.startDate, ranges.selection.endDate])}
-                    moveRangeOnFirstSelection={true}
-                    editableDateInputs={false}
-                />
-                {comparisonPeriod !== "none" && (
                     <DateRange
-                        ranges={[{ startDate: compDates[0], endDate: compDates[1], key: "selection" }]}
-                        onChange={(ranges) => setCompDates([ranges.selection.startDate, ranges.selection.endDate])}
+                        ranges={[{ startDate: baseDates[0], endDate: baseDates[1], key: "selection" }]}
+                        onChange={(ranges) => setBaseDates([ranges.selection.startDate, ranges.selection.endDate])}
                         moveRangeOnFirstSelection={true}
                         editableDateInputs={false}
+                        maxDate={new Date()}
                     />
-                )}
-            </div>
-            <div className="button-container">
-                <button className="cancel-btn">Cancel</button>
-                <button className="apply-btn">Apply</button>
-            </div>
+                    {comparisonPeriod !== "none" && (
+                        <DateRange
+                            ranges={[{ startDate: compDates[0], endDate: compDates[1], key: "selection" }]}
+                            onChange={(ranges) => setCompDates([ranges.selection.startDate, ranges.selection.endDate])}
+                            moveRangeOnFirstSelection={true}
+                            rangeColors={['#198754']}
+                            editableDateInputs={false}
+                            maxDate={new Date()}
+                        />
+                    )}
+                </div>
+                <div className="button-container">
+                    <button className="cancel-btn" onClick={()=>setHandleDateFilter(false)}>Cancel</button>
+                    <button className="apply-btn" onClick={()=>ApplyDateFilter()}>Apply</button>
+                </div>
             </div>
         </div>
     );

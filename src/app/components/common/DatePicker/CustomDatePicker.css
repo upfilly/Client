@@ -129,4 +129,8 @@
     background: #007bff;
     color: white;
   }
+
+  input[type="radio"] {
+    margin: 4px;
+}
   
