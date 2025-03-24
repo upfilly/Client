@@ -213,7 +213,7 @@ const Html = ({
 
                                                     </th>
                                                     <th scope="col" className="table_data" onClick={e => sorting('name')}>
-                                                        Campaign Type
+                                                    Affiliate Approval
                                                     </th>
                                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
                                                         Event Type

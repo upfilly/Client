@@ -13,6 +13,7 @@ import ApiClient from '@/methods/api/apiClient';
 import AnalyticsChartData from './AnalyticsData'
 import MultiSelectValue from '@/app/components/common/MultiSelectValue';
 import crendentialModel from '@/models/credential.model';
+import CustomDatePicker from '../../components/common/DatePicker/DatePickerCustom'
 
 export default function AnalyticsDashboard() {
     const user = crendentialModel.getUser()
@@ -186,7 +187,7 @@ export default function AnalyticsDashboard() {
                     </div>
 
                     <div className="controls mt-2">
-                        {handleDateFilter && (
+                        {/* {handleDateFilter && (
                             <DateRangePicker
                                 onChange={item => setState({ ...state, ...item })}
                                 showSelectionPreview={true}
@@ -206,7 +207,8 @@ export default function AnalyticsDashboard() {
                                     nextButton: "next month button",
                                 }}
                             />
-                        )}
+                        )} */}
+                        <CustomDatePicker/>
                     </div>
 
                     <div className="reset-filters-container">

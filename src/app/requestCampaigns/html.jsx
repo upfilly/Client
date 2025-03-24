@@ -50,8 +50,8 @@ const Html = ({
                                             <th scope="col" className="table_data" onClick={e => sorting('name')}>
                                                 Name {filters?.sorder === "asc" ? "↑" : "↓"}
                                             </th>
-                                            <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
-                                                Event Type {filters?.sorder === "asc" ? "↑" : "↓"}
+                                            <th scope="col" className='table_data'>
+                                                Event Type
                                             </th>
                                             <th scope="col" className='table_data'>Commission</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>
@@ -64,7 +64,7 @@ const Html = ({
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         {data.map((itm, i) => (
+                                        {data.map((itm, i) => (
                                             <tr className='data_row' key={i}>
                                                 <td className='table_dats' onClick={e => view(itm.campaign_details?.id || itm?.campaign_details?._id)}>
                                                     <div className='user_detail'>
@@ -72,7 +72,7 @@ const Html = ({
                                                             <h4 className='user'>
                                                                 {methodModel.capitalizeFirstLetter(itm?.campaign_details?.name)}
                                                             </h4>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -83,10 +83,10 @@ const Html = ({
                                                 <td className='table_dats d-flex align-items-center'>
                                                     {itm?.status === 'pending' ? (
                                                         <div className='d-flex align-items-center'>
-                                                            <button onClick={() => statusChange("accepted",itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                            <button onClick={() => statusChange("accepted", itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected",itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                                            <button onClick={() => statusChange("rejected", itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div>
@@ -104,14 +104,14 @@ const Html = ({
                                                     </button>
                                                 </td>
                                             </tr>
-                                        )) }
+                                        ))}
                                     </tbody>
                                 </table>
                                 {(!loaging && total === 0) && <div className="py-3 text-center">No Data</div>}
                             </div>
                         </div>
 
-                         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+                        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
                             <span>Show {data?.length} from {total} campaigns</span>
                             <ReactPaginate
                                 breakLabel="..."

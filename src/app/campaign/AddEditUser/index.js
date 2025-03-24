@@ -55,7 +55,7 @@ const AddEditUser = () => {
         if (!form.access_type) formErrors.access_type = 'Access Type is required';
         if (!form.event_type || form.event_type.length === 0) formErrors.event_type = 'Event Type is required';
         if (form.event_type?.includes("lead") && !form.lead_amount) formErrors.lead_amount = 'Lead Amount is required';
-        if (form.event_type?.includes("purchase") && !form.campaign_type) formErrors.campaign_type = 'Campaign Type is required';
+        if (form.event_type?.includes("purchase") && !form.campaign_type) formErrors.campaign_type = 'Affiliate Approval is required';
         // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
         // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
         // if (!form.category_type) formErrors.category_type = 'Category Type is required';

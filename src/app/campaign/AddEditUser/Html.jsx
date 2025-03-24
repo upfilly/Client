@@ -95,11 +95,11 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
 
     const handleNumericInput = (e, fieldName) => {
         const value = e.target.value;
-    
+
         if (/^\d*\.?\d*$/.test(value)) {
-          setform({ ...form, [fieldName]: value });
+            setform({ ...form, [fieldName]: value });
         }
-      };
+    };
 
     const handleCategoryChange = (selectedCategoryIds) => {
         const filteredSubCategories = categories
@@ -240,7 +240,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 </div>
 
                                 <div className="col-md-6 mb-3">
-                                    <label>Campaign Type:<span className="star">*</span></label>
+                                    <label>Affiliate Approval:<span className="star">*</span></label>
                                     <div className="select_row">
                                         <MultiSelectValue
                                             id="statusDropdown"
@@ -261,25 +261,9 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     {submitted && !form?.campaign_type && <div className="invalid-feedback d-block">{errors?.campaign_type}</div>}
                                 </div>
 
-                                {form?.event_type?.includes("lead") && (
-                                    <div className="col-md-6 mb-3">
-                                        <label>Lead Amount<span className="star">*</span></label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={form?.lead_amount || ''}
-                                            disabled={!id ? false : true}
-                                            // onChange={e => setform({ ...form, lead_amount: e.target.value })}
-                                            onChange={(e) => handleNumericInput(e, 'lead_amount')}
-                                            placeholder="Enter Lead Amount"
-                                        />
-                                        {submitted && !form?.lead_amount && <div className="invalid-feedback d-block">{errors?.lead_amount}</div>}
-                                    </div>
-                                )}
-
                                 {/* New Dropdown for Percentage or Amount */}
                                 {form?.event_type?.includes("purchase") && <div className="col-md-6 mb-3">
-                                    <label>Amount/Percentage Type<span className="star">*</span></label>
+                                    <label>Purchase Amount/Percentage Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
                                             id="amount_typeDropdown"
@@ -296,10 +280,9 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     {submitted && !form?.commission_type && <div className="invalid-feedback d-block">{errors?.commission_type}</div>}
                                 </div>}
 
-                                {/* Conditionally Render the Input Field for Amount or Percentage */}
                                 {(form?.commission_type === "percentage" && form?.event_type?.includes("purchase")) && (
                                     <div className="col-md-6 mb-3">
-                                        <label>Percentage<span className="star">*</span></label>
+                                        <label>Commission(%)<span className="star">*</span></label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -315,7 +298,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
 
                                 {(form?.commission_type === "amount" && form?.event_type?.includes("purchase")) && (
                                     <div className="col-md-6 mb-3">
-                                        <label>Amount<span className="star">*</span></label>
+                                        <label>Commission Amount<span className="star">*</span></label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -328,6 +311,24 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
                                     </div>
                                 )}
+
+                                {form?.event_type?.includes("lead") && (
+                                    <div className="col-md-6 mb-3">
+                                        <label>Lead Amount<span className="star">*</span></label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={form?.lead_amount || ''}
+                                            disabled={!id ? false : true}
+                                            // onChange={e => setform({ ...form, lead_amount: e.target.value })}
+                                            onChange={(e) => handleNumericInput(e, 'lead_amount')}
+                                            placeholder="Enter Lead Amount"
+                                        />
+                                        {submitted && !form?.lead_amount && <div className="invalid-feedback d-block">{errors?.lead_amount}</div>}
+                                    </div>
+                                )}
+
+                                {/* Conditionally Render the Input Field for Amount or Percentage */}
 
                                 <div className="col-md-12 mb-3">
                                     <label>Default Campaign</label>
