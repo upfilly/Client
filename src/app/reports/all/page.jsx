@@ -42,6 +42,19 @@ export default function AnalyticsDashboard() {
     const [compDates, setCompDates] = useState([new Date(), new Date()]);
     const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
 
+    const dateRange = {
+        selection1: {
+            startDate: baseDates?.[0],
+            endDate: baseDates?.[1],
+            key: 'selection1'
+        },
+        selection2: {
+            startDate: compDates?.[0],
+            endDate: compDates?.[1],
+            key: 'selection2'
+        }
+    }
+
     const isFilterApplied = () => {
         return (
             selectedAffiliate ||
@@ -233,7 +246,7 @@ export default function AnalyticsDashboard() {
                     </div>
 
 
-                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={state} />
+                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} />
                 </main>
             </div>
         </Layout>
