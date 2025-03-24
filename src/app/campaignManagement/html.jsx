@@ -7,9 +7,10 @@ import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import { FaFilter } from "react-icons/fa";
-import MultiSelectValue from '../components/common/MultiSelectValue';
+// import MultiSelectValue from '../components/common/MultiSelectValue';
 import SelectDropdown from '../components/common/SelectDropdown';
 import axios from 'axios';
+import { regionData } from '../campaign/AddEditUser/regionCountries';
 
 const Html = ({
     view,
@@ -49,6 +50,22 @@ const Html = ({
         { id: "North America", name: "North America" },
         { id: "Oceania", name: "Oceania" }
     ];
+
+    const handleRegionChange = (region) => {
+        setSelectedRegion((prevState) =>
+            prevState.includes(region)
+                ? prevState.filter((r) => r !== region)
+                : [...prevState, region]
+        );
+    };
+
+    const handleCountryChange = (country) => {
+        setSelectedCountries((prevState) =>
+            prevState.includes(country)
+                ? prevState.filter((c) => c !== country)
+                : [...prevState, country]
+        );
+    };
 
     const handleCategoryTypeChange = (id) => {
         setCategoryType(prev =>
@@ -102,11 +119,11 @@ const Html = ({
         );
     };
 
-    const handleRegionChange = (region) => {
-        setSelectedRegion(prev =>
-            prev.includes(region.id) ? prev.filter(item => item !== region.id) : [...prev, region.id]
-        );
-    };
+    // const handleRegionChange = (region) => {
+    //     setSelectedRegion(prev =>
+    //         prev.includes(region.id) ? prev.filter(item => item !== region.id) : [...prev, region.id]
+    //     );
+    // };
 
     const fetchCountriesByRegions = async (regions) => {
         try {
@@ -534,8 +551,7 @@ const Html = ({
                                                 </div>
                                             </div>
 
-                                            {/* Region Filter */}
-                                            <div className="accordion" id="accordionExample">
+                                            {/* <div className="accordion" id="accordionExample">
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header">
                                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxRegion" aria-expanded="true" aria-controls="collapsebxRegion">
@@ -568,7 +584,6 @@ const Html = ({
                                                 </div>
                                             </div>
 
-                                            {/* Country Filter */}
                                             <div className="accordion" id="accordionExample">
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header">
@@ -598,7 +613,73 @@ const Html = ({
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div> */}
+
+                                            {/* Unified Region and Country Filter */}
+                                            <div className="accordion" id="accordionExample">
+                                                <div className="accordion-item">
+                                                    <h2 className="accordion-header">
+                                                        <button
+                                                            className="accordion-button"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#collapsebxRegionCountry"
+                                                            aria-expanded="true"
+                                                            aria-controls="collapsebxRegionCountry">
+                                                            <b>Select Region & Country</b>
+                                                            <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapsebxRegionCountry" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                                        <div className="accordion-body">
+                                                            <ul className="filter_ullist">
+                                                                {/* Loop through each region */}
+                                                                {Object.keys(regionData).map((region) => (
+                                                                    <li key={region}>
+                                                                        <div className="form-check">
+                                                                            {/* Region Checkbox */}
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="checkbox"
+                                                                                id={region}
+                                                                                value={region}
+                                                                                checked={selectedRegion?.includes(region)}
+                                                                                onChange={() => handleRegionChange(region)}
+                                                                            />
+                                                                            <label className="form-check-label" htmlFor={region}>
+                                                                                <b>{region}</b>
+                                                                            </label>
+                                                                        </div>
+                                                                        {selectedRegion?.includes(region) && (
+                                                                            <ul className="filter_ullist">
+                                                                                {regionData[region].map((country) => (
+                                                                                    <li key={country}>
+                                                                                        <div className="form-check ml-3">
+                                                                                            <input
+                                                                                                className="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                id={country}
+                                                                                                name="country"
+                                                                                                value={country}
+                                                                                                checked={selectedCountries?.includes(country)}
+                                                                                                onChange={() => handleCountryChange(country)}
+                                                                                            />
+                                                                                            <label className="form-check-label" htmlFor={country}>
+                                                                                                {country}
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                ))}
+                                                                            </ul>
+                                                                        )}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div className="modal-footer gap-3">
