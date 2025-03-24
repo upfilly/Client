@@ -2504,7 +2504,22 @@ span.contract {
   justify-content: center;
 }
 
-
+.switched{
+  font-size: 13px;
+  font-style: normal;
+  line-height: normal;
+  padding: 7px 11px;
+  min-height: 30px;
+  font-weight: 400;
+  color: #fff;
+  border-radius: 50px;
+  background: #fceb02;
+  width: 100px;
+  display: inline-flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
 
 .pending_status {
   font-size: 13px;
