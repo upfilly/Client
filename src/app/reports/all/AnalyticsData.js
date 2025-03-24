@@ -106,7 +106,6 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
   const legendClicks1 = formatLegendLabel(selection1, clickPercentage);
   const legendClicks2 = formatLegendLabel(selection2, clickPercentage);
 
-  // Chart Options
   const revenueChartOption = {
     title: { text: 'Revenue Over Time Comparison' },
     tooltip: {
@@ -114,10 +113,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       formatter: function (params) {
         let tooltipContent = '';
         params.forEach(item => {
+          const date = allDates1[item.dataIndex];  // Get the date based on dataIndex
           const value1 = item.data;
           const value2 = params[1]?.data;
           const percentageDifference = calculatePercentageDifference(value1, value2);
-          tooltipContent += `<div>${item.seriesName}: $${value1}</div>`;
+          tooltipContent += `<div>${date}: $${value1} (${percentageDifference})</div>`;
         });
         return tooltipContent;
       },
@@ -130,7 +130,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       { name: legendRevenue2, data: revenuePrices2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
     ],
   };
-
+  
   const actionsChartOption = {
     title: { text: 'Actions Comparison' },
     tooltip: revenueChartOption.tooltip,
@@ -142,7 +142,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       { name: legendActions2, data: actionCounts2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
     ],
   };
-
+  
   const clicksChartOption = {
     title: { text: 'Clicks Comparison' },
     tooltip: revenueChartOption.tooltip,
@@ -154,6 +154,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       { name: legendClicks2, data: clickCounts2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
     ],
   };
+  
 
   return (
     <div className="cards-grid">
