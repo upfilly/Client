@@ -199,20 +199,20 @@ const Html = ({
                                 ))}
                             </div>*/}
 
-                                    <SelectDropdown
-                                        id="statusDropdown"
-                                        displayValue="name"
-                                        placeholder="All Status"
-                                        intialValue={filters.status}
-                                        result={e => { ChangeStatus(e.value) }}
-                                        options={[
-                                            { id: 'pending', name: 'Pending' },
-                                            { id: 'accepted', name: 'Accepted' },
-                                            { id: 'rejected', name: 'Rejected' },
-                                        ]}
-                                    />
 
                                 </div>
+                                <SelectDropdown
+                                    id="statusDropdown"
+                                    displayValue="name"
+                                    placeholder="All Status"
+                                    intialValue={filters.status}
+                                    result={e => { ChangeStatus(e.value) }}
+                                    options={[
+                                        { id: 'pending', name: 'Pending' },
+                                        { id: 'accepted', name: 'Joined' },
+                                        { id: 'rejected', name: 'Rejected' },
+                                    ]}
+                                />
                             </div>
                             <div className='mt-5'>
                                 <div className='table_section mt-0'>
@@ -269,7 +269,7 @@ const Html = ({
                                                             {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
                                                                 <span className={!itm?.isActive ? "inactive" : "contract"}>
-                                                                    {!itm?.isActive ? 'Pending' : 'Joined'}
+                                                                    {!itm?.isActive ? itm?.status == "rejected" ? "Rejected" : 'Pending' : 'Joined'}
                                                                 </span>
                                                             </span></td>
                                                             <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
