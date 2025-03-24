@@ -1,13 +1,21 @@
 .date-picker-container {
-    width: 600px;
+    width: 100%;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+  }
+
+  .date-picker-wrapper{
+    width: 100%;
+  }
+  .rdrCalendarWrapper {
+    font-size: 14px;
   }
   
   .flex-container {
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     margin-bottom: 15px;
   }

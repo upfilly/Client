@@ -111,7 +111,7 @@ const CustomDatePicker = () => {
                     ))}
                 </div>
                 <div>
-                    <h3 className="section-title">Comparison Period</h3>
+                    <h3 className="section-title mt-3">Comparison Period</h3>
                     {["Previous Period", "Previous Year", "Custom", "None"].map((option) => (
                         <label key={option} className="radio-label">
                             <input
@@ -126,6 +126,7 @@ const CustomDatePicker = () => {
                 </div>
             </div>
             <div className="date-picker-wrapper">
+                <div className="d-flex gap-3">
                 <DateRange
                     ranges={[{ startDate: baseDates[0], endDate: baseDates[1], key: "selection" }]}
                     onChange={(ranges) => setBaseDates([ranges.selection.startDate, ranges.selection.endDate])}
@@ -144,6 +145,7 @@ const CustomDatePicker = () => {
             <div className="button-container">
                 <button className="cancel-btn">Cancel</button>
                 <button className="apply-btn">Apply</button>
+            </div>
             </div>
         </div>
     );
