@@ -10,20 +10,19 @@
   .date-picker-wrapper{
     width: 100%;
   }
-  .rdrCalendarWrapper {
-    font-size: 14px;
-  }
   
   .flex-container {
     /* display: flex; */
-    justify-content: space-between;
     margin-bottom: 15px;
+    width: 200px;
+    max-width: 100%;
   }
   
   .section-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #b3b3b3;
   }
   
   .radio-label {

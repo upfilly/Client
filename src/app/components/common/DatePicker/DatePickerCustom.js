@@ -96,7 +96,7 @@ const CustomDatePicker = () => {
     return (
         <div className="date-picker-container">
             <div className="flex-container">
-                <div>
+                <div className="flex-container">
                     <h3 className="section-title">Base Period</h3>
                     {["Today", "Yesterday", "This Week", "Last Week", "This Month", "Last Month", "This Year", "Last Year", "Custom"].map((option) => (
                         <label key={option} className="radio-label">
