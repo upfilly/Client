@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { addDays } from 'date-fns';
 import Layout from '@/app/components/global/layout';
-import { DateRangePicker } from "react-date-range";
+// import { DateRangePicker } from "react-date-range";
 import moment from "moment";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -41,7 +41,6 @@ export default function AnalyticsDashboard() {
     const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
     const [compDates, setCompDates] = useState([new Date(), new Date()]);
     const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
-    console.log(baseDates,compDates,"jkjkjkjkllkjjkljkljkjkl")
 
     const isFilterApplied = () => {
         return (
@@ -120,7 +119,7 @@ export default function AnalyticsDashboard() {
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
-    }, [state, selectedAffiliate, selectedBrand])
+    }, [selectedAffiliate, selectedBrand])
 
     const ApplyDateFilter = () => {
         getClicksAnalyticsData({
@@ -143,18 +142,8 @@ export default function AnalyticsDashboard() {
     }
 
     const resetFilters = () => {
-        setState({
-            selection1: {
-                startDate: addDays(new Date(), -6),
-                endDate: new Date(),
-                key: 'selection1'
-            },
-            selection2: {
-                startDate: addDays(new Date(), 1),
-                endDate: addDays(new Date(), 7),
-                key: 'selection2'
-            }
-        });
+        setBaseDates([new Date(), new Date()]);
+        setCompDates([new Date(), new Date()]);
         setSelectedAffiliate(null);
         setSelectedBrand(null);
     };
