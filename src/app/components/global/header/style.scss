@@ -33,7 +33,8 @@ a.dropdown-item:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 13px 3rem;
+  // padding: 13px 3rem;
+  padding: 10px 2rem;
 }
 
 nav.navbar.navbar-expand-lg.navbar-light.bg-white {
@@ -282,7 +283,11 @@ a.btn.btn-primary.login {
   border: none;
   margin-right: 10px;
 }
-
+a.btn.btn-primary.contact-btn{
+  background: #fff;
+  border: 1px solid #123554 !important;
+  color: #123554 !important;
+}
 .navbar-light .navbar-nav .nav-link {
   color: #000 !important;
 }
@@ -541,4 +546,18 @@ img.fonts15 {
 
 .subscribe_text{
   font-size: 14px;
+}
+
+
+// Nikhil CSS
+
+.sponsor-wrapper{
+  width: 80%;
+  margin: 0 auto;
+}
+.sponsor-wrapper h1{
+  color: #ADB0C2;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 300;
 }
