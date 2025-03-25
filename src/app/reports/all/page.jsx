@@ -162,7 +162,7 @@ export default function AnalyticsDashboard() {
     };
 
     return (
-        <Layout>
+        <Layout name="Reports">
             <div className="dashboard">
                 <aside className="sidebar">
                     <h1 className="sidebar-title">Insights</h1>
