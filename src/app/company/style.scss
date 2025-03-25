@@ -10,21 +10,24 @@
   .overview {
     text-align: center;
     padding: 60px 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
   }
   
   .overview-header {
     margin-bottom: 40px;
+    width: 70%;
+    margin: 0 auto;
   }
   
   .overview-title {
     font-size: 36px;
-    margin: 0;
+    margin: 10px 0;
   }
   
   .overview-subtitle {
     font-size: 20px;
-    color: #777;
+    color: #000;
+    margin: 10px 0px;
   }
   
   .overview-text {
@@ -41,9 +44,9 @@
   }
   
   .section-title {
-    font-size: 28px;
-    text-align: left;
-    color: #333;
+    font-size: 38px;
+    text-align: center;
+    color: #000;
     margin-bottom: 20px;
   }
   
@@ -51,29 +54,31 @@
     display: flex;
     justify-content: center;
     gap: 40px;
+    margin-top: 40px;
   }
   
   .included-item {
-    width: 250px;
+    width: 330px;
     padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #CED9E5;
+    border-radius: 20px;
   }
   
   .included-item h3 {
-    font-size: 18px;
+    font-size: 22px;
     margin: 0 0 10px;
   }
   
   .included-item p {
-    font-size: 14px;
-    color: #555;
+    font-size: 15px;
+    margin-top: 5px;
+    color: #000;
   }
   
   /* Pricing Options Section */
   .pricing-options {
     padding: 40px 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
   }
   
   .pricing-table {
@@ -84,20 +89,23 @@
   }
   
   .pricing-option {
-    width: 250px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 330px;
+    padding: 30px;
+    background-color: #19294D;
+    border-radius: 20px;
   }
   
   .pricing-option h3 {
     font-size: 18px;
     margin: 0 0 10px;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 20px;
   }
   
   .pricing-option p {
     font-size: 14px;
-    color: #555;
+    color: #fff;
   }
   
   /* Benefits Section */
@@ -121,7 +129,9 @@
   .cta {
     text-align: center;
     padding: 60px 20px;
-    background-color: #007BFF;
+    background-color: #032E72;
+    border-radius: 20px;
+    margin-bottom: 5rem;
     color: white;
   }
   
@@ -131,12 +141,16 @@
   
   .cta-title {
     font-size: 36px;
-    margin: 0;
+    margin: 20px 0;
   }
   
   .cta-subtitle {
     font-size: 20px;
     margin-top: 10px;
+    font-weight: 400;
+    width: 60%;
+    margin: 0 auto;
+    line-height: 150%;
   }
   
   .cta-buttons {
@@ -153,16 +167,45 @@
   }
   
   .cta-btn.primary {
-    background-color: #28a745;
+    background-color: #00BAFF;
+    border-radius: 40px;
     color: white;
   }
   
   .cta-btn.secondary {
-    background-color: #6c757d;
-    color: white;
+    background-color: #fff;
+    border-radius: 40px;
+    color: #000;
   }
   
   .cta-btn:hover {
     opacity: 0.8;
   }
   
+  // Nikhil CSS
+
+.dots-img {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 240px;
+  top: 230px;
+}
+.included-icon{
+  background-color: #02AAE81F;
+  border-radius: 100%;
+  padding: 10px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.subs-content h5{
+  color: #00BAFF;
+  font-size: 22px;
+  margin-bottom: 0px;
+}
+.subs-content h6{
+  margin-bottom: 30px;
+}
