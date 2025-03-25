@@ -85,7 +85,10 @@ const CustomDatePicker = ({baseDates, setBaseDates,compDates, setCompDates,setHa
         // setBasePeriod(option);
         setBaseDates([start, end]);
         setComparisonPeriod(option);
-        setCompDates([start, end]);
+        if(option == "none"){
+           setCompDates(["", ""]); 
+        }
+        // setCompDates([start, end]);
         //   } else {
         //     setComparisonPeriod(option);
         //     setCompDates([start, end]);
@@ -98,7 +101,7 @@ const CustomDatePicker = ({baseDates, setBaseDates,compDates, setCompDates,setHa
             <div className="flex-container">
                 <div className="flex-container">
                     <h3 className="section-title">Base Period</h3>
-                    {["Today", "Yesterday", "This Week", "Last Week", "This Month", "Last Month", "This Year", "Last Year", "Custom"].map((option) => (
+                    {["Today", "Yesterday", "Last Week",  "Last Month", "Last Year", "Custom"].map((option) => (
                         <label key={option} className="radio-label">
                             <input
                                 type="radio"

@@ -68,8 +68,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
   };
 
   const formatLegendLabel = (selection, percentage) => {
-    const startDate = selection.startDate.toLocaleDateString();
-    const endDate = selection.endDate.toLocaleDateString();
+    const startDate = selection.startDate ? selection.startDate.toLocaleDateString() : "";
+    const endDate = selection.endDate ? selection.endDate.toLocaleDateString() : "";
     return `${startDate} - ${endDate} (${percentage})`;
   };
 
@@ -111,13 +111,13 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
 
   // Update legend labels with overall percentages
   const legendRevenue1 = formatLegendLabel(selection1, revenuePercentage);
-  const legendRevenue2 = formatLegendLabel(selection2, revenuePercentage);
+  const legendRevenue2 = selection2 ? formatLegendLabel(selection2, revenuePercentage) : "";
 
   const legendActions1 = formatLegendLabel(selection1, actionPercentage);
-  const legendActions2 = formatLegendLabel(selection2, actionPercentage);
+  const legendActions2 = selection2 ? formatLegendLabel(selection2, actionPercentage) : "";
 
   const legendClicks1 = formatLegendLabel(selection1, clickPercentage);
-  const legendClicks2 = formatLegendLabel(selection2, clickPercentage);
+  const legendClicks2 = selection2 ? formatLegendLabel(selection2, clickPercentage) : "";
 
   const revenueChartOption = {
     title: { text: 'Revenue Over Time Comparison' },
