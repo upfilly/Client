@@ -40,7 +40,7 @@ const getDateRange = (option) => {
         case "lastyear":
             return [new Date(today.getFullYear() - 1, 0, 1), new Date(today.getFullYear() - 1, 11, 31)];
         default:
-            return [null, null];
+            return [today, today];
     }
 };
 
