@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ExpandOutlined, CompressOutlined } from '@ant-design/icons';
 import ReactECharts from 'echarts-for-react';
 import './AnalyticsDashboard.scss';
 
-const CustomCard = ({ title, children }) => (
-  <div className="custom-card">
-    <h2 className="custom-card-title">{title}</h2>
-    {children}
+const CustomCard = ({ title, children, isExpanded, onExpand }) => (
+  <div className={`custom-card ${isExpanded ? "expanded" : ""}`}>
+    <div className="card-header" onClick={onExpand}>
+      <h2 className="custom-card-title">{title}</h2>
+      <span className="expand-icon">
+        {isExpanded ? <CompressOutlined /> : <ExpandOutlined />}
+      </span>
+    </div>
+    <div className="card-content">
+      {children}
+    </div>
   </div>
 );
 
 const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
   const { selection1, selection2 } = state;
+  const [expandedCard, setExpandedCard] = useState(null);
+
+  const toggleExpand = (cardTitle) => {
+    setExpandedCard(expandedCard === cardTitle ? null : cardTitle);
+  };
 
   const formatDates = (data) => {
     return data.map(item => `${item._id.year}-${item._id.month}-${item._id.day}`);
@@ -154,19 +167,40 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state }) => {
       { name: legendClicks2, data: clickCounts2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
     ],
   };
-  
 
   return (
-    <div className="cards-grid">
-      <CustomCard title="Revenue Over Time">
-        <ReactECharts option={revenueChartOption} className="chart" />
-      </CustomCard>
-      <CustomCard title="Actions">
-        <ReactECharts option={actionsChartOption} className="chart" />
-      </CustomCard>
-      <CustomCard title="Clicks Comparison">
-        <ReactECharts option={clicksChartOption} className="chart" />
-      </CustomCard>
+    <div className="analytics-container">
+      <div className="row">
+        <div className={expandedCard === "Revenue Over Time" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+          <CustomCard 
+            title="Revenue Over Time" 
+            isExpanded={expandedCard === "Revenue Over Time"} 
+            onExpand={() => toggleExpand("Revenue Over Time")}
+          >
+            <ReactECharts option={revenueChartOption} className="chart" />
+          </CustomCard>
+        </div>
+        
+        <div className={expandedCard === "Actions" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+          <CustomCard 
+            title="Actions"  
+            isExpanded={expandedCard === "Actions"} 
+            onExpand={() => toggleExpand("Actions")}
+          >
+            <ReactECharts option={actionsChartOption} className="chart" />
+          </CustomCard>
+        </div>
+        
+        <div className={expandedCard === "Clicks Comparison" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+          <CustomCard 
+            title="Clicks Comparison"  
+            isExpanded={expandedCard === "Clicks Comparison"} 
+            onExpand={() => toggleExpand("Clicks Comparison")}
+          >
+            <ReactECharts option={clicksChartOption} className="chart" />
+          </CustomCard>
+        </div>
+      </div>
     </div>
   );
 };

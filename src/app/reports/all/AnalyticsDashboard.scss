@@ -171,3 +171,58 @@ input#statusDropdown_input {
   margin: 2px;
 }
 
+.analytics-container {
+  padding: 20px;
+}
+
+.custom-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  
+  &.expanded {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f9f9f9;
+    }
+  }
+
+  .custom-card-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .expand-icon {
+    color: #666;
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .chart {
+    height: 400px;
+    
+    @media (max-width: 768px) {
+      height: 300px;
+    }
+  }
+}
+
