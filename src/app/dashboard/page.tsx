@@ -26,7 +26,7 @@ export default function Dashboard() {
       user?.request_status == "pending" ||
       user?.request_status == "rejected"
     ) {
-      history.push("/");
+      history.push("/profile");
     }
   }, []);
 
