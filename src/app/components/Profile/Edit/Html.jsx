@@ -6,16 +6,18 @@ import PhoneInput from 'react-phone-input-2'
 import PlacesAutocomplete from "react-places-autocomplete";
 import 'react-phone-input-2/lib/style.css';
 import SelectDropdown from '../../common/SelectDropdown';
+import MultiSelectDropdown from '../../../campaign/MultiSelectDropdownData'
 import 'react-datepicker/dist/react-datepicker.css';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
+import ApiClient from '@/methods/api/apiClient';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ user,
   picLoader,
-  selectedItems,
+  selectedItems1,
   handleFeatureCheckbox,
   handleSubmit,
   setChangeSubCategory,
@@ -27,23 +29,62 @@ const Html = ({ user,
   setFormData,
   form,
   getError,
+  selectedItems,
+  setSelectedItems,
+  setSelectedItems1,
   uploadImage,
   submitted,
   category,
   setForm,
-  handleCategoryChange,
-  handleSubcategoryChange,
-  selectedCategory,
-  selectedSubcategory,
-  selectedSubSubcategory,
-  handleSubsubcategoryChange,history }) => {
+  websites,
+  setWebsites,
+  history }) => {
   const [inputFocused, setInputFocused] = useState(false)
+  const [categories, setCategories] = useState([]);
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
     { id: 'property_types', name: 'Property Types' },
     { id: 'advertiser_categories', name: 'Advertiser Categories' },
   ]
   const data = ["youtube", "twitter", "instagram", "linkedin"]
+
+  const [newItem, setNewItem] = useState("");
+  const [customItems, setCustomItems] = useState(data);
+
+  const handleAddNewItem = () => {
+    if (newItem.trim() !== "" && !customItems.includes(newItem)) {
+      setCustomItems([...customItems, newItem]);
+      setNewItem(""); // Clear input
+    }
+  };
+  
+  const handleRemoveItem = (itemToRemove) => {
+    setCustomItems(customItems.filter((item) => item !== itemToRemove));
+    setSelectedItems1(selectedItems1.filter((item) => item !== itemToRemove));
+  
+    // Remove related form values
+    setForm((prevForm) => {
+      const updatedForm = { ...prevForm };
+      delete updatedForm[`${itemToRemove}_username`];
+      delete updatedForm[`${itemToRemove}_profile_link`];
+      return updatedForm;
+    });
+  };
+
+  const handleWebsiteChange = (index, value) => {
+    const newWebsites = [...websites];
+    newWebsites[index] = value;
+    setWebsites(newWebsites);
+  };
+
+  const addWebsite = () => {
+    setWebsites([...websites, '']);
+  };
+
+  const removeWebsite = (index) => {
+    const newWebsites = websites.filter((_, i) => i !== index);
+    setWebsites(newWebsites);
+  };
 
   const pattern = /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
 
@@ -59,6 +100,19 @@ const Html = ({ user,
       setChangeSubCategory('');
     }
   };
+
+  const getCategory = () => {
+    let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
+    ApiClient.get(url).then((res) => {
+      if (res.success) {
+        setCategories(res.data.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getCategory()
+  }, [])
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -108,7 +162,7 @@ const Html = ({ user,
             <div className='card mb-3'>
               <div className='card-header'>
                 <div className='main_title_head d-flex gap-3 align-items-center'>
-                  <button type='button' className='btn btn-primary rounded-2' onClick={()=>history.push("/profile")}><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
+                  <button type='button' className='btn btn-primary rounded-2' onClick={() => history.push("/profile")}><i class="fa fa-arrow-left " aria-hidden="true"></i></button>
 
                   <h3>  User Details</h3>
                 </div>
@@ -214,6 +268,28 @@ const Html = ({ user,
 
                         </div>
 
+                        <div className="col-12 col-sm-12 col-md-6 mb-3 ">
+                          <div className='form-group'>
+                            <label>Gender<span className="star">*</span></label>
+                            <div className="select_row">
+                              <SelectDropdown
+                                id="statusDropdown"
+                                className='gander_drop'
+                                displayValue="name"
+                                placeholder="Select Gender"
+                                intialValue={form?.gender}
+                                result={e => { setForm({ ...form, gender: e.value }) }}
+                                options={[
+                                  { id: 'male', name: 'Male' },
+                                  { id: 'female', name: 'Female' },
+                                  { id: 'others', name: 'Rather Not Say' },
+                                ]}
+                              />
+                            </div>
+                            {submitted && !form?.gender ? <div className="invalid-feedback d-block">Gender is Required</div> : <></>}
+                          </div>
+                        </div>
+
                         <div className="col-12 col-sm-12 col-md-6 form-group ">
                           <label>Role</label>
                           <div>
@@ -309,7 +385,9 @@ const Html = ({ user,
                               </div>
                             </div>
                           </div>} */}
-                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
+
+
+                        {/* <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="category">Category:</label>
                           <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
                             <option value="">Select a category</option>
@@ -317,8 +395,7 @@ const Html = ({ user,
                               <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
                             ))}
                           </select>
-                          {/* {submitted && !form?.category_id ? <div className="invalid-feedback d-block">Category is Required</div> : <></>} */}
-                          </div>
+                        </div>
                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="subcategory">Subcategory:</label>
                           <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
@@ -327,8 +404,7 @@ const Html = ({ user,
                               <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                             ))}
                           </select>
-                          {/* {submitted && !form?.sub_category_id ? <div className="invalid-feedback d-block">Subcategory is Required</div> : <></>} */}
-                          </div>
+                        </div>
                         <div className='col-12 col-sm-12 col-md-6 mb-3'>
                           <label htmlFor="subsubcategory">Sub-subcategory:</label>
                           <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
@@ -337,8 +413,20 @@ const Html = ({ user,
                               <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
                             ))}
                           </select>
-                          {/* {submitted && !form?.sub_child_category_id ? <div className="invalid-feedback d-block">Sub-subcategory is Required</div> : <></>} */}
+                        </div> */}
+
+
+                        <div className="col-md-12 mb-3">
+                          <label>Select Category<span className="star">*</span></label>
+                          <div className="drops category-input">
+                            <MultiSelectDropdown
+                              data={categories}
+                              selectedItems={selectedItems}
+                              setSelectedItems={setSelectedItems}
+                            />
                           </div>
+                          {/* {submitted && selectedItems?.categories?.length == 0 && <div className="invalid-feedback d-block">{errors?.categories}</div>} */}
+                        </div>
 
 
                         {user?.role == 'affiliate' &&
@@ -411,13 +499,13 @@ const Html = ({ user,
                           <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>Country  </label>
-                              <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
+                              <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" />
                             </div>
                           </div>
                           <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>City  </label>
-                              <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" disabled />
+                              <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" />
                             </div>
                           </div>
                           <div className='col-12 col-sm-12 col-md-6 mb-3'>
@@ -428,7 +516,7 @@ const Html = ({ user,
                           </div></>
                         }
 
-                        {<div className="col-12 col-sm-12 col-md-6 mb-3">
+                        {user?.role == "affiliate" ? <div className="col-12 col-sm-12 col-md-6 mb-3">
                           <div className='form-group'>
                             <label>website</label>
                             <input
@@ -441,29 +529,40 @@ const Html = ({ user,
                               pattern={pattern}
                             />
                           </div>
-                        </div>}
-
-                        <div className="col-12 col-sm-12 col-md-6 mb-3 ">
-                          <div className='form-group'>
-                            <label>Gender<span className="star">*</span></label>
-                            <div className="select_row">
-                              <SelectDropdown
-                                id="statusDropdown"
-                                className='gander_drop'
-                                displayValue="name"
-                                placeholder="Select Gender"
-                                intialValue={form?.gender}
-                                result={e => { setForm({ ...form, gender: e.value }) }}
-                                options={[
-                                  { id: 'male', name: 'Male' },
-                                  { id: 'female', name: 'Female' },
-                                  { id: 'others', name: 'Rather Not Say' },
-                                ]}
+                        </div> 
+                        :
+                        <div className="col-12 col-sm-12 col-md-6 mb-3">
+                        <div className="form-group">
+                          <label>Websites</label>
+                          {websites.map((website, index) => (
+                            <div key={index} className="d-flex align-items-center gap-2 mb-2">
+                              <input
+                                type="text"
+                                className="form-control flex-grow-1"
+                                placeholder="http://www.example.com"
+                                value={website}
+                                onChange={(e) => handleWebsiteChange(index, e.target.value)}
+                                title="http://www.example.com"
+                                pattern="https?://.+" 
                               />
+                              <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => removeWebsite(index)}
+                                disabled={websites.length === 1}
+                              >
+                                ❌
+                              </button>
                             </div>
-                            {submitted && !form?.gender ? <div className="invalid-feedback d-block">Gender is Required</div> : <></>}
-                          </div>
+                          ))}
+                          <button type="button" className="btn btn-primary mt-2" onClick={addWebsite}>
+                            ➕ Add Website
+                          </button>
                         </div>
+                      </div>
+                        }
+
+
                         {
                           <div className='col-12 col-sm-12 col-md-6 mb-3  col-lg-12'>
                             <div className=" form-group">
@@ -515,53 +614,59 @@ const Html = ({ user,
                       {
 
                         <div className="row mx-auto">
-
-                          {data?.map((item) => (
-                            <div key={item?.id} className=" col-12 col-sm-12 col-md-12 col-lg-12">
-                              <div className="card rounded-5 border platforms_input mb-3">
-                                <input
-                                  className="form-check-input ml-0"
-                                  type="checkbox"
-                                  id={item}
-                                  onChange={() => handleFeatureCheckbox(item)}
-                                  checked={selectedItems?.includes(item)}
-                                />
-                                <label className="form-check-label ml-3 pl-2" for={item}>
-                                  {methodModel?.capitalizeFirstLetter(item)}
-                                </label>
-                                {selectedItems?.includes(item) && (
+                          {[...customItems].map((item,index) => (
+                            <div key={item} className="col-12">
+                              <div className="card rounded-5 border platforms_input mb-3 p-3">
+                                <div className="d-flex align-items-center">
+                                  <input
+                                    className="form-check-input ml-0"
+                                    type="checkbox"
+                                    id={item}
+                                    onChange={() => handleFeatureCheckbox(item)}
+                                    checked={selectedItems1?.includes(item)}
+                                  />
+                                  <label className="form-check-label ml-3 pl-2" htmlFor={item}>
+                                    {methodModel?.capitalizeFirstLetter(item)}
+                                  </label>
+                                  {index > 3 && <button
+                                    className="btn btn-danger btn-sm ml-auto"
+                                    onClick={() => handleRemoveItem(item)}
+                                  >
+                                    Remove
+                                  </button>}
+                                </div>
+                                {selectedItems1?.includes(item) && (
                                   <div className="row">
-                                    <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
+                                    <div className="col-12 my-3">
                                       <label>User name</label>
                                       <input
                                         type="text"
                                         className="form-control"
-                                        placeholder='Enter Name'
-                                        value={form[`${item}_username`]}
-                                        onChange={(e) => {
+                                        placeholder="Enter Name"
+                                        value={form[`${item}_username`] || ""}
+                                        onChange={(e) =>
                                           setForm((prevForm) => ({
                                             ...prevForm,
                                             [`${item}_username`]: e.target.value,
-                                          }));
-                                        }}
+                                          }))
+                                        }
                                         required
                                       />
                                     </div>
 
-                                    <div className="col-12 col-sm-12  col-md-6 col-lg-12 my-3">
+                                    <div className="col-12 my-3">
                                       <label>{`${methodModel?.capitalizeFirstLetter(item)} link`}</label>
                                       <input
                                         type="text"
                                         className="form-control"
-                                        placeholder='Enter link'
-
-                                        value={form[`${item}_profile_link`]}
-                                        onChange={(e) => {
+                                        placeholder="Enter link"
+                                        value={form[`${item}_profile_link`] || ""}
+                                        onChange={(e) =>
                                           setForm((prevForm) => ({
                                             ...prevForm,
                                             [`${item}_profile_link`]: e.target.value,
-                                          }));
-                                        }}
+                                          }))
+                                        }
                                         title="http://www.example.com"
                                         pattern={pattern}
                                         required
@@ -572,6 +677,22 @@ const Html = ({ user,
                               </div>
                             </div>
                           ))}
+
+                          <div className="col-12">
+                            <div className="card rounded-5 border platforms_input mb-3 p-3">
+                              <input
+                                type="text"
+                                className="form-control mb-2"
+                                placeholder="Enter new platform"
+                                value={newItem}
+                                onChange={(e) => setNewItem(e.target.value)}
+                              />
+                              <button className="btn btn-primary" onClick={handleAddNewItem}>
+                                Add Platform
+                              </button>
+                            </div>
+                          </div>
+
                         </div>
 
                       }
@@ -579,209 +700,7 @@ const Html = ({ user,
                   </div>
                 </div>
               </div>
-              <div className='col-12 mt-4'>
-                <div className='row'>
-                  <div className='card p-0'>
-                    <div className='card-header'>
-                      <div className='main_title_head'>
-                        <h3>Add Your Account Detail</h3>
-                      </div>
-                    </div>
-                    <div className='card-body'>
 
-                      <div className='row '>
-                        {/* <div className='col-md-6'>
-
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>Auto Invoicing <img className='sad-img' src='/assets/img/information-button.png' alt=''></img></label></p>
-                              <input type="checkbox"
-                                checked={formData?.auto_invoice}
-                                name="auto_invoice"
-                                onChange={handleInputChange}
-                                className="checkbox-custom d-block">
-                              </input>
-                            </div>
-
-
-                          </div>
-                          <div className='col-12 col-sm-12 col-md-6 '>
-
-
-                            <div className='form-group'>
-                              <p className='mb-0'><label className='label-set'>Hide Invoices from Partners <img className='sad-img' src='/assets/img/information-button.png' alt=''></img></label></p>
-                              <input
-                                checked={formData?.is_hide_invoice}
-                                onChange={handleInputChange}
-                                name="is_hide_invoice"
-                                type="checkbox"
-                                className="checkbox-custom d-block"></input>
-                            </div>
-                          </div> */}
-                      </div>
-                      <div className='row  '>
-                        {/* <div className='col-md-6'>
-                            <div class="form-group">
-                              <label className='label-set' >Payment Method  </label>
-                              <select class="form-select " aria-label="Default select example" name='payment_method' value={formData?.payment_method}
-                                onChange={handleInputChange}>
-                                <option selected>Select</option>
-                                <option value="stripe">Stripe</option>
-                               
-                              </select>
-                              {submitted && !formData?.payment_method ? <div className="invalid-feedback d-block">Payment method is Required</div> : <></>}
-                            </div>
-                          </div> */}
-                        <div className='col-md-6'>
-                          <div className='form-group'>
-                            <p className='mb-0'><label className='label-set'>Account Holder Name </label></p>
-                            <input
-                              value={formData?.accountholder_name}
-                              onChange={handleInputChange}
-                              name="accountholder_name"
-                              placeholder="Enter your Holder Number"
-                              type="text"
-                              className="form-control "></input>
-                            {submitted && !formData?.accountholder_name ? <div className="invalid-feedback d-block">Account Holder Name is Required</div> : <></>}
-                          </div>
-                        </div>
-                        <div className='col-md-6'>
-                          <div className='form-group'>
-                            <p className='mb-0'><label className='label-set'>Company Name </label></p>
-                            <input
-                              value={formData?.company_name}
-                              onChange={handleInputChange}
-                              name="company_name"
-                              placeholder="Enter your Company Number"
-                              type="text"
-                              className="form-control "></input>
-                            {submitted && !formData?.company_name ? <div className="invalid-feedback d-block">Company Name is Required</div> : <></>}
-                          </div>
-                        </div>
-                        <div className='col-md-6'>
-
-
-                          <div className='form-group'>
-                            <p className='mb-0'><label className='label-set'>Account Number</label></p>
-                            <input
-                              value={formData?.account_number}
-                              onChange={handleInputChange}
-                              name="account_number"
-                              placeholder="Enter your Account Number"
-                              type="number"
-                              className="form-control "></input>
-                            {submitted && formData?.account_number?.length < 12 ? <div className="invalid-feedback d-block">Account Number is must be 12 digit</div> : <></>}
-                          </div>
-                        </div>
-                        <div className='col-md-6'>
-
-                          <div className='form-group'>
-                            <p className='mb-0'><label className='label-set'>Routing Number </label></p>
-                            <input
-                              value={formData?.routing_number}
-                              onChange={handleInputChange}
-                              name="routing_number"
-                              placeholder="Enter your Routing Number"
-                              type="number"
-                              className="form-control "></input>
-                            {submitted && formData?.routing_number?.length < 9 ? <div className="invalid-feedback d-block">Routing Number is must be 9 digit</div> : <></>}
-                          </div>
-                        </div>
-                        <div className='col-md-6'>
-
-                          <div className='form-group'>
-                            <p className='mb-0'><label className='label-set'>SSN Number </label></p>
-                            <input
-                              value={formData?.ssn_number}
-                              onChange={handleInputChange}
-                              name="ssn_number"
-                              placeholder="Enter your SSN Number"
-                              type="number"
-                              className="form-control "></input>
-                            {submitted && formData?.ssn_number?.length < 9 ? <div className="invalid-feedback d-block">SSN Number is must be 9 digit</div> : <></>}
-                          </div>
-                        </div>
-                        {/* <div className='col-md-6'>
-                            <div className='form-group rect-cust-width'>
-                              <label className='label-set'>Date of Birth:</label>
-                              <p>
-                                <DatePicker
-                                  className='form-control w-100'
-                                  selected={dob}
-                                  onChange={handleDateChange}
-                                  peekNextMonth
-                                  showMonthDropdown
-                                  showYearDropdown
-                                  dropdownMode="select"
-                                  placeholderText="Select Date of Birth"
-                                  maxDate={eighteenYearsAgo}
-                                />
-                                {submitted && !dob ? <div className="invalid-feedback d-block">DOB is Required</div> : <></>}
-                              </p>
-                            </div>
-                          </div> */}
-
-                        {/* <div className='col-md-6 ml-1'>
-                            <div class="form-group">
-                              <label className='label-set' >Tax Details <img className='sad-img' src='/assets/img/information-button.png' alt=''></img> </label>
-                              <input type="text" className="form-control " id="tax_detail" name="tax_detail" value={formData?.tax_detail}
-                                onChange={handleInputChange} />
-                            </div>
-                          </div> */}
-                        {/* <div className='col-md-6'>
-                            <label>Front Doc (only image)</label>
-                            <div className="form-group drag_drop">
-                              <div className='upload_file'>
-                                {!loaderr && !imgLoder && image.length == 0 ? <><button className="btn btn-primary upload_image">Upload Document</button>
-                                  <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
-                                    // disabled={loader}
-                                    onChange={(e) => {
-                                      setImgLoder(true)
-                                      uploadImage(e, 'images');
-                                    }} /></> : <></>}
-                                {submitted && !frontDoc ? <div className="invalid-feedback d-block">Front doc is Required</div> : <></>}
-                                {loaderr && imgLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                <div className="imagesRow mt-4 img-wrappper">
-                                  {image && image?.map((itm, i) => {
-                                    return <div className="imagethumbWrapper" key={i}>
-                                      <img src={itm?.url?.length > 0 ? methodModel.noImg(itm?.url) : ''} alt={itm.name} className="thumbnail" />
-                                      <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
-                                    </div>
-                                  })}
-                                </div>
-                              </div>
-                            </div>
-                          </div> */}
-
-                        {/* <div className='col-md-6'>
-                            <label>Back Doc(only image) </label>
-                            <div className="form-group drag_drop">
-                              <div className='upload_file'>
-                                {!loadDocerr && !docLoder && doc.length == 0 && <><button className="btn btn-primary upload_image">Upload Document</button>
-                                  <input type="file" className="form-control-file over_input" accept="images/*" multiple={true}
-                                    // disabled={loader}
-                                    onChange={(e) => {
-                                      setDocLoder(true)
-                                      uploadDocument(e, 'images');
-                                    }} /></>}
-                                {submitted && !backDoc ? <div className="invalid-feedback d-block">Back doc is Required</div> : <></>}
-                                {loadDocerr && docLoder ? <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div> : <></>}
-                                <div className="imagesRow mt-4 img-wrappper">
-                                  {doc && doc?.map((itm, i) => {
-                                    return <div className="imagethumbWrapper" key={i}>
-                                      <img src={itm?.url?.length > 0 ? methodModel.noImg(itm?.url) : ''} alt={itm.name} className="thumbnail" />
-                                      <i className="fa fa-times kliil" title="Remove" onClick={e => removeDocument(i)}></i>
-                                    </div>
-                                  })}
-                                </div>
-                              </div>
-                            </div>
-                          </div> */}
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className='mt-4 btn-discards'>
               <div className="text-end edit-btns d-flex gap-3 align-items-center justify-content-end">

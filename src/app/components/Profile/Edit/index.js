@@ -28,30 +28,36 @@ const EditProfile = () => {
     website: "",
     description: "",
     tags: [],
-    dialCode:'+1',
+    dialCode: '+1',
     pincode: "",
     social_media_platforms: [],
     category_name: "",
     category_id: "",
-    country:"",
-    city:"",
-    pincode:"",
+    country: "",
+    city: "",
+    pincode: "",
     accountholder_name: "",
     routing_number: "",
     account_number: "",
     ssn_number: '',
     company_name: "",
-    affiliate_type:'',
-    cat_type:''
+    affiliate_type: '',
+    cat_type: ''
     // dob:''
   });
-  const [picLoader,setPicLoader]=useState(false)
+  const [picLoader, setPicLoader] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [category, setCategory] = useState([])
   const [changeSubCategory, setChangeSubCategory] = useState('')
   const [address, setAddress] = useState(form?.address);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [selectedItems, setSelectedItems] = useState(form?.social_media_platforms);
+  const [selectedItems1, setSelectedItems1] = useState(form?.social_media_platforms);
+  const [websites, setWebsites] = useState(['']);
+  const [selectedItems, setSelectedItems] = useState({
+    categories: [],
+    subCategories: [],
+    subSubCategories: [],
+  });
   const [dob, setDOB] = useState(null);
   const [formData, setFormData] = useState({
     // auto_invoice: false,
@@ -70,10 +76,10 @@ const EditProfile = () => {
   });
   const [formatedDob, setFormatedDob] = useState()
   const formValidation = [
-    { key: 'firstName', required:true },
+    { key: 'firstName', required: true },
     { key: 'mobileNo', minLength: 10 },
-    { key: 'gender', required:true },
-    { key: 'dialCode', minLength:1 },
+    { key: 'gender', required: true },
+    { key: 'dialCode', minLength: 1 },
     // { key: 'affiliate_type', required:true },
     // { key: 'category_id', required:true },
     // { key: 'sub_category_id', required:true },
@@ -97,7 +103,7 @@ const EditProfile = () => {
   const handleSubsubcategoryChange = (e) => {
     setSelectedSubSubcategory(e.target.value);
   };
-  
+
   useEffect(() => {
     if (!form?.dialCode) {
       setForm((prevForm) => ({ ...prevForm, dialCode: '+1' }));
@@ -119,7 +125,7 @@ const EditProfile = () => {
       setFormatedDob(formattedDOB);
     }
   };
-  
+
 
   const gallaryData = () => {
     loader(true)
@@ -134,7 +140,13 @@ const EditProfile = () => {
         })
         setForm(payload)
         setFormData(payload)
+        setWebsites(value?.affiliate_website || [''])
         setData(res.data)
+        setSelectedItems({
+          categories: res.data.category_id,
+          subCategories:res.data.sub_category_id,
+          subSubCategories:res.data.sub_child_category_id,
+        })
       }
       loader(false)
     })
@@ -148,14 +160,15 @@ const EditProfile = () => {
     e.preventDefault();
     setSubmitted(true)
     let invalid = methodModel.getFormError(formValidation, form)
-    if(form?.dialCode == "") return
-    if(form?.mobileNo == "") return
+    if (form?.dialCode == "") return
+    if (form?.mobileNo == "") return
     if (invalid) return
-    if(user?.role == 'affiliate' && !form?.affiliate_type)return
+    if (user?.role == 'affiliate' && !form?.affiliate_type) return
 
     let value = {
       ...form,
-      social_media_platforms: selectedItems || [],
+      social_media_platforms: selectedItems1 || [],
+      affiliate_website:websites,
       lat: selectedLocation?.lat?.toString(),
       lng: selectedLocation?.lng?.toString(),
       address: selectedLocation?.address,
@@ -169,22 +182,26 @@ const EditProfile = () => {
       account_number: formData?.account_number,
       ssn_number: formData?.ssn_number,
       company_name: formData?.company_name,
-      sub_category_id: selectedSubcategory,
-      sub_child_category_id: selectedSubSubcategory,
-      category_id: selectedCategory,
+      // sub_category_id: selectedSubcategory,
+      // sub_child_category_id: selectedSubSubcategory,
+      // category_id: selectedCategory,
+      category_id: selectedItems?.categories,
+      sub_category_id: selectedItems?.subCategories,
+      sub_child_category_id: selectedItems?.subSubCategories,
       // cat_type:form?.cat_type
       // dob: formatedDob,
     }
-    if(!value?.cat_type){
+    delete value?.websites
+    if (!value?.cat_type) {
       delete value?.cat_type
     }
-    if(!value?.sub_category_id){
+    if (!value?.sub_category_id) {
       delete value?.sub_category_id
     }
-    if(!value?.category_id){
+    if (!value?.category_id) {
       delete value?.category_id
     }
-    if(!value?.sub_child_category_id){
+    if (!value?.sub_child_category_id) {
       delete value?.sub_child_category_id
     }
     delete value.category_name
@@ -196,7 +213,7 @@ const EditProfile = () => {
       delete value.affiliate_group
     }
 
-    if (user?.role != "affiliate"){
+    if (user?.role != "affiliate") {
       delete value.affiliate_type
     }
 
@@ -241,11 +258,12 @@ const EditProfile = () => {
       };
 
       setSelectedLocation(selectedLocation);
-      setForm({...form,
+      setForm({
+        ...form,
         city: selectedLocation?.city,
         state: selectedLocation?.state,
         country: selectedLocation?.country,
-        pincode:selectedLocation?.pincode
+        pincode: selectedLocation?.pincode
       })
       setAddress(selectedAddress);
       sendLocationToApi(selectedLocation);
@@ -291,8 +309,8 @@ const EditProfile = () => {
   };
 
   const handleFeatureCheckbox = (item) => {
-    if (selectedItems.includes(item)) {
-      setSelectedItems(selectedItems.filter((selected) => selected !== item));
+    if (selectedItems1.includes(item)) {
+      setSelectedItems1(selectedItems1.filter((selected) => selected !== item));
       // Clear the corresponding form fields when the checkbox is unchecked
       setForm((prevForm) => ({
         ...prevForm,
@@ -300,12 +318,12 @@ const EditProfile = () => {
         [`${item}_profile_link`]: '',
       }));
     } else {
-      setSelectedItems([...selectedItems, item]);
+      setSelectedItems1([...selectedItems1, item]);
     }
   };
 
   useEffect(() => {
-    setSelectedItems(form?.social_media_platforms)
+    setSelectedItems1(form?.social_media_platforms)
   }, [form?.social_media_platforms])
 
   useEffect(() => {
@@ -327,6 +345,8 @@ const EditProfile = () => {
         handleSelect={handleSelect}
         handleChange={handleChange}
         setChangeSubCategory={setChangeSubCategory}
+        selectedItems1={selectedItems1}
+        setSelectedItems1={setSelectedItems1}
         selectedItems={selectedItems}
         setSelectedItems={setSelectedItems}
         handleFeatureCheckbox={handleFeatureCheckbox}
@@ -346,6 +366,8 @@ const EditProfile = () => {
         selectedSubcategory={selectedSubcategory}
         selectedSubSubcategory={selectedSubSubcategory}
         history={history}
+        websites={websites} 
+        setWebsites={setWebsites}
       />
     </>
   );

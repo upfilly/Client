@@ -267,7 +267,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
       </span>
 
       {isOpen && (
-        <div className="dropdown-menu">
+        <div className={`dropdown-menu ${isOpen ? "show" : ""}`}>
           <input type="text" placeholder="Search Categories..." value={searchTerm} onChange={handleSearch} className="search-input" />
 
           <div className="select-actions">
