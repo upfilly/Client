@@ -156,6 +156,7 @@ img.rankeds {
     background-color: #CED9E5;
     border-radius: 15px;
     border: 1px solid #dbdbdb;
+    height: 100%;
 }
 
 i.fa.fa-quote-right.df {
@@ -232,7 +233,7 @@ p.includes-plan {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-bottom: 17px;
+    margin-bottom: 0px;
 }
 
 p.montyh {
@@ -305,7 +306,8 @@ img.check_list {
     background-image: url(../../../public/assets/img/bg_blue.png);
     background-size: cover;
     color: #fff;
-    padding: 28px 40px;
+    // padding: 28px 40px;
+    padding: 50px 40px;
     background-repeat: no-repeat;
     border-radius: 10px;
 
@@ -367,7 +369,7 @@ a.demo-button {
 }
 
 .plan-features {
-    height: 250px;
+    height: 100px;
     overflow: auto;
 }
 
@@ -454,11 +456,11 @@ p.textWrong {
   }
   
   .additional-info {
-    margin-top: 20px;
+    margin-top: 0px;
     font-size: 14px;
     color: #333;
-    padding: 10px;
-    border-top: 1px solid #ccc;
+    padding: 5px 0px;
+    // border-top: 1px solid #ccc;
   }
   
   .info-item {
@@ -469,3 +471,41 @@ p.textWrong {
     color: #555;
   }
   
+
+//   Nikhil CSS
+
+.quickss:hover{
+    background-color: #19294D;
+}
+.quickss:hover .triel-city{
+    color: #fff !important;
+}
+.quickss:hover .dollarf-sec {
+    color: #fff !important;
+}
+.quickss:hover .montyh {
+    color: #fff !important;
+}
+.quickss:hover .includes-plan {
+    color: #fff !important;
+}
+.quickss:hover .additional-info{
+    color: #fff !important;
+}
+
+.quickss:hover .info-item strong{
+    color: #fff !important;
+}
+.quickss:hover p.ipsi{
+    color: #fff !important;
+}
+a.demos-button{
+    border: none !important;
+}
+.dots-img {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 300px;
+    top: 250px;
+}

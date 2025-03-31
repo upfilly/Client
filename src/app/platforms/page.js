@@ -186,6 +186,7 @@ const UpFillyPage = () => {
 
   return (
     <Layout>
+      <img className='dots-img' src='/assets/img/Vector-dots.png' alt=''></img>
       <div className="App platforms-page">
         {/* Header Section */}
         <header className="header">
@@ -207,37 +208,43 @@ const UpFillyPage = () => {
           </div>
         </div> */}
         </header>
-<div className="container">
+        <div className="container">
 
-        {/* Overview Section */}
+          {/* Overview Section */}
 
-        {/* Affiliate Tracking Section */}
-        <section className="affiliate-tracking mt-4">
-          <h2>Track Every Click, Conversion, and Commission</h2>
-          <p>
-            Stay on top of your affiliate program with real-time tracking.
+          {/* Affiliate Tracking Section */}
+          <section className="affiliate-tracking mt-4">
+            <h2>
+              {/* Track Every Click, Conversion, and Commission */}
+              Important Updates
+            </h2>
+            <p>
+              {/* Stay on top of your affiliate program with real-time tracking.
             UpFilly provides precise data on clicks, conversions, and
             commissions, ensuring you never miss a detail. Our advanced
             attribution technology guarantees accurate results, while fraud
-            protection tools keep your campaigns secure.
-          </p>
-          {/* <div className="tracking-visual">
+            protection tools keep your campaigns secure. */}
+              Whether you are just beginning to build or expand your business, Upfilly offers a broad set of programs to help you innovate, expand, and differentiate your offerings. <br></br><br></br>
+
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            </p>
+            {/* <div className="tracking-visual">
           <img src="/assets/images/affiliate-tracking.png" alt="Tracking Flow" />
           <img src="/assets/icons/tracking-icon.svg" alt="Tracking" />
         </div> */}
-        </section>
+          </section>
 
-        {/* Analytics & Insights Section */}
-        <section className="analytics-insights">
-          <h2>Turn Data Into Decisions</h2>
+          {/* Analytics & Insights Section */}
+          <section className="analytics-insights">
+            {/* <h2>Turn Data Into Decisions</h2>
           <p>
             UpFilly’s powerful analytics give you a complete overview of your
             affiliate program’s performance. With advanced reporting and data
             visualization, you can identify top-performing affiliates, optimize
             campaigns, and drive better results. Make informed decisions with
             insights that matter.
-          </p>
-          {/* <div className="analytics-visual">
+          </p> */}
+            {/* <div className="analytics-visual">
           <img src="/assets/images/analytics-graph.png" alt="Analytics Graph" />
           <div className="icons">
             <img src="/assets/icons/analytics-icon.svg" alt="Top Affiliates" />
@@ -245,42 +252,146 @@ const UpFillyPage = () => {
             <img src="/assets/icons/analytics-icon.svg" alt="Click-Through Rates" />
           </div>
         </div> */}
-        </section>
 
-        {/* Payout Management Section */}
-        <section className="payout-management">
-          <h2>Simplify Affiliate Payouts</h2>
+            <div className="row">
+              <div className="col-md-6 platform-wrapper">
+                <h1>
+                  Usable Upfilly
+                </h1>
+                <h1>
+                  Platform
+                </h1>
+                <p>
+                  Lorem Ipsum is simply dummy text of the
+                </p>
+                <p>
+                  printing and type lorem Ipsum is simply
+                </p>
+                <div className="platform-content mt-3">
+                  <h2>
+                    Understand Buyers
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+                <div className="platform-content">
+                  <h2>
+                    Attribute User Activity
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+                <div className="platform-content">
+                  <h2>
+                    Utilize CRM Stages
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+                <div className="platform-content-2">
+                  <h2>
+                    Measure Organic
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+              </div>
+              <div className="col-md-6 d-flex justify-content-end">
+                <img className='w-75 object-fit-contain' src='/assets/img/platform-1.png' alt=''></img>
+              </div>
+            </div>
+          </section>
+
+          {/* Payout Management Section */}
+          <section className="payout-management">
+            {/* <h2>Simplify Affiliate Payouts</h2>
           <p>
             Pay your affiliates quickly and effortlessly with UpFilly’s
             automated payout system. Choose from multiple payment methods and
             let us handle the rest. Whether it’s one affiliate or hundreds,
             UpFilly ensures payments are accurate and on time, keeping your
             partners happy and engaged.
-          </p>
-          {/* <div className="payout-visual">
+          </p> */}
+            {/* <div className="payout-visual">
           <img src="/assets/images/payout-completed.png" alt="Payout Completed" />
           <img src="/assets/icons/payment-options.svg" alt="Payment Options" />
         </div> */}
-        </section>
 
-        {/* Supported Integrations Section */}
-        <section className="supported-integrations">
-          <h2>Connect with Leading Platforms</h2>
+            <div className="row">
+              <div className="col-md-6 d-flex justify-content-start">
+                <img className='w-75 object-fit-contain' src='/assets/img/platform-2.png' alt=''></img>
+              </div>
+              <div className="col-md-6 platform-wrapper">
+                <h1>
+                  Usable Upfilly
+                </h1>
+                <h1>
+                  Platform
+                </h1>
+                <p>
+                  Lorem Ipsum is simply dummy text of the
+                </p>
+                <p>
+                  printing and type lorem Ipsum is simply
+                </p>
+                <div className="platform-content mt-3">
+                  <h2>
+                    Understand Buyers
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+                <div className="platform-content">
+                  <h2>
+                    Attribute User Activity
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+                <div className="platform-content">
+                  <h2>
+                    Utilize CRM Stages
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+                <div className="platform-content-2">
+                  <h2>
+                    Measure Organic
+                  </h2>
+                  <span>
+                    <img src="/assets/img/check.png" className="check_list" alt=""></img>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Supported Integrations Section */}
+          {/* <section className="supported-integrations">
+            <h2>Connect with Leading Platforms</h2>
           <p>
             UpFilly integrates seamlessly with platforms like Shopify, making it
             easy to connect your store and start tracking affiliate performance.
             With quick onboarding and minimal setup, you’ll be up and running in
             no time.
           </p>
-          {/* <div className="integrations-logos">
+            <div className="integrations-logos">
           <img src="/assets/images/shopify-logo.svg" alt="Shopify" />
         </div>
-        <img src="/assets/icons/platform-integrations.svg" alt="Integration Visual" /> */}
-        </section>
+        <img src="/assets/icons/platform-integrations.svg" alt="Integration Visual" />
+          </section> */}
 
-        {/* Call to Action Section */}
-     
-          <section className="cta last-section card_box">
+          {/* Call to Action Section */}
+
+          {/* <section className="cta last-section card_box">
             <h2>Experience the Power of UpFilly</h2>
             <button
               className="cta-button"
@@ -288,9 +399,9 @@ const UpFillyPage = () => {
             >
               Get Started Now
             </button>
-          </section>
-        
-</div>
+          </section> */}
+
+        </div>
       </div>
     </Layout>
   );
