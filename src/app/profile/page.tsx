@@ -22,8 +22,8 @@ const Profile = () => {
   const [show, setShow] = useState(false);
   const [ActivityData, setActivityData] = useState<any>([])
   const [assosiateUserData, setAssosiateUserData] = useState([])
-  const [switchUser,setSwitchUser] = useState<any>(null)
-  const [bankData,setBankData] = useState<any>([])
+  const [switchUser, setSwitchUser] = useState<any>(null)
+  const [bankData, setBankData] = useState<any>([])
   const [roles, setRoles] = useState<any>('')
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -44,7 +44,7 @@ const Profile = () => {
     })
   };
 
-  const copyToClipboard = (text:any) => {
+  const copyToClipboard = (text: any) => {
     navigator.clipboard.writeText(text).then(() => {
       alert("Copied to clipboard: " + text);
     }).catch(err => {
@@ -62,7 +62,7 @@ const Profile = () => {
 
   const activityLogsData = (id: any) => {
     loader(true)
-    ApiClient.get(`activity-logs`, {account_manager_id:user?.id, user_id:id}).then(res => {
+    ApiClient.get(`activity-logs`, { account_manager_id: user?.id, user_id: id }).then(res => {
       if (res.success) {
         setActivityData(res?.data?.data)
       }
@@ -71,7 +71,7 @@ const Profile = () => {
 
   const retriveAccountData = () => {
     loader(true)
-    ApiClient.get(`account/retrieve`, {userId:user?.id || user?._id}).then(res => {
+    ApiClient.get(`account/retrieve`, { userId: user?.id || user?._id }).then(res => {
       if (res.success) {
         setBankData(res?.data)
       }
@@ -134,14 +134,14 @@ const Profile = () => {
 
   useEffect(() => {
     retriveAccountData()
-      if (user) {
-        gallaryData(user?.id || user?._id);
-        AssosiateUserData()
-        handleSwitchUser(user?.id || user?._id)
-        // activityLogsData(user?.activeUser?.id || user?.id || user?._id)
-        setRoles(user?.activeUser?.role)
-      }
-    },[]
+    if (user) {
+      gallaryData(user?.id || user?._id);
+      AssosiateUserData()
+      handleSwitchUser(user?.id || user?._id)
+      // activityLogsData(user?.activeUser?.id || user?.id || user?._id)
+      setRoles(user?.activeUser?.role)
+    }
+  }, []
   );
 
 
@@ -184,7 +184,7 @@ const Profile = () => {
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles =='affiliate' || roles == 'brand') && <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
@@ -194,7 +194,7 @@ const Profile = () => {
                         </div>
                       </div>
                       {/* <hr /> */}
-                      <div    className=" row align-items-center ">
+                      <div className=" row align-items-center ">
                         <div className="col-12 col-sm-12 col-md-12">
                           <div className="row">
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6">
@@ -250,29 +250,29 @@ const Profile = () => {
                             <div className='inputFlexs width400'>
                               <label>Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.all_category?.map((dat:any)=>dat?.name).join(",")}</p>
+                                <p className="profile_data">{data && data?.all_category?.map((dat: any) => dat?.name).join(",")}</p>
                               </div>
                             </div>
 
                           </div>}
 
-                          {data &&
+                        {data &&
                           <div className="col-12">
                             <div className='inputFlexs width400'>
                               <label>Sub Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.all_sub_category?.map((dat:any)=>dat?.name).join(",")}</p>
+                                <p className="profile_data">{data && data?.all_sub_category?.map((dat: any) => dat?.name).join(",")}</p>
                               </div>
                             </div>
 
                           </div>}
 
-                          {data?.activeUser &&
+                        {data?.activeUser &&
                           <div className="col-12">
                             <div className='inputFlexs width400'>
                               <label>Sub Child Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.all_sub_child_category?.map((dat:any)=>dat?.name).join(",")}</p>
+                                <p className="profile_data">{data && data?.all_sub_child_category?.map((dat: any) => dat?.name).join(",")}</p>
                               </div>
                             </div>
 
@@ -312,7 +312,7 @@ const Profile = () => {
                           </div>}
 
 
-                        
+
 
                         {data?.activeUser?.cellDialCode && data?.activeUser?.work_phone &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
@@ -385,7 +385,7 @@ const Profile = () => {
                               </div>
                             </div>}
 
-                           {data.activeUser.role == "brand" && <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                            {data.activeUser.role == "brand" && <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                               <div className='inputFlexs width400'>
                                 <label>Advertiser ID:</label>
                                 <div className='d-flex align-items-center'>
@@ -563,19 +563,19 @@ const Profile = () => {
 
                       </div>
                     </div>
-                   {user?.role == "affiliate" && <div className='card p-3 rounded-3 mb-4 ' >
+                    {user?.role == "affiliate" && <div className='card p-3 rounded-3 mb-4 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
                         <div className='main_title_head'>
                           <h3 className=''>Accounts</h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles =='affiliate' || roles == 'brand') && !bankData?.bank_name  && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
+                          {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && !bankData?.bank_name && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Add Account
                           </button>}
                         </div>
                       </div>
-                      
+
                       {bankData?.bank_name && <div className="bank-details-container">
                         <h2 className="bank-details-header">Bank Details</h2>
                         <div className="bank-details-row">
@@ -630,7 +630,7 @@ const Profile = () => {
                           <h3 className=''>Basic Information </h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
-                          {(Id==user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'brand' || roles == 'affilaite')  && <Link href="/profile/edit" className="btn btn-primary profiles">
+                          {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'brand' || roles == 'affilaite') && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
@@ -669,7 +669,7 @@ const Profile = () => {
                                   <p className="profile_data">{switchUser && switchUser?.role}</p>
                                 </div>
                               </div>}
-{/* 
+                            {/* 
                             {data?.affiliate_group_name &&
                               <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                                 <div className='inputFlexs width400'>
@@ -989,10 +989,10 @@ const Profile = () => {
                   </Modal.Header>
                   <Modal.Body>
 
-                  { ActivityData?.length > 0 && <div>
+                    {ActivityData?.length > 0 && <div>
                       <CompareTable
                         data={ActivityData}
-                        // getData={activityLogsData}
+                      // getData={activityLogsData}
                       />
                     </div>}
                     {/* {ActivityData?.map((data: any) => {
