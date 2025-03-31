@@ -51,13 +51,14 @@
   }
   
   .included-list {
-    margin-top: 40px;
+    margin-top: 80px;
   }
   
   .included-item {
     // width: 330px;
     padding: 20px;
-    background-color: #CED9E5;
+    background-color: #CED9E566; /* 66 is 40% opacity in hex */
+
     border-radius: 20px;
     height: 100%;
   }
@@ -92,16 +93,16 @@
   }
   
   .pricing-option h3 {
-    font-size: 18px;
+    font-size: 24px;
     margin: 0 0 10px;
-    color: #fff;
-    border-bottom: 1px solid #fff;
+    color: #EFF5FF;
+    border-bottom: 1px solid #FFFFFF4D;
     padding-bottom: 20px;
   }
   
   .pricing-option p {
-    font-size: 14px;
-    color: #fff;
+    font-size: 18px;
+    color: #EFF5FF;
   }
   
   /* Benefits Section */
@@ -195,8 +196,6 @@
   background-color: #02AAE81F;
   border-radius: 100%;
   padding: 10px;
-  height: 50px;
-  width: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -210,11 +209,35 @@
   margin-bottom: 30px;
 }
 
+
+
+
+
 @media screen and (max-width: 767px) {
   .included-list{
     gap: 20px;
   }
   .pricing-table{
     gap: 20px;
+  }
+}
+
+
+
+// deepak css
+
+.iconhegt{
+  height: 50px;
+}
+
+@media screen and (min-width:1450px) {
+  .included-item{
+    width: 400px;
+    padding: 40px;
+  }
+
+  .pricing-option{
+    width: 400px;
+    padding: 40px;
   }
 }
