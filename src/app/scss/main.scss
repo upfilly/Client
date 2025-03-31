@@ -6081,7 +6081,7 @@ input.form-control {
   color: #000;
   text-align: center;
   font-family: Poppins;
-  font-size: 52px;
+  font-size: 32px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -6139,4 +6139,10 @@ input.form-control {
   line-height: 36.194px;
   margin-bottom: 20px;
   /* 54.545% */
+}
+
+@media screen and (min-width:1450px) {
+  .innerhtmls {
+   font-size: 52px;
+}
 }

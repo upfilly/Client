@@ -21,7 +21,7 @@ export default function Company() {
 
           <div className="minus_margin container">
 
-            <h1 className="innerhtmls">Take the Hassle Out of Managing Your <span className="d-block "> Affiliate Program</span></h1>
+            <h1 className="innerhtmls">Take the Hassle Out of Managing Your <p className="d-block "> Affiliate Program</p></h1>
             <h2 className="ptext_bgs">
               Let our team of specialists handle your affiliate program, so you can focus on growing your business.
             </h2>
