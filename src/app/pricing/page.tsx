@@ -211,6 +211,7 @@ export default function Pricing() {
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+       <img className='dots-img' src='/assets/img/Vector-dots.png' alt=''></img>
       <div className='container   '>
         <div className="row  ">
           <div className="col-12  ">
@@ -223,8 +224,6 @@ export default function Pricing() {
                 </div>
                 <p className='text-center printit'>UpFilly offers a range of flexible pricing plans designed to scale with your business needs. The plans include monthly platform fees and basket value charges based on revenue generation.</p>
 
-              </div>
-              <div className=''>
                 <div className="row">
                   <div className="col-md-12 mb-5 mt-4">
                     <div className="monthalu_plan d-flex">
@@ -241,6 +240,8 @@ export default function Pricing() {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className='my-5'>
 
                 <div className="row">
                   {sortedData?.map((itm: any) => {
@@ -430,7 +431,7 @@ export default function Pricing() {
                     </div>
 
                     <p className='types'>"I've been using this service for months, and it has never disappointed. The team is professional, and the results are always top-notch. I highly recommend them to anyone looking for reliable and efficient service."</p>
-                    <hr className='bgs'></hr>
+                    <hr className='bgs mt-auto'></hr>
                     <div className='d-flex align-items-center'>
                       <img src='/assets/img/person.jpg' className='icon_user' alt="Customer" />
                       <div>
@@ -447,7 +448,7 @@ export default function Pricing() {
                     </div>
 
                     <p className='types'>"This company has exceeded my expectations. The customer service is exceptional, and their attention to detail is unmatched. I will continue to be a loyal customer for years to come!"</p>
-                    <hr className='bgs'></hr>
+                    <hr className='bgs mt-auto'></hr>
                     <div className='d-flex align-items-center'>
                       <img src='/assets/img/person.jpg' className='icon_user' alt="Customer" />
                       <div>
@@ -464,7 +465,7 @@ export default function Pricing() {
                     </div>
 
                     <p className='types'>"I've tried many similar services, but none have come close to the level of professionalism and quality I receive here. They truly understand customer needs and always go the extra mile. Highly recommend!"</p>
-                    <hr className='bgs'></hr>
+                    <hr className='bgs mt-auto'></hr>
                     <div className='d-flex align-items-center'>
                       <img src='/assets/img/person.jpg' className='icon_user' alt="Customer" />
                       <div>

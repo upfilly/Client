@@ -175,13 +175,13 @@ const Html = ({ settingData, Logout }) => {
         </Link>
       </nav>} */}
         {!isDashboard &&
-          <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4  ">
+          <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
             <Link href="/">
               <img
                 src={`${environment?.api}${settingData?.logo}`}
                 className="logo"
                 alt=""
-                style={{ width: '200px', height: '100px' }}
+                style={{ width: '200px', height: 'auto' }}
               />
             </Link>
 
@@ -220,7 +220,10 @@ const Html = ({ settingData, Logout }) => {
             {(user?.role == "brand" || !user) && <Link class="btn btn-primary login" href="/pricing">Book a Demo</Link>}
             </li> */}
                 <li class="nav-item">
-                  <Link class={`btn btn-primary  login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Contact Us</Link>
+                  <Link class={`btn btn-primary login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Book a Demo</Link>
+                </li>
+                <li class="nav-item">
+                  <Link class={`btn btn-primary  contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
                 </li>
               </form>
             </div>

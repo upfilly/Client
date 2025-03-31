@@ -15,86 +15,157 @@ export default function Company() {
         name={undefined}
         filters={undefined}
       >
-        <div className="managed-subscriptions">
-          {/* Overview Section */}
-          <section className="overview">
-            <header className="overview-header">
-              <h1 className="overview-title">Take the Hassle Out of Managing Your Affiliate Program</h1>
-              <h2 className="overview-subtitle">
-                Let our team of specialists handle your affiliate program, so you can focus on growing your business.
-              </h2>
-            </header>
-            <p className="overview-text">
+
+        {/* Overview Section */}
+        <section className=" bgdots">
+
+          <div className="minus_margin container">
+
+            <h1 className="innerhtmls">Take the Hassle Out of Managing Your <p className="d-block "> Affiliate Program</p></h1>
+            <h2 className="ptext_bgs">
+              Let our team of specialists handle your affiliate program, so you can focus on growing your business.
+            </h2>
+
+            <p className="para3">
               Our Managed Subscriptions service is designed to provide expert guidance and hands-on management for your affiliate network. From strategy to execution, we ensure your program performs at its best.
             </p>
-          </section>
+          </div>
+        </section>
 
-          {/* What’s Included Section */}
-          <section className="whats-included">
-            <header>
-              <h2 className="section-title">What’s Included in Managed Subscriptions?</h2>
-            </header>
+        {/* What’s Included Section */}
+        <section className="container">
+          <div className="cuspadding">
+            <h2 className="section-title ">What’s Included in Managed Subscriptions?</h2>
             <div className="included-list">
-              <div className="included-item">
-                <h3>Dedicated Affiliate Specialist</h3>
-                <p>Your personal expert to manage and optimize your program.</p>
-              </div>
-              <div className="included-item">
-                <h3>Weekly Strategy Calls</h3>
-                <p>Regular discussions to align on goals, share insights, and refine strategies.</p>
-              </div>
-              <div className="included-item">
-                <h3>Comprehensive Reports</h3>
-                <p>Detailed analysis of affiliate performance, campaign success, and growth opportunities.</p>
+              <div className=" row">
+                <div className="col-12 col-md-4">
+                  <div className="included-item">
+                    <div className="d-flex gap-2 mb-3 align-items-center">
+                      <div className="included-icon">
+                        <img className="iconhegt" src="/assets/img/s1.svg" />
+                      </div>
+                      <h3>Dedicated Affiliate Specialist</h3>
+                    </div>
+                    <p>Your personal expert to manage and optimize your program.</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div className="included-item">
+                    <div className="d-flex gap-2 mb-3 align-items-center">
+                      <div className="included-icon">
+                        <img className="iconhegt" src="/assets/img/s2.svg" />
+                      </div>
+                      <h3>Weekly Strategy Calls</h3>
+                    </div>
+                    <p>Regular discussions to align on goals, share insights, and refine strategies.</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div className="included-item">
+                    <div className="d-flex gap-2 mb-3 align-items-center">
+                      <div className="included-icon">
+                        <img className="iconhegt" src="/assets/img/s3.svg" />
+                      </div>
+                      <h3>Comprehensive Reports</h3>
+                    </div>
+                    <p>Detailed analysis of affiliate performance, campaign success, and growth opportunities.</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Pricing Options Section */}
-          <section className="pricing-options">
-            <header>
-              <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
-            </header>
-            <div className="pricing-table">
-              <div className="pricing-option">
-                <h3>Standard Package</h3>
-                <p>Fixed monthly fee for full-service management.</p>
-              </div>
-              <div className="pricing-option">
-                <h3>Hybrid Package</h3>
-                <p>Monthly fee + a small commission percentage tied to program performance.</p>
-              </div>
-              <div className="pricing-option">
-                <h3>Custom Requests</h3>
-                <p>Tailored plans to align with your specific business requirements.</p>
+        {/* Pricing Options Section */}
+        <section className=" container">
+          <div className="cuspadding pt-0">
+            <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
+            <div className="included-list">
+              <div className=" row">
+                <div className="col-12 col-md-4">
+                  <div className="pricing-option">
+                    <h3>Standard Package</h3>
+                    <p>Fixed monthly fee for full-service management.</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div className="pricing-option">
+                    <h3>Hybrid Package</h3>
+                    <p>Monthly fee + a small commission percentage tied to program performance.</p>
+                  </div>
+                </div>
+                <div className="col-12 col-md-4">
+                  <div className="pricing-option">
+                    <h3>Custom Requests</h3>
+                    <p>Tailored plans to align with your specific business requirements.</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Benefits Section */}
-          <section className="benefits">
-            <header>
-              <h2 className="section-title">Why Choose Managed Subscriptions?</h2>
-            </header>
-            <ul className="benefits-list">
-              <li>Save Time and Resources: Let us handle the heavy lifting while you focus on scaling your business.</li>
-              <li>Optimize Performance: Benefit from expert strategies tailored to your goals.</li>
-              <li>Clear and Transparent Reporting: Gain detailed insights into affiliate activity and campaign outcomes.</li>
-            </ul>
-          </section>
-
-          {/* Call-to-Action Section */}
-          <section className="cta">
-            <header>
-              <h1 className="cta-title">Let Our Experts Manage Your Affiliate Program</h1>
-              <h2 className="cta-subtitle">Maximize your affiliate marketing success with the help of our dedicated specialists.</h2>
-            </header>
-            <div className="cta-buttons">
-              <button className="cta-btn primary">Get Started with Managed Subscriptions</button>
-              <button className="cta-btn secondary">Contact Us for a Custom Plan</button>
+        {/* Benefits Section */}
+        <section className="benefits container">
+          <div className="cuspadding pt-0">
+            <div className="row align-items-center">
+              <div className="col-12 col-md-6">
+                <img src="assets/img/subscription.png" className="img-fluid" />
+              </div>
+              <div className="col-12 col-md-6">
+                <h2 className="text-left titleheads mb-4">Why Choose Managed Subscriptions?</h2>
+                <div className="subs-content">
+                  <div className="d-flex gap-2 align-items-start">
+                    <span>
+                      <img src="/assets/img/check.png" className="check_list mt-1" alt=""></img>
+                    </span>
+                    <div>
+                      <h5>Save Time and Resources:</h5>
+                      <h6>Let us handle the heavy lifting while you focus on scaling your business. </h6>
+                    </div>
+                  </div>
+                  <div className="d-flex gap-2 align-items-start">
+                    <span>
+                      <img src="/assets/img/check.png" className="check_list mt-1" alt=""></img>
+                    </span>
+                    <div>
+                      <h5>Optimize Performance:</h5>
+                      <h6> Benefit from expert strategies tailored to your goals.</h6>
+                    </div>
+                  </div>
+                  <div className="d-flex gap-2 align-items-start">
+                    <span>
+                      <img src="/assets/img/check.png" className="check_list mt-1" alt=""></img>
+                    </span>
+                    <div>
+                      <h5>Clear and Transparent Reporting:</h5>
+                      <h6> Gain detailed insights into affiliate activity and campaign outcomes.</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
+
+        {/* Call-to-Action Section */}
+        <section className="cta container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="cta-content">
+                <header>
+                  <h1 className="cta-title">Let Our Experts Manage Your Affiliate Program</h1>
+                  <h2 className="cta-subtitle">Maximize your affiliate marketing success with the help of our dedicated specialists.</h2>
+                </header>
+                <div className="cta-buttons">
+                  <button className="cta-btn primary">Get Started with Managed Subscriptions</button>
+                  <button className="cta-btn secondary">Contact Us for a Custom Plan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </Layout>
     </>
   );
