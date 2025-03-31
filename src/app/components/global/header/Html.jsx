@@ -223,7 +223,7 @@ const Html = ({ settingData, Logout }) => {
                   <Link class={`btn btn-primary login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Book a Demo</Link>
                 </li>
                 <li class="nav-item">
-                  <Link class={`btn btn-primary  contact-btn ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Contact Us</Link>
+                  <Link class={`btn btn-primary  contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
                 </li>
               </form>
             </div>

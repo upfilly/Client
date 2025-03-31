@@ -15,26 +15,28 @@ export default function Company() {
         name={undefined}
         filters={undefined}
       >
-        <img className='dots-img' src='/assets/img/Vector-dots.png' alt=''></img>
-        <div className="managed-subscriptions container">
-          {/* Overview Section */}
-          <section className="overview">
-            <header className="overview-header">
-              <h1 className="overview-title">Take the Hassle Out of Managing Your Affiliate Program</h1>
-              <h2 className="overview-subtitle">
-                Let our team of specialists handle your affiliate program, so you can focus on growing your business.
-              </h2>
-            </header>
-            <p className="overview-text">
+
+        {/* Overview Section */}
+        <section className=" bgdots">
+
+          <div className="minus_margin container">
+
+            <h1 className="innerhtmls">Take the Hassle Out of Managing Your <span className="d-block "> Affiliate Program</span></h1>
+            <h2 className="ptext_bgs">
+              Let our team of specialists handle your affiliate program, so you can focus on growing your business.
+            </h2>
+
+            <p className="para3">
               Our Managed Subscriptions service is designed to provide expert guidance and hands-on management for your affiliate network. From strategy to execution, we ensure your program performs at its best.
             </p>
-          </section>
+          </div>
+        </section>
 
-          {/* What’s Included Section */}
-          <section className="whats-included">
-            <header>
-              <h2 className="section-title">What’s Included in Managed Subscriptions?</h2>
-            </header>
+        {/* What’s Included Section */}
+        <section className="container">
+          <div className="cuspadding">
+            <h2 className="section-title">What’s Included in Managed Subscriptions?</h2>
+
             <div className="included-list row">
               <div className="col-md-4">
                 <div className="included-item">
@@ -81,13 +83,14 @@ export default function Company() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Pricing Options Section */}
-          <section className="pricing-options">
-            <header>
-              <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
-            </header>
+        {/* Pricing Options Section */}
+        <section className=" container">
+          <div className="cuspadding pt-0">
+            <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
+
             <div className="pricing-table row">
               <div className="col-md-4">
                 <div className="pricing-option">
@@ -108,19 +111,18 @@ export default function Company() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Benefits Section */}
-          <section className="benefits">
-            <header>
-              {/* <h2 className="section-title">Why Choose Managed Subscriptions?</h2> */}
-            </header>
-            <div className="row">
-              <div className="col-md-6">
-                <img src="assets/img/subscription.png" width={"100%"}></img>
+        {/* Benefits Section */}
+        <section className="benefits container">
+          <div className="cuspadding pt-0">
+            <div className="row align-items-center">
+              <div className="col-12 col-md-6">
+                <img src="assets/img/subscription.png" className="img-fluid" />
               </div>
-              <div className="col-md-6">
-                <h2 className="text-left subs-title mb-4">Why Choose Managed Subscriptions?</h2>
+              <div className="col-12 col-md-6">
+                <h2 className="text-left titleheads mb-4">Why Choose Managed Subscriptions?</h2>
                 <div className="subs-content">
                   <div className="d-flex gap-2 align-items-start">
                     <span>
@@ -152,26 +154,27 @@ export default function Company() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Call-to-Action Section */}
-          <section className="cta">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="cta-content">
-                  <header>
-                    <h1 className="cta-title">Let Our Experts Manage Your Affiliate Program</h1>
-                    <h2 className="cta-subtitle">Maximize your affiliate marketing success with the help of our dedicated specialists.</h2>
-                  </header>
-                  <div className="cta-buttons">
-                    <button className="cta-btn primary">Get Started with Managed Subscriptions</button>
-                    <button className="cta-btn secondary">Contact Us for a Custom Plan</button>
-                  </div>
+        {/* Call-to-Action Section */}
+        <section className="cta container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="cta-content">
+                <header>
+                  <h1 className="cta-title">Let Our Experts Manage Your Affiliate Program</h1>
+                  <h2 className="cta-subtitle">Maximize your affiliate marketing success with the help of our dedicated specialists.</h2>
+                </header>
+                <div className="cta-buttons">
+                  <button className="cta-btn primary">Get Started with Managed Subscriptions</button>
+                  <button className="cta-btn secondary">Contact Us for a Custom Plan</button>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
+
       </Layout>
     </>
   );
