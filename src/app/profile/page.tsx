@@ -234,15 +234,45 @@ const Profile = () => {
                           </div>
                         </div>
 
-
-
-
-                        {data?.activeUser?.category_name &&
+                        {data?.activeUser?.dialCode && data?.activeUser?.mobileNo &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
+                            <div className='inputFlexs width400' >
+                              <label>Mobile No</label>
+                              <div>
+                                <p className="profile_data">({data && data?.activeUser?.dialCode}) {data && data?.activeUser?.mobileNo}</p>
+                              </div>
+                            </div>
+                          </div>}
+
+
+                        {data &&
+                          <div className="col-12">
                             <div className='inputFlexs width400'>
                               <label>Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.activeUser?.category_name}</p>
+                                <p className="profile_data">{data && data?.all_category?.map((dat:any)=>dat?.name).join(",")}</p>
+                              </div>
+                            </div>
+
+                          </div>}
+
+                          {data &&
+                          <div className="col-12">
+                            <div className='inputFlexs width400'>
+                              <label>Sub Category Name:</label>
+                              <div>
+                                <p className="profile_data">{data && data?.all_sub_category?.map((dat:any)=>dat?.name).join(",")}</p>
+                              </div>
+                            </div>
+
+                          </div>}
+
+                          {data?.activeUser &&
+                          <div className="col-12">
+                            <div className='inputFlexs width400'>
+                              <label>Sub Child Category Name:</label>
+                              <div>
+                                <p className="profile_data">{data && data?.all_sub_child_category?.map((dat:any)=>dat?.name).join(",")}</p>
                               </div>
                             </div>
 
@@ -282,15 +312,7 @@ const Profile = () => {
                           </div>}
 
 
-                        {data?.activeUser?.dialCode && data?.activeUser?.mobileNo &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                            <div className='inputFlexs width400' >
-                              <label>Mobile No</label>
-                              <div>
-                                <p className="profile_data">({data && data?.activeUser?.dialCode}) {data && data?.activeUser?.mobileNo}</p>
-                              </div>
-                            </div>
-                          </div>}
+                        
 
                         {data?.activeUser?.cellDialCode && data?.activeUser?.work_phone &&
                           <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">

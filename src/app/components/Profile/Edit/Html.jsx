@@ -499,13 +499,13 @@ const Html = ({ user,
                           <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>Country  </label>
-                              <input type="text" value={form?.country} className="form-control quick-radius" id="exampleFormControlInput1" />
+                              <input type="text" value={form?.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
                             </div>
                           </div>
                           <div className='col-12 col-sm-12 col-md-6 mb-3 '>
                             <div class="form-group">
                               <label className='label-set'>City  </label>
-                              <input type="text" value={form?.city} className="form-control quick-radius" id="exampleFormControlInput1" />
+                              <input type="text" value={form?.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
                             </div>
                           </div>
                           <div className='col-12 col-sm-12 col-md-6 mb-3'>

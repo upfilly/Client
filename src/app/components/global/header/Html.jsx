@@ -142,7 +142,7 @@ const Html = ({ settingData, Logout }) => {
                   >Sign Up</Link> /
                     <Link className="ml-2 mr-2" href="/login">Sign In</Link></>}
                   {user && <>
-                    {(user?.request_status != "accepted") && <span className="text-danger">Your account cannot be verified by the admin, and as a result, you will not be able to access the dashboard.</span>}
+                    {(user?.request_status != "accepted") && <span className="text-danger">Please update your profile details to ensure they meet the required criteria for verification. Once your details are updated, the admin will review your request.</span>}
                     <Dropdown className="ml-auto ml-2 proifle_dropbx">
                       <Dropdown.Toggle className="d-flex align-items-center drpdown_new" variant="" id="">
                         <img alt="image" src={user?.image ? methodModel.userImg(user && user?.image) : '/assets/img/person.jpg'} className="rounded-circle mr-1" />
