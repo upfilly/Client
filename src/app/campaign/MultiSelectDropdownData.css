@@ -1,11 +1,11 @@
 /* MultiSelectDropdownData.css */
 
 /* Basic styling for the dropdown container */
-.dropdown1 {
+/* .dropdown1 {
   position: relative;
   display: inline-block;
   width: 100%;
-}
+} */
 .dropdown-item label::after {
   content: " ▼" !important;
   font-size: 12px !important;

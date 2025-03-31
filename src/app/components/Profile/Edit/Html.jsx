@@ -516,7 +516,7 @@ const Html = ({ user,
                           </div></>
                         }
 
-                        {user?.role == "affiliate" ? <div className="col-12 col-sm-12 col-md-6 mb-3">
+                        {user?.role != "affiliate" ? <div className="col-12 col-sm-12 col-md-6 mb-3">
                           <div className='form-group'>
                             <label>website</label>
                             <input
