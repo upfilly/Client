@@ -143,9 +143,9 @@ const EditProfile = () => {
         setWebsites(value?.affiliate_website || [''])
         setData(res.data)
         setSelectedItems({
-          categories: res.data.category_id,
-          subCategories:res.data.sub_category_id,
-          subSubCategories:res.data.sub_child_category_id,
+          categories: res.data.category_id || [],
+          subCategories: res.data.sub_category_id || [],
+          subSubCategories: res.data.sub_child_category_id || [],
         })
       }
       loader(false)
@@ -168,7 +168,7 @@ const EditProfile = () => {
     let value = {
       ...form,
       social_media_platforms: selectedItems1 || [],
-      affiliate_website:websites,
+      affiliate_website: websites,
       lat: selectedLocation?.lat?.toString(),
       lng: selectedLocation?.lng?.toString(),
       address: selectedLocation?.address,
@@ -366,7 +366,7 @@ const EditProfile = () => {
         selectedSubcategory={selectedSubcategory}
         selectedSubSubcategory={selectedSubSubcategory}
         history={history}
-        websites={websites} 
+        websites={websites}
         setWebsites={setWebsites}
       />
     </>
