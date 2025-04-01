@@ -156,12 +156,15 @@
   .cta {
     text-align: center;
     padding: 60px 20px;
-    background-color: #001f3d;
+    background-color: #032E72;
     color: white;
+    border-radius: 20px;
   }
   
   .cta-header {
     margin-bottom: 40px;
+    width: 80%;
+    margin: 0 auto;
   }
   
   .cta-title {
@@ -178,15 +181,7 @@
     margin-top: 40px;
     
   }
-  .cta-button{
-    background-color: #00b0ff;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-  }
+  
   
   .cta-btn {
     padding: 12px 24px;
@@ -211,4 +206,71 @@
     opacity: 0.8;
   }
   
+}
+
+.bggraylight{
+  background-color: #E8E9ED;
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.fetaues_lasts h6{
+  color: #000;
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 50px; /* 140.323% */
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width:1200px) {
+  .fetaues_lasts h6{
+
+    width: 70%;
+  }
+}
+
+.fetaues_lasts p{
+  color: #000;
+font-family: Inter;
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.feyusul{
+  list-style: disc;
+  text-align: left;
+}
+
+.feyusul li{
+  color: #032E72;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+
+.cta-button{
+  background-color: #00b0ff;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 50px;
+}
+
+.checimg{
+  height: 30px;
+}
+
+.heads{
+  color: #00BAFF;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+margin: 0px;
 }

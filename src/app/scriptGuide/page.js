@@ -7,15 +7,36 @@ import crendentialModel from "../../models/credential.model";
 
 const TrackingGuide = () => {
   const user = crendentialModel.getUser()
-  
-  return (<Layout>
-    <div className="container">
-      <header className="header">
-        <h1 className='trackHeading my-3'>Tracking Implementation Guide</h1>
-        <p>This guide shows how to implement tracking in your Web app using cookies, URL parameters, and API requests to log user behavior.</p>
-      </header>
 
-      <section className="content mb-5">
+  return (<Layout>
+
+    {/* Overview Section */}
+    <section className=" bgdots">
+
+      <div className="minus_margin container">
+
+        <h5 className="innerhtmls">Tracking Implementation Guide</h5>
+
+
+        <p className="para3">
+          This guide shows how to implement tracking in your Web app using cookies, URL parameters, and API requests to log user behavior.
+        </p>
+
+
+      </div>
+
+
+    </section>
+
+
+    <div className="container">
+
+
+
+
+
+
+      <section className="content mb-5 mt-5">
         <h4 className='trackHeading text-left'>Step 1: Setting Master Script</h4>
         <p>Cookies allow you to store data on the user's browser. Here's how to set and get cookies in your web app.</p>
 
@@ -28,7 +49,7 @@ const TrackingGuide = () => {
         </div>
 
         <p>This code captures URL parameters like <code>?abcd=1234</code> and stores them as cookies for later use. For example, you can track affiliate IDs or campaign sources using this method.</p>
-<hr></hr>
+        <hr></hr>
         <h4 className='trackHeading text-left'>Step 2: Sending Tracking Data For Upfilly</h4>
         <p>Once you have captured the necessary data (like user information, sales, or campaign data), you can send it to an external API for further processing. Here's an example using <code>XMLHttpRequest</code>:</p>
 
@@ -80,7 +101,7 @@ const TrackingGuide = () => {
         <p>Created by [Your Name]. Follow these steps to implement tracking in your React app.</p>
       </footer> */}
     </div>
-    </Layout>
+  </Layout>
   );
 };
 

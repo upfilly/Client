@@ -704,7 +704,7 @@ const Html = ({ user,
             </div>
             <div className='mt-4 btn-discards'>
               <div className="text-end edit-btns d-flex gap-3 align-items-center justify-content-end">
-                <Link href="/profile" className="btn btn-secondary ">
+                <Link href="/profile" className="btn  bggray ">
                   Discard
                 </Link>
                 <button type="submit" className="btn btn-primary">

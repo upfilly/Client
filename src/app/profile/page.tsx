@@ -388,7 +388,7 @@ const Profile = () => {
                            {data.activeUser.role == "brand" && <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                               <div className='inputFlexs width400'>
                                 <label>Advertiser ID:</label>
-                                <div className='d-flex align-items-center'>
+                                <div className='d-flex align-items-center gap-3'>
                                   <p className="profile_data" id="advertiserId">{data.activeUser._id || data.activeUser.id}</p>
                                   <button
                                     className="btn btn-primary"

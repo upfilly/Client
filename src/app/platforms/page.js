@@ -186,28 +186,36 @@ const UpFillyPage = () => {
 
   return (
     <Layout>
-      <img className='dots-img' src='/assets/img/Vector-dots.png' alt=''></img>
-      <div className="App platforms-page">
-        {/* Header Section */}
-        <header className="header">
-          <h1>Powering Your Affiliate Success</h1>
-          <p className="desc-pera mt-3">
+
+
+
+        {/* Overview Section */}
+        <section className=" bgdots">
+
+          <div className="minus_margin container">
+
+            <h5 className="innerhtmls">Powering Your Affiliate Success</h5>
+
+
+            <p className="para3">
             UpFilly is your all-in-one affiliate marketing solution designed to
             help merchants and affiliates thrive. With advanced tracking,
             actionable insights, and seamless payouts, we simplify the process
             of building and scaling affiliate programs. Whether you’re just
             starting or looking to optimize, UpFilly has the tools you need to
             succeed.
-          </p>
-          {/* <div className="header-visual">
-          <img src="/assets/images/dashboard-mockup.png" alt="UpFilly Dashboard" />
-          <div className="icons">
-            <img src="/assets/icons/tracking-icon.svg" alt="Tracking" />
-            <img src="/assets/icons/analytics-icon.svg" alt="Analytics" />
-            <img src="/assets/icons/payouts-icon.svg" alt="Payouts" />
+            </p>
+
+
           </div>
-        </div> */}
-        </header>
+
+
+        </section>
+
+
+
+      <div className="App platforms-page">
+    
         <div className="container">
 
           {/* Overview Section */}
