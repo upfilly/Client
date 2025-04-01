@@ -24,7 +24,7 @@ export default function Faq() {
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
   const [isOpen, setIsOpen] = useState({});
-  
+
   const toggleQuestion = (index) => {
     setIsOpen((prevState) => ({
       ...prevState,
@@ -64,7 +64,7 @@ export default function Faq() {
 
   return (
     <>
-    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+      <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
             <h1 class="display-4 font-weight-bold">FAQ</h1>
@@ -102,30 +102,35 @@ export default function Faq() {
                 !loaging &&
                 data?.map((itm, index) => (
                   <ul key={index}>
-                    <li>
-                      <i className="fa fa-question-circle icon-help" aria-hidden="true"></i>{" "}
-                      <a
-                        data-bs-toggle="collapse"
-                        className="collapse"
-                        data-bs-target={`#faq-list-${index}`}
-                        onClick={() => toggleQuestion(index)}
-                      >
+                  <li>
+                    <i className="fa fa-question-circle icon-help" aria-hidden="true"></i>{" "}
+                    <a
+                      data-bs-toggle="collapse"
+                      className="collapse"
+                      data-bs-target={`#faq-list-${index}`}
+                      onClick={() => toggleQuestion(index)}
+                    >
+                      <div className="d-flex justify-content-between align-items-center gap-4">
                         {itm?.question}
-                        <i
-                          className={isOpen[index] ? 'fa fa-sm fa-angle-up icon-close' : 'fa fa-sm fa-angle-down icon-show'}
-                          aria-hidden="true"
-                        ></i>
-                         <i className="fa fa-sm fa-angle-up icon-close"></i>
-                      </a>
-                      <div
-                        id={`faq-list-${index}`}
-                        className={`collapse ${isOpen[index] ? 'show' : ''}`}
-                        data-bs-parent=".faq-list"
-                      >
-                        <p dangerouslySetInnerHTML={{ __html: itm?.answer }} />
+                        <span className="icon-wrapper">
+                          <i
+                            className={`fa fa-sm fa-angle-down icon-toggle ${isOpen[index] ? "rotate" : ""}`}
+                            aria-hidden="true"
+                          ></i>
+                        </span>
                       </div>
-                    </li>
-                  </ul>
+                    </a>
+                    <div
+                      id={`faq-list-${index}`}
+                      className={`collapse faq-content ${isOpen[index] ? "show" : ""}`}
+                      data-bs-parent=".faq-list"
+                    >
+                      <p dangerouslySetInnerHTML={{ __html: itm?.answer }} />
+                    </div>
+                  </li>
+                </ul>
+                
+
                 ))
               }
             </div>
@@ -157,7 +162,7 @@ export default function Faq() {
           </div>
 
         </section>
-        </Layout>
+      </Layout>
     </>
   );
 }
