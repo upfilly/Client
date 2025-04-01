@@ -6071,6 +6071,17 @@ input.form-control {
   text-align: center;
 }
 
+.bgdotsprice {
+  background-image: url('/assets/img/dots.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* Adjust as needed */
+  margin-top: 90px;
+  padding-bottom: 0px;
+  text-align: center;
+}
+
 
 .minus_margin {
   position: relative;
@@ -6276,10 +6287,12 @@ input.form-control {
 .custom-list li {
   display: flex;
   align-items: center;
-  gap: 8px; /* Adjust spacing as needed */
+  gap: 8px;
+  /* Adjust spacing as needed */
 }
 
 .custom-list img {
-  width: 16px; /* Adjust size as needed */
+  width: 16px;
+  /* Adjust size as needed */
   height: auto;
 }
