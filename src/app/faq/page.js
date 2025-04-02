@@ -102,34 +102,37 @@ export default function Faq() {
                 !loaging &&
                 data?.map((itm, index) => (
                   <ul key={index}>
-                  <li>
-                    <i className="fa fa-question-circle icon-help" aria-hidden="true"></i>{" "}
-                    <a
-                      data-bs-toggle="collapse"
-                      className="collapse"
-                      data-bs-target={`#faq-list-${index}`}
-                      onClick={() => toggleQuestion(index)}
-                    >
-                      <div className="d-flex justify-content-between align-items-center gap-4">
-                        {itm?.question}
-                        <span className="icon-wrapper">
-                          <i
-                            className={`fa fa-sm fa-angle-down icon-toggle ${isOpen[index] ? "rotate" : ""}`}
-                            aria-hidden="true"
-                          ></i>
-                        </span>
+                    <li>
+
+                      <a
+                        data-bs-toggle="collapse"
+                        className="collapse"
+                        data-bs-target={`#faq-list-${index}`}
+                        onClick={() => toggleQuestion(index)}
+                      >
+                        <div className="d-flex justify-content-between align-items-center gap-4">
+                          <div className='d-flex gap-2 align-items-center'>
+                            <i className="fa fa-question-circle fs-3 text-primary" aria-hidden="true"></i>{" "}
+                            {itm?.question}
+                          </div>
+                          <span className="icon-wrapper">
+                            <i
+                              className={`fa fa-sm fa-angle-down icon-toggle ${isOpen[index] ? "rotate" : ""}`}
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                        </div>
+                      </a>
+                      <div
+                        id={`faq-list-${index}`}
+                        className={`collapse pd30 faq-content ${isOpen[index] ? "show" : ""}`}
+                        data-bs-parent=".faq-list"
+                      >
+                        <p dangerouslySetInnerHTML={{ __html: itm?.answer }} />
                       </div>
-                    </a>
-                    <div
-                      id={`faq-list-${index}`}
-                      className={`collapse faq-content ${isOpen[index] ? "show" : ""}`}
-                      data-bs-parent=".faq-list"
-                    >
-                      <p dangerouslySetInnerHTML={{ __html: itm?.answer }} />
-                    </div>
-                  </li>
-                </ul>
-                
+                    </li>
+                  </ul>
+
 
                 ))
               }
