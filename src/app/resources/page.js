@@ -60,90 +60,181 @@ export default function Resources() {
 
 
             <p className="para3">
-              UpFilly offers everything you need to track, analyze, and optimize your affiliate program—all in one place.            </p>
+              UpFilly offers everything you need to track, analyze, and optimize your affiliate program—all in one place.
+            </p>
+
+
           </div>
+
+
         </section>
+
+
+        <section className='rowmeatures'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-12 col-md-4'>
+                <div className='fetausinners'>
+                  <h6 className='linetext'>Affiliate Tracking</h6>
+                  <p>Monitor clicks, sales, and commissions in real-time, ensuring transparency and precision.</p>
+                </div>
+              </div>
+
+              <div className='col-12 col-md-4'>
+                <div className='fetausinners'>
+                  <h6 className='linetext'>Affiliate Tracking</h6>
+                  <p>Monitor clicks, sales, and commissions in real-time, ensuring transparency and precision.</p>
+                </div>
+              </div>
+
+              <div className='col-12 col-md-4'>
+                <div className='fetausinners'>
+                  <h6 className='linetext'>Affiliate Tracking</h6>
+                  <p>Monitor clicks, sales, and commissions in real-time, ensuring transparency and precision.</p>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+        </section>
+
+
+
+        <div className="container my-5">
+
+          <div className="row align-items-center cuspadding">
+            <div className="col-md-6 text-center">
+              <img src="/assets/img/f2.png" className="img-fluid rounded" alt="Shopify Integration" />
+            </div>
+            <div className="col-md-6">
+              <h3 className="shopify-title">Integrate Seamlessly with Your Existing Platforms</h3>
+              <p className="highlight-text">Shopify Integration</p>
+              <p>Easily connect your Shopify store for precise tracking and analytics.</p>
+            </div>
+          </div>
+
+          <div className="row align-items-center cuspadding pt-0 flex-md-row-reverse">
+            <div className="col-md-6 text-center">
+              <img src="/assets/img/f1.png" className="img-fluid rounded" alt="Business Growth" />
+            </div>
+            <div className="col-md-6">
+              <h3 className="shopify-title">Built to Grow with Your Business</h3>
+
+              <p>UpFilly is designed to support businesses of all sizes—from startups launching their first affiliate program to enterprise-level brands managing complex networks.</p>
+              <ul className="custom-list">
+                <li>
+                  <img src="/assets/img/cheks.svg" className="img-fluid rounded" alt="cheks" />
+                  Affordable entry plans with no setup fees for startups.
+                </li>
+                <li>
+                  <img src="/assets/img/cheks.svg" className="img-fluid rounded" alt="cheks" />
+                  Robust tools to handle high-volume campaigns.
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+          <div className="row align-items-center cuspadding pt-0">
+            <div className="col-md-6 text-center">
+              <img src="/assets/img/f3.png" className="img-fluid rounded" alt="Dashboard for Merchants and Affiliates" />
+            </div>
+            <div className="col-md-6">
+              <h3 className="shopify-title">An Intuitive Dashboard for Merchants and Affiliates</h3>
+              <p>Our dashboard is designed to be simple yet powerful, providing all the tools you need to manage and optimize your program.</p>
+              <div className='d-flex gap-3 align-items-center mb-4 mt-4'>
+                 <img src="/assets/img/cheks.svg" className="checimg" alt="cheks" />
+                 <div className='heavy_fonts'>
+                    <p className='heads'>For Merchants:</p> 
+                    <p className='mb-0'>Customizable branding options.</p>
+                 </div>
+              </div>
+
+              <div className='d-flex gap-3 align-items-center mb-4'>
+                 <img src="/assets/img/cheks.svg" className="checimg" alt="cheks" />
+                 <div className=''>
+                    <p className='heads'>For Affiliates:</p> 
+                    <p className='mb-0'>A clean interface to track earnings and access campaign insights.</p>
+                 </div>
+              </div>
+
+
+
+             
+            </div>
+          </div>
+        </div>
+
+
+
 
 
 
         <div className="feature-page resource-page">
           <div className='container'>
-         
 
-            {/* Integrations Section */}
-            <section className="scalability mt-5">
-              <header>
-                <h2 className="section-title">Integrate Seamlessly with Your Existing Platforms</h2>
-              </header>
-              <div>
-                <h3>Shopify Integration</h3>
-                <p>Easily connect your Shopify store for precise tracking and analytics.</p>
-              </div>
-            </section>
 
-            {/* Scalability Section */}
-            <section className="scalability my-5">
-              <header>
-                <h2 className="section-title">Built to Grow with Your Business</h2>
-              </header>
-              <div>
-                <p>UpFilly is designed to support businesses of all sizes—from startups launching their first affiliate program to enterprise-level brands managing complex networks.</p>
-                <ul>
-                  <li>Affordable entry plans with no setup fees (for startups).</li>
-                  <li>Robust tools to handle high-volume campaigns (enterprise-ready).</li>
-                </ul>
-              </div>
-            </section>
 
-            {/* User-Friendly Interface Section */}
-            <section className="scalability">
-              <header>
-                <h2 className="section-title">An Intuitive Dashboard for Merchants and Affiliates</h2>
-              </header>
-              <div>
-                <p>Our dashboard is designed to be simple, yet powerful, providing all the tools you need to manage and optimize your program.</p>
-                <div>
-                  <h3>For Merchants:</h3>
-                  <p>Customizable branding options to align with your identity.</p>
-                </div>
-                <div>
-                  <h3>For Affiliates:</h3>
-                  <p>A clean interface to track earnings and access campaign insights.</p>
-                </div>
-              </div>
-            </section>
 
             {/* Call-to-Action Section */}
             <section className="cta mt-5">
-              <header className="cta-header">
+              <div className="cta-header">
                 <h1 className="cta-title">Explore UpFilly’s Features Today</h1>
                 <h2 className="cta-subtitle">Discover how our platform can take your affiliate marketing to the next level.</h2>
-              </header>
-              <div className="cta-buttons">
-                <button className="cta-btn primary" onClick={() => history.push("/SignupOptions")}>Get Started Now</button>
+              </div>
+              <div className="mt-5">
+                <button className="cta-button" onClick={() => history.push("/SignupOptions")}>Get Started Now</button>
                 {/* <button className="cta-btn secondary">Learn More About Features</button> */}
               </div>
             </section>
-            <div className='pricing-padding'>
 
 
-              {/* Shopify Tracking App Section */}
-              <div className='row cpadd pt-3'>
-                <div className='col-md-12'>
-                  <div className='card_box text-center hover_box'>
-                    <h2 className='mb-3'>{shopifyTrackingInfo.title}</h2>
-                    <p>{shopifyTrackingInfo.description}</p>
-                    <ul className='list-unstyled mb-4'>
-                      {shopifyTrackingInfo.features.map((feature, index) => (
-                        <li key={index}>{feature}</li>
-                      ))}
-                    </ul>
-                    <a href={shopifyTrackingInfo.link} className='cta-button'>Learn More</a>
-                  </div>
+
+
+
+
+
+          </div>
+        </div>
+
+
+        <div className="cuspadding container">
+          <div className=' bggraylight'>
+            {/* Shopify Tracking App Section */}
+            <div className='row  align-items-center'>
+              <div className='col-12 col-md-6'>
+                <div className='fetaues_lasts'>
+                  <h6 className=''>{shopifyTrackingInfo.title}</h6>
+                  <p>{shopifyTrackingInfo.description}</p>
+                </div>
+
+              </div>
+
+              <div className='col-12 col-md-6'>
+                <div className='card_box text-center hover_box'>
+
+                  <ul className='feyusul mb-4'>
+                    {shopifyTrackingInfo.features.map((feature, index) => (
+                      <li key={index}>{feature}</li>
+                    ))}
+                  </ul>
+
                 </div>
               </div>
 
+              <div className='col-12 mt-5'>
+                <div className='text-center'>
+
+                  <a href={shopifyTrackingInfo.link} className='cta-button'>Learn More</a>
+                </div>
+              </div>
+
+
             </div>
+
           </div>
         </div>
 

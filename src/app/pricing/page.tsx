@@ -32,14 +32,14 @@ export default function Pricing() {
   const param = useSearchParams()
   const id = param.get("id")
   const [show, setShow] = useState(false);
-  const [offers,setOffers] = useState<any>([])
+  const [offers, setOffers] = useState<any>([])
   const [selectedOffer, setSelectedOffer] = useState(null);
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
 
-  const specialOfferPrice = offers?.filter((itm:any)=>itm?._id == selectedOffer)?.[0]?.amount
+  const specialOfferPrice = offers?.filter((itm: any) => itm?._id == selectedOffer)?.[0]?.amount
 
-  const handleSpecialOfferChange = (id:any) => {
+  const handleSpecialOfferChange = (id: any) => {
     setSelectedOffer((prevSelected) => (prevSelected === id ? null : id));
   };
 
@@ -65,14 +65,14 @@ export default function Pricing() {
 
   const getOfferData = (p = {}) => {
     setLoader(true)
-      let filter = { category:"Managed Services"}
-      let url = 'subscription-plan/all'
-      ApiClient.get(url, filter).then(res => {
-        if (res) {
-          setOffers(res?.data?.data)
-          setLoader(false)
-        }
-      })
+    let filter = { category: "Managed Services" }
+    let url = 'subscription-plan/all'
+    ApiClient.get(url, filter).then(res => {
+      if (res) {
+        setOffers(res?.data?.data)
+        setLoader(false)
+      }
+    })
   }
 
   useEffect(() => {
@@ -147,7 +147,7 @@ export default function Pricing() {
     }
   }
 
-  console.log(data,"aaaaassss")
+  console.log(data, "aaaaassss")
 
   const filteredPlans = data?.filter((item: any) => {
     if (!selectedPlan) {
@@ -170,7 +170,7 @@ export default function Pricing() {
     return a.amount - b.amount;
   });
 
-  console.log(sortedData,"sortedDatasortedData")
+  console.log(sortedData, "sortedDatasortedData")
 
 
   const ChangePlan = (dat: any) => {
@@ -211,160 +211,177 @@ export default function Pricing() {
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-       <img className='dots-img' src='/assets/img/Vector-dots.png' alt=''></img>
+
+      {/* Overview Section */}
+      <section className="bgdotsprice">
+
+        <div className="minus_margin container">
+          {!user?.isPayment && user && <h5 className='text-center '>Note : <span className='noPlan'>You Don't have any Active Plan</span></h5>}
+          <h5 className="innerhtmls">Price & Plans</h5>
+
+
+          <p className="para3">
+            UpFilly offers a range of flexible pricing plans designed to scale with your business needs. The plans include monthly platform fees and basket value charges based on revenue generation.
+          </p>
+
+          <div className="row">
+            <div className="col-md-12 mt-4">
+              <div className="monthalu_plan d-flex">
+                <h3>Monthly Plan</h3>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={selectedPlan}
+                    onChange={() => setSelectedPlan(!selectedPlan)}
+                  />
+                  <span className="slider round"></span>
+                </label>
+                <h3>Annual Plan</h3>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+      <section className='container'>
+        <div className=''>
+
+          <div className="row">
+            {sortedData?.map((itm: any) => {
+              const activePlans: any = data.filter((plan: any) => plan.isActive);
+              const upcomingDate = new Date(itm?.upcoming_date)
+              const currentDate = new Date()
+              const showCard = (upcomingDate >= currentDate);
+              const calculateDiscountedAmount = (amount: any, discountDetails: any) => {
+                if (!discountDetails || !discountDetails.discount_type) {
+                  return amount;
+                }
+
+                if (discountDetails.discount_type === 'flat') {
+                  return amount - discountDetails.amount_value;
+                }
+
+                if (discountDetails.discount_type === 'percentage') {
+                  const percentageValue = (amount * discountDetails.amount_value) / 100;
+                  return amount - percentageValue;
+                }
+
+                return amount;
+              }
+
+              const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
+
+              return (
+
+                <div className=" col-12 col-sm-12 col-md-6 col-lg-4 mt-4" key={itm._id}>
+                  <div className={itm.recommended === "Y" && !user?.isPayment ? "card quicksf card_height p-4" : "card card_height quickss p-4 h-100"}>
+                    <div className='card_highjt'>
+                      <div className='d-flex justify-content-between align-items-center'>
+                        {(itm?.isUpcoming && showCard) && <div className="avtive_badges"><p className='mb-0 upcoming-plan'>Upcoming Plan <span className='d-block date-activeplan'>{`(${datepipeModel.date(itm?.upcoming_date)})`}</span> </p>
+
+                        </div>}
+                        {itm.recommended === "Y" && !user?.isPayment && <div className="avtive_badges">MOST POPULAR</div>}
+                        <div>
+                          <h1 className={itm.recommended === "Y" && !user?.isPayment ? 'triel-city locks' : 'triel-city '}>{methodModel.capitalizeFirstLetter(itm.name)}</h1>
+                        </div>
+                        {/* {itm.payment_type === "recurring" && ( */}
+                        <div className='text-end'>
+                          <div className='text_wrong d-flex justify-content-between align-items-center'>
+                            {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
+                            <p className={itm.recommended === "Y" && !user?.isPayment ? 'dollarf-sec locks' : 'dollarf-sec '}>${discountedAmount}</p>
+                          </div>
+                          <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.billing_frequency} month</p>
+                        </div>
+                        {/* )} */}
+                        {itm.payment_type === "trial" && (
+                          <div className='text-end'>
+                            <div className='text_wrong d-flex justify-content-between align-items-center'>
+                              {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
+                              <p className={itm.recommended === "Y" && !user?.isPayment ? 'dollarf-sec locks' : 'dollarf-sec '}>${discountedAmount}</p>
+                            </div>
+                            <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.trial_period_days} days</p>
+                          </div>
+                        )}
+                      </div>
+
+                      <hr className='bgs'></hr>
+                      <p className={itm.recommended === "Y" && !user?.isPayment ? 'includes-plan locks' : 'includes-plan '}>Plan includes</p>
+                      <div className='additional-info'>
+                        <div className='info-item d-flex align-items-center justify-content-between'>
+                          <strong>Basket Value Charge:</strong>
+                          <p className='mb-0'>{itm.basket_value_charge}%</p>
+                        </div>
+                        <div className='info-item d-flex align-items-center justify-content-between'>
+                          <strong>Commission Override:</strong>
+                          <p className='mb-0'>{itm.commission_override}%</p>
+                        </div>
+                        <div className='info-item d-flex align-items-center justify-content-between'>
+                          <strong>Bonus Override:</strong>
+                          <p className='mb-0'>{itm.bonus_override}%</p>
+                        </div>
+                        <div className='info-item d-flex align-items-center justify-content-between'>
+                          <strong>Allowed Total Revenue:</strong>
+                          <p className='mb-0'>{itm.allowed_total_revenue}$</p>
+                        </div>
+                      </div>
+                      {<div className='plan-features'>
+                        {itm.features.map((feature: any) => (
+                          <div className='d-flex align-items-center mt-3 flex_list' key={feature.id}>
+                            {itm.features?.[0]?.feature_name && <img
+                              className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks check_list' : 'checkss check_list '}
+                              src={itm.recommended === "Y" && !user?.isPayment ? '/assets/img/checkmark.png' : '/assets/img/check.png'}
+                              alt=''
+                            ></img>}
+                            <p className={itm.recommended === "Y" && !user?.isPayment ? 'ipsi ml-3 locks' : 'ipsi ml-3 '}>{methodModel.capitalizeFirstLetter(feature.feature_name)}</p>
+                          </div>
+                        ))}
+                      </div>}
+
+                    </div>
+                    <div className='mt-4'>
+                      {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={() => { !user ? history.push(`/bookingForm?planId=${itm._id}`) : ChangePlan(itm) }}>Book a Demo</a>}
+                      {!showCard && !itm.isUpcoming && !user?.isPayment && user && <a className='demos-button w-100 form-control book-demo'
+                        // href={user ? `/cards?id=${itm._id}&price=${itm?.amount}` : `/bookingForm/${itm._id}`}
+                        onClick={() => ChangePlan(itm)}>Buy a Plan</a>}
+                      {!showCard && !itm.isUpcoming && user && !itm.isActive && user?.isPayment && (
+                        <a className='demos-button w-100 form-control' onClick={() => ChangePlan(itm)}>
+                          {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
+                        </a>
+                      )}
+                      {(!showCard && !itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
+                      {(showCard && itm.isUpcoming) && <span className=''></span>}
+                      {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={() => { !user ? history.push(`/bookingForm?planId=${itm._id}`) : ChangePlan(itm) }}>Book a Demo</a>}
+                      {(!showCard && itm.isUpcoming && user && !user?.isPayment && user) && <a className='demos-button w-100 form-control book-demo' onClick={() => ChangePlan(itm)}>Buy a Plan</a>}
+                      {(!showCard && itm.isUpcoming) && user && !itm.isActive && user?.isPayment && (
+                        <a className='demos-button w-100 form-control' onClick={() => ChangePlan(itm)}>
+                          {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
+                        </a>
+                      )}
+                      {(!showCard && itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
+                    </div>
+                  </div>
+                </div>
+
+              )
+
+            })}
+          </div>
+        </div>
+      </section>
+
+
+
       <div className='container   '>
         <div className="row  ">
           <div className="col-12  ">
 
-            <div className='pricing-list pricing-padding'>
-              <div className='title-pricing'>
-                {!user?.isPayment && user && <h5 className='text-center '>Note : <span className='noPlan'>You Don't have any Active Plan</span></h5>}
-                <div className='main-title text-center mb-3'>
-                  <h1 className=' '>Price & Plans</h1>
-                </div>
-                <p className='text-center printit'>UpFilly offers a range of flexible pricing plans designed to scale with your business needs. The plans include monthly platform fees and basket value charges based on revenue generation.</p>
 
-                <div className="row">
-                  <div className="col-md-12 mb-5 mt-4">
-                    <div className="monthalu_plan d-flex">
-                      <h3>Monthly Plan</h3>
-                      <label className="switch">
-                        <input
-                          type="checkbox"
-                          checked={selectedPlan}
-                          onChange={() => setSelectedPlan(!selectedPlan)}
-                        />
-                        <span className="slider round"></span>
-                      </label>
-                      <h3>Annual Plan</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className='my-5'>
 
-                <div className="row">
-                  {sortedData?.map((itm: any) => {
-                    const activePlans: any = data.filter((plan: any) => plan.isActive);
-                    const upcomingDate = new Date(itm?.upcoming_date)
-                    const currentDate = new Date()
-                    const showCard = (upcomingDate >= currentDate);
-                    const calculateDiscountedAmount = (amount: any, discountDetails: any) => {
-                      if (!discountDetails || !discountDetails.discount_type) {
-                        return amount;
-                      }
 
-                      if (discountDetails.discount_type === 'flat') {
-                        return amount - discountDetails.amount_value;
-                      }
-
-                      if (discountDetails.discount_type === 'percentage') {
-                        const percentageValue = (amount * discountDetails.amount_value) / 100;
-                        return amount - percentageValue;
-                      }
-
-                      return amount;
-                    }
-
-                    const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
-
-                    return (
-
-                      <div className=" col-12 col-sm-12 col-md-6 col-lg-4 mt-4" key={itm._id}>
-                        <div className={itm.recommended === "Y" && !user?.isPayment ? "card quicksf card_height p-4" : "card card_height quickss p-4 h-100"}>
-                          <div className='card_highjt'>
-                            <div className='d-flex justify-content-between align-items-center'>
-                              {(itm?.isUpcoming && showCard) && <div className="avtive_badges"><p className='mb-0 upcoming-plan'>Upcoming Plan <span className='d-block date-activeplan'>{`(${datepipeModel.date(itm?.upcoming_date)})`}</span> </p>
-
-                              </div>}
-                              {itm.recommended === "Y" && !user?.isPayment && <div className="avtive_badges">MOST POPULAR</div>}
-                              <div>
-                                <h1 className={itm.recommended === "Y" && !user?.isPayment ? 'triel-city locks' : 'triel-city '}>{methodModel.capitalizeFirstLetter(itm.name)}</h1>
-                              </div>
-                              {/* {itm.payment_type === "recurring" && ( */}
-                              <div className='text-end'>
-                                <div className='text_wrong d-flex justify-content-between align-items-center'>
-                                  {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
-                                  <p className={itm.recommended === "Y" && !user?.isPayment ? 'dollarf-sec locks' : 'dollarf-sec '}>${discountedAmount}</p>
-                                </div>
-                                <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.billing_frequency} month</p>
-                              </div>
-                              {/* )} */}
-                              {itm.payment_type === "trial" && (
-                                <div className='text-end'>
-                                  <div className='text_wrong d-flex justify-content-between align-items-center'>
-                                    {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
-                                    <p className={itm.recommended === "Y" && !user?.isPayment ? 'dollarf-sec locks' : 'dollarf-sec '}>${discountedAmount}</p>
-                                  </div>
-                                  <p className={itm.recommended === "Y" && !user?.isPayment ? 'montyh locks' : 'montyh '}>for {itm.trial_period_days} days</p>
-                                </div>
-                              )}
-                            </div>
-
-                            <hr className='bgs'></hr>
-                            <p className={itm.recommended === "Y" && !user?.isPayment ? 'includes-plan locks' : 'includes-plan '}>Plan includes</p>
-                            <div className='additional-info'>
-                              <div className='info-item d-flex align-items-center justify-content-between'>
-                                <strong>Basket Value Charge:</strong> 
-                                <p className='mb-0'>{itm.basket_value_charge}%</p>
-                              </div>
-                              <div className='info-item d-flex align-items-center justify-content-between'>
-                                <strong>Commission Override:</strong>
-                                <p className='mb-0'>{itm.commission_override}%</p> 
-                              </div>
-                              <div className='info-item d-flex align-items-center justify-content-between'>
-                                <strong>Bonus Override:</strong>
-                                <p className='mb-0'>{itm.bonus_override}%</p> 
-                              </div>
-                              <div className='info-item d-flex align-items-center justify-content-between'>
-                                <strong>Allowed Total Revenue:</strong> 
-                                <p className='mb-0'>{itm.allowed_total_revenue}$</p>
-                              </div>
-                            </div>
-                            {<div className='plan-features'>
-                              {itm.features.map((feature: any) => (
-                                <div className='d-flex align-items-center mt-3 flex_list' key={feature.id}>
-                                  {itm.features?.[0]?.feature_name && <img
-                                    className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks check_list' : 'checkss check_list '}
-                                    src={itm.recommended === "Y" && !user?.isPayment ? '/assets/img/checkmark.png' : '/assets/img/check.png'}
-                                    alt=''
-                                  ></img>}
-                                  <p className={itm.recommended === "Y" && !user?.isPayment ? 'ipsi ml-3 locks' : 'ipsi ml-3 '}>{methodModel.capitalizeFirstLetter(feature.feature_name)}</p>
-                                </div>
-                              ))}
-                            </div>}
-
-                          </div>
-                          <div className='mt-4'>
-                            {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={() => { !user ? history.push(`/bookingForm?planId=${itm._id}`) : ChangePlan(itm) }}>Book a Demo</a>}
-                            {!showCard && !itm.isUpcoming && !user?.isPayment && user && <a className='demos-button w-100 form-control book-demo'
-                              // href={user ? `/cards?id=${itm._id}&price=${itm?.amount}` : `/bookingForm/${itm._id}`}
-                              onClick={() => ChangePlan(itm)}>Buy a Plan</a>}
-                            {!showCard && !itm.isUpcoming && user && !itm.isActive && user?.isPayment && (
-                              <a className='demos-button w-100 form-control' onClick={() => ChangePlan(itm)}>
-                                {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
-                              </a>
-                            )}
-                            {(!showCard && !itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
-                            {(showCard && itm.isUpcoming) && <span className=''></span>}
-                            {(!showCard && itm.isUpcoming && !user && !user?.isPayment) && <a className='demos-button w-100 form-control book-demo' onClick={() => { !user ? history.push(`/bookingForm?planId=${itm._id}`) : ChangePlan(itm) }}>Book a Demo</a>}
-                            {(!showCard && itm.isUpcoming && user && !user?.isPayment && user) && <a className='demos-button w-100 form-control book-demo' onClick={() => ChangePlan(itm)}>Buy a Plan</a>}
-                            {(!showCard && itm.isUpcoming) && user && !itm.isActive && user?.isPayment && (
-                              <a className='demos-button w-100 form-control' onClick={() => ChangePlan(itm)}>
-                                {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Buy" : "Upgrade"}
-                              </a>
-                            )}
-                            {(!showCard && itm.isUpcoming && user && itm.isActive) && <Link className='demos-button w-100 form-control    ' href='#'>Active</Link>}
-                          </div>
-                        </div>
-                      </div>
-
-                    )
-
-                  })}
-                </div>
-              </div>
-            </div>
 
 
             <div className='truste pricing-padding'>

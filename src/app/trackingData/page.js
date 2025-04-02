@@ -26,7 +26,7 @@ export default function affilate() {
   const [calculatedAmount, setCalculatedAmount] = useState(100)
   const [upfillyAmount, setUpfillyAmount] = useState(100)
 
-  const handleShow = (price,commission,commission_type,id) =>{
+  const handleShow = (price, commission, commission_type, id) => {
     setAssociateId(id)
     calculateCommission(commission_type, price, commission)
     // if(commission_type == "percentage"){
@@ -42,14 +42,14 @@ export default function affilate() {
 
   function calculateCommission(commission_type, price, commission) {
     let CalPrice;
-    
+
     if (commission_type === "percentage") {
       CalPrice = price * commission / 100;
     } else {
       CalPrice = price - commission;
     }
 
-    const finalPrice = CalPrice*user?.plan_id?.commission_override/100 
+    const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
     setUpfillyAmount(finalPrice)
     setCalculatedAmount(finalPrice + CalPrice);
     setShowModal(true);
@@ -64,11 +64,11 @@ export default function affilate() {
       CalPrice = price - commission;
     }
 
-    const finalPrice = CalPrice*user?.plan_id?.commission_override/100
+    const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
 
     return (finalPrice + CalPrice).toFixed(2)
   }
-  
+
 
   const handleClose = () => setShowModal(false);
 
@@ -133,7 +133,7 @@ export default function affilate() {
     filter({ sortBy, key, sorder })
   }
 
-  const ChangeStatus = (e,key) => {
+  const ChangeStatus = (e, key) => {
     setFilter({ ...filters, [key]: e })
     getData({ [key]: e, page: 1, user_id: user?.id })
   }
@@ -151,7 +151,7 @@ export default function affilate() {
       });
     } else {
       Swal.fire({
-     
+
         html: `
          <h2 style="" class="modal-title-main pt-0">Deny Commission</h2>
             <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
@@ -192,7 +192,7 @@ export default function affilate() {
       page: 1,
       count: 5,
       commission_paid: '',
-      commission_status:''
+      commission_status: ''
     }
 
     setIsOpen(false)
@@ -257,27 +257,29 @@ export default function affilate() {
                       displayValue="name"
                       placeholder="Paid Status"
                       intialValue={filters.commission_status}
-                      result={e => { ChangeStatus(e.value,"commission_status") }}
+                      result={e => { ChangeStatus(e.value, "commission_status") }}
                       options={[
                         { id: 'pending', name: 'Pending' },
                         { id: 'accepted', name: 'Accepted' },
                         { id: 'rejected', name: 'Rejected' },
-                        
+
                       ]}
                     />
 
-                    <SelectDropdown
-                      id="statusDropdown"
-                      displayValue="name"
-                      placeholder="Commission Status"
-                      intialValue={filters.commission_paid}
-                      result={e => { ChangeStatus(e.value,"commission_paid") }}
-                      options={[
-                        { id: 'pending', name: 'Pending' },
-                        { id: 'paid', name: 'Paid' },
-                        { id: 'unpaid', name: 'unPaid' },
-                      ]}
-                    />
+                    <div className='width80'>
+                      <SelectDropdown
+                        id="statusDropdown"
+                        displayValue="name"
+                        placeholder="Commission Status"
+                        intialValue={filters.commission_paid}
+                        result={e => { ChangeStatus(e.value, "commission_paid") }}
+                        options={[
+                          { id: 'pending', name: 'Pending' },
+                          { id: 'paid', name: 'Paid' },
+                          { id: 'unpaid', name: 'unPaid' },
+                        ]}
+                      />
+                    </div>
 
                     {filters.search || filters.commission_paid || filters.commission_status ? <>
                       <a className="btn btn-primary" onClick={e => reset()}>
@@ -350,8 +352,8 @@ export default function affilate() {
                               ) : itm?.commission_status == 'rejected' ? (
                                 <div className="btn btn-primary mr-2">Rejected</div>
                               ) : (<>
-                                {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={()=>handleShow(itm?.price,itm?.campaign_details?.commission,itm?.campaign_details?.commission_type,itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
-                                </>
+                                {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={() => handleShow(itm?.price, itm?.campaign_details?.commission, itm?.campaign_details?.commission_type, itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
+                              </>
                               )}
                             </td>
                           </tr>
@@ -393,15 +395,15 @@ export default function affilate() {
           />
         </div>
         <PaymentModal
-        showModal={showModal} 
-        setShowModal={setShowModal}
-        calculatedAmount={calculatedAmount}
-        setCalculatedAmount={setCalculatedAmount}
-        handleShow={handleShow}
-        handleClose={handleClose}
-        associateId={associateId}
-        user={user}
-        upfillyAmount={upfillyAmount}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          calculatedAmount={calculatedAmount}
+          setCalculatedAmount={setCalculatedAmount}
+          handleShow={handleShow}
+          handleClose={handleClose}
+          associateId={associateId}
+          user={user}
+          upfillyAmount={upfillyAmount}
         />
       </Layout>
     </>

@@ -10,7 +10,7 @@ export default function AboutUs() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-        <div className="guide-container">
+        <div className="guide-container mb-5">
           
           {/* Affiliate Guide Section */}
           <div className="affiliate-guide-container">

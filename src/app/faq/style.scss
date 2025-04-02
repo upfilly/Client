@@ -13,9 +13,6 @@
 # Frequently Asked Questions
 --------------------------------------------------------------*/
  
-.faq .faq-list {
-  padding: 0 100px;
-}
 
 .faq .faq-list ul {
   padding: 0;
@@ -97,3 +94,19 @@
 }
 
  
+.icon-wrapper {
+  width: 20px; /* Ensures the icon doesn't move */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+.icon-toggle {
+  transition: transform 0.3s ease-in-out;
+  
+}
+
+.icon-toggle.rotate {
+  transform: rotate(180deg);
+}
