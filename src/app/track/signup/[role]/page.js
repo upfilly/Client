@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 export default function Login() {
   const { role } = useParams()
   const [form, setForm] = useState({});
+  const [emailError, setEmailError] = useState("")
   const [submitted, setSubmitted] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const [ip, setIP] = useState("");
@@ -98,6 +99,10 @@ export default function Login() {
     setSubmitted(true)
     e.preventDefault()
     // useReferralTracking("bry6ko3r")
+    const isValidEmail = (email) => {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    };
 
    let data;
     if(localStorage.getItem("device_token")){
@@ -128,6 +133,10 @@ export default function Login() {
       if (!form?.firstName || !form?.lastName || !form?.email || !form?.password || form?.firstName?.length < 3 || form?.password?.length < 8) return
     }
 
+    if (!isValidEmail(form?.email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
 
     loader(true)
     ApiClient.post('register', data).then(res => {
@@ -162,6 +171,11 @@ export default function Login() {
       }
 
     })
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value.replace(/\s/g, "");
+    setForm({ ...form, password: newPassword });
   };
 
   const handleClick = () => {
@@ -229,6 +243,7 @@ export default function Login() {
                     }}
                   />
                   {submitted && !form?.email && <p className='text-danger'>This field required</p>}
+                  {submitted && emailError && <p className='text-danger'>{emailError}</p>}
                 </div>
                 <div className="mb-3">
                   <div className="inputWrapper">
@@ -236,9 +251,10 @@ export default function Login() {
                       type={eyes.password ? 'text' : 'password'}
                       className="form-control mb-0 bginput"
                       value={form?.password}
-                      onChange={(e) => {
-                        setForm({ ...form, password: e.target.value })
-                      }}
+                      onChange={handlePasswordChange}
+                      // onChange={(e) => {
+                      //   setForm({ ...form, password: e.target.value })
+                      // }}
                       placeholder="Password"
 
                     />

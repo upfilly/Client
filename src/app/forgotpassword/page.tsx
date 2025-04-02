@@ -5,11 +5,9 @@ import ApiClient from '@/methods/api/apiClient';
 import loader from '../../methods/loader';
 import './style.scss';
 import PageContainer from '../components/main/PageContainer';
-import Link from 'next/link';
 import crendentialModel from '@/models/credential.model';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import Image from 'next/image';
 
 const Forgotpassword = () => {
     const history = useRouter();

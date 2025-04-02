@@ -72,8 +72,6 @@ export default function BillingForm() {
     // history.push(`/bookingForm?planId=${itemId}`)
   };
 
-  console.log(seletedplandata,"seletedplandataseletedplandata")
-
   function isValidEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
     return emailRegex.test(email);
@@ -336,6 +334,11 @@ export default function BillingForm() {
     getData()
   }, [])
 
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value.replace(/\s/g, "");
+    setFormData({ ...formData, password: newPassword });
+  };
+
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -569,7 +572,7 @@ export default function BillingForm() {
                                 id="password"
                                 name="password"
                                 value={formData.password}
-                                onChange={handleInputChange} />
+                                onChange={handlePasswordChange} />
                               <div className='eye-icon-m'>
                                 <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
                               </div>
