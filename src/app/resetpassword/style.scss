@@ -195,7 +195,13 @@ p.para_forget_new {
     font-size: 14px;
     font-weight: 400;
     color: #484848;
-    text-align: left;
+    text-align: center;
     width: 100%;
-    max-width:300px;
+    max-width: 300px;
+    margin: auto;
+}
+.logo_img1 {
+    width: 230px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
 }

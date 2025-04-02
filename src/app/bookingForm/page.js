@@ -55,10 +55,10 @@ export default function BillingForm() {
   })
   const [selectedId, setSelectedId] = useState(id || null);
   const FilterData = data.filter(event => !event.isUpcoming);
-  const [offers,setOffers] = useState([])
+  const [offers, setOffers] = useState([])
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const specialOfferPrice = offers?.filter((itm)=>itm?._id == selectedOffer)
-  const seletedplandata = data?.filter((dat)=>dat?._id == selectedId)
+  const specialOfferPrice = offers?.filter((itm) => itm?._id == selectedOffer)
+  const seletedplandata = data?.filter((dat) => dat?._id == selectedId)
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
@@ -179,7 +179,7 @@ export default function BillingForm() {
 
     let data = {
       role: "brand",
-      request_status:"accepted",
+      request_status: "accepted",
       email: formData?.email,
       firstName: formData?.firstName,
       lastName: formData?.lastName,
@@ -190,9 +190,9 @@ export default function BillingForm() {
       city: selectedLocation?.city,
       pincode: selectedLocation?.pincode,
       plan_id: selectedId,
-      network_plan_amount:seletedplandata?.[0]?.amount,
-      managed_services_plan_amount:seletedplandata?.[0]?.amount == 0 ? 0 : specialOfferPrice?.[0]?.amount,
-      special_plan_id:seletedplandata?.[0]?.amount == 0 ? null : selectedOffer,
+      network_plan_amount: seletedplandata?.[0]?.amount,
+      managed_services_plan_amount: seletedplandata?.[0]?.amount == 0 ? 0 : specialOfferPrice?.[0]?.amount,
+      special_plan_id: seletedplandata?.[0]?.amount == 0 ? null : selectedOffer,
       isSpecial: false,
       interval: "month",
       interval_count: seletedplandata?.[0]?.interval_count,
@@ -304,7 +304,7 @@ export default function BillingForm() {
   const getData = (p = {}) => {
     setLoader(true)
     if (!user) {
-      let filter = { ...filters, ...p ,category:"Network"}
+      let filter = { ...filters, ...p, category: "Network" }
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
@@ -318,7 +318,7 @@ export default function BillingForm() {
   const getOfferData = (p = {}) => {
     setLoader(true)
     if (!user) {
-      let filter = { ...filters, ...p ,category:"Managed Services"}
+      let filter = { ...filters, ...p, category: "Managed Services" }
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
@@ -435,11 +435,11 @@ export default function BillingForm() {
                             <ul className='opt-category plan-featuress pl-0'>
                               <div className='additional-info'>
                                 <div className='info-item d-flex justify-content-between align-items-center'>
-                                  <strong>Basket Value Charge:</strong> 
+                                  <strong>Basket Value Charge:</strong>
                                   <p className='mb-0'>{itm.basket_value_charge}%</p>
                                 </div>
                                 <div className='info-item d-flex justify-content-between align-items-center'>
-                                  <strong>Commission Override:</strong> 
+                                  <strong>Commission Override:</strong>
                                   <p className='mb-0'>{itm.commission_override}%</p>
                                 </div>
                                 <div className='info-item d-flex justify-content-between align-items-center'>
@@ -447,13 +447,13 @@ export default function BillingForm() {
                                   <p className='mb-0'> {itm.bonus_override}%</p>
                                 </div>
                                 <div className='info-item d-flex justify-content-between align-items-center'>
-                                  <strong>Allowed Total Revenue:</strong> 
+                                  <strong>Allowed Total Revenue:</strong>
                                   <p className='mb-0'>{itm.allowed_total_revenue}$</p>
                                 </div>
                               </div>
                               {itm?.features?.map((feature) => (
                                 <li className='d-flex align-items-center' key={feature.id}>
-                                 {itm.features?.[0]?.feature_name && <img
+                                  {itm.features?.[0]?.feature_name && <img
                                     className='checkss'
                                     src='/assets/img/check.png'
                                     alt=''
@@ -505,7 +505,7 @@ export default function BillingForm() {
                     ))}
                   </div>
                 </div>}
-               
+
                 <div className='card p-0 mb-4'>
                   <div className='card-header'>
                     <h4 className='card-title'>Basic Information</h4>
@@ -734,8 +734,8 @@ export default function BillingForm() {
                             onChange={() => setIsTermsAccepted(!isTermsAccepted)}
                           />
                           <label className="form-check-label" htmlFor="termsCheck">
-                            I agree to the <a href="/termsconditions" target="_blank">terms and conditions</a> and 
-                            <a href="#"  onClick={handleShowModal}> aggreement</a>.
+                            I agree to the <a href="/termsconditions" target="_blank">terms and conditions</a> and
+                            <a href="#" onClick={handleShowModal}> aggreement</a>.
                           </label>
                           {summitted && !isTermsAccepted && (
                             <div className="invalid-feedback d-block">You must agree to the terms and conditions.</div>
@@ -759,7 +759,7 @@ export default function BillingForm() {
                     </div>
                   </div>
                 </div>
-              
+
               </div>
             </div>
           </div>

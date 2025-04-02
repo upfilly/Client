@@ -93,76 +93,78 @@ const Resetpassword = () => {
                     </div>
 
                     <div className="col-md-8 p-0"> */}
-                        <div className='right_side'>
-                            <form
-                                className="centerLogin"
-                                onSubmit={hendleSubmit}
-                            >
-                                <div className="text-center mb-2">
-                                    <h3 className="text-left lgtext">New Password</h3>
+                                <div className='right_side'>
+                                    <form
+                                        className="centerLogin"
+                                        onSubmit={hendleSubmit}
+                                    >
+                                        <div className="text-center mb-2">
+                                        <Link href="/"> <Image alt='logo' width="300" height="55" src="/assets/img/logo.png" className='logo_img1' /></Link>
 
-                                    <p className='para_forget_new'>Please create a new password that you don’t use on any other site.</p>
-                                </div>
+                                            <h3 className="text-center lgtext">New Password</h3>
 
-                                <div className="mb-3">
-                                        <div className="inputWrapper mb-3">
-                                            <input
-                                                type="text"
-                                                className="form-control mb-0 bginput"
-                                                value={form.code}
-                                                onChange={e => setForm({ ...form, code: e.target.value })}
-                                                placeholder="Code"
-                                                required
-                                            />
-                                        </div>
-                                    {/* <label>New Password<span className="start">*</span></label> */}
-
-                                    <div className="mb-3">
-                                        <div className="inputWrapper">
-                                            <input
-                                                type={eyes.password ? 'text' : 'password'}
-                                                className="form-control mb-0 bginput"
-                                                value={form.newPassword}
-                                                min="12"
-                                                onChange={e => setForm({ ...form, newPassword: e.target.value })}
-                                                placeholder="Create new password"
-                                                required
-                                            />
-                                            <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
+                                            <p className='para_forget_new'>Please create a new password that you don’t use on any other site.</p>
                                         </div>
 
-                                        {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
-                                    </div>
-                                    <div className="inputWrapper">
-                                        {/* <label>Confirm Password<span className="start">*</span></label> */}
+                                        <div className="mb-3">
+                                            <div className="inputWrapper mb-3">
+                                                <input
+                                                    type="text"
+                                                    className="form-control mb-0 bginput"
+                                                    value={form.code}
+                                                    onChange={e => setForm({ ...form, code: e.target.value })}
+                                                    placeholder="Code"
+                                                    required
+                                                />
+                                            </div>
+                                            {/* <label>New Password<span className="start">*</span></label> */}
 
-                                        <div className="inputWrapper">
-                                            <input
-                                                type={eyes.confirmPassword ? 'text' : 'password'}
-                                                className="form-control mb-0 bginput"
-                                                value={form.confirmPassword}
-                                                maxLength={50}
-                                                onChange={e => setForm({ ...form, confirmPassword: e.target.value })}
-                                                placeholder="Confirm new password"
-                                                required
-                                            />
-                                            <i className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
+                                            <div className="mb-3">
+                                                <div className="inputWrapper">
+                                                    <input
+                                                        type={eyes.password ? 'text' : 'password'}
+                                                        className="form-control mb-0 bginput"
+                                                        value={form.newPassword}
+                                                        min="12"
+                                                        onChange={e => setForm({ ...form, newPassword: e.target.value })}
+                                                        placeholder="Create new password"
+                                                        required
+                                                    />
+                                                    <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
+                                                </div>
+
+                                                {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
+                                            </div>
+                                            <div className="inputWrapper">
+                                                {/* <label>Confirm Password<span className="start">*</span></label> */}
+
+                                                <div className="inputWrapper">
+                                                    <input
+                                                        type={eyes.confirmPassword ? 'text' : 'password'}
+                                                        className="form-control mb-0 bginput"
+                                                        value={form.confirmPassword}
+                                                        maxLength={50}
+                                                        onChange={e => setForm({ ...form, confirmPassword: e.target.value })}
+                                                        placeholder="Confirm new password"
+                                                        required
+                                                    />
+                                                    <i className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
+                                                </div>
+                                                {submitted && getError('confirmPassword').err.confirmMatch ? <div className="invalid-feedback d-block">Comfirm Password is not matched with New Password</div> : <></>}
+                                            </div>
                                         </div>
-                                        {submitted && getError('confirmPassword').err.confirmMatch ? <div className="invalid-feedback d-block">Comfirm Password is not matched with New Password</div> : <></>}
-                                    </div>
+
+
+                                        <div className="buttons">
+
+                                            <button type="submit" className="btn btn-primary loginclass mb-2">
+                                                Send
+                                            </button>
+                                        </div>
+
+                                        {/* <p className='accopuntt'> Just Remember?<a class="sign_up" href="/login"> Sign Up</a></p> */}
+                                    </form>
                                 </div>
-
-
-                                <div className="buttons">
-
-                                    <button type="submit" className="btn btn-primary loginclass mb-2">
-                                        Send
-                                    </button>
-                                </div>
-
-                                {/* <p className='accopuntt'> Just Remember?<a class="sign_up" href="/login"> Sign Up</a></p> */}
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
