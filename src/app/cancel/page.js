@@ -15,6 +15,7 @@ const Html = () => {
     if (id) {
       ApiClient.delete(`destroy/user?id=${id}`).then(res => {
         if (res.success) {
+          crendentialModel.logout()
           // toast.error("Payment cannot complete...")
         }
       })
