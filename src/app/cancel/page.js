@@ -5,6 +5,7 @@ import './style.scss';
 import Layout from '../components/global/layout';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ApiClient from '../../methods/api/apiClient'
+import crendentialModel from "../../models/credential.model";
 
 const Html = () => {
   const history = useRouter()
