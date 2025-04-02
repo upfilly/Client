@@ -262,7 +262,7 @@ const Html = ({ user,
                             </div>
                             {submitted && getError('dialCode').invalid ? <div className="invalid-feedback d-block">Invalid country code</div> : <></>}
                             {submitted && getError('mobileNo').invalid && !getError('dialCode').invalid ? <div className="invalid-feedback d-block">Min Length is 10</div> : <></>}
-                            {submitted && !form?.mobileNo && !form?.dialCode ? <div className="invalid-feedback d-block"> DailCode is Required*   MobileNo is Required* </div> : submitted && !form?.mobileNo ? <div className="invalid-feedback d-block">MobileNo is Required*</div> : <></>}
+                            {submitted && !form?.mobileNo && !form?.dialCode ? <div className="invalid-feedback d-block"> DailCode is Required*   Mobile Number is Required* </div> : submitted && !form?.mobileNo ? <div className="invalid-feedback d-block">MobileNo is Required*</div> : <></>}
                             {/* {submitted && !form?.dialCode ? <div className="invalid-feedback d-block">DailCode is Required</div> : <></>} */}
                           </div>
 

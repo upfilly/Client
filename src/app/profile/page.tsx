@@ -121,6 +121,7 @@ const Profile = () => {
   };
 
   const handleSwitchUser = (id: any) => {
+    if(id == Id) return
     loader(true)
     ApiClient.put(`changeactiveuser`, { id: id }).then(res => {
       if (res.success) {

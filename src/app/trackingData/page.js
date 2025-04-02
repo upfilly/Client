@@ -276,7 +276,7 @@ export default function affilate() {
                         options={[
                           { id: 'pending', name: 'Pending' },
                           { id: 'paid', name: 'Paid' },
-                          { id: 'unpaid', name: 'unPaid' },
+                          { id: 'unpaid', name: 'unpaid' },
                         ]}
                       />
                     </div>
