@@ -6060,6 +6060,10 @@ input.form-control {
 
 // deepak css
 
+
+
+
+
 .bgdots {
   background-image: url('/assets/img/dots.png');
   background-repeat: no-repeat;
@@ -6295,4 +6299,18 @@ input.form-control {
   width: 16px;
   /* Adjust size as needed */
   height: auto;
+}
+
+
+@media (max-width: 767px) {
+  .innerhtmls {
+    font-size: 28px;
+}
+.para3 {
+  font-size: 14px;
+}
+.bgdots {
+padding-bottom: 0px; 
+}
+
 }

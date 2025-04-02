@@ -12,6 +12,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import ApiClient from '@/methods/api/apiClient';
+import { IoClose } from "react-icons/io5";
+import { FiPlus } from "react-icons/fi";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -547,16 +549,17 @@ const Html = ({ user,
                               />
                               <button
                                 type="button"
-                                className="btn btn-danger"
+                                className="closebtn"
                                 onClick={() => removeWebsite(index)}
                                 disabled={websites.length === 1}
                               >
-                                ❌
+                               <IoClose />
                               </button>
                             </div>
                           ))}
-                          <button type="button" className="btn btn-primary mt-2" onClick={addWebsite}>
-                            ➕ Add Website
+                          <button type="button" className="btn d-flex gap-2 align-items-center btn-primary mt-2" onClick={addWebsite}>
+                          <FiPlus />
+                          Add Website
                           </button>
                         </div>
                       </div>
