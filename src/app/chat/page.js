@@ -884,9 +884,9 @@ export default function Chat() {
                   </div>
                   <div className="chat-footer">
                     <div className=" position-relative w-100 set_message">
-                      <input
+                      <textarea
                         type="text"
-                        className="form-control"
+                        className="form-control-chat"
                         placeholder="Type a message..."
                         value={chatMsg}
                         onChange={(e) => setChatMsg(e.target.value)}
@@ -897,7 +897,7 @@ export default function Chat() {
                         }}
                         disabled={chat?.length > 0 && chat[0]?.rooms_details?.blocked_admin ? true : false}
                       />
-                      <label className="pointer-upload">
+                      <label className="pointer-upload-chart">
                         <input
                           id="bannerImage"
                           type="file"

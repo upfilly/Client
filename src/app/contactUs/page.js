@@ -29,11 +29,12 @@ export default function ContactUs() {
 
         <div className='cuspadding contactus'>
           <div className='container '>
-            <div className='row'>
-              <h3 className="mainhead mb-4">Need Assistance?</h3>
+          <h3 className="mainhead mb-4">Need Assistance?</h3>
+            <div className='custom-grid'>
+              
 
-              <div className='col-12 col-sm-6 col-lg-4 '>
-                <div className='card_box text-center'>
+              <div className='grid-item  '>
+                <div className='card_box text-center mb-4'>
                   <div className='imgtag_card'>
                     <img src="/assets/img/c2.png" className='img-fluid heighteual' />
                     <h6>Visit our Forum</h6>
@@ -43,8 +44,8 @@ export default function ContactUs() {
                 </div>
               </div>
 
-              <div className='col-12 col-sm-6 col-lg-4 '>
-                <div className='card_box text-center '>
+              <div className='grid-item  '>
+                <div className='card_box text-center mb-4 '>
                   <div className='imgtag_card'>
                     <img src="/assets/img/c1.png" className='img-fluid heighteual' />
                     <h6>Email Us </h6>
@@ -54,8 +55,8 @@ export default function ContactUs() {
                 </div>
               </div>
 
-              <div className='col-12 col-sm-6 col-lg-4 '>
-                <div className='card_box text-center'>
+              <div className='grid-item  '>
+                <div className='card_box text-center mb-4'>
                   <div className='imgtag_card'>
                     <img src="/assets/img/c3.png" className='img-fluid heighteual' />
                     <h6>Telephone Us</h6>
