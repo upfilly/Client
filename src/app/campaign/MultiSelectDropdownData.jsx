@@ -93,7 +93,8 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
         }
       }
 
-      // Logic to automatically select category if all subcategories are selected
+
+
       data.forEach((category) => {
         const allSubSelected = category.subCategories.every(
           (sub) =>
@@ -107,19 +108,20 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
         }
       });
 
-      // Logic to automatically select subcategory if all subsubcategories are selected
       data
         .flatMap((category) => category.subCategories)
         .forEach((subCategory) => {
+          // console.log(subCategory,"gjgjhghg")
           if (subCategory.subchildcategory) {
             const allSubSubSelected = subCategory.subchildcategory.every((subSub) => newSubSubCategories.includes(subSub._id));
             if (allSubSubSelected && !newSubCategories.includes(subCategory.id)) {
-              newSubCategories.push(subCategory.id);
+              // newSubCategories.push(subCategory.id);
             } else if (!allSubSubSelected && newSubCategories.includes(subCategory.id)) {
               newSubCategories = newSubCategories.filter((id) => id !== subCategory.id);
             }
           }
         });
+
 
       return { categories: newCategories, subCategories: newSubCategories, subSubCategories: newSubSubCategories };
     });
@@ -182,11 +184,13 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
   const renderSubcategories = (categoryId, subCategories) => (
     <div className="subcategory-dropdown">
-      {subCategories.map((sub) => (
-        <div key={sub.id} className="subcategory-container" style={{ marginLeft: "15px" }}>
-          <div className="dropdown-item" >
+      {subCategories.map((sub) =>{
+        return(
+        <div key={sub.id} className="subcategory-container">
+          <div className={sub.subchildcategory?.length > 0 ? "dropdown-item ml-3"  : "ml-5"} >
             <input
               type="checkbox"
+              className={sub.subchildcategory?.length > 0 ? "" : "form-check-input"}
               checked={selectedItems && selectedItems?.subCategories?.includes(sub.id)}
               indeterminate={isIndeterminate(categoryId, 'category')}
               onChange={(e) => handleSelection("", sub.id, "", e.target.checked)}
@@ -196,7 +200,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
           {expandedSubCategories[sub.id] && renderSubSubcategories(categoryId, sub.id, sub.subchildcategory)}
         </div>
-      ))}
+      )})}
     </div>
   );
 
