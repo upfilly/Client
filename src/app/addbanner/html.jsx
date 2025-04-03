@@ -138,7 +138,7 @@ const Html = ({
                                             <div className='user_detail'>
                                                 <div className='user_name'>
                                                     <h4 className='user'>
-                                                        {methodModel.capitalizeFirstLetter(itm?.addedByDetails?.fullName)}
+                                                        {methodModel.capitalizeFirstLetter(itm?.addedBy_details?.fullName)}
                                                     </h4>
                                                 </div>
                                             </div></td>
