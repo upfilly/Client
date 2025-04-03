@@ -59,11 +59,11 @@ const Html = ({ user,
       setNewItem(""); // Clear input
     }
   };
-  
+
   const handleRemoveItem = (itemToRemove) => {
     setCustomItems(customItems.filter((item) => item !== itemToRemove));
     setSelectedItems1(selectedItems1.filter((item) => item !== itemToRemove));
-  
+
     // Remove related form values
     setForm((prevForm) => {
       const updatedForm = { ...prevForm };
@@ -104,7 +104,7 @@ const Html = ({ user,
   };
 
   const getCategory = () => {
-    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types": "advertiser_categories"}&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         setCategories(res.data.data);
@@ -422,7 +422,7 @@ const Html = ({ user,
                           <label>Select Category<span className="star">*</span></label>
                           <div className="drops category-input">
                             <MultiSelectDropdown
-                              isOpen={isOpen} 
+                              isOpen={isOpen}
                               setIsOpen={setIsOpen}
                               data={categories}
                               selectedItems={selectedItems}
@@ -533,38 +533,38 @@ const Html = ({ user,
                               pattern={pattern}
                             />
                           </div>
-                        </div> 
-                        :
-                        <div className="col-12 col-sm-12 col-md-6 mb-3">
-                        <div className="form-group">
-                          <label>Websites</label>
-                          {websites.map((website, index) => (
-                            <div key={index} className="d-flex align-items-center gap-2 mb-2">
-                              <input
-                                type="text"
-                                className="form-control flex-grow-1"
-                                placeholder="http://www.example.com"
-                                value={website}
-                                onChange={(e) => handleWebsiteChange(index, e.target.value)}
-                                title="http://www.example.com"
-                                pattern="https?://.+" 
-                              />
-                              <button
-                                type="button"
-                                className="closebtn"
-                                onClick={() => removeWebsite(index)}
-                                disabled={websites.length === 1}
-                              >
-                               <IoClose />
+                        </div>
+                          :
+                          <div className="col-12 col-sm-12 col-md-6 mb-3">
+                            <div className="form-group">
+                              <label>Websites</label>
+                              {websites.map((website, index) => (
+                                <div key={index} className="d-flex align-items-center gap-2 mb-2">
+                                  <input
+                                    type="text"
+                                    className="form-control flex-grow-1"
+                                    placeholder="http://www.example.com"
+                                    value={website}
+                                    onChange={(e) => handleWebsiteChange(index, e.target.value)}
+                                    title="http://www.example.com"
+                                    pattern="https?://.+"
+                                  />
+                                  <button
+                                    type="button"
+                                    className="closebtn"
+                                    onClick={() => removeWebsite(index)}
+                                    disabled={websites.length === 1}
+                                  >
+                                    <IoClose />
+                                  </button>
+                                </div>
+                              ))}
+                              <button type="button" className="btn d-flex gap-2 align-items-center btn-primary mt-2" onClick={addWebsite}>
+                                <FiPlus />
+                                Add Website
                               </button>
                             </div>
-                          ))}
-                          <button type="button" className="btn d-flex gap-2 align-items-center btn-primary mt-2" onClick={addWebsite}>
-                          <FiPlus />
-                          Add Website
-                          </button>
-                        </div>
-                      </div>
+                          </div>
                         }
 
 
@@ -619,7 +619,7 @@ const Html = ({ user,
                       {
 
                         <div className="row mx-auto">
-                          {[...customItems].map((item,index) => (
+                          {[...customItems].map((item, index) => (
                             <div key={item} className="col-12">
                               <div className="card rounded-5 border platforms_input mb-3 p-3">
                                 <div className="d-flex align-items-center">
