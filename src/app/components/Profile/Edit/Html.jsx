@@ -49,7 +49,7 @@ const Html = ({ user,
     { id: 'advertiser_categories', name: 'Advertiser Categories' },
   ]
   const data = ["youtube", "twitter", "instagram", "linkedin"]
-
+  const [isOpen, setIsOpen] = useState(false);
   const [newItem, setNewItem] = useState("");
   const [customItems, setCustomItems] = useState(data);
 
@@ -422,6 +422,8 @@ const Html = ({ user,
                           <label>Select Category<span className="star">*</span></label>
                           <div className="drops category-input">
                             <MultiSelectDropdown
+                              isOpen={isOpen} 
+                              setIsOpen={setIsOpen}
                               data={categories}
                               selectedItems={selectedItems}
                               setSelectedItems={setSelectedItems}

@@ -20,6 +20,8 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [subSubCategories, setSubSubCategories] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isRegionOpen, setRegionIsOpen] = useState(false);
     const categoryTypes = [
         { id: 'promotional_models', name: 'Promotional Models' },
         { id: 'property_types', name: 'Property Types' },
@@ -364,10 +366,12 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     {submitted && !form?.category_type && <div className="invalid-feedback d-block">{errors?.category_type}</div>}
                                 </div> */}
 
-                                <div className="col-md-12 mb-3">
+                                <div className="col-md-12 mb-3" onClick={() => setRegionIsOpen(false)}>
                                     <label>Select Category<span className="star">*</span></label>
                                     <div className="drops category-input">
                                         <MultiSelectDropdownData
+                                            isOpen={isOpen}
+                                            setIsOpen={setIsOpen}
                                             data={categories}
                                             selectedItems={selectedItems}
                                             setSelectedItems={setSelectedItems}
@@ -449,10 +453,12 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     </div>
                                     {submitted && !form?.region && <div className="invalid-feedback d-block">{errors?.region}</div>}
                                 </div> */}
-                                <div className="col-md-12 mb-3">
+                                <div className="col-md-12 mb-3" onClick={() => setIsOpen(false)}>
                                     <label>Select Country<span className="star">*</span></label>
                                     <div className="drops category-input">
                                         <MultiSelectRegionDropdown
+                                            isRegionOpen={isRegionOpen}
+                                            setRegionIsOpen={setRegionIsOpen}
                                             selectedItems={selectedRegionItems}
                                             setSelectedItems={setSelectedRegionItems}
                                         />

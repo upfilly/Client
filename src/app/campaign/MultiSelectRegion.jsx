@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import "./MultiSelectDropdownData.css";
 import { regionData } from "./AddEditUser/regionCountries";
 
-const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
+const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems ,isRegionOpen, setRegionIsOpen}) => {
   const data = regionData;
-  const [isOpen, setIsOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  const toggleDropdown = () => setRegionIsOpen(!isRegionOpen);
 
   const toggleCategory = (categoryId) => {
     setExpandedCategories((prev) => ({
@@ -102,7 +101,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems }) => {
         {getSelectedValuesText()}
       </span>
 
-      {isOpen && (
+      {isRegionOpen && (
         <div className="dropdown-menu">
           <input
             type="text"
