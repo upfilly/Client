@@ -31,11 +31,12 @@ const AddEditUser = () => {
         e.preventDefault()
         setSubmitted(true)
         // let invalid = methodModel.getFormError(formValidation, form)
-        if (!form?.group_name || !form?.group_type) return
+        if (!form?.group_name) return
         let method = 'post'
         let url = 'affiliate-group'
         let value = {
             ...form,
+            group_type:"affiliate"
         }
         if (value.id) {
             method = 'put'

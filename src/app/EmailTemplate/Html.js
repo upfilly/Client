@@ -51,7 +51,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                                             autocomplete="off"
                                             onChange={(e) => setForm({ ...form, isAllJoined: false ,timeInterval:'',affiliateStatus:e.target.checked ,acceptedDate:''})}
                                         />
-                                        <label className=' form-check-label' >Active Affiliate</label>
+                                        <label className=' form-check-label' >Active Affiliates</label>
                                     </div>
                                 </div>
                                 <div className='col-12 col-sm-3 col-md-3'>

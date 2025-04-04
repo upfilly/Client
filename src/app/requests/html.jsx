@@ -111,7 +111,7 @@ const Html = ({
 <table className="table table-striped  ">
     <thead className='table_head'>
         <tr className='heading_row'>
-            <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affilite Name"}</th>
+            <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affiliate Name"}</th>
             <th scope="col" className='table_data' >Title</th>
             <th scope="col" className='table_data' >Comment</th>
             {user && user?.role == "brand" && <th scope="col" className='table_data' >Status</th>}

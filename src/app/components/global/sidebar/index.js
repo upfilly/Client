@@ -18,7 +18,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     communication: ['EmailMessages'],
     commisions: ['commisionplan','manualCommission'],
     catalogue: ['types', 'categories', 'category/'],
-    affiliates: ['affiliate', 'group','marketplace', 'EmailTemplate','appliedjobs','makeLink'],
+    affiliates: ['affiliate', 'group','marketplace', 'EmailTemplate','appliedjobs','makeLink','requests'],
     CreativeAssets: ['CreativeAsset','DataFeeds','CreativeEmails','addbanner','coupons'],
     api: ['bookingSystem', 'pos', 'reviews', 'accounting-system'],
     geo: ['continents', 'countries', 'regions', 'cities'],

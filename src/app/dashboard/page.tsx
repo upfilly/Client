@@ -186,7 +186,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Associate Affiliate</p>
+                          <p className="revuh">Joined Affiliates</p>
 
                           <h3 className="dollars-t">
                             {campaignData?.associatedAffiliatesCount}
@@ -393,7 +393,7 @@ export default function Dashboard() {
 
         {user.role == "brand" && (
           <div className="row mt-3 mx-0">
-            <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
+            {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
               <div className="recent-sales">
                 <div className="d-flex align-items-center flex-wrap justify-content-between">
                   <p className="tives mb-0">Recent Sales</p>
@@ -494,7 +494,7 @@ export default function Dashboard() {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
 
             <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
               <div className="recent-sales active-users">
@@ -536,55 +536,6 @@ export default function Dashboard() {
                   {recentUser?.length == 0 && (
                     <div className="py-3 text-center">No User</div>
                   )}
-
-                  {/* <li>
-                        <div className='d-flex align-items-center flex-wrap item-name'>
-                          <img src='/assets/img/girl-img.png' />
-                          <p className='mb-0'>Person Name</p>
-                        </div>
-
-                        <div className='d-flex align-items-center flex-wrap item-status'>
-                          <p className='yellow-badge'>Last Activity: Today</p>
-                          <i className="fa fa-chevron-right " aria-hidden="true"></i>
-                        </div>
-                      </li>
-
-
-                      <li>
-                        <div className='d-flex align-items-center flex-wrap item-name'>
-                          <img src='/assets/img/girl-img.png' />
-                          <p className='mb-0'>Person Name</p>
-                        </div>
-
-                        <div className='d-flex align-items-center flex-wrap item-status'>
-                          <p className='yellow-badge'>Last Activity: Today</p>
-                          <i className="fa fa-chevron-right " aria-hidden="true"></i>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div className='d-flex align-items-center flex-wrap item-name'>
-                          <img src='/assets/img/girl-img.png' />
-                          <p className='mb-0'>Person Name</p>
-                        </div>
-
-                        <div className='d-flex align-items-center flex-wrap item-status'>
-                          <p className='yellow-badge'>Last Activity: Today</p>
-                          <i className="fa fa-chevron-right " aria-hidden="true"></i>
-                        </div>
-                      </li>
-
-                      <li>
-                        <div className='d-flex align-items-center flex-wrap item-name'>
-                          <img src='/assets/img/girl-img.png' />
-                          <p className='mb-0'>Person Name</p>
-                        </div>
-
-                        <div className='d-flex align-items-center flex-wrap item-status'>
-                          <p className='yellow-badge'>Last Activity: Today</p>
-                          <i className="fa fa-chevron-right " aria-hidden="true"></i>
-                        </div>
-                      </li> */}
                 </ul>
               </div>
             </div>
