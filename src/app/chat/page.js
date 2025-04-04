@@ -470,7 +470,7 @@ export default function Chat() {
   const handelSubmit = (e) => {
     e.preventDefault();
 
-    if (!chatMsg) {
+    if (!chatMsg?.trim()) {
       return
     }
 

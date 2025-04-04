@@ -147,7 +147,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Accepted Campaign</p>
+                          <p className="revuh">Accepted Campaigns</p>
 
                           <h3 className="dollars-t">
                             {CampaignRequest?.acceptedRequestCount}
@@ -200,7 +200,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Pending Campaign</p>
+                          <p className="revuh">Pending Campaigns</p>
 
                           <h3 className="dollars-t">
                             {CampaignRequest?.pendingRequestsCount}
@@ -236,7 +236,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Pending Campaign</p>
+                          <p className="revuh">Pending Campaigns</p>
 
                           <h3 className="dollars-t">
                             {campaignData?.pendingCampaigns}
@@ -255,7 +255,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Rejected Campaign</p>
+                          <p className="revuh">Rejected Campaigns</p>
 
                           <h3 className="dollars-t">
                             {CampaignRequest?.rejectedRequestsCount}
@@ -294,7 +294,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Rejected Campaign</p>
+                          <p className="revuh">Rejected Campaigns</p>
 
                           <h3 className="dollars-t">
                             {CampaignRequest?.rejectedCampaigns || 0}
