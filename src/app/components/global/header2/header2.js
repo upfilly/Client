@@ -221,7 +221,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                             }
                                         </div>
                                         :
-                                        <div className='no_Notification'>No Notification</div>
+                                        <div className='no_Notification'>No Notifications</div>
                                     }
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ import SelectDropdown from '@/app/components/common/SelectDropdown';
 import { useRouter } from 'next/navigation';
 import environment from '@/environment';
 import { Modal } from 'react-bootstrap';
+import Papa from 'papaparse';
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -21,7 +22,13 @@ const Html = () => {
     const [commissionSelectType, setCommissionType] = useState("");
     const [submitted, setsubmitted] = useState(false)
     const [show, setShow] = useState(false);
+    const [csvData, setCsvData] = useState([]);
     const history = useRouter()
+
+    const handleDownload = () => {
+        const url = '/searchspring.csv';
+        window.open(url, '_blank');
+    };
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -30,10 +37,10 @@ const Html = () => {
         handleShow()
     }
 
-    const handleDownload = () => {
-        const url ='/assets/img/Example.csv';
-        window.open(url, '_blank');
-      };
+    // const handleDownload = () => {
+    //     const url = '/assets/img/Example.csv';
+    //     window.open(url, '_blank');
+    // };
 
     const commissionType = [{
         id: "sales", name: "Sales"
@@ -84,16 +91,39 @@ const Html = () => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);
-                const manipulateData = filteredData.map((itm)=>{return{
-                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
-                }})
+                console.log(filteredData, "lklklll")
+                const manipulateData = filteredData.map((itm) => {
+                    return {
+                        name: itm?.fullName || itm?.firstName, id: itm?.id || itm?._id
+                    }
+                })
                 setData(manipulateData)
             }
         })
     }
 
+     const fetchCSV = async () => {
+            try {
+                const response = await fetch('/searchspring.csv');
+                if (!response.ok) {
+                    throw new Error('File not found');
+                }
+    
+                const text = await response.text();
+                Papa.parse(text, {
+                    complete: (result) => {
+                        setCsvData(result.data);
+                    },
+                    header: true,
+                    skipEmptyLines: true,
+                });
+            } catch (err) {
+            }
+        };
+
     useEffect(() => {
         getData()
+        fetchCSV();
     }, [])
 
     const handleSubmit = () => {
@@ -215,7 +245,7 @@ const Html = () => {
                                                     <label>Publisher Id</label>
                                                     <SelectDropdown
                                                         id="statusDropdown"
-                                                        displayValue="fullName"
+                                                        displayValue="name"
                                                         placeholder="select"
                                                         intialValue={formData?.publisher_id}
                                                         result={e => { setFormData({ ...formData, publisher_id: e.value }) }}
@@ -372,9 +402,49 @@ const Html = () => {
                                         <h5 className='modal-title'>Sample CSV File</h5>
                                         <button className='btn btn-primary ml-2' onClick={handleDownload}>Download CSV</button>
                                     </Modal.Header>
-                                    <Modal.Body className='p-0' >
-                                        <img src="/assets/img/affiliteCsv.png" className='csv_img_file'
-                                        />
+                                    <Modal.Body className='p-0'>
+                                        <div className="table-responsive">
+                                            <table className="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product ID</th>
+                                                        <th>SKU</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Retail Price</th>
+                                                        <th>Category</th>
+                                                        <th>Brand</th>
+                                                        <th>Size</th>
+                                                        <th>Color</th>
+                                                        <th>Season</th>
+                                                        <th>Avg Rating</th>
+                                                        <th>Rating Count</th>
+                                                        <th>Inventory Count</th>
+                                                        <th>Product URL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {csvData.map((product, index) => (
+                                                        <tr key={index}>
+                                                            <td>{product["Product ID"]}</td>
+                                                            <td>{product["SKU"]}</td>
+                                                            <td>{product["Name"]}</td>
+                                                            <td>{product["Price"]}</td>
+                                                            <td>{product["Retail Price"]}</td>
+                                                            <td>{product["Category"]}</td>
+                                                            <td>{product["Brand"]}</td>
+                                                            <td>{product["Size"]}</td>
+                                                            <td>{product["Color"]}</td>
+                                                            <td>{product["Season"]}</td>
+                                                            <td>{product["Rating Avg"]}</td>
+                                                            <td>{product["Rating Count"]}</td>
+                                                            <td>{product["Inventory Count"]}</td>
+                                                            <td>{product["Product URL"]}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </Modal.Body>
                                 </Modal>
 

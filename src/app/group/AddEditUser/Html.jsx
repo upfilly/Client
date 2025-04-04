@@ -63,8 +63,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back ,id}) => {
                                     {submitted && !form?.group_name ? <div className="invalid-feedback d-block">Group name is Required</div> : <></>}
                                 </div>
 
-                                <div className='col-md-6 mb-3'>
-                                    {/* <div className='mb-3' > */}
+                                {/* <div className='col-md-6 mb-3'>
                                         <label >Select Type<span className="star">*</span></label>
                                         <SelectDropdown
                                             id="statusDropdown"
@@ -78,9 +77,8 @@ const Html = ({ submitted, form, handleSubmit, setform, back ,id}) => {
                                                 { id: 'banner', name: 'Banner' },
                                             ]}
                                         />
-                                    {/* </div> */}
                                     {submitted && !form?.group_type ? <div className="invalid-feedback d-block">Group Type is Required</div> : <></>}
-                                </div>
+                                </div> */}
                                 {/* <div className="col-md-6 mb-3">
                                     <label>Commision<span className="star">*</span></label>
                                     <input

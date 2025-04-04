@@ -197,14 +197,14 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             <div className={`collapse dropdown-btm ${tabclass('commisions') || tab == 'commisions' ? 'show' : ''}`}>
 
-              {urlAllow('commisionplan') ? <>
+              {/* {urlAllow('commisionplan') ? <>
                 <ListItemLink to="/commission/commisionplan" title="Manage Commissions">
                   <div className="d-flex align-items-center icns_center">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
                     <span className="side_head">Manage</span>
                   </div>
                 </ListItemLink>
-              </> : <></>}
+              </> : <></>} */}
               {/* {urlAllow('addcommision') ? <>
               <ListItemLink to="/commission/addcommision"  title="Commissions">
               <div className="d-flex align-items-center icns_center">

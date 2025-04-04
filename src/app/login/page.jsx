@@ -224,7 +224,9 @@ export default function Login() {
               type={eyes.password ? 'text' : 'password'}
               className="form-control mb-0 bginput"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={e => {
+                const newPassword = e.target.value.replace(/\s/g, "");
+                setPassword(newPassword)}}
               placeholder="Password"
               required
             />

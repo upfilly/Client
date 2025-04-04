@@ -48,6 +48,11 @@ export default function StageLastStep() {
     setFormData({ ...formData, [name]: fieldValue });
   }
 
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value.replace(/\s/g, "");
+    setFormData({ ...formData, password: newPassword });
+  };
+
   useEffect(() => {
     if (!formData?.dialCode) {
       setFormData((prevForm) => ({ ...prevForm, dialCode: '+1' }));
@@ -360,7 +365,7 @@ export default function StageLastStep() {
                         <label className='label-set'>Password <img className='sad-img' src='/assets/img/information-button.png' alt=''></img></label>
                         <input type={eyes.password ? 'text' : 'password'} name="password" className="form-control position-relative "
                           checked={formData.password}
-                          onChange={handleInputChange}></input>
+                          onChange={handlePasswordChange}></input>
                         <div className='eye-icon-m'>
                           <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
                         </div>
