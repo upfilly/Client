@@ -5,21 +5,19 @@ import ApiClient from '../../methods/api/apiClient';
 import './style.scss';
 import loader from '../../methods/loader';
 import Html from './html';
-import { userType } from '../../models/type.model';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams,useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
-import methodModel from '../../methods/methods';
 
 const Users = () => {
     const user = crendentialModel.getUser()
-    const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:'', addedBy:user?.id})
+    const { role } = useParams()
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '', addedBy: user?.id })
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
-    const history=useRouter()
+    const history = useRouter()
     const [dateRange, setDateRange] = useState([null, null]);
     const [startDate, endDate] = dateRange;
     const currentDate = startDate ? new Date(startDate) : null;
@@ -30,13 +28,13 @@ const Users = () => {
 
     useEffect(() => {
         if (user) {
-            getData({role, page: 1 })
+            getData({ role, page: 1 })
         }
     }, [role])
 
     useEffect(() => {
         if (startDate && endDate) {
-            setFilter({...filters, page: 1, start_date: formattedStartDate, end_date: formattedEndDate })
+            setFilter({ ...filters, page: 1, start_date: formattedStartDate, end_date: formattedEndDate })
             getData({ ...filters, page: 1, start_date: formattedStartDate, end_date: formattedEndDate })
         }
     }, [startDate, endDate])
@@ -45,7 +43,7 @@ const Users = () => {
     const getData = (p = {}) => {
         setLoader(true)
         let filter = { ...filters, ...p }
-        let url='product/all'
+        let url = 'product/all'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res.data.data)
@@ -71,18 +69,18 @@ const Users = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-            // loader(true)
-            ApiClient.delete('delete', {id: id ,model:'product' }).then(res => {
-                if (res.success) {
-                    toast.success(res.message)
-                    clear()
-                }
-                // loader(false)
-            })
+                // loader(true)
+                ApiClient.delete('delete', { id: id, model: 'product' }).then(res => {
+                    if (res.success) {
+                        toast.success("Offer deleted successfully")
+                        clear()
+                    }
+                    // loader(false)
+                })
             }
-          })
+        })
     }
 
     const pageChange = (e) => {
@@ -90,12 +88,12 @@ const Users = () => {
         getData({ page: e.selected + 1 })
     }
 
-    const filter = (p={}) => {
-        setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page+1})
+    const filter = (p = {}) => {
+        setFilter({ ...filters, ...p })
+        getData({ ...p, page: filters?.page + 1 })
     }
 
-    
+
 
     const ChangeRole = (e) => {
         setFilter({ ...filters, role: e, page: 1 })
@@ -103,61 +101,64 @@ const Users = () => {
     }
     const ChangeStatus = (e) => {
         setFilter({ ...filters, status: e, page: 1 })
-        getData({...filters, status: e, page: 1 })
+        getData({ ...filters, status: e, page: 1 })
     }
 
-    const statusChange=(itm)=>{
-        let modal='users'
-        let status='active'
-        if(itm.status=='active') status='deactive'
+    const statusChange = (itm) => {
+        let modal = 'users'
+        let status = 'active'
+        if (itm.status == 'active') status = 'deactive'
 
         Swal.fire({
             title: ``,
-            text: `Do you want to ${status =='active'?'Active':'Deactive'} this user`,
+            text: `Do you want to ${status == 'active' ? 'Active' : 'Inactive'} this Offer`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 loader(true)
-                ApiClient.put(`change/status`,{status,id:itm.id,model:'product'}).then(res=>{
-                    if(res.success){
-                        getData({page: 1})
+                ApiClient.put(`change/status`, { status, id: itm.id, model: 'product' }).then(res => {
+                    if (res.success) {
+                        getData({ page: 1 })
                     }
                     loader(false)
                 })
             }
-          })
+        })
     }
 
-    const view=(id)=>{
-        history.push("/Offers/detail/"+id)
+    const view = (id) => {
+        history.push("/Offers/detail/" + id)
     }
 
-    const edit=(id)=>{
-        let url=`/Offers/edit/${id}`
-        if(role) url=`/product/${role}/edit/${id}`
+    const edit = (id) => {
+        let url = `/Offers/edit/${id}`
+        if (role) url = `/product/${role}/edit/${id}`
         history.push(url)
     }
 
-    const add=()=>{
-        let url=`/Offers/add`
-        if(role) url=`/Offers/${role}/add`
+    const add = () => {
+        let url = `/Offers/add`
+        if (role) url = `/Offers/${role}/add`
         history.push(url)
     }
 
 
-    const reset=()=>{
-        let filter={
+    const reset = () => {
+        let filter = {
+            addedBy: user?.id,
             status: '',
-            role:'',
-            search:'',
-             page: 1,
-             count:5, start_date:'', end_date: ''
+            role: '',
+            search: '',
+            page: 1,
+            count: 5,
+            start_date: '',
+            end_date: ''
         }
-        setFilter({ ...filters,...filter })
+        setFilter({ ...filters, ...filter })
         getData({ ...filter })
         // dispatch(search_success(''))
     }
@@ -173,11 +174,11 @@ const Users = () => {
         }
 
         let sortBy = `${key} ${sorder}`;
-        filter({ sortBy, key, sorder  })
+        filter({ sortBy, key, sorder })
     }
 
-    const isAllow=(key='')=>{
-        
+    const isAllow = (key = '') => {
+
         return true
     }
 

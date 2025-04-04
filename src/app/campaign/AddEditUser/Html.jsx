@@ -159,7 +159,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
             <form onSubmit={handleSubmit}>
-                <div className="sidebar-left-content">
+                <div className="sidebar-left-content" onClick={() => { if (isOpen) { setIsOpen(false); } if (isRegionOpen) { setRegionIsOpen(false) } }}>
                     <div className="pprofile1 card card-shadow p-4">
                         <div className="">
                             <div className="main_title_head profile-card">
