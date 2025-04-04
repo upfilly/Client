@@ -2549,7 +2549,9 @@ span.contract {
   align-items: center;
   justify-content: center;
 }
-
+textarea.form-control-chat::placeholder {
+  color: #000;
+}
 
 
 select.form-select {
