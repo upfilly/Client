@@ -50,6 +50,7 @@ const NotificationPage = () => {
                             return(
                             <div key={notification.id} className="notificationItem" onClick={() => {
                                 if (notification?.type == 'message') {
+                                    localStorage.setItem("chatId",notification?.addedBy)
                                     history.push("/chat")
                                 } else if (notification?.type == 'make_offer') {
                                     history.push("/requests")
