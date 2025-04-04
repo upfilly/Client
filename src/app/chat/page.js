@@ -83,7 +83,7 @@ export default function Chat() {
         setSettingData(res?.data)
       }
     })
-}, [])
+  }, [])
 
   useEffect(() => {
     filterArrays();
@@ -413,7 +413,7 @@ export default function Chat() {
 
   useEffect(() => {
     ConnectSocket.on(`delete-message`, (data) => {
-      userMessage(data?.data?.room_id,data?.data?.user_id)
+      userMessage(data?.data?.room_id, data?.data?.user_id)
       getChatList()
     });
   }, [])
@@ -487,7 +487,7 @@ export default function Chat() {
     setChatMsg("");
   };
 
-  const userMessage = (roomuid,u_id) => {
+  const userMessage = (roomuid, u_id) => {
     axios
       .get(
         `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${u_id || id}&login_user_id=${user?.id}`
@@ -513,7 +513,7 @@ export default function Chat() {
           const data = res.data;
           // // console.log(res?.data,"=----------")
           setRoomId(res.data.data.room_id);
-          userMessage(data.data.room_id,data?.room_members?.[0]?.user_id);
+          userMessage(data.data.room_id, data?.room_members?.[0]?.user_id);
           joinRoom(data.data.room_id);
           localStorage.setItem("roomId", data.data.room_id)
           // loader(false);
@@ -591,7 +591,7 @@ export default function Chat() {
 
   return (
     <>
-      <Header settingData={settingData}/>
+      <Header settingData={settingData} />
       <PageContainer title="Chat" description="Chat">
 
         <div className="container chat-bg-main">
@@ -601,8 +601,8 @@ export default function Chat() {
                 <div className="conversations mb-4">
                   <div className="card p-0">
                     <div className="card-header pl-0 pr-0 p-0" id="headingOne">
-                      <div  className="pointer">
-                          <h3 class="about_head" > <i onClick={() => router.push('/requests')} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
+                      <div className="pointer">
+                        <h3 class="about_head" > <i onClick={() => router.push('/requests')} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
                       </div>
                       <div className="msg_info person-chat hide_icon_Group b-none">
                         {user?.role == "brand" && <button className=" btn-group btn-sm" onClick={handleShow}>Create a Group</button>}
@@ -622,9 +622,9 @@ export default function Chat() {
                             id="searchright"
                             value={searchText}
                             onChange={e => setSearchText(e.target.value)}
-                            // onChange={(e) =>
-                            //   filter({ search: e.target.value })
-                            // }
+                          // onChange={(e) =>
+                          //   filter({ search: e.target.value })
+                          // }
                           />
                           <span className="mglass">
                             {" "}
@@ -644,20 +644,20 @@ export default function Chat() {
                               filteredChatList?.map((itm, indx) => {
                                 // console.log(itm,"itmmmmmm=====")
                                 return (<>
-                                 
+
                                   <li
                                     className={itm?.room_id == roomId ? "person-list-inner chat_active" : "person-list-inner"}
                                     key={indx}
                                     onClick={isImage ? "" : () => {
-                                    
+
                                       setActiveData(itm)
                                       localStorage.setItem("roomId", itm?.room_id)
                                       handleUserId(itm?.user_id)
-                                      userMessage(itm?.room_id,itm?.room_members[0]?.user_id);
+                                      userMessage(itm?.room_id, itm?.room_members[0]?.user_id);
                                       setRoomId(itm?.room_id)
                                       joinRoom(itm?.room_id);
                                       getGroupListMember(itm?.room_id)
-                                  
+
                                     }}
                                   >
 
@@ -710,7 +710,7 @@ export default function Chat() {
                                     </div>
 
                                   </li>
-                                  
+
                                 </>);
                               })
                               : <div className="text-center">
@@ -749,7 +749,7 @@ export default function Chat() {
                             {" "}
                             {activeData?.room_name ? methodModel?.capitalizeFirstLetter(activeData?.room_name) : methodModel?.capitalizeFirstLetter(activeUser?.[0]?.user_name)}
                           </h5>
-                          {!activeData?.room_name ? <span>{activeUser?.[0]?.isOnline == 'true' || activeUser?.[0]?.user_id == onlineUserId  ? "online" : "offline"}</span> :
+                          {!activeData?.room_name ? <span>{activeUser?.[0]?.isOnline == 'true' || activeUser?.[0]?.user_id == onlineUserId ? "online" : "offline"}</span> :
                             <>{chatMembers?.length >= 2 && <span>{chatMembers?.length} members</span>}</>
                           }
                         </div>
@@ -852,23 +852,23 @@ export default function Chat() {
                                     </div>
                                   </div>
                                 </div>
-<div className=" addbx">
-<div className="msg_info person-chat hide_icon_delete b-none">
-                                  <Dropdown className="p-0">
-                                    <Dropdown.Toggle className="p-0 btnremove" variant="" id="">
-                                      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                <div className=" addbx">
+                                  <div className="msg_info person-chat hide_icon_delete b-none">
+                                    <Dropdown className="p-0">
+                                      <Dropdown.Toggle className="p-0 btnremove" variant="" id="">
+                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 
-                                    </Dropdown.Toggle>
+                                      </Dropdown.Toggle>
 
-                                    <Dropdown.Menu className="chat_dropdwon">
-                                      <Dropdown.Item onClick={() => deleteChatForme(itm._id)}><i className="fa fa-trash fs12"></i> Delete For Me</Dropdown.Item>
-                                      <Dropdown.Item onClick={() => deleteChatEveryone(itm._id)}><i className="fa fa-trash fs12"></i> Delete For Everyone</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
+                                      <Dropdown.Menu className="chat_dropdwon">
+                                        <Dropdown.Item onClick={() => deleteChatForme(itm._id)}><i className="fa fa-trash fs12"></i> Delete For Me</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => deleteChatEveryone(itm._id)}><i className="fa fa-trash fs12"></i> Delete For Everyone</Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
 
+                                  </div>
                                 </div>
-</div>
-                                
+
                               </div>
                             </li>
                           );
@@ -889,11 +889,18 @@ export default function Chat() {
                         className="form-control-chat"
                         placeholder="Type a message..."
                         value={chatMsg}
-                        onChange={(e) => setChatMsg(e.target.value)}
-
+                        onChange={(e) => {
+                          setChatMsg(e.target.value);
+                        }}
+                        onInput={(e) => {
+                          e.target.style.height = "40px"; // Reset height
+                          e.target.style.height = `${Math.min(e.target.scrollHeight, 250)}px`; // Adjust height dynamically
+                        }}
                         onKeyDown={(e) => {
-                          e.key === 'Enter' && handelSubmit(e)
-                          // e.key === 'Enter' && setChangeCategory('')
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            handelSubmit(e);
+                          }
                         }}
                         disabled={chat?.length > 0 && chat[0]?.rooms_details?.blocked_admin ? true : false}
                       />

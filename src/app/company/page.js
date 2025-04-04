@@ -40,7 +40,7 @@ export default function Company() {
               <div className=" row">
                 <div className="col-12 col-md-4">
                   <div className="included-item">
-                    <div className="d-flex gap-2 mb-3 align-items-center">
+                    <div className="d-flex gap-2 mb-3 align-items-center flex-column flex-lg-row">
                       <div className="included-icon">
                         <img className="iconhegt" src="/assets/img/s1.svg" />
                       </div>
@@ -51,7 +51,7 @@ export default function Company() {
                 </div>
                 <div className="col-12 col-md-4">
                   <div className="included-item">
-                    <div className="d-flex gap-2 mb-3 align-items-center">
+                    <div className="d-flex gap-2 mb-3 align-items-center flex-column flex-lg-row">
                       <div className="included-icon">
                         <img className="iconhegt" src="/assets/img/s2.svg" />
                       </div>
@@ -62,7 +62,7 @@ export default function Company() {
                 </div>
                 <div className="col-12 col-md-4">
                   <div className="included-item">
-                    <div className="d-flex gap-2 mb-3 align-items-center">
+                    <div className="d-flex gap-2 mb-3 align-items-center flex-column flex-lg-row">
                       <div className="included-icon">
                         <img className="iconhegt" src="/assets/img/s3.svg" />
                       </div>
@@ -109,10 +109,10 @@ export default function Company() {
         <section className="benefits container">
           <div className="cuspadding pt-0">
             <div className="row align-items-center">
-              <div className="col-12 col-md-6">
+              <div className="col-12 col-md-6 col-lg-6">
                 <img src="assets/img/subscription.png" className="img-fluid" />
               </div>
-              <div className="col-12 col-md-6">
+              <div className="col-12 col-md-6 col-lg-6">
                 <h2 className="text-left titleheads mb-4">Why Choose Managed Subscriptions?</h2>
                 <div className="subs-content">
                   <div className="d-flex gap-2 align-items-start">
