@@ -355,6 +355,7 @@ span.mglass img {
     padding: 7px;
     width: 100%;
     border: 1px solid #dbd5d5;
+    background: #f1f1f1;
 }
 
 .search-form img {
@@ -1171,4 +1172,70 @@ h3.about_head span {
 }
 .set_navbx .nav-link {
     padding: 1rem !important;
+}
+
+
+
+.position-relative.w-100.set_message::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+
+textarea.form-control {
+    resize: none; /* Removes the resize handle */
+  }
+  
+  /* Scrollbar Styling */
+  textarea.form-control::-webkit-scrollbar {
+    width: 0px; /* Adjust width if needed */
+  }
+  
+  textarea.form-control::-webkit-scrollbar-thumb {
+    background-color: gray; /* Change scrollbar thumb color to gray */
+    border-radius: 4px;
+  }
+  
+  textarea.form-control::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Optional: Change track background */
+  }
+  
+
+  .pointer-upload-chart {
+    border-radius: 50px;
+    background: #eff2f5;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+
+
+.position-relative.w-100.set_message {
+    border-radius: 50px;
+    padding: 6px 15px;
+    background-color: #fff;
+    resize: none !important;
+    overflow: auto; /* Enables scrolling if needed but hides scrollbar */
+    scrollbar-width: none; /* Firefox */
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 50px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    width: 100%;
+    display: flex;
+    color: black;
+    align-items: center;
+    gap: 10px;
+}
+
+textarea.form-control-chat {
+    width: 100%;
+    background: #fff;
+    border: none;
+    color: #000;
+    resize: none !important;
 }

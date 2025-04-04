@@ -4,9 +4,9 @@
 .dropdown {
     position: relative;
     display: inline-block;
-    width: 100%;
+    // width: 100%;
   }
-  
+
   /* Dropdown Button */
   .dropdown-toggle {
     display: inline-block;
@@ -155,3 +155,16 @@
     }
   }
   
+
+  // deepak css
+
+  .dropdown.set_search_icons.none_bx {
+    margin-left: 6px;
+}
+
+i.material-icons.edit {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  vertical-align: initial;
+}

@@ -367,7 +367,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           {(user?.role == "affiliate") && <ListItemLink to="/addAccount/detail" title="Change Plan">
             <i class="material-icons  svg_iconbx">list_alt</i>
-            <span className="side_head">Add tax Detail</span>
+            <span className="side_head">Add Tax Detail</span>
           </ListItemLink>}
 
           {((permission('camapaign_get')) || user?.role != "users") && <ListItemLink to="/users" title="Add Users" >
