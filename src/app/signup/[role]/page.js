@@ -122,11 +122,11 @@ export default function Login() {
     }
 
     if (role === 'brand') {
-      if (!form?.firstName || !form?.email || !form?.password || !form?.brand_name || form?.brand_name?.length < 3 || form?.firstName?.length < 3 || form?.password?.length < 8) return
+      if (!form?.firstName || !form?.email || !form?.password || !form?.brand_name || form?.brand_name?.length < 3 || form?.firstName?.trim()?.length < 3 || form?.password?.length < 8) return
     }
 
     if (role === 'affiliate') {
-      if (!form?.firstName || !form?.lastName || !form?.email || !form?.password || form?.firstName?.length < 3 || form?.password?.length < 8) return
+      if (!form?.firstName || !form?.lastName || !form?.email || !form?.password || form?.firstName?.trim()?.length < 3 || form?.password?.length < 8) return
     }
 
 
@@ -202,7 +202,7 @@ export default function Login() {
                         }}
                       />
                       {submitted && !form?.firstName && <p className='text-danger'>This field required</p>}
-                      {submitted && form?.firstName && form?.firstName?.length < 3 && <p className='text-danger'>Required minimum length minimum 3</p>}
+                      {submitted && form?.firstName && form?.firstName?.trim()?.length < 3 && <p className='text-danger'>Required minimum length minimum 3</p>}
                     </div>
                   </div>
                   <div className="col-12 col-sm-12 col col-md-6 ">
@@ -238,7 +238,8 @@ export default function Login() {
                       className="form-control mb-0 bginput"
                       value={form?.password}
                       onChange={(e) => {
-                        setForm({ ...form, password: e.target.value })
+                        const newPassword = e.target.value.replace(/\s/g, "");
+                        setForm({ ...form, password: newPassword })
                       }}
                       placeholder="Password"
 

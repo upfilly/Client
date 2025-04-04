@@ -525,7 +525,7 @@ const Profile = () => {
                                     <div className='d-flex inputFlexs social-media-links'>
                                       <i className=" mr-1" aria-hidden="true"><img src="/assets/img/twitter.png" /> </i>
                                       <div className='ml-1'>
-                                        <label >X(formerly Twitter)</label>
+                                        <label>X(formerly Twitter)</label>
                                         <p className="profile_data name_space">User Name : <b>{data?.twitter_username}</b></p>
                                         <div>
                                           <p className="profile_data ">Link : <b>{data?.twitter_profile_link}</b></p>

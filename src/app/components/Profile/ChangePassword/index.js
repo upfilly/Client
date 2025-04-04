@@ -37,87 +37,98 @@ const ChangePassword = p => {
     })
   };
 
+  // const handlePasswordChange = (e) => {
+  //   const newPassword = e.target.value.replace(/\s/g, "");
+  //   setFormData({ ...formData, password: newPassword });
+  // };
+
   return (
     <>
-<section className='change_passwordbx' >
-  <div className='container'>
-  <div className='row'>
-        <div className='col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto'>
-          <form
-            className=" chage_profiles shadow  "
-            onSubmit={handleSubmit}
-          >
-            <div className="mb-2">
-              <h3 className='ViewUser1 chage_titles  mt-3 mb-4'>Change Password</h3>
-              <label>Current Password<span className="start">*</span></label>
-              <div className="inputWrapper">
-                <input
-                  type={eyes.currentPassword ? 'text' : 'password'}
-                  className="form-control"
-                  value={form.currentPassword}
-                  maxLength="20"
-                  onChange={e => setForm({ ...form, currentPassword: e.target.value })}
-                  required
-                />
-                <i className={eyes.currentPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, currentPassword: !eyes.currentPassword })}></i>
-              </div>
-              {submitted && getError('currentPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
+      <section className='change_passwordbx' >
+        <div className='container'>
+          <div className='row'>
+            <div className='col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 mx-auto'>
+              <form
+                className=" chage_profiles shadow  "
+                onSubmit={handleSubmit}
+              >
+                <div className="mb-2">
+                  <h3 className='ViewUser1 chage_titles  mt-3 mb-4'>Change Password</h3>
+                  <label>Current Password<span className="start">*</span></label>
+                  <div className="inputWrapper">
+                    <input
+                      type={eyes.currentPassword ? 'text' : 'password'}
+                      className="form-control"
+                      value={form.currentPassword}
+                      maxLength="20"
+                      onChange={e =>{ 
+                        const newPassword = e.target.value.replace(/\s/g, "");
+                        setForm({ ...form, currentPassword:newPassword })}}
+                      required
+                    />
+                    <i className={eyes.currentPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, currentPassword: !eyes.currentPassword })}></i>
+                  </div>
+                  {submitted && getError('currentPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
+                </div>
+
+                <div className="mb-2">
+                  <label>New Password<span className="start">*</span></label>
+
+                  <div className="inputWrapper">
+                    <input
+                      type={eyes.password ? 'text' : 'password'}
+                      className="form-control"
+                      value={form.newPassword}
+                      maxLength="20"
+                      onChange={e =>{ 
+                        const newPassword = e.target.value.replace(/\s/g, "");
+                        setForm({ ...form, newPassword: newPassword})}}
+                      required
+                    />
+                    <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
+                  </div>
+                  {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
+                </div>
+
+                <div className="mb-2">
+                  <label>Confirm Password<span className="start">*</span></label>
+
+                  <div className="inputWrapper">
+                    <input
+                      type={eyes.confirmPassword ? 'text' : 'password'}
+                      className="form-control"
+
+                      value={form.confirmPassword}
+                      maxLength="20"
+                      onChange={e =>{ 
+                        const newPassword = e.target.value.replace(/\s/g, "");
+                        setForm({ ...form, confirmPassword: newPassword })}}
+                      required
+                    />
+                    <i className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
+                  </div>
+                  {submitted && getError('confirmPassword').invalid ? <>
+
+                    {/* {getError('confirmPassword').err.minLength ? <div>Min Length must be 8 characters long</div> : <></>} */}
+                    {getError('confirmPassword').err.confirmMatch ? <div className="invalid-feedback d-block">Comfirm Password is not matched with New Password</div> : <></>}
+
+                  </> : <></>}
+
+
+
+
+                </div>
+
+                <div className=" text-right mt-4  mb-3">
+                  <button type="submit" className="btn btn-primary update_btns w-100">
+                    Update
+                  </button>
+                </div>
+              </form>
             </div>
-
-            <div className="mb-2">
-              <label>New Password<span className="start">*</span></label>
-
-              <div className="inputWrapper">
-                <input
-                  type={eyes.password ? 'text' : 'password'}
-                  className="form-control"
-                  value={form.newPassword}
-                  maxLength="20"
-                  onChange={e => setForm({ ...form, newPassword: e.target.value })}
-                  required
-                />
-                <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
-              </div>
-              {submitted && getError('newPassword').invalid ? <div className="invalid-feedback d-block">Min Length must be 8 characters long</div> : <></>}
-            </div>
-
-            <div className="mb-2">
-              <label>Confirm Password<span className="start">*</span></label>
-
-              <div className="inputWrapper">
-                <input
-                  type={eyes.confirmPassword ? 'text' : 'password'}
-                  className="form-control"
-
-                  value={form.confirmPassword}
-                  maxLength="20"
-                  onChange={e => setForm({ ...form, confirmPassword: e.target.value })}
-                  required
-                />
-                <i className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
-              </div>
-              {submitted && getError('confirmPassword').invalid ? <>
-
-                {/* {getError('confirmPassword').err.minLength ? <div>Min Length must be 8 characters long</div> : <></>} */}
-                {getError('confirmPassword').err.confirmMatch ? <div className="invalid-feedback d-block">Comfirm Password is not matched with New Password</div> : <></>}
-
-              </> : <></>}
-
-
-
-
-            </div>
-
-            <div className=" text-right mt-4  mb-3">
-              <button type="submit" className="btn btn-primary update_btns w-100">
-                Update
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-  </div>
-</section>
+      </section>
     </>
   );
 };

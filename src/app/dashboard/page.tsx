@@ -117,11 +117,6 @@ export default function Dashboard() {
                 <div className="d-flex align-items-center flex-wrap">
                   {/* <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img> */}
 
-                
-                   
-               
-                    
-                  
                   {user.role == "brand" ? (
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
@@ -133,7 +128,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Total Campaign</p>
+                          <p className="revuh">Total Campaigns</p>
 
                           <h3 className="dollars-t">
                             {campaignData?.myTotalCampaigns}

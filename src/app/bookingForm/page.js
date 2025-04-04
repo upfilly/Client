@@ -154,7 +154,7 @@ export default function BillingForm() {
       return;
     }
 
-    if (!formData?.firstName || !formData?.currency) {
+    if (!formData?.firstName?.trim() || !formData?.lastName?.trim() || !formData?.currency) {
       Setsummitted(true);
       return;
     }
@@ -164,7 +164,6 @@ export default function BillingForm() {
       return;
     }
 
-    // Validate password
     if (!formData.password || formData.password.length < 8) {
       setPasswordError('Password must be at least 8 characters');
       return;
@@ -526,7 +525,7 @@ export default function BillingForm() {
                               name="firstName"
                               value={formData.firstName}
                               onChange={handleInputChange} />
-                            {summitted && !formData.firstName ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
+                            {summitted && !formData.firstName?.trim() ? <div className="invalid-feedback d-block">First Name is required</div> : <></>}
 
                           </div>
                         </div>
@@ -541,7 +540,7 @@ export default function BillingForm() {
                               name="lastName"
                               value={formData.lastName}
                               onChange={handleInputChange} />
-                            {summitted && !formData.lastName ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
+                            {summitted && !formData.lastName?.trim() ? <div className="invalid-feedback d-block">Last Name is required</div> : <></>}
 
                           </div>
                         </div>

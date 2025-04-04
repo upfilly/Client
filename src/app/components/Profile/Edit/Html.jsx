@@ -48,7 +48,7 @@ const Html = ({ user,
     { id: 'property_types', name: 'Property Types' },
     { id: 'advertiser_categories', name: 'Advertiser Categories' },
   ]
-  const data = ["youtube", "twitter", "instagram", "linkedin"]
+  const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
   const [isOpen, setIsOpen] = useState(false);
   const [newItem, setNewItem] = useState("");
   const [customItems, setCustomItems] = useState(data);
@@ -264,7 +264,7 @@ const Html = ({ user,
                             </div>
                             {submitted && getError('dialCode').invalid ? <div className="invalid-feedback d-block">Invalid country code</div> : <></>}
                             {submitted && getError('mobileNo').invalid && !getError('dialCode').invalid ? <div className="invalid-feedback d-block">Min Length is 10</div> : <></>}
-                            {submitted && !form?.mobileNo && !form?.dialCode ? <div className="invalid-feedback d-block"> DailCode is Required*   Mobile Number is Required* </div> : submitted && !form?.mobileNo ? <div className="invalid-feedback d-block">MobileNo is Required*</div> : <></>}
+                            {submitted && !form?.mobileNo && !form?.dialCode ? <div className="invalid-feedback d-block"> DailCode is Required*   Mobile Number is Required* </div> : submitted && !form?.mobileNo ? <div className="invalid-feedback d-block">Mobile Number is Required*</div> : <></>}
                             {/* {submitted && !form?.dialCode ? <div className="invalid-feedback d-block">DailCode is Required</div> : <></>} */}
                           </div>
 

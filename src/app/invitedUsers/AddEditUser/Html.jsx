@@ -125,7 +125,9 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                         type={eyes?.password ? 'text' : 'password'}
                                         className="form-control"
                                         value={form?.password}
-                                        onChange={e => setform({ ...form, password: e.target.value })}
+                                        onChange={e =>{
+                                            const newPassword = e.target.value.replace(/\s/g, "");
+                                            setform({ ...form, password: newPassword })}}
 
                                     />
                                     <i className={eyes?.password ? 'fa fa-eye fa-set' : 'fa fa-eye-slash fa-set'} onClick={() => setEyes({ ...eyes, password: !eyes?.password })}></i>
@@ -140,7 +142,9 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                             type={eyes?.confirmPassword ? 'text' : 'password'}
                                             className="form-control"
                                             value={form?.confirmPassword}
-                                            onChange={e => setform({ ...form, confirmPassword: e.target.value })}
+                                            onChange={e =>{ 
+                                                const newPassword = e.target.value.replace(/\s/g, "");
+                                                setform({ ...form, confirmPassword: newPassword })}}
                                             required={form?.password ? true : false}
                                         />
                                         <i className={eyes?.confirmPassword ? 'fa fa-eye fa-set' : 'fa fa-eye-slash fa-set'} onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}></i>
