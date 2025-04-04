@@ -285,7 +285,7 @@ const Html = ({
                                                             <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : `$${itm?.campaign_detail?.commission}`}</td>
                                                             {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
-                                                                <span className={!itm?.isActive ? (itm?.status == "accepted" && !itm?.isActive) ? "switched" : "inactive" : "contract"}>
+                                                                <span className={!itm?.isActive ? (itm?.status == "accepted" && !itm?.isActive) ? "pending_status" : "inactive" : "contract"}>
                                                                     {!itm?.isActive ? itm?.status == "rejected" ? "Rejected" : (itm?.status == "accepted" && !itm?.isActive) ? "Switched" : 'Pending' : 'Joined'}
                                                                 </span>
                                                             </span></td>

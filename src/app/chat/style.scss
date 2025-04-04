@@ -1216,7 +1216,6 @@ textarea.form-control {
 
 .position-relative.w-100.set_message {
     border-radius: 50px;
-    height: calc(1.5em + .75rem + 2px);
     padding: 6px 15px;
     background-color: #fff;
     resize: none !important;
@@ -1224,10 +1223,11 @@ textarea.form-control {
     scrollbar-width: none; /* Firefox */
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
+    border-radius: 50px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     width: 100%;
     display: flex;
+    color: black;
     align-items: center;
     gap: 10px;
 }

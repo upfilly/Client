@@ -661,7 +661,7 @@ export default function Chat() {
                                     }}
                                   >
 
-                                    <div className="d-flex gap-3 flex-wrap align-items-center">
+                                    <div className="d-flex gap-3  align-items-center">
                                       <div className="profile-img">
                                         {!itm?.isGroupChat ?
                                           itm && itm?.room_members && itm?.room_members[0]?.user_image ?
