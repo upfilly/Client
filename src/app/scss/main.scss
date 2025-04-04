@@ -2549,6 +2549,8 @@ span.contract {
   align-items: center;
   justify-content: center;
 }
+
+
 textarea.form-control-chat::placeholder {
   color: #000;
 }
@@ -6316,5 +6318,20 @@ input.form-control {
 .bgdots {
 padding-bottom: 0px; 
 }
+.rowmeatures {
+  margin-top: 40px;
+}
 
+.fetausinners , .included-item , .pricing-option {
+  margin-bottom: 20px;
+    height: auto !important;
+}
+
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .titleheads {
+    font-size: 25px;
+  }
 }

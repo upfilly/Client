@@ -288,7 +288,7 @@
     padding: 0px 25px 25px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
 }
 
 .chat-footer button {
@@ -379,7 +379,7 @@ i.fa.fa-paperclip {
 
 i.fa.send_msg.fa-paper-plane {
     background-image: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
-    padding: 15px;
+    padding: 22px;
     border-radius: 50px;
     color: #fff;
 }
@@ -1216,7 +1216,6 @@ textarea.form-control {
 
 .position-relative.w-100.set_message {
     border-radius: 50px;
-    padding: 6px 15px;
     background-color: #fff;
     resize: none !important;
     overflow: auto; /* Enables scrolling if needed but hides scrollbar */
@@ -1230,6 +1229,8 @@ textarea.form-control {
     color: black;
     align-items: center;
     gap: 10px;
+    padding-right: 10px;
+    padding: 6px 14px;
 }
 
 textarea.form-control-chat {
@@ -1238,4 +1239,9 @@ textarea.form-control-chat {
     border: none;
     color: #000;
     resize: none !important;
+    border-radius: 50px;
+    padding: 0px 10px;
+    min-height: 40px; /* Initial height */
+    max-height: 250px !important; /* Max height before scrolling */
+    overflow-y: auto; /* Enable vertical scroll after max height */
 }
