@@ -111,7 +111,7 @@ const Users = () => {
 
         Swal.fire({
             title: ``,
-            text: `Do you want to ${status == 'active' ? 'Active' : 'Inactive'} this Offer`,
+            text: `Do you want to ${status == 'active' ? 'Active' : 'inactivate'} this Offer`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

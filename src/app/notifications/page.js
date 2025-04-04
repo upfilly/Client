@@ -6,11 +6,13 @@ import './style.scss';
 import ApiClient from '@/methods/api/apiClient';
 import crendentialModel from '@/models/credential.model';
 import { useRouter } from 'next/navigation';
+import environment from '../../environment';
 
 const NotificationPage = () => {
     const history = useRouter()
     const user = crendentialModel.getUser()
     const [notifications, setNotification] = useState([])
+    const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
 
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
@@ -27,6 +29,11 @@ const NotificationPage = () => {
         }
     };
 
+    const isURL = (text) => {
+        const containsDocuments = text?.includes("documents/");
+        return containsDocuments;
+      };
+
     useEffect(() => {
         Notifications()
     }, [])
@@ -37,7 +44,10 @@ const NotificationPage = () => {
                 <h1>Notifications</h1>
                 <div className="notificationList">
                     {notifications.length > 0 ? (
-                        notifications.map((notification) => (
+                        notifications.map((notification) =>{
+                            const fileExtension = notification?.message?.split(".").pop().toLowerCase();
+                            let isTrue = imageExtensions.includes(fileExtension); 
+                            return(
                             <div key={notification.id} className="notificationItem" onClick={() => {
                                 if (notification?.type == 'message') {
                                     history.push("/chat")
@@ -53,10 +63,25 @@ const NotificationPage = () => {
                             }}>
                                 <h3 className='noti_head'>{notification?.type == 'message' ? "" : notification?.type == 'make_offer' ? "Offer Request" : "Campaign"}</h3>
                                 {/* <h2>{notification.title}</h2> */}
-                                <p>{notification.message}</p>
+                                    <p>{isTrue ? <img
+                                        // onClick={()=>router.push(`${`chat/userDetail/${activeUser[0]?.user_id}`}`)}
+                                        src={`${environment.api}${notification.message}`}
+                                        height={45}
+                                        width={55}
+                                    /> :  isURL(notification.message) ? (
+                                        <a
+                                          href={`${environment?.api}${notification.message}`}
+                                          download="document.pdf"
+                                        >
+                                          {" "}
+                                                <img src="/assets/img/document.png" height={45}
+                                                    width={55}></img>
+
+                                        </a>
+                                      ) : notification.message}</p>
                                 <span className="timestamp">{formatTimestamp(notification.createdAt)}</span>
                             </div>
-                        ))
+                        )})
                     ) : (
                         <p>No notifications available.</p>
                     )}
