@@ -35,6 +35,9 @@ const NotificationPage = () => {
       };
 
     useEffect(() => {
+        if (!user?.id) {
+            history.push("/")
+        }
         Notifications()
     }, [])
 

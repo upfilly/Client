@@ -81,7 +81,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-8 col-md-9 '>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.category_name)}</p>
+                                                <p className='headsub'>{data && data?.all_categories?.map((dat) => dat?.name)?.join(",")}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -94,7 +94,25 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-8 col-md-9 '>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.sub_category_name)}</p>
+                                                <p className='headsub'>{data && data?.all_sub_categories?.map((dat) => dat?.name)?.join(",")}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-4 col-md-3 ' >
+                                            <div className='userdata'>
+                                                <p className='headmain'>Sub-Child-Category:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-8 col-md-9 '>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && data?.all_sub_child_categories?.map((dat) => {
+                                                    if (dat == null) {
+                                                        return
+                                                    }
+                                                    dat?.name
+                                                })?.join(",")}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +138,7 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-8 col-md-9 '>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data?.opportunity_type?.map((itm)=>itm).join(',\n')}</p>
+                                                <p className='headsub'>{data?.opportunity_type?.map((itm) => itm).join(',\n')}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -133,12 +151,12 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-8 col-md-9 '>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data?.placement?.map((itm)=>itm).join(',\n')}</p>
+                                                <p className='headsub'>{data?.placement?.map((itm) => itm).join(',\n')}</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className='row'>
+                                    {/* <div className='row'>
                                         <div className='col-12 col-sm-4 col-md-3 ' >
                                             <div className='userdata'>
                                                 <p className='headmain'>Price:</p>
@@ -149,7 +167,7 @@ const Detail = (p) => {
                                                 <p className='headsub'>${data?.price}</p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className='row'>
                                         <div className='col-12 col-sm-4 col-md-3 ' >

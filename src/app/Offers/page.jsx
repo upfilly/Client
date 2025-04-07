@@ -30,7 +30,7 @@ const Users = () => {
         if (user) {
             getData({ role, page: 1 })
         }
-    }, [role])
+    }, [role,dateRange])
 
     useEffect(() => {
         if (startDate && endDate) {

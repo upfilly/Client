@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import methodModel from "@/methods/methods";
 import Layout from "@/app/components/global/layout";
 import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
@@ -7,14 +7,15 @@ import ApiClient from "@/methods/api/apiClient";
 import 'react-quill/dist/quill.snow.css';
 import '../style.scss';
 import { useRouter } from "next/navigation";
-import SelectDropdown from "@/app/components/common/SelectDropdown";
+import MultiSelectDropdownData from "@/app/campaign/MultiSelectDropdownData";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, submitted, back,category,setCategory,subCategory,setSubCategory}) => {
+const Html = ({form,startDate, endDate,setDateRange,user, handleSubmit, setform, submitted, back,selectedItems, setSelectedItems}) => {
     const [loaderr, setLoader] = useState()
     const [imgLoder, setImgLoder] = useState()
-   
+    const [categories, setCategories] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
     const history = useRouter()
 
     const uploadImage = async (e, key) => {
@@ -70,6 +71,19 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
         setform({ ...form, payment_model: updatedValues });
     };
 
+    const getCategory = () => {
+        let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types" : "advertiser_categories"}&status=active`;
+        ApiClient.get(url).then((res) => {
+          if (res.success) {
+            setCategories(res.data.data);
+          }
+        });
+      };
+    
+      useEffect(() => {
+        getCategory()
+      }, [])
+
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Camapaign"} filters={undefined}>
@@ -97,42 +111,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     />
                                     {submitted && !form?.name ? <div className="invalid-feedback d-block">Title name is Required</div> : <></>}
                                 </div>
-                                {/* <div className="col-md-6 mb-3">
-                                    <label>Price ($)<span className="star">*</span></label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="0"
-                                        name="amount"
-                                        value={form?.price}
-                                        onChange={(e) => {
-                                            const enteredValue = e.target.value;
-                                            const regex = /^[0-9]*$/;
-                                            if (enteredValue === '' || regex.test(enteredValue)) {
-                                                setform({ ...form, price: enteredValue });
-                                            }
-                                        }}
-                                    />
-                                    {submitted && !form?.price ? <div className="invalid-feedback d-block">Price is Required</div> : <></>}
-                                </div> */}
-                                {/* <div className="col-md-6 mb-3">
-                                    <label>Quantity<span className="star">*</span></label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="0"
-                                        name="quantity"
-                                        value={form?.quantity}
-                                        onChange={(e) => {
-                                            const enteredValue = e.target.value;
-                                            const regex = /^[0-9]*$/;
-                                            if (enteredValue === '' || regex.test(enteredValue)) {
-                                                setform({ ...form, quantity: enteredValue });
-                                            }
-                                        }}
-                                    />
-                                    {submitted && !form?.quantity ? <div className="invalid-feedback d-block">Quantity is Required</div> : <></>}
-                                </div> */}
+                                
                                 <div className="col-md-6 mb-3">
                                     <label>Date<span className="star">*</span></label>
                                     <DatePicker
@@ -154,8 +133,20 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                     />
                 {submitted && (startDate && endDate) ? <div className="invalid-feedback d-block">Date is Required</div> : <></>}
                                 </div>
+                                        <div className="col-md-12 mb-3">
+                                            <label>Select Category<span className="star">*</span></label>
+                                            <div className="drops category-input">
+                                                <MultiSelectDropdownData
+                                                    isOpen={isOpen}
+                                                    setIsOpen={setIsOpen}
+                                                    data={categories}
+                                                    selectedItems={selectedItems}
+                                                    setSelectedItems={setSelectedItems}
+                                                />
+                                            </div>
+                                        </div>
                              
-                                <div className="select_drop col-md-6 mb-3">
+                                {/* <div className="select_drop col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown
@@ -187,12 +178,7 @@ const Html = ({form,startDate, endDate,setDateRange, handleSubmit, setform, subm
                                             required
                                         />
                                     </div>
-                                    {/* {submitted && !form?.sub_category_id ? (
-                                        <div className="invalid-feedback d-block">Sub Category is Required</div>
-                                    ) : (
-                                        <></>
-                                    )} */}
-                                </div>}
+                                </div>} */}
                                 <div className="select_type select_drop col-md-12 mb-3">
                                     <label>Placement<span className="star">*</span></label>
                                     <div className="select_row select_arrowbx">

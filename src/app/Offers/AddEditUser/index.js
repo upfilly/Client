@@ -19,8 +19,8 @@ const AddEditUser = () => {
         description: "",
         image: [],
         payment_model:[],
-        category_id: "",
-        sub_category_id: null,
+        category_id: [],
+        sub_category_id: [],
         opportunity_type: [],
         placement: [],
         start_date: "",
@@ -37,6 +37,11 @@ const AddEditUser = () => {
     const [subCategory, setSubCategory] = useState([])
     const [dateRange, setDateRange] = useState([null, null]);
     const [startDate, endDate] = dateRange;
+    const [selectedItems, setSelectedItems] = useState({
+        categories: [],
+        subCategories: [],
+        subSubCategories: [],
+    });
 
     const getCategory = (p = {}) => {
         let url = "main-category/all";
@@ -75,7 +80,7 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!form?.description || !form?.name || !form?.category_id || form?.opportunity_type?.length <= 0 || form?.payment_model?.length <= 0 || form?.placement?.length <= 0) {
+        if (!form?.description || !form?.name || form?.opportunity_type?.length <= 0 || form?.payment_model?.length <= 0 || form?.placement?.length <= 0) {
             setSubmitted(true)
             return;
         }
@@ -85,6 +90,9 @@ const AddEditUser = () => {
 
         let value = {
             ...form,
+            category_id: selectedItems?.categories,
+            sub_category_id: selectedItems?.subCategories,
+            sub_child_category_id: selectedItems?.subSubCategories,
             start_date:startDate,
             end_date:endDate
         }
@@ -95,8 +103,8 @@ const AddEditUser = () => {
             delete value.role
             delete value.improvements
             delete value.status
-            delete value.sub_category_id
-            delete value.category_id
+            delete value.sub_category
+            delete value.category
         } else {
             delete value.id
         }
@@ -228,6 +236,9 @@ const AddEditUser = () => {
             setDateRange={setDateRange}
             startDate={startDate}
             endDate={endDate}
+            selectedItems={selectedItems}
+            user={user}
+            setSelectedItems={setSelectedItems}
         />
     </>
 }
