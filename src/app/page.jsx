@@ -823,15 +823,14 @@ export default function Home() {
 
           <div className="cuspadding">
             <div className="bannerimgs">
-              <div className="d-flex align-items-center h-100">
-                <div className=" ">
-                  <div className="pl-0 pl-sm-0 pl-lg-5 ">
+              <div className="seclastsgives">
+                  <div className="paddings_dats">
                     <h1 class="customers">
                       Give Your <br />
                       Growth Goals <br />
                       The Right tools{" "}
                     </h1>
-                    <p className="w-75">
+                    <p class="w-100 w-lg-75">
                       Join UpFilly today and unlock the full potential of your
                       affiliate marketing program with expert guidance.{" "}
                     </p>
@@ -841,7 +840,7 @@ export default function Home() {
                       </a>
                     )}
                   </div>
-                </div>
+                
                 <div className="imgbgs">
                     <img src="/assets/img/dash1.png" className="dashimgs" alt="" />
                 </div>
