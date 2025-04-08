@@ -77,7 +77,7 @@ export default function Company() {
         </section>
 
         {/* Pricing Options Section */}
-        <section className=" container">
+        <section className="container">
           <div className="cuspadding pt-0">
             <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
             <div className="included-list">
@@ -110,10 +110,10 @@ export default function Company() {
           <div className="cuspadding pt-0">
             <div className="row align-items-center">
               <div className="col-12 col-md-6 col-lg-6">
-                <img src="assets/img/subscription.png" className="img-fluid" />
+                <img src="assets/img/subscription.png" className=" hightwidth" />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <h2 className="text-left titleheads mb-4">Why Choose Managed Subscriptions?</h2>
+                <h2 className="text-left lefttext  mb-4">Why Choose Managed Subscriptions?</h2>
                 <div className="subs-content">
                   <div className="d-flex gap-2 align-items-start">
                     <span>
@@ -148,7 +148,7 @@ export default function Company() {
           </div>
         </section>
 
-        {/* Call-to-Action Section */}
+        {/* Call-to-Action Section */}  
         <section className="cta container">
           <div className="row">
             <div className="col-md-12">

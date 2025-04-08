@@ -135,8 +135,10 @@ const Html = ({ settingData, Logout }) => {
                 </div> : <div></div>}
 
               <div className={!user ? "col-12 col-md-12 col-lg-3 col-xl-2 " : "col-12 col-md-12 px-0"}>
-                <div className="right_auth d-flex align-items-center blue-header-main justify-content-center">
+                <div className="right_auth d-flex align-items-center blue-header-main justify-content-center justify-content-lg-end">
                   {(!user) && <>
+                  <img src="/assets/img/users1.svg" className="hedsvg" />
+
                   <Link className="ml-2 mr-2" href="/SignupOptions"
                   // onClick={() => setShowPopup(true)}
                   >Sign Up</Link> /

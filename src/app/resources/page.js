@@ -102,85 +102,127 @@ export default function Resources() {
         </section>
 
 
-
-        <div className="container my-5">
-
-          <div className="row align-items-center cuspadding">
-            <div className="col-md-6 text-center">
-              <img src="/assets/img/f2.png" className="img-fluid rounded" alt="Shopify Integration" />
-            </div>
-            <div className="col-md-6">
-              <h3 className="shopify-title">Integrate Seamlessly with Your Existing Platforms</h3>
-              <p className="highlight-text">Shopify Integration</p>
-              <p>Easily connect your Shopify store for precise tracking and analytics.</p>
-            </div>
-          </div>
-
-          <div className="row align-items-center cuspadding pt-0 flex-md-row-reverse">
-            <div className="col-md-6 text-center">
-              <img src="/assets/img/f1.png" className="img-fluid rounded" alt="Business Growth" />
-            </div>
-            <div className="col-md-6">
-              <h3 className="shopify-title">Built to Grow with Your Business</h3>
-
-              <p>UpFilly is designed to support businesses of all sizes—from startups launching their first affiliate program to enterprise-level brands managing complex networks.</p>
-              <ul className="custom-list">
-                <li>
-                  <img src="/assets/img/cheks.svg" className="img-fluid rounded" alt="cheks" />
-                  Affordable entry plans with no setup fees for startups.
-                </li>
-                <li>
-                  <img src="/assets/img/cheks.svg" className="img-fluid rounded" alt="cheks" />
-                  Robust tools to handle high-volume campaigns.
-                </li>
-              </ul>
-
-            </div>
-          </div>
-
-          <div className="row align-items-center cuspadding pt-0">
-            <div className="col-md-6 text-center">
-              <img src="/assets/img/f3.png" className="img-fluid rounded" alt="Dashboard for Merchants and Affiliates" />
-            </div>
-            <div className="col-md-6">
-              <h3 className="shopify-title">An Intuitive Dashboard for Merchants and Affiliates</h3>
-              <p>Our dashboard is designed to be simple yet powerful, providing all the tools you need to manage and optimize your program.</p>
-              <div className='d-flex gap-3 align-items-center mb-4 mt-4'>
-                 <img src="/assets/img/cheks.svg" className="checimg" alt="cheks" />
-                 <div className='heavy_fonts'>
-                    <p className='heads'>For Merchants:</p> 
-                    <p className='mb-0'>Customizable branding options.</p>
-                 </div>
+        <section className="benefits container">
+          <div className="cuspadding pb-0 ">
+            <div className="row align-items-center">
+              <div className="col-12 col-md-6 col-lg-6">
+                <img src="assets/img/f2.png" className="fetures_imgs " />
               </div>
+              <div className="col-12 col-md-6 col-lg-6">
+                <h2 className="text-left lefttext  mb-4">Integrate Seamlessly with Your Existing Platforms
+                </h2>
+                <div className="subs-content">
+                  <div className="d-flex gap-2 align-items-start">
+                    <div>
+                      <h5>Shopify Integration</h5>
+                      <h6>Easily connect your Shopify store for precise tracking and analytics.</h6>
+                    </div>
+                  </div>
 
-              <div className='d-flex gap-3 align-items-center mb-4'>
-                 <img src="/assets/img/cheks.svg" className="checimg" alt="cheks" />
-                 <div className=''>
-                    <p className='heads'>For Affiliates:</p> 
-                    <p className='mb-0'>A clean interface to track earnings and access campaign insights.</p>
-                 </div>
+                </div>
               </div>
-
-
-
-             
             </div>
           </div>
-        </div>
+        </section>
+
+
+        <section className="benefits container">
+          <div className="cuspadding pb-0 ">
+            <div className="row align-items-center flex-md-row-reverse">
+              <div className="col-12 col-md-6 col-lg-6">
+                <img src="assets/img/f1.png" className="fetures_imgs " />
+              </div>
+              <div className="col-12 col-md-6 col-lg-6">
+                <h2 className="text-left lefttext  mb-4">Built to Grow with Your Business
+                </h2>
+                <div className="subs-content">
+                  <div className="d-flex gap-2 align-items-center">
+                    <div>
+
+                      <h6>UpFilly is designed to support businesses of all sizes—from startups launching their first affiliate program to enterprise-level brands managing complex networks.</h6>
+                    </div>
+                  </div>
+
+                  <div className="d-flex gap-2 align-items-center mt-4">
+                    <span>
+                      <img src="/assets/img/cheks.svg" className="checimg" alt=""></img>
+                    </span>
+                    <div>
+                      <h6 className='mb-0'>Affordable entry plans with no setup fees for startups. </h6>
+                    </div>
+                  </div>
+
+                  <div className="d-flex gap-2 align-items-center mt-3">
+                    <span>
+                      <img src="/assets/img/cheks.svg" className="checimg" alt=""></img>
+                    </span>
+                    <div>
+                      <h6 className='mb-0'>Robust tools to handle high-volume campaigns. </h6>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
 
 
 
+        <section className="benefits container">
+          <div className="cuspadding ">
+            <div className="row align-items-center ">
+              <div className="col-12 col-md-6 col-lg-6">
+                <img src="assets/img/f3.png" className="fetures_imgslast " />
+              </div>
+              <div className="col-12 col-md-6 col-lg-6">
+                <h2 className="text-left lefttext  mb-4">An Intuitive Dashboard for Merchants and Affiliates
+                </h2>
+                <div className="subs-content">
+                  <div className="d-flex gap-2 align-items-center">
+                    <div>
+
+                      <h6>Our dashboard is designed to be simple yet powerful, providing all the tools you need to manage and optimize your program.</h6>
+                    </div>
+                  </div>
+
+                  <div className="d-flex gap-2 align-items-start mt-4">
+                    <span>
+                      <img src="/assets/img/cheks.svg" className="checimg" alt=""></img>
+                    </span>
+                    <div>
+                      <h5>For Merchants:</h5>
+                      <h6>Customizable branding options. </h6>
+                    </div>
+                  </div>
+
+                  <div className="d-flex gap-2 align-items-start">
+                    <span>
+                      <img src="/assets/img/cheks.svg" className="checimg" alt=""></img>
+                    </span>
+                    <div>
+                      <h5>For Affiliates:</h5>
+                      <h6>A clean interface to track earnings and access campaign insights. </h6>
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
 
 
 
         <div className="feature-page resource-page">
           <div className='container'>
 
-
-
-
             {/* Call-to-Action Section */}
-            <section className="cta mt-5">
+            <section className="cta ">
               <div className="cta-header">
                 <h1 className="cta-title">Explore UpFilly’s Features Today</h1>
                 <h2 className="cta-subtitle">Discover how our platform can take your affiliate marketing to the next level.</h2>

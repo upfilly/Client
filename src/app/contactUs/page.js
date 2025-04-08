@@ -21,7 +21,9 @@ export default function ContactUs() {
 
 
             <p className="para3">
-              Lorem Ipsum is simply dummy text of the printing and typesetting  <br /> industry. Lorem Ipsum has been the industry's standard            </p>
+            Feel free to reach out to us with any questions or feedback. <br />
+            We're here to help and look forward to connecting with you!  
+            </p>
           </div>
         </section>
 
@@ -49,7 +51,7 @@ export default function ContactUs() {
                   <div className='imgtag_card'>
                     <img src="/assets/img/c1.png" className='img-fluid heighteual' />
                     <h6>Email Us </h6>
-                    <p>When you need to ask us a specific question, simply contact us via email and one of our support engineers will get back to you with an answer.</p>
+                    <p>Whenever you have a question for the community, visit our forum to connect with industry experts and get the help you need around the clock.</p>
                     <button className='btn btn-blue'>Send us an Email</button>
                   </div>
                 </div>

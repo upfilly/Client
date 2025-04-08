@@ -5,6 +5,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import 'react-toastify/dist/ReactToastify.css';
 import "./scss/main.scss";
+import "./scss/deepmain.scss";
+import "./scss/responsive.scss";
+
 import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] })

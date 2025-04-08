@@ -12,6 +12,7 @@ import loader from '@/methods/loader';
 import methodModel from '@/methods/methods';
 import { toast } from 'react-toastify';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { LuCircleCheckBig } from "react-icons/lu";
 
 export default function Pricing() {
   const user = crendentialModel.getUser()
@@ -331,11 +332,22 @@ export default function Pricing() {
                       {<div className='plan-features'>
                         {itm.features.map((feature: any) => (
                           <div className='d-flex align-items-center mt-3 flex_list' key={feature.id}>
-                            {itm.features?.[0]?.feature_name && <img
-                              className={itm.recommended === "Y" && !user?.isPayment ? 'checkss locks check_list' : 'checkss check_list '}
-                              src={itm.recommended === "Y" && !user?.isPayment ? '/assets/img/checkmark.png' : '/assets/img/check.png'}
-                              alt=''
-                            ></img>}
+                            {itm.features?.[0]?.feature_name && (
+                              <LuCircleCheckBig
+                                className={
+                                  itm.recommended === "Y" && !user?.isPayment
+                                    ? "checkss locks check_list"
+                                    : "checkss check_list"
+                                }
+                              />
+                            )}
+
+
+
+
+
+
+
                             <p className={itm.recommended === "Y" && !user?.isPayment ? 'ipsi ml-3 locks' : 'ipsi ml-3 '}>{methodModel.capitalizeFirstLetter(feature.feature_name)}</p>
                           </div>
                         ))}
