@@ -7,7 +7,7 @@ export default function SignupOption() {
   const history = useRouter()
 
   return (
-    <div handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
       <div className='card_parent'>
         <div className="container">
           <div className="row">
@@ -42,6 +42,6 @@ export default function SignupOption() {
         </div>
 
       </div>
-    </div>
+    </Layout>
   );
 }
