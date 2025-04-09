@@ -40,7 +40,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         <div className="select_drop ">
                                             <label>Select Access Type<span className='star'>*</span></label>
                                             <div className="select_row">
-                                                <SelectDropdown
+                                                <SelectDropdown                                                     theme='search'
                                                     id="statusDropdown"
                                                     displayValue="name"
                                                     placeholder="Select type"
@@ -59,7 +59,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         <div className="select_drop ">
                                             <label>Select Affiliate<span className='star'>*</span></label>
                                             <div className="select_row">
-                                                <SelectDropdown
+                                                <SelectDropdown                                                     theme='search'
                                                     id="statusDropdown"
                                                     displayValue="name"
                                                     placeholder="Select Affiliate"
@@ -97,7 +97,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         <div className="select_drop ">
                                             <label>Category<span className='star'>*</span></label>
                                             <div className="select_row">
-                                                <SelectDropdown
+                                                <SelectDropdown                                                     theme='search'
                                                     id="statusDropdown"
                                                     displayValue="name"
                                                     placeholder="Select category"

@@ -36,7 +36,7 @@ const Html = ({
                         </a>
                     </> : <></>}
                     <div className='searchInput'><input type="text" value={filters.search} placeholder="Search" className="form-control" onChange={e=>filter({search:e.target.value,page:1})} /></div>
-                    <SelectDropdown
+                    <SelectDropdown                                                     theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All Status"

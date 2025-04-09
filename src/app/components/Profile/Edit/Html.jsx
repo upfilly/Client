@@ -274,7 +274,7 @@ const Html = ({ user,
                           <div className='form-group'>
                             <label>Gender<span className="star">*</span></label>
                             <div className="select_row">
-                              <SelectDropdown
+                              <SelectDropdown                                                     theme='search'
                                 id="statusDropdown"
                                 className='gander_drop'
                                 displayValue="name"
@@ -374,7 +374,7 @@ const Html = ({ user,
                               <div className="select_drop ">
                                 <label>Category Type</label>
                                 <div className="select_row">
-                                  <SelectDropdown
+                                  <SelectDropdown                                                     theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="Select Type"
@@ -439,7 +439,7 @@ const Html = ({ user,
                               <div className="select_drop ">
                                 <label>Type</label>
                                 <div className="select_row">
-                                  <SelectDropdown
+                                  <SelectDropdown                                                     theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="Select Type"

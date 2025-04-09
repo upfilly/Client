@@ -159,7 +159,7 @@ export default function BrandReport() {
                 <div className='table_section '>
                   <div className='table-responsive '>
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <SelectDropdown
+                      <SelectDropdown                                                     theme='search'
                         id="statusDropdown"
                         displayValue="name"
                         placeholder="All Affiliates"

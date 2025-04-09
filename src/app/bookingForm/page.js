@@ -154,7 +154,7 @@ export default function BillingForm() {
       return;
     }
 
-    if (!formData?.firstName?.trim() || !formData?.lastName?.trim() || !formData?.currency) {
+    if (!formData?.firstName?.trim() || !formData?.lastName?.trim() || !formData?.currency || !address || !selectedLocation?.city || !selectedLocation?.pincode || !selectedLocation?.country) {
       Setsummitted(true);
       return;
     }
@@ -682,6 +682,7 @@ export default function BillingForm() {
                               )}
                             </PlacesAutocomplete>
                           ) : ""}
+                          {summitted && !address ? <div className="invalid-feedback d-block">Address is required</div> : <></>}
                         </div>
                       </div>
 
@@ -695,6 +696,7 @@ export default function BillingForm() {
                             className="form-control quick-radius"
                           />
                         </div>
+                        {summitted && !selectedLocation?.country ? <div className="invalid-feedback d-block">Country is required</div> : <></>}
                       </div>
 
                       <div className='col-md-6'>
@@ -706,6 +708,7 @@ export default function BillingForm() {
                             className="form-control quick-radius"
                           />
                         </div>
+                        {summitted && !selectedLocation?.city ? <div className="invalid-feedback d-block">City is required</div> : <></>}
                       </div>
 
                       <div className='col-md-12'>
@@ -719,6 +722,7 @@ export default function BillingForm() {
                           />
                         </div>
                       </div>
+                      {summitted && !selectedLocation?.pincode ? <div className="invalid-feedback d-block">Pincode is required</div> : <></>}
                     </div>
 
                     {/* Terms and Conditions Checkbox */}

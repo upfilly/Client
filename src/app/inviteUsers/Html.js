@@ -107,7 +107,7 @@ const Html = () => {
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Select User Role</div>
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Roles"
@@ -157,7 +157,7 @@ const Html = () => {
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Language</div>
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Language"

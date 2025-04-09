@@ -252,7 +252,7 @@ export default function affilate() {
                       }} aria-hidden="true"></i>
                     </div>
 
-                    <SelectDropdown
+                    <SelectDropdown                                                     theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="Paid Status"
@@ -267,7 +267,7 @@ export default function affilate() {
                     />
 
                     <div className='width80'>
-                      <SelectDropdown
+                      <SelectDropdown                                                     theme='search'
                         id="statusDropdown"
                         displayValue="name"
                         placeholder="Commission Status"

@@ -91,7 +91,6 @@ const Html = () => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);
-                console.log(filteredData, "lklklll")
                 const manipulateData = filteredData.map((itm) => {
                     return {
                         name: itm?.fullName || itm?.firstName, id: itm?.id || itm?._id
@@ -102,24 +101,24 @@ const Html = () => {
         })
     }
 
-     const fetchCSV = async () => {
-            try {
-                const response = await fetch('/searchspring.csv');
-                if (!response.ok) {
-                    throw new Error('File not found');
-                }
-    
-                const text = await response.text();
-                Papa.parse(text, {
-                    complete: (result) => {
-                        setCsvData(result.data);
-                    },
-                    header: true,
-                    skipEmptyLines: true,
-                });
-            } catch (err) {
+    const fetchCSV = async () => {
+        try {
+            const response = await fetch('/searchspring.csv');
+            if (!response.ok) {
+                throw new Error('File not found');
             }
-        };
+
+            const text = await response.text();
+            Papa.parse(text, {
+                complete: (result) => {
+                    setCsvData(result.data);
+                },
+                header: true,
+                skipEmptyLines: true,
+            });
+        } catch (err) {
+        }
+    };
 
     useEffect(() => {
         getData()
@@ -229,7 +228,7 @@ const Html = () => {
                                             <div className='col-md-6 '>
                                                 <div className='mb-3' >
                                                     <label>Select a Commission Type</label>
-                                                    <SelectDropdown
+                                                    <SelectDropdown theme='search'
                                                         id="statusDropdown"
                                                         displayValue="name"
                                                         placeholder="select"
@@ -243,7 +242,7 @@ const Html = () => {
                                             <div className='col-md-6 '>
                                                 <div className='mb-3' >
                                                     <label>Publisher Id</label>
-                                                    <SelectDropdown
+                                                    <SelectDropdown theme='search'
                                                         id="statusDropdown"
                                                         displayValue="name"
                                                         placeholder="select"
@@ -278,7 +277,7 @@ const Html = () => {
                                             <div className='col-md-6 '>
                                                 <div className='mb-3' >
                                                     <label>Commission Status</label>
-                                                    <SelectDropdown
+                                                    <SelectDropdown theme='search'
                                                         id="statusDropdown"
                                                         displayValue="name"
                                                         placeholder="select"

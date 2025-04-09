@@ -139,7 +139,7 @@ export default function affilate() {
                   </div> */}
 
                   <div className=''>
-                   {user?.role == 'brand' ? <SelectDropdown
+                   {user?.role == 'brand' ? <SelectDropdown                                                     theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="All Transaction"
@@ -151,7 +151,7 @@ export default function affilate() {
                       ]}
                     />
 :
-                    <SelectDropdown
+                    <SelectDropdown                                                     theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="All Transaction"
@@ -163,7 +163,7 @@ export default function affilate() {
                     />}
                   </div>
                   <div className=''>
-                    <SelectDropdown
+                    <SelectDropdown                                                     theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="All Status"

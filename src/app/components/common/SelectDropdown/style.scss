@@ -1,0 +1,18 @@
+.dropdown-menu.shadow.bg_hover.leftAlignDrop {
+    // left: 0 !important;
+    width: fit-content;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.removeBg{
+    &:hover {
+        background: #fff !important;
+        border: 1px solid #ced4da !important;
+        color: #495057 !important;
+    border-radius: 8px;
+    }
+    &.invalid{
+        border-color: red !important;
+    }
+}

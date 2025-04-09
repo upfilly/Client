@@ -1,18 +1,31 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import Layout from "../components/global/layout";
+import ApiClient from "@/methods/api/apiClient";
+import { useEffect, useState } from "react";
+import PageContainer from "../components/main/PageContainer";
+import Link from "next/link";
 
 export default function SignupOption() {
+  const [settingData, setSettingData] = useState([])
   const history = useRouter()
 
+  useEffect(() => {
+    ApiClient.get('settings').then(res => {
+      if (res.success) {
+        setSettingData(res?.data)
+      }
+    })
+  }, [])
+
   return (
-    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+    <PageContainer title='Login Page' description='Login Page' settingData={settingData}>
       <div className='card_parent'>
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-12 col-lg-7 mx-auto">
               <div className="sgnup data">
+              <Link href="/"><i className="fa fa-angle-double-left back_button1" aria-hidden="true"></i></Link>
                 <h4 className="text-white mb-3 ">Signup As</h4>
                 <div className="row">
                   <div className="col-12 col-sm-12 col-md-6" onClick={() => history.push("/track/signup/affiliate")}>
@@ -42,6 +55,6 @@ export default function SignupOption() {
         </div>
 
       </div>
-    </Layout>
+    </PageContainer>
   );
 }

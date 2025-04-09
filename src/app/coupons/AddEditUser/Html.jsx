@@ -40,7 +40,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 <div className="col-md-6 mb-3">
                                     <label>Type</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Type"
@@ -61,7 +61,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 <div className="col-md-6 mb-3">
                                     <label>Commission Type</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Commission Type"
@@ -83,7 +83,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Coupon Commission</label>
-                                    <SelectDropdown
+                                    <SelectDropdown                                                     theme='search'
                                         id="statusDropdown"
                                         displayValue="name"
                                         placeholder="Select Commission Type"
@@ -105,7 +105,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 <div className="col-md-6 mb-3">
                                     <label>Coupon Type <span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Coupon Type"

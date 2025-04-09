@@ -52,7 +52,7 @@ const Html = ({
             <div className='sidebar-left-content main_box '>
                 <div className="d-flex justify-content-between align-items-center flex-wrap all_flexbx gap-2">
                     <div className="d-flex gap-2 align-items-center flex-wrap">
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                             id="statusDropdown"
                             displayValue="name"
                             placeholder="All Status"

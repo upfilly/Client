@@ -1,57 +1,44 @@
-import React, { useState, useEffect, useRef } from "react";
-import methodModel from "@/methods/methods";
+import React from "react";
 import './style.scss';
+import Select from "react-select";
+import methodModel from "@/methods/methods";
 
-const Html = ({ setToggle, toggle, options, selectedValues, handleChange, displayValue, id, placeholder, required, disabled, name }) => {
-    const dropdownRef = useRef(null);
+const Html = ({ options, selectedValues, handleChange, displayValue, id,placeholder,required ,disabled,name,noDefault,className,theme='normal'}) => {
 
-    useEffect(() => {
-        const handleOutsideClick = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setToggle(false);
-            }
-        };
+    const categoryVal = () => {
+        let ext = options && options.find(item => item.id == selectedValues)
+        return ext ? {value:ext.id,label:ext[displayValue]} : ''
+    }
 
-        document.addEventListener("mousedown", handleOutsideClick);
-
-        return () => {
-            document.removeEventListener("mousedown", handleOutsideClick);
-        };
-    }, [setToggle]);
-
-    return (
-        <>
+    return <>
+        {theme=='search'?<>
+        
+        <Select
+                            options={options?.map(itm=>{return {value:itm.id,label:itm[displayValue]}})||[]}
+                            placeholder={placeholder}
+                            value={categoryVal()}
+                            isClearable={true}
+                            name={name}
+                            onChange={e => handleChange(e?.value||'')}
+                        />
+        </>:<>
+        <div className="selectDropdown">
             <input type="hidden" name={name} required={required} value={selectedValues} />
-            <div className="selectDropdown" ref={dropdownRef}>
-                <div className="dropdown addDropdown">
-                    <button
-                        disabled={disabled}
-                        onClick={() => setToggle(!toggle)}
-                        className="btn btn-primary dropdown-toggle removeBg"
-                        type="button"
-                        id={"dropdownMenuButton" + id }
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        {selectedValues ? methodModel.find(options, selectedValues, 'id' || '_id')?.[displayValue] || placeholder : placeholder}
-                    </button>
-                    <div className={`dropdown-menu shadow bg_hover ${toggle ? 'show active' : ''}`} aria-labelledby={"dropdownMenuButton" + id}>
-                        <a className={selectedValues === '' ? 'dropdown-item active' : 'dropdown-item'} onClick={() => handleChange('')}>{placeholder}</a>
-                        {options && options.map((itm) => (
-                            <a
-                                className={selectedValues === itm.id ? 'dropdown-item active' : 'dropdown-item'}
-                                onClick={() => handleChange(itm.id )}
-                                key={itm.id}
-                            >
-                                {itm[displayValue]}
-                            </a>
-                        ))}
-                    </div>
+            <div className="dropdown addDropdown">
+                <button disabled={disabled} className={`btn btn-primary dropdown-toggle removeBg ${className}`} type="button" id={"dropdownMenuButton" + id} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {selectedValues ? methodModel.find(options, selectedValues, 'id')?.[displayValue] || placeholder : placeholder}
+                </button>
+                <div className="dropdown-menu shadow bg_hover" aria-labelledby={"dropdownMenuButton" + id}>
+                   {noDefault?<a className={selectedValues == '' ? 'dropdown-item active disabled' : 'dropdown-item disabled'} disabled>{placeholder}</a>:<a className={selectedValues == '' ? 'dropdown-item active' : 'dropdown-item'} onClick={() => handleChange('')}>{placeholder}</a>} 
+                    {options && options.map(itm => {
+                        return <a className={selectedValues == itm.id ? 'dropdown-item active' : 'dropdown-item'} onClick={() => handleChange(itm.id)} key={itm.id}>{itm[displayValue]}</a>
+                    })}
                 </div>
             </div>
-        </>
-    );
-};
+        </div>
+        </>}
 
-export default Html;
+    </>
+}
+
+export default Html

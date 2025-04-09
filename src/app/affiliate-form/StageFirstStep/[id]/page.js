@@ -212,7 +212,7 @@ export default function StageFirstStep() {
                     {/* <div className='col-md-6'>
       <div className="form-group">
         <label className='label-set'>partner Manager </label>
-        <SelectDropdown
+        <SelectDropdown                                                     theme='search'
           id="statusDropdown"
           displayValue="fullName"
           placeholder="select"
@@ -226,7 +226,7 @@ export default function StageFirstStep() {
     <div className='col-md-6'>
       <div className="form-group">
         <label className='label-set'>Account Executive </label>
-        <SelectDropdown
+        <SelectDropdown                                                     theme='search'
           id="statusDropdown"
           displayValue="fullName"
           placeholder="select"
@@ -240,7 +240,7 @@ export default function StageFirstStep() {
                     <div className='col-md-6'>
                       <div className="form-group">
                         <label className='label-set'>Affilate Group </label>
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                           id="statusDropdown"
                           displayValue="group_name"
                           placeholder="select"
@@ -253,7 +253,7 @@ export default function StageFirstStep() {
                     {/* <div className='col-md-6'>
                         <div className="form-group">
                           <label className='label-set'>Referred By </label>
-                          <SelectDropdown
+                          <SelectDropdown                                                     theme='search'
                             id="statusDropdown"
                             displayValue="name"
                             placeholder="select"
@@ -305,7 +305,7 @@ export default function StageFirstStep() {
                     <div className='col-md-6'>
                       <div className="form-group">
                         <label className='label-set'>Status </label>
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                           id="statusDropdown"
                           displayValue="name"
                           placeholder="select"

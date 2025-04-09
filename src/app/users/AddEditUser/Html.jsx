@@ -25,7 +25,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                         <div className="col-md-12 mb-3">
                                 <label>Select Role</label>
                                 <div className="select_row">
-                                    <SelectDropdown
+                                    <SelectDropdown                                                     theme='search'
                                         id="statusDropdown"
                                         displayValue="name"
                                         placeholder="Select Role"
@@ -82,7 +82,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                             {/* <div className="col-md-6 mb-3">
                                 <label>Language</label>
                                 <div className="select_row">
-                                    <SelectDropdown
+                                    <SelectDropdown                                                     theme='search'
                                         id="statusDropdown"
                                         displayValue="name"
                                         placeholder="Select Language"
@@ -137,7 +137,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                 <div className="select_drop col-md-6 mb-3">
                                     <label>Affiliate Group</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="group_name"
                                             placeholder="Select Group"

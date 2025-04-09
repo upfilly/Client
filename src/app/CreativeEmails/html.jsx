@@ -42,7 +42,7 @@ const Html = ({
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="E-mail" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-end align-items-center">
-                     {/* <SelectDropdown
+                     {/* <SelectDropdown                                                     theme='search'
                             id="statusDropdown"
                             displayValue="name"
                             placeholder="All Status"
@@ -78,7 +78,7 @@ const Html = ({
 
 
 
-                        {/* {!role ? <SelectDropdown
+                        {/* {!role ? <SelectDropdown                                                     theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All User"
