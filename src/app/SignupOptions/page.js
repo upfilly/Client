@@ -25,9 +25,16 @@ export default function SignupOption() {
           <div className="row">
             <div className="col-12 col-md-12 col-lg-7 mx-auto">
               <div className="sgnup data">
-              <Link href="/"><i className="fa fa-angle-double-left back_button1" aria-hidden="true"></i></Link>
-                <h4 className="text-white mb-3 ">Signup As</h4>
+
                 <div className="row">
+
+                  <div className="col-12">
+
+                    <div className="d-flex mb-3 align-items-center">
+                      <Link href="/"><i className="fa fa-angle-double-left aroows" aria-hidden="true"></i></Link>
+                      <h4 className="text-white ml-2 mb-0 ">Signup As</h4>
+                    </div>
+                  </div>
                   <div className="col-12 col-sm-12 col-md-6" onClick={() => history.push("/track/signup/affiliate")}>
                     <div className="miansign">
                       <label className="center_img">
