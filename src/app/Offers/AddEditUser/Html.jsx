@@ -149,7 +149,7 @@ const Html = ({form,startDate, endDate,setDateRange,user, handleSubmit, setform,
                                 {/* <div className="select_drop col-md-6 mb-3">
                                     <label>Category<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select category"
@@ -168,7 +168,7 @@ const Html = ({form,startDate, endDate,setDateRange,user, handleSubmit, setform,
                                 {form?.category_id &&  <div className="select_drop col-md-6 mb-3">
                                     <label>Sub Category</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Sub Category"

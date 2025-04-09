@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import Html from "./html";
 
-const SelectDropdown = ({intialValue,options,isSingle,result,displayValue='name',id,placeholder="Select Status",disabled=false,name,required=false}:any) => {
-    const [toggle,setToggle]=useState(false)
-
-   
-    const handleChange=(e:any)=>{
+const SelectDropdown = ({intialValue,options,result,displayValue='name',id,placeholder="Select Status",disabled=false,name,required=false,noDefault=false,className='',theme='normal'}) => {
+    const handleChange=(e)=>{
         result({event:"value",value:e})
-        setToggle(false)
     }
+
     return <>
         <Html
-        toggle={toggle}
-        setToggle={setToggle}
+        theme={theme}
         id={id}
         name={name}
+        className={className}
+        noDefault={noDefault}
         required={required}
         disabled={disabled}
         placeholder={placeholder}

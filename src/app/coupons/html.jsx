@@ -92,7 +92,7 @@ const Html = ({
                                 Add Coupon
                             </a>
                         </>}
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                             id="statusDropdown" className="mr-2 "
                             displayValue="name"
                             placeholder="All Status"

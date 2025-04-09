@@ -37,7 +37,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                 <div className="col-md-6 mb-3">
                                     <label>Select Brand<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="brand_name"
                                             placeholder="Select Brand"
@@ -123,7 +123,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                 <div className="col-md-6 mb-3">
                                     <label>Type</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Type"
@@ -132,13 +132,13 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                                 setform({ ...form, type: e.value })
                                             }}
                                             options={[{
-                                                name:'unTracked',id:'unTracked'
+                                                name: 'unTracked', id: 'unTracked'
                                             },
                                             {
-                                                name:'Incorrect',id:'Incorrect'
+                                                name: 'Incorrect', id: 'Incorrect'
                                             },
                                             {
-                                                name:'Declined',id:'Declined'
+                                                name: 'Declined', id: 'Declined'
                                             }]}
                                         />
                                     </div>
@@ -146,7 +146,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                 <div className="col-md-6 mb-3">
                                     <label>TimeZone</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select TimeZone"
@@ -156,9 +156,9 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                                 setform({ ...form, timeZone: e.value })
                                             }}
                                             options={[{
-                                                name:'Europe/Dublin',id:'Europe/Dublin'
+                                                name: 'Europe/Dublin', id: 'Europe/Dublin'
                                             },
-                                           ]}
+                                            ]}
                                         />
                                     </div>
                                 </div>

@@ -293,7 +293,7 @@ export default function StageLastStep() {
                       <div class="form-group">
                         <label className='label-set' >Status  </label>
 
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                           id="statusDropdown"
                           displayValue="name"
                           placeholder="select"
@@ -361,7 +361,7 @@ export default function StageLastStep() {
                     <div className='col-md-6'>
                       <div class="form-group">
                         <label className='label-set' >Language<span className="star">*</span>  </label>
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                           id="statusDropdown"
                           displayValue="name"
                           placeholder="select"
@@ -389,7 +389,7 @@ export default function StageLastStep() {
                     <div className='col-md-6'>
                       <div class="form-group">
                         <label className='label-set' >Instant Messaging<span className="star">*</span>  </label>
-                        <SelectDropdown
+                        <SelectDropdown                                                     theme='search'
                           id="statusDropdown"
                           displayValue="name"
 

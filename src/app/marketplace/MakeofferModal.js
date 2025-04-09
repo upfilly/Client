@@ -139,7 +139,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
 
             {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2 selectlabel'  controlId="formBasicText">
               <Form.Label>Select affiliate</Form.Label>
-            <SelectDropdown
+            <SelectDropdown                                                     theme='search'
               id="statusDropdown"
               className="w-100"
               displayValue="fullName"

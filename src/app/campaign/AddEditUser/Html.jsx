@@ -187,7 +187,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 <div className="col-md-6 mb-3">
                                     <label>Type<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select Type"
@@ -267,7 +267,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 {form?.event_type?.includes("purchase") && <div className="col-md-6 mb-3">
                                     <label>Purchase Amount/Percentage Type<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="amount_typeDropdown"
                                             displayValue="name"
                                             placeholder="Select Amount or Percentage"
@@ -351,7 +351,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 {/* <div className="col-md-6 mb-3">
                                     <label>Category Type<span className="star">*</span></label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="categoryTypeDropdown"
                                             displayValue="name"
                                             placeholder="Select Category Type"

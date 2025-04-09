@@ -218,7 +218,7 @@ const Html = ({
 
 
                                 </div>
-                                <SelectDropdown
+                                <SelectDropdown                                                     theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All Status"

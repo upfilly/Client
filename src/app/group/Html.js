@@ -49,7 +49,7 @@ const Html = ({
                                 {permission('group_add') && <a className="btn btn-primary ms-2 " onClick={e => add()}>
                                     <i className='fa fa-plus mr-1'></i> Add
                                 </a>}
-                                <SelectDropdown
+                                <SelectDropdown                                                     theme='search'
                                     id="statusDropdown" className="mr-2 "
                                     displayValue="name"
                                     placeholder="All Status"

@@ -50,7 +50,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                             {/* {role ? <></> : <div className="col-md-6 mb-3">
                         <label>Role<span className="star">*</span></label>
                         <div className="select_row">
-                            <SelectDropdown
+                            <SelectDropdown                                                     theme='search'
                                 id="statusDropdown"
                                 displayValue="name"
                                 placeholder="Select Role"
@@ -102,7 +102,7 @@ const Html = ({ affiliateGroup, id, role, form, handleSubmit, setform, submitted
                                 <div className="select_drop col-md-6 mb-3">
                                     <label>Affiliate Group</label>
                                     <div className="select_row">
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="group_name"
                                             placeholder="Select Group"

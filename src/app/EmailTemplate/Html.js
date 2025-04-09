@@ -110,7 +110,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                                 {/* <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
                                         <div className='mb-2' >Select User</div>
-                                        <SelectDropdown
+                                        <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
                                             displayValue="fullName"
                                             placeholder="Select User"

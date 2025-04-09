@@ -556,7 +556,7 @@ export default function affilate() {
                     <button className='set-filter' type="button" class="set-filter abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
                   </div>
                   <div class="">
-                    <SelectDropdown
+                    <SelectDropdown                                                     theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="All Status"
@@ -800,7 +800,7 @@ export default function affilate() {
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select Campaign</Form.Label>
-                  <SelectDropdown
+                  <SelectDropdown                                                     theme='search'
                     id="statusDropdown"
                     className="w-100"
                     displayValue="name"
@@ -886,7 +886,7 @@ export default function affilate() {
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select group</Form.Label>
-                  <SelectDropdown
+                  <SelectDropdown                                                     theme='search'
                     id="statusDropdown"
                     className="w-100"
                     displayValue="group_name"

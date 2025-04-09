@@ -48,7 +48,7 @@ const Html = ({
                         <div className='row '>
                             <div className='col-lg-12 '>
                                 <div className=" all_bxbtns flex-wrap  gap-2 d-flex filterFlex phView align-items-center   justify-content-end">
-                                    <SelectDropdown
+                                    <SelectDropdown                                                     theme='search'
                                         id="statusDropdown" className=" "
                                         displayValue="name"
                                         placeholder="All Status"
@@ -60,7 +60,7 @@ const Html = ({
                                         ]}
                                     />
 
-                                    <SelectDropdown
+                                    <SelectDropdown                                                     theme='search'
                                         id="statusDropdown" 
                                         className=" "
                                         displayValue="name"

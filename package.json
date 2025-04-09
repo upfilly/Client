@@ -45,6 +45,7 @@
     "react-places-autocomplete": "^7.3.0",
     "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
+    "react-select": "^5.10.1",
     "react-single-image-viewer": "^1.0.1",
     "react-toastify": "^9.1.3",
     "reactstrap": "^9.2.2",
