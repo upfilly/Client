@@ -693,6 +693,7 @@ export default function BillingForm() {
                           <input
                             type="text"
                             value={selectedLocation?.country}
+                            onChange={(e)=>setSelectedLocation({...selectedLocation,country:e.target.value})}
                             className="form-control quick-radius"
                           />
                         </div>
@@ -705,6 +706,7 @@ export default function BillingForm() {
                           <input
                             type="text"
                             value={selectedLocation?.city}
+                            onChange={(e)=>setSelectedLocation({...selectedLocation,city:e.target.value})}
                             className="form-control quick-radius"
                           />
                         </div>

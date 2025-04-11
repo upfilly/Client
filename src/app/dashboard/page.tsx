@@ -9,6 +9,8 @@ import ApiClient from "@/methods/api/apiClient";
 import environment from "@/environment";
 import BarChart from "../components/common/BarChart/Barchart";
 import PieChart from "../components/common/PieChart/Piechat";
+import { Modal, Button } from 'react-bootstrap';
+import { FaTachometerAlt, FaUsers, FaClipboardList, FaChalkboardTeacher, FaTools, FaChartLine, FaMarker, FaUserPlus } from 'react-icons/fa'; // FontAwesome icons
 
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -19,6 +21,9 @@ export default function Dashboard() {
   const [recentUser, setRecentUser] = useState<any>([]);
   const [CampaignRequest, setCampaignRequest] = useState<any>(null);
   const [analyticData, setAnalyticData] = useState<any>();
+  const [show, setShow] = useState(false);
+  const handleClose = () => { setShow(false)};
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (
@@ -37,6 +42,18 @@ export default function Dashboard() {
   //       }
   //     }
   // }, [user])
+
+  const handleAddCampaignClick = () => {
+    console.log('Redirecting to Add Campaign page...');
+  };
+
+  const navigateToSection = () =>{
+
+  }
+  
+  useEffect(() => {
+    setShow(true)
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -219,12 +236,12 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-           {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
+            {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-               
-           
-             
+
+
+
                   {/* {user.role == "brand" ? (
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
@@ -245,24 +262,24 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : ( */}
-                    <div className="ml-2 ">
-                      <div className="d-flex items-center gap-2">
-                        <div className="img-div-first">
-                          <img
-                            className="fixi-boxx purchase"
-                            src="/assets/img/purchase.png"
-                            alt=""
-                          ></img>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Rejected Campaigns</p>
+                  <div className="ml-2 ">
+                    <div className="d-flex items-center gap-2">
+                      <div className="img-div-first">
+                        <img
+                          className="fixi-boxx purchase"
+                          src="/assets/img/purchase.png"
+                          alt=""
+                        ></img>
+                      </div>
+                      <div className="d-flex flex-column justify-content-center">
+                        <p className="revuh">Rejected Campaigns</p>
 
-                          <h3 className="dollars-t">
-                            {CampaignRequest?.rejectedRequestsCount}
-                          </h3>
-                        </div>
+                        <h3 className="dollars-t">
+                          {CampaignRequest?.rejectedRequestsCount}
+                        </h3>
                       </div>
                     </div>
+                  </div>
                   {/* )} */}
                 </div>
                 <div className="">
@@ -274,7 +291,7 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>}
-           {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
+            {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
                   {/* <img
@@ -282,7 +299,7 @@ export default function Dashboard() {
                     src="/assets/img/growth.png"
                     alt=""
                   ></img> */}
-                  
+
                   {/* {user.role == "brand" ? (
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
@@ -303,24 +320,24 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : ( */}
-                    <div className="ml-2 ">
-                      <div className="d-flex items-center gap-2">
-                        <div className="img-div-first">
-                          <img
-                            className="fixi-boxx purchase"
-                            src="/assets/img/line.png"
-                            alt=""
-                          ></img>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Brands Associated</p>
+                  <div className="ml-2 ">
+                    <div className="d-flex items-center gap-2">
+                      <div className="img-div-first">
+                        <img
+                          className="fixi-boxx purchase"
+                          src="/assets/img/line.png"
+                          alt=""
+                        ></img>
+                      </div>
+                      <div className="d-flex flex-column justify-content-center">
+                        <p className="revuh">Brands Associated</p>
 
-                          <h3 className="dollars-t">
-                            {CampaignRequest?.brandsAssociatedCount}
-                          </h3>
-                        </div>
+                        <h3 className="dollars-t">
+                          {CampaignRequest?.brandsAssociatedCount}
+                        </h3>
                       </div>
                     </div>
+                  </div>
                   {/* )} */}
                 </div>
                 <div className="">
@@ -502,7 +519,7 @@ export default function Dashboard() {
                 </div>
                 <ul className="sales-listing">
                   {recentUser?.slice(0, 5)?.map((data: any) => (
-                    <li>
+                    <li onClick={() => history.push(`affiliate/detail/${data?.id || data?._id}`)}>
                       <div className="d-flex flex-wrap align-items-center item-name">
                         {data?.image ? (
                           <img
@@ -537,6 +554,83 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      <Modal show={show} onHide={handleClose} className="shadowboxmodal">
+        <Modal.Header className="align-items-center" closeButton>
+          <h5 className="modal-title">Welcome to Upfilly Dashboard</h5>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Welcome to your Upfilly Dashboard! Here's how to get started:</p>
+          <ol className="instruction-list">
+            <li>
+              <FaTachometerAlt className="icon" onClick={() => navigateToSection('dashboard')} />
+              <strong>Dashboard</strong>: Overview of your performance and key metrics.
+            </li>
+            <li>
+              <FaUsers className="icon" onClick={() => navigateToSection('affiliateManagement')} />
+              <strong>Affiliate Management</strong>: Manage your affiliates, approve or deny affiliate requests.
+              <ul>
+                <li>Affiliate Requests: View and manage new affiliate requests.</li>
+                <li>Manage Affiliates: Manage all your existing affiliates.</li>
+                <li>Affiliate Groups: Organize your affiliates into groups for targeted campaigns.</li>
+              </ul>
+            </li>
+            <li>
+              <FaChalkboardTeacher className="icon" onClick={() => navigateToSection('chat')} />
+              <strong>Chat</strong>: Communicate with your affiliates directly through the chat feature.
+            </li>
+            <li>
+              <FaClipboardList className="icon" onClick={() => navigateToSection('campaignManagement')} />
+              <strong>Campaign Management</strong>: Manage your campaigns from creation to tracking performance.
+              <ul>
+                <li>Manage Campaigns: View and edit your active campaigns.</li>
+                <li>Campaign Requests: Approve or deny new campaign requests.</li>
+              </ul>
+            </li>
+            <li>
+              <FaTools className="icon" onClick={() => navigateToSection('marketingTools')} />
+              <strong>Marketing Tools</strong>: Enhance your marketing efforts with creative assets and more.
+              <ul>
+                <li>Creative Assets: Upload and manage banners, images, and other creative materials.</li>
+                <li>Banners: Create and manage banners for your campaigns.</li>
+                <li>Email Templates: Design email templates for marketing purposes.</li>
+                <li>Data Feeds: Provide affiliates with product data feeds.</li>
+                <li>Generate Links: Create trackable links for your affiliates.</li>
+                <li>Add Coupon: Create and manage promotional codes for campaigns.</li>
+                <li>Newsletter: Send updates and newsletters to your affiliates or users.</li>
+              </ul>
+            </li>
+            <li>
+              <FaChartLine className="icon" onClick={() => navigateToSection('performanceAnalytics')} />
+              <strong>Performance & Analytics</strong>: Analyze campaign performance and track affiliate success.
+              <ul>
+                <li>Campaign Reports: View detailed reports on each campaign's performance.</li>
+                <li>Performance Charts: Visualize data with charts to assess performance.</li>
+                <li>Affiliate Marketing Stats: Review stats on affiliate activities and earnings.</li>
+              </ul>
+            </li>
+            <li>
+              <FaMarker className="icon" onClick={() => navigateToSection('marketplace')} />
+              <strong>Marketplace</strong>: Explore the marketplace to find new offers.
+              <ul>
+                <li>Marketplace: Browse available offers in the marketplace.</li>
+                <li>Sent Offers: View the offers you've sent to affiliates.</li>
+              </ul>
+            </li>
+            <li>
+              <FaUserPlus className="icon" onClick={() => navigateToSection('userManagement')} />
+              <strong>User Management</strong>: Add and manage users within your platform.
+              <ul>
+                <li>Add Users: Add new users to your dashboard with different roles and permissions.</li>
+              </ul>
+            </li>
+          </ol>
+          <Button variant="primary" onClick={handleAddCampaignClick} className="cta-button">
+            Click here to add a campaign
+          </Button>
+        </Modal.Body>
+      </Modal>
+
     </Layout>
   );
 }
