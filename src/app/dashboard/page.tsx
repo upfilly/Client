@@ -10,7 +10,6 @@ import environment from "@/environment";
 import BarChart from "../components/common/BarChart/Barchart";
 import PieChart from "../components/common/PieChart/Piechat";
 import { Modal, Button } from 'react-bootstrap';
-import { FaTachometerAlt, FaUsers, FaClipboardList, FaChalkboardTeacher, FaTools, FaChartLine, FaMarker, FaUserPlus } from 'react-icons/fa'; // FontAwesome icons
 
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -22,8 +21,10 @@ export default function Dashboard() {
   const [CampaignRequest, setCampaignRequest] = useState<any>(null);
   const [analyticData, setAnalyticData] = useState<any>();
   const [show, setShow] = useState(false);
-  const handleClose = () => { setShow(false)};
+  const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
+
+  console.log(user, "useruseruser")
 
   useEffect(() => {
     if (
@@ -44,15 +45,17 @@ export default function Dashboard() {
   // }, [user])
 
   const handleAddCampaignClick = () => {
-    console.log('Redirecting to Add Campaign page...');
+    history.push('campaign')
   };
 
-  const navigateToSection = () =>{
-
+  const navigateToSection = (data: any) => {
+    history.push(data)
   }
-  
+
   useEffect(() => {
-    setShow(true)
+    if (user?.total_campaign == 0) {
+      setShow(true)
+    }
   }, []);
 
   useEffect(() => {
@@ -84,10 +87,10 @@ export default function Dashboard() {
   useEffect(() => {
     if (user) {
       let filter
-      if(user?.role == "brand"){
-        filter = {brand_id:user?.id || user?._id}
+      if (user?.role == "brand") {
+        filter = { brand_id: user?.id || user?._id }
       }
-      ApiClient.get("total-campaigns",filter).then((data) => {
+      ApiClient.get("total-campaigns", filter).then((data) => {
         setCampaignData(data);
       });
       getAnalyticsData();
@@ -97,12 +100,12 @@ export default function Dashboard() {
   useEffect(() => {
     if (user) {
       let filter;
-      if(user?.role == "affiliate"){
-        filter={affiliate_id:user?.id || user?._id}
-      }else{
-        filter={brand_id:user?.id || user?._id}
+      if (user?.role == "affiliate") {
+        filter = { affiliate_id: user?.id || user?._id }
+      } else {
+        filter = { brand_id: user?.id || user?._id }
       }
-      ApiClient.get("dashboard/campaign-request",filter).then((data) => {
+      ApiClient.get("dashboard/campaign-request", filter).then((data) => {
         setCampaignRequest(data);
       });
     }
@@ -119,6 +122,7 @@ export default function Dashboard() {
   return (
     <Layout
       activeSidebar={activeSidebar}
+      setShow={setShow}
       handleKeyPress={undefined}
       setFilter={undefined}
       reset={undefined}
@@ -555,79 +559,150 @@ export default function Dashboard() {
         )}
       </div>
 
-      <Modal show={show} onHide={handleClose} className="shadowboxmodal">
-        <Modal.Header className="align-items-center" closeButton>
+      <Modal show={show} onHide={handleClose} className="shadowboxmodal new-modal">
+        {/* <Modal.Header className="align-items-center" closeButton>
           <h5 className="modal-title">Welcome to Upfilly Dashboard</h5>
-        </Modal.Header>
+        </Modal.Header> */}
         <Modal.Body>
-          <p>Welcome to your Upfilly Dashboard! Here's how to get started:</p>
-          <ol className="instruction-list">
-            <li>
-              <FaTachometerAlt className="icon" onClick={() => navigateToSection('dashboard')} />
-              <strong>Dashboard</strong>: Overview of your performance and key metrics.
-            </li>
-            <li>
-              <FaUsers className="icon" onClick={() => navigateToSection('affiliateManagement')} />
-              <strong>Affiliate Management</strong>: Manage your affiliates, approve or deny affiliate requests.
-              <ul>
-                <li>Affiliate Requests: View and manage new affiliate requests.</li>
-                <li>Manage Affiliates: Manage all your existing affiliates.</li>
-                <li>Affiliate Groups: Organize your affiliates into groups for targeted campaigns.</li>
-              </ul>
-            </li>
-            <li>
-              <FaChalkboardTeacher className="icon" onClick={() => navigateToSection('chat')} />
-              <strong>Chat</strong>: Communicate with your affiliates directly through the chat feature.
-            </li>
-            <li>
-              <FaClipboardList className="icon" onClick={() => navigateToSection('campaignManagement')} />
-              <strong>Campaign Management</strong>: Manage your campaigns from creation to tracking performance.
-              <ul>
-                <li>Manage Campaigns: View and edit your active campaigns.</li>
-                <li>Campaign Requests: Approve or deny new campaign requests.</li>
-              </ul>
-            </li>
-            <li>
-              <FaTools className="icon" onClick={() => navigateToSection('marketingTools')} />
-              <strong>Marketing Tools</strong>: Enhance your marketing efforts with creative assets and more.
-              <ul>
-                <li>Creative Assets: Upload and manage banners, images, and other creative materials.</li>
-                <li>Banners: Create and manage banners for your campaigns.</li>
-                <li>Email Templates: Design email templates for marketing purposes.</li>
-                <li>Data Feeds: Provide affiliates with product data feeds.</li>
-                <li>Generate Links: Create trackable links for your affiliates.</li>
-                <li>Add Coupon: Create and manage promotional codes for campaigns.</li>
-                <li>Newsletter: Send updates and newsletters to your affiliates or users.</li>
-              </ul>
-            </li>
-            <li>
-              <FaChartLine className="icon" onClick={() => navigateToSection('performanceAnalytics')} />
-              <strong>Performance & Analytics</strong>: Analyze campaign performance and track affiliate success.
-              <ul>
-                <li>Campaign Reports: View detailed reports on each campaign's performance.</li>
-                <li>Performance Charts: Visualize data with charts to assess performance.</li>
-                <li>Affiliate Marketing Stats: Review stats on affiliate activities and earnings.</li>
-              </ul>
-            </li>
-            <li>
-              <FaMarker className="icon" onClick={() => navigateToSection('marketplace')} />
-              <strong>Marketplace</strong>: Explore the marketplace to find new offers.
-              <ul>
-                <li>Marketplace: Browse available offers in the marketplace.</li>
-                <li>Sent Offers: View the offers you've sent to affiliates.</li>
-              </ul>
-            </li>
-            <li>
-              <FaUserPlus className="icon" onClick={() => navigateToSection('userManagement')} />
-              <strong>User Management</strong>: Add and manage users within your platform.
-              <ul>
-                <li>Add Users: Add new users to your dashboard with different roles and permissions.</li>
-              </ul>
-            </li>
-          </ol>
-          <Button variant="primary" onClick={handleAddCampaignClick} className="cta-button">
-            Click here to add a campaign
-          </Button>
+          {/* <p>Welcome to your Upfilly Dashboard! Here's how to get started:</p> */}
+          <div className="mt-2">
+            <h4 className="mb-2 fs-5 fw-bold text-center">👋 Welcome to your Upfilly Dashboard</h4>
+            <p className="text-center mb-3 fs-6">Here’s how to get started:</p>
+
+            <ul className="dashboard-list list-unstyled">
+              <li className="dashboard-item" >
+                <i className="fas fa-tachometer-alt text-primary"></i>
+                <div>
+                  <div>
+                    <strong>Dashboard</strong><br />
+                    <small>Overview of your performance and key metrics.</small>
+                  </div>
+                  <Button variant="" onClick={() => navigateToSection('dashboard')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+
+              <li className="dashboard-item" onClick={() => navigateToSection('affiliate')}>
+                <i className="fas fa-users text-success"></i>
+                <div>
+                  <div>
+                    <strong>Affiliate Management</strong>
+                    <ul className="sub-list">
+                      <li>Affiliate Requests</li>
+                      <li>Manage Affiliates</li>
+                      <li>Affiliate Groups</li>
+                    </ul>
+                  </div>
+                  <Button variant="" onClick={() => navigateToSection('affiliate')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+
+              <li className="dashboard-item">
+                <i className="fas fa-comments text-purple"></i>
+                <div>
+                  <div>
+                    <strong>Chat</strong><br />
+                    <small>Communicate directly with your affiliates.</small>
+                  </div>
+                  {/* <Button variant="" onClick={() => navigateToSection('dashboard')} className="">
+                    Click here
+                  </Button> */}
+                </div>
+              </li>
+
+              <li className="dashboard-item" >
+                <i className="fas fa-clipboard-list text-danger"></i>
+                <div>
+                  <div>
+                    <strong>Campaign Management</strong>
+                    <ul className="sub-list">
+                      <li>Manage Campaigns</li>
+                      <li>Campaign Requests</li>
+                    </ul>
+                  </div>
+                  <Button variant="" onClick={() => navigateToSection('campaign')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+
+              <li className="dashboard-item" >
+                <i className="fas fa-tools text-warning"></i>
+                <div>
+                  <div>
+                    <strong>Marketing Tools</strong>
+                    <ul className="sub-list">
+                      <li>Creative Assets</li>
+                      <li>Banners</li>
+                      <li>Email Templates</li>
+                      <li>Data Feeds</li>
+                      <li>Generate Links</li>
+                      <li>Add Coupon</li>
+                      <li>Newsletter</li>
+                    </ul>
+                  </div>
+                  <Button variant="" onClick={() => navigateToSection('addbanner')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+
+              <li className="dashboard-item" >
+                <i className="fas fa-chart-line text-info"></i>
+                <div>
+                  <div>
+                    <strong>Performance & Analytics</strong>
+                    <ul className="sub-list">
+                      <li>Campaign Reports</li>
+                      <li>Performance Charts</li>
+                      <li>Affiliate Marketing Stats</li>
+                    </ul>
+                  </div>
+                  <Button variant="" onClick={() => navigateToSection('reports/all')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+
+              <li className="dashboard-item">
+                <i className="fas fa-store text-pink"></i>
+                <div>
+                  <div>
+                    <strong>Marketplace</strong>
+                    <ul className="sub-list">
+                      <li>Marketplace</li>
+                      <li>Sent Offers</li>
+                    </ul>
+                  </div>
+                  <Button variant="" onClick={() => navigateToSection('marketplace')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+
+              <li className="dashboard-item" >
+                <i className="fas fa-user-plus text-secondary"></i>
+                <div><div>
+                  <strong>User Management</strong>
+                  <ul className="sub-list">
+                    <li>Add Users</li>
+                  </ul>
+                </div>
+                  <Button variant="" onClick={() => navigateToSection('users')} className="">
+                    Click here
+                  </Button>
+                </div>
+              </li>
+            </ul>
+
+            <div className="text-center ">
+
+            </div>
+          </div>
+
         </Modal.Body>
       </Modal>
 

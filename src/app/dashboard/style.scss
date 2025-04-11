@@ -132,3 +132,76 @@ h3.dollars-t {
         object-fit: cover;
     }
 }
+
+
+.dashboard-list {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .dashboard-item {
+    background: #f8f8f8;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: 4px 3px 5px #bebebe, -8px -8px 15px #ffffff;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+  
+  .dashboard-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 12px 12px 24px #c2c2c2, -12px -12px 24px #fff;
+  }
+  
+  .dashboard-item i {
+    font-size: 1.8rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  
+  .sub-list {
+    list-style: disc;
+    margin: 5px 0 0 20px;
+    padding-left: 0;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .text-purple {
+    color: #6f42c1;
+  }
+  
+  .text-pink {
+    color: #d63384;
+  }
+
+  
+  .new-modal .modal-dialog {
+    max-width: 800px;
+}
+
+.new-modal .dashboard-item {
+    width: 49%;
+}
+.new-modal ul.dashboard-list.list-unstyled {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 450px;
+    overflow: auto;
+    padding-right: 20px;
+}
+.new-modal .dashboard-item button.btn {
+    color: #6d3ac1;
+    font-size: 12px;
+    text-align: right;
+    margin: 0 0 0 auto;
+    display: block;
+    border-bottom: 1px solid #6d3ac1;
+    border-radius: 0;
+    padding: 0;
+}

@@ -18,12 +18,12 @@ type Props = {
   children: any;
   title?: string;
   activeSidebar?: boolean
-  handleKeyPress:any, setFilter:any, reset:any ,filter:any,name:any,filters:any
+  handleKeyPress:any, setFilter:any, reset:any ,filter:any,name:any,filters:any,setShow:any
 };
 
 declare const localStorage: any
 
-export default function Layout({ title, description, children , handleKeyPress, setFilter, reset ,filter ,name ,filters}: Props) {
+export default function Layout({ title, setShow,description, children , handleKeyPress, setFilter, reset ,filter ,name ,filters}: Props) {
   let user: any = crendentialModel.getUser()
   const history: any = useRouter()
   const pathname = usePathname()
@@ -42,6 +42,9 @@ export default function Layout({ title, description, children , handleKeyPress, 
     if (user) {
       ApiClient.get('user/detail', { id: user.id }).then(res => {
         if (res.success) {
+          if(res?.data?.total_campaign == 0){
+            setShow(true)
+          }
           let data = { ...user, ...res.data }
           crendentialModel.setUser(data)
           localStorage.setItem('browseload', 'true')
