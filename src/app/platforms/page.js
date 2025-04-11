@@ -189,33 +189,33 @@ const UpFillyPage = () => {
 
 
 
-        {/* Overview Section */}
-        <section className=" bgdots">
+      {/* Overview Section */}
+      <section className=" bgdots">
 
-          <div className="minus_margin container">
+        <div className="minus_margin container">
 
-            <h5 className="innerhtmls">Powering Your Affiliate Success</h5>
+          <h5 className="innerhtmls">Powering Your Affiliate Success</h5>
 
 
-            <p className="para3">
+          <p className="para3">
             UpFilly is your all-in-one affiliate marketing solution designed to
             help merchants and affiliates thrive. With advanced tracking,
             actionable insights, and seamless payouts, we simplify the process
             of building and scaling affiliate programs. Whether you’re just
             starting or looking to optimize, UpFilly has the tools you need to
             succeed.
-            </p>
+          </p>
 
 
-          </div>
+        </div>
 
 
-        </section>
+      </section>
 
 
 
       <div className="App platforms-page">
-    
+
         <div className="container">
 
           {/* Overview Section */}
@@ -261,7 +261,7 @@ const UpFillyPage = () => {
           </div>
         </div> */}
 
-            <div className="row">
+            <div className="row align-items-center flex-column-reverse flex-md-row">
               <div className="col-md-6 platform-wrapper">
                 <h1>
                   Usable Upfilly
@@ -309,7 +309,7 @@ const UpFillyPage = () => {
                 </div>
               </div>
               <div className="col-md-6 d-flex justify-content-end">
-                <img className='w-75 object-fit-contain' src='/assets/img/platform-1.png' alt=''></img>
+                <img className='platofm_imgs object-fit-contain' src='/assets/img/platform-1.png' alt=''></img>
               </div>
             </div>
           </section>
@@ -330,22 +330,20 @@ const UpFillyPage = () => {
         </div> */}
 
             <div className="row">
-              <div className="col-md-6 d-flex justify-content-start">
-                <img className='w-75 object-fit-contain' src='/assets/img/platform-2.png' alt=''></img>
+              <div className="col-12 col-md-5 col-lg-6 d-flex justify-content-start">
+                <img className='platofm_imgs object-fit-contain' src='/assets/img/platform-2.png' alt=''></img>
               </div>
-              <div className="col-md-6 platform-wrapper">
-                <h1>
-                  Usable Upfilly
-                </h1>
-                <h1>
-                  Platform
-                </h1>
-                <p>
-                  Lorem Ipsum is simply dummy text of the
-                </p>
-                <p>
-                  printing and type lorem Ipsum is simply
-                </p>
+              <div className="col-12 col-md-7 col-lg-6 platform-wrapper">
+                <div className="mainwidths">
+                  <h3>
+                    Usable Upfilly  Platform
+                  </h3>
+
+                  <p>
+                    Lorem Ipsum is simply dummy text of the   printing and type lorem Ipsum is simply
+                  </p>
+                </div>
+
                 <div className="platform-content mt-3">
                   <h2>
                     Understand Buyers

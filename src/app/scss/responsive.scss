@@ -10,6 +10,10 @@
     max-width: 1406px !important;
   }
 
+  .platofm_imgs{
+    width: 60%;
+  }
+
   .fetausinners {
     width: 400px;
     padding: 40px;
@@ -22,6 +26,11 @@
   .lefttext {
     font-size: 52px;
   }
+
+
+  .dashimgs {
+    height: 400px;
+}
 }
 
 /* For screen width <= 1250px */
@@ -32,6 +41,10 @@
 
   .lefttext {
     font-size: 35px;
+  }
+
+  .platofm_imgs{
+    width: 70%;
   }
 }
 
