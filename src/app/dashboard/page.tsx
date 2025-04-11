@@ -113,6 +113,21 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user) {
+      ApiClient.get('user/detail', { id: user.id }).then(res => {
+        if (res.success) {
+          if(res?.data?.total_campaign == 0){
+            setShow(true)
+          }
+          let data = { ...user, ...res.data }
+          crendentialModel.setUser(data)
+          localStorage.setItem('browseload', 'true')
+        }
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (user) {
       ApiClient.get("recent-users").then((data) => {
         setRecentUser(data?.data?.data);
       });
@@ -122,7 +137,7 @@ export default function Dashboard() {
   return (
     <Layout
       activeSidebar={activeSidebar}
-      setShow={setShow}
+      // setShow={setShow}
       handleKeyPress={undefined}
       setFilter={undefined}
       reset={undefined}
