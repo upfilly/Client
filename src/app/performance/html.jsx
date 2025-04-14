@@ -9,7 +9,7 @@ import ApiClient from '@/methods/api/apiClient';
 import SelectDropdown from '../components/common/SelectDropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import MultiSelectDropdown from '../components/common/MultiSelectDropdown';
+import MultiSelectDropdown from '../components/common/MultiSelectValue';
 
 const Html = ({
   reset,

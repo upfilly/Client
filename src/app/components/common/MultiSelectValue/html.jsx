@@ -14,6 +14,7 @@ const Html = ({ options,selectedValues,handleChange,displayValue,id,name,singleS
                 onRemove={e => handleChange(e,'remove')}
                 displayValue={displayValue}
                 id={id}
+                 
                 showArrow
                 name={name}
             />
