@@ -129,7 +129,7 @@ const Html = ({
                           setDateRange([update[0], update[1]]);
                         }}
                         isClearable
-                        minDate={new Date()}
+                        maxDate={new Date()}
                         // withPortal
                         dateFormat={"dd/MM/yyyy"}
                       />
