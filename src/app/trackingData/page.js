@@ -272,7 +272,7 @@ export default function affilate() {
             <div className='row'>
               <div className='card-header'>
                 <div className="main_title_head d-flex justify-content-between align-items-center">
-                  <h3 className="">
+                  <h3 className="mb-2">
                     Affiliates Marketing Stats
                   </h3>
 
