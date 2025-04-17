@@ -472,7 +472,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
           {<>
 
-            {urlAllow('performancereports') ? <>
+            {urlAllow('performancereports') && (user?.role == "brand" || addedUser?.role == "brand") ? <>
               <div className="nav-item">
                 <CustomTooltip text="Marketplace">
                   <a className={` side_titles  nav-link hoverclass affilate ${tabclass('campaignsrequests') || tab == 'campaignsrequests' ? '' : 'collapsed-m'}`} onClick={() => tabChange('campaignsrequests')} >

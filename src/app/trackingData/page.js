@@ -12,6 +12,7 @@ import loader from '@/methods/loader';
 import PaymentModal from './paymodal'
 import { toast } from 'react-toastify';
 import SelectDropdown from '../components/common/SelectDropdown';
+import { CurencyData } from '../../methods/currency';
 
 export default function affilate() {
   const history = useRouter()
@@ -25,6 +26,8 @@ export default function affilate() {
   const [associateId, setAssociateId] = useState("");
   const [calculatedAmount, setCalculatedAmount] = useState(100)
   const [upfillyAmount, setUpfillyAmount] = useState(100)
+  const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [exchangeRate, setExchangeRate] = useState(null);
 
   const handleShow = (price, commission, commission_type, id) => {
     setAssociateId(id)
@@ -39,6 +42,38 @@ export default function affilate() {
     //   setShowModal(true)
     // }
   };
+
+  const getExchangeRate = async (currency) => {
+    try {
+      const res = await fetch(`https://v6.exchangerate-api.com/v6/b0247d42906773d9631b53b0/pair/USD/${currency}`);
+      const data = await res.json();
+
+      if (data.result === "success") {
+        setExchangeRate(data.conversion_rate);
+      } else {
+        setExchangeRate("")
+        // toast.error('Failed to fetch exchange rate');
+      }
+    } catch (err) {
+      setExchangeRate("")
+      console.error(err);
+      // toast.error('Error fetching exchange rate');
+    }
+  };
+
+  const handleCurrencyChange = (e) => {
+    const currency = e.value;
+    setSelectedCurrency(currency);
+    getExchangeRate(currency);
+  };
+
+  const convertedCurrency = (price) => {
+    if (price && exchangeRate) {
+      return (price * exchangeRate).toFixed(2) + " " + selectedCurrency
+    } else {
+      return price
+    }
+  }
 
   function calculateCommission(commission_type, price, commission) {
     let CalPrice;
@@ -65,8 +100,12 @@ export default function affilate() {
     }
 
     const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
-
-    return (finalPrice + CalPrice).toFixed(2)
+    if(selectedCurrency){
+      return convertedCurrency((finalPrice + CalPrice).toFixed(2))
+    }else{
+      return (finalPrice + CalPrice).toFixed(2)
+    }
+    
   }
 
 
@@ -252,7 +291,7 @@ export default function affilate() {
                       }} aria-hidden="true"></i>
                     </div>
 
-                    <SelectDropdown                                                     theme='search'
+                    <SelectDropdown theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="Paid Status"
@@ -266,8 +305,18 @@ export default function affilate() {
                       ]}
                     />
 
+                    <SelectDropdown
+                      theme='search'
+                      id="currencyDropdown"
+                      displayValue="name"
+                      placeholder="Select Currency"
+                      intialValue={selectedCurrency}
+                      result={handleCurrencyChange}
+                      options={CurencyData}
+                    />
+
                     <div className='width80'>
-                      <SelectDropdown                                                     theme='search'
+                      <SelectDropdown theme='search'
                         id="statusDropdown"
                         displayValue="name"
                         placeholder="Commission Status"
@@ -312,7 +361,7 @@ export default function affilate() {
                           <th scope="col" >Affiliate</th>
                           <th scope="col" >Brand</th>
                           <th scope="col" >Currency</th>
-                          <th scope="col" >Currency</th>
+                          <th scope="col" >Order price</th>
                           <th scope="col" >Order Id</th>
                           <th scope="col" >Commission</th>
                           <th scope="col" >Commission paid</th>
@@ -333,10 +382,12 @@ export default function affilate() {
                             <td className='name-person ml-2' >{itm?.affiliate_name}</td>
                             <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
                             <td className='name-person ml-2' >{itm?.currency}</td>
-                            <td className='name-person ml-2' >{itm?.price}</td>
+                            <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
-                            <td className='name-person ml-2' >{itm?.campaign_details?.commission}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
-                            <td className='name-person ml-2' >${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}</td>
+                            <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
+                            <td className='name-person ml-2' >
+                              {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
+                              </td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             <td className='table_dats d-flex align-items-center'>

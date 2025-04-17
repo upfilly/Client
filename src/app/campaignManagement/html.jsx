@@ -11,6 +11,7 @@ import { FaFilter } from "react-icons/fa";
 import SelectDropdown from '../components/common/SelectDropdown';
 import axios from 'axios';
 import { regionData } from '../campaign/AddEditUser/regionCountries';
+import { CurencyData } from '../../methods/currency';
 
 const Html = ({
     view,
@@ -43,6 +44,8 @@ const Html = ({
     const [category, setCategory] = useState([])
     const [countries, setCountries] = useState([]);
     const [selectedCountries, setSelectedCountries] = useState([]);
+    const [selectedCurrency, setSelectedCurrency] = useState('');
+    const [exchangeRate, setExchangeRate] = useState(null);
     const regions = [
         { id: "Africa", name: "Africa" },
         { id: "Asia", name: "Asia" },
@@ -67,11 +70,37 @@ const Html = ({
         );
     };
 
-    const handleCategoryTypeChange = (id) => {
-        setCategoryType(prev =>
-            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-        );
+    const getExchangeRate = async (currency) => {
+        try {
+            const res = await fetch(`https://v6.exchangerate-api.com/v6/b0247d42906773d9631b53b0/pair/USD/${currency}`);
+            const data = await res.json();
+
+            if (data.result === "success") {
+                setExchangeRate(data.conversion_rate);
+            } else {
+                setExchangeRate("")
+                // toast.error('Failed to fetch exchange rate');
+            }
+        } catch (err) {
+            setExchangeRate("")
+            console.error(err);
+            // toast.error('Error fetching exchange rate');
+        }
     };
+
+    const handleCurrencyChange = (e) => {
+        const currency = e.value;
+        setSelectedCurrency(currency);
+        getExchangeRate(currency);
+    };
+
+    const convertedCurrency = (price) => {
+        if (price && exchangeRate) {
+            return price * exchangeRate + " " + selectedCurrency
+        } else {
+            return price
+        }
+    }
 
     const reset = () => {
         let filter = {
@@ -218,18 +247,29 @@ const Html = ({
 
 
                                 </div>
-                                <SelectDropdown                                                     theme='search'
-                                    id="statusDropdown"
-                                    displayValue="name"
-                                    placeholder="All Status"
-                                    intialValue={filters.status}
-                                    result={e => { ChangeStatus(e.value) }}
-                                    options={[
-                                        { id: 'pending', name: 'Pending' },
-                                        { id: 'accepted', name: 'Joined' },
-                                        { id: 'rejected', name: 'Rejected' },
-                                    ]}
-                                />
+                                <div className='d-flex align-items-center gap-2'>
+                                    <SelectDropdown theme='search'
+                                        id="statusDropdown"
+                                        displayValue="name"
+                                        placeholder="All Status"
+                                        intialValue={filters.status}
+                                        result={e => { ChangeStatus(e.value) }}
+                                        options={[
+                                            { id: 'pending', name: 'Pending' },
+                                            { id: 'accepted', name: 'Joined' },
+                                            { id: 'rejected', name: 'Rejected' },
+                                        ]}
+                                    />
+                                    <SelectDropdown
+                                        theme='search'
+                                        id="currencyDropdown"
+                                        displayValue="name"
+                                        placeholder="Select Currency"
+                                        intialValue={selectedCurrency}
+                                        result={handleCurrencyChange}
+                                        options={CurencyData}
+                                    />
+                                </div>
                             </div>
                             <div className='mt-5'>
                                 <div className='table_section mt-0'>
@@ -282,7 +322,7 @@ const Html = ({
                                                             {itm?.brand_detail?.fullName && <td className='table_dats'>{itm?.brand_detail?.fullName}</td>}
                                                             {<td className='table_dats'>{itm?.campaign_type || "--"}</td>}
                                                             {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
-                                                            <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : `$${itm?.campaign_detail?.commission}`}</td>
+                                                            <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : selectedCurrency ? `${convertedCurrency(itm?.campaign_detail?.commission)}` : `$${convertedCurrency(itm?.campaign_detail?.commission)}`}</td>
                                                             {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
                                                                 <span className={!itm?.isActive ? (itm?.status == "accepted" && !itm?.isActive) ? "pending_status" : "inactive" : "contract"}>
