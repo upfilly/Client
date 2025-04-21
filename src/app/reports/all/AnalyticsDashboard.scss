@@ -226,3 +226,34 @@ input#statusDropdown_input {
   }
 }
 
+.d-flex {
+  display: flex;
+  gap: 1rem; /* Add spacing between elements */
+  align-items: center;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+/* Style for the custom date select span */
+.date_select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #fff;
+  min-width: 240px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Optional: Add hover effect */
+.date_select:hover {
+  border-color: #999;
+}
+
+/* Ensure dropdowns have consistent spacing */
+#statusDropdown,
+#currencyDropdown {
+  min-width: 220px;
+}
+
+

@@ -14,6 +14,8 @@ import AnalyticsChartData from './AnalyticsData'
 import MultiSelectValue from '@/app/components/common/MultiSelectValue';
 import crendentialModel from '@/models/credential.model';
 import CustomDatePicker from '../../components/common/DatePicker/DatePickerCustom'
+import { CurencyData } from '@/methods/currency';
+import SelectDropdown from '@/app/components/common/SelectDropdown';
 
 export default function AnalyticsDashboard() {
     const user = crendentialModel.getUser()
@@ -40,6 +42,8 @@ export default function AnalyticsDashboard() {
     const [brands, setBrands] = useState();
     const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
     const [compDates, setCompDates] = useState([new Date(), new Date()]);
+    const [selectedCurrency, setSelectedCurrency] = useState('');
+    const [exchangeRate, setExchangeRate] = useState(null);
     const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
 
     const dateRange = {
@@ -64,6 +68,38 @@ export default function AnalyticsDashboard() {
             state.selection2.startDate !== addDays(new Date(), 1) ||
             state.selection2.endDate !== addDays(new Date(), 7)
         );
+    };
+
+    const convertedCurrency = (price) => {
+        if (price && exchangeRate) {
+            return price * exchangeRate + " " + selectedCurrency
+        } else {
+            return price
+        }
+    }
+
+    const getExchangeRate = async (currency) => {
+        try {
+            const res = await fetch(`https://v6.exchangerate-api.com/v6/b0247d42906773d9631b53b0/pair/USD/${currency}`);
+            const data = await res.json();
+
+            if (data.result === "success") {
+                setExchangeRate(data.conversion_rate);
+            } else {
+                setExchangeRate("")
+                // toast.error('Failed to fetch exchange rate');
+            }
+        } catch (err) {
+            setExchangeRate("")
+            console.error(err);
+            // toast.error('Error fetching exchange rate');
+        }
+    };
+
+    const handleCurrencyChange = (e) => {
+        const currency = e.value;
+        setSelectedCurrency(currency);
+        getExchangeRate(currency);
     };
 
     const getBrandData = (p = {}) => {
@@ -140,7 +176,7 @@ export default function AnalyticsDashboard() {
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
             // affiliate_id: selectedAffiliate || "",
             // brand_id: selectedBrand || "",
-            startDate2:comparisonPeriod == 'none' ? "" : moment(compDates?.[0]).format("YYYY-MM-DD"),
+            startDate2: comparisonPeriod == 'none' ? "" : moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: comparisonPeriod == 'none' ? "" : moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
@@ -148,8 +184,8 @@ export default function AnalyticsDashboard() {
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
             // affiliate_id: selectedAffiliate || "",
             // brand_id: selectedBrand || "",
-            startDate2:comparisonPeriod == 'none' ? "" : moment(compDates?.[0]).format("YYYY-MM-DD"),
-            endDate2:comparisonPeriod == 'none' ? "" : moment(compDates?.[1]).format("YYYY-MM-DD"),
+            startDate2: comparisonPeriod == 'none' ? "" : moment(compDates?.[0]).format("YYYY-MM-DD"),
+            endDate2: comparisonPeriod == 'none' ? "" : moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
         setHandleDateFilter(false)
     }
@@ -210,6 +246,16 @@ export default function AnalyticsDashboard() {
                                 }}
                                 options={affiliateData}
                             />}
+
+                        <SelectDropdown
+                            theme='search'
+                            id="currencyDropdown"
+                            displayValue="name"
+                            placeholder="Select Currency"
+                            intialValue={selectedCurrency}
+                            result={handleCurrencyChange}
+                            options={CurencyData}
+                        />
                     </div>
 
                     <div className="controls mt-2">
@@ -234,7 +280,7 @@ export default function AnalyticsDashboard() {
                                 }}
                             />
                         )} */}
-                       { handleDateFilter && <CustomDatePicker baseDates={baseDates} setBaseDates={setBaseDates} compDates={compDates} setCompDates={setCompDates} setHandleDateFilter={setHandleDateFilter} ApplyDateFilter={ApplyDateFilter} comparisonPeriod={comparisonPeriod} setComparisonPeriod={setComparisonPeriod}/>}
+                        {handleDateFilter && <CustomDatePicker baseDates={baseDates} setBaseDates={setBaseDates} compDates={compDates} setCompDates={setCompDates} setHandleDateFilter={setHandleDateFilter} ApplyDateFilter={ApplyDateFilter} comparisonPeriod={comparisonPeriod} setComparisonPeriod={setComparisonPeriod} />}
                     </div>
 
                     <div className="reset-filters-container">
@@ -246,7 +292,7 @@ export default function AnalyticsDashboard() {
                     </div>
 
 
-                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} />
+                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} convertedCurrency={convertedCurrency} />
                 </main>
             </div>
         </Layout>

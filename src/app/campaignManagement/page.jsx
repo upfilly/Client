@@ -106,7 +106,7 @@ const Users = () => {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page + 1 })
+    getData({ ...p, page: filters?.page })
   }
 
   const ChangeRole = (e) => {
@@ -306,7 +306,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     }
 
     let sortBy = `${key} ${sorder}`;
-    let page = filters?.page;
+    let page = 1;
     filter({ sortBy, key, sorder, page })
   }
 

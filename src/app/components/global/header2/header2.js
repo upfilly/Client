@@ -129,9 +129,9 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
 
 
                             <div class="dropdown set_search_icons none_bx">
-                                <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {/* <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-search search_main" aria-hidden="true"></i>
-                                </a>
+                                </a> */}
 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item">

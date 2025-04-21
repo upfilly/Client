@@ -7,7 +7,6 @@ import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import { FaFilter } from "react-icons/fa";
-// import MultiSelectValue from '../components/common/MultiSelectValue';
 import SelectDropdown from '../components/common/SelectDropdown';
 import axios from 'axios';
 import { regionData } from '../campaign/AddEditUser/regionCountries';
@@ -277,14 +276,14 @@ const Html = ({
                                         <table className="table table-striped">
                                             <thead className='table_head'>
                                                 <tr className='heading_row'>
-                                                    <th scope="col" className="table_data" onClick={e => sorting('name')}>
+                                                    <th scope="col" className="table_data" onClick={e => sorting('campaign_name')}>
                                                         Campaign Name {filters?.sorder === "asc" ? "↑" : "↓"}
                                                     </th>
-                                                    <th scope="col" className="table_data" onClick={e => sorting('name')}>
+                                                    <th scope="col" className="table_data" onClick={e => sorting('brand_name')}>
                                                         Brand Name {filters?.sorder === "asc" ? "↑" : "↓"}
 
                                                     </th>
-                                                    <th scope="col" className="table_data" onClick={e => sorting('name')}>
+                                                    <th scope="col" className="table_data">
                                                         Affiliate Approval
                                                     </th>
                                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>
