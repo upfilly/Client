@@ -6,6 +6,7 @@ import Layout from "@/app/components/global/layout";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 import ApiClient from "@/methods/api/apiClient";
+import MyHoriBarChart from "../components/common/BarChart/Horizontalbarchart";
 import environment from "@/environment";
 import BarChart from "../components/common/BarChart/Barchart";
 import PieChart from "../components/common/PieChart/Piechat";
@@ -20,11 +21,33 @@ export default function Dashboard() {
   const [recentUser, setRecentUser] = useState<any>([]);
   const [CampaignRequest, setCampaignRequest] = useState<any>(null);
   const [analyticData, setAnalyticData] = useState<any>();
+  const [clicksAnalyticData, setClicksAnalyticData] = useState<any>();
+  const [transactionAnalyticData, setTransactionAnalyticData] = useState<any>();
   const [show, setShow] = useState(false);
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
 
-  console.log(user, "useruseruser")
+  console.log(analyticData,"asasas")
+  console.log(clicksAnalyticData,"clicksAnalyticData")
+  console.log(transactionAnalyticData,"transactionAnalyticData")
+
+
+  const chartData = {
+    headers: [
+      { month: 1 },
+      { month: 2 },
+      { month: 3 },
+      { month: 4 },
+      { month: 5 },
+    ],
+    data: [
+      { price: 50 },
+      { price: 65 },
+      { price: 80 },
+      { price: 70 },
+      { price: 90 },
+    ],
+  };
 
   useEffect(() => {
     if (
@@ -66,8 +89,8 @@ export default function Dashboard() {
     }
   }, []);
 
-  const getAnalyticsData = (p = {}) => {
-    let url = "analytics-sales";
+  const getSalesAnalyticsData = (p = {}) => {
+    let url = "findGraph";
     let filters;
     if (user?.role == "affiliate") {
       filters = { affiliate_id: user?.id };
@@ -77,6 +100,38 @@ export default function Dashboard() {
     ApiClient.get(url, filters).then((res) => {
       if (res) {
         setAnalyticData(res?.data);
+        // getData(res?.data?.id)
+      }
+    });
+  };
+
+  const getClicksData = (p = {}) => {
+    let url = "analytics-click";
+    let filters;
+    if (user?.role == "affiliate") {
+      filters = { affiliate_id: user?.id };
+    } else {
+      filters = { brand_id: user?.id };
+    }
+    ApiClient.get(url, filters).then((res) => {
+      if (res) {
+        setClicksAnalyticData(res?.data?.data);
+        // getData(res?.data?.id)
+      }
+    });
+  };
+
+  const getTransactionData = (p = {}) => {
+    let url = "transactionGraph";
+    let filters;
+    if (user?.role == "affiliate") {
+      filters = { affiliate_id: user?.id };
+    } else {
+      filters = { brand_id: user?.id };
+    }
+    ApiClient.get(url, filters).then((res) => {
+      if (res) {
+        setTransactionAnalyticData(res?.data);
         // getData(res?.data?.id)
       }
     });
@@ -93,7 +148,9 @@ export default function Dashboard() {
       ApiClient.get("total-campaigns", filter).then((data) => {
         setCampaignData(data);
       });
-      getAnalyticsData();
+      getClicksData()
+      getSalesAnalyticsData();
+      getTransactionData()
     }
   }, []);
 
@@ -373,51 +430,25 @@ export default function Dashboard() {
         <div className="mt-3">
           <div className="container-fluid ">
             <div className="row ">
-              <div className="col-sm-12 col-md-7 col-lg-7 col-xl-8  mb-3 ">
+              {/* <div className="col-sm-12 col-md-5 col-lg-5 col-xl-4   mb-3">
+                <div className="bgDiv d-flex"> */}
+                  {" "}
+                 {analyticData && clicksAnalyticData && transactionAnalyticData && <MyHoriBarChart sales={analyticData} clicks={clicksAnalyticData} transaction={transactionAnalyticData}/>}
+                  {/* <PieChart data={analyticData?.data?.[0]} /> */}
+                {/* </div>
+              </div> */}
+              {/* <div className="col-sm-12 col-md-7 col-lg-7 col-xl-8  mb-3 ">
                 <div className="bgDiv p-2">
                   {" "}
                   <BarChart data={analyticData?.data?.[0]} />
                 </div>
-                {/* <img className='w-100' src='/assets/img/yeks.png' alt=''></img> */}
               </div>
               <div className="col-sm-12 col-md-5 col-lg-5 col-xl-4   mb-3">
                 <div className="bgDiv d-flex">
                   {" "}
                   <PieChart data={analyticData?.data?.[0]} />
                 </div>
-                {/* <div className='dispost'>
-              <div className='d-flex align-items-center flex-wrap justify-content-between'>
-                <p className='tives mb-0'>Dispositives</p>
-                <i className="fa fa-chevron-right awes" aria-hidden="true"></i>
-
-              </div>
-              <div className='text-center'>
-                <img className='pro-bar' src='/assets/img/progresser.png' alt=''></img>
-              </div>
-              <div className='row mx-auto mt-3'>
-                <div className='col-md-6 '>
-                  <p className='tebs-t'><i className="fa fa-circle aas mr-2" aria-hidden="true"></i>
-                    Desktop
-                  </p>
-                </div>
-                <div className='col-md-6 '>
-                  <p className='tebs-t'><i className="fa fa-circle yell mr-2" aria-hidden="true"></i>
-                    Android
-                  </p>
-                </div>
-                <div className='col-md-6'>
-                  <p className='tebs-t'><i className="fa fa-circle blu mr-2" aria-hidden="true"></i>
-                    iPhone
-                  </p>
-                </div>
-                <div className='col-md-6'>
-                  <p className='tebs-t'><i className="fa fa-circle pik mr-2" aria-hidden="true"></i>
-                    Tablet
-                  </p>
-                </div>
-              </div>
-            </div> */}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
