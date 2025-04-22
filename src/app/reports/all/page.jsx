@@ -72,7 +72,8 @@ export default function AnalyticsDashboard() {
 
     const convertedCurrency = (price) => {
         if (price && exchangeRate) {
-            return price * exchangeRate + " " + selectedCurrency
+            const totalCal = (price * exchangeRate).toFixed(2) + " " + selectedCurrency
+            return totalCal
         } else {
             return price
         }
@@ -292,7 +293,7 @@ export default function AnalyticsDashboard() {
                     </div>
 
 
-                    <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} convertedCurrency={convertedCurrency} />
+            <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} convertedCurrency={convertedCurrency} exchangeRate={exchangeRate}/>
                 </main>
             </div>
         </Layout>

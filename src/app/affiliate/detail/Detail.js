@@ -6,9 +6,7 @@ import '../style.scss';
 import methodModel from '@/methods/methods';
 import { useRouter, useParams } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
-import { Navbar, Dropdown, Button, Form, Col, Row, Modal, Accordion } from "react-bootstrap";
-
-
+import datepipeModel from '@/models/datepipemodel';
 
 const Detail = (p) => {
     const history = useRouter()
@@ -141,20 +139,6 @@ const Detail = (p) => {
                                         </div>
                                     </div>}
 
-
-                                    {data?.tax_detail && <div className='row align-items-center mb-3 mx-auto '>
-                                        <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
-                                            <div className='userdata'>
-                                                <p className='headmains'>Tax Details:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
-                                            <div className='name-dtls'>
-                                                {/* <p className='headsubs'>{data && methodModel.capitalizeFirstLetter(data?.tax_detail)}</p> */}
-                                            </div>
-                                        </div>
-                                    </div>}
-
                                     {data?.mobileNo && <div className='row align-items-center mb-3 mx-auto '>
                                         <div className='col-12 col-sm-12 col-md-3 col-lg-2'>
                                             <div className='userdata'>
@@ -239,7 +223,7 @@ const Detail = (p) => {
                                 </div>
                             </div>
 
-                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
+                            {/* <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 {<div className='billing_dtls'>
                                     <h6>Billing Detail</h6>
                                 </div>
@@ -283,9 +267,9 @@ const Detail = (p) => {
                                         </div>
                                     </div>
                                 </div>}
-                            </div>
+                            </div> */}
 
-                            <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
+                            {data?.tax_detail && <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3'>
                                 <div className='billing_dtls'>
                                     <h6>Tax Detail</h6>
                                 </div>
@@ -376,13 +360,13 @@ const Detail = (p) => {
                                     </div>
                                     <div className='col-12 col-sm-12 col-md-9 col-lg-10'>
                                         <div className='name-dtls'>
-                                            <p className='headsubs'>{data && data?.tax_detail?.signature_date}</p>
+                                            <p className='headsubs'>{data && datepipeModel.date(data?.tax_detail?.signature_date)}</p>
                                         </div>
                                     </div>
                                 </div>}
-                            </div>
+                            </div>}
 
-                            <div className='col-sm-12 col-md-12'>
+                            {/* <div className='col-sm-12 col-md-12'>
                                 <div className='fetch_data'>
                                     <div className='track_head' onClick={() => setShowStatus(!showStatus)}>
                                         <h4 > Track Affiliate Status</h4>
@@ -420,7 +404,7 @@ const Detail = (p) => {
                                             </div>
                                         </div>}</>}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

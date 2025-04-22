@@ -45,13 +45,30 @@ const Html = ({
     const [selectedCountries, setSelectedCountries] = useState([]);
     const [selectedCurrency, setSelectedCurrency] = useState('');
     const [exchangeRate, setExchangeRate] = useState(null);
-    const regions = [
-        { id: "Africa", name: "Africa" },
-        { id: "Asia", name: "Asia" },
-        { id: "Europe", name: "Europe" },
-        { id: "North America", name: "North America" },
-        { id: "Oceania", name: "Oceania" }
-    ];
+    const [expandedCategories, setExpandedCategories] = useState([]);
+    const [expandedSubCategories, setExpandedSubCategories] = useState([]);
+    const [expandedRegions, setExpandedRegions] = useState([]);
+
+    const toggleRegionExpand = (region) => {
+        setExpandedRegions((prev) =>
+            prev.includes(region)
+                ? prev.filter((r) => r !== region)
+                : [...prev, region]
+        );
+    };
+
+    const toggleCategory = (id) => {
+        setExpandedCategories(prev =>
+            prev.includes(id) ? prev.filter(cat => cat !== id) : [...prev, id]
+        );
+    };
+
+    const toggleSubCategory = (id) => {
+        setExpandedSubCategories(prev =>
+            prev.includes(id) ? prev.filter(cat => cat !== id) : [...prev, id]
+        );
+    };
+
 
     const handleRegionChange = (region) => {
         setSelectedRegion((prevState) =>
@@ -197,14 +214,15 @@ const Html = ({
 
     useEffect(() => {
         getData({
-            page: 1, region: selectedRegion?.map((dat) => dat).join(","),
+            page: 1,
+            region: selectedRegion?.map((dat) => dat).join(","),
             category_type: categoryType?.map((dat) => dat).join(","),
             category: selectedCategory?.map((dat) => dat).join(","),
             sub_category: selectedSubCategory?.map((dat) => dat).join(","),
             countries: selectedCountries?.map((dat) => dat).join(","),
             sub_child_category: selectedSubSubCategory?.map((dat) => dat).join(",")
         })
-    }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory, selectedRegion])
+    }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory, selectedRegion, selectedCountries])
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -475,259 +493,204 @@ const Html = ({
                                         <i data-bs-dismiss="modal" aria-label="Close" className="fa fa-times clse" aria-hidden="true"></i>
                                     </div>
                                     <div className="modal-body">
+                                        <div className="modal-footer gap-3">
+                                            <button type="button" className="btn btn-outline-secondary m-0" data-bs-dismiss="modal" onClick={reset}>Clear all Filter</button>
+                                        </div>
                                         <div className='height_fixed'>
-                                            {/* Category Type Filter */}
                                             <div className="accordion" id="accordionExample">
                                                 <div className="accordion-item">
-                                                    {/* <h2 className="accordion-header">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
-                                                            <b>Select Category Type</b>
-                                                            <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
-                                                        </button>
-                                                    </h2> */}
-                                                    {/* <div id="collapsebxone" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-                                                            <ul className="filter_ullist">
-                                                                {categoryTypes.map(category1 => (
-                                                                    <li key={category1.id}>
-                                                                        <div className="form-check">
-                                                                            <input
-                                                                                className="form-check-input"
-                                                                                type="checkbox"
-                                                                                id={category1.id}
-                                                                                name="categoryType"
-                                                                                value={category1.id}
-                                                                                checked={categoryType.includes(category1.id)}
-                                                                                onChange={() => handleCategoryTypeChange(category1.id)}
-                                                                            />
-                                                                            <label className="form-check-label" htmlFor={category1.id}>{category1.name}</label>
-                                                                        </div>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    </div> */}
                                                 </div>
                                             </div>
 
-                                            {/* Affiliate Category Filter */}
                                             <div className="accordion" id="accordionExample">
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header">
                                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
-                                                            <b>Select Category of Affiliate</b>
+                                                            <b>Select Category</b>
                                                             <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
                                                         </button>
                                                     </h2>
                                                     <div id="collapsebx1" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                                         <div className="accordion-body">
                                                             <ul className="filter_ullist">
-                                                                {category.map(category => (
-                                                                    <li key={category._id}>
-                                                                        <div className="form-check">
-                                                                            <input
-                                                                                className="form-check-input"
-                                                                                type="checkbox"
-                                                                                id={category._id}
-                                                                                name="category"
-                                                                                value={category._id}
-                                                                                checked={selectedCategory?.includes(category._id)}
-                                                                                onChange={() => handleCategoryChange(category)}
-                                                                            />
-                                                                            <label className="form-check-label" htmlFor={category._id}>{category.parent_cat_name}</label>
-                                                                        </div>
+                                                                {category.map(category => {
+                                                                    console.log(category, "klklklklk")
+                                                                    const isCategoryExpanded = expandedCategories.includes(category._id);
+                                                                    console.log(isCategoryExpanded, "klklkl")
+                                                                    return (
+                                                                        <li key={category._id}>
+                                                                            <div className="form-check d-flex justify-content-between align-items-center">
+                                                                                <div>
+                                                                                    <input
+                                                                                        className="form-check-input"
+                                                                                        type="checkbox"
+                                                                                        id={category._id}
+                                                                                        name="category"
+                                                                                        value={category._id}
+                                                                                        checked={selectedCategory?.includes(category._id)}
+                                                                                        onChange={() => handleCategoryChange(category)}
+                                                                                    />
+                                                                                    <label className="form-check-label" htmlFor={category._id}>
+                                                                                        {category.parent_cat_name}
+                                                                                    </label>
+                                                                                </div>
 
-                                                                        {selectedCategory?.includes(category._id) && (
-                                                                            <ul className="sub_ulbx">
-                                                                                {category.subCategories.map((subCategory) => (
-                                                                                    <li key={subCategory.id}>
-                                                                                        <div className="form-check">
-                                                                                            <input
-                                                                                                className="form-check-input"
-                                                                                                type="checkbox"
-                                                                                                id={subCategory.id}
-                                                                                                name="subCategory"
-                                                                                                value={subCategory.id}
-                                                                                                checked={selectedSubCategory?.includes(subCategory.id)}
-                                                                                                onChange={() => handleSubCategoryChange(subCategory)}
-                                                                                            />
-                                                                                            <label className="form-check-label" htmlFor={subCategory.id}>
-                                                                                                {subCategory.name}
-                                                                                            </label>
-                                                                                        </div>
+                                                                                {category.subCategories?.length > 0 && (
+                                                                                    <i
+                                                                                        className={`fa fa-angle-${isCategoryExpanded ? "down" : "right"} toggle-arrow`}
+                                                                                        onClick={() => toggleCategory(category._id)}
+                                                                                        style={{ cursor: "pointer" }}
+                                                                                    ></i>
+                                                                                )}
+                                                                            </div>
 
-                                                                                        {subCategory.subchildcategory && subCategory.subchildcategory.length > 0 && (
-                                                                                            <ul>
-                                                                                                {subCategory.subchildcategory.map((subSubCategory) => (
-                                                                                                    <li key={subSubCategory._id}>
-                                                                                                        <div className="form-check">
+                                                                            {isCategoryExpanded &&
+                                                                                // selectedCategory?.includes(category._id) && 
+                                                                                (
+                                                                                    <ul className="sub_ulbx">
+                                                                                        {category.subCategories.map((subCategory) => {
+                                                                                            const isSubExpanded = expandedSubCategories.includes(subCategory.id);
+                                                                                            return (
+                                                                                                <li key={subCategory.id}>
+                                                                                                    <div className="form-check d-flex justify-content-between align-items-center">
+                                                                                                        <div>
                                                                                                             <input
                                                                                                                 className="form-check-input"
                                                                                                                 type="checkbox"
-                                                                                                                id={subSubCategory._id}
-                                                                                                                name="subSubCategory"
-                                                                                                                value={subSubCategory._id}
-                                                                                                                checked={selectedSubSubCategory?.includes(subSubCategory._id)}
-                                                                                                                onChange={() => handleSubSubCategoryChange(subSubCategory)}
+                                                                                                                id={subCategory.id}
+                                                                                                                name="subCategory"
+                                                                                                                value={subCategory.id}
+                                                                                                                checked={selectedSubCategory?.includes(subCategory.id)}
+                                                                                                                onChange={() => handleSubCategoryChange(subCategory)}
                                                                                                             />
-                                                                                                            <label className="form-check-label" htmlFor={subSubCategory._id}>
-                                                                                                                {subSubCategory.name}
+                                                                                                            <label className="form-check-label" htmlFor={subCategory.id}>
+                                                                                                                {subCategory.name}
                                                                                                             </label>
                                                                                                         </div>
-                                                                                                    </li>
-                                                                                                ))}
-                                                                                            </ul>
-                                                                                        )}
-                                                                                    </li>
-                                                                                ))}
-                                                                            </ul>
-                                                                        )}
-                                                                    </li>
-                                                                ))}
+
+                                                                                                        {subCategory.subchildcategory?.length > 0 && (
+                                                                                                            <i
+                                                                                                                className={`fa fa-angle-${isSubExpanded ? "down" : "right"} toggle-arrow`}
+                                                                                                                onClick={() => toggleSubCategory(subCategory.id)}
+                                                                                                                style={{ cursor: "pointer" }}
+                                                                                                            ></i>
+                                                                                                        )}
+                                                                                                    </div>
+
+                                                                                                    {isSubExpanded && subCategory.subchildcategory?.length > 0 && (
+                                                                                                        <ul>
+                                                                                                            {subCategory.subchildcategory.map((subSubCategory) => (
+                                                                                                                <li key={subSubCategory._id}>
+                                                                                                                    <div className="form-check">
+                                                                                                                        <input
+                                                                                                                            className="form-check-input"
+                                                                                                                            type="checkbox"
+                                                                                                                            id={subSubCategory._id}
+                                                                                                                            name="subSubCategory"
+                                                                                                                            value={subSubCategory._id}
+                                                                                                                            checked={selectedSubSubCategory?.includes(subSubCategory._id)}
+                                                                                                                            onChange={() => handleSubSubCategoryChange(subSubCategory)}
+                                                                                                                        />
+                                                                                                                        <label className="form-check-label" htmlFor={subSubCategory._id}>
+                                                                                                                            {subSubCategory.name}
+                                                                                                                        </label>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                            ))}
+                                                                                                        </ul>
+                                                                                                    )}
+                                                                                                </li>
+                                                                                            );
+                                                                                        })}
+                                                                                    </ul>
+                                                                                )}
+                                                                        </li>
+                                                                    );
+                                                                })}
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div className="accordion" id="accordionExample">
+                                                    <div className="accordion-item">
+                                                        <h2 className="accordion-header">
+                                                            <button
+                                                                className="accordion-button"
+                                                                type="button"
+                                                                data-bs-toggle="collapse"
+                                                                data-bs-target="#collapsebxRegionCountry"
+                                                                aria-expanded="true"
+                                                                aria-controls="collapsebxRegionCountry">
+                                                                <b>Select Region & Country</b>
+                                                                <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapsebxRegionCountry" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                                            <div className="accordion-body">
+                                                                <ul className="filter_ullist">
+                                                                    <ul className="filter_ullist">
+                                                                        {Object.keys(regionData).map((region) => (
+                                                                            <li key={region}>
+                                                                                <div className="form-check d-flex justify-content-between align-items-center">
+                                                                                    <div>
+                                                                                        <input
+                                                                                            className="form-check-input"
+                                                                                            type="checkbox"
+                                                                                            id={region}
+                                                                                            value={region}
+                                                                                            checked={selectedRegion?.includes(region)}
+                                                                                            onChange={() => handleRegionChange(region)}
+                                                                                        />
+                                                                                        <label className="form-check-label ms-2" htmlFor={region}>
+                                                                                            <b>{region}</b>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <i
+                                                                                        className={`fa fa-angle-${expandedRegions.includes(region) ? 'down' : 'right'} cursor-pointer`}
+                                                                                        onClick={() => toggleRegionExpand(region)}
+                                                                                        aria-hidden="true"
+                                                                                    ></i>
+                                                                                </div>
+
+                                                                                {expandedRegions.includes(region) && (
+                                                                                    <ul className="filter_ullist ms-4">
+                                                                                        {regionData[region].map((country) => (
+                                                                                            <li key={country}>
+                                                                                                <div className="form-check">
+                                                                                                    <input
+                                                                                                        className="form-check-input"
+                                                                                                        type="checkbox"
+                                                                                                        id={country}
+                                                                                                        name="country"
+                                                                                                        value={country}
+                                                                                                        checked={selectedCountries?.includes(country)}
+                                                                                                        onChange={() => handleCountryChange(country)}
+                                                                                                    />
+                                                                                                    <label className="form-check-label" htmlFor={country}>
+                                                                                                        {country}
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        ))}
+                                                                                    </ul>
+                                                                                )}
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-
-                                            {/* <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxRegion" aria-expanded="true" aria-controls="collapsebxRegion">
-                                                            <b>Select Region</b>
-                                                            <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapsebxRegion" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-                                                            <ul className="filter_ullist">
-                                                                {regions.map(region => (
-                                                                    <li key={region.id}>
-                                                                        <div className="form-check">
-                                                                            <input
-                                                                                className="form-check-input"
-                                                                                type="checkbox"
-                                                                                id={region.id}
-                                                                                name="region"
-                                                                                value={region.id}
-                                                                                checked={selectedRegion?.includes(region.id)}
-                                                                                onChange={() => handleRegionChange(region)}
-                                                                            />
-                                                                            <label className="form-check-label" htmlFor={region.id}>{region.name}</label>
-                                                                        </div>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxRegion" aria-expanded="true" aria-controls="collapsebxRegion">
-                                                            <b>Select Country</b>
-                                                            <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapsebxRegion" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body pading">
-                                                            <ul className="filter_ullist">
-
-                                                                <MultiSelectValue
-                                                                    className="select-c"
-                                                                    id="subSubCategoryDropdown"
-                                                                    displayValue="label"
-                                                                    placeholder="Select Country"
-                                                                    intialValue={selectedCountries}
-                                                                    result={e => {
-                                                                        setSelectedCountries(e.value);
-                                                                        // fetchCountriesByRegions(e.value)
-                                                                    }}
-                                                                    options={countries}
-                                                                />
-
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> */}
-
-                                            {/* Unified Region and Country Filter */}
-                                            <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button
-                                                            className="accordion-button"
-                                                            type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#collapsebxRegionCountry"
-                                                            aria-expanded="true"
-                                                            aria-controls="collapsebxRegionCountry">
-                                                            <b>Select Region & Country</b>
-                                                            <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapsebxRegionCountry" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                                        <div className="accordion-body">
-                                                            <ul className="filter_ullist">
-                                                                {/* Loop through each region */}
-                                                                {Object.keys(regionData).map((region) => (
-                                                                    <li key={region}>
-                                                                        <div className="form-check">
-                                                                            {/* Region Checkbox */}
-                                                                            <input
-                                                                                className="form-check-input"
-                                                                                type="checkbox"
-                                                                                id={region}
-                                                                                value={region}
-                                                                                checked={selectedRegion?.includes(region)}
-                                                                                onChange={() => handleRegionChange(region)}
-                                                                            />
-                                                                            <label className="form-check-label" htmlFor={region}>
-                                                                                <b>{region}</b>
-                                                                            </label>
-                                                                        </div>
-                                                                        {selectedRegion?.includes(region) && (
-                                                                            <ul className="filter_ullist">
-                                                                                {regionData[region].map((country) => (
-                                                                                    <li key={country}>
-                                                                                        <div className="form-check ml-3">
-                                                                                            <input
-                                                                                                className="form-check-input"
-                                                                                                type="checkbox"
-                                                                                                id={country}
-                                                                                                name="country"
-                                                                                                value={country}
-                                                                                                checked={selectedCountries?.includes(country)}
-                                                                                                onChange={() => handleCountryChange(country)}
-                                                                                            />
-                                                                                            <label className="form-check-label" htmlFor={country}>
-                                                                                                {country}
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                ))}
-                                                                            </ul>
-                                                                        )}
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                         </div>
-                                    </div>
-                                    <div className="modal-footer gap-3">
-                                        <button type="button" className="btn btn-outline-secondary m-0" data-bs-dismiss="modal" onClick={reset}>Clear all Filter</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>

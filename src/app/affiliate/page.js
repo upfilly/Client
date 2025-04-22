@@ -74,6 +74,24 @@ export default function affilate() {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
+  const [expandedSubCategories, setExpandedSubCategories] = useState([]);
+  const [expandedCategories, setExpandedCategories] = useState([]);
+
+  const toggleCategoryExpand = (categoryId) => {
+    setExpandedCategories(prev =>
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const toggleSubCategoryExpand = (subCategoryId) => {
+    setExpandedSubCategories(prev =>
+      prev.includes(subCategoryId)
+        ? prev.filter(id => id !== subCategoryId)
+        : [...prev, subCategoryId]
+    );
+  };
 
   const handleCategoryTypeChange = (id) => {
     setCategoryType(prev =>
@@ -453,40 +471,60 @@ export default function affilate() {
                                 <ul className="filter_ullist">
                                   {category.map(category => (
                                     <li key={category._id}>
-                                      <div className="form-check">
-                                        <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          id={category._id}
-                                          name="category"
-                                          value={category._id}
-                                          checked={selectedCategory?.includes(category._id)}
-                                          onChange={() => handleCategoryChange(category)}
-                                        />
-                                        <label className="form-check-label" htmlFor={category._id}>{category.parent_cat_name}</label>
+                                      <div className="form-check d-flex justify-content-between align-items-center">
+                                        <div>
+                                          <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id={category._id}
+                                            name="category"
+                                            value={category._id}
+                                            checked={selectedCategory?.includes(category._id)}
+                                            onChange={() => handleCategoryChange(category)}
+                                          />
+                                          <label className="form-check-label ms-2" htmlFor={category._id}>
+                                            {category.parent_cat_name}
+                                          </label>
+                                        </div>
+                                        {category.subCategories?.length > 0 && (
+                                          <i
+                                            className={`fa fa-angle-${expandedCategories.includes(category._id) ? 'down' : 'right'} cursor-pointer`}
+                                            onClick={() => toggleCategoryExpand(category._id)}
+                                            aria-hidden="true"
+                                          ></i>
+                                        )}
                                       </div>
 
-                                      {selectedCategory?.includes(category._id) && (
-                                        <ul className="sub_ulbx">
+                                      {expandedCategories.includes(category._id) && (
+                                        <ul className="sub_ulbx ms-4">
                                           {category.subCategories.map((subCategory) => (
                                             <li key={subCategory.id}>
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id={subCategory.id}
-                                                  name="subCategory"
-                                                  value={subCategory.id}
-                                                  checked={selectedSubCategory?.includes(subCategory.id)}
-                                                  onChange={() => handleSubCategoryChange(subCategory)}
-                                                />
-                                                <label className="form-check-label" htmlFor={subCategory.id}>
-                                                  {subCategory.name}
-                                                </label>
+                                              <div className="form-check d-flex justify-content-between align-items-center">
+                                                <div>
+                                                  <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={subCategory.id}
+                                                    name="subCategory"
+                                                    value={subCategory.id}
+                                                    checked={selectedSubCategory?.includes(subCategory.id)}
+                                                    onChange={() => handleSubCategoryChange(subCategory)}
+                                                  />
+                                                  <label className="form-check-label ms-2" htmlFor={subCategory.id}>
+                                                    {subCategory.name}
+                                                  </label>
+                                                </div>
+                                                {subCategory.subchildcategory?.length > 0 && (
+                                                  <i
+                                                    className={`fa fa-angle-${expandedSubCategories.includes(subCategory.id) ? 'down' : 'right'} cursor-pointer`}
+                                                    onClick={() => toggleSubCategoryExpand(subCategory.id)}
+                                                    aria-hidden="true"
+                                                  ></i>
+                                                )}
                                               </div>
 
-                                              {subCategory.subchildcategory && subCategory.subchildcategory.length > 0 && (
-                                                <ul>
+                                              {expandedSubCategories.includes(subCategory.id) && subCategory.subchildcategory?.length > 0 && (
+                                                <ul className="ms-4">
                                                   {subCategory.subchildcategory.map((subSubCategory) => (
                                                     <li key={subSubCategory._id}>
                                                       <div className="form-check">
@@ -511,30 +549,9 @@ export default function affilate() {
                                           ))}
                                         </ul>
                                       )}
-
-
-                                      {/* {selectedCategory?.includes(category._id) && (
-                                        <ul className='filter_ullist'>
-                                          {selectedSubCategory.subchildcategory.map(subSubCategory => (
-                                            <li key={subSubCategory._id}>
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id={subSubCategory._id}
-                                                  name="subSubCategory"
-                                                  value={subSubCategory._id}
-                                                  checked={selectedSubSubCategory?.includes(subSubCategory._id)}
-                                                  onChange={() => handleSubSubCategoryChange(subSubCategory)}
-                                                />
-                                                <label className="form-check-label" htmlFor={subSubCategory._id}>{subSubCategory.name}</label>
-                                              </div>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      )} */}
                                     </li>
                                   ))}
+
                                 </ul>
                               </div>
                             </div>
@@ -555,11 +572,12 @@ export default function affilate() {
                   <div className='filter-opt'>
                     <button className='set-filter' type="button" class="set-filter abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
                   </div>
-                  <div class="">
-                    <SelectDropdown                                                     theme='search'
+                  <div class="w-25">
+                    <SelectDropdown theme='search'
                       id="statusDropdown"
                       displayValue="name"
-                      placeholder="All Status"
+                      placeholder="All"
+                      className='mt-2 '
                       intialValue={filters.invite_status}
                       result={e => { ChangeStatus(e.value) }}
                       options={[
@@ -800,7 +818,7 @@ export default function affilate() {
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select Campaign</Form.Label>
-                  <SelectDropdown                                                     theme='search'
+                  <SelectDropdown theme='search'
                     id="statusDropdown"
                     className="w-100"
                     displayValue="name"
@@ -886,7 +904,7 @@ export default function affilate() {
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column  width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Select group</Form.Label>
-                  <SelectDropdown                                                     theme='search'
+                  <SelectDropdown theme='search'
                     id="statusDropdown"
                     className="w-100"
                     displayValue="group_name"

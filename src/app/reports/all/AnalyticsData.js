@@ -17,7 +17,7 @@ const CustomCard = ({ title, children, isExpanded, onExpand }) => (
   </div>
 );
 
-const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurrency}) => {
+const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurrency,exchangeRate}) => {
   const { selection1, selection2 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
 
@@ -126,11 +126,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
       formatter: function (params) {
         let tooltipContent = '';
         params.forEach(item => {
-          const date = allDates1[item.dataIndex];  // Get the date based on dataIndex
+          const date = allDates1[item.dataIndex];
           const value1 = item.data;
           const value2 = params[1]?.data;
           const percentageDifference = calculatePercentageDifference(value1, value2);
-          tooltipContent += `<div>${date}: $${convertedCurrency(value1)} (${percentageDifference})</div>`;
+          tooltipContent += `<div>${date}: ${!exchangeRate ? `$${value1}` :`${convertedCurrency(value1)}`} (${percentageDifference})</div>`;
         });
         return tooltipContent;
       },
