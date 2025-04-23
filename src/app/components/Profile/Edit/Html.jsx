@@ -43,10 +43,106 @@ const Html = ({ user,
   history }) => {
   const [inputFocused, setInputFocused] = useState(false)
   const [categories, setCategories] = useState([]);
-  const categoryTypes = [
-    { id: 'promotional_models', name: 'Promotional Models' },
-    { id: 'property_types', name: 'Property Types' },
-    { id: 'advertiser_categories', name: 'Advertiser Categories' },
+  const allTimeZone = [
+    { "name": "Pacific/Midway", "id": "Pacific/Midway" },
+    { "name": "US/Samoa", "id": "US/Samoa" },
+    { "name": "US/Hawaii", "id": "US/Hawaii" },
+    { "name": "US/Alaska", "id": "US/Alaska" },
+    { "name": "US/Pacific", "id": "US/Pacific" },
+    { "name": "America/Tijuana", "id": "America/Tijuana" },
+    { "name": "US/Arizona", "id": "US/Arizona" },
+    { "name": "US/Mountain", "id": "US/Mountain" },
+    { "name": "America/Chihuahua", "id": "America/Chihuahua" },
+    { "name": "America/Mazatlan", "id": "America/Mazatlan" },
+    { "name": "America/Mexico_City", "id": "America/Mexico_City" },
+    { "name": "America/Monterrey", "id": "America/Monterrey" },
+    { "name": "Canada/Saskatchewan", "id": "Canada/Saskatchewan" },
+    { "name": "US/Central", "id": "US/Central" },
+    { "name": "US/Eastern", "id": "US/Eastern" },
+    { "name": "US/East-Indiana", "id": "US/East-Indiana" },
+    { "name": "America/Bogota", "id": "America/Bogota" },
+    { "name": "America/Lima", "id": "America/Lima" },
+    { "name": "America/Caracas", "id": "America/Caracas" },
+    { "name": "Canada/Atlantic", "id": "Canada/Atlantic" },
+    { "name": "America/La_Paz", "id": "America/La_Paz" },
+    { "name": "America/Santiago", "id": "America/Santiago" },
+    { "name": "Canada/Newfoundland", "id": "Canada/Newfoundland" },
+    { "name": "America/Buenos_Aires", "id": "America/Buenos_Aires" },
+    { "name": "Greenland", "id": "Greenland" },
+    { "name": "Atlantic/Stanley", "id": "Atlantic/Stanley" },
+    { "name": "Atlantic/Azores", "id": "Atlantic/Azores" },
+    { "name": "Atlantic/Cape_Verde", "id": "Atlantic/Cape_Verde" },
+    { "name": "Africa/Casablanca", "id": "Africa/Casablanca" },
+    { "name": "Europe/Dublin", "id": "Europe/Dublin" },
+    { "name": "Europe/Lisbon", "id": "Europe/Lisbon" },
+    { "name": "Europe/London", "id": "Europe/London" },
+    { "name": "Africa/Monrovia", "id": "Africa/Monrovia" },
+    { "name": "Europe/Amsterdam", "id": "Europe/Amsterdam" },
+    { "name": "Europe/Belgrade", "id": "Europe/Belgrade" },
+    { "name": "Europe/Berlin", "id": "Europe/Berlin" },
+    { "name": "Europe/Bratislava", "id": "Europe/Bratislava" },
+    { "name": "Europe/Brussels", "id": "Europe/Brussels" },
+    { "name": "Europe/Budapest", "id": "Europe/Budapest" },
+    { "name": "Europe/Copenhagen", "id": "Europe/Copenhagen" },
+    { "name": "Europe/Ljubljana", "id": "Europe/Ljubljana" },
+    { "name": "Europe/Madrid", "id": "Europe/Madrid" },
+    { "name": "Europe/Paris", "id": "Europe/Paris" },
+    { "name": "Europe/Prague", "id": "Europe/Prague" },
+    { "name": "Europe/Rome", "id": "Europe/Rome" },
+    { "name": "Europe/Sarajevo", "id": "Europe/Sarajevo" },
+    { "name": "Europe/Skopje", "id": "Europe/Skopje" },
+    { "name": "Europe/Stockholm", "id": "Europe/Stockholm" },
+    { "name": "Europe/Vienna", "id": "Europe/Vienna" },
+    { "name": "Europe/Warsaw", "id": "Europe/Warsaw" },
+    { "name": "Europe/Zagreb", "id": "Europe/Zagreb" },
+    { "name": "Europe/Athens", "id": "Europe/Athens" },
+    { "name": "Europe/Bucharest", "id": "Europe/Bucharest" },
+    { "name": "Africa/Cairo", "id": "Africa/Cairo" },
+    { "name": "Africa/Harare", "id": "Africa/Harare" },
+    { "name": "Europe/Helsinki", "id": "Europe/Helsinki" },
+    { "name": "Europe/Istanbul", "id": "Europe/Istanbul" },
+    { "name": "Asia/Jerusalem", "id": "Asia/Jerusalem" },
+    { "name": "Europe/Kiev", "id": "Europe/Kiev" },
+    { "name": "Europe/Minsk", "id": "Europe/Minsk" },
+    { "name": "Europe/Moscow", "id": "Europe/Moscow" },
+    { "name": "Asia/Baghdad", "id": "Asia/Baghdad" },
+    { "name": "Asia/Kuwait", "id": "Asia/Kuwait" },
+    { "name": "Africa/Nairobi", "id": "Africa/Nairobi" },
+    { "name": "Asia/Riyadh", "id": "Asia/Riyadh" },
+    { "name": "Europe/Volgograd", "id": "Europe/Volgograd" },
+    { "name": "Asia/Tehran", "id": "Asia/Tehran" },
+    { "name": "Asia/Dubai", "id": "Asia/Dubai" },
+    { "name": "Asia/Baku", "id": "Asia/Baku" },
+    { "name": "Asia/Yerevan", "id": "Asia/Yerevan" },
+    { "name": "Asia/Kabul", "id": "Asia/Kabul" },
+    { "name": "Asia/Yekaterinburg", "id": "Asia/Yekaterinburg" },
+    { "name": "Asia/Tashkent", "id": "Asia/Tashkent" },
+    { "name": "Asia/Karachi", "id": "Asia/Karachi" },
+    { "name": "Asia/Calcutta", "id": "Asia/Calcutta" },
+    { "name": "Asia/Kolkata", "id": "Asia/Kolkata" },
+    { "name": "Asia/Kathmandu", "id": "Asia/Kathmandu" },
+    { "name": "Asia/Novosibirsk", "id": "Asia/Novosibirsk" },
+    { "name": "Asia/Rangoon", "id": "Asia/Rangoon" },
+    { "name": "Asia/Bangkok", "id": "Asia/Bangkok" },
+    { "name": "Asia/Krasnoyarsk", "id": "Asia/Krasnoyarsk" },
+    { "name": "Asia/Hong_Kong", "id": "Asia/Hong_Kong" },
+    { "name": "Asia/Irkutsk", "id": "Asia/Irkutsk" },
+    { "name": "Australia/Perth", "id": "Australia/Perth" },
+    { "name": "Asia/Kuala_Lumpur", "id": "Asia/Kuala_Lumpur" },
+    { "name": "Asia/Singapore", "id": "Asia/Singapore" },
+    { "name": "Asia/Taipei", "id": "Asia/Taipei" },
+    { "name": "Australia/Adelaide", "id": "Australia/Adelaide" },
+    { "name": "Australia/Darwin", "id": "Australia/Darwin" },
+    { "name": "Asia/Yakutsk", "id": "Asia/Yakutsk" },
+    { "name": "Australia/Brisbane", "id": "Australia/Brisbane" },
+    { "name": "Australia/Hobart", "id": "Australia/Hobart" },
+    { "name": "Australia/Sydney", "id": "Australia/Sydney" },
+    { "name": "Pacific/Guam", "id": "Pacific/Guam" },
+    { "name": "Asia/Vladivostok", "id": "Asia/Vladivostok" },
+    { "name": "Pacific/Auckland", "id": "Pacific/Auckland" },
+    { "name": "Pacific/Fiji", "id": "Pacific/Fiji" },
+    { "name": "Asia/Kamchatka", "id": "Asia/Kamchatka" },
+    { "name": "Pacific/Tongatapu", "id": "Pacific/Tongatapu" }
   ]
   const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
   const [isOpen, setIsOpen] = useState(false);
@@ -241,7 +337,7 @@ const Html = ({ user,
                               <div className='dailCode phn-code'>
                                 <PhoneInput
                                   international
-                                  country="US"
+                                  country="us"
                                   defaultValue="+1"
                                   value={form?.dialCode}
                                   className="input_number"
@@ -274,7 +370,7 @@ const Html = ({ user,
                           <div className='form-group'>
                             <label>Gender<span className="star">*</span></label>
                             <div className="select_row">
-                              <SelectDropdown                                                     theme='search'
+                              <SelectDropdown theme='search'
                                 id="statusDropdown"
                                 className='gander_drop'
                                 displayValue="name"
@@ -302,6 +398,24 @@ const Html = ({ user,
                               value={form?.role}
                               disabled
                             />
+                          </div>
+                        </div>
+
+                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
+                          <div className='form-group'>
+                            <div className="select_drop ">
+                              <label>Timezone</label>
+                              <div className="select_row">
+                                <SelectDropdown theme='search'
+                                  id="statusDropdown"
+                                  displayValue="name"
+                                  placeholder="Select"
+                                  intialValue={form?.timezone}
+                                  result={e => setForm({ ...form, timezone: e.value })}
+                                  options={allTimeZone}
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
 
@@ -439,7 +553,7 @@ const Html = ({ user,
                               <div className="select_drop ">
                                 <label>Type</label>
                                 <div className="select_row">
-                                  <SelectDropdown                                                     theme='search'
+                                  <SelectDropdown theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="Select Type"

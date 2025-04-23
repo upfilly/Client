@@ -11,11 +11,13 @@ import environment from "@/environment";
 import BarChart from "../components/common/BarChart/Barchart";
 import PieChart from "../components/common/PieChart/Piechat";
 import { Modal, Button } from 'react-bootstrap';
+import loader from "@/methods/loader";
 
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false);
   const history = useRouter();
   const user: any = crendentialModel.getUser();
+  const [filter, setFilter] = useState('this_month')
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [campaignData, setCampaignData] = useState<any>(null);
   const [recentUser, setRecentUser] = useState<any>([]);
@@ -27,27 +29,10 @@ export default function Dashboard() {
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
 
-  console.log(analyticData,"asasas")
-  console.log(clicksAnalyticData,"clicksAnalyticData")
-  console.log(transactionAnalyticData,"transactionAnalyticData")
-
-
-  const chartData = {
-    headers: [
-      { month: 1 },
-      { month: 2 },
-      { month: 3 },
-      { month: 4 },
-      { month: 5 },
-    ],
-    data: [
-      { price: 50 },
-      { price: 65 },
-      { price: 80 },
-      { price: 70 },
-      { price: 90 },
-    ],
-  };
+  const handleFilterChange = (event: any) => {
+    const newFilter = event.target.value;
+    setFilter(newFilter);
+  }
 
   useEffect(() => {
     if (
@@ -59,6 +44,12 @@ export default function Dashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    getClicksData({ filter: filter })
+    getSalesAnalyticsData({ filter: filter });
+    getTransactionData({ filter: filter })
+  }, [filter]);
+
   //   useEffect(() => {
   //     if (user) {
   //       if ((user?.role == 'affiliate' && user?.account_id == '') || (user?.role == 'affiliate' && user?.tax_detail?.tax_classification == '')) {
@@ -67,9 +58,9 @@ export default function Dashboard() {
   //     }
   // }, [user])
 
-  const handleAddCampaignClick = () => {
-    history.push('campaign')
-  };
+  // const handleAddCampaignClick = () => {
+  //   history.push('campaign')
+  // };
 
   const navigateToSection = (data: any) => {
     history.push(data)
@@ -93,14 +84,16 @@ export default function Dashboard() {
     let url = "findGraph";
     let filters;
     if (user?.role == "affiliate") {
-      filters = { affiliate_id: user?.id };
+      filters = { affiliate_id: user?.id, ...p};
     } else {
-      filters = { brand_id: user?.id };
+      filters = { brand_id: user?.id, ...p};
     }
+    loader(true)
     ApiClient.get(url, filters).then((res) => {
       if (res) {
         setAnalyticData(res?.data);
         // getData(res?.data?.id)
+        loader(false)
       }
     });
   };
@@ -109,9 +102,9 @@ export default function Dashboard() {
     let url = "analytics-click";
     let filters;
     if (user?.role == "affiliate") {
-      filters = { affiliate_id: user?.id };
+      filters = { affiliate_id: user?.id,...p };
     } else {
-      filters = { brand_id: user?.id };
+      filters = { brand_id: user?.id,...p };
     }
     ApiClient.get(url, filters).then((res) => {
       if (res) {
@@ -125,9 +118,9 @@ export default function Dashboard() {
     let url = "transactionGraph";
     let filters;
     if (user?.role == "affiliate") {
-      filters = { affiliate_id: user?.id };
+      filters = { affiliate_id: user?.id,...p};
     } else {
-      filters = { brand_id: user?.id };
+      filters = { brand_id: user?.id,...p};
     }
     ApiClient.get(url, filters).then((res) => {
       if (res) {
@@ -172,7 +165,7 @@ export default function Dashboard() {
     if (user) {
       ApiClient.get('user/detail', { id: user.id }).then(res => {
         if (res.success) {
-          if(res?.data?.total_campaign == 0){
+          if (res?.data?.total_campaign == 0) {
             setShow(true)
           }
           let data = { ...user, ...res.data }
@@ -429,136 +422,31 @@ export default function Dashboard() {
         </div>
         <div className="mt-3">
           <div className="container-fluid ">
-            <div className="row ">
-              {/* <div className="col-sm-12 col-md-5 col-lg-5 col-xl-4   mb-3">
-                <div className="bgDiv d-flex"> */}
-                  {" "}
-                 {analyticData && clicksAnalyticData && transactionAnalyticData && <MyHoriBarChart sales={analyticData} clicks={clicksAnalyticData} transaction={transactionAnalyticData}/>}
-                  {/* <PieChart data={analyticData?.data?.[0]} /> */}
-                {/* </div>
-              </div> */}
-              {/* <div className="col-sm-12 col-md-7 col-lg-7 col-xl-8  mb-3 ">
-                <div className="bgDiv p-2">
-                  {" "}
-                  <BarChart data={analyticData?.data?.[0]} />
-                </div>
+            <div className="row mb-3 justify-content-end">
+              <div className="col-auto">
+                <select className="form-select" value={filter} onChange={handleFilterChange}>
+                  <option value="this_month">This Month</option>
+                  <option value="last_month">Last Month</option>
+                  <option value="this_year">This Year</option>
+                  <option value="last_year">Last Year</option>
+                </select>
               </div>
-              <div className="col-sm-12 col-md-5 col-lg-5 col-xl-4   mb-3">
-                <div className="bgDiv d-flex">
-                  {" "}
-                  <PieChart data={analyticData?.data?.[0]} />
-                </div>
-              </div> */}
+            </div>
+            <div className="row ">
+              {analyticData && clicksAnalyticData && transactionAnalyticData && (
+                <MyHoriBarChart
+                  sales={analyticData}
+                  clicks={clicksAnalyticData}
+                  transaction={transactionAnalyticData}
+                />
+              )}
             </div>
           </div>
         </div>
 
         {user.role == "brand" && (
           <div className="row mt-3 mx-0">
-            {/* <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-              <div className="recent-sales">
-                <div className="d-flex align-items-center flex-wrap justify-content-between">
-                  <p className="tives mb-0">Recent Sales</p>
-                  <i
-                    className="fa fa-chevron-right awes"
-                    aria-hidden="true"
-                  ></i>
-                </div>
-                <ul className="sales-listing">
-                  <li>
-                    <div className="d-flex flex-wrap  align-items-center item-name">
-                      <img
-                        src="/assets/img/person.jpg"
-                        className="dashboard_image"
-                      />
-                      <p className="mb-0">Product Item Name</p>
-                    </div>
-
-                    <div className="d-flex align-items-center flex-wrap item-status">
-                      <p className="light-badge">Confirmed</p>
-                      <i
-                        className="fa fa-chevron-right "
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="d-flex align-items-center flex-wrap item-name">
-                      <img
-                        src="/assets/img/person.jpg"
-                        className="dashboard_image"
-                      />
-                      <p className="mb-0">Product Item Name</p>
-                    </div>
-
-                    <div className="d-flex align-items-center flex-wrap item-status">
-                      <p className="light-badge">Confirmed</p>
-                      <i
-                        className="fa fa-chevron-right "
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="d-flex align-items-center flex-wrap item-name">
-                      <img
-                        src="/assets/img/person.jpg"
-                        className="dashboard_image"
-                      />
-                      <p className="mb-0">Product Item Name</p>
-                    </div>
-
-                    <div className="d-flex align-items-center flex-wrap item-status">
-                      <p className="yellow-badge">Payment Pending</p>
-                      <i
-                        className="fa fa-chevron-right "
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="d-flex align-items-center flex-wrap item-name">
-                      <img
-                        src="/assets/img/person.jpg"
-                        className="dashboard_image"
-                      />
-                      <p className="mb-0">Product Item Name</p>
-                    </div>
-
-                    <div className="d-flex align-items-center flex-wrap item-status">
-                      <p className="yellow-badge">Payment Pending</p>
-                      <i
-                        className="fa fa-chevron-right "
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="d-flex align-items-center flex-wrap item-name">
-                      <img
-                        src="/assets/img/person.jpg"
-                        className="dashboard_image"
-                      />
-                      <p className="mb-0">Product Item Name</p>
-                    </div>
-
-                    <div className="d-flex align-items-center flex-wrap item-status">
-                      <p className="yellow-badge">Payment Pending</p>
-                      <i
-                        className="fa fa-chevron-right "
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
-
-            <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
+            <div className="col-sm-12">
               <div className="recent-sales active-users">
                 <div className="d-flex align-items-center flex-wrap justify-content-between">
                   <p className="tives mb-0">Recent Users</p>
