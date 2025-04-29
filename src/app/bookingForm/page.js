@@ -450,16 +450,18 @@ export default function BillingForm() {
                                   <p className='mb-0'>{itm.allowed_total_revenue}$</p>
                                 </div>
                               </div>
+                              <div>
                               {itm?.features?.map((feature) => (
-                                <li className='d-flex align-items-center' key={feature.id}>
+                                <li className='flexs' key={feature.id}>
                                   {itm.features?.[0]?.feature_name && <img
-                                    className='checkss'
+                                    className='checkss !mr-0'
                                     src='/assets/img/check.png'
                                     alt=''
                                   ></img>}
-                                  <p className='ipsi ml-2 mb-0'>{feature.feature_name}</p>
+                                  <p className='ipsi mb-0'>{feature.feature_name}</p>
                                 </li>
                               ))}
+                              </div>
                             </ul>
                             <div className='d-flex  align-items-center amt-desc'>
                               {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
