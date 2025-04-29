@@ -29,7 +29,7 @@ export default function Dashboard() {
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
 
-  const handleFilterChange = (e:any) => {
+  const handleFilterChange = (e: any) => {
     setFilter(e.target.value);
   };
 
@@ -83,9 +83,9 @@ export default function Dashboard() {
     let url = "findGraph";
     let filters;
     if (user?.role == "affiliate") {
-      filters = { affiliate_id: user?.id, ...p};
+      filters = { affiliate_id: user?.id, ...p };
     } else {
-      filters = { brand_id: user?.id, ...p};
+      filters = { brand_id: user?.id, ...p };
     }
     loader(true)
     ApiClient.get(url, filters).then((res) => {
@@ -101,9 +101,9 @@ export default function Dashboard() {
     let url = "analytics-click";
     let filters;
     if (user?.role == "affiliate") {
-      filters = { affiliate_id: user?.id,...p };
+      filters = { affiliate_id: user?.id, ...p };
     } else {
-      filters = { brand_id: user?.id,...p };
+      filters = { brand_id: user?.id, ...p };
     }
     ApiClient.get(url, filters).then((res) => {
       if (res) {
@@ -117,9 +117,9 @@ export default function Dashboard() {
     let url = "transactionGraph";
     let filters;
     if (user?.role == "affiliate") {
-      filters = { affiliate_id: user?.id,...p};
+      filters = { affiliate_id: user?.id, ...p };
     } else {
-      filters = { brand_id: user?.id,...p};
+      filters = { brand_id: user?.id, ...p };
     }
     ApiClient.get(url, filters).then((res) => {
       if (res) {
@@ -423,7 +423,7 @@ export default function Dashboard() {
           <div className="container-fluid">
             <div className="row mb-3 justify-content-end">
               <div className="col-auto">
-                <div className="btn-group" role="group" aria-label="Filter">
+                <div className="btn-group btnsgroup" role="group" aria-label="Filter">
                   <button
                     type="button"
                     className={`btn ${filter === "this_month" ? "primary12" : "btn-outline-primary"}`}
@@ -460,21 +460,25 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="row">
-              {analyticData && clicksAnalyticData && transactionAnalyticData && (
-                <MyHoriBarChart
-                  sales={analyticData}
-                  clicks={clicksAnalyticData}
-                  transaction={transactionAnalyticData}
-                />
-              )}
+              <div className="col-span-12">
+                <div className="whitemain">
+                  {analyticData && clicksAnalyticData && transactionAnalyticData && (
+                    <MyHoriBarChart
+                      sales={analyticData}
+                      clicks={clicksAnalyticData}
+                      transaction={transactionAnalyticData}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {user.role == "brand" && (
-          <div className="row mt-3 mx-0">
-            <div className="col-sm-12">
-              <div className="recent-sales active-users">
+          <div className="row mt-3  mx-0">
+            <div className="col-12">
+              <div className="recent-sales active-users h-auto">
                 <div className="d-flex align-items-center flex-wrap justify-content-between">
                   <p className="tives mb-0">Recent Users</p>
                   <i

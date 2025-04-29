@@ -135,7 +135,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
       },
       y: {
         title: {
-          display: true,
+          display: false,
           text: 'Month'
         }
       },
