@@ -213,7 +213,8 @@ const Coupons = () => {
         sorting={sorting}
         setFilter={setFilter}
         user={user}
-        statusChange={statusChange}   
+        statusChange={statusChange}
+        getData={getData}   
     />
     </>;
 };

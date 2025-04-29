@@ -26,7 +26,7 @@ const Html = ({
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
 
-    
+
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -34,14 +34,19 @@ const Html = ({
         }
     };
 
-    const permission=(p)=>{
+    const permission = (p) => {
         if (user && user?.permission_detail && p) {
             return user?.permission_detail[p]
-        }else{
+        } else {
             return false
         }
     }
-    
+
+    const handleCountChange = (count) => {
+        setFilter({ ...filters, count: count, page: 1 });
+        getData({ count: count, page: 1 });
+    };
+
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={user?.role == 'brand' ? "Sent Offers" : "Offer Requests"} filters={filters}>
             <div className='sidebar-left-content main_box'>
@@ -67,7 +72,7 @@ const Html = ({
                                     }} aria-hidden="true"></i>
                                 </div>
 
-                                <SelectDropdown                                                     theme='search'
+                                <SelectDropdown theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All Status"
@@ -105,100 +110,111 @@ const Html = ({
                     <div className='card-body'>
 
 
-                       <div className='table_section mt-0'>
-                       <div className="table-responsive ">
+                        <div className='table_section mt-0'>
+                            <div className="table-responsive ">
 
-<table className="table table-striped  ">
-    <thead className='table_head'>
-        <tr className='heading_row'>
-            <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affiliate Name"}</th>
-            <th scope="col" className='table_data' >Title</th>
-            <th scope="col" className='table_data' >Comment</th>
-            {user && user?.role == "brand" && <th scope="col" className='table_data' >Status</th>}
-            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-            <th scope="col" className='table_data'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {!loaging && data && data.map((itm, i) => {
-            return <tr className='data_row' key={i}>
-                <td className='table_dats' onClick={e => view(itm.id)}>
-                    <div className='user_detail'>
-                        <div className='user_name'>
-                            {user?.role == 'affiliate' ?
-                                <h4 className='user'>
-                                    {methodModel.capitalizeFirstLetter(itm.brand_name)}
-                                </h4>
-                                : <h4 className='user'>
-                                    {methodModel.capitalizeFirstLetter(itm.affiliate_name)}
-                                </h4>}
-                        </div>
-                    </div></td>
-                <td className='table_dats'>{itm?.product_name}</td>
-                <td className='table_dats'>{itm?.comments.slice(0, 40)}</td>
-                {user && user?.role == "brand" && <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>}
-                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
-                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
+                                <table className="table table-striped  ">
+                                    <thead className='table_head'>
+                                        <tr className='heading_row'>
+                                            <th scope="col" class="table_data" >{user?.role == 'affiliate' ? "Brand Name" : "Affiliate Name"}</th>
+                                            <th scope="col" className='table_data' >Title</th>
+                                            <th scope="col" className='table_data' >Comment</th>
+                                            {user && user?.role == "brand" && <th scope="col" className='table_data' >Status</th>}
+                                            <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                            <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                            <th scope="col" className='table_data'>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {!loaging && data && data.map((itm, i) => {
+                                            return <tr className='data_row' key={i}>
+                                                <td className='table_dats' onClick={e => view(itm.id)}>
+                                                    <div className='user_detail'>
+                                                        <div className='user_name'>
+                                                            {user?.role == 'affiliate' ?
+                                                                <h4 className='user'>
+                                                                    {methodModel.capitalizeFirstLetter(itm.brand_name)}
+                                                                </h4>
+                                                                : <h4 className='user'>
+                                                                    {methodModel.capitalizeFirstLetter(itm.affiliate_name)}
+                                                                </h4>}
+                                                        </div>
+                                                    </div></td>
+                                                <td className='table_dats'>{itm?.product_name}</td>
+                                                <td className='table_dats'>{itm?.comments.slice(0, 40)}</td>
+                                                {user && user?.role == "brand" && <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{itm?.status}</td>}
+                                                <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
+                                                <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
 
-                {<td className='table_dats d-flex '>
-                    {(user && user?.role == "affiliate" || permission("make_offer_edit")) && <>
-                        {itm?.status == 'pending' ? <div >
-                            <button onClick={() => {
-                                statusChange("accepted", itm?.id)
-                                Tracklogin(itm?.campaign_unique_id)
-                            }} className="btn btn-primary mr-2">
-                                <i className='fa fa-check'></i>
-                            </button>
-                            <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
-                                <i className='fa fa-times'></i>
-                            </button>
-                        </div> :
-                            itm?.status == 'rejected' ?
-                                <div className="btn btn-primary">Rejected</div> :
-                                <div className="btn btn-primary">Accepted</div>
-                        }
-                    </>}
-                    <>
-                        <span className='btn btn-primary ml-2'
-                            onClick={() => {
-                                history.push(`/chat`)
-                                localStorage.setItem("chatId", itm?.brand_id)
-                            }}>
-                            <i className='fa fa-comment-o'></i>
-                        </span>
-                    </>
+                                                {<td className='table_dats d-flex '>
+                                                    {(user && user?.role == "affiliate" || permission("make_offer_edit")) && <>
+                                                        {itm?.status == 'pending' ? <div >
+                                                            <button onClick={() => {
+                                                                statusChange("accepted", itm?.id)
+                                                                Tracklogin(itm?.campaign_unique_id)
+                                                            }} className="btn btn-primary mr-2">
+                                                                <i className='fa fa-check'></i>
+                                                            </button>
+                                                            <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
+                                                                <i className='fa fa-times'></i>
+                                                            </button>
+                                                        </div> :
+                                                            itm?.status == 'rejected' ?
+                                                                <div className="btn btn-primary">Rejected</div> :
+                                                                <div className="btn btn-primary">Accepted</div>
+                                                        }
+                                                    </>}
+                                                    <>
+                                                        <span className='btn btn-primary ml-2'
+                                                            onClick={() => {
+                                                                history.push(`/chat`)
+                                                                localStorage.setItem("chatId", itm?.brand_id)
+                                                            }}>
+                                                            <i className='fa fa-comment-o'></i>
+                                                        </span>
+                                                    </>
 
-                    {/* {itm?.status == 'accepted' &&
+                                                    {/* {itm?.status == 'accepted' &&
                 <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
                     Send Proposal
                 </button>} */}
 
-                </td>}
+                                                </td>}
 
-            </tr>
+                                            </tr>
 
-        })
-        }
-    </tbody>
-</table>
-{!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
+                                        })
+                                        }
+                                    </tbody>
+                                </table>
+                                {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
 
-</div>
-                       </div>
+                            </div>
+                        </div>
 
-                       
 
-                        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                            <span>Show {data?.length} from {total} campaignManagement</span>
+
+                        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                            <span>Show <select
+                                className="form-control"
+                                onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                value={filters.count}
+                            >
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                                <option value={150}>150</option>
+                                <option value={200}>200</option>
+                            </select> from {total} Users</span>
                             <ReactPaginate
                                 breakLabel="..."
                                 nextLabel="Next >"
                                 initialPage={filters?.page}
                                 onPageChange={pageChange}
                                 pageRangeDisplayed={2}
-                        marginPagesDisplayed={1}
-                        pageCount={Math.ceil(total / filters?.count)}
+                                marginPagesDisplayed={1}
+                                pageCount={Math.ceil(total / filters?.count)}
+                                // pageCount={2}
                                 previousLabel="< Previous"
                                 renderOnZeroPageCount={null}
                                 pageClassName={"pagination-item"}

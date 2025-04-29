@@ -11,11 +11,13 @@ import axios from 'axios';
 const Html = () => {
     const user = crendentialModel.getUser()
     const [url, setUrl] = useState('');
+    const [isSubmited, setSubmited] = useState(false);
     const [copied, setCopied] = useState(false);
     const [SelectDropdown, setSelectDropdown] = useState(true);
     const [newKey, setNewKey] = useState('');
     const [newLabel, setNewLabel] = useState('');
     const [showNewKeyForm, setShowNewKeyForm] = useState(false);
+    const [showCustomParameters, setShowCustomParameters] = useState(false);
     const [checkboxValues, setCheckboxValues] = useState([
         { id: "param", label: "param" },
         // { key: "affiliate_id", label: "Affiliate ID" },
@@ -53,16 +55,10 @@ const Html = () => {
         setSelectedValues(selectedOptions);
     };
 
-    // const getData = (p = {}) => {
-
-    //     let filter = {role: "affiliate",isDeleted: false}
-    //     let url = 'users/list'
-    //     ApiClient.get(url, filter).then(res => {
-    //         if (res.success) {
-    //             setBrandData(res?.data?.data);
-    //         }
-    //     })
-    // }
+    // Toggle function for custom parameters section
+    const toggleCustomParameters = () => {
+        setShowCustomParameters(!showCustomParameters);
+    };
 
     const getData = (p = {}) => {
         let filter = {brand_id:user?.id}
@@ -146,7 +142,7 @@ const Html = () => {
         if (urlData || url) {
             const data = await axios.post('https://api.t.ly/api/v1/link/shorten', { long_url: urlData || url }, {
                 headers: {
-                    'Authorization': 'Bearer dgZu0yi9QvaezlVsXrQkhcPy2ecxgXKZyrQrxdL9Avq4ZA0gAxHdU3QXmn98',
+                    'Authorization':'Bearer KAxgeQzaEgrANTAdKImU25lQVbGZ3rkJTZ0vlN35FXqksFm65E3suA9opwee',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -172,14 +168,18 @@ const Html = () => {
         ApiClient.get('get-affilaite-link').then((res) => {
             if (res?.success) {
                 console.log(res?.data, "res?.datares?.datares?.data")
-                setUrl(res?.data?.[0]?.link)
+                setUrl(res?.data?.link)
+                generateShortLink(res?.data?.link)
             }
             loader(false);
         });
     }, []);
 
     const handleSubmit = () => {
-
+        setSubmited(true)
+        if(!DestinationUrl){
+            return
+        }
         // if (hasBlankInput) {
         //     toast.error("Please fill in all required fields.");
         //     return;
@@ -218,6 +218,7 @@ const Html = () => {
         ApiClient.post('get-link', { "base_url": finalUrlString, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
+                setSubmited(false)
                 setUrl(res?.data);
                 generateShortLink(res?.data)
                 if (!SelectDropdown) {
@@ -277,72 +278,72 @@ const Html = () => {
                                             value={DestinationUrl}
                                             onChange={(e) => setDestinationUrl(e.target.value)}
                                         />
-                                        {selectedBrand && <span className="input-group-text  ">?fp_sid={selectedBrand}</span>}
                                     </div>
-                                    {/* {selectedBrand && (
-                                        <div className="invalid-feedback d-block">Destination url is Required</div>
-                                    )} */}
+                                    {(!DestinationUrl && isSubmited) && <div className="invalid-feedback d-block">Destination url is Required</div>}
                                 </div>
-                                {/* <div className='col-12 col-md-6'>
-                                    <div className='mb-3' >
-                                        <label className='mb-2' >Destination URL</label>
-                                        <input
-                                            type="text"
-                                            className='form-control'
-                                            placeholder="Enter your Url"
-                                            value={DestinationUrl}
-                                            onChange={(e) => setDestinationUrl(e.target.value)} />
-                                    {selectedBrand && <span className="input-group-text  ">? fp_sid:{selectedBrand}</span>}
+
+                                <div className='col-12 col-md-12 mb-3'>
+                                    {/* Show/Hide Custom Parameters Checkbox */}
+                                    <div className="form-check">
+                                        <input 
+                                            className="form-check-input" 
+                                            type="checkbox" 
+                                            id="showCustomParameters" 
+                                            checked={showCustomParameters}
+                                            onChange={toggleCustomParameters}
+                                        />
+                                        <label className="form-check-label" htmlFor="showCustomParameters">
+                                            Show Custom Parameters
+                                        </label>
                                     </div>
+                                </div>
 
-                                </div> */}
+                                {showCustomParameters && (
+                                    <div className='col-12 col-md-12'>
+                                        <div class="select_parabx mb-3" >
+                                            <div className='mb-3' >
+                                                <label className='mb-2'>Select Custom Parameters</label>
+                                                <MultiSelectValue
+                                                    id="statusDropdown"
+                                                    displayValue="label"
+                                                    intialValue={selectedValues}
+                                                    result={(e) => handleMultiSelectChange(e.value)}
+                                                    setInputValues={setInputValues}
+                                                    updateDictionary={updateDictionary}
+                                                    inputValues={inputValues}
+                                                    options={checkboxValues}
+                                                />
+                                            </div>
 
-                                <div className='col-12 col-md-12'>
-                                    <div class="select_parabx mb-3" >
-                                        <div className='mb-3' >
-                                            <label className='mb-2'>Select Custom Parameters</label>
-                                            <MultiSelectValue
-                                                id="statusDropdown"
-                                                displayValue="label"
-                                                intialValue={selectedValues}
-                                                result={(e) => handleMultiSelectChange(e.value)}
-                                                setInputValues={setInputValues}
-                                                updateDictionary={updateDictionary}
-                                                inputValues={inputValues}
-                                                options={checkboxValues}
-                                            />
+                                            <div className='addkey mt-3 mb-3 d-flex justify-content-end'>
+                                                <button className='btn btn-primary btn-sm' onClick={() => setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
+                                            </div>
+
                                         </div>
 
-                                        <div className='addkey mt-3 mb-3 d-flex justify-content-end'>
-                                            <button className='btn btn-primary btn-sm' onClick={() => setShowNewKeyForm(true)}><i className='fa fa-plus mr-1'></i>Add Key</button>
-                                        </div>
-
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-md-12 '>
-                                            <div className='row'>
-                                                {selectedValues.map((selected, index) => (
-                                                    <div className='col-12 col-sm-6 col-md-4 mb-3 ' key={index}>
-                                                        <p className='mb-0 labeltext'>{selected}:</p>
-                                                        <input
-                                                            type="text"
-                                                            className='form-control'
-                                                            placeholder={`Input value for ${selected}`}
-                                                            onChange={(e) => handleInputChange(selected, e.target.value)}
-                                                        />
-                                                    </div>
-                                                ))}
+                                        <div className='row'>
+                                            <div className='col-12 col-md-12 '>
+                                                <div className='row'>
+                                                    {selectedValues.map((selected, index) => (
+                                                        <div className='col-12 col-sm-6 col-md-4 mb-3 ' key={index}>
+                                                            <p className='mb-0 labeltext'>{selected}:</p>
+                                                            <input
+                                                                type="text"
+                                                                className='form-control'
+                                                                placeholder={`Input value for ${selected}`}
+                                                                onChange={(e) => handleInputChange(selected, e.target.value)}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-
+                                )}
                             </div>
 
                             <div className='text-end '>
-                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Add Data</button>
+                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Genrate URL</button>
                             </div>
 
                             <h6 className="link_default m-0"> Your Link :</h6>

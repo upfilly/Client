@@ -242,6 +242,7 @@ const Users = () => {
     statusChange={statusChange}
     sorting={sorting}
     sendProposal={sendProposal}
+    getData={getData}
   />
   </>;
 };

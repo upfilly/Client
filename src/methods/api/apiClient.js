@@ -27,13 +27,13 @@ const handleError = (err, hideError) => {
             // localStorage.removeItem("persist:admin-app")
             // localStorage.removeItem("token")
             localStorage.clear()
-            methodModel.route('/')
+            methodModel.route('/login')
         }
         message = err && err.error && err.error.message
         if (!message) message = err.message
         // if (!message) message = 'Server Error'
     }
-    if (!hideError) toast.error(message);
+    // if (!hideError) toast.error(message);
 }
 
 class ApiClient {

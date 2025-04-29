@@ -194,6 +194,7 @@ const Users = () => {
         sorting={sorting}
         setFilter={setFilter}
         user={user}
+        getData={getData}
         // statusChange={statusChange}
     />
     </>;
