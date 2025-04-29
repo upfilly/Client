@@ -26,7 +26,7 @@ export default function affilate() {
   const [associateId, setAssociateId] = useState("");
   const [calculatedAmount, setCalculatedAmount] = useState(100)
   const [upfillyAmount, setUpfillyAmount] = useState(100)
-  const [selectedCurrency, setSelectedCurrency] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [exchangeRate, setExchangeRate] = useState(null);
 
   const handleShow = (price, commission, commission_type, id) => {

@@ -42,7 +42,7 @@ export default function AnalyticsDashboard() {
     const [brands, setBrands] = useState();
     const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
     const [compDates, setCompDates] = useState([new Date(), new Date()]);
-    const [selectedCurrency, setSelectedCurrency] = useState('');
+    const [selectedCurrency, setSelectedCurrency] = useState('USD');
     const [exchangeRate, setExchangeRate] = useState(null);
     const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
 

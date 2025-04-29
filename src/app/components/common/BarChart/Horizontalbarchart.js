@@ -113,7 +113,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
         callbacks: {
           label: (context) => {
             let label = context.dataset.label || '';
-
+  
             if (label) {
               label += ': ';
             }
@@ -131,7 +131,13 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
         title: {
           display: true,
           text: 'Value'
-        }
+        },
+        ticks: {
+          callback: function (value) {
+            return value.toLocaleString()
+          },
+          stepSize: 5000,
+        },
       },
       y: {
         title: {
@@ -141,6 +147,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
       },
     },
   };
+  
 
   return <Bar data={{ labels: chartLabels, datasets: chartDatasets }} options={options} />;
 };
