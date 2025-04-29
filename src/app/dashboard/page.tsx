@@ -29,10 +29,9 @@ export default function Dashboard() {
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
 
-  const handleFilterChange = (event: any) => {
-    const newFilter = event.target.value;
-    setFilter(newFilter);
-  }
+  const handleFilterChange = (e:any) => {
+    setFilter(e.target.value);
+  };
 
   useEffect(() => {
     if (
@@ -421,18 +420,46 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="mt-3">
-          <div className="container-fluid ">
+          <div className="container-fluid">
             <div className="row mb-3 justify-content-end">
               <div className="col-auto">
-                <select className="form-select" value={filter} onChange={handleFilterChange}>
-                  <option value="this_month">This Month</option>
-                  <option value="last_month">Last Month</option>
-                  <option value="this_year">This Year</option>
-                  <option value="last_year">Last Year</option>
-                </select>
+                <div className="btn-group" role="group" aria-label="Filter">
+                  <button
+                    type="button"
+                    className={`btn ${filter === "this_month" ? "primary12" : "btn-outline-primary"}`}
+                    value="this_month"
+                    onClick={handleFilterChange}
+                  >
+                    This Month
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${filter === "last_month" ? "primary12" : "btn-outline-primary"}`}
+                    value="last_month"
+                    onClick={handleFilterChange}
+                  >
+                    Last Month
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${filter === "this_year" ? "primary12" : "btn-outline-primary"}`}
+                    value="this_year"
+                    onClick={handleFilterChange}
+                  >
+                    This Year
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${filter === "last_year" ? "primary12" : "btn-outline-primary"}`}
+                    value="last_year"
+                    onClick={handleFilterChange}
+                  >
+                    Last Year
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="row ">
+            <div className="row">
               {analyticData && clicksAnalyticData && transactionAnalyticData && (
                 <MyHoriBarChart
                   sales={analyticData}

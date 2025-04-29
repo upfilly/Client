@@ -240,7 +240,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                             options={EventType}
                                         />
                                     </div>
-                                    {submitted && !form?.event_type && <div className="invalid-feedback d-block">{errors?.event_type}</div>}
+                                    {(submitted && form?.event_type?.length == 0) && <div className="invalid-feedback d-block">{errors?.event_type}</div>}
                                 </div>
 
                                 <div className="col-md-6 mb-3">

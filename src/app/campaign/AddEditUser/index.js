@@ -53,13 +53,14 @@ const AddEditUser = () => {
         let formErrors = {};
         if (!form.name) formErrors.name = 'Name is required';
         if (!form.access_type) formErrors.access_type = 'Access Type is required';
-        if (!form.event_type || form.event_type.length === 0) formErrors.event_type = 'Event Type is required';
+        if (form.event_type.length == 0) formErrors.event_type = 'Event Type is required';
         if (form.event_type?.includes("lead") && !form.lead_amount) formErrors.lead_amount = 'Lead Amount is required';
         if (form.event_type?.includes("purchase") && !form.campaign_type) formErrors.campaign_type = 'Affiliate Approval is required';
         // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
         // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
         // if (!form.category_type) formErrors.category_type = 'Category Type is required';
         // if (!form.category) formErrors.category = 'Category is required';
+        if (!form?.campaign_type) formErrors.campaign_type = 'Campaign type is required';
         if (!form.description) formErrors.description = 'Description is required';
         if (selectedRegionItems?.regions.length == 0) formErrors.region = 'Country is required';
         if (selectedItems?.categories.length == 0) formErrors.categories = 'Categories is required';

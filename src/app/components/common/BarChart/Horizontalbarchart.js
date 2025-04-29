@@ -16,7 +16,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
   const salesData = sales.map(sale => ({
     totalAmount: sale.totalAmount,
     count: sale.count,
-    label: 'Sales',
+    label: 'Revenue',
     month: 1
   }));
 
@@ -54,7 +54,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
       };
     }
 
-    if (item.label === 'Sales') {
+    if (item.label === 'Revenue') {
       acc[month].salesTotalAmount += item.totalAmount;
       acc[month].salesCount += item.count;
     } else if (item.label === 'Clicks') {
@@ -77,7 +77,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
 
   const chartDatasets = [
     {
-      label: 'Sales',
+      label: 'Revenue',
       data: sortedGroupedData.map(item => item.salesTotalAmount),
       backgroundColor: 'rgba(75, 192, 192, 0.6)',
       borderColor: 'rgba(75, 192, 192, 1)',
