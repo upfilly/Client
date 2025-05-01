@@ -261,19 +261,13 @@ const UpFillyPage = () => {
           </div>
         </div> */}
 
-            <div className="row align-items-center flex-column-reverse flex-md-row">
-              <div className="col-md-6 platform-wrapper">
-                <h1>
-                  Usable Upfilly
+            <div className="row gy-4 align-items-center flex-column-reverse flex-md-row">
+              <div className="col-md-6 platform-wrapper ">
+                <h1 className='text-center text-md-left'>
+                  Usable Upfilly <br/> Platform
                 </h1>
-                <h1>
-                  Platform
-                </h1>
-                <p>
-                  Lorem Ipsum is simply dummy text of the
-                </p>
-                <p>
-                  printing and type lorem Ipsum is simply
+                <p className='mt-2 text-center text-md-left'>
+                  Lorem Ipsum is simply dummy text of the  printing and type lorem Ipsum is simply
                 </p>
                 <div className="platform-content mt-3">
                   <h2>
@@ -299,7 +293,7 @@ const UpFillyPage = () => {
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
-                <div className="platform-content-2">
+                <div className="platform-content">
                   <h2>
                     Measure Organic
                   </h2>
@@ -329,16 +323,15 @@ const UpFillyPage = () => {
           <img src="/assets/icons/payment-options.svg" alt="Payment Options" />
         </div> */}
 
-            <div className="row">
+            <div className="row gy-4">
               <div className="col-12 col-md-5 col-lg-6 d-flex justify-content-start">
                 <img className='platofm_imgs object-fit-contain' src='/assets/img/platform-2.png' alt=''></img>
               </div>
-              <div className="col-12 col-md-7 col-lg-6 platform-wrapper">
-                <div className="mainwidths">
+              <div className="col-12 col-md-7 col-lg-6 platform-wrapper ">
+                <div className="mainwidths text-center text-md-right">
                   <h3>
                     Usable Upfilly  Platform
                   </h3>
-
                   <p>
                     Lorem Ipsum is simply dummy text of the   printing and type lorem Ipsum is simply
                   </p>
@@ -368,7 +361,7 @@ const UpFillyPage = () => {
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
-                <div className="platform-content-2">
+                <div className="platform-content">
                   <h2>
                     Measure Organic
                   </h2>

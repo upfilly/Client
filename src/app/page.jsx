@@ -237,23 +237,20 @@ export default function Home() {
       name={undefined}
       filters={undefined}
     >
-
-      <div className="px-5 pt-3">
-
-
-        <div className="container-fluid ">
+      <div className="px-md-5 pt-3">
+        <div className="container-fluid">
           <div className="main-section">
             <div className="row align-items-center flex-lg-row flex-column-reverse flex-md-row ">
               <div className="col-md-6 ">
-                <div className="pl_section ">
-                  <h2 className="heding_main">
+                <div className="pl_section text-center text-md-left">
+                  <h2 className="heding_main mb-1 mb-md-3">
                     Revolutionize Your Affiliate Marketing with UpFilly
                   </h2>
 
                   <p className="desc">
-                    Track performance, manage campaigns, and scale your affiliate
-                    network effortlessly. Plus, let our experts handle it all for
-                    you with our Managed Subscription service.
+                    Track performance, manage campaigns, and scale your
+                    affiliate network effortlessly. Plus, let our experts handle
+                    it all for you with our Managed Subscription service.
                   </p>
 
                   {/* {(user?.role == "brand" || !user) && <a className='btn btn-primary mt-3 mr-2' href="/pricing">Book a Demo</a>} */}
@@ -293,9 +290,9 @@ export default function Home() {
         </div>
 
         <div className="container">
-          <div className="sponsor-wrapper cuspadding pb-0">
-            <h1>Trusted by industry leaders and best-in-class brands</h1>
-            <div className="d-flex align-items-center justify-content-between gap-5">
+          <div className="sponsor-wrapper cuspadding2  pb-0">
+            <h2>Trusted by industry leaders and best-in-class brands</h2>
+            <div className="d-flex align-items-center justify-content-between gap-4">
               <div className="mx-auto">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -414,14 +411,14 @@ export default function Home() {
         </div>
 
         <div className="container ">
-          <div className="cuspadding pb-0 ">
-            <div className="mobile-pl ">
+          <div className="cuspadding2 pb-0 ">
+            <div>
               <div className="row">
                 <div className="col-md-12 text-center  mb-0">
-                  <h2 className="leading_heading">
+                  <h2 className="leading_heading mb-0">
                     More Than Just an Affiliate Network
                   </h2>
-                  <p className="">
+                  <p>
                     Providing best developers to create your affiliates
                   </p>
                 </div>
@@ -436,8 +433,8 @@ export default function Home() {
                       Subscriptions
                     </h4>
                     <p className="text-white para_affiliate">
-                      Let our specialists handle your affiliate program with weekly
-                      calls
+                      Let our specialists handle your affiliate program with
+                      weekly calls
                     </p>
 
                     <div className="arrow">
@@ -448,7 +445,7 @@ export default function Home() {
                       />
                     </div>
 
-                    <ul className="tool_list set_tool_list">
+                    <ul className="tool_list set_tool_list mb-0">
                       <li>
                         <img
                           src="/assets/img/checkmark.png"
@@ -465,7 +462,7 @@ export default function Home() {
                         />
                         Strategic planning
                       </li>
-                      <li>
+                      <li className='mb-0'>
                         <img
                           src="/assets/img/checkmark.png"
                           className="chckrk"
@@ -484,8 +481,8 @@ export default function Home() {
                       Tracking
                     </h4>
                     <p className="text-white para_affiliate">
-                      Showcase the UpFilly dashboard highlighting performance metrics
-                      .
+                      Showcase the UpFilly dashboard highlighting performance
+                      metrics .
                     </p>
 
                     <div className="arrow">
@@ -496,7 +493,7 @@ export default function Home() {
                       />
                     </div>
 
-                    <ul className="tool_list set_tool_list">
+                    <ul className="tool_list set_tool_list mb-0">
                       <li>
                         <img
                           src="/assets/img/checkmark.png"
@@ -513,7 +510,7 @@ export default function Home() {
                         />
                         conversions
                       </li>
-                      <li>
+                      <li className='mb-0'>
                         <img
                           src="/assets/img/checkmark.png"
                           className="chckrk"
@@ -532,7 +529,8 @@ export default function Home() {
                       Insights
                     </h4>
                     <p className="text-white para_affiliate">
-                      Data-driven analytics to optimize your <br></br> campaigns.
+                      Data-driven analytics to optimize your <br></br>{" "}
+                      campaigns.
                     </p>
 
                     <div className="arrow">
@@ -543,7 +541,7 @@ export default function Home() {
                       />
                     </div>
 
-                    <ul className="tool_list set_tool_list">
+                    <ul className="tool_list set_tool_list mb-0">
                       <li>
                         <img
                           src="/assets/img/checkmark.png"
@@ -560,7 +558,7 @@ export default function Home() {
                         />
                         Track Performance
                       </li>
-                      <li>
+                      <li className='mb-0'>
                         <img
                           src="/assets/img/checkmark.png"
                           className="chckrk"
@@ -572,20 +570,17 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
 
-
-
-          <div className="cuspadding pb-0">
+          <div className="cuspadding2 pb-0">
             <div className="row align-items-center flex-column-reverse flex-md-row">
               <div className="col-12 col-sm-12 col-md-6 col-lg-5">
-                <div className="mb-4 lens_details prbx">
-                  <h1 className="text-black set_lensbx">
+                <div className="mb-4 lens_details prbx ">
+                  <h1 className="text-black set_lensbx text-md-left text-center">
                     Use a Lens <br /> Performance
                   </h1>
-                  <p>Getting Started is Simple</p>
+                  <p className='text-md-left text-center'>Getting Started is Simple</p>
                   <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                     <b>Understand Buyers</b>
                     <img
@@ -622,25 +617,33 @@ export default function Home() {
               </div>
               <div className="col-12 col-sm-12 col-md-6 col-lg-7 ">
                 <div className="mb-4">
-                  <img src="/assets/img/lens.png" className="mainhome rightimg" alt="" />
+                  <img
+                    src="/assets/img/lens.png"
+                    className="mainhome rightimg"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="cuspadding pb-0">
+          <div className="cuspadding2 pb-0">
             <div className="row align-items-center">
               <div className="col-12 col-sm-12 col-md-6 col-lg-5 col-12 col-sm-12 col-md-6 col-lg-7">
                 <div className="mb-4">
-                  <img src="/assets/img/scale.png" className="mainhome leftimg" alt="" />
+                  <img
+                    src="/assets/img/scale.png"
+                    className="mainhome leftimg"
+                    alt=""
+                  />
                 </div>
               </div>
               <div className="col-12 col-sm-12 col-md-6 col-lg-5 ">
-                <div className="mb-4 lens_details plbx">
-                  <h1 className="text-black set_lensbx ">
+                <div className="mb-4 lens_details plbx ">
+                  <h1 className="text-black set_lensbx text-md-left text-center">
                     Scale The Right <br /> Channels
                   </h1>
-                  <p>Let Us Handle Your Affiliate Program for You</p>
+                  <p className='text-md-left text-center'>Let Us Handle Your Affiliate Program for You</p>
                   <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                     <b>A dedicated affiliate marketing specialist.</b>
                     <img
@@ -678,15 +681,14 @@ export default function Home() {
             </div>
           </div>
 
-
-          <div className="cuspadding pb-0">
+          <div className="cuspadding2 pb-0">
             <div className="row align-items-center flex-column-reverse flex-md-row">
               <div className="col-12 col-sm-12 col-md-6 col-lg-5">
-                <div className="mb-4 lens_details prbx">
-                  <h1 className="text-black set_lensbx">
+                <div className="mb-4 lens_details prbx ">
+                  <h1 className="text-black set_lensbx text-md-left text-center">
                     Simplify Your <br /> Growth
                   </h1>
-                  <p>Why Choose UpFilly?</p>
+                  <p className='text-md-left text-center'>Why Choose UpFilly?</p>
                   <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                     <b>Expert-Led Campaigns</b>
                     <img
@@ -723,25 +725,31 @@ export default function Home() {
               </div>
               <div className="col-12 col-sm-12 col-md-6 col-lg-7">
                 <div className="mb-4">
-                  <img src="/assets/img/grow.png" className="mainhome rightimg" alt="" />
+                  <img
+                    src="/assets/img/grow.png"
+                    className="mainhome rightimg"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
           </div>
 
-
-          <div className="cuspadding pb-0">
+          <div className="cuspadding2 pb-0">
             <div className="bg_tracked">
               <div className="row align-items-center">
                 <div className="col-12 col-md-6">
                   <div className="pl-0 pl-lg-5 mb-4 ">
-                    <h1 className="customers">
+                    <h1 className="customers text-md-left text-center">
                       Customers <br />
                       tracked in 2023 <br />
                       more than +3Mi{" "}
                     </h1>
                     {(user?.role == "brand" || !user) && (
-                      <a className="btn btn-light mt-2 roundedfull" href="/pricing">
+                      <a
+                        className="btn btn-light mt-2 roundedfull"
+                        href="/pricing"
+                      >
                         Book a Demo
                       </a>
                     )}
@@ -764,8 +772,8 @@ export default function Home() {
                     </svg>
 
                     <p className="mt-4 mb-4 pb-4 border-bottom">
-                      I am really impressed with the quality of service. The product
-                      exceeded my expectations. Highly recommend!
+                      I am really impressed with the quality of service. The
+                      product exceeded my expectations. Highly recommend!
                     </p>
                     <div className="d-flex align-items-center">
                       <img
@@ -784,7 +792,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="cuspadding pb-0">
+          <div className="cuspadding2 pb-0">
             <div className="row">
               <div className="col-md-12 text-center mb-4">
                 <h2 className="abouts mb-0">What Customers Say About Us</h2>
@@ -809,7 +817,11 @@ export default function Home() {
                       {testimonial.feedback}
                     </p>
                     <div className="d-flex align-items-center">
-                      <img src={testimonial.image} className="icon_user" alt="" />
+                      <img
+                        src={testimonial.image}
+                        className="icon_user"
+                        alt=""
+                      />
                       <div className="ml-2 line_height_user">
                         <b>{testimonial.name}</b> <br />
                         <small>{testimonial.location}</small>
@@ -821,40 +833,44 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="cuspadding">
+          <div className="cuspadding2">
             <div className="bannerimgs">
-              <div className="seclastsgives">
-                  <div className="paddings_dats">
-                    <h1 class="customers">
-                      Give Your <br />
-                      Growth Goals <br />
-                      The Right tools{" "}
-                    </h1>
-                    <p class="w-100 w-lg-75">
-                      Join UpFilly today and unlock the full potential of your
-                      affiliate marketing program with expert guidance.{" "}
-                    </p>
-                    {(user?.role == "brand" || !user) && (
-                      <a className="btn btn-blue-new roundedfull" href="/pricing">
-                        Book a Demo
-                      </a>
-                    )}
-                  </div>
-                
+              <div className="seclastsgives ">
+                <div className="paddings_dats">
+                  <h1 class="customers mb-2">
+                    Give Your <br />
+                    Growth Goals <br />
+                    The Right tools{" "}
+                  </h1>
+                  <p class="w-100 w-lg-75 mb-0">
+                    Join UpFilly today and unlock the full potential of your
+                    affiliate marketing program with expert guidance.{" "}
+                  </p>
+                  {(user?.role == "brand" || !user) && (
+                    <a className="btn btn-blue-new roundedfull" href="/pricing">
+                      Book a Demo
+                    </a>
+                  )}
+                </div>
+
                 <div className="imgbgs">
-                    <img src="/assets/img/dash1.png" className="dashimgs" alt="" />
+                  <img
+                    src="/assets/img/dash1.png"
+                    className="dashimgs ml-0"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
           </div>
 
           {FAQdata && FAQdata.length > 0 && (
-            <div className="cuspadding pt-0">
+            <div className="">
               <div className="row ">
                 <div className="col-md-12 text-center">
                   <h2 className="customers mb-0">Frequent Asked Questions</h2>
                 </div>
-                <div className="accordion my-5" id="accordionExample">
+                <div className="accordion my-4 my-md-5" id="accordionExample">
                   <div className="row">
                     {FAQdata ? (
                       <>

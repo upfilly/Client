@@ -10,7 +10,7 @@
     max-width: 1406px !important;
   }
 
-  .platofm_imgs{
+  .platofm_imgs {
     width: 60%;
   }
 
@@ -27,10 +27,9 @@
     font-size: 52px;
   }
 
-
   .dashimgs {
     height: 400px;
-}
+  }
 }
 
 /* For screen width <= 1250px */
@@ -43,7 +42,7 @@
     font-size: 35px;
   }
 
-  .platofm_imgs{
+  .platofm_imgs {
     width: 70%;
   }
 }
@@ -57,11 +56,11 @@
 
 /* For screen width <= 1024px (iPad landscape etc.) */
 @media (min-width: 768px) and (max-width: 1450px) {
-.imgtag_card {
-  width: 90% !important;
-  margin: 0 auto;
-  padding: 20px 0px !important;
-}
+  .imgtag_card {
+    width: 90% !important;
+    margin: 0 auto;
+    padding: 20px 0px !important;
+  }
 }
 
 /* For screen width <= 992px (Small desktops / Large tablets) */
@@ -73,39 +72,54 @@
     font-size: 28px;
   }
   .dashimgs {
-    height: 300px;
+    // height: 300px;
     margin-left: 10px;
-}
+  }
 
-.seclastsgives {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  .seclastsgives {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-.paddings_dats {
-  width: 100%;
-  text-align: center;
-}
-
+  .paddings_dats {
+    width: 100%;
+    text-align: center;
+  }
+  .bannerimgs {
+    height: unset;
+  }
+  .platform-wrapper {
+    h1 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+  .platform-content h2 {
+    font-size: 28px !important;
+    font-weight: 500 !important;
+  }
 }
 
 /* For screen width <= 768px (Tablets and smaller devices) */
 @media (max-width: 768px) {
   .innerhtmls {
     font-size: 28px;
+    line-height: 35px;
   }
-  .fetures_imgs , .fetures_imgslast ,.hightwidth ,.mainhome{
+  .fetures_imgs,
+  .fetures_imgslast,
+  .hightwidth,
+  .mainhome {
     margin-bottom: 20px;
     width: 100%;
   }
 
-
   .dashimgs {
     margin-left: 10px;
-    object-fit: contain;
+    // object-fit: contain;
     width: 100%;
-}
+  }
 
   .bgdotsprice {
     margin-top: 50px;
@@ -141,6 +155,31 @@
   .section img {
     margin-bottom: 20px;
   }
+  .imgbgs {
+    padding: 10px;
+  }
+  .dashimgs {
+    border-radius: 20px;
+  }
+  .platforms-page {
+    .affiliate-tracking h2 {
+      font-size: 28px;
+    }
+    .affiliate-tracking p {
+      font-size: 18px;
+    }
+  }
+  .platform-wrapper {
+    h1 {
+      font-size: 28px !important;
+      line-height: 35px;
+    }
+  }
+  .platform-content h2 {
+    font-size: 24px !important;
+    font-weight: 500 !important;
+  }
+
 }
 
 /* For screen width <= 576px (Mobile devices) */
@@ -148,5 +187,23 @@
   .shopify-title {
     font-size: 24px;
     text-align: center;
+  }
+  .dashimgs {
+    height: 280px;
+  }
+  .platforms-page {
+    section {
+      padding-top: 0 !important;
+    }
+    .affiliate-tracking h2 {
+      font-size: 24px;
+    }
+    .affiliate-tracking p {
+      font-size: 16px;
+    }
+  }
+  .platform-content h2 {
+    font-size: 20px !important;
+    font-weight: 500 !important;
   }
 }
