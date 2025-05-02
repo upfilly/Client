@@ -1,51 +1,53 @@
 .heighteual {
-    height: auto;
-    width: 70px;
-    margin-bottom: 10px;
+  height: auto;
+  width: 70px;
+  margin-bottom: 10px;
 }
 
 .card_box {
-    border-radius: 7.588px;
-    background: #FFF;
-    box-shadow: 1.508px 6.032px 18.097px 0px rgba(0, 0, 0, 0.25);
-    height: 100%;
+  border-radius: 7.588px;
+  background: #fff;
+  box-shadow: 1.508px 6.032px 18.097px 0px rgba(0, 0, 0, 0.25);
+  height: 100%;
 }
 
-
-
 .imgtag_card {
-    width: 70%;
-    margin: 0 auto;
-    padding: 60px 0px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 60px 0px;
 }
 
 .imgtag_card h6 {
-    color: #000;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
-
 
 .imgtag_card p {
-    color: #828282;
-    text-align: center;
-    font-family: Poppins;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 31.87px;
-    /* 144.828% */
-    letter-spacing: -0.33px;
+  color: #828282;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 31.87px;
+  /* 144.828% */
+  letter-spacing: -0.33px;
 }
 
-.btn-blue{
-    background-color: #02AAE8 !important;
-    color: #fff !important;
-    border-radius: 10px !important;
+.btn-blue {
+  background-color: #02aae8 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
 }
 
-
+.contactus {
+  .card_box {
+    height: unset !important;
+    padding: 10px 0 !important;
+  }
+}

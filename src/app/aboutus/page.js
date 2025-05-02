@@ -42,9 +42,9 @@ export default function AboutUs() {
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
         <section id="about-section" className="pt-1 pb-2">
-          <div className="container p-0">
+          <div className="container ">
 
-            <div className="row align-items-center mt-5 mb-5">
+            <div className="row align-items-center my-3 my-md-5">
               <div className="col-md-12">
                 <h3 className="text-center rise">{data && data?.meta_title}</h3>
               </div>
@@ -54,7 +54,7 @@ export default function AboutUs() {
               <div className='col-12 col-md-6'>
                 {data?.image && <img src={methodModel.userImg(data && data?.image)} alt="Signature" className="img-fluid" />}
               </div>
-              <div className="col-12 col-md-6 text-left mx-auto">
+              <div className="col-12 col-md-6 text-left mx-auto text-center text-md-left">
                 <p dangerouslySetInnerHTML={{ __html: data && data?.description?.slice(0, 999) }}></p>
               </div>
             </div>

@@ -44,3 +44,30 @@
     font-size: 30px;
     margin-bottom: 15px;
 }
+
+.bap-btn{
+    padding: 14px 20px !important;
+    font-size: 18px !important;
+    @media(max-width:767px){
+        padding: 12px 20px !important;
+        font-size: 16px !important;
+    }
+}
+.partners-heading{
+    font-size: 30px;
+    @media(max-width:767px){
+        font-size: 28px !important;
+        line-height: 38px;
+        text-align: center;
+    }
+    @media(max-width:575px){
+        font-size: 24px !important;
+        line-height: 32px;
+    }
+}
+.partners-page{
+    .imgtag_card{
+        width: 100% !important;
+        padding:0px !important;
+    }
+}

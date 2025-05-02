@@ -117,9 +117,11 @@
   flex-direction: column;
   justify-content: center;
 }
-.platform-wrapper p{
+.platform-wrapper .para{
   margin: 0 !important;
-  font-size: 18px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  font-size: 18px ;
 }
 .platform-content{
   display: flex;
@@ -127,7 +129,7 @@
   padding: 30px 5px;
   border-bottom: 2px solid #000000;
 }
-.platform-content h2{
+.platform-content h3{
   color: #000 !important;
   font-size: 20px ;
   font-weight: bold;
