@@ -175,7 +175,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                             </div>
 
                             <div className="form-row">
-                                <div className="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3 custom-input">
                                     <label>Name<span className="star">*</span></label>
                                     <input
                                         type="text"
@@ -186,7 +186,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     {submitted && !form?.name && <div className="invalid-feedback d-block">{errors?.name}</div>}
                                 </div>
 
-                                <div className="col-md-6 mb-3">
+                                <div className="col-md-6 mb-3 custom-type">
                                     <label>Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown                                                     theme='search'
@@ -205,7 +205,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 </div>
 
                                 {form?.access_type === "private" && (
-                                    <div className="col-md-6 mb-3">
+                                    <div className="col-md-6 mb-3 event-select affiliate">
                                         <label>Affiliate<span className="star">*</span></label>
                                         <div className="select_row">
                                             <MultiSelectValue
@@ -226,7 +226,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
 
                                 <div className="col-md-6 mb-3">
                                     <label>Event Type:<span className="star">*</span></label>
-                                    <div className="select_row">
+                                    <div className="select_row event-select">
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             // singleSelect={true}
@@ -245,7 +245,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
 
                                 <div className="col-md-6 mb-3">
                                     <label>Affiliate Approval:<span className="star">*</span></label>
-                                    <div className="select_row">
+                                    <div className="select_row event-select affiliate">
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             singleSelect={true}
@@ -266,7 +266,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 </div>
 
                                 {/* New Dropdown for Percentage or Amount */}
-                                {form?.event_type?.includes("purchase") && <div className="col-md-6 mb-3">
+                                {form?.event_type?.includes("purchase") && <div className="col-md-6 mb-3 custom-type">
                                     <label>Purchase Amount/Percentage Type<span className="star">*</span></label>
                                     <div className="select_row">
                                         <SelectDropdown                                                     theme='search'
@@ -317,7 +317,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 )}
 
                                 {form?.event_type?.includes("lead") && (
-                                    <div className="col-md-6 mb-3">
+                                    <div className="col-md-6 mb-3 custom-input">
                                         <label>Lead Amount<span className="star">*</span></label>
                                         <input
                                             type="text"
@@ -368,7 +368,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     {submitted && !form?.category_type && <div className="invalid-feedback d-block">{errors?.category_type}</div>}
                                 </div> */}
 
-                                <div className="col-md-12 mb-3" onClick={() => setRegionIsOpen(false)}>
+                                <div className="col-md-12 mb-3 category-dropdown" onClick={() => setRegionIsOpen(false)}>
                                     <label>Select Category<span className="star">*</span></label>
                                     <div className="drops category-input">
                                         <MultiSelectDropdownData
@@ -455,7 +455,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     </div>
                                     {submitted && !form?.region && <div className="invalid-feedback d-block">{errors?.region}</div>}
                                 </div> */}
-                                <div className="col-md-12 mb-3" onClick={() => setIsOpen(false)}>
+                                <div className="col-md-12 mb-3 category-dropdown" onClick={() => setIsOpen(false)}>
                                     <label>Select Country<span className="star">*</span></label>
                                     <div className="drops category-input">
                                         <MultiSelectRegionDropdown
@@ -487,7 +487,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     {submitted && !form?.region_continents && <div className="invalid-feedback d-block">{errors?.region_continents}</div>}
                                 </div>} */}
 
-                                <div className="col-md-12 mb-3">
+                                <div className="col-md-12 mb-3 custom-description">
                                     <label>Description<span className="star">*</span></label>
                                     {true && <DynamicReactQuill
                                         theme="snow"
