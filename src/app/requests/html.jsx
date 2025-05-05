@@ -152,20 +152,20 @@ const Html = ({
                                                             <button onClick={() => {
                                                                 statusChange("accepted", itm?.id)
                                                                 Tracklogin(itm?.campaign_unique_id)
-                                                            }} className="btn btn-primary mr-2">
+                                                            }} className="btn btn-primary action-btns mr-2">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 bg-red mr-2">
+                                                            <button onClick={() => statusChange("rejected", itm?.id)} className="btn btn-danger br50 action-btns bg-red mr-2">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                                <div className="btn btn-primary">Rejected</div> :
+                                                                <div className="btn btn-primary ">Rejected</div> :
                                                                 <div className="btn btn-primary">Accepted</div>
                                                         }
                                                     </>}
                                                     <>
-                                                        <span className='btn btn-primary ml-2'
+                                                        <span className='btn btn-primary action-btns py-2 ml-2'
                                                             onClick={() => {
                                                                 history.push(`/chat`)
                                                                 localStorage.setItem("chatId", itm?.brand_id)

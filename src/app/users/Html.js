@@ -132,13 +132,13 @@ const Html = ({
                                                         <td className='table_dats'>{datepipeModel.date(itm?.updatedAt)}</td>
                                                         <td>
                                                             {(user?.role == 'affiliate' || user?.role == 'brand' || user?.permission_detail?.user_edit) &&
-                                                                <div className='action_icons'>
-                                                                    {permission("user_edit") && <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
+                                                                <div className='action_icons '>
+                                                                    {permission("user_edit") && <a className='edit_icon action-btns edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.user_id)} >
 
                                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                                     </a>}
 
-                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || permission("user_delete")) &&<a className='edit_icon' onClick={() => deleteItem(itm.user_id)}>
+                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || permission("user_delete")) &&<a className='edit_icon action-btns' onClick={() => deleteItem(itm.user_id)}>
                                                                         <i className={`material-icons delete`} title='Delete'> delete</i>
                                                                     </a>}
                                                                     {/* <a className='edit_icon action-btn' onClick={() => {

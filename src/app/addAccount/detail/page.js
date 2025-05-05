@@ -981,7 +981,7 @@ export default function addAffiliateAccount() {
                                 </label>
                                 {/* <p className='label_p'>This is themos important place to include keywords</p> */}
 
-                                <div className="row">
+                                <div className="row gy-2">
 
                                   {form?.tax_classification === "individual" && (
                                     <div className="col-md-6 ">

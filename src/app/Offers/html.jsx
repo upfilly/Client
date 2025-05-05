@@ -160,13 +160,13 @@ const Html = ({
                                         {permission("marketplace_product_edit") && <td className='table_dats'>
                                             <div className="action_icons">
                                                 {isAllow('editAdmins') || user?.permission_detail?.offer_edit ? <>
-                                                    <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id)}>
+                                                    <a className='edit_icon action-btn action-btns' title="Edit" onClick={e => edit(itm.id)}>
                                                         <i className="material-icons edit" title="Edit">edit</i>
                                                     </a>
                                                 </> : <></>}
 
                                                 {isAllow('deleteAdmins') || user?.permission_detail?.offer_delete ? <>
-                                                    <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
+                                                    <a className='edit_icon edit-delete action-btns' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id)}>
                                                         <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                                                     </a>
                                                 </> : <></>}
