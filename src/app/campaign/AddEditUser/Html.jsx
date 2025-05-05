@@ -36,34 +36,40 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
     ]
 
     const uploadDocument = async (e, key) => {
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
+        const files = e.target.files;
+        const uploadedFileNames = [];
 
-        setDocLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/document'
+        setDocLoader(true);
 
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.imagePath
-                if (form?.documents?.length <= 9) {
-                    form?.documents?.push({
-                        name: `documents/${path}`,
-                        url: `documents/${path}`
-                    })
+        for (let i = 0; i < files.length; i++) {
+            const file = files.item(i);
+            const originalName = file.name;
+            const url = 'upload/document';
+
+            try {
+                const res = await ApiClient.postFormData(url, { file: file });
+
+                if (res.success) {
+                    const path = res?.data?.imagePath;
+                    const docPath = `documents/${path}`;
+
+                    if (form?.documents?.length < 10) {
+                        form.documents.push({
+                            name: originalName,
+                            url: docPath
+                        });
+                    }
+
+                    uploadedFileNames.push(originalName);
                 }
+            } catch (error) {
+                console.error(`Upload failed for ${originalName}`, error);
             }
-            i++
         }
-        setDocLoader(false)
-        setDocLoder(false)
-        // setVdo(false)
-    }
+
+        setDocLoader(false);
+    };
+    
 
     const removeDocument = (index, key) => {
         const filterVid = form?.documents?.length > 0 && form.documents.filter((data, indx) => {
@@ -71,12 +77,6 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
         })
         setform({ ...form, documents: filterVid })
     }
-
-    const handleCategoryTypeChange = (selectedCategoryType) => {
-        getCategory(selectedCategoryType)
-        setSubCategories([]);
-        setSubSubCategories([]);
-    };
 
     const getCategory = () => {
         let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
@@ -100,55 +100,6 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
 
         if (/^\d*\.?\d*$/.test(value)) {
             setform({ ...form, [fieldName]: value });
-        }
-    };
-
-    const handleCategoryChange = (selectedCategoryIds) => {
-        const filteredSubCategories = categories
-            .filter(cat => selectedCategoryIds.includes(cat.id))
-            .flatMap(cat => cat.subCategories);
-
-        console.log(filteredSubCategories, "klklklk");
-        setSubCategories(filteredSubCategories);
-        setSubSubCategories([]);
-    };
-
-    const handleSubCategoryChange = (selectedSubCategoryIds) => {
-        const filteredSubSubCategories = subCategories
-            .filter(sub => selectedSubCategoryIds.includes(sub.id))
-            .flatMap(sub => sub.subchildcategory);
-
-        console.log(filteredSubSubCategories, "klklkll");
-
-        const SubSubCategories = filteredSubSubCategories.map((dat) => {
-            return {
-                id: dat?._id || dat?.id,
-                name: dat?.name,
-            };
-        });
-
-        setSubSubCategories(SubSubCategories);
-    };
-
-    const fetchCountriesByRegions = async (regions) => {
-        try {
-            const countries = await Promise.all(
-                regions.map(async (region) => {
-                    const response = await axios.get(
-                        `https://restcountries.com/v3.1/region/${region}`
-                    );
-                    return response.data.map((country) => ({
-                        label: country.name.common,
-                        id: country.name.common,
-                    }));
-                })
-            );
-
-            // Flatten the array of country arrays and return
-            setCountries(countries.flat());
-        } catch (error) {
-            console.error('Error fetching countries:', error);
-            return [];
         }
     };
 
@@ -543,8 +494,9 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                             <div className="imagesRow mt-4 img-wrappper">
                                                 {form?.documents && form?.documents.map((itm, i) => {
                                                     return <div className="imagethumbWrapper cover" key={i}>
-                                                        <img src="/assets/img/document.png" className="thumbnail" onClick={() => window.open(methodModel.noImg(itm?.url))} />
+                                                        <img src="/assets/img/document.png" className="" onClick={() => window.open(methodModel.noImg(itm?.url))} />
                                                         <i className="fa fa-times kliil" title="Remove" onClick={e => removeDocument(i)}></i>
+                                                        <div>{itm?.name}</div>
                                                     </div>
                                                 })}
                                             </div>
