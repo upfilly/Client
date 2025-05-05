@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./MultiSelectDropdownData.css";
 import { regionData } from "./AddEditUser/regionCountries";
 
-const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems ,isRegionOpen, setRegionIsOpen}) => {
+const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOpen, setRegionIsOpen }) => {
   const data = regionData;
   const [expandedCategories, setExpandedCategories] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [savedSelections, setSavedSelections] = useState(null);
 
   const toggleDropdown = () => setRegionIsOpen(!isRegionOpen);
 
@@ -22,15 +23,39 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems ,isRegionOp
       let newSelectedCountries = [...prevState.countries];
 
       if (checked) {
-        if (!newSelectedRegions.includes(region)) {
+        // If selecting a country, also ensure its region is selected
+        if (country && !newSelectedRegions.includes(region)) {
           newSelectedRegions.push(region);
         }
-        if (!newSelectedCountries.includes(country)) {
+        
+        // Add the region or country
+        if (region && !country && !newSelectedRegions.includes(region)) {
+          newSelectedRegions.push(region);
+        }
+        if (country && !newSelectedCountries.includes(country)) {
           newSelectedCountries.push(country);
         }
       } else {
-        newSelectedRegions = newSelectedRegions.filter((item) => item !== region);
-        newSelectedCountries = newSelectedCountries.filter((item) => item !== country);
+        if (!country) {
+          // If deselecting a region, also deselect all its countries
+          newSelectedRegions = newSelectedRegions.filter(item => item !== region);
+          newSelectedCountries = newSelectedCountries.filter(item => 
+            !data[region].includes(item)
+          );
+        } else {
+          // If deselecting a country, just remove the country
+          newSelectedCountries = newSelectedCountries.filter(item => item !== country);
+          
+          // Check if there are any selected countries from this region remaining
+          const hasSelectedCountriesInRegion = newSelectedCountries.some(country => 
+            data[region].includes(country)
+          );
+          
+          // If no countries from this region are selected, also deselect the region
+          if (!hasSelectedCountriesInRegion) {
+            newSelectedRegions = newSelectedRegions.filter(item => item !== region);
+          }
+        }
       }
 
       return { regions: newSelectedRegions, countries: newSelectedCountries };
@@ -38,6 +63,16 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems ,isRegionOp
   };
 
   const handleSearch = (e) => setSearchTerm(e.target.value.toLowerCase());
+
+  const handleSave = () => {
+    setSavedSelections({...selectedItems});
+    setRegionIsOpen(false);
+    // You can add additional logic here, such as sending the data to a parent component or API
+  };
+
+  const handleRemoveAll = () => {
+    setSelectedItems({ regions: [], countries: [] });
+  };
 
   const renderCategories = () => {
     return Object.keys(data)
@@ -128,9 +163,37 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems ,isRegionOp
               checked={selectedItems.regions.length === Object.keys(data).length}
             />
             <label htmlFor="selectAll">Select All</label>
+            <span className="remove-all-btn ml-2" title="Remove" onClick={handleRemoveAll}>
+              Remove All
+            </span>
           </div>
 
           {renderCategories()}
+          
+          <div className="save-container">
+            <button 
+              className="save-button" 
+              onClick={handleSave}
+            >
+              Save Selection
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {savedSelections && (
+        <div className="saved-selections">
+          {/* <h4>Selected Values:</h4> */}
+          {savedSelections.regions.length > 0 && (
+            <div>
+              <strong>Regions:</strong> {savedSelections.regions.join(", ")}
+            </div>
+          )}
+          {savedSelections.countries.length > 0 && (
+            <div>
+              <strong>Countries:</strong> {savedSelections.countries.join(", ")}
+            </div>
+          )}
         </div>
       )}
     </div>

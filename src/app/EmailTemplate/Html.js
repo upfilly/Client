@@ -81,7 +81,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                               
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className=' mb-3' >
-                                    <label  className='form-label' >Accepted Date</label>
+                                    <label  className='form-label' >Joined Date</label>
                                         <input
                                             type="date"
                                             className='form-control'

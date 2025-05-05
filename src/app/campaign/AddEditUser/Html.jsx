@@ -313,6 +313,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                             placeholder="Enter Amount"
                                         />
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
+                                        {id && <div className="invalid-feedback d-block">Note: Commission can’t be changed on a published campaign.</div>}
                                     </div>
                                 )}
 
@@ -329,6 +330,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                             placeholder="Enter Lead Amount"
                                         />
                                         {submitted && !form?.lead_amount && <div className="invalid-feedback d-block">{errors?.lead_amount}</div>}
+                                        {id && <div className="invalid-feedback d-block">Note: Lead Amount can’t be changed on a published campaign.</div>}
                                     </div>
                                 )}
 

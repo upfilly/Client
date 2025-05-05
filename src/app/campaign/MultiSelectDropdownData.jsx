@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./MultiSelectDropdownData.css";
 
-const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, setIsOpen}) => {
+const MultiSelectDropdown = ({ data, selectedItems: initialSelectedItems }) => {
+  const [selectedItems, setSelectedItems] = useState(initialSelectedItems || { 
+    categories: [], 
+    subCategories: [], 
+    subSubCategories: [] 
+  });
+  const [isOpen, setIsOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [expandedSubCategories, setExpandedSubCategories] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [displaySelections, setDisplaySelections] = useState({
+    categories: [],
+    subCategories: [],
+    subSubCategories: []
+  });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -92,8 +103,6 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
         }
       }
 
-
-
       data.forEach((category) => {
         const allSubSelected = category.subCategories.every(
           (sub) =>
@@ -110,7 +119,6 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
       data
         .flatMap((category) => category.subCategories)
         .forEach((subCategory) => {
-          // console.log(subCategory,"gjgjhghg")
           if (subCategory.subchildcategory) {
             const allSubSubSelected = subCategory.subchildcategory.every((subSub) => newSubSubCategories.includes(subSub._id));
             if (allSubSubSelected && !newSubCategories.includes(subCategory.id)) {
@@ -120,7 +128,6 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
             }
           }
         });
-
 
       return { categories: newCategories, subCategories: newSubCategories, subSubCategories: newSubSubCategories };
     });
@@ -151,7 +158,6 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
 
   const handleSearch = (e) => setSearchTerm(e.target.value.toLowerCase());
 
-  // Logic to check if some subcategories or subsubcategories are selected
   const isIndeterminate = (parentId, type) => {
     let selected = [];
     if (type === 'category') {
@@ -183,10 +189,9 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
 
   const renderSubcategories = (categoryId, subCategories) => (
     <div className="subcategory-dropdown">
-      {subCategories.map((sub) =>{
-        return(
+      {subCategories.map((sub) => (
         <div key={sub.id} className="subcategory-container">
-          <div className={sub.subchildcategory?.length > 0 ? "dropdown-item ml-3"  : "ml-5"} >
+          <div className={sub.subchildcategory?.length > 0 ? "dropdown-item ml-3" : "ml-5"}>
             <input
               type="checkbox"
               className={sub.subchildcategory?.length > 0 ? "" : "form-check-input"}
@@ -199,7 +204,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
 
           {expandedSubCategories[sub.id] && renderSubSubcategories(categoryId, sub.id, sub.subchildcategory)}
         </div>
-      )})}
+      ))}
     </div>
   );
 
@@ -208,7 +213,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
       .filter((cat) => cat?.parent_cat_name?.toLowerCase()?.includes(searchTerm))
       .map((category) => (
         <div key={category._id} className="category-container">
-          <div className="dropdown-item" >
+          <div className="dropdown-item">
             <input
               type="checkbox"
               checked={selectedItems && selectedItems?.categories?.includes(category._id)}
@@ -223,8 +228,8 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
       ));
   };
 
-  const getSelectedCategoryNames = () => {
-    return selectedItems && selectedItems?.categories
+  const getSelectedCategoryNames = (items = selectedItems) => {
+    return items && items?.categories
       ?.map((categoryId) => {
         const category = data?.find((cat) => cat._id === categoryId);
         return category ? category?.parent_cat_name : "";
@@ -233,8 +238,8 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
       .join(", ");
   };
 
-  const getSelectedSubCategoryNames = () => {
-    return selectedItems && selectedItems?.subCategories
+  const getSelectedSubCategoryNames = (items = selectedItems) => {
+    return items && items?.subCategories
       ?.map((subcategoryId) => {
         const subCategory = data
           ?.flatMap((category) => category?.subCategories)
@@ -245,8 +250,8 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
       .join(", ");
   };
 
-  const getSelectedSubSubCategoryNames = () => {
-    return selectedItems && selectedItems?.subSubCategories
+  const getSelectedSubSubCategoryNames = (items = selectedItems) => {
+    return items && items?.subSubCategories
       ?.map((subSubCategoryId) => {
         const subSubCategory = data
           ?.flatMap((category) =>
@@ -261,17 +266,32 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
       .join(", ");
   };
 
+  const handleSave = () => {
+    // Save the current selections to be displayed in the toggle
+    setDisplaySelections({...selectedItems});
+    // Close the dropdown
+    setIsOpen(false);
+  };
+
   return (
     <div className="dropdown-container show-drop">
-      <span onClick={toggleDropdown} className="dropdown-toggle">
-        {getSelectedCategoryNames() || "Select Categories"}{" "}
-        {getSelectedSubCategoryNames() && `| ${getSelectedSubCategoryNames()}`}
-        {getSelectedSubSubCategoryNames() && `| ${getSelectedSubSubCategoryNames()}`}
-      </span>
+      <div className="category-input">
+        <span onClick={toggleDropdown} className="dropdown-toggle">
+          {getSelectedCategoryNames(displaySelections) || "Select Categories"}{" "}
+          {getSelectedSubCategoryNames(displaySelections) && `| ${getSelectedSubCategoryNames(displaySelections)}`}
+          {getSelectedSubSubCategoryNames(displaySelections) && `| ${getSelectedSubSubCategoryNames(displaySelections)}`}
+        </span>
+      </div>
 
       {isOpen && (
         <div className={`dropdown-menu ${isOpen ? "show" : ""}`}>
-          <input type="text" placeholder="Search Categories..." value={searchTerm} onChange={handleSearch} className="search-input" />
+          <input
+            type="text"
+            placeholder="Search Categories..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search-input"
+          />
 
           <div className="select-actions">
             <input
@@ -282,12 +302,19 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems ,isOpen, se
               checked={selectedItems && selectedItems?.categories?.length === data.length}
             />
             <label htmlFor="selectAll">Select All</label>
-            <span className="remove-all-btn ml-2" title="Remove " onClick={handleRemoveAll}>
+            <span className="remove-all-btn ml-2" title="Remove" onClick={handleRemoveAll}>
               Remove All
             </span>
           </div>
 
           {renderCategories()}
+
+          {/* Save button at the bottom */}
+          <div className="dropdown-footer">
+            <button className="save-button" onClick={handleSave}>
+              Save
+            </button>
+          </div>
         </div>
       )}
     </div>
