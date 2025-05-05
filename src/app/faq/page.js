@@ -110,7 +110,7 @@ export default function Faq() {
                         data-bs-target={`#faq-list-${index}`}
                         onClick={() => toggleQuestion(index)}
                       >
-                        <div className="d-flex justify-content-between align-items-center gap-4">
+                        <div className="d-flex justify-content-between flex-nowrap align-items-center gap-4">
                           <div className='d-flex gap-2 align-items-center'>
                             <i className="fa fa-question-circle fs-3 text-primary" aria-hidden="true"></i>{" "}
                             {itm?.question}

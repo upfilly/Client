@@ -34,41 +34,41 @@ export default function Company() {
 
         {/* What’s Included Section */}
         <section className="container">
-          <div className="cuspadding">
-            <h2 className="section-title ">What’s Included in Managed Subscriptions?</h2>
+          <div className="cuspadding2">
+            <h2 className="included-title ">What’s Included in Managed Subscriptions?</h2>
             <div className="included-list">
               <div className=" row">
                 <div className="col-12 col-md-4">
                   <div className="included-item">
-                    <div className="d-flex gap-2 mb-3 align-items-center flex-column flex-lg-row">
+                    <div className="d-flex gap-2 mb-md-3 align-items-center flex-column flex-lg-row">
                       <div className="included-icon">
                         <img className="iconhegt" src="/assets/img/s1.svg" />
                       </div>
                       <h3>Dedicated Affiliate Specialist</h3>
                     </div>
-                    <p>Your personal expert to manage and optimize your program.</p>
+                    <p className="text-center text-md-left">Your personal expert to manage and optimize your program.</p>
                   </div>
                 </div>
                 <div className="col-12 col-md-4">
                   <div className="included-item">
-                    <div className="d-flex gap-2 mb-3 align-items-center flex-column flex-lg-row">
+                    <div className="d-flex gap-2 mb-md-3 align-items-center flex-column flex-lg-row">
                       <div className="included-icon">
                         <img className="iconhegt" src="/assets/img/s2.svg" />
                       </div>
                       <h3>Weekly Strategy Calls</h3>
                     </div>
-                    <p>Regular discussions to align on goals, share insights, and refine strategies.</p>
+                    <p className="text-center text-md-left">Regular discussions to align on goals, share insights, and refine strategies.</p>
                   </div>
                 </div>
                 <div className="col-12 col-md-4">
                   <div className="included-item">
-                    <div className="d-flex gap-2 mb-3 align-items-center flex-column flex-lg-row">
+                    <div className="d-flex gap-2 mb-md-3 align-items-center flex-column flex-lg-row">
                       <div className="included-icon">
                         <img className="iconhegt" src="/assets/img/s3.svg" />
                       </div>
                       <h3>Comprehensive Reports</h3>
                     </div>
-                    <p>Detailed analysis of affiliate performance, campaign success, and growth opportunities.</p>
+                    <p className="text-center text-md-left">Detailed analysis of affiliate performance, campaign success, and growth opportunities.</p>
                   </div>
                 </div>
               </div>
@@ -78,24 +78,24 @@ export default function Company() {
 
         {/* Pricing Options Section */}
         <section className="container">
-          <div className="cuspadding pt-0">
-            <h2 className="section-title">Flexible Pricing to Suit Your Needs</h2>
+          <div className="cuspadding2  pt-0">
+            <h2 className="included-title">Flexible Pricing to Suit Your Needs</h2>
             <div className="included-list">
               <div className=" row">
                 <div className="col-12 col-md-4">
-                  <div className="pricing-option">
+                  <div className="pricing-option text-center text-md-left">
                     <h3>Standard Package</h3>
                     <p>Fixed monthly fee for full-service management.</p>
                   </div>
                 </div>
                 <div className="col-12 col-md-4">
-                  <div className="pricing-option">
+                  <div className="pricing-option text-center text-md-left">
                     <h3>Hybrid Package</h3>
                     <p>Monthly fee + a small commission percentage tied to program performance.</p>
                   </div>
                 </div>
                 <div className="col-12 col-md-4">
-                  <div className="pricing-option">
+                  <div className="pricing-option text-center text-md-left">
                     <h3>Custom Requests</h3>
                     <p>Tailored plans to align with your specific business requirements.</p>
                   </div>
@@ -106,14 +106,14 @@ export default function Company() {
         </section>
 
         {/* Benefits Section */}
-        <section className="benefits container">
-          <div className="cuspadding pt-0">
+        <section className="benefits container py-0 py-md-4">
+          <div className="cuspadding2 pt-0">
             <div className="row align-items-center">
               <div className="col-12 col-md-6 col-lg-6">
                 <img src="assets/img/subscription.png" className=" hightwidth" />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <h2 className="text-left lefttext  mb-4">Why Choose Managed Subscriptions?</h2>
+                <h2 className="text-left lefttext text-center text-md-left  mb-4">Why Choose Managed Subscriptions?</h2>
                 <div className="subs-content">
                   <div className="d-flex gap-2 align-items-start">
                     <span>
@@ -139,7 +139,7 @@ export default function Company() {
                     </span>
                     <div>
                       <h5>Clear and Transparent Reporting:</h5>
-                      <h6> Gain detailed insights into affiliate activity and campaign outcomes.</h6>
+                      <h6 className="mb-0"> Gain detailed insights into affiliate activity and campaign outcomes.</h6>
                     </div>
                   </div>
                 </div>

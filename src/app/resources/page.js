@@ -56,7 +56,7 @@ export default function Resources() {
 
           <div className="minus_margin container">
 
-            <h5 className="innerhtmls">Powerful Tools to Drive Your Affiliate  <p className="d-block "> Success</p></h5>
+            <h5 className="innerhtmls">Powerful Tools to Drive Your Affiliate  <p className="d-block"> Success</p></h5>
 
 
             <p className="para3">
@@ -103,15 +103,15 @@ export default function Resources() {
 
 
         <section className="benefits container">
-          <div className="cuspadding pb-0 ">
+          <div className="cuspadding2 pb-0 ">
             <div className="row align-items-center">
               <div className="col-12 col-md-6 col-lg-6">
                 <img src="assets/img/f2.png" className="fetures_imgs " />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <h2 className="text-left lefttext  mb-4">Integrate Seamlessly with Your Existing Platforms
+                <h2 className="text-left lefttext text-md-left text-center mb-2 mb-md-4">Integrate Seamlessly with Your Existing Platforms
                 </h2>
-                <div className="subs-content">
+                <div className="subs-content text-md-left text-center">
                   <div className="d-flex gap-2 align-items-start">
                     <div>
                       <h5>Shopify Integration</h5>
@@ -127,23 +127,23 @@ export default function Resources() {
 
 
         <section className="benefits container">
-          <div className="cuspadding pb-0 ">
+          <div className="cuspadding2 pb-0 ">
             <div className="row align-items-center flex-md-row-reverse">
               <div className="col-12 col-md-6 col-lg-6">
                 <img src="assets/img/f1.png" className="fetures_imgs " />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <h2 className="text-left lefttext  mb-4">Built to Grow with Your Business
+                <h2 className="text-left lefttext text-center text-md-left mb-2 mb-md-4">Built to Grow with Your Business
                 </h2>
                 <div className="subs-content">
                   <div className="d-flex gap-2 align-items-center">
-                    <div>
+                    <div className='text-center text-md-left'>
 
                       <h6>UpFilly is designed to support businesses of all sizes—from startups launching their first affiliate program to enterprise-level brands managing complex networks.</h6>
                     </div>
                   </div>
 
-                  <div className="d-flex gap-2 align-items-center mt-4">
+                  <div className="d-flex gap-2 align-items-center mt-3 mt-md-4">
                     <span>
                       <img src="/assets/img/cheks.svg" className="checimg" alt=""></img>
                     </span>
@@ -171,23 +171,23 @@ export default function Resources() {
 
 
         <section className="benefits container">
-          <div className="cuspadding ">
+          <div className="cuspadding2 ">
             <div className="row align-items-center ">
               <div className="col-12 col-md-6 col-lg-6">
                 <img src="assets/img/f3.png" className="fetures_imgslast " />
               </div>
               <div className="col-12 col-md-6 col-lg-6">
-                <h2 className="text-left lefttext  mb-4">An Intuitive Dashboard for Merchants and Affiliates
+                <h2 className="text-left lefttext mb-2 text-center text-md-left mb-2 mb-md-4">An Intuitive Dashboard for Merchants and Affiliates
                 </h2>
                 <div className="subs-content">
                   <div className="d-flex gap-2 align-items-center">
-                    <div>
+                    <div className='text-center text-md-left'>
 
                       <h6>Our dashboard is designed to be simple yet powerful, providing all the tools you need to manage and optimize your program.</h6>
                     </div>
                   </div>
 
-                  <div className="d-flex gap-2 align-items-start mt-4">
+                  <div className="d-flex gap-2 align-items-start mt-3 mt-md-4">
                     <span>
                       <img src="/assets/img/cheks.svg" className="checimg" alt=""></img>
                     </span>
@@ -227,7 +227,7 @@ export default function Resources() {
                 <h1 className="cta-title">Explore UpFilly’s Features Today</h1>
                 <h2 className="cta-subtitle">Discover how our platform can take your affiliate marketing to the next level.</h2>
               </div>
-              <div className="mt-5">
+              <div className="mt-sm-5 mt-4">
                 <button className="cta-button" onClick={() => history.push("/SignupOptions")}>Get Started Now</button>
                 {/* <button className="cta-btn secondary">Learn More About Features</button> */}
               </div>
@@ -243,12 +243,12 @@ export default function Resources() {
         </div>
 
 
-        <div className="cuspadding container">
+        <div className="cuspadding2 container">
           <div className=' bggraylight'>
             {/* Shopify Tracking App Section */}
             <div className='row  align-items-center'>
               <div className='col-12 col-md-6'>
-                <div className='fetaues_lasts'>
+                <div className='fetaues_lasts text-center text-md-left'>
                   <h6 className=''>{shopifyTrackingInfo.title}</h6>
                   <p>{shopifyTrackingInfo.description}</p>
                 </div>
@@ -267,7 +267,7 @@ export default function Resources() {
                 </div>
               </div>
 
-              <div className='col-12 mt-5'>
+              <div className='col-12 mt-4 mt-md-5'>
                 <div className='text-center'>
 
                   <a href={shopifyTrackingInfo.link} className='cta-button'>Learn More</a>

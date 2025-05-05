@@ -261,54 +261,48 @@ const UpFillyPage = () => {
           </div>
         </div> */}
 
-            <div className="row align-items-center flex-column-reverse flex-md-row">
-              <div className="col-md-6 platform-wrapper">
-                <h1>
-                  Usable Upfilly
+            <div className="row gy-4 align-items-center flex-column-reverse flex-md-row">
+              <div className="col-md-6 platform-wrapper ">
+                <h1 className='text-center text-md-left'>
+                  Usable Upfilly <br/> Platform
                 </h1>
-                <h1>
-                  Platform
-                </h1>
-                <p>
-                  Lorem Ipsum is simply dummy text of the
-                </p>
-                <p>
-                  printing and type lorem Ipsum is simply
+                <p className='mt-2 para text-center text-md-left'>
+                  Lorem Ipsum is simply dummy text of the  printing and type lorem Ipsum is simply
                 </p>
                 <div className="platform-content mt-3">
-                  <h2>
+                  <h3>
                     Understand Buyers
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
                 <div className="platform-content">
-                  <h2>
+                  <h3>
                     Attribute User Activity
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
                 <div className="platform-content">
-                  <h2>
+                  <h3>
                     Utilize CRM Stages
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
-                <div className="platform-content-2">
-                  <h2>
+                <div className="platform-content">
+                  <h3>
                     Measure Organic
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
               </div>
-              <div className="col-md-6 d-flex justify-content-end">
+              <div className="col-md-6 d-flex justify-content-center justify-content-md-end">
                 <img className='platofm_imgs object-fit-contain' src='/assets/img/platform-1.png' alt=''></img>
               </div>
             </div>
@@ -329,49 +323,48 @@ const UpFillyPage = () => {
           <img src="/assets/icons/payment-options.svg" alt="Payment Options" />
         </div> */}
 
-            <div className="row">
-              <div className="col-12 col-md-5 col-lg-6 d-flex justify-content-start">
+            <div className="row gy-4">
+              <div className="col-12 col-md-5 col-lg-6 d-flex justify-content-center justify-content-md-start">
                 <img className='platofm_imgs object-fit-contain' src='/assets/img/platform-2.png' alt=''></img>
               </div>
-              <div className="col-12 col-md-7 col-lg-6 platform-wrapper">
-                <div className="mainwidths">
-                  <h3>
-                    Usable Upfilly  Platform
-                  </h3>
-
-                  <p>
+              <div className="col-12 col-md-7 col-lg-6 platform-wrapper ">
+                <div className="mainwidths text-center text-md-left">
+                  <h1>
+                    Usable Upfilly <br/> Platform
+                  </h1>
+                  <p className="para">
                     Lorem Ipsum is simply dummy text of the   printing and type lorem Ipsum is simply
                   </p>
                 </div>
 
                 <div className="platform-content mt-3">
-                  <h2>
+                  <h3>
                     Understand Buyers
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
                 <div className="platform-content">
-                  <h2>
+                  <h3>
                     Attribute User Activity
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
                 <div className="platform-content">
-                  <h2>
+                  <h3>
                     Utilize CRM Stages
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>
                 </div>
-                <div className="platform-content-2">
-                  <h2>
+                <div className="platform-content">
+                  <h3>
                     Measure Organic
-                  </h2>
+                  </h3>
                   <span>
                     <img src="/assets/img/check.png" className="check_list" alt=""></img>
                   </span>

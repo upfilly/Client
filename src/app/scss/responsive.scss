@@ -10,7 +10,7 @@
     max-width: 1406px !important;
   }
 
-  .platofm_imgs{
+  .platofm_imgs {
     width: 60%;
   }
 
@@ -27,10 +27,9 @@
     font-size: 52px;
   }
 
-
   .dashimgs {
     height: 400px;
-}
+  }
 }
 
 /* For screen width <= 1250px */
@@ -43,7 +42,7 @@
     font-size: 35px;
   }
 
-  .platofm_imgs{
+  .platofm_imgs {
     width: 70%;
   }
 }
@@ -57,11 +56,11 @@
 
 /* For screen width <= 1024px (iPad landscape etc.) */
 @media (min-width: 768px) and (max-width: 1450px) {
-.imgtag_card {
-  width: 90% !important;
-  margin: 0 auto;
-  padding: 20px 0px !important;
-}
+  .imgtag_card {
+    width: 90% !important;
+    margin: 0 auto;
+    padding: 20px 0px !important;
+  }
 }
 
 /* For screen width <= 992px (Small desktops / Large tablets) */
@@ -73,39 +72,61 @@
     font-size: 28px;
   }
   .dashimgs {
-    height: 300px;
+    // height: 300px;
     margin-left: 10px;
-}
+  }
 
-.seclastsgives {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  .seclastsgives {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-.paddings_dats {
-  width: 100%;
-  text-align: center;
-}
-
+  .paddings_dats {
+    width: 100%;
+    text-align: center;
+  }
+  .bannerimgs {
+    height: unset;
+  }
+  .platform-wrapper {
+    h1 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+  .platform-content h3 {
+    font-size: 28px !important;
+    font-weight: 500 !important;
+  }
+  .fetaues_lasts h6 {
+    font-size: 36px !important;
+    line-height: 40px !important;
+  }
+  .included-list {
+    margin-top: 60px !important;
+  }
 }
 
 /* For screen width <= 768px (Tablets and smaller devices) */
 @media (max-width: 768px) {
   .innerhtmls {
     font-size: 28px;
+    line-height: 35px;
   }
-  .fetures_imgs , .fetures_imgslast ,.hightwidth ,.mainhome{
+  .fetures_imgs,
+  .fetures_imgslast,
+  .hightwidth,
+  .mainhome {
     margin-bottom: 20px;
     width: 100%;
   }
 
-
   .dashimgs {
     margin-left: 10px;
-    object-fit: contain;
+    // object-fit: contain;
     width: 100%;
-}
+  }
 
   .bgdotsprice {
     margin-top: 50px;
@@ -141,12 +162,157 @@
   .section img {
     margin-bottom: 20px;
   }
+  .imgbgs {
+    padding: 10px;
+  }
+  .dashimgs {
+    border-radius: 20px;
+  }
+  .platforms-page {
+    .affiliate-tracking h2 {
+      font-size: 28px;
+    }
+    .affiliate-tracking p {
+      font-size: 18px;
+    }
+  }
+  .platform-wrapper {
+    h1 {
+      font-size: 28px !important;
+      line-height: 35px;
+    }
+  }
+  .platform-content h3 {
+    font-size: 24px !important;
+    font-weight: 500 !important;
+  }
+  .resource-page {
+    .cta-title {
+      font-size: 30px !important;
+    }
+  }
+  .fetaues_lasts h6 {
+    font-size: 32px !important;
+  }
+  .fetaues_lasts p {
+    font-size: 16px;
+  }
+  .included-list {
+    margin-top: 40px !important;
+  }
+  .included-title {
+    font-size: 32px !important;
+  }
+  .cta-content {
+    padding: 40px 20px !important;
+  }
+  .cta-content {
+    .cta-title {
+      font-size: 28px !important;
+    }
+    .cta-subtitle {
+      font-size: 18px !important;
+      width: 100% !important;
+    }
+    margin-bottom: 0 !important;
+  }
+  .cta-buttons {
+    margin-top: 20px !important;
+  }
+  .contactus {
+    .card_box{
+      height: unset !important;
+    }
+    .imgtag_card {
+      width: 90%;
+      margin: 0 auto;
+      padding: 30px 0px;
+    }
+  }
 }
-
 /* For screen width <= 576px (Mobile devices) */
 @media (max-width: 576px) {
   .shopify-title {
     font-size: 24px;
     text-align: center;
+  }
+  .dashimgs {
+    height: 280px;
+  }
+  .platforms-page {
+    section {
+      padding-top: 0 !important;
+    }
+    .affiliate-tracking h2 {
+      font-size: 24px;
+    }
+    .affiliate-tracking p {
+      font-size: 16px;
+    }
+  }
+  .platform-content h3 {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+  }
+  .platform-content {
+    padding: 18px 5px !important;
+  }
+  .platform-wrapper {
+    h1 {
+      font-size: 24px !important;
+      line-height: 30px;
+    }
+  }
+  .platform-wrapper {
+    .para {
+      font-size: 16px !important;
+    }
+  }
+  .lefttext {
+    font-size: 24px;
+  }
+  .resource-page {
+    .cta-header {
+      width: 100% !important;
+    }
+    .cta {
+      padding: 40px 20px !important;
+    }
+    .cta-title {
+      font-size: 28px !important;
+    }
+    .cta-subtitle {
+      font-size: 16px !important;
+    }
+  }
+  .bggraylight {
+    padding: 30px 30px;
+    padding-bottom: 40px !important;
+  }
+  .fetaues_lasts h6 {
+    font-size: 28px !important;
+    line-height: 35px !important;
+  }
+  .cta-button {
+    padding: 8px 18px !important;
+  }
+  .feyusul li {
+    font-size: 18px !important;
+  }
+  .included-list {
+    margin-top: 30px !important;
+  }
+  .included-title {
+    font-size: 28px !important;
+  }
+  .cta-content {
+    padding: 20px !important;
+  }
+  .mainhead{
+    font-size: 28px;
+    margin-bottom: 0;
+  }
+  #about-section h3.rise {
+    font-size: 24px !important;
   }
 }
