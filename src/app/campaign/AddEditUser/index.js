@@ -26,7 +26,7 @@ const AddEditUser = () => {
         name: "",
         // amount: "",
         description: "",
-        // images: [],
+        images: [],
         documents: [],
         // videos: [],
         affiliate_id: null,

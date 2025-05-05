@@ -37,27 +37,27 @@ const Html = ({
 
     const permission = (p) => {
         if (user && user?.permission_detail && p) {
-          return user?.permission_detail[p]
+            return user?.permission_detail[p]
         } else {
-          return false
+            return false
         }
     }
 
     const exportCSV = () => {
-        let url='coupon/getAll'
-        let payload ={media:user?.id,csv:"yes",visibility:"Public",}
+        let url = 'coupon/getAll'
+        let payload = { media: user?.id, csv: "yes", visibility: "Public", }
         ApiClient.get(url, payload).then(res => {
             if (res) {
                 const xmlContent = res;
-    
+
                 const blob = new Blob([xmlContent], { type: 'application/xml' });
-    
+
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-    
+
                 link.download = 'Coupons.csv';
-    
-                link.click(); 
+
+                link.click();
             }
         })
     };
@@ -65,26 +65,40 @@ const Html = ({
     const exportXML = () => {
         let url = 'coupon/getAll';
         let payload = { media: user?.id, xml: "yes", visibility: "Public" };
-    
+
         ApiClient.get(url, payload).then(res => {
             if (res) {
                 const xmlContent = res;
-    
+
                 const blob = new Blob([xmlContent], { type: 'application/xml' });
-    
+
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-    
+
                 link.download = 'CouponsXml.xml';
-    
+
                 link.click();
             }
         });
-    }; 
-    
+    };
+
     const handleCountChange = (count) => {
         setFilter({ ...filters, count: count, page: 1 });
         getData({ count: count, page: 1 });
+    };
+
+    // Function to determine the status based on dates
+    const getCouponStatus = (item) => {
+        const currentDate = new Date();
+        const startDate = new Date(item.startDate);
+
+        // If start date is in the future, show "Pending"
+        if (startDate > currentDate) {
+            return "Pending";
+        }
+
+        // Otherwise return the original status
+        return item.status;
     };
 
     return (
@@ -98,7 +112,7 @@ const Html = ({
                                 Add Coupon
                             </a>
                         </>}
-                        <SelectDropdown                                                     theme='search'
+                        <SelectDropdown theme='search'
                             id="statusDropdown" className="mr-2 "
                             displayValue="name"
                             placeholder="All Status"
@@ -107,6 +121,7 @@ const Html = ({
                             options={[
                                 { id: 'Enabled', name: 'Enabled' },
                                 { id: 'Expired', name: 'Expired' },
+                                { id: 'Pending', name: 'Pending' },
                             ]}
                         />
 
@@ -118,7 +133,7 @@ const Html = ({
                     </article>
 
                     {/* Add Export Buttons */}
-                   {user?.role == "affiliate" && <div className="d-flex gap-2">
+                    {user?.role == "affiliate" && <div className="d-flex gap-2">
                         <button className="btn btn-success" onClick={exportCSV}>Export CSV</button>
                         <button className="btn btn-warning" onClick={exportXML}>Export XML</button>
                     </div>}
@@ -134,6 +149,7 @@ const Html = ({
                                     <th scope="col" className='table_data' >Coupon Type</th>
                                     <th scope="col" className="table_data">Brand Name</th>
                                     <th scope="col" className='table_data' >Visibility</th>
+                                    <th scope="col" className='table_data' >Start Date</th>
                                     <th scope="col" className='table_data' >Expiration Date</th>
                                     <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
@@ -142,6 +158,7 @@ const Html = ({
                             </thead>
                             <tbody>
                                 {!loaging && data && data.map((itm, i) => {
+                                    const displayStatus = getCouponStatus(itm);
                                     return <tr className='data_row' key={i}>
                                         <td className='table_dats' onClick={e => view(itm.id || itm?._id)}>
                                             <div className='user_detail'>
@@ -183,6 +200,15 @@ const Html = ({
                                             <div className='user_detail'>
                                                 <div className='user_name'>
                                                     <h4 className='user'>
+                                                        {datepipeModel.date(itm.startDate)}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className='table_dats'>
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
                                                         {datepipeModel.date(itm.expirationDate)}
                                                     </h4>
                                                 </div>
@@ -190,27 +216,27 @@ const Html = ({
                                         </td>
                                         <td className='table_dats'>
                                             <div className={`user_hours`}>
-                                                <span className={itm?.status == "Enabled" ? 'contract' : itm?.status == "Expired" ? 'inactive' : 'pending_status'}>
-                                                    {itm.status}
+                                                <span className={displayStatus == "Enabled" ? 'contract' : displayStatus == "Expired" ? 'inactive' : 'pending_status'}>
+                                                    {displayStatus}
                                                 </span>
                                             </div>
                                         </td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                                         {/* dropdown */}
-                                        <td className='table_dats'>
+                                        {user?.role == 'brand' && <td className='table_dats'>
                                             <div className="action_icons gap-3 ">
                                                 {(user?.role == 'brand' || permission('coupon_edit')) && <>
                                                     <a className='edit_icon action-btn' title="Edit" onClick={e => edit(itm.id || itm?._id)}>
                                                         <i className="material-icons edit" title="Edit">edit</i>
                                                     </a>
-                                                    <a className='edit_icon edit-delete' onClick={itm?.status == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
-                                                        <i className={`material-icons ${itm?.status == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
+                                                    <a className='edit_icon edit-delete' onClick={displayStatus == "accepted" ? "" : () => deleteItem(itm.id || itm?._id)}>
+                                                        <i className={`material-icons ${displayStatus == "accepted" ? 'delete' : 'diabled'}`} title='Delete'> delete</i>
                                                     </a>
                                                 </>
                                                 }
                                             </div>
-                                        </td>
+                                        </td>}
 
                                     </tr>
 

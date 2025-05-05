@@ -35,41 +35,59 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
         // { id: 'line-item', name: 'Line-item' }
     ]
 
-    const uploadDocument = async (e, key) => {
+    const uploadDocument = async (e) => {
         const files = e.target.files;
         const uploadedFileNames = [];
-
+    
         setDocLoader(true);
-
+    
         for (let i = 0; i < files.length; i++) {
             const file = files.item(i);
             const originalName = file.name;
-            const url = 'upload/document';
-
+            const isImage = file.type.startsWith("image/");
+    
+            const url = isImage ? "upload/image?modelName=campaign" : 'upload/document';
+            const formDataKey = isImage ? 'images' : 'file';
+    
             try {
+    
                 const res = await ApiClient.postFormData(url, { file: file });
-
+    
                 if (res.success) {
                     const path = res?.data?.imagePath;
                     const docPath = `documents/${path}`;
-
+    
                     if (form?.documents?.length < 10) {
-                        form.documents.push({
-                            name: originalName,
-                            url: docPath
-                        });
+                        if(isImage){
+                            form.images.push({
+                                name: originalName,
+                                url: `images/campaign/${res?.data?.fullpath}`
+                            });
+                        }else{
+                            form.documents.push({
+                                name: originalName,
+                                url: docPath
+                            });
+                        }
+                        
                     }
-
+    
                     uploadedFileNames.push(originalName);
                 }
             } catch (error) {
                 console.error(`Upload failed for ${originalName}`, error);
             }
         }
-
+    
         setDocLoader(false);
     };
     
+    const remove = (index, key) => {
+        const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
+            return index != indx
+        })
+        setform({ ...form, images: filterImg })
+    }
 
     const removeDocument = (index, key) => {
         const filterVid = form?.documents?.length > 0 && form.documents.filter((data, indx) => {
@@ -481,11 +499,11 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                                     <input
                                                         type="file"
                                                         className="form-control-file over_input"
-                                                        accept=".doc,.docx,.xml,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                        accept=".doc,.docx,.xml,.xls,.xlsx,.pdf,.png,.jpg,.jpeg,image/png,image/jpeg,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                                         multiple={true}
                                                         onChange={(e) => {
                                                             setDocLoder(true)
-                                                            uploadDocument(e, 'images');
+                                                            uploadDocument(e);
                                                         }}
                                                     />
                                                 </>
@@ -497,6 +515,14 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                                         <img src="/assets/img/document.png" className="" onClick={() => window.open(methodModel.noImg(itm?.url))} />
                                                         <i className="fa fa-times kliil" title="Remove" onClick={e => removeDocument(i)}></i>
                                                         <div>{itm?.name}</div>
+                                                    </div>
+                                                })}
+                                            </div>
+                                            <div className="imagesRow mt-4">
+                                                {form?.images && form?.images.map((itm, i) => {
+                                                    return <div className="imagethumbWrapper" key={i}>
+                                                        <img src={methodModel.noImg(itm?.url)} className="thumbnail" />
+                                                        <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
                                                     </div>
                                                 })}
                                             </div>
