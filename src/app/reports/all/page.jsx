@@ -293,7 +293,7 @@ export default function AnalyticsDashboard() {
                     </div>
 
 
-            <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} convertedCurrency={convertedCurrency} exchangeRate={exchangeRate}/>
+            <AnalyticsChartData data={data} data2={data2} clicks={clicks} clicks2={clicks2} state={dateRange} convertedCurrency={convertedCurrency} exchangeRate={exchangeRate} comparisonPeriod={comparisonPeriod}/>
                 </main>
             </div>
         </Layout>

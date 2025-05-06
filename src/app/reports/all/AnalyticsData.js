@@ -17,7 +17,7 @@ const CustomCard = ({ title, children, isExpanded, onExpand }) => (
   </div>
 );
 
-const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurrency,exchangeRate}) => {
+const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurrency,exchangeRate,comparisonPeriod}) => {
   const { selection1, selection2 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
 
@@ -120,7 +120,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
   const legendClicks2 = selection2 ? formatLegendLabel(selection2, clickPercentage) : "";
 
   const revenueChartOption = {
-    title: { text: 'Revenue Over Time Comparison' },
+    title: { text: comparisonPeriod == 'none' ? 'Revenue Over Time' : 'Revenue Over Time Comparison' },
     tooltip: {
       trigger: 'axis',
       formatter: function (params) {
@@ -145,7 +145,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
   };
   
   const actionsChartOption = {
-    title: { text: 'Actions Comparison' },
+    title: { text:comparisonPeriod == 'none' ? 'Actions' : 'Actions Comparison' },
     tooltip: revenueChartOption.tooltip,
     legend: { data: [legendActions1, legendActions2], bottom: 0, left: 'center' },
     xAxis: { type: 'category', data: allDates1, boundaryGap: false },
@@ -157,7 +157,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
   };
   
   const clicksChartOption = {
-    title: { text: 'Clicks Comparison' },
+    title: { text:comparisonPeriod == "none" ? 'Clicks' : 'Clicks Comparison' },
     tooltip: revenueChartOption.tooltip,
     legend: { data: [legendClicks1, legendClicks2], bottom: 0, left: 'center' },
     xAxis: { type: 'category', data: allDates1, boundaryGap: false },
@@ -193,7 +193,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
         
         <div className={expandedCard === "Clicks Comparison" ? "col-12 mt-3" : "col-md-6 mt-3"}>
           <CustomCard 
-            title="Clicks Comparison"  
+            title="Clicks"  
             isExpanded={expandedCard === "Clicks Comparison"} 
             onExpand={() => toggleExpand("Clicks Comparison")}
           >
