@@ -85,49 +85,52 @@ const AddEditUser = () => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-        setSubmitted(true)
-
-        // if(!form?.couponType || !form?.commissionType || !form?.couponCommission ||form?.startDate
-        //     || !form?.expirationDate 
-        // ){
-        //     return
-        // }
-        let method = 'post'
-        let url = 'coupon/add'
-
+        e.preventDefault();
+        setSubmitted(true);
+    
+        let method = 'post';
+        let url = 'coupon/add';
+    
         let value = {
             ...form,
-            // couponCommission:10,
+        };
+    
+        // Convert media to string if it exists
+        if (value?.media) {
+            value = { ...value, media: value?.media?.value.toString() };
         }
-        if(value?.media){
-            value={...value , media:value?.media?.value.toString()}
-
+    
+        // If visibility is Public, remove media
+        if (form?.visibility === 'Public') {
+            delete value.media;
         }
-        if(form?.visibility == 'Public'){
-            delete value.media
+    
+        // Set status to 'Pending' if startDate is in the future
+        const now = new Date();
+        const startDate = new Date(form?.startDate);
+        if (startDate > now) {
+            value.status = 'Pending';
         }
-
-        // delete value?.couponCommission
-        
+    
         if (value.id) {
-            method = 'put'
-            url = 'coupon/edit'
+            method = 'put';
+            url = 'coupon/edit';
         } else {
-            delete value.id
+            delete value.id;
         }
-        loader(true)
+    
+        loader(true);
         ApiClient.allApi(url, value, method).then(res => {
             if (res.success) {
-                toast.success("Coupon Added Successfully.")
-                let url = '/coupons'
-                if (role) url = "/coupons/" + role
-                history.push(url)
+                toast.success("Coupon Added Successfully.");
+                let redirectUrl = '/coupons';
+                if (role) redirectUrl = "/coupons/" + role;
+                history.push(redirectUrl);
             }
-            loader(false)
-            setSubmitted(true)
-        })
-    }
+            loader(false);
+            setSubmitted(true);
+        });
+    };
 
     const imageResult = (e) => {
         setImages(e?.value)
@@ -180,7 +183,7 @@ const AddEditUser = () => {
                         "visibility": value?.visibility,
                         "url":value?.url,
                         "couponCommission":value?.couponCommission,
-                        "status": "Enabled"
+                        // "status": "Enabled"
                     })
                     setImages(value?.image)
                     //     let payload = { ...defaultvalue };
