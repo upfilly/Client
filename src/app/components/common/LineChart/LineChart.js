@@ -21,7 +21,7 @@ ChartJS.register(
   PointElement
 );
 
-const LineChart = ({ data }) => {
+const LineChart = ({ data,convertedCurrency,exchangeRate}) => {
   const monthNumberToName = (month) => {
     const months = [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -34,7 +34,7 @@ const LineChart = ({ data }) => {
     labels: data?.headers?.map(header => monthNumberToName(header.month)),
     datasets: [
       {
-        label: 'Price ($)',
+        label: 'Revenue ($)',
         data: data?.data?.map(d => d.price),
         backgroundColor: 'rgba(75, 134, 192, 0.6)',
         borderColor: 'rgba(75, 134, 192, 1)',
@@ -53,7 +53,8 @@ const LineChart = ({ data }) => {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
-            return `$${tooltipItem.parsed.y.toFixed(2)}`;
+            return !exchangeRate ? `$${tooltipItem.parsed.y.toFixed(2)}` :`${convertedCurrency(tooltipItem.parsed.y.toFixed(2))}`;
+            // return `$${tooltipItem.parsed.y.toFixed(2)}`;
           },
         },
       },
@@ -66,7 +67,7 @@ const LineChart = ({ data }) => {
         beginAtZero: true,
         ticks: {
           callback: function (value) {
-            return `$${value}`;
+            return !exchangeRate ? `$${value}` :`${convertedCurrency(value)}`;
           },
         },
       },
