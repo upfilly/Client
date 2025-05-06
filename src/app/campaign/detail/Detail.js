@@ -184,7 +184,7 @@ const Detail = (p) => {
                                         </div>
                                     </div>
 
-                                    {/* <div className='row'>
+                                    <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Images:</p>
@@ -201,7 +201,7 @@ const Detail = (p) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> */}
+                                    </div>
 
                                     {/* <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>

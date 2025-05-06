@@ -35,34 +35,58 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
         // { id: 'line-item', name: 'Line-item' }
     ]
 
-    const uploadDocument = async (e, key) => {
-        let files = e.target.files
-        let i = 0
-        let imgfile = []
-        for (let item of files) {
-            imgfile.push(item)
-        }
-
-        setDocLoader(true)
-        for await (let item of imgfile) {
-            let file = files.item(i)
-            let url = 'upload/document'
-
-            const res = await ApiClient.postFormData(url, { file: file })
-            if (res.success) {
-                let path = res?.data?.imagePath
-                if (form?.documents?.length <= 9) {
-                    form?.documents?.push({
-                        name: `documents/${path}`,
-                        url: `documents/${path}`
-                    })
+    const uploadDocument = async (e) => {
+        const files = e.target.files;
+        const uploadedFileNames = [];
+    
+        setDocLoader(true);
+    
+        for (let i = 0; i < files.length; i++) {
+            const file = files.item(i);
+            const originalName = file.name;
+            const isImage = file.type.startsWith("image/");
+    
+            const url = isImage ? "upload/image?modelName=campaign" : 'upload/document';
+            const formDataKey = isImage ? 'images' : 'file';
+    
+            try {
+    
+                const res = await ApiClient.postFormData(url, { file: file });
+    
+                if (res.success) {
+                    const path = res?.data?.imagePath;
+                    const docPath = `documents/${path}`;
+    
+                    if (form?.documents?.length < 10) {
+                        if(isImage){
+                            form.images.push({
+                                name: originalName,
+                                url: `images/campaign/${res?.data?.fullpath}`
+                            });
+                        }else{
+                            form.documents.push({
+                                name: originalName,
+                                url: docPath
+                            });
+                        }
+                        
+                    }
+    
+                    uploadedFileNames.push(originalName);
                 }
+            } catch (error) {
+                console.error(`Upload failed for ${originalName}`, error);
             }
-            i++
         }
-        setDocLoader(false)
-        setDocLoder(false)
-        // setVdo(false)
+    
+        setDocLoader(false);
+    };
+    
+    const remove = (index, key) => {
+        const filterImg = form?.images.length > 0 && form.images.filter((data, indx) => {
+            return index != indx
+        })
+        setform({ ...form, images: filterImg })
     }
 
     const removeDocument = (index, key) => {
@@ -71,12 +95,6 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
         })
         setform({ ...form, documents: filterVid })
     }
-
-    const handleCategoryTypeChange = (selectedCategoryType) => {
-        getCategory(selectedCategoryType)
-        setSubCategories([]);
-        setSubSubCategories([]);
-    };
 
     const getCategory = () => {
         let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
@@ -100,55 +118,6 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
 
         if (/^\d*\.?\d*$/.test(value)) {
             setform({ ...form, [fieldName]: value });
-        }
-    };
-
-    const handleCategoryChange = (selectedCategoryIds) => {
-        const filteredSubCategories = categories
-            .filter(cat => selectedCategoryIds.includes(cat.id))
-            .flatMap(cat => cat.subCategories);
-
-        console.log(filteredSubCategories, "klklklk");
-        setSubCategories(filteredSubCategories);
-        setSubSubCategories([]);
-    };
-
-    const handleSubCategoryChange = (selectedSubCategoryIds) => {
-        const filteredSubSubCategories = subCategories
-            .filter(sub => selectedSubCategoryIds.includes(sub.id))
-            .flatMap(sub => sub.subchildcategory);
-
-        console.log(filteredSubSubCategories, "klklkll");
-
-        const SubSubCategories = filteredSubSubCategories.map((dat) => {
-            return {
-                id: dat?._id || dat?.id,
-                name: dat?.name,
-            };
-        });
-
-        setSubSubCategories(SubSubCategories);
-    };
-
-    const fetchCountriesByRegions = async (regions) => {
-        try {
-            const countries = await Promise.all(
-                regions.map(async (region) => {
-                    const response = await axios.get(
-                        `https://restcountries.com/v3.1/region/${region}`
-                    );
-                    return response.data.map((country) => ({
-                        label: country.name.common,
-                        id: country.name.common,
-                    }));
-                })
-            );
-
-            // Flatten the array of country arrays and return
-            setCountries(countries.flat());
-        } catch (error) {
-            console.error('Error fetching countries:', error);
-            return [];
         }
     };
 
@@ -530,11 +499,11 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                                     <input
                                                         type="file"
                                                         className="form-control-file over_input"
-                                                        accept=".doc,.docx,.xml,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                        accept=".doc,.docx,.xml,.xls,.xlsx,.pdf,.png,.jpg,.jpeg,image/png,image/jpeg,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                                         multiple={true}
                                                         onChange={(e) => {
                                                             setDocLoder(true)
-                                                            uploadDocument(e, 'images');
+                                                            uploadDocument(e);
                                                         }}
                                                     />
                                                 </>
@@ -543,8 +512,17 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                             <div className="imagesRow mt-4 img-wrappper">
                                                 {form?.documents && form?.documents.map((itm, i) => {
                                                     return <div className="imagethumbWrapper cover" key={i}>
-                                                        <img src="/assets/img/document.png" className="thumbnail" onClick={() => window.open(methodModel.noImg(itm?.url))} />
+                                                        <img src="/assets/img/document.png" className="" onClick={() => window.open(methodModel.noImg(itm?.url))} />
                                                         <i className="fa fa-times kliil" title="Remove" onClick={e => removeDocument(i)}></i>
+                                                        <div>{itm?.name}</div>
+                                                    </div>
+                                                })}
+                                            </div>
+                                            <div className="imagesRow mt-4">
+                                                {form?.images && form?.images.map((itm, i) => {
+                                                    return <div className="imagethumbWrapper" key={i}>
+                                                        <img src={methodModel.noImg(itm?.url)} className="thumbnail" />
+                                                        <i className="fa fa-times kliil" title="Remove" onClick={e => remove(i)}></i>
                                                     </div>
                                                 })}
                                             </div>
