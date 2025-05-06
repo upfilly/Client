@@ -40,7 +40,7 @@ const Users = () => {
     const getAffiliateData = (p = {}) => {
         // let filter = {brand_id:user?.id}
         let url = 'getallaffiliatelisting'
-        ApiClient.get(url).then(res => {
+        ApiClient.get(url, { brand_id: user?.id || user?._id }).then(res => {
             if (res.success) {
                 const data = res?.data?.map((data) => {
                     return ({

@@ -168,8 +168,8 @@ const Html = () => {
         ApiClient.get('get-affilaite-link').then((res) => {
             if (res?.success) {
                 console.log(res?.data, "res?.datares?.datares?.data")
-                setUrl(res?.data?.link)
-                generateShortLink(res?.data?.link)
+                setUrl(res?.data?.link.replace('/?','/'))
+                generateShortLink(res?.data?.link.replace('/?','/'))
             }
             loader(false);
         });
@@ -185,16 +185,24 @@ const Html = () => {
         //     return;
         // }
 
-        const base_url = 'https://upfilly.com/';
+        const base_url = 'https://api.upfilly.com/';
 
-        const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
-        const formattedDestinationUrl = hasProtocol ? DestinationUrl : DestinationUrl;
+        // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
+        // const formattedDestinationUrl = DestinationUrl
+        //     .replace(/^https?:\/\//i, '') 
+        //     .replace(/\.com$/i, '');
+        const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
 
-        const urlParams = new URLSearchParams({
-            fp_sid: selectedBrand,
-            affiliate: selectedBrand,
-            brand: user?.id
-        }).toString();
+        const domainParts = rawUrl.split('.');
+        const formattedDestinationUrl = domainParts.slice(0, -1).join('.')
+        const domainExtension = domainParts[domainParts.length - 1];
+
+        // const urlParams = new URLSearchParams({
+        //     fp_sid: selectedBrand,
+        //     affiliate: selectedBrand,
+        //     brand: user?.id
+        // }).toString();
+        const urlParams = `fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`;
 
         let finalUrl = new URL(base_url);
 
@@ -203,12 +211,14 @@ const Html = () => {
         }
 
         if (SelectedCampaign) {
-            finalUrl.searchParams.set('campaign', SelectedCampaign);
+            finalUrl.searchParams.set('campaign_id', SelectedCampaign);
         }
 
         if (DestinationUrl) {
-            const destinationUrlWithParams = `${formattedDestinationUrl}?${urlParams}`;
-            finalUrl.searchParams.set('url', encodeURIComponent(destinationUrlWithParams));
+            // const destinationUrlWithParams = `${formattedDestinationUrl}?${urlParams}`;
+            const destinationUrlWithParams = `${formattedDestinationUrl}`;
+            finalUrl.searchParams.set('url', destinationUrlWithParams);
+            finalUrl.searchParams.set('ext', domainExtension);
         }
 
         const finalUrlString = finalUrl.toString();
@@ -219,8 +229,8 @@ const Html = () => {
             if (res?.success) {
                 toast.success(res?.message)
                 setSubmited(false)
-                setUrl(res?.data);
-                generateShortLink(res?.data)
+                setUrl(res?.data.replace('/?','/'));
+                generateShortLink(res?.data.replace('/?','/'))
                 if (!SelectDropdown) {
                     setSelectDropdown(!SelectDropdown)
                 }
@@ -354,10 +364,10 @@ const Html = () => {
                                     </div>
                                 </div>
 
-                                {!selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com`}</div>}
-                                {SelectedCampaign && !selectedBrand && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?campaign=${SelectedCampaign}`}</div>}
-                                {selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}`}</div>}
-                                {selectedBrand && SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</div>}
+                                {!selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://api.upfilly.com`}</div>}
+                                {SelectedCampaign && !selectedBrand && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://api.upfilly.com/?campaign=${SelectedCampaign}`}</div>}
+                                {selectedBrand && !SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://api.upfilly.com/?affiliate_id=${selectedBrand}`}</div>}
+                                {selectedBrand && SelectedCampaign && <div id="textToCopy" className="form-control br0 mb-0 heauto" >{url || `https://api.upfilly.com/?affiliate_id=${selectedBrand}&campaign=${SelectedCampaign}`}</div>}
                             </div>
 
                             <h6 className="link_default mt-3 mb-0"> Your Short URL Link :</h6>

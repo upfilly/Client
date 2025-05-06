@@ -155,7 +155,16 @@ const Html = () => {
         }
         const base_url = 'https://upfilly.com/';
         const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
-        const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
+        // const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
+        // const formattedDestinationUrl = DestinationUrl
+        //     .replace(/^https?:\/\//i, '') 
+        //     .replace(/\.com$/i, '');
+
+        const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
+
+        const domainParts = rawUrl.split('.');
+        const formattedDestinationUrl = domainParts.slice(0, -1).join('.')
+        const domainExtension = domainParts[domainParts.length - 1];
         
         const baseParams = new URLSearchParams({
             affiliate_id: user?.id,
@@ -179,8 +188,10 @@ const Html = () => {
         }
         
         if (DestinationUrl) {
-            const finalDestinationUrl = formattedDestinationUrl + (urlParams ? `?${urlParams}` : '');
-            finalUrl += `&url=${encodeURIComponent(finalDestinationUrl)}`;
+            // const finalDestinationUrl = formattedDestinationUrl + (urlParams ? `?${urlParams}` : '');
+            const finalDestinationUrl = formattedDestinationUrl
+            // finalUrl += `&url=${encodeURIComponent(finalDestinationUrl)}`;
+            finalUrl += `&url=${finalDestinationUrl}&ext=${domainExtension}`;
         }
         
         if (!finalUrl.includes('?')) {
