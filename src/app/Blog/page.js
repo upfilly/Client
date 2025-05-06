@@ -97,7 +97,7 @@ export default function Blog() {
            
             {!loaging && data?.data?.map((itm) =>
               // eslint-disable-next-line react/jsx-key
-              <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-4" >
+              <div class="col-12 col-md-6 col-lg-4 mb-4" >
                 <div class="card card-shadow blog_cards">
                   <Carousel showIndicators={false}>
                     {itm?.image?.length > 0 ? (

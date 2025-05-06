@@ -96,7 +96,7 @@
     }
   }
   .platform-content h3 {
-    font-size: 28px !important;
+    font-size: 20px !important;
     font-weight: 500 !important;
   }
   .fetaues_lasts h6 {
@@ -183,7 +183,7 @@
     }
   }
   .platform-content h3 {
-    font-size: 24px !important;
+    font-size: 20px !important;
     font-weight: 500 !important;
   }
   .resource-page {
@@ -220,7 +220,7 @@
     margin-top: 20px !important;
   }
   .contactus {
-    .card_box{
+    .card_box {
       height: unset !important;
     }
     .imgtag_card {
@@ -229,6 +229,9 @@
       padding: 30px 0px;
     }
   }
+  #about-section .row{
+    margin-bottom: 0 !important;
+  }
 }
 /* For screen width <= 576px (Mobile devices) */
 @media (max-width: 576px) {
@@ -236,22 +239,52 @@
     font-size: 24px;
     text-align: center;
   }
+  .included-item h3 {
+    font-size: 18px !important;
+    margin-bottom: 0 !important;
+  }
+  .included-item p {
+    font-size: 14px !important;
+  }
+  .innerhtmls {
+    font-size: 24px !important;
+    line-height: 30px;
+  }
+  .pricing-option h3 {
+    font-size: 18px !important;
+    padding-bottom: 15px !important;
+  }
+  .pricing-option p {
+    font-size: 14px !important;
+  }
   .dashimgs {
     height: 280px;
+  }
+  .fetausinners {
+    p {
+      font-size: 14px;
+    }
+  }
+  .ptext_bgs {
+    font-size: 16px;
+    line-height: 20px;
   }
   .platforms-page {
     section {
       padding-top: 0 !important;
     }
     .affiliate-tracking h2 {
-      font-size: 24px;
+      font-size: 20px;
+      text-align: center;
     }
     .affiliate-tracking p {
-      font-size: 16px;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
     }
   }
   .platform-content h3 {
-    font-size: 18px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
   }
   .platform-content {
@@ -259,17 +292,23 @@
   }
   .platform-wrapper {
     h1 {
-      font-size: 24px !important;
-      line-height: 30px;
+      font-size: 20px !important;
+      line-height: 26px;
     }
   }
   .platform-wrapper {
     .para {
-      font-size: 16px !important;
+      font-size: 14px !important;
     }
   }
   .lefttext {
-    font-size: 24px;
+    font-size: 20px;
+  }
+  .subs-content h5 {
+    font-size: 18px !important;
+  }
+  .subs-content h6 {
+    font-size: 14px;
   }
   .resource-page {
     .cta-header {
@@ -279,40 +318,69 @@
       padding: 40px 20px !important;
     }
     .cta-title {
-      font-size: 28px !important;
+      font-size: 24px !important;
+      line-height: 30px;
     }
     .cta-subtitle {
-      font-size: 16px !important;
+      font-size: 14px !important;
     }
+  }
+  .included-container{
+    .cuspadding2{
+      padding: 0;
+    }
+  }
+  .cta-btn{
+    font-size: 14px !important;
   }
   .bggraylight {
     padding: 30px 30px;
     padding-bottom: 40px !important;
   }
   .fetaues_lasts h6 {
-    font-size: 28px !important;
+    font-size: 24px !important;
     line-height: 35px !important;
+  }
+  .fetaues_lasts p {
+    font-size: 14px !important;
   }
   .cta-button {
     padding: 8px 18px !important;
   }
   .feyusul li {
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
   .included-list {
     margin-top: 30px !important;
   }
   .included-title {
-    font-size: 28px !important;
+    font-size: 20px !important;
   }
   .cta-content {
     padding: 20px !important;
   }
-  .mainhead{
-    font-size: 28px;
+  .mainhead {
+    font-size: 24px;
     margin-bottom: 0;
   }
   #about-section h3.rise {
     font-size: 24px !important;
   }
+  .imgtag_card h6{
+    font-size: 20px !important;
+  }
+  .imgtag_card p{
+    font-size: 14px !important;
+    line-height: 25px !important;
+  }
+  .btn{
+    font-size: 14px !important;
+  }
+  #about-section p{
+    font-size: 14px;
+  }
+  #about-section .col-md-12 p {
+    font-size: 14px !important;
+  }
+ 
 }

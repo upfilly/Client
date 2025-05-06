@@ -56,7 +56,7 @@ export default function Resources() {
 
           <div className="minus_margin container">
 
-            <h5 className="innerhtmls">Powerful Tools to Drive Your Affiliate  <p className="d-block"> Success</p></h5>
+            <h5 className="innerhtmls">Powerful Tools to Drive Your Affiliate Success</h5>
 
 
             <p className="para3">

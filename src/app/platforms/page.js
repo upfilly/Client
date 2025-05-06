@@ -264,7 +264,7 @@ const UpFillyPage = () => {
             <div className="row gy-4 align-items-center flex-column-reverse flex-md-row">
               <div className="col-md-6 platform-wrapper ">
                 <h1 className='text-center text-md-left'>
-                  Usable Upfilly <br/> Platform
+                  Usable Upfilly Platform
                 </h1>
                 <p className='mt-2 para text-center text-md-left'>
                   Lorem Ipsum is simply dummy text of the  printing and type lorem Ipsum is simply
@@ -330,7 +330,7 @@ const UpFillyPage = () => {
               <div className="col-12 col-md-7 col-lg-6 platform-wrapper ">
                 <div className="mainwidths text-center text-md-left">
                   <h1>
-                    Usable Upfilly <br/> Platform
+                    Usable Upfilly Platform
                   </h1>
                   <p className="para">
                     Lorem Ipsum is simply dummy text of the   printing and type lorem Ipsum is simply

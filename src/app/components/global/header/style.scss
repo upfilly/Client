@@ -561,3 +561,12 @@ img.fonts15 {
   text-align: center;
   font-weight: 300;
 }
+.dropdown-menu{
+  padding: 0 !important;
+  a{
+    padding: 6px 10px !important;
+    &:hover{
+      border-radius: 2px !important;
+    }
+  }
+}
