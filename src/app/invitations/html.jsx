@@ -123,9 +123,9 @@ const Html = ({
                                                 <td className='table_dats'>{itm?.tags?.map((data) => data).join(",") || "--"}</td>
                                                 <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{methodModel.capitalizeFirstLetter(itm?.status)}</td>
                                                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
-                                                {<td className='table_dats d-flex set_iconstabls justify-content-center '>
+                                                {<td className='table_dats d-flex flex-nowrap set_iconstabls justify-content-cente'>
                                                     {user && user?.role == "affiliate" && <>
-                                                        {itm?.status == 'pending' ? <div >
+                                                        {itm?.status == 'pending' ? <div>
                                                             <button onClick={() => {
                                                                 statusChange("accepted", itm?.id || itm?._id)
                                                                 // Tracklogin(itm?.campaign_unique_id)
@@ -146,7 +146,6 @@ const Html = ({
                                                                 </div>
                                                         }
                                                     </>}
-                                                    <>
                                                         <button type='button' className='btn btn-primary action-btns circle_icons mb-0'
                                                             onClick={() => {
                                                                 history.push(`/chat`)
@@ -154,7 +153,6 @@ const Html = ({
                                                             }}>
                                                             <i className='fa fa-comment-o'></i>
                                                         </button>
-                                                    </>
 
 
 

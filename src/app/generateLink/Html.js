@@ -230,7 +230,7 @@ const Html = () => {
                         <div className='card-body'>
 
                             <div className='row'>
-                                <div className='col-12 col-sm-6 col-md-6'>
+                                <div className='col-12 col-sm-6 col-md-6 custom-dropdown'>
                                     <div className='mb-3' >
                                         <label>Select a Merchant</label>
                                         <select className="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
@@ -241,7 +241,7 @@ const Html = () => {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-md-12 mb-3">
+                                <div className="col-md-12 mb-3 custom-input">
                                     <label>
                                         Destination Url<span className="star">*</span>
                                     </label>

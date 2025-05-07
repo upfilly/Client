@@ -24,7 +24,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                         <div className="form-row ">
                         <div className="col-md-12 mb-3">
                                 <label>Select Role</label>
-                                <div className="select_row">
+                                <div className="select_row custom-dropdown">
                                     <SelectDropdown                                                     theme='search'
                                         id="statusDropdown"
                                         displayValue="name"
@@ -41,7 +41,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                     />
                                 </div>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
                                 <label>First Name<span className="star">*</span></label>
                                 <input
                                     type="text"
@@ -53,7 +53,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
                                 {submitted && !form?.firstName ? <div className="invalid-feedback d-block">First Name is Required</div> : <></>}
                             </div>
 
-                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
                                 <label>Last Name<span className="star">*</span></label>
                                 <input
                                     type="text"
@@ -67,7 +67,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
 
                            
 
-                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
                                 <label>E-mail<span className="star">*</span></label>
                                 <input
                                     type="email"

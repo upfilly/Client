@@ -777,7 +777,7 @@ export default function addAffiliateAccount() {
                                   Are you a U.S. citizen, U.S. permanent resident (green card
                                   holder) <i class="fa fa-info-circle" aria-hidden="true"></i>
                                 </label>
-                                <div className='position-relative selectYes'>
+                                <div className='position-relative selectYes custom-dropdown'>
                                   <select
                                     class="form-control  "
                                     id="exampleFormControlSelect1"
@@ -984,7 +984,7 @@ export default function addAffiliateAccount() {
                                 <div className="row gy-2">
 
                                   {form?.tax_classification === "individual" && (
-                                    <div className="col-md-6 ">
+                                    <div className="col-md-6 custom-input">
                                       <input
                                         type="text"
                                         className="form-control"
@@ -1004,7 +1004,7 @@ export default function addAffiliateAccount() {
 
                                   {form?.tax_classification === "business" && (
                                     <>
-                                      <div className="col-md-6 ">
+                                      <div className="col-md-6 custom-input">
                                         <input
                                           type="text"
                                           className="form-control"
@@ -1022,7 +1022,7 @@ export default function addAffiliateAccount() {
                                         )}
                                       </div>
 
-                                      <div className="col-md-6 ">
+                                      <div className="col-md-6 custom-input">
                                         <input
                                           type="text"
                                           className="form-control phone_IN"
@@ -1063,7 +1063,7 @@ export default function addAffiliateAccount() {
                                   )}
 
                                   {form?.tax_classification === "individual" && (
-                                    <div className="col-md-6 ">
+                                    <div className="col-md-6 custom-input">
                                       <input
                                         type="text"
                                         className="form-control phone_us"

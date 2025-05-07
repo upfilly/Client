@@ -348,9 +348,9 @@ const Html = ({
                                                             </span></td>
                                                             <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>
                                                             {/* <td className='table_dats'>{datepipeModel.date(itm?.campaign_detail?.updatedAt)}</td> */}
-                                                            <td className='table_dats d-flex align-items-center'>
+                                                            <td className='table_dats d-flex gap-1 align-items-center'>
                                                                 {itm?.status == 'pending' ? (
-                                                                    <div className='d-flex align-items-center'>
+                                                                    <div className='d-flex gap-1 align-items-center'>
                                                                         <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?._id, itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                             <i className='fa fa-check'></i>
                                                                         </button>

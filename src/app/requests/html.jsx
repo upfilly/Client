@@ -165,7 +165,7 @@ const Html = ({
                                                         }
                                                     </>}
                                                     <>
-                                                        <span className='btn btn-primary action-btns py-2 ml-2'
+                                                        <span className='btn btn-primary action-btns '
                                                             onClick={() => {
                                                                 history.push(`/chat`)
                                                                 localStorage.setItem("chatId", itm?.brand_id)

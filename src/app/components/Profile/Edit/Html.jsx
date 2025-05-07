@@ -302,7 +302,7 @@ const Html = ({ user,
                     <div className='edit-user-details'>
 
                       <div className='row'>
-                        <div className='col-12 col-sm-12 col-md-6 form-group'>
+                        <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
                           <label>Name<span className='star'>*</span></label>
                           <div>
                             <input
@@ -317,7 +317,7 @@ const Html = ({ user,
                           </div>
                         </div>
 
-                        <div className='col-12 col-sm-12 col-md-6 form-group'>
+                        <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
                           <label className='d-block'>Email</label>
                           <div>
                             <input
@@ -330,7 +330,7 @@ const Html = ({ user,
                           </div>
                         </div>
 
-                        <div className="col-12 col-sm-12 col-md-6 form-group">
+                        <div className="col-12 col-sm-12 col-md-6 form-group custom-input">
                           <label>Mobile No<span className='star'>*</span></label>
                           <div className='w-100'>
                             <div className="phoneInput w-100 ">
@@ -366,7 +366,7 @@ const Html = ({ user,
 
                         </div>
 
-                        <div className="col-12 col-sm-12 col-md-6 mb-3 ">
+                        <div className="col-12 col-sm-12 col-md-6 mb-3 custom-dropdown">
                           <div className='form-group'>
                             <label>Gender<span className="star">*</span></label>
                             <div className="select_row">
@@ -388,7 +388,7 @@ const Html = ({ user,
                           </div>
                         </div>
 
-                        <div className="col-12 col-sm-12 col-md-6 form-group ">
+                        <div className="col-12 col-sm-12 col-md-6 form-group custom-input">
                           <label>Role</label>
                           <div>
                             <input
@@ -401,7 +401,7 @@ const Html = ({ user,
                           </div>
                         </div>
 
-                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
+                        <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
                           <div className='form-group'>
                             <div className="select_drop ">
                               <label>Timezone</label>
@@ -532,7 +532,7 @@ const Html = ({ user,
                         </div> */}
 
 
-                        <div className="col-md-12 mb-3">
+                        <div className="col-md-12 mb-3 custom-dropdown">
                           <label>Select Category<span className="star">*</span></label>
                           <div className="drops category-input">
                             <MultiSelectDropdown
@@ -548,7 +548,7 @@ const Html = ({ user,
 
 
                         {user?.role == 'affiliate' &&
-                          <div className='col-12 col-sm-12 col-md-6 mb-3'>
+                          <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
                             <div className='form-group'>
                               <div className="select_drop ">
                                 <label>Type</label>
@@ -569,7 +569,7 @@ const Html = ({ user,
                           </div>}
 
                         {<><>
-                          <div className="col-12 col-sm-12 col-md-6 mb-3">
+                          <div className="col-12 col-sm-12 col-md-6 mb-3 custom-input">
                             <div className="form-group">
                               <label>Location</label>
                               <PlacesAutocomplete
@@ -615,27 +615,27 @@ const Html = ({ user,
                           </div>
                         </>
                           <div className='col-12 col-sm-12 col-md-6 mb-3 '>
-                            <div class="form-group">
+                            <div class="form-group custom-input">
                               <label className='label-set'>Country  </label>
-                              <input type="text" value={form?.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
+                              <input type="text" value={form?.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                             </div>
                           </div>
                           <div className='col-12 col-sm-12 col-md-6 mb-3 '>
-                            <div class="form-group">
+                            <div class="form-group custom-input">
                               <label className='label-set'>City  </label>
-                              <input type="text" value={form?.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
+                              <input type="text" value={form?.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                             </div>
                           </div>
                           <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                            <div class="form-group">
+                            <div class="form-group custom-input">
                               <label className='label-set' >Postal Code</label>
-                              <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control quick-radius" id="exampleFormControlInput1" />
+                              <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                             </div>
                           </div></>
                         }
 
                         {user?.role != "affiliate" ? <div className="col-12 col-sm-12 col-md-6 mb-3">
-                          <div className='form-group'>
+                          <div className='form-group custom-input'>
                             <label>website</label>
                             <input
                               type="text"
@@ -650,7 +650,7 @@ const Html = ({ user,
                         </div>
                           :
                           <div className="col-12 col-sm-12 col-md-6 mb-3">
-                            <div className="form-group">
+                            <div className="form-group custom-input">
                               <label>Websites</label>
                               {websites.map((website, index) => (
                                 <div key={index} className="d-flex align-items-center gap-2 mb-2">
@@ -684,9 +684,9 @@ const Html = ({ user,
 
                         {
                           <div className='col-12 col-sm-12 col-md-6 mb-3  col-lg-12'>
-                            <div className=" form-group">
+                            <div className=" form-group custom-input">
                               <label> Tags</label>
-                              <div className="d-flex gap-3  flex-row">
+                              <div className="d-flex gap-2  flex-row">
                                 <input
                                   type="text"
                                   className="form-control"
@@ -697,14 +697,14 @@ const Html = ({ user,
 
                                 />
                                 <a
-                                  className=" d-flex justify-content-center align-items-center btn btn-primary"
+                                  className="add-btn d-flex justify-content-center align-items-center btn btn-primary"
                                   onClick={addTag}
                                 ><i className='fa fa-plus'></i></a>
                               </div>
                               <div className="d-flex gap-3 align-items-center flex-wrap mt-4 ">
                                 {form && form?.tags?.map((item, i) => {
                                   return (
-                                    <button type="button" class="btn btn-primary d-flex gap-2 align-items-center" key={i}>
+                                    <button type="button" class="btn btn-primary d-flex gap-2  align-items-center" key={i}>
                                       <span className=' pt_bx'> {item}</span>
                                       <i className='fa fa-close cloosebtn' onClick={() => cancele(item, 'tags')} ></i>
                                     </button>
@@ -756,7 +756,7 @@ const Html = ({ user,
                                 </div>
                                 {selectedItems1?.includes(item) && (
                                   <div className="row">
-                                    <div className="col-12 my-3">
+                                    <div className="col-12 my-3 custom-input">
                                       <label>User name</label>
                                       <input
                                         type="text"
@@ -773,7 +773,7 @@ const Html = ({ user,
                                       />
                                     </div>
 
-                                    <div className="col-12 my-3">
+                                    <div className="col-12 my-3 custom-input">
                                       <label>{`${methodModel?.capitalizeFirstLetter(item)} link`}</label>
                                       <input
                                         type="text"
@@ -798,7 +798,7 @@ const Html = ({ user,
                           ))}
 
                           <div className="col-12">
-                            <div className="card rounded-5 border platforms_input mb-3 p-3">
+                            <div className="card rounded-5 border platforms_input custom-input mb-3 p-3">
                               <input
                                 type="text"
                                 className="form-control mb-2"

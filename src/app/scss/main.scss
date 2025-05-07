@@ -710,6 +710,7 @@ button.btn.btn-primary.loginclass {
 .btn-primary {
   border-radius: 50px !important;
   border: unset !important;
+  line-height: 1.6 !important;
 }
 
 @media(max-width:768px) {
@@ -1914,7 +1915,7 @@ p.card-text.text-truncate p {
 
 .categories span {
   background: #e2e2e2;
-  padding: 7px 11px;
+  padding: 6px 12px;
   border-radius: 50px;
   font-size: 14px !important;
   margin: 4px 8px 4px 0;
@@ -2120,7 +2121,7 @@ input.datepicker-field {
 }
 
 .react-datepicker__view-calendar-icon input {
-  padding: 6px 10px 5px 35px !important;
+  padding: 6px 12px 5px 35px !important;
   background-color: #fff !important;
 }
 
@@ -2486,7 +2487,7 @@ span.contract {
   font-size: 13px;
   font-style: normal;
   line-height: normal;
-  padding: 7px 11px;
+  padding: 6px 12px;
   font-weight: 400;
   color: #fcf2f2;
   border-radius: 50px;
@@ -2503,7 +2504,7 @@ span.contract {
   font-size: 13px;
   font-style: normal;
   line-height: normal;
-  padding: 7px 11px;
+  padding: 6px 12px;
   min-height: 30px;
   font-weight: 400;
   color: #fff;
@@ -2520,7 +2521,7 @@ span.contract {
   font-size: 13px;
   font-style: normal;
   line-height: normal;
-  padding: 7px 11px;
+  padding: 6px 12px;
   min-height: 30px;
   font-weight: 400;
   color: #fff;
@@ -2539,7 +2540,7 @@ span.contract {
   font-size: 13px;
   font-style: normal;
   line-height: normal;
-  padding: 7px 11px;
+  padding: 6px 12px;
   font-weight: 400;
   color: #222;
   border-radius: 50px;
@@ -3426,7 +3427,7 @@ p.types_date {
 
 .searchWrapper {
   border: 1px solid #ccc;
-  padding: 6px 10px !important;
+  padding: 6px 12px !important;
   position: relative;
   min-height: 40px;
   border-radius: 50px !important;
@@ -3517,6 +3518,7 @@ p.types_date {
 
 .btn-secondary {
   border-radius: 50px !important;
+  font-size: 14px !important;
 }
 
 button.cancel_btns {
@@ -4324,7 +4326,8 @@ p.checkbox-option-main {
 
 // offer edit page css 
 .select_arrowbx .icon_down_dir {
-  width: 9px;
+  width: 8px;
+  opacity: 0.5;
 }
 
 .textarea_offers {
@@ -6070,7 +6073,41 @@ input.form-control {
   border-radius: 50px !important;
 }
 .action-btns{
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.add-btn{
+  min-width: 38px !important;
   width: 38px !important;
   height: 38px !important;
-  border-radius: 50% !important;
+}
+.custom-input {
+  input {
+    height: 40px !important;
+  }
+}
+.custom-dropdown{
+  .searchWrapper{
+    min-height: 40px;
+  }
+  select{
+    min-height: 40px !important;
+  }
+  .css-1fdsijx-ValueContainer{
+    min-height: 40px;
+    .css-1dimb5e-singleValue{
+      font-size: 14px;
+    }
+  }
+  .date_select{
+    min-height: 40px ;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
 }

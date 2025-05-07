@@ -211,7 +211,7 @@ export default function AnalyticsDashboard() {
                 </aside>
 
                 <main className="main-content">
-                    <div className='d-flex'>
+                    <div className='d-flex custom-dropdown'>
                         <span
                             className="form-select position-relative date_select"
                             onClick={(e) => setHandleDateFilter(!handleDateFilter)}
