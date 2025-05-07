@@ -33,7 +33,7 @@ export default function Company() {
         </section>
 
         {/* What’s Included Section */}
-        <section className="container">
+        <section className="container included-container">
           <div className="cuspadding2">
             <h2 className="included-title ">What’s Included in Managed Subscriptions?</h2>
             <div className="included-list">
@@ -77,7 +77,7 @@ export default function Company() {
         </section>
 
         {/* Pricing Options Section */}
-        <section className="container">
+        <section className="container included-container">
           <div className="cuspadding2  pt-0">
             <h2 className="included-title">Flexible Pricing to Suit Your Needs</h2>
             <div className="included-list">
@@ -149,7 +149,7 @@ export default function Company() {
         </section>
 
         {/* Call-to-Action Section */}  
-        <section className="cta container">
+        <section className="cta container resource-page">
           <div className="row">
             <div className="col-md-12">
               <div className="cta-content">

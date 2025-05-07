@@ -1,4 +1,4 @@
-@import '../../../scss/mixins';
+@import "../../../scss/mixins";
 
 // li a:hover {
 //   color: #2271b8 !important;
@@ -15,8 +15,13 @@ ul.footer_list {
 ul.footer_list li {
   list-style: none;
   line-height: 2;
+  a {
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 }
-.pointer{
+.pointer {
   cursor: pointer;
 }
 .right.d-flex a {

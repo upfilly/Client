@@ -11,7 +11,7 @@ const CustomCard = ({ title, children, isExpanded, onExpand }) => (
         {isExpanded ? <CompressOutlined /> : <ExpandOutlined />}
       </span>
     </div>
-    <div className="card-content">
+    <div className="card-content p-0">
       {children}
     </div>
   </div>
@@ -171,7 +171,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
   return (
     <div className="analytics-container">
       <div className="row">
-        <div className={expandedCard === "Revenue Over Time" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+        <div className={expandedCard === "Revenue Over Time" ? "col-12 mt-3" : "col-lg-6 mt-3"}>
           <CustomCard 
             title="Revenue Over Time" 
             isExpanded={expandedCard === "Revenue Over Time"} 

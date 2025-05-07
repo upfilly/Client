@@ -129,25 +129,25 @@ const Html = ({
                                                             <button onClick={() => {
                                                                 statusChange("accepted", itm?.id || itm?._id)
                                                                 // Tracklogin(itm?.campaign_unique_id)
-                                                            }} className="btn btn-primary  circle_icons mb-0 mr-2">
+                                                            }} className="btn btn-primary action-btns circle_icons mb-0 mr-2">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red circle_icons mb-0">
+                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger action-btns br50 bg-red circle_icons mb-0">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                                <div className="btn btn-danger" title="Rejected">
+                                                                <div className="btn btn-danger action-btns" title="Rejected">
                                                                     <i className="fa fa-times"></i>
                                                                 </div>
                                                                 :
-                                                                <div className="btn btn-primary" title="Accepted">
+                                                                <div className="btn btn-primary py-2 action-btns" title="Accepted">
                                                                     <i className="fa fa-check"></i>
                                                                 </div>
                                                         }
                                                     </>}
                                                     <>
-                                                        <button type='button' className='btn btn-primary circle_icons mb-0'
+                                                        <button type='button' className='btn btn-primary action-btns circle_icons mb-0'
                                                             onClick={() => {
                                                                 history.push(`/chat`)
                                                                 localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)

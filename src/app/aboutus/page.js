@@ -55,13 +55,13 @@ export default function AboutUs() {
                 {data?.image && <img src={methodModel.userImg(data && data?.image)} alt="Signature" className="img-fluid" />}
               </div>
               <div className="col-12 col-md-6 text-left mx-auto text-center text-md-left">
-                <p dangerouslySetInnerHTML={{ __html: data && data?.description?.slice(0, 999) }}></p>
+                <p className='mb-0' dangerouslySetInnerHTML={{ __html: data && data?.description?.slice(0, 999) }}></p>
               </div>
             </div>
 
             <div className="row mx-auto d-flex align-items-center text-center">
               <div className="col-md-12 p-0 mx-auto">
-                <p dangerouslySetInnerHTML={{ __html: data && data?.description?.slice(999) }}></p>
+                <p className='mt-0' dangerouslySetInnerHTML={{ __html: data && data?.description?.slice(999) }}></p>
               </div>
             </div>
 
