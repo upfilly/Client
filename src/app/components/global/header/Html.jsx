@@ -191,41 +191,41 @@ const Html = ({ settingData, Logout }) => {
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse set_nabx" id="navbarSupportedContent">
-              <ul class="navbar-nav d-flex justify-content-between ml-auto set_navbx">
+            <div class="collapse navbar-collapse set_nabx py-2" id="navbarSupportedContent">
+              <ul class="navbar-nav d-flex gap-0 ml-auto set_navbx">
                 <li class="nav-item">
                   <Link
-                    class={`nav-link ${pathname == "/platforms" ? 'active' : ''}`}
+                    class={`nav-link py-2 ${pathname == "/platforms" ? 'active' : ''}`}
                     href="/platforms">Platform</Link>
                 </li>
                 {/* {false && */}
                  <>{(user?.role == "brand" || !user) && <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/pricing" ? 'active' : ''}`} href="/pricing">Pricing</Link>
+                  <Link class={`nav-link py-2 ${pathname == "/pricing" ? 'active' : ''}`} href="/pricing">Pricing</Link>
                 </li>}</>
                 {/* } */}
                 {/* <li class="nav-item">
                   <Link class={`nav-link ${pathname == "/partners" ? 'active' : ''}`} href="/partners">Partners</Link>
                 </li> */}
                 <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/resources" ? 'active' : ''}`} href="/resources">Features</Link>
+                  <Link class={`nav-link py-2 ${pathname == "/resources" ? 'active' : ''}`} href="/resources">Features</Link>
                 </li>
                 <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/company" ? 'active' : ''}`} href="/company">Subscriptions</Link>
+                  <Link class={`nav-link py-2 ${pathname == "/company" ? 'active' : ''}`} href="/company">Subscriptions</Link>
                 </li>
                 {(user?.role == "brand" || !user) && <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Script</Link>
+                  <Link class={`nav-link  ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Script</Link>
                 </li>}
 
               </ul>
-              <form class="form-inline my-2 my-lg-0 ml-auto">
+              <form class="my-2 my-lg-0 ">
                 {/* <li class="nav-item">
             {(user?.role == "brand" || !user) && <Link class="btn btn-primary login" href="/pricing">Book a Demo</Link>}
             </li> */}
                 {/* <li class="nav-item">
                   <Link class={`btn btn-primary login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Book a Demo</Link>
                 </li> */}
-                <li class="nav-item">
-                  <Link class={`btn btn-primary  contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
+                <li class="nav-item text-center">
+                  <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
                 </li>
               </form>
             </div>

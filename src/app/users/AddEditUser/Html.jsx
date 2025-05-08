@@ -98,7 +98,7 @@ const Html = ({user, id, role, form, handleSubmit, setform, submitted, back, }) 
 
                             
 
-                            <div className="col-md-12 mb-3">
+                            <div className="col-md-12 mb-3 custom-description">
                                 <label>Description</label>
                                 <DynamicReactQuill
                                     theme="snow"

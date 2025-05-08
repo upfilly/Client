@@ -238,7 +238,7 @@ export default function Home() {
       filters={undefined}
     >
       <div className="px-md-5 pt-3">
-        <div className="container-fluid">
+        <div className="container">
           <div className="main-section">
             <div className="row align-items-center flex-lg-row flex-column-reverse flex-md-row ">
               <div className="col-md-6 ">

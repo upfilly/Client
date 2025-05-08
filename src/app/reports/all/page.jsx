@@ -286,7 +286,7 @@ export default function AnalyticsDashboard() {
 
                     <div className="reset-filters-container">
                         {isFilterApplied() && (
-                            <button className="reset-button" onClick={resetFilters}>
+                            <button className="reset-button rounded-pill" onClick={resetFilters}>
                                 Reset Filters
                             </button>
                         )}
