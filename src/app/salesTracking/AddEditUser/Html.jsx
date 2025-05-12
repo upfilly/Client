@@ -39,7 +39,7 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                     <div className="select_row">
                                         <SelectDropdown                                                     theme='search'
                                             id="statusDropdown"
-                                            displayValue="brand_name"
+                                            displayValue="name"
                                             placeholder="Select Brand"
                                             intialValue={form?.brand_id}
                                             // disabled={(form?.status == "rejected" || !id) ? false : true}

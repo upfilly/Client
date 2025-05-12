@@ -24,7 +24,7 @@ const AddEditUser = () => {
     const [submitted, setSubmitted] = useState(false)
     const history = useRouter()
     const [emailLoader, setEmailLoader] = useState(false) 
-    const [BrandData, setBrandData] = useState('') 
+    const [BrandData, setBrandData] = useState([]) 
     const [detail, setDetail] = useState()
 
     // console.log(form,"fshdjifdjifh")
@@ -181,7 +181,7 @@ const AddEditUser = () => {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);
                 const manipulateData = filteredData.map((itm)=>{return{
-                    brand_name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
                 }})
                 setBrandData(manipulateData)
             }

@@ -255,8 +255,8 @@ export default function Home() {
 
                   {/* {(user?.role == "brand" || !user) && <a className='btn btn-primary mt-3 mr-2' href="/pricing">Book a Demo</a>} */}
                   {(user?.role == "brand" || !user) && (
-                    <a className="btn btn-outline-primary mt-3" href="/pricing">
-                      Prices
+                    <a className="btn btn-outline-primary mt-3" href="/merchant">
+                      Get Started
                     </a>
                   )}
                 </div>

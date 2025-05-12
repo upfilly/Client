@@ -457,7 +457,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 <span className="side_head">Payments</span>
               </ListItemLink>}
 
-              {(user?.role == "affiliate" || addedUser?.role == "affiate") && <ListItemLink to="/salesTracking" title="Untracked Sales">
+              {<ListItemLink to="/salesTracking" title="Untracked Sales">
                 <i className="material-icons  svg_iconbx" title="untracked sales">
                   real_estate_agent</i>
                 <span className="side_head">Untracked Sales</span>
