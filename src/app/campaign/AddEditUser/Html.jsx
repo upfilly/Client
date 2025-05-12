@@ -13,7 +13,7 @@ import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionItems, handleSubmit, setform, submitted, back, errors, selectedItems, setSelectedItems }) => {
+const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionItems, handleSubmit, setform, submitted, back, errors, selectedItems, setSelectedItems,profileData}) => {
     const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState()
     const [docLoder, setDocLoder] = useState()
@@ -171,6 +171,29 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                         />
                                     </div>
                                     {submitted && !form?.access_type && <div className="invalid-feedback d-block">{errors?.access_type}</div>}
+                                </div>
+
+                                <div className="col-md-6 mb-3 custom-type">
+                                    <label>Currency<span className="star">*</span></label>
+                                    <div className="select_row">
+                                        <SelectDropdown                                                     theme='search'
+                                            id="statusDropdown"
+                                            displayValue="name"
+                                            placeholder="Select Type"
+                                            intialValue={form?.currencies}
+                                            // disabled={form?.status === "rejected" || !id ? false : true}
+                                            result={e => {
+                                                setform({ ...form, currencies: e.value });
+                                            }}
+                                            options={profileData?.currencies.map((dat)=>{
+                                                return({
+                                                    name:dat,
+                                                    id:dat
+                                                })
+                                            })}
+                                        />
+                                    </div>
+                                    {submitted && !form?.currencies && <div className="invalid-feedback d-block">{errors?.currencies}</div>}
                                 </div>
 
                                 {form?.access_type === "private" && (

@@ -386,6 +386,19 @@ const Profile = () => {
                               </div>
                             </div>}
 
+                            {data?.currencies?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
+                              <div className='inputFlexs width400'>
+                                <label >currency:</label>
+                                <div className='d-flex wraps'>
+                                  {data?.activeUser?.currencies?.map((item: any, index: any, array: any) =>
+                                    <div key={item} className="profile_data_wrapper">
+                                      <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
+                                  )}
+
+                                </div>
+                              </div>
+                            </div>}
+
                             {data.activeUser.role == "brand" && <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                               <div className='inputFlexs width400'>
                                 <label>Advertiser ID:</label>

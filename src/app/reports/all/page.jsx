@@ -45,6 +45,8 @@ export default function AnalyticsDashboard() {
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
     const [exchangeRate, setExchangeRate] = useState(null);
     const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
+    const [CampaignData, setCamapign] = useState([]);
+    const [campaignId, setCampaignId] = useState();
 
     const dateRange = {
         selection1: {
@@ -152,24 +154,43 @@ export default function AnalyticsDashboard() {
         })
     }
 
+    const getCamapignData = (p = {}) => {
+        let filter = { ...p }
+        let url = 'campaign/brand/all'
+        ApiClient.get(url, filter).then(res => {
+          if (res.success) {
+            const data = res?.data?.data?.map((data) => {
+              return ({
+                id: data?.id || data?._id,
+                name: data?.name
+              })
+            })
+            setCamapign(data)
+          }
+        })
+      }
+
     useEffect(() => {
+        getCamapignData()
         getClicksAnalyticsData({
             startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
             affiliate_id: selectedAffiliate || "",
             brand_id: selectedBrand || "",
+            campaign: campaignId || "",
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
             startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+            campaign: campaignId || "",
             affiliate_id: selectedAffiliate || "",
             brand_id: selectedBrand || "",
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
-    }, [selectedAffiliate, selectedBrand])
+    }, [selectedAffiliate, selectedBrand, campaignId])
 
     const ApplyDateFilter = () => {
         getClicksAnalyticsData({
@@ -247,6 +268,18 @@ export default function AnalyticsDashboard() {
                                 }}
                                 options={affiliateData}
                             />}
+
+                        <MultiSelectValue
+                            id="statusDropdown"
+                            displayValue="name"
+                            placeholder="Select Campaign"
+                            singleSelect={true}
+                            intialValue={campaignId}
+                            result={e => {
+                                setCampaignId(e.value);
+                            }}
+                            options={CampaignData}
+                        />
 
                         <SelectDropdown
                             theme='search'

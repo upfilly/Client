@@ -17,6 +17,7 @@ const AddEditUser = () => {
         subCategories: [],
         subSubCategories: [],
     });
+    const [profileData, setProfileData] = useState()
     const [selectedRegionItems, setSelectedRegionItems] = useState({
         regions: [], countries: []
     })
@@ -43,7 +44,7 @@ const AddEditUser = () => {
     const [errors, setErrors] = useState({});
     const [detail, setDetail] = useState()
 
-    console.log(selectedRegionItems, "nmnmnmnmn")
+    console.log(selectedItems, "nmnmnmnmn")
 
     const getError = (key) => {
         return methodModel.getError(key, form, formValidation)
@@ -59,7 +60,7 @@ const AddEditUser = () => {
         // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
         // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
         // if (!form.category_type) formErrors.category_type = 'Category Type is required';
-        // if (!form.category) formErrors.category = 'Category is required';
+        if (!form.currencies) formErrors.currencies = 'Currency is required';
         if (!form?.campaign_type) formErrors.campaign_type = 'Campaign type is required';
         if (!form.description) formErrors.description = 'Description is required';
         if (selectedRegionItems?.regions.length == 0) formErrors.region = 'Country is required';
@@ -244,8 +245,19 @@ const AddEditUser = () => {
         })
     }
 
+    const getProfileDetail = () => {
+        loader(true)
+        ApiClient.get(`user/detail`, { id: user?.id || user?._id }).then(res => {
+            if (res.success) {
+                setProfileData(res.data)
+            }
+            loader(false)
+        })
+    };
+
     useEffect(() => {
         getData()
+        getProfileDetail()
     }, [])
 
     return <>
@@ -275,6 +287,7 @@ const AddEditUser = () => {
             setSelectedItems={setSelectedItems}
             selectedRegionItems={selectedRegionItems}
             setSelectedRegionItems={setSelectedRegionItems}
+            profileData={profileData}
         />
     </>
 }

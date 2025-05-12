@@ -122,6 +122,7 @@ const Html = ({
                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Access Type</th>
                                     <th scope="col" className='table_data'>Commission</th>
+                                    <th scope="col" className='table_data'>Currency</th>
                                     <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
@@ -157,6 +158,7 @@ const Html = ({
                                                 {itm?.access_type == "private" ? itm.status : "--"}
                                             </span>
                                         </div></td>} */}
+                                        <td className='table_dats'>{itm?.currencies || "--"}</td>
                                         <td className='table_dats'>{(itm?.commission == "0" || !itm?.commission) ? "No Commission Added" : "Added Commission"}</td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 

@@ -16,7 +16,17 @@ const EditProfile = () => {
   const user = crendentialModel.getUser()
   const [data, setData] = useState('');
   const [form, setForm] = useState({
-    id: '', fullName: '', firstName: '', lastName: '', gender: '', email: '', mobileNo: '', address: '', image: [], role: '',
+    id: '', 
+    fullName: '', 
+    firstName: '', 
+    lastName: '', 
+    gender: '', 
+    email: '',
+    mobileNo: '',
+    address: '', 
+    image: [],
+    currencies:[],
+    role: '',
     instagram_username: "",
     instagram_profile_link: "",
     youtube_username: "",

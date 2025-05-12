@@ -14,6 +14,8 @@ import dynamic from 'next/dynamic';
 import ApiClient from '@/methods/api/apiClient';
 import { IoClose } from "react-icons/io5";
 import { FiPlus } from "react-icons/fi";
+import { CurencyData } from '@/methods/currency';
+import MultiSelectValue from '../../common/MultiSelectValue';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -43,6 +45,10 @@ const Html = ({ user,
   history }) => {
   const [inputFocused, setInputFocused] = useState(false)
   const [categories, setCategories] = useState([]);
+  const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
+  const [isOpen, setIsOpen] = useState(false);
+  const [newItem, setNewItem] = useState("");
+  const [customItems, setCustomItems] = useState(data);
   const allTimeZone = [
     { "name": "Pacific/Midway", "id": "Pacific/Midway" },
     { "name": "US/Samoa", "id": "US/Samoa" },
@@ -144,10 +150,6 @@ const Html = ({ user,
     { "name": "Asia/Kamchatka", "id": "Asia/Kamchatka" },
     { "name": "Pacific/Tongatapu", "id": "Pacific/Tongatapu" }
   ]
-  const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
-  const [isOpen, setIsOpen] = useState(false);
-  const [newItem, setNewItem] = useState("");
-  const [customItems, setCustomItems] = useState(data);
 
   const handleAddNewItem = () => {
     if (newItem.trim() !== "" && !customItems.includes(newItem)) {
@@ -406,13 +408,33 @@ const Html = ({ user,
                             <div className="select_drop ">
                               <label>Timezone</label>
                               <div className="select_row">
-                                <SelectDropdown theme='search'
+                                <SelectDropdown 
+                                  theme='search'
                                   id="statusDropdown"
                                   displayValue="name"
                                   placeholder="Select"
                                   intialValue={form?.timezone}
                                   result={e => setForm({ ...form, timezone: e.value })}
                                   options={allTimeZone}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
+                          <div className='form-group'>
+                            <div className="select_drop ">
+                              <label>Currency</label>
+                              <div className="select_row">
+                                <MultiSelectValue 
+                                  theme='search'
+                                  id="statusDropdown"
+                                  displayValue="name"
+                                  placeholder="Select"
+                                  intialValue={form?.currencies}
+                                  result={e => setForm({ ...form, currencies: e.value })}
+                                  options={CurencyData}
                                 />
                               </div>
                             </div>

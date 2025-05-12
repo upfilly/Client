@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./MultiSelectDropdownData.css";
 
-const MultiSelectDropdown = ({ data, selectedItems: initialSelectedItems }) => {
-  const [selectedItems, setSelectedItems] = useState(initialSelectedItems || { 
-    categories: [], 
-    subCategories: [], 
-    subSubCategories: [] 
-  });
+const MultiSelectDropdown = ({ data, selectedItems,setSelectedItems }) => {
+  // const [selectedItems, setSelectedItems] = useState(initialSelectedItems || { 
+  //   categories: [], 
+  //   subCategories: [], 
+  //   subSubCategories: [] 
+  // });
   const [isOpen, setIsOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [expandedSubCategories, setExpandedSubCategories] = useState({});
