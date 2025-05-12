@@ -58,7 +58,7 @@ const AddEditUser = () => {
         e.preventDefault()
 
         if(!form?.title || !form?.brand_id || !form?.amount || !form?.commission || !form?.customer_reference
-            || !form?.order_date || !form?.type || !form?.title){
+            || !form?.order_date || !form?.type || !form?.title || !form?.description){
                setSubmitted(true)
                return;
            }

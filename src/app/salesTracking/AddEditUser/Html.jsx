@@ -142,11 +142,13 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                             }]}
                                         />
                                     </div>
+                                    {submitted && !form?.type ? <div className="invalid-feedback d-block">Type is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>TimeZone</label>
                                     <div className="select_row">
-                                        <SelectDropdown                                                     theme='search'
+                                        <SelectDropdown                                                     
+                                            theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
                                             placeholder="Select TimeZone"
@@ -190,7 +192,9 @@ const Html = ({ id, BrandData, form, affiliateData, handleSubmit, setform, submi
                                             'link', 'image', 'video'
                                         ]}
                                         bounds={'.app'}
+                                        
                                     />
+                            {submitted && !form?.description ? <div className="invalid-feedback d-block">Description is Required</div> : <></>}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
