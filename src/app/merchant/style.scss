@@ -1,0 +1,200 @@
+/* Upfilly Merchant Guide Styles */
+
+/* Variables */
+:root {
+    --primary-color: #4353ff;
+    --primary-dark: #3043e5;
+    --accent-color: #ff6b35;
+    --text-color: #333333;
+    --light-text: #666666;
+    --background: #ffffff;
+    --light-bg: #f7f9fc;
+    --border-color: #e0e4e8;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --border-radius: 8px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    --transition: all 0.3s ease;
+  }
+  
+  /* Base styles */
+  .guide-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  
+  /* Header styles */
+  .guide-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .guide-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-color);
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+    color: var(--light-text);
+    font-weight: 400;
+  }
+  
+  /* Section styles */
+  .section {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md);
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+  
+  .section h2 {
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+    position: relative;
+    padding-bottom: var(--spacing-xs);
+  }
+  
+  .section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+  }
+  
+  /* Introduction */
+  .intro {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-xl);
+    background-color: var(--light-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  /* Lists */
+  ul, ol {
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  ul li, ol li {
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+  }
+  
+  ul li {
+    list-style-type: none;
+    padding-left: var(--spacing-sm);
+  }
+  
+  ul li::before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  
+  ol li {
+    padding-left: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  ol li strong {
+    color: var(--primary-color);
+  }
+  
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .footer h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+  }
+  
+  /* CTA Button */
+  .cta-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: var(--spacing-md);
+    box-shadow: 0 4px 12px rgba(67, 83, 255, 0.3);
+  }
+  
+  .cta-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(67, 83, 255, 0.4);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .guide-header h1 {
+      font-size: 2rem;
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .section h2 {
+      font-size: 1.5rem;
+    }
+    
+    .intro {
+      font-size: 1.1rem;
+    }
+    
+    .cta-button {
+      padding: 12px 24px;
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .guide-container {
+      padding: var(--spacing-sm);
+    }
+    
+    .guide-header h1 {
+      font-size: 1.7rem;
+    }
+    
+    .section {
+      padding: var(--spacing-sm);
+    }
+    
+    .cta-button {
+      width: 100%;
+    }
+  }

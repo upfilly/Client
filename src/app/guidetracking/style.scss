@@ -1,0 +1,232 @@
+/* Affiliate Marketing Guide Styles */
+
+/* Variables */
+:root {
+  --primary-color: #5045e4;
+  --primary-dark: #3a32b0;
+  --accent-color: #ff7846;
+  --text-color: #333333;
+  --light-text: #666666;
+  --background: #ffffff;
+  --light-bg: #f8f9fd;
+  --highlight-bg: #f0f2ff;
+  --border-color: #e0e4e8;
+  --box-shadow: 0 4px 16px rgba(80, 69, 228, 0.08);
+  --border-radius: 10px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 5rem;
+  --transition: all 0.3s ease;
+}
+
+/* Base styles */
+.affiliate-guide-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-sm);
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-color);
+  line-height: 1.7;
+  background-color: var(--background);
+}
+
+@media (min-width: 768px) {
+  .affiliate-guide-container {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+}
+
+/* Header styles */
+.affiliate-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0 var(--spacing-sm);
+}
+
+.affiliate-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+  line-height: 1.2;
+}
+
+.header-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--accent-color);
+  margin: 0 auto;
+}
+
+/* Section styles */
+.content-section {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: var(--light-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.content-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
+  position: relative;
+  padding-bottom: var(--spacing-xs);
+  font-weight: 700;
+}
+
+.content-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--accent-color);
+}
+
+/* Introduction */
+.intro-section {
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  background-color: var(--highlight-bg);
+  border-left: 4px solid var(--primary-color);
+}
+
+.highlight-text {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1.1em;
+  margin-top: var(--spacing-sm);
+}
+
+/* Lists */
+.steps-list, 
+.benefits-list, 
+.key-factors-list,
+.growth-factors-list {
+  padding-left: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.steps-list li, 
+.benefits-list li, 
+.key-factors-list li,
+.growth-factors-list li {
+  margin-bottom: var(--spacing-sm);
+  position: relative;
+}
+
+.benefits-list li,
+.key-factors-list li,
+.growth-factors-list li {
+  list-style-type: none;
+  padding-left: var(--spacing-sm);
+}
+
+.benefits-list li::before,
+.key-factors-list li::before,
+.growth-factors-list li::before {
+  content: "•";
+  color: var(--accent-color);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+  font-size: 1.2em;
+}
+
+.steps-list li {
+  padding-left: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.steps-list li strong {
+  color: var(--primary-color);
+}
+
+/* Example section */
+.example-section {
+  background-color: var(--highlight-bg);
+  border-left: 4px solid var(--accent-color);
+}
+
+.example-content {
+  background-color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Conclusion section */
+.conclusion-section {
+  background-color: var(--highlight-bg);
+  border-top: 3px solid var(--primary-color);
+}
+
+/* CTA Button */
+.cta-container {
+  text-align: center;
+  margin: var(--spacing-xl) 0;
+}
+
+.cta-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 16px 35px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(80, 69, 228, 0.2);
+}
+
+.cta-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(80, 69, 228, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .affiliate-header h1 {
+    font-size: 2rem;
+  }
+  
+  .content-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .intro-section {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .affiliate-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .content-section {
+    padding: var(--spacing-sm);
+  }
+  
+  .cta-button {
+    width: 100%;
+    padding: 14px 20px;
+  }
+  
+  .steps-list, 
+  .benefits-list, 
+  .key-factors-list,
+  .growth-factors-list {
+    padding-left: var(--spacing-sm);
+  }
+}

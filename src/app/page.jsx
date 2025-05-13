@@ -244,13 +244,11 @@ export default function Home() {
               <div className="col-md-6 ">
                 <div className="pl_section text-center text-md-left">
                   <h2 className="heding_main mb-1 mb-md-3">
-                    Revolutionize Your Affiliate Marketing with UpFilly
+                  Power Your Growth with Upfilly
                   </h2>
 
                   <p className="desc">
-                    Track performance, manage campaigns, and scale your
-                    affiliate network effortlessly. Plus, let our experts handle
-                    it all for you with our Managed Subscription service.
+                  Connect with top affiliates, grow your brand, and track every conversion — all in one performance-driven platform.
                   </p>
 
                   {/* {(user?.role == "brand" || !user) && <a className='btn btn-primary mt-3 mr-2' href="/pricing">Book a Demo</a>} */}
@@ -416,7 +414,7 @@ export default function Home() {
               <div className="row">
                 <div className="col-md-12 text-center  mb-0">
                   <h2 className="leading_heading mb-0">
-                    More Than Just an Affiliate Network
+                  Affiliate marketing made simple for merchants and affiliates.
                   </h2>
                   <p>
                     Providing best developers to create your affiliates
@@ -437,7 +435,7 @@ export default function Home() {
                       weekly calls
                     </p>
 
-                    <div className="arrow">
+                    <div className="arrow" onClick={()=>history.push("/pricing")}>
                       <img
                         src="/assets/img/arrow.png"
                         className="arrow_icon"
@@ -485,7 +483,7 @@ export default function Home() {
                       metrics .
                     </p>
 
-                    <div className="arrow">
+                    <div className="arrow" onClick={()=>history.push("/guidetracking")}>
                       <img
                         src="/assets/img/arrow.png"
                         className="arrow_icon"
