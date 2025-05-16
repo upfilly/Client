@@ -236,6 +236,8 @@ export default function BillingForm() {
         } else {
           window.location.href = res?.data?.url
         }
+       
+
         // ApiClient.post('create/session', data1).then(res => {
         //   if (res.success == true) {
         //     loader(false)
@@ -288,7 +290,7 @@ export default function BillingForm() {
         // })
 
       }
-
+      toast.error(res?.error?.message)
     })
 
     // router.push("/affiliate-form/StageSecStep");
