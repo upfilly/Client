@@ -193,6 +193,16 @@ const Html = ({ settingData, Logout }) => {
 
             <div class="collapse navbar-collapse set_nabx py-2" id="navbarSupportedContent">
               <ul class="navbar-nav d-flex gap-0 ml-auto set_navbx">
+              <li class="nav-item">
+                  <Link
+                    class={`nav-link py-2 ${pathname == "/merchant" ? 'active' : ''}`}
+                    href="/merchant">Merchant</Link>
+                </li>
+                <li class="nav-item">
+                  <Link
+                    class={`nav-link py-2 ${pathname == "/affguide" ? 'active' : ''}`}
+                    href="/affguide">Affiliate</Link>
+                </li>
                 <li class="nav-item">
                   <Link
                     class={`nav-link py-2 ${pathname == "/platforms" ? 'active' : ''}`}
@@ -224,9 +234,9 @@ const Html = ({ settingData, Logout }) => {
                 {/* <li class="nav-item">
                   <Link class={`btn btn-primary login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Book a Demo</Link>
                 </li> */}
-                <li class="nav-item text-center">
+                {/* <li class="nav-item text-center">
                   <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
-                </li>
+                </li> */}
               </form>
             </div>
           </nav>
