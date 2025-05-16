@@ -35,8 +35,9 @@ export default function Blog() {
     setLoader(true)
     let filter = { ...filters, ...p }
     let url = 'blog/all'
-    ApiClient.get(url, filter).then(res => {
+    ApiClient.get(url, filter).then((res) => {
       if (res) {
+        console.log(res) 
         setData(res?.data)
         setTotal(res?.data?.total_count)
       }
@@ -75,6 +76,22 @@ export default function Blog() {
     getData({ ...filter })
   }
 
+  //Url for Video
+  const noVideo = (video, modal = 'blogs') => {
+      console.log(video, "Video Path Check");
+      
+      // Default video path
+      let value = '/assets/video/default.mp4'; 
+  
+      // Check if video is provided, and ensure the path is constructed correctly
+      if (video) {
+          // Assuming the video path is already in the correct format like 'blogs/e3e0b44e-4179-4691-a635-11b699d8cbeb1747304034768.mp4'
+          value = `${'https://api.upfilly.com/'}/${modal}/${video}`; 
+      }
+  
+      return value;
+  }
+
   return (
     <>
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -100,7 +117,21 @@ export default function Blog() {
               <div class="col-12 col-md-6 col-lg-4 mb-4" >
                 <div class="card card-shadow blog_cards">
                   <Carousel showIndicators={false}>
-                    {itm?.image?.length > 0 ? (
+                    {itm?.videos?.length > 0 ? (
+          itm.videos.map((videoUrl, index) => (
+            <div key={index}>
+              <div className="card-img-overlay" onClick={() => routeBlogDetail(itm?.id)}>
+                <a className="cantain_btns">{itm.category_name}</a>
+              </div>
+              <div className="blog_cardd">
+                <video className="blog_video" controls autoPlay>
+                  <source src={noVideo(videoUrl, 'blogs')} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          ))
+        ) : itm?.image?.length > 0 ? (
                       itm.image.map((images) => (
                         <div key={images.id}>
                           <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.id)}>
@@ -123,11 +154,18 @@ export default function Blog() {
                     )}
                   </Carousel>
 
-                  <div class="card-body" onClick={()=>routeBlogDetail(itm?.id)}>
+                  <div class="card-body" >
 
                  
                   <div>
-                  <h4 class="card-title">{methodModel.capitalizeFirstLetter(itm?.title)}</h4>
+                  <div className='flex'>
+                  {/* Initailly Link appended to text */}
+                  <h4 className="card-title" >
+                  <a href={itm.link} target="_blank" rel="noopener noreferrer">
+                    {methodModel.capitalizeFirstLetter(itm?.title)}
+                  </a>
+                </h4></div>
+                  
                     <p class="card-text   text-truncate" dangerouslySetInnerHTML={{
                       __html: itm?.description && itm.description.length > 40
                         ? itm.description.slice(0, 40) + '...' : itm?.description
