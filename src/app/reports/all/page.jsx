@@ -37,8 +37,8 @@ export default function AnalyticsDashboard() {
     const [clicks2, setClicks2] = useState()
     const [handleDateFilter, setHandleDateFilter] = useState(false);
     const [affiliateData, setAffiliateData] = useState();
-    const [selectedAffiliate, setSelectedAffiliate] = useState();
-    const [selectedBrand, setSelectedBrand] = useState();
+    const [selectedAffiliate, setSelectedAffiliate] = useState([]);
+    const [selectedBrand, setSelectedBrand] = useState([]);
     const [brands, setBrands] = useState();
     const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
     const [compDates, setCompDates] = useState([new Date(), new Date()]);
@@ -46,7 +46,7 @@ export default function AnalyticsDashboard() {
     const [exchangeRate, setExchangeRate] = useState(null);
     const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
     const [CampaignData, setCamapign] = useState([]);
-    const [campaignId, setCampaignId] = useState();
+    const [campaignId, setCampaignId] = useState([]);
 
     const dateRange = {
         selection1: {
@@ -175,18 +175,18 @@ export default function AnalyticsDashboard() {
         getClicksAnalyticsData({
             startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-            affiliate_id: selectedAffiliate || "",
-            brand_id: selectedBrand || "",
-            campaign: campaignId || "",
+            affiliate_id: selectedAffiliate.map((dat)=>dat).join(",") || "",
+            brand_id: selectedBrand.map((dat)=>dat).join(",") || "",
+            campaign: campaignId.map((dat)=>dat).join(",") || "",
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
             startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-            campaign: campaignId || "",
-            affiliate_id: selectedAffiliate || "",
-            brand_id: selectedBrand || "",
+            campaign: campaignId.map((dat)=>dat).join(",") || "",
+            affiliate_id: selectedAffiliate.map((dat)=>dat).join(",") || "",
+            brand_id: selectedBrand.map((dat)=>dat).join(",") || "",
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
@@ -250,7 +250,7 @@ export default function AnalyticsDashboard() {
                                 id="statusDropdown"
                                 displayValue="fullName"
                                 placeholder="Select Brand"
-                                singleSelect={true}
+                                // singleSelect={true}
                                 intialValue={selectedBrand}
                                 result={e => {
                                     setSelectedBrand(e.value);
@@ -261,7 +261,7 @@ export default function AnalyticsDashboard() {
                                 id="statusDropdown"
                                 displayValue="fullName"
                                 placeholder="Select Affiliate"
-                                singleSelect={true}
+                                // singleSelect={true}
                                 intialValue={selectedAffiliate}
                                 result={e => {
                                     setSelectedAffiliate(e.value);
@@ -273,7 +273,7 @@ export default function AnalyticsDashboard() {
                             id="statusDropdown"
                             displayValue="name"
                             placeholder="Select Campaign"
-                            singleSelect={true}
+                            // singleSelect={true}
                             intialValue={campaignId}
                             result={e => {
                                 setCampaignId(e.value);
