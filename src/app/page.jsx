@@ -346,7 +346,7 @@ export default function Home() {
             <h2 class="display-5 fw-semibold mb-4">
               Start your affiliate program today — no setup fees.
             </h2>
-            <a href="/signup" class="btn btn-light btn-lg px-4 py-2 fw-medium">
+            <a href="/track/signup/affiliate" class="btn btn-light btn-lg px-4 py-2 fw-medium">
               Start Free
             </a>
           </div>
