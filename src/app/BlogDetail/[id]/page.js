@@ -1,3 +1,4 @@
+import methodModel from "@/methods/methods";
 import environment from "../../../environment"
 import BlogDetail from "../page"
 
