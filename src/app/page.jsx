@@ -244,11 +244,11 @@ export default function Home() {
               <div className="col-md-6 ">
                 <div className="pl_section text-center text-md-left">
                   <h2 className="heding_main mb-1 mb-md-3">
-                  Power Your Growth with Upfilly
+                    Power Your Growth with Upfilly
                   </h2>
 
                   <p className="desc">
-                  Connect with top affiliates, grow your brand, and track every conversion — all in one performance-driven platform.
+                    Connect with top affiliates, grow your brand, and track every conversion — all in one performance-driven platform.
                   </p>
 
                   {/* {(user?.role == "brand" || !user) && <a className='btn btn-primary mt-3 mr-2' href="/pricing">Book a Demo</a>} */}
@@ -286,6 +286,72 @@ export default function Home() {
           </div>
         </div> */}
         </div>
+
+        {/* Who Is Upfilly For? Section */}
+        <div className="container py-5">
+          <div className="row">
+            <div className="col-md-12 text-center mb-4">
+              <h2>Who Is Upfilly For?</h2>
+            </div>
+            <div className="col-md-6 text-center">
+              <div className="p-4">
+                <h3>Merchants</h3>
+                <p>Launch and manage a scalable affiliate program in minutes.</p>
+              </div>
+            </div>
+            <div className="col-md-6 text-center">
+              <div className="p-4">
+                <h3>Affiliates</h3>
+                <p>Promote trusted brands and earn commissions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* What Makes Upfilly Different? Section */}
+        <div className="container py-5 bg-light">
+          <div className="row">
+            <div className="col-md-12 text-center mb-4">
+              <h2>What Makes Upfilly Different?</h2>
+            </div>
+            <div className="col-md-3 text-center">
+              <div className="p-4">
+                <h4>Real-Time Tracking</h4>
+                <p>Know exactly which clicks convert, and who's performing.</p>
+              </div>
+            </div>
+            <div className="col-md-3 text-center">
+              <div className="p-4">
+                <h4>Automated Payouts</h4>
+                <p>Say goodbye to spreadsheets and manual transfers.</p>
+              </div>
+            </div>
+            <div className="col-md-3 text-center">
+              <div className="p-4">
+                <h4>Shopify Friendly</h4>
+                <p>Track affiliate sales across major platforms.</p>
+              </div>
+            </div>
+            <div className="col-md-3 text-center">
+              <div className="p-4">
+                <h4>Managed Program Option</h4>
+                <p>Let our experts handle strategy, outreach, and optimization.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container py-5">
+          <div class="bg_blue text-white text-center p-5 rounded-4 shadow-lg">
+            <h2 class="display-5 fw-semibold mb-4">
+              Start your affiliate program today — no setup fees.
+            </h2>
+            <a href="/signup" class="btn btn-light btn-lg px-4 py-2 fw-medium">
+              Start Free
+            </a>
+          </div>
+        </div>
+
 
         <div className="container">
           <div className="sponsor-wrapper cuspadding2  pb-0">
@@ -414,7 +480,7 @@ export default function Home() {
               <div className="row">
                 <div className="col-md-12 text-center  mb-0">
                   <h2 className="leading_heading mb-0">
-                  Affiliate marketing made simple for merchants and affiliates.
+                    Affiliate marketing made simple for merchants and affiliates.
                   </h2>
                   <p>
                     Providing best developers to create your affiliates
@@ -435,7 +501,7 @@ export default function Home() {
                       weekly calls
                     </p>
 
-                    <div className="arrow" onClick={()=>history.push("/pricing")}>
+                    <div className="arrow" onClick={() => history.push("/pricing")}>
                       <img
                         src="/assets/img/arrow.png"
                         className="arrow_icon"
@@ -483,7 +549,7 @@ export default function Home() {
                       metrics .
                     </p>
 
-                    <div className="arrow" onClick={()=>history.push("/guidetracking")}>
+                    <div className="arrow" onClick={() => history.push("/guidetracking")}>
                       <img
                         src="/assets/img/arrow.png"
                         className="arrow_icon"

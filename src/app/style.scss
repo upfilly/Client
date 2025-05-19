@@ -206,4 +206,87 @@ input.form-control-file.over_input {
 .swal2-cancel.swal2-styled.swal2-default-outline{
     background-color: #6c757d !important;
 }
+
+/* General Container Padding */
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  /* Section Padding */
+  .py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  /* Headings */
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Text Centering */
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Margin Bottom */
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Padding Box */
+  .p-4 {
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .p-4:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Light Background Section */
+  .bg-light {
+    background-color: #f8f9fa;
+  }
+  
+  /* Responsive Grid Layout */
+  @media (min-width: 768px) {
+    .col-md-12 {
+      width: 100%;
+    }
+    .col-md-6 {
+      width: 50%;
+      float: left;
+    }
+    .col-md-3 {
+      width: 25%;
+      float: left;
+    }
+  }
+  
+  /* Clearfix for Rows */
+  .row::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
   

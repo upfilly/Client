@@ -12,6 +12,48 @@ const Detail = (p) => {
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
+    const [copySuccess, setCopySuccess] = useState(false)
+
+    const appendAffiliateToLinks = (htmlContent) => {
+        if (!htmlContent) return '--';
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, 'text/html');
+
+        const links = doc.querySelectorAll('a');
+
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href) {
+                const hasParams = href.includes('?');
+                const newHref = hasParams
+                    ? `${href}&affiliate=${user?.id}`
+                    : `${href}?affiliate=${user?.id}`;
+                link.setAttribute('href', newHref);
+            }
+        });
+
+        // Get the modified HTML content
+        return doc.body.innerHTML;
+    };
+
+    // Function to handle copying content to clipboard
+    const copyToClipboard = (text) => {
+        if (!text) return;
+
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                setCopySuccess(true);
+                // Reset success message after 2 seconds
+                setTimeout(() => {
+                    setCopySuccess(false);
+                }, 2000);
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    };
+
     const getDetail = (did) => {
         loader(true)
         ApiClient.get(`emailtemplate`, { id: id }).then(res => {
@@ -127,8 +169,18 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className="d-flex justify-content-between align-items-start mb-2">
+                                                <div></div>
+                                                <span
+                                                    // className="btn btn-sm btn-primary copy-btn"
+                                                    onClick={() => copyToClipboard(appendAffiliateToLinks(data?.textContent))}
+                                                >
+                                                    {/* {copySuccess ? 'Copied!' : 'Copy HTML'} */}
+                                                    <i className={`fa fa-${copySuccess ? 'check' : 'copy'} ml-1`} aria-hidden="true"></i>
+                                                </span>
+                                            </div>
                                             <div className='name-dtls content_scrollbx'>
-                                                <p className='headsub mb-0' >{data?.textContent}</p>
+                                                <p className='headsub mb-0'>{appendAffiliateToLinks(data?.textContent)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +193,8 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls image_content'>
-                                            <p className='headsub mb-0' dangerouslySetInnerHTML={{__html:data&&data?.textContent || '--'}}></p>
+                                                {/* Modified to use the affiliate link function */}
+                                                <p className='headsub mb-0' dangerouslySetInnerHTML={{ __html: data && appendAffiliateToLinks(data?.textContent) || '--' }}></p>
                                             </div>
                                         </div>
                                     </div>
@@ -187,18 +240,13 @@ const Detail = (p) => {
                                         </div>
                                     </div> */}
 
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-        </Layout >
-
+        </Layout>
     );
 };
 

@@ -16,14 +16,31 @@ export default function Login() {
   const { role } = useParams()
   const [form, setForm] = useState({
     firstName: "",
-    lastName: ""
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    brand_name: ""
   });
-  const [emailError, setEmailError] = useState("")
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    brand_name: ""
+  });
   const [submitted, setSubmitted] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const [ip, setIP] = useState("");
   const [settingData, setSettingData] = useState([])
-  const [eyes, setEyes] = useState({ password: false, confirmPassword: false, currentPassword: false });
+  const [eyes, setEyes] = useState({ 
+    password: false, 
+    confirmPassword: false, 
+    currentPassword: false 
+  });
+  const [remember, setRemember] = useState(false);
+  
   const param = useSearchParams()
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
@@ -44,7 +61,9 @@ export default function Login() {
 
   useEffect(() => {
     getData();
-    setForm({ ...form, "email": invite_email })
+    if (invite_email) {
+      setForm({ ...form, email: invite_email });
+    }
   }, []);
 
   useEffect(() => {
@@ -54,6 +73,79 @@ export default function Login() {
       }
     })
   }, [])
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      brand_name: ""
+    };
+
+    // Validate first name
+    if (!form.firstName.trim()) {
+      newErrors.firstName = "First name is required";
+      isValid = false;
+    } else if (form.firstName.trim().length < 3) {
+      newErrors.firstName = "First name must be at least 3 characters";
+      isValid = false;
+    }
+
+    // Validate based on role
+    if (role === "brand") {
+      // Validate brand name
+      if (!form.brand_name || form.brand_name.trim() === "") {
+        newErrors.brand_name = "Brand name is required";
+        isValid = false;
+      } else if (form.brand_name.trim().length < 3) {
+        newErrors.brand_name = "Brand name must be at least 3 characters";
+        isValid = false;
+      }
+    } else {
+      // Validate last name for affiliates
+      if (!form.lastName || form.lastName.trim() === "") {
+        newErrors.lastName = "Last name is required";
+        isValid = false;
+      } else if (form.lastName.trim().length < 2) {
+        newErrors.lastName = "Last name must be at least 2 characters";
+        isValid = false;
+      }
+    }
+
+    // Validate email
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(form.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    // Validate password
+    if (!form.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (form.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+      isValid = false;
+    }
+
+    // Validate confirm password
+    if (!form.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+      isValid = false;
+    } else if (form.password !== form.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const googleLogin = () => {
     ApiClient.get('google/login/authentication').then((res) => {
@@ -99,14 +191,12 @@ export default function Login() {
   }
 
   const hendleSubmit = (e) => {
-    setSubmitted(true);
     e.preventDefault();
+    setSubmitted(true);
 
-    // UseReferralTracking("bry6ko3r");
-    const isValidEmail = (email) => {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return emailRegex.test(email);
-    };
+    if (!validateForm()) {
+      return;
+    }
 
     let data;
     if (localStorage.getItem("device_token")) {
@@ -129,43 +219,8 @@ export default function Login() {
       };
     }
 
-    // Validation for brand role
-    if (role === "brand") {
-      if (
-        !form?.firstName ||
-        !form?.email ||
-        !form?.password ||
-        !form?.brand_name ||
-        form?.brand_name?.length < 3 ||
-        form?.firstName?.length < 3 ||
-        form?.password?.length < 8 ||
-        form?.firstName.trim() === "" // Check for empty or space-only first name
-      ) {
-        return;
-      }
-    }
-
-    // Validation for affiliate role
-    if (role === "affiliate") {
-      if (
-        !form?.firstName ||
-        !form?.lastName ||
-        !form?.email ||
-        !form?.password ||
-        form?.firstName?.length < 3 ||
-        form?.password?.length < 8 ||
-        form?.firstName.trim() === "" || // Check for empty or space-only first name
-        form?.lastName.trim() === "" // Check for empty or space-only last name
-      ) {
-        return;
-      }
-    }
-
-    // Email validation
-    if (!isValidEmail(form?.email)) {
-      setEmailError("Please enter a valid email address");
-      return;
-    }
+    // Remove confirmPassword as it's not needed in the API request
+    delete data.confirmPassword;
 
     loader(true);
     ApiClient.post("register", data).then((res) => {
@@ -189,14 +244,48 @@ export default function Login() {
             }
           });
         }
+      } else {
+        loader(false);
+        
+        // Handle the specific error format
+        if (res.error && res.error.message) {
+          // Handle common errors like email already exists
+          if (res.error.message.includes("Email-Id already exists")) {
+            setErrors({
+              ...errors,
+              email: "Email address already exists. Please use a different email."
+            });
+          } else {
+            toast.error(res.error.message);
+          }
+        } else if (res.errors) {
+          // Handle other validation errors format
+          const apiErrors = {};
+          if (res.errors.email) apiErrors.email = res.errors.email;
+          if (res.errors.password) apiErrors.password = res.errors.password;
+          if (res.errors.firstName) apiErrors.firstName = res.errors.firstName;
+          if (res.errors.lastName) apiErrors.lastName = res.errors.lastName;
+          if (res.errors.brand_name) apiErrors.brand_name = res.errors.brand_name;
+          
+          setErrors({...errors, ...apiErrors});
+        } else if (res.message) {
+          toast.error(res.message);
+        }
       }
+    }).catch(err => {
+      loader(false);
+      toast.error("An error occurred. Please try again.");
     });
   };
-
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value.replace(/\s/g, "");
     setForm({ ...form, password: newPassword });
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const newConfirmPassword = e.target.value.replace(/\s/g, "");
+    setForm({ ...form, confirmPassword: newConfirmPassword });
   };
 
   const handleClick = () => {
@@ -209,7 +298,6 @@ export default function Login() {
     <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
       <div className='card_parent bg-black'>
         <div className="container">
-          {/* <a className="p-3 d-block text-white" href="/">Back</a> */}
           <div className="row align-items-center ">
             <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
               <div className='right_side'>
@@ -225,66 +313,86 @@ export default function Login() {
                     <div className="col-12 col-sm-12 col col-md-6 ">
                       <div className="mb-3">
                         <input
-                          type="First Name"
-                          className="form-control mb-0 bginput"
+                          type="text"
+                          className={`form-control mb-0 bginput ${submitted && errors.firstName ? 'is-invalid' : ''}`}
                           placeholder={role === 'brand' ? 'Full Name' : 'First Name'}
+                          value={form.firstName}
                           onChange={(e) => {
-                            setForm({ ...form, firstName: e.target.value })
+                            setForm({ ...form, firstName: e.target.value });
+                            if (submitted) validateForm();
                           }}
                         />
-                        {submitted && !form?.firstName.trim() && <p className='text-danger'>This field required</p>}
-                        {submitted && form?.firstName.trim() && form?.firstName?.length < 3 && <p className='text-danger'>Required minimum length minimum 3</p>}
+                        {submitted && errors.firstName && <p className='text-danger small mt-1'>{errors.firstName}</p>}
                       </div>
                     </div>
                     <div className="col-12 col-sm-12 col col-md-6 ">
                       <div className='mb-3' >
                         <input
                           type="text"
-                          className="form-control mb-0 bginput"
+                          className={`form-control mb-0 bginput ${submitted && (role === 'brand' ? errors.brand_name : errors.lastName) ? 'is-invalid' : ''}`}
                           placeholder={role === 'brand' ? 'Brand Name' : 'Last Name'}
-                          value={role === 'brand' ? form?.brand_name : form?.lastName}
+                          value={role === 'brand' ? form.brand_name : form.lastName}
                           onChange={(e) => {
-                            role === 'brand' ? setForm({ ...form, brand_name: e.target.value }) :
-                              setForm({ ...form, lastName: e.target.value })
+                            role === 'brand' 
+                              ? setForm({ ...form, brand_name: e.target.value }) 
+                              : setForm({ ...form, lastName: e.target.value });
+                            if (submitted) validateForm();  
                           }}
                         />
+                        {submitted && role === 'brand' && errors.brand_name && 
+                          <p className='text-danger small mt-1'>{errors.brand_name}</p>}
+                        {submitted && role !== 'brand' && errors.lastName && 
+                          <p className='text-danger small mt-1'>{errors.lastName}</p>}
                       </div>
                     </div>
                   </div>
                   <div className="mb-3">
                     <input
                       type="email"
-                      className="form-control mb-0 bginput" placeholder='Email address'
-                      value={form?.email}
+                      className={`form-control mb-0 bginput ${submitted && errors.email ? 'is-invalid' : ''}`}
+                      placeholder='Email address'
+                      value={form.email}
                       onChange={(e) => {
-                        setForm({ ...form, email: e.target.value })
+                        setForm({ ...form, email: e.target.value });
+                        if (submitted) validateForm();
                       }}
                     />
-                    {submitted && !form?.email && <p className='text-danger'>This field required</p>}
-                    {submitted && emailError && <p className='text-danger'>{emailError}</p>}
+                    {submitted && errors.email && <p className='text-danger small mt-1'>{errors.email}</p>}
                   </div>
                   <div className="mb-3">
                     <div className="inputWrapper">
                       <input
                         type={eyes.password ? 'text' : 'password'}
-                        className="form-control mb-0 bginput"
-                        value={form?.password}
+                        className={`form-control mb-0 bginput ${submitted && errors.password ? 'is-invalid' : ''}`}
+                        value={form.password}
                         onChange={handlePasswordChange}
-                        // onChange={(e) => {
-                        //   setForm({ ...form, password: e.target.value })
-                        // }}
                         placeholder="Password"
-
                       />
-                      <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
+                      <i 
+                        className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} 
+                        onClick={() => setEyes({ ...eyes, password: !eyes.password })}
+                      ></i>
                     </div>
-                    {submitted && !form?.password && <p className='text-danger'>This field required</p>}
-                    {submitted && form?.password && form?.password?.length < 8 && <p className='text-danger'>Required minimum length minimum 8</p>}
+                    {submitted && errors.password && <p className='text-danger small mt-1'>{errors.password}</p>}
+                  </div>
+                  <div className="mb-3">
+                    <div className="inputWrapper">
+                      <input
+                        type={eyes.confirmPassword ? 'text' : 'password'}
+                        className={`form-control mb-0 bginput ${submitted && errors.confirmPassword ? 'is-invalid' : ''}`}
+                        value={form.confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        placeholder="Confirm Password"
+                      />
+                      <i 
+                        className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} 
+                        onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}
+                      ></i>
+                    </div>
+                    {submitted && errors.confirmPassword && <p className='text-danger small mt-1'>{errors.confirmPassword}</p>}
                   </div>
                   <div className="mt-0 border-bottom">
-
-
-                    <button type="submit" className="btn btn-primary loginclass mb-2" >
+                    <button type="submit" className="btn btn-primary loginclass mb-2">
                       Create Account
                     </button>
                     <p className='text-center mb-2'>By signing up, you agree to our Terms and Privacy Policy</p>
@@ -326,37 +434,28 @@ export default function Login() {
             </div>
           </div>
           {showPopup && (
-
-            <div class="modal d-block">
-              <div class="modal-dialog  dateModal" role="document">
-                <div class="modal-content text-center">
-                  {/* <button type="button" class="close verify" routerLink="/auth/login">
-                  <span aria-hidden="true">&times;</span> </button> */}
-
-                  <div class="modal-body">
+            <div className="modal d-block">
+              <div className="modal-dialog dateModal" role="document">
+                <div className="modal-content text-center">
+                  <div className="modal-body">
                     <div>
-                      <img src="../../../assets/img/logo.png" class="greentik" />
+                      <img src="../../../assets/img/logo.png" className="greentik" alt="Success" />
                     </div>
-                    <h5 Class="tital mt-5">Successfully Registered</h5>
-                    <div class="paraclass">
-                      We have send you the verification by email.
+                    <h5 className="tital mt-5">Successfully Registered</h5>
+                    <div className="paraclass">
+                      We have sent you the verification by email.
                     </div>
 
                     <div>
-                      <button type="button" class="btn btn-primary " onClick={() => handleClick()} >Ok</button>
-
+                      <button type="button" className="btn btn-primary" onClick={() => handleClick()}>Ok</button>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
-
-
           )}
         </div>
       </div>
-
     </PageContainer>
   )
 }
