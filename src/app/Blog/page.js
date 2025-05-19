@@ -62,7 +62,7 @@ export default function Blog() {
   }, [])
 
   const routeBlogDetail =(id)=>{
-    router.push(`BlogDetail/${id}`)
+    router.push(`blogdetail/${id}`)
   }
 
   const reset = () => {
@@ -120,7 +120,7 @@ export default function Blog() {
                     {itm?.videos?.length > 0 ? (
           itm.videos.map((videoUrl, index) => (
             <div key={index}>
-              <div className="card-img-overlay" onClick={() => routeBlogDetail(itm?.id)}>
+              <div className="card-img-overlay" onClick={() => routeBlogDetail(itm?.slug)}>
                 <a className="cantain_btns">{itm.category_name}</a>
               </div>
               <div className="blog_cardd">
@@ -134,7 +134,7 @@ export default function Blog() {
         ) : itm?.image?.length > 0 ? (
                       itm.image.map((images) => (
                         <div key={images.id}>
-                          <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.id)}>
+                          <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.slug)}>
                             <a class="cantain_btns">{itm.category_name}</a>
                           </div>
                           <div className='blog_cardd'  >
@@ -144,7 +144,7 @@ export default function Blog() {
                       ))
                     ) : (
                       <div>
-                        <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.id)}>
+                        <div class="card-img-overlay" onClick={()=>routeBlogDetail(itm?.slug)}>
                           <a class="cantain_btns" >{itm.category_name}</a>
                         </div>
                         <div className='blog_cardd' >
@@ -180,7 +180,7 @@ export default function Blog() {
                   <div class="views text-end"> <i class="fa fa-clock-o mr-2 " aria-hidden="true"></i>
                   {datepipeModel.date(itm?.createdAt)}
                     </div>
-                  <Link href={`BlogDetail/${itm?.id}`} class="btn btn-primary ">Read More</Link>
+                  <Link href={`blogdetail/${itm?.slug}`} class="btn btn-primary ">Read More</Link>
                    
                   </div>
                 </div>

@@ -3,7 +3,7 @@ import environment from "../../../environment"
 import BlogDetail from "../page"
 
 export async function generateMetadata({ params }) {
-  const res = await fetch(`${environment.api}blog?id=${params.id}`);
+  const res = await fetch(`${environment.api}blog?slug=${params.id}`);
   const blog = await res.json();
   const blogData = await blog.data;
 

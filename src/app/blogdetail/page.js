@@ -19,7 +19,7 @@ export default function BlogDetail({ params }) {
   const getData = (p = {}) => {
     loader(true);
     let url = "blog";
-    ApiClient.get(url, { id: params.id }).then((res) => {
+    ApiClient.get(url, { slug: params.id }).then((res) => {
       if (res) {
         setData(res?.data);
         setTotal(res?.data?.total);
