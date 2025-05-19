@@ -4,7 +4,8 @@ import BlogDetail from "../page"
 
 export async function generateMetadata({ params }) {
   const res = await fetch(`${environment.api}blog?id=${params.id}`);
-  const blogData = await res.json();
+  const blog = await res.json();
+  const blogData = await blog.data;
 
   console.log(blogData,"ooooooo")
   
