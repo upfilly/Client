@@ -21,7 +21,7 @@ export default function Blog() {
   const router = useRouter()
   const [filters, setFilter] = useState({
     page: 0,
-    count: 4,
+    count: 6,
     search: '',
     isDeleted: false,
     status: ''
