@@ -385,3 +385,16 @@ ul.categories-inner {
   border-radius: 4px;
   padding: 14px;
 }
+
+.card-img-overlay {
+  pointer-events: none;
+
+  .btn {
+    pointer-events: auto;
+  }
+}
+
+.video_blogs {
+  z-index: 1;
+  position: relative;
+}
