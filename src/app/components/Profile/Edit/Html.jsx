@@ -42,13 +42,13 @@ const Html = ({ user,
   setForm,
   websites,
   setWebsites,
-  history,
-  customItems, setCustomItems }) => {
+  history,}) => {
   const [inputFocused, setInputFocused] = useState(false)
   const [categories, setCategories] = useState([]);
   const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
   const [isOpen, setIsOpen] = useState(false);
   const [newItem, setNewItem] = useState("");
+   const [customItems, setCustomItems] = useState(data);
   const allTimeZone = [
     { "name": "Pacific/Midway", "id": "Pacific/Midway" },
     { "name": "US/Samoa", "id": "US/Samoa" },
@@ -828,9 +828,9 @@ const Html = ({ user,
                                 value={newItem}
                                 onChange={(e) => setNewItem(e.target.value)}
                               />
-                              <button className="btn btn-primary" onClick={handleAddNewItem}>
+                              <span className="btn btn-primary" onClick={handleAddNewItem}>
                                 Add Platform
-                              </button>
+                              </span>
                             </div>
                           </div>
 
