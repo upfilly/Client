@@ -98,6 +98,7 @@ const EditProfile = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedSubSubcategory, setSelectedSubSubcategory] = useState('');
+  const [customItems, setCustomItems] = useState(data);
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -138,28 +139,71 @@ const EditProfile = () => {
 
 
   const gallaryData = () => {
-    loader(true)
+    loader(true);
     ApiClient.get(`user/detail`, { id: user?.activeUser?.id }).then(res => {
       if (res.success) {
-        // setForm(res.data)
-        let value = res.data
-        let payload = userType
-        let oarr = Object.keys(userType)
-        oarr.map(itm => {
-          payload[itm] = value[itm] || ''
-        })
-        setForm(payload)
-        setFormData(payload)
-        setWebsites(value?.affiliate_website || [''])
-        setData(res.data)
-        setSelectedItems({
-          categories: res.data.category_id || [],
-          subCategories: res.data.sub_category_id || [],
-          subSubCategories: res.data.sub_child_category_id || [],
-        })
+        const userData = res.data;
+        
+        // Start with the base user type structure
+        let payload = { ...userType };
+        
+        // Map all existing user data properties to the form
+        Object.keys(userData).forEach(key => {
+          payload[key] = userData[key] !== undefined ? userData[key] : payload[key];
+        });
+        
+        // Handle special cases and nested properties
+        
+        // Social media platforms
+        const socialMediaPlatforms = ['youtube', 'X(formerly Twitter)', 'instagram', 'linkedin'];
+        const userSelectedPlatforms = [];
+        
+        socialMediaPlatforms.forEach(platform => {
+          const usernameKey = `${platform}_username`;
+          const linkKey = `${platform}_profile_link`;
+          
+          // If user has data for this platform, mark it as selected
+          if (userData[usernameKey] || userData[linkKey]) {
+            userSelectedPlatforms.push(platform);
+          }
+        });
+        
+        // Also check for custom platforms the user might have added
+        Object.keys(userData).forEach(key => {
+          if (key.endsWith('_username') || key.endsWith('_profile_link')) {
+            const platform = key.split('_')[0];
+            if (!socialMediaPlatforms.includes(platform) && !userSelectedPlatforms.includes(platform)) {
+              userSelectedPlatforms.push(platform);
+              // Add to custom items if it's not in the default list
+              if (!customItems.includes(platform)) {
+                setCustomItems(prev => [...prev, platform]);
+              }
+            }
+          }
+        });
+        
+        // Handle websites for affiliates
+        const websites = userData.affiliate_website && userData.affiliate_website.length > 0 
+          ? userData.affiliate_website 
+          : [''];
+        
+        // Handle categories
+        const selectedItems = {
+          categories: userData.category_id || [],
+          subCategories: userData.sub_category_id || [],
+          subSubCategories: userData.sub_child_category_id || [],
+        };
+        
+        // Set all the state
+        setForm(payload);
+        setFormData(payload);
+        setWebsites(websites);
+        setData(userData);
+        setSelectedItems(selectedItems);
+        setSelectedItems1(userSelectedPlatforms);
       }
-      loader(false)
-    })
+      loader(false);
+    });
   };
 
   const getError = (key) => {
@@ -378,6 +422,8 @@ const EditProfile = () => {
         history={history}
         websites={websites}
         setWebsites={setWebsites}
+        customItems={customItems} 
+        setCustomItems={setCustomItems}
       />
     </>
   );

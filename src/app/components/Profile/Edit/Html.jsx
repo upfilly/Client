@@ -42,13 +42,13 @@ const Html = ({ user,
   setForm,
   websites,
   setWebsites,
-  history }) => {
+  history,
+  customItems, setCustomItems }) => {
   const [inputFocused, setInputFocused] = useState(false)
   const [categories, setCategories] = useState([]);
   const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
   const [isOpen, setIsOpen] = useState(false);
   const [newItem, setNewItem] = useState("");
-  const [customItems, setCustomItems] = useState(data);
   const allTimeZone = [
     { "name": "Pacific/Midway", "id": "Pacific/Midway" },
     { "name": "US/Samoa", "id": "US/Samoa" },
