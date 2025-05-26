@@ -69,6 +69,7 @@ const EditProfile = () => {
     subSubCategories: [],
   });
   const [dob, setDOB] = useState(null);
+  const [platforms, setPlatforms] = useState([]);
   const [formData, setFormData] = useState({
     // auto_invoice: false,
     // is_hide_invoice: false,
@@ -98,6 +99,7 @@ const EditProfile = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedSubSubcategory, setSelectedSubSubcategory] = useState('');
+
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
@@ -148,10 +150,11 @@ const EditProfile = () => {
         oarr.map(itm => {
           payload[itm] = value[itm] || ''
         })
-        setForm(payload)
+        setForm({...payload,platforms:res?.data?.propertyType})
         setFormData(payload)
         setWebsites(value?.affiliate_website || [''])
         setData(res.data)
+        setPlatforms(res?.data?.propertyType)
         setSelectedItems({
           categories: res.data.category_id || [],
           subCategories: res.data.sub_category_id || [],
@@ -161,6 +164,8 @@ const EditProfile = () => {
       loader(false)
     })
   };
+
+  console.log(platforms,"platformsplatforms")
 
   const getError = (key) => {
     return formModel.getError('profileForm', key)
@@ -181,11 +186,11 @@ const EditProfile = () => {
       affiliate_website: websites,
       lat: selectedLocation?.lat?.toString(),
       lng: selectedLocation?.lng?.toString(),
-      address: selectedLocation?.address,
-      country: selectedLocation?.country,
-      state: selectedLocation?.state,
-      city: selectedLocation?.city,
-      pincode: selectedLocation?.pincode,
+      address: selectedLocation?.address || address ,
+      country: selectedLocation?.country || form?.country,
+      state: selectedLocation?.state || form?.state,
+      city: selectedLocation?.city || form?.city,
+      pincode: selectedLocation?.pincode || form?.pincode,
       // payment_method:formData?.payment_method,
       accountholder_name: formData?.accountholder_name,
       routing_number: formData?.routing_number,
@@ -195,12 +200,14 @@ const EditProfile = () => {
       // sub_category_id: selectedSubcategory,
       // sub_child_category_id: selectedSubSubcategory,
       // category_id: selectedCategory,
+      propertyType:form?.platforms,
       category_id: selectedItems?.categories,
       sub_category_id: selectedItems?.subCategories,
       sub_child_category_id: selectedItems?.subSubCategories,
       // cat_type:form?.cat_type
       // dob: formatedDob,
     }
+    delete value?.platforms
     delete value?.websites
     if (!value?.cat_type) {
       delete value?.cat_type
@@ -378,6 +385,8 @@ const EditProfile = () => {
         history={history}
         websites={websites}
         setWebsites={setWebsites}
+        platforms={platforms} 
+        setPlatforms={setPlatforms}
       />
     </>
   );

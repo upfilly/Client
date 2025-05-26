@@ -24,6 +24,7 @@ export const userType = {
     affiliate_group: '',
     affiliate_type: '',
     addedBy: null,
+    currencies:[],
 }
 
 export let userDetailType={ id:'',fullName: '',firstName:'',lastName:'',gender:'', email: '', mobileNo: '',address:'',image:[],role:'',

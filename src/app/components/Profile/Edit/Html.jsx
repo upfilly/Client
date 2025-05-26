@@ -16,6 +16,7 @@ import { IoClose } from "react-icons/io5";
 import { FiPlus } from "react-icons/fi";
 import { CurencyData } from '@/methods/currency';
 import MultiSelectValue from '../../common/MultiSelectValue';
+import PropertyDataEntry from './SocialPlatForm'
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -41,6 +42,8 @@ const Html = ({ user,
   category,
   setForm,
   websites,
+  platforms, 
+  setPlatforms,
   setWebsites,
   history,}) => {
   const [inputFocused, setInputFocused] = useState(false)
@@ -151,6 +154,8 @@ const Html = ({ user,
     { "name": "Pacific/Tongatapu", "id": "Pacific/Tongatapu" }
   ]
 
+  console.log(selectedItems,"selectedItemsselectedItems")
+
   const handleAddNewItem = () => {
     if (newItem.trim() !== "" && !customItems.includes(newItem)) {
       setCustomItems([...customItems, newItem]);
@@ -202,7 +207,7 @@ const Html = ({ user,
   };
 
   const getCategory = () => {
-    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types" : "advertiser_categories"}&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         setCategories(res.data.data);
@@ -704,7 +709,7 @@ const Html = ({ user,
                         }
 
 
-                        {
+                        {/* {
                           <div className='col-12 col-sm-12 col-md-6 mb-3  col-lg-12'>
                             <div className=" form-group custom-input">
                               <label> Tags</label>
@@ -738,108 +743,16 @@ const Html = ({ user,
 
                             </div>
                           </div>
-                        }
+                        } */}
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div className='col-12 col-sm-12 col-md-12 col-lg-4'>
-                  <div className='card'>
-                    <div className='card-header'>
-                      <div className='main_title_head'>
-                        <h3>Select Social Media Platforms :</h3>
-                      </div>
-                    </div>
-                    <div className='card-body'>
-                      {
-
-                        <div className="row mx-auto">
-                          {[...customItems].map((item, index) => (
-                            <div key={item} className="col-12">
-                              <div className="card rounded-5 border platforms_input mb-3 p-3">
-                                <div className="d-flex align-items-center">
-                                  <input
-                                    className="form-check-input ml-0"
-                                    type="checkbox"
-                                    id={item}
-                                    onChange={() => handleFeatureCheckbox(item)}
-                                    checked={selectedItems1?.includes(item)}
-                                  />
-                                  <label className="form-check-label ml-3 pl-2" htmlFor={item}>
-                                    {methodModel?.capitalizeFirstLetter(item)}
-                                  </label>
-                                  {index > 3 && <button
-                                    className="btn btn-danger btn-sm ml-auto"
-                                    onClick={() => handleRemoveItem(item)}
-                                  >
-                                    Remove
-                                  </button>}
-                                </div>
-                                {selectedItems1?.includes(item) && (
-                                  <div className="row">
-                                    <div className="col-12 my-3 custom-input">
-                                      <label>User name</label>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Enter Name"
-                                        value={form[`${item}_username`] || ""}
-                                        onChange={(e) =>
-                                          setForm((prevForm) => ({
-                                            ...prevForm,
-                                            [`${item}_username`]: e.target.value,
-                                          }))
-                                        }
-                                        required
-                                      />
-                                    </div>
-
-                                    <div className="col-12 my-3 custom-input">
-                                      <label>{`${methodModel?.capitalizeFirstLetter(item)} link`}</label>
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Enter link"
-                                        value={form[`${item}_profile_link`] || ""}
-                                        onChange={(e) =>
-                                          setForm((prevForm) => ({
-                                            ...prevForm,
-                                            [`${item}_profile_link`]: e.target.value,
-                                          }))
-                                        }
-                                        title="http://www.example.com"
-                                        pattern={pattern}
-                                        required
-                                      />
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-
-                          <div className="col-12">
-                            <div className="card rounded-5 border platforms_input custom-input mb-3 p-3">
-                              <input
-                                type="text"
-                                className="form-control mb-2"
-                                placeholder="Enter new platform"
-                                value={newItem}
-                                onChange={(e) => setNewItem(e.target.value)}
-                              />
-                              <span className="btn btn-primary" onClick={handleAddNewItem}>
-                                Add Platform
-                              </span>
-                            </div>
-                          </div>
-
-                        </div>
-
-                      }
-                    </div>
-                  </div>
-                </div>
+                <PropertyDataEntry
+                  form={form}
+                  setForm={setForm}
+                  platforms={platforms}
+                  setPlatforms={setPlatforms} />
               </div>
 
             </div>

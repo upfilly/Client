@@ -358,19 +358,19 @@ const Profile = () => {
                           <>
 
 
-                            {data?.social_media_platforms?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
+                            {data?.propertyType?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                               <div className='inputFlexs width400'>
                                 <label >Social Media</label>
                                 <div className='d-flex wraps'>
-                                  {data?.activeUser?.social_media_platforms?.map((item: any, index: any, array: any) =>
-                                    <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p>
+                                  {data?.activeUser?.propertyType?.map((item: any, index: any, array: any) =>
+                                    <p className="profile_data">{item?.name} {index !== array.length - 1 && <span>,</span>}</p>
                                   )
                                   }
 
                                 </div>
                               </div>
                             </div>}
-
+{/* 
                             {data?.tags?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                               <div className='inputFlexs width400'>
                                 <label >Tags:</label>
@@ -384,7 +384,7 @@ const Profile = () => {
 
                                 </div>
                               </div>
-                            </div>}
+                            </div>} */}
 
                             {data?.currencies?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                               <div className='inputFlexs width400'>
@@ -493,28 +493,29 @@ const Profile = () => {
 
 
                             <div className="">
-                              <div className="row mt-2">
 
-                                {data?.instagram_username && data?.instagram_profile_link &&
-                                  <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                                    <div className='d-flex inputFlexs social-media-links '>
-                                      <i className=" mr-1" aria-hidden="true"><img src="/assets/img/instagram.png" /> </i>
-                                      <div className='ml-1'>
-                                        <label >Instagram</label>
-                                        <p className="profile_data name_space">User Name : <b>{data?.instagram_username}</b></p>
-                                        <div>
-                                          <p className="profile_data name_space ">Link : <b>{data?.instagram_profile_link}</b></p>
-                                        </div>
-                                      </div>
-
-
+                                {data?.propertyType && data?.propertyType?.map((dat:any)=>
+                                 <div className="row mt-2">
+                                <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
+                                <div className='d-flex inputFlexs social-media-links '>
+                                  <i className=" mr-1" aria-hidden="true"><img src="/assets/img/instagram.png" /> </i>
+                                  <div className='ml-1'>
+                                    <label >{dat?.id}</label>
+                                    <p className="profile_data name_space">User Name : <b>{dat?.name}</b></p>
+                                    <div>
+                                      <p className="profile_data name_space ">Link : <b>{dat?.url}</b></p>
                                     </div>
+                                  </div>
 
 
-                                  </div>}
+                                </div>
 
 
-                                {data?.linkedin_username && data?.linkedin_profile_link &&
+                              </div> </div>)
+                                  }
+
+
+                                {/* {data?.linkedin_username && data?.linkedin_profile_link &&
                                   <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                                     <div className='d-flex inputFlexs social-media-links'>
                                       <i className=" mr-1" aria-hidden="true"><img src="/assets/img/linkedin.png" /> </i>
@@ -568,10 +569,10 @@ const Profile = () => {
                                     </div>
 
 
-                                  </div>}
+                                  </div>} */}
 
                               </div>
-                            </div>
+                           
                           </>
                         }
 

@@ -266,6 +266,16 @@ const MultiSelectDropdown = ({ data, selectedItems,setSelectedItems }) => {
       .join(", ");
   };
 
+  useEffect(() => {
+    if (selectedItems) {
+      setDisplaySelections({
+        categories: selectedItems.categories || [],
+        subCategories: selectedItems.subCategories || [],
+        subSubCategories: selectedItems.subSubCategories || []
+      });
+    }
+  }, [selectedItems]);
+
   const handleSave = () => {
     // Save the current selections to be displayed in the toggle
     setDisplaySelections({...selectedItems});
@@ -276,7 +286,7 @@ const MultiSelectDropdown = ({ data, selectedItems,setSelectedItems }) => {
   return (
     <div className="dropdown-container show-drop">
       <div className="category-input">
-        <span onClick={toggleDropdown} className="dropdown-toggle">
+      <span onClick={toggleDropdown} className="dropdown-toggle">
           {getSelectedCategoryNames(displaySelections) || "Select Categories"}{" "}
           {getSelectedSubCategoryNames(displaySelections) && `| ${getSelectedSubCategoryNames(displaySelections)}`}
           {getSelectedSubSubCategoryNames(displaySelections) && `| ${getSelectedSubSubCategoryNames(displaySelections)}`}
