@@ -494,25 +494,30 @@ const Profile = () => {
 
                             <div className="">
 
-                                {data?.propertyType && data?.propertyType?.map((dat:any)=>
-                                 <div className="row mt-2">
-                                <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                                <div className='d-flex inputFlexs social-media-links '>
-                                  <i className=" mr-1" aria-hidden="true"><img src="/assets/img/instagram.png" /> </i>
-                                  <div className='ml-1'>
-                                    <label >{dat?.id}</label>
-                                    <p className="profile_data name_space">User Name : <b>{dat?.name}</b></p>
-                                    <div>
-                                      <p className="profile_data name_space ">Link : <b>{dat?.url}</b></p>
+                              {data?.propertyType?.map((dat: any) => (
+                                <div className="row mt-2" key={dat.id}>
+                                  <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div className="d-flex inputFlexs social-media-links p-3 bg-light rounded">
+                                      <div className="mr-3">
+                                        <img src="/assets/img/instagram.png" alt="social icon" className="img-fluid" style={{ width: "40px" }} />
+                                      </div>
+                                      <div className="flex-grow-1">
+                                        <h6 className="mb-1 font-weight-bold">{dat?.id}</h6>
+                                        <div className="mb-1">
+                                          <span className="text-muted">User Name:</span>
+                                          <span className="ml-1 font-weight-bold">{dat?.name}</span>
+                                        </div>
+                                        <div className="text-truncate">
+                                          <span className="text-muted">Link:</span>
+                                          <a href={dat?.url} className="ml-1 font-weight-bold text-primary" target="_blank" rel="noopener noreferrer">
+                                            {dat?.url}
+                                          </a>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-
-
                                 </div>
-
-
-                              </div> </div>)
-                                  }
+                              ))}
 
 
                                 {/* {data?.linkedin_username && data?.linkedin_profile_link &&
