@@ -150,11 +150,11 @@ const EditProfile = () => {
         oarr.map(itm => {
           payload[itm] = value[itm] || ''
         })
-        setForm({...payload,platforms:res?.data?.propertyType})
+        setForm({...payload,platforms:res?.data?.propertyType || []})
         setFormData(payload)
         setWebsites(value?.affiliate_website || [''])
         setData(res.data)
-        setPlatforms(res?.data?.propertyType)
+        setPlatforms(res?.data?.propertyType || [])
         setSelectedItems({
           categories: res.data.category_id || [],
           subCategories: res.data.sub_category_id || [],

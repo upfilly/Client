@@ -1,0 +1,21 @@
+.selectDropdown {
+    position: relative;
+    
+    // Style for action items inside the dropdown
+    :global(.action-option) {
+        background-color: #f8f9fa !important;
+        border-bottom: 1px solid #dee2e6 !important;
+        font-weight: 600 !important;
+        color: #495057 !important;
+        
+        &:hover {
+            background-color: #e9ecef !important;
+        }
+    }
+    
+    // Optional: Add some spacing after action items
+    :global(.optionContainer .action-option:last-of-type) {
+        margin-bottom: 4px;
+        border-bottom: 2px solid #dee2e6 !important;
+    }
+}

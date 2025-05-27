@@ -11,6 +11,7 @@ import Layout from '../components/global/layout/index';
 import { useRouter } from 'next/navigation';
 import { Modal } from 'react-bootstrap';
 import CompareTable from './CompareTable'
+import ApprovalRequirementsModal from './ApprovalRequirement'
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
@@ -25,8 +26,44 @@ const Profile = () => {
   const [switchUser, setSwitchUser] = useState<any>(null)
   const [bankData, setBankData] = useState<any>([])
   const [roles, setRoles] = useState<any>('')
+  const [showApprovalPrompt, setShowApprovalPrompt] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleApprovalPromptClose = () => setShowApprovalPrompt(false);
+  const handleApprovalPromptShow = () => setShowApprovalPrompt(true);
+
+  // Function to check if all required fields are present for admin approval
+  const checkApprovalRequirements = (userData: any) => {
+    if (!userData?.activeUser) return false;
+
+    const user = userData.activeUser;
+    const hasName = user?.fullName;
+    const hasAddress = user?.address;
+    const hasTimezone = user?.timezone;
+    const hasCurrency = userData?.currencies && userData.currencies.length > 0;
+    const hasPropertyType = userData?.propertyType && userData.propertyType.length > 0;
+    const hasCategory = userData?.all_category && userData.all_category.length > 0;
+
+    return hasName && hasAddress && hasTimezone && hasCurrency && hasPropertyType && hasCategory;
+  };
+
+  // Get missing requirements for display
+  const getMissingRequirements = (userData: any) => {
+    if (!userData?.activeUser) return [];
+
+    const user = userData.activeUser;
+    const missing = [];
+
+    if (!user?.fullName) missing.push('Name');
+    if (!user?.address) missing.push('Address');
+    if (!user?.timezone) missing.push('Timezone');
+    if (!userData?.currencies || userData.currencies.length === 0) missing.push('Currency');
+    if (!userData?.propertyType || userData.propertyType.length === 0) missing.push('Property Type');
+    if (!userData?.all_category || userData.all_category.length === 0) missing.push('Category');
+
+    return missing;
+  };
 
   // console.log(ActivityData,"ActivityDataActivityData")
 
@@ -121,7 +158,7 @@ const Profile = () => {
   };
 
   const handleSwitchUser = (id: any) => {
-    if(id == Id) return
+    if (id == Id) return
     loader(true)
     ApiClient.put(`changeactiveuser`, { id: id }).then(res => {
       if (res.success) {
@@ -145,6 +182,9 @@ const Profile = () => {
   }, []
   );
 
+  // Check if user meets approval requirements
+  const meetsApprovalRequirements = data ? checkApprovalRequirements(data) : false;
+  const missingRequirements:any = data ? getMissingRequirements(data) : [];
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -181,14 +221,27 @@ const Profile = () => {
                   <div className='col-12 col-sm-12 col-md-12  col-lg-8  '>
                     <div className='card p-3 rounded-3 mb-4 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
-                        <div className='main_title_head'>
-                          <h3 className=''>Basic Information </h3>
+                        <div className='main_title_head d-flex align-items-center gap-3'>
+                          <h3 className=''>Basic Information</h3>
+                          {(meetsApprovalRequirements) && (
+                            <div className="d-flex align-items-center gap-2">
+                              <i className="material-icons text-success" style={{ fontSize: '20px' }}>check_circle</i>
+                              {(meetsApprovalRequirements && user?.request_status != "accepted") && <span className="text-success font-weight-bold">Wait for Admin Approval</span>}
+                            </div>
+                          )}
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
+                          {(!meetsApprovalRequirements && missingRequirements.length > 0 && user?.request_status != "accepted") && (
+                            <button className="btn btn-warning profiles" onClick={handleApprovalPromptShow}>
+                              <i className="material-icons prob" title="Requirements">info</i>
+                              Approval Requirements
+                            </button>
+                          )}
                           {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && <Link href="/profile/edit" className="btn btn-primary profiles">
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
+                          
                           {/* <button className="btn btn-primary profiles" onClick={handleShow}>
                             See Activity Logs
                           </button> */}
@@ -219,6 +272,16 @@ const Profile = () => {
                                 <div className='inputFlexs width400'>
                                   <label >Address:</label>
                                   <p className="profile_data">{data && data?.activeUser?.address}</p>
+                                </div>
+                              </div>}
+
+                            {data?.activeUser?.timezone &&
+                              <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
+                                <div className='inputFlexs width400'>
+                                  <label>Timezone:</label>
+                                  <div>
+                                    <p className="profile_data">{data && data?.activeUser?.timezone}</p>
+                                  </div>
                                 </div>
                               </div>}
 
@@ -370,7 +433,7 @@ const Profile = () => {
                                 </div>
                               </div>
                             </div>}
-{/* 
+                            {/* 
                             {data?.tags?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                               <div className='inputFlexs width400'>
                                 <label >Tags:</label>
@@ -498,13 +561,13 @@ const Profile = () => {
                                 <div className="row mt-2" key={dat.id}>
                                   <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                                     <div className="d-flex inputFlexs social-media-links p-3 bg-light rounded">
-                                      <div className="mr-3">
+                                      {/* <div className="mr-3">
                                         <img src="/assets/img/instagram.png" alt="social icon" className="img-fluid" style={{ width: "40px" }} />
-                                      </div>
+                                      </div> */}
                                       <div className="flex-grow-1">
                                         <h6 className="mb-1 font-weight-bold">{dat?.id}</h6>
                                         <div className="mb-1">
-                                          <span className="text-muted">User Name:</span>
+                                          <span className="text-muted">Username:</span>
                                           <span className="ml-1 font-weight-bold">{dat?.name}</span>
                                         </div>
                                         <div className="text-truncate">
@@ -520,7 +583,7 @@ const Profile = () => {
                               ))}
 
 
-                                {/* {data?.linkedin_username && data?.linkedin_profile_link &&
+                              {/* {data?.linkedin_username && data?.linkedin_profile_link &&
                                   <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
                                     <div className='d-flex inputFlexs social-media-links'>
                                       <i className=" mr-1" aria-hidden="true"><img src="/assets/img/linkedin.png" /> </i>
@@ -576,8 +639,8 @@ const Profile = () => {
 
                                   </div>} */}
 
-                              </div>
-                           
+                            </div>
+
                           </>
                         }
 
@@ -704,298 +767,6 @@ const Profile = () => {
                           </div>
                         </div>
 
-
-
-
-                        {/* {data?.category_name &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                            <div className='inputFlexs width400'>
-                              <label>Category Name:</label>
-                              <div>
-                                <p className="profile_data">{data && data?.activeUser?.category_name || data?.category_name}</p>
-                              </div>
-                            </div>
-
-                          </div>} */}
-
-                        {/* {data?.parter_manager_name &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                            <div className='inputFlexs width400'>
-                              <label>Parter Manager Name:</label>
-                              <div>
-                                <p className="profile_data">{data && data?.activeUser?.parter_manager_name || data?.parter_manager_name}</p>
-                              </div>
-                            </div>
-
-                          </div>} */}
-
-                        {/* {data?.account_executive_name &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                            <div className='inputFlexs width400'>
-                              <label>Account Executive Name:</label>
-                              <div>
-                                <p className="profile_data">{data && data?.activeUser?.account_executive_name || data?.account_executive_name}</p>
-                              </div>
-                            </div>
-
-                          </div>} */}
-
-                        {/* {data?.address2 &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                            <div className='inputFlexs width400'>
-                              <label>Address 2:</label>
-                              <div>
-                                <p className="profile_data">{data && data?.activeUser?.address2 || data?.address2}</p>
-                              </div>
-                            </div>
-
-                          </div>} */}
-
-
-                        {/* {data?.dialCode && data?.mobileNo &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                            <div className='inputFlexs width400' >
-                              <label>Mobile No</label>
-                              <div>
-                                <p className="profile_data">({data && data?.activeUser?.dialCode || data?.dialCode}) {data && data?.activeUser?.mobileNo || data?.mobileNo}</p>
-                              </div>
-                            </div>
-                          </div>} */}
-
-                        {/* {data?.cellDialCode && data?.work_phone &&
-                          <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                            <div className='inputFlexs width400' >
-                              <label>Work No</label>
-                              <div>
-                                <p className="profile_data">({data && data?.activeUser?.cellDialCode || data?.cellDialCode}) {data && data?.activeUser?.work_phone || data?.work_phone}</p>
-                              </div>
-                            </div>
-                          </div>} */}
-
-                        {/* {data?.brand_name && data?.mobileNo && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                          <div className='inputFlexs width400' >
-                            <label>Brand Name</label>
-                            <div>
-                              <p className="profile_data">{data && data?.activeUser?.brand_name || data?.brand_name}</p>
-                            </div>
-                          </div>
-                        </div>} */}
-
-                        {/* {data?.language && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                          <div className='inputFlexs width400' >
-                            <label>Language</label>
-                            <div>
-                              <p className="profile_data">{data && data?.activeUser?.language || data?.language}</p>
-                            </div>
-                          </div>
-                        </div>} */}
-
-                        {/* {data?.reffering_affiliate && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                          <div className='inputFlexs width400'>
-                            <label>Brand Email:</label>
-                            <div>
-                              <p className="profile_data">{data && data?.activeUser?.reffering_affiliate || data?.reffering_affiliate}</p>
-                            </div>
-                          </div>
-
-                        </div>} */}
-
-
-                        {/* {
-                          <>
-
-
-                            {data?.social_media_platforms?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                              <div className='inputFlexs width400'>
-                                <label >Social Media</label>
-                                <div className='d-flex wraps'>
-                                  {data?.activeUser?.social_media_platforms?.map((item: any, index: any, array: any) =>
-                                    <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p>
-                                  )
-                                  }
-                                  ||
-                                  {data?.social_media_platforms?.map((item: any, index: any, array: any) =>
-                                    <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p>
-                                  )
-                                  }
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.tags?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400'>
-                                <label >Tags:</label>
-                                <div className='d-flex wraps'>
-                                  {data?.activeUser?.tags?.map((item: any, index: any, array: any) =>
-                                    <div key={item} className="profile_data_wrapper">
-                                      <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
-                                  )
-
-                                  }
-                                  ||
-                                  {data?.tags?.map((item: any, index: any, array: any) =>
-                                    <div key={item} className="profile_data_wrapper">
-                                      <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
-                                  )
-
-                                  }
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.tax_detail && data?.default_invoice_setting && data?.payment_method && <div className="col-md-12 ">
-                              <div className='main_title_head_bill'>
-                                <h3>Billing Detail</h3>
-                              </div>
-                            </div>}
-
-                            {data?.default_invoice_setting && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>Default Invoice </label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.default_invoice_setting || data?.default_invoice_setting}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.accountholder_name && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>Account Holdername</label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.accountholder_name || data?.accountholder_name}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.routing_number && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>Routing Number</label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.routing_number || data?.routing_number}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.account_number && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>Account Number</label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.account_number || data?.account_number}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.ssn_number && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>SSN Number</label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.ssn_number || data?.ssn_number}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.company_name && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>Company Name</label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.company_name || data?.company_name}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-                            {data?.payment_method && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
-                              <div className='inputFlexs width400' >
-                                <label>Payment Method</label>
-                                <div>
-                                  <p className="profile_data">{data && data?.activeUser?.payment_method || data?.payment_method}</p>
-                                </div>
-                              </div>
-                            </div>}
-
-
-                            <div className="">
-                              <div className="row mt-2">
-
-                                {data?.instagram_username && data?.instagram_profile_link &&
-                                  <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                                    <div className='d-flex inputFlexs social-media-links '>
-                                      <i className=" mr-1" aria-hidden="true"><img src="/assets/img/instagram.png" /> </i>
-                                      <div className='ml-1'>
-                                        <label >Instagram</label>
-                                        <p className="profile_data name_space">User Name : <b>{data?.instagram_username}</b></p>
-                                        <div>
-                                          <p className="profile_data name_space ">Link : <b>{data?.instagram_profile_link}</b></p>
-                                        </div>
-                                      </div>
-
-
-                                    </div>
-
-
-                                  </div>}
-
-
-                                {data?.linkedin_username && data?.linkedin_profile_link &&
-                                  <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                                    <div className='d-flex inputFlexs social-media-links'>
-                                      <i className=" mr-1" aria-hidden="true"><img src="/assets/img/linkedin.png" /> </i>
-                                      <div className='ml-1'>
-                                        <label >Linkedin</label>
-                                        <p className="profile_data name_space">User Name : <b>{data?.linkedin_username}</b></p>
-                                        <div>
-                                          <p className="profile_data ">Link : <b>{data?.linkedin_profile_link}</b></p>
-                                        </div>
-                                      </div>
-
-
-                                    </div>
-
-
-                                  </div>}
-
-
-                                {data?.twitter_username && data?.twitter_profile_link &&
-                                  <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                                    <div className='d-flex inputFlexs social-media-links'>
-                                      <i className=" mr-1" aria-hidden="true"><img src="/assets/img/twitter.png" /> </i>
-                                      <div className='ml-1'>
-                                        <label >Twitter</label>
-                                        <p className="profile_data name_space">User Name : <b>{data?.twitter_username}</b></p>
-                                        <div>
-                                          <p className="profile_data ">Link : <b>{data?.twitter_profile_link}</b></p>
-                                        </div>
-                                      </div>
-
-
-                                    </div>
-
-
-                                  </div>}
-
-
-                                {data?.youtube_username && data?.youtube_profile_link &&
-                                  <div className="col-12 col-sm-6 col-md-6 col-lg-6  ">
-                                    <div className='d-flex inputFlexs social-media-links'>
-                                      <i className=" mr-1" aria-hidden="true"><img src="/assets/img/youtub.png" /> </i>
-                                      <div className='ml-1'>
-                                        <label >Youtube</label>
-                                        <p className="profile_data name_space">Username : <b>{data?.youtube_username}</b></p>
-                                        <div>
-                                          <p className="profile_data ">Link : <b>{data?.youtube_profile_link}</b></p>
-                                        </div>
-                                      </div>
-
-
-                                    </div>
-
-
-                                  </div>}
-
-                              </div>
-                            </div>
-                          </>
-                        } */}
-
                       </div>
                     </div>
                   </div>}
@@ -1028,6 +799,13 @@ const Profile = () => {
                     {ActivityData?.length == 0 && <div className='d-flex justify-content-center align-items-center height_fix' > <img src="/assets/img/no-data.jpg" className='n-databx' alt="" /> </div>}
                   </Modal.Body>
                 </Modal>
+
+                {showApprovalPrompt && <ApprovalRequirementsModal
+                  show={showApprovalPrompt}
+                  onHide={handleApprovalPromptClose}
+                  missingRequirements={missingRequirements}
+                  onEditProfile={() => history.push('/profile/edit')}
+                />}
 
               </div>
             </div>

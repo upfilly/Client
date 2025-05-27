@@ -352,7 +352,7 @@ const Html = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      {/* <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
                             Personalization Tags
@@ -394,7 +394,7 @@ const Html = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-md-12">
                         <div className="d-flex justify-content-end align-items-center gap-3">
                           <button
