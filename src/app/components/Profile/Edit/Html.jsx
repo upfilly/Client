@@ -310,7 +310,7 @@ const Html = ({ user,
 
                       <div className='row'>
                         <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
-                          <label>Name<span className='star'>*</span></label>
+                          <label>First Name<span className='star'>*</span></label>
                           <div>
                             <input
                               type="text"
@@ -321,6 +321,21 @@ const Html = ({ user,
                               onChange={e => setForm({ ...form, firstName: e.target.value })}
                             />
                             {submitted && !form?.firstName ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
+                          </div>
+                        </div>
+
+                        <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
+                          <label>Last Name<span className='star'>*</span></label>
+                          <div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Last Name"
+                              name='lastName'
+                              value={form.lastName}
+                              onChange={e => setForm({ ...form, lastName: e.target.value })}
+                            />
+                            {/* {submitted && !form?.firstName ? <div className="invalid-feedback d-block">Name is Required</div> : <></>} */}
                           </div>
                         </div>
 
