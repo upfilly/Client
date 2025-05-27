@@ -570,9 +570,9 @@ const Profile = () => {
                                           <span className="text-muted">Username:</span>
                                           <span className="ml-1 font-weight-bold">{dat?.name}</span>
                                         </div>
-                                        <div className="text-truncate">
+                                        <div className="text-truncate text-wrap">
                                           <span className="text-muted">Link:</span>
-                                          <a href={dat?.url} className="ml-1 font-weight-bold text-primary" target="_blank" rel="noopener noreferrer">
+                                          <a href={dat?.url} style={{wordBreak:'break-all'}} className="ml-1 font-weight-bold text-primary " target="_blank" rel="noopener noreferrer">
                                             {dat?.url}
                                           </a>
                                         </div>
