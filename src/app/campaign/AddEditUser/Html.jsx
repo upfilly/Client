@@ -10,6 +10,12 @@ import MultiSelectDropdownData from "../MultiSelectDropdownData";
 import MultiSelectRegionDropdown from "../MultiSelectRegion"
 import axios from "axios";
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import Samplelegalterm from './campaigntabs/Samplelegalterm';
+import Affiliateprogrammanagement from './campaigntabs/Affiliateprogrammanagement';
+
+
+
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -511,7 +517,18 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                     />}
                                     {submitted && !form?.description && <div className="invalid-feedback d-block">Description is Required</div>}
                                 </div>
-
+                                <div className="col-md-12 mb-3 category-dropdown">
+                                {/* <Tabs className="flex">
+                                <TabList>
+                                    <Tab href="./campaigntabs/samplelegalterm">Hot</Tab>
+                                    <Tab href="./campaigntabs/samplelegalterm">New</Tab>
+                                </TabList>
+                                <TabPanel>"hello</TabPanel>
+                                </Tabs> */}
+                                <Affiliateprogrammanagement/>
+                                    
+                                </div>
+                                
                                 <div className='col-md-6'>
                                     <label>Document(Max. Limit 10)</label>
                                     <div className="form-group drag_drop">

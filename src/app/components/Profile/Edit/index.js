@@ -52,7 +52,9 @@ const EditProfile = () => {
     ssn_number: '',
     company_name: "",
     affiliate_type: '',
-    cat_type: ''
+    cat_type: '',
+    default_currency : ''
+
     // dob:''
   });
   const [picLoader, setPicLoader] = useState(false)

@@ -17,6 +17,7 @@ import { FiPlus } from "react-icons/fi";
 import { CurencyData } from '@/methods/currency';
 import MultiSelectValue from '../../common/MultiSelectValue';
 import PropertyDataEntry from './SocialPlatForm'
+import { Currency } from 'lucide-react';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -454,6 +455,24 @@ const Html = ({ user,
                                   placeholder="Select"
                                   intialValue={form?.currencies}
                                   result={e => setForm({ ...form, currencies: e.value })}
+                                  options={CurencyData}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
+                          <div className='form-group'>
+                            <div className="select_drop ">
+                              <label>Default Currency</label>
+                              <div className="select_row">
+                                <SelectDropdown 
+                                  theme='search'
+                                  id="statusDropdown"
+                                  displayValue="name"
+                                  placeholder="Select"
+                                  intialValue={form?.default_currency}
+                                  result={e => setForm({ ...form, default_currency: e.value })}
                                   options={CurencyData}
                                 />
                               </div>
