@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
-const AffiliateTerms = () => {
+import PropTypes from 'prop-types';
+const AffiliateTerms = ({ onAcceptTerms }) => {
     const [isAgreed, setIsAgreed] = useState(false);
     const legalText = `
 
@@ -269,7 +269,9 @@ BY SUBMITTING THE ONLINE APPLICATION TO JOIN OUR AFFILIATE PROGRAM, YOU ARE AGRE
         <input
           type="checkbox"
         //   checked={isAgreed}
-          onChange={() => setIsAgreed(!isAgreed)}
+          onChange={(e) => {setIsAgreed(!isAgreed);
+            onAcceptTerms(e.target.checked);
+          }}
         />
         &nbsp;I agree to the terms and conditions
       </label>
@@ -277,5 +279,8 @@ BY SUBMITTING THE ONLINE APPLICATION TO JOIN OUR AFFILIATE PROGRAM, YOU ARE AGRE
     </div>
   );
 };
+AffiliateTerms.propTypes = {
+   onAcceptTerms: PropTypes.func.isRequired, // Ensure that onAcceptTerms is a function
+ };
 
 export default AffiliateTerms;

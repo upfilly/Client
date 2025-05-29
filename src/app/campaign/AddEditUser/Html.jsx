@@ -13,6 +13,8 @@ import MultiSelectValue from "@/app/components/common/MultiSelectValue";
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import Samplelegalterm from './campaigntabs/Samplelegalterm';
 import Affiliateprogrammanagement from './campaigntabs/Affiliateprogrammanagement';
+import { Tooltip } from "react-bootstrap";
+import CustomTooltip from "@/app/components/common/Tooltip/CustomTooltip";
 
 
 
@@ -130,6 +132,13 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
     useEffect(() => {
         getCategory()
     }, [])
+
+
+    const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+    const handleAcceptTerms = (isAccepted) => {
+        setIsTermsAccepted(isAccepted);
+        console.log('active', isAccepted)  // Update the state based on checkbox value
+      };
 
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Campaign"} filters={undefined}>
@@ -525,7 +534,7 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                                 </TabList>
                                 <TabPanel>"hello</TabPanel>
                                 </Tabs> */}
-                                <Affiliateprogrammanagement/>
+                                <Affiliateprogrammanagement  onAcceptTerms={handleAcceptTerms}/>
                                     
                                 </div>
                                 
@@ -572,7 +581,15 @@ const Html = ({ id, form, affiliateData, selectedRegionItems, setSelectedRegionI
                             </div>
 
                             <div className="text-right edit-btns">
-                                <button type="submit" className="btn btn-primary">Save</button>
+                                {
+                                    !isTermsAccepted &&
+                                    <p>*Accept terms and Conditons</p>
+                                }
+                                <button type="submit" disabled={!isTermsAccepted} className="btn btn-primary">Save</button> 
+                                  
+                                
+                               
+                                
                             </div>
                         </div>
 

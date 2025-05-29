@@ -6,9 +6,17 @@ import Transactions from "./Transactions"
 import Legalterms from "./LegalTerms"
 import Terms from "./Terms"
 
+import PropTypes from 'prop-types';
 
 
-const Affiliateprogrammanagement = () => {
+
+const Affiliateprogrammanagement = ({ onAcceptTerms }) => {
+
+  const handlechange = (e)=>{
+    
+    onAcceptTerms(e)
+  }
+  
   const AFFILIATE_PROGRAM_AGREEMENT = `
   AFFILIATE PROGRAM AGREEMENT
   PLEASE READ THE ENTIRE AGREEMENT.
@@ -111,13 +119,14 @@ const Affiliateprogrammanagement = () => {
   9. This Agreement shall be binding upon successors and assigns.
   10. We reserve the right to amend this agreement at any time without notice.
   `;
+  
     const tabsData = [
-        { id: 'tab1', title: 'Affliate Program', content: <Terms/>  },
+        { id: 'tab1', title: 'Affliate Program', content: <Terms onAcceptTerms={handlechange}/>  },
         // { id: 'tab2', title: 'Sample Legal term', content: <Samplelegalterm/> },
         { id: 'tab3', title: 'Publishers', content: <PublisherPolicyForm/> },
         { id: 'tab4', title: 'DeDuplication', content: <Deduplication/> },
         { id: 'tab5', title: 'Transactions', content: <Transactions/>},
-        { id: 'tab6', title: 'Legal terms', content: <Legalterms/> },
+        { id: 'tab6', title: 'Legal terms', content: <Legalterms /> },
         // { id: 'tab7', title: 'Billing', content: 'This is the Billing panel.' },
         // { id: 'tab8', title: 'Logs', content: 'This is the Logs panel.' },
         // { id: 'tab9', title: 'Integrations', content: 'This is the Integrations panel.' },
@@ -157,12 +166,15 @@ const Affiliateprogrammanagement = () => {
                 activeTab === tab.id && (
                   <div key={tab.id}>
                     
-                    <p>{tab.content}</p>
+                    {tab.content}
                   </div>
                 )
             )}
           </div>
         </div>
       );
+    };
+    Affiliateprogrammanagement.propTypes = {
+      onAcceptTerms: PropTypes.func.isRequired, // Make sure onAcceptTerms is a function
     };
 export default Affiliateprogrammanagement
