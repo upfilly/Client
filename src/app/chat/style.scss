@@ -1245,3 +1245,7 @@ textarea.form-control-chat {
     max-height: 250px !important; /* Max height before scrolling */
     overflow-y: auto; /* Enable vertical scroll after max height */
 }
+
+.terms-textarea textarea{
+    height: 307px !important;
+}

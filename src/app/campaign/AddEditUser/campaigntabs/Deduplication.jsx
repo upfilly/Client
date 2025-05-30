@@ -3,14 +3,13 @@ import { useState } from "react";
 const formFields = [
   "Do You de-duplicate publisher sales against any other Online advertising channels ?",
   "PPC Brand",
-  "PPC Genric",
+  "PPC Generic",
   "Display Advertising",
   "E-mail Advertising",
   "Direct Partnerships",
   "Price Comparison",
   "In House-Publisher Program",
-  "other Affliate Networks",
-  
+  "other Affiliate Networks",
 ];
 
 export default function Deduplication() {
@@ -38,69 +37,73 @@ export default function Deduplication() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
-    // Save logic here (e.g., API call)
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      
-      <form  className="space-y-4">
-        {formFields.map((field) => (
-          <div
-            key={field}
-            className="border rounded-xl p-4 shadow-sm w-full overflow-x-auto"
-          >
-            <div className="flex  gap-6 ">
-              {/* Field Label */}
-              <div className="w-[200px] shrink-0">
-                <p className="text-sm font-medium">{field}</p>
+    // <div className="container-fluid">
+      <div className="row">
+        <div className="col-12">
+          <form onSubmit={handleSubmit}>
+            {formFields.map((field) => (
+              <div key={field} className="mb-3">
+                <div className="card shadow-sm">
+                  <div className="card-body">
+                    <div className="row align-items-center">
+                      {/* Field Label */}
+                      <div className="col-lg-6 col-md-12 mb-2 mb-lg-0">
+                        <p className="mb-0 fw-medium small">{field}</p>
+                      </div>
+
+                      {/* Yes/No Radio Buttons */}
+                      <div className="col-lg-6 col-md-12">
+                        <div className="d-flex gap-3">
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name={`${field}-option`}
+                              id={`${field}-yes`}
+                              value="Yes"
+                              checked={formData[field].value === "Yes"}
+                              onChange={() => handleValueChange(field, "Yes")}
+                            />
+                            <label className="form-check-label small" htmlFor={`${field}-yes`}>
+                              Yes
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name={`${field}-option`}
+                              id={`${field}-no`}
+                              value="No"
+                              checked={formData[field].value === "No"}
+                              onChange={() => handleValueChange(field, "No")}
+                            />
+                            <label className="form-check-label small" htmlFor={`${field}-no`}>
+                              No
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-  
-              {/* Yes/No Radio Buttons */}
-              <div className="flex gap-4 w-[200px] overflow:hidden">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name={`${field}-option`}
-                    value="Yes"
-                    checked={formData[field].value === "Yes"}
-                    onChange={() => handleValueChange(field, "Yes")}
-                  />
-                  Yes
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name={`${field}-option`}
-                    value="No"
-                    checked={formData[field].value === "No"}
-                    onChange={() => handleValueChange(field, "No")}
-                  />
-                  No
-                </label>
-              </div>
-  
-              {/* Textarea */}
-              {/* <div className=" min-w-[300px]">
-                <input
-                  className="w-full border rounded-md p-2 text-sm"
-                  placeholder="Click to edit"
-                  value={formData[field].additionalInfo}
-                  onChange={(e) => handleInfoChange(field, e.target.value)}
-                />
-              </div> */}
+            ))}
+            
+            <div className="mt-4">
+              <button
+                type="submit"
+                className="btn btn-primary w-100 py-2"
+              >
+                Save
+              </button>
             </div>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-        >
-          Save
-        </button>
-      </form>
-    </div>
+          </form>
+        </div>
+      </div>
+    // </div>
   );
-  
 }
