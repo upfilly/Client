@@ -184,6 +184,7 @@ const EditProfile = () => {
 
     let value = {
       ...form,
+      currencies:form?.currencies || [],
       social_media_platforms: selectedItems1 || [],
       affiliate_website: websites,
       lat: selectedLocation?.lat?.toString(),
@@ -244,6 +245,7 @@ const EditProfile = () => {
         history.push("/profile")
         toast.success(res.message)
       }
+      toast.error(res.error.message)
       loader(false)
     })
   };
