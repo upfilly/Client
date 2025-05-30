@@ -53,7 +53,7 @@ const EditProfile = () => {
     company_name: "",
     affiliate_type: '',
     cat_type: '',
-    default_currency : ''
+    defaultCurrency : ''
 
     // dob:''
   });

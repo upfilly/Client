@@ -471,8 +471,8 @@ const Html = ({ user,
                                   id="statusDropdown"
                                   displayValue="name"
                                   placeholder="Select"
-                                  intialValue={form?.default_currency}
-                                  result={e => setForm({ ...form, default_currency: e.value })}
+                                  intialValue={form?.defaultCurrency}
+                                  result={e => setForm({ ...form, defaultCurrency: e.value })}
                                   options={CurencyData}
                                 />
                               </div>

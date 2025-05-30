@@ -58,6 +58,8 @@ const Html = ({
         // { id: 'line-item', name: 'Line-item' }
     ];
 
+    console.log(profileData?.currencies,"profileData")
+
     const uploadDocument = async (e) => {
         const files = e.target.files;
         const uploadedFileNames = [];
@@ -218,6 +220,13 @@ const Html = ({
                                         />
                                     </div>
                                     {submitted && !form?.currencies && <div className="invalid-feedback d-block">{errors?.currencies}</div>}
+
+                                    {/* Add this conditional note */}
+                                    {(!profileData?.currencies || profileData?.currencies == undefined) && (
+                                        <div className="text-danger  small mt-2">
+                                            Note: You don't have any currencies. Please update your profile first.
+                                        </div>
+                                    )}
                                 </div>
 
                                 {form?.access_type === "private" && (
