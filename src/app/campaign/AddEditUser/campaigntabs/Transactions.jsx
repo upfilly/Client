@@ -26,11 +26,11 @@ export default function Transactions({formTransactionData, setFormTransactionDat
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Transaction Settings</h1>
+      <h3 className="font-bold text-gray-800 mb-3">Transaction Settings</h3>
 
       <div className="space-y-4">
         {formTransactionFields.map(({ label, showInput }) => (
-          <div key={label} className="border rounded-lg p-4 bg-white shadow-sm">
+          <div key={label} className="border rounded-lg p-4 bg-white shadow-sm mb-3">
             <div className="flex flex-col md:flex-row md:items-center gap-4">
               {/* Field Label */}
               <div className="md:w-1/2">
@@ -68,7 +68,7 @@ export default function Transactions({formTransactionData, setFormTransactionDat
                 <div className="md:w-1/4">
                   <textarea
                     rows={3}
-                    className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-2 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Additional information"
                     value={formTransactionData[label].additionalInfo}
                     onChange={(e) => handleInfoChange(label, e.target.value)}

@@ -77,7 +77,7 @@ const AffiliateProgramManagement = ({
             {tabsData.map((tab) => (
               <li className="nav-item" role="presentation" key={tab.id}>
                 <button
-                  className={`nav-link border-0 ${activeTab === tab.id ? 'active fw-bold text-dark' : ''}`}
+                  className={`nav-link shadow-none border-0 ${activeTab === tab.id ? 'active fw-semibold  text-white bg-tab' : 'text-dark bg-transparent'}`}
                   id={`${tab.id}-tab`}
                   type="button"
                   role="tab"

@@ -72,7 +72,7 @@ export default function PublisherPolicyForm({formPublisherData, setFormPublisher
                     {/* Additional Info Textarea */}
                     <div className="col-lg-4 col-md-6">
                       <textarea
-                        className="form-control form-control-sm"
+                        className="form-control rounded-2 form-control-sm"
                         placeholder="Click to edit"
                         value={formPublisherData[field].additionalInfo}
                         onChange={(e) => handleInfoChange(field, e.target.value)}

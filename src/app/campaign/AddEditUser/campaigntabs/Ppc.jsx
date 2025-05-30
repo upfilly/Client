@@ -72,7 +72,7 @@ export default function Ppc({setFormPpcData,formPpcData,formPpcFields}) {
                   {showInput && (
                     <div className="col-lg-3 col-md-6">
                       <textarea
-                        className="form-control form-control-sm"
+                        className="form-control rounded-2 form-control-sm"
                         placeholder="Click to edit"
                         value={formPpcData[label].additionalInfo}
                         onChange={(e) => handleInfoChange(label, e.target.value)}
