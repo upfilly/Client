@@ -23,38 +23,45 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
       let newSelectedCountries = [...prevState.countries];
 
       if (checked) {
-        // If selecting a country, also ensure its region is selected
-        if (country && !newSelectedRegions.includes(region)) {
-          newSelectedRegions.push(region);
+        // If selecting a country, ensure its region is selected
+        if (country) {
+          if (!newSelectedRegions.includes(region)) {
+            newSelectedRegions.push(region);
+          }
+          if (!newSelectedCountries.includes(country)) {
+            newSelectedCountries.push(country);
+          }
         }
-        
-        // Add the region or country
-        if (region && !country && !newSelectedRegions.includes(region)) {
+        // If selecting a region, select the region and all its countries
+        else if (region && !newSelectedRegions.includes(region)) {
           newSelectedRegions.push(region);
-        }
-        if (country && !newSelectedCountries.includes(country)) {
-          newSelectedCountries.push(country);
+          // Add all countries in this region if not already selected
+          data[region].forEach(c => {
+            if (!newSelectedCountries.includes(c)) {
+              newSelectedCountries.push(c);
+            }
+          });
         }
       } else {
-        if (!country) {
-          // If deselecting a region, also deselect all its countries
-          newSelectedRegions = newSelectedRegions.filter(item => item !== region);
-          newSelectedCountries = newSelectedCountries.filter(item => 
-            !data[region].includes(item)
-          );
-        } else {
+        if (country) {
           // If deselecting a country, just remove the country
           newSelectedCountries = newSelectedCountries.filter(item => item !== country);
-          
+
           // Check if there are any selected countries from this region remaining
-          const hasSelectedCountriesInRegion = newSelectedCountries.some(country => 
-            data[region].includes(country)
+          const hasSelectedCountriesInRegion = newSelectedCountries.some(c =>
+            data[region].includes(c)
           );
-          
+
           // If no countries from this region are selected, also deselect the region
           if (!hasSelectedCountriesInRegion) {
             newSelectedRegions = newSelectedRegions.filter(item => item !== region);
           }
+        } else {
+          // If deselecting a region, deselect all its countries
+          newSelectedRegions = newSelectedRegions.filter(item => item !== region);
+          newSelectedCountries = newSelectedCountries.filter(item =>
+            !data[region].includes(item)
+          );
         }
       }
 
@@ -65,7 +72,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   const handleSearch = (e) => setSearchTerm(e.target.value.toLowerCase());
 
   const handleSave = () => {
-    setSavedSelections({...selectedItems});
+    setSavedSelections({ ...selectedItems });
     setRegionIsOpen(false);
     // You can add additional logic here, such as sending the data to a parent component or API
   };
@@ -169,10 +176,10 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
           </div>
 
           {renderCategories()}
-          
+
           <div className="save-container">
-            <button 
-              className="save-button" 
+            <button
+              className="save-button"
               onClick={handleSave}
             >
               Save Selection
@@ -180,7 +187,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
           </div>
         </div>
       )}
-      
+
       {savedSelections && (
         <div className="saved-selections">
           {/* <h4>Selected Values:</h4> */}
