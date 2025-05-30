@@ -8,16 +8,11 @@ import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import MultiSelectDropdownData from "../MultiSelectDropdownData";
 import MultiSelectRegionDropdown from "../MultiSelectRegion"
-import axios from "axios";
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
-import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
-import Samplelegalterm from './campaigntabs/Samplelegalterm';
 import Affiliateprogrammanagement from './campaigntabs/Affiliateprogrammanagement';
-import { Tooltip } from "react-bootstrap";
-import CustomTooltip from "@/app/components/common/Tooltip/CustomTooltip";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
+ 
 const Html = ({
     id,
     form,
@@ -31,23 +26,30 @@ const Html = ({
     errors,
     selectedItems,
     setSelectedItems,
-    profileData
+    profileData,
+    formData,
+    setFormData,
+    formPpcData,
+    setFormPpcData,
+    formPublisherData,
+    setFormPublisherData,
+    formTransactionData,
+    setFormTransactionData,
+    isAgreed,
+    setIsAgreed,
+    legalTerm,
+    setlegalTerm,
+    formFields,
+    formPpcFields,
+    formTransactionFields,
+    formPublisherFields,
 }) => {
-    const [countries, setCountries] = useState([]);
     const [loadDocerr, setDocLoader] = useState(false);
     const [docLoder, setDocLoder] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
-    const [subSubCategories, setSubSubCategories] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [isRegionOpen, setRegionIsOpen] = useState(false);
     const [isTermsAccepted, setIsTermsAccepted] = useState(false);
-
-    const categoryTypes = [
-        { id: 'promotional_models', name: 'Promotional Models' },
-        { id: 'property_types', name: 'Property Types' },
-        // { id: 'advertiser_categories', name: 'Advertiser Categories' },
-    ];
 
     const EventType = [
         { id: 'lead', name: 'Lead' },
@@ -469,13 +471,31 @@ const Html = ({
 
                                 {/* Affiliate Program Management Component */}
                                 <div className="col-md-12 mb-3">
-                                    <Affiliateprogrammanagement onAcceptTerms={handleAcceptTerms} />
+                                    <Affiliateprogrammanagement
+                                        onAcceptTerms={handleAcceptTerms}
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                        formPpcData={formPpcData}
+                                        setFormPpcData={setFormPpcData}
+                                        formPublisherData={formPublisherData}
+                                        setFormPublisherData={setFormPublisherData}
+                                        formTransactionData={formTransactionData} 
+                                        setFormTransactionData={setFormTransactionData}
+                                        isAgreed={isAgreed}
+                                        setIsAgreed={setIsAgreed}
+                                        legalTerm={legalTerm} 
+                                        setlegalTerm={setlegalTerm}
+                                        formFields={formFields}
+                                        formPpcFields={formPpcFields}
+                                        formTransactionFields={formTransactionFields}
+                                        formPublisherFields={formPublisherFields}
+                                    />
                                 </div>
                             </div>
 
                             <div className="text-right edit-btns">
                                 {!isTermsAccepted && (
-                                    <p className="text-danger">*Accept terms and conditions</p>
+                                    <p className="text-danger">*Accept terms and conditions of legal terms</p>
                                 )}
                                 <button type="submit" disabled={!isTermsAccepted} className="btn btn-primary">
                                     Save

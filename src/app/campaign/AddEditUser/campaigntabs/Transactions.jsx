@@ -1,132 +1,83 @@
 import { useState } from "react";
 
-const formFields = [
-    {
-        label:
-          "Does the transaction value that commissions are paid on include VAT?Sales Tax?",
-        showInput: false,
-      },
-    {
-        label:
-          "Does the transaction value that commissions are paid on include Delivery charges?",
-        showInput: false,
-      },
-    {
-        label:
-          "Does the transaction value that commissions are paid on include Credit card fees ?",
-        showInput: false,
-      },
-  {
-    label:
-      "Does the transaction value that commissions are paid on include gift wrapping or other service charges?",
-    showInput: false,
-  },
-  {
-    label:
-      "Are commissions not paid out on some products or product categories?",
-    showInput: false,
-  },
-  { label: "Order canceled", showInput: true },
-  { label: "Item was returned", showInput: true },
-  { label: "Customer failed credit check", showInput: true },
-  { label: "Breach of program terms", showInput: true },
-  { label: "Duplicate order", showInput: true },
-  { label: "Item was out of stock", showInput: true },
-  { label: "Other", showInput: true },
-];
 
-export default function Transactions() {
-  const [formData, setFormData] = useState(
-    formFields.reduce((acc, field) => {
-      acc[field.label] = { value: "Yes", additionalInfo: "" };
-      return acc;
-    }, {})
-  );
+
+export default function Transactions({formTransactionData, setFormTransactionData,formTransactionFields}) {
 
   const handleValueChange = (label, value) => {
-    setFormData((prev) => ({
+    setFormTransactionData((prev) => ({
       ...prev,
       [label]: { ...prev[label], value },
     }));
   };
 
   const handleInfoChange = (label, value) => {
-    setFormData((prev) => ({
+    setFormTransactionData((prev) => ({
       ...prev,
       [label]: { ...prev[label], additionalInfo: value },
     }));
   };
 
   const handleSubmit = () => {
-    console.log("Form Data:", formData);
+    console.log("Form Data:", formTransactionData);
     alert("Form submitted! Check console for data.");
     // Add save logic here
   };
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">Transaction Settings</h1>
+
       <div className="space-y-4">
-        {formFields.map(({ label, showInput }) => (
-          <div key={label}>
-            <div className="border rounded-xl p-4 shadow-sm w-full overflow-x-auto">
-              <div className="flex gap-6">
-                {/* Field Label */}
-                <div className="w-[400px] shrink-0">
-                  <p className="text-sm font-medium">{label}</p>
-                </div>
-
-                {/* Yes/No Radio Buttons */}
-                <div className="flex gap-4 w-[200px] overflow-hidden">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`${label}-option`}
-                      value="Yes"
-                      checked={formData[label].value === "Yes"}
-                      onChange={() => handleValueChange(label, "Yes")}
-                      className="w-4 h-4 text-green-600"
-                    />
-                    <span className="text-sm">Yes</span>
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={`${label}-option`}
-                      value="No"
-                      checked={formData[label].value === "No"}
-                      onChange={() => handleValueChange(label, "No")}
-                      className="w-4 h-4 text-green-600"
-                    />
-                    <span className="text-sm">No</span>
-                  </label>
-                </div>
-
-                {/* Conditional Input */}
-                {showInput && (
-                  <div className="min-w-[300px]">
-                    <input
-                      className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Click to edit"
-                      value={formData[label].additionalInfo}
-                      onChange={(e) =>
-                        handleInfoChange(label, e.target.value)
-                      }
-                    />
-                  </div>
-                )}
+        {formTransactionFields.map(({ label, showInput }) => (
+          <div key={label} className="border rounded-lg p-4 bg-white shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center gap-4">
+              {/* Field Label */}
+              <div className="md:w-1/2">
+                <p className="text-sm font-medium text-gray-700">{label}</p>
               </div>
+
+              {/* Yes/No Radio Buttons */}
+              <div className="flex gap-4 md:w-1/4">
+                <label className="inline-flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name={`${label}-option`}
+                    value="Yes"
+                    checked={formTransactionData[label].value === "Yes"}
+                    onChange={() => handleValueChange(label, "Yes")}
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-700">Yes</span>
+                </label>
+                <label className="inline-flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name={`${label}-option`}
+                    value="No"
+                    checked={formTransactionData[label].value === "No"}
+                    onChange={() => handleValueChange(label, "No")}
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 ml-2"
+                  />
+                  <span className="text-sm text-gray-700">No</span>
+                </label>
+              </div>
+
+              {/* Conditional Textarea */}
+              {showInput && (
+                <div className="md:w-1/4">
+                  <textarea
+                    rows={3}
+                    className="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Additional information"
+                    value={formTransactionData[label].additionalInfo}
+                    onChange={(e) => handleInfoChange(label, e.target.value)}
+                  />
+                </div>
+              )}
             </div>
           </div>
         ))}
-
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-        >
-          Save
-        </button>
       </div>
     </div>
   );
