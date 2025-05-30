@@ -3,8 +3,8 @@ import './style.scss';
 import Multiselect from 'multiselect-react-dropdown';
 
 const Html = ({ 
-    options, 
-    selectedValues, 
+    options = [], 
+    selectedValues = [],
     handleChange, 
     displayValue, 
     id, 
@@ -15,15 +15,14 @@ const Html = ({
     showReset = true
 }) => {
     
-    // Create enhanced options with Select All and Reset
     const enhancedOptions = useMemo(() => {
         if (singleSelect) {
-            return options; // No Select All/Reset for single select
+            return options;
         }
         
         const actionOptions = [];
         
-        if (showSelectAll && selectedValues?.length < options?.length) {
+        if (showSelectAll && selectedValues.length < options.length) {
             actionOptions.push({
                 [displayValue]: "🔲 Select All",
                 isSelectAll: true,
@@ -32,7 +31,7 @@ const Html = ({
             });
         }
         
-        if (showReset && selectedValues?.length > 0) {
+        if (showReset && selectedValues.length > 0) {
             actionOptions.push({
                 [displayValue]: "❌ Reset",
                 isReset: true,
@@ -45,55 +44,57 @@ const Html = ({
     }, [options, displayValue, singleSelect, showSelectAll, showReset, selectedValues]);
     
     const handleSelect = (selectedList, selectedItem) => {
-        if (selectedItem.isSelectAll) {
+        if (!handleChange) return;
+        
+        if (selectedItem?.isSelectAll) {
             // Select all actual options (exclude action items)
-            const allRealOptions = options.filter(option => !option.isActionItem);
+            const allRealOptions = options.filter(option => !option?.isActionItem);
             handleChange([...selectedValues, ...allRealOptions.filter(opt => 
                 !selectedValues.some(selected => selected[displayValue] === opt[displayValue])
             )], 'selectAll');
             return;
         }
         
-        if (selectedItem.isReset) {
+        if (selectedItem?.isReset) {
             // Reset selection - clear everything
             handleChange([], 'reset');
             return;
         }
         
         // Normal selection - filter out action items and ensure we don't duplicate
-        const filteredList = selectedList.filter(item => !item.isActionItem);
+        const filteredList = selectedList.filter(item => !item?.isActionItem);
         handleChange(filteredList, 'select');
     };
     
     const handleRemove = (selectedList, removedItem) => {
+        if (!handleChange) return;
+        
         // Filter out action items from the list
-        const filteredList = selectedList.filter(item => !item.isActionItem);
+        const filteredList = selectedList.filter(item => !item?.isActionItem);
         handleChange(filteredList, 'remove');
     };
     
     // Filter selectedValues to exclude action items (they shouldn't stay selected)
-    const filteredSelectedValues = selectedValues?.filter(item => !item.isActionItem) || [];
+    const filteredSelectedValues = selectedValues.filter(item => !item?.isActionItem);
     
     return (
-        <>
-            <div className="selectDropdown">
-                <Multiselect
-                    options={enhancedOptions}
-                    singleSelect={singleSelect || false}
-                    placeholder={placeholder}
-                    selectedValues={filteredSelectedValues}
-                    onSelect={handleSelect}
-                    onRemove={handleRemove}
-                    displayValue={displayValue}
-                    id={id}
-                    showArrow
-                    name={name}
-                    optionObjectClassName={(option) => 
-                        option.isActionItem ? 'action-option' : ''
-                    }
-                />
-            </div>
-        </>
+        <div className="selectDropdown">
+            <Multiselect
+                options={enhancedOptions}
+                singleSelect={singleSelect || false}
+                placeholder={placeholder}
+                selectedValues={filteredSelectedValues}
+                onSelect={handleSelect}
+                onRemove={handleRemove}
+                displayValue={displayValue}
+                id={id}
+                showArrow
+                name={name}
+                optionObjectClassName={(option) => 
+                    option?.isActionItem ? 'action-option' : ''
+                }
+            />
+        </div>
     );
 };
 

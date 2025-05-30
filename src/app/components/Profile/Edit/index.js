@@ -314,7 +314,7 @@ const EditProfile = () => {
     }, []);
 
   const getCategory = (p = {}) => {
-    let url = 'categoryWithSub'
+    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then(res => {
       if (res.success) {
         const data = res.data.data
