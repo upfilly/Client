@@ -309,6 +309,8 @@ const Html = ({
                                                     </th>
                                                     <th scope="col" className='table_data'>Commission</th>
                                                     <th scope="col" className='table_data'>Status</th>
+                                                    <th scope="col" className='table_data'>Request Status</th>
+                                                    
                                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>
                                                         Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
                                                     </th>
@@ -340,7 +342,11 @@ const Html = ({
                                                             {<td className='table_dats'>{itm?.campaign_type || "--"}</td>}
                                                             {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
                                                             <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : selectedCurrency ? `${convertedCurrency(itm?.campaign_detail?.commission)}` : `$${convertedCurrency(itm?.campaign_detail?.commission)}`}</td>
-                                                            {/* <td className={`${itm?.isActive  ? "active" : "inactive"}`}>{itm?.isActive ? "Active" : "InActive"}</td> */}
+                                                            <td className='table_dats'>   <span className={`active_btn${itm?.status}`} >
+                                                                <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
+                                                                    {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
+                                                                </span>
+                                                            </span></td>
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
                                                                 <span className={!itm?.isActive ? (itm?.status == "accepted" && !itm?.isActive) ? "pending_status" : "inactive" : "contract"}>
                                                                     {!itm?.isActive ? itm?.status == "rejected" ? "Rejected" : (itm?.status == "accepted" && !itm?.isActive) ? "Switched" : 'Pending' : 'Joined'}

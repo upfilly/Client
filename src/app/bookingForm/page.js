@@ -366,7 +366,7 @@ export default function BillingForm() {
           <div className='container'>
 
             <div>
-              <img src="/assets/img/logo.png" className='mx-auto mb-4 pointer logo' onClick={() => history.push('/')} />
+              <img src="/assets/img/logo.png" className='mx-auto mb-4 pointer logo' onClick={!user ? () => history.push('/') :() => history.push('/dashboard')} />
               <h2 className='text-center mb-0 select_plans'> Select a plan</h2>
             </div>
 

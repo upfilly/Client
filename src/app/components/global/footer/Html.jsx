@@ -37,7 +37,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
           <div className=" col-12 col-sm-12  col-md-2">
             <ul className="footer_list">
               <li className="mb-3"><Link href="/company"><b>Company</b></Link></li>
-              <li><Link href="/aboutus">About Us</Link></li>
+              {/* <li><Link href="/aboutus">About Us</Link></li> */}
               <li><Link href="/partners">Partners</Link></li>
               <li><Link href="/signup-guide">Affiliate/Brand Guide</Link></li>
               {/* <li><Link href="/contactUs">Contact Us</Link></li> */}

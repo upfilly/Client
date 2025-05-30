@@ -176,7 +176,7 @@ const Html = ({ settingData, Logout }) => {
           <img src="/assets/img/logo.png" className="logo" alt="" />
         </Link>
       </nav>} */}
-        {!isDashboard &&
+        {(!isDashboard && pathname != "/profile") &&
           <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
             <Link href="/">
               <img

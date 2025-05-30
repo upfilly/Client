@@ -101,7 +101,7 @@ const Users = () => {
     }
 
     const statusChange=(itm)=>{
-        let modal='users'
+        // let modal='users'
         let status='active'
         if(itm.status=='active') status='deactive'
 
@@ -116,9 +116,9 @@ const Users = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                 loader(true)
-                ApiClient.put(`campaign/change-status`,{status,id:itm.id,model:'users'}).then(res=>{
+                ApiClient.put(`campaign`,{name:itm.name,status,id:itm.id || itm?._id}).then(res=>{
                     if(res.success){
-                        getData()
+                        getData({page:1})
                     }
                     loader(false)
                 })
@@ -195,7 +195,7 @@ const Users = () => {
         setFilter={setFilter}
         user={user}
         getData={getData}
-        // statusChange={statusChange}
+        statusChange={statusChange}
     />
     </>;
 };

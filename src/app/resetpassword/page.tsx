@@ -99,7 +99,7 @@ const Resetpassword = () => {
                                         onSubmit={hendleSubmit}
                                     >
                                         <div className="text-center mb-2">
-                                        <Link href="/"> <Image alt='logo' width="300" height="55" src="/assets/img/logo.png" className='logo_img1' /></Link>
+                                        <Link href={!user ? '/' :'/dashboard'}> <Image alt='logo' width="300" height="55" src="/assets/img/logo.png" className='logo_img1' /></Link>
 
                                             <h3 className="text-center lgtext">New Password</h3>
 

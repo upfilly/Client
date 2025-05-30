@@ -22,7 +22,7 @@ const Html = ({
     filters,
     loaging,
     data,
-    role,
+    statusChange,
     isAllow,
     total,
     setFilter,
@@ -159,7 +159,12 @@ const Html = ({
                                             </span>
                                         </div></td>} */}
                                         <td className='table_dats'>{itm?.currencies || "--"}</td>
-                                        <td className='table_dats'>{(itm?.commission == "0" || !itm?.commission) ? "No Commission Added" : "Added Commission"}</td>
+                                        <td className='table_dats'>   <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
+                                            <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
+                                                {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
+                                            </span>
+                                        </span></td>
+                                        {/* <td className='table_dats'>{(itm?.commission == "0" || !itm?.commission) ? "No Commission Added" : "Added Commission"}</td> */}
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                                         {/* dropdown */}
