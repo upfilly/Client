@@ -55,61 +55,63 @@ const Html = ({
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
             <div className='sidebar-left-content'>
-                <div className="d-flex justify-content-end align-items-center">
-                    {/* <SelectDropdown                                                     theme='search'
-                        id="statusDropdown"
-                        displayValue="name"
-                        placeholder="All Status"
-                        intialValue={filters.status}
-                        result={e => { ChangeStatus(e.value) }}
-                        options={[
-                            { id: 'pending', name: 'Pending' },
-                            { id: 'accepted', name: 'Accepted' },
-                            { id: 'rejected', name: 'Rejected' },
-                        ]}
-                    /> */}
+                <div className="d-flex justify-content-end align-items-center gap-3">
 
-                    <article className="d-flex filterFlex phView">
-                        {permission('campaign_add') ? <>
-                            <a className="btn btn-primary" onClick={e => add()}>
+                    <div className="d-flex align-items-center gap-2">
+                        {permission('campaign_add') && (
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={e => add()}
+                            >
                                 Add Campaign
-                            </a>
-                        </> : <></>}
-                        {/* <div className='searchInput'>
-                            <input
-                                type="text"
-                                value={filters.search}
-                                placeholder="Search"
-                                className="form-control"
-                                onChange={(e)=>e.target.value==""?reset(): setFilter({ search: e.target.value })}
-                                onKeyPress={handleKeyPress}
-                            />
-                            <i class="fa fa-search search_fa" onClick={() => {
-                                filter()
-                            }} aria-hidden="true"></i>
-                        </div> */}
+                            </button>
+                        )}
 
+                        {/* Search Input - Uncommented and fixed if needed
+        <div className="position-relative">
+            <input
+                type="text"
+                value={filters.search}
+                placeholder="Search"
+                className="form-control pe-5"
+                onChange={(e) => e.target.value === "" ? reset() : setFilter({ search: e.target.value })}
+                onKeyPress={handleKeyPress}
+            />
+            <i 
+                className="fa fa-search position-absolute top-50 end-0 translate-middle-y me-3" 
+                onClick={() => filter()} 
+                aria-hidden="true"
+                style={{ cursor: 'pointer' }}
+            ></i>
+        </div>
+        */}
 
-
-
-                        {/* {!role ? <SelectDropdown                                                     theme='search'
-                                    id="statusDropdown"
-                                    displayValue="name"
-                                    placeholder="All User"
-                                    intialValue={filters.role}
-                                    result={e => { ChangeRole(e.value) }}
-                                    options={rolesModel.list}
-                                />: <></>} */}
-
-
-                        {filters.status ? <>
-                            <a className="btn btn-primary" onClick={e => reset()}>
+                        <SelectDropdown
+                            theme="search"
+                            id="statusDropdown"
+                            displayValue="name"
+                            placeholder="All Status"
+                            initialValue={filters.status}
+                            result={e => { ChangeStatus(e.value) }}
+                            options={[
+                                { id: 'active', name: 'Active' },
+                                { id: 'inactive', name: 'Inactive' },
+                                // { id: 'pending', name: 'Pending' },
+                                // { id: 'accepted', name: 'Accepted' },
+                                // { id: 'rejected', name: 'Rejected' },
+                            ]}
+                        />
+                        {filters.status && (
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary"
+                                onClick={e => reset()}
+                            >
                                 Reset
-                            </a>
-                        </> : <></>}
-                    </article>
-
-
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 <div className='table_section'>
@@ -206,32 +208,32 @@ const Html = ({
 
 
                 <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
-                                    <span>Show <select
-                                        className="form-control"
-                                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
-                                        value={filters.count}
-                                    >
-                                        <option value={10}>10</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                        <option value={150}>150</option>
-                                        <option value={200}>200</option>
-                                    </select> from {total} Users</span>
-                                    <ReactPaginate
-                                        breakLabel="..."
-                                        nextLabel="Next >"
-                                        initialPage={filters?.page}
-                                        onPageChange={pageChange}
-                                        pageRangeDisplayed={2}
-                                        marginPagesDisplayed={1}
-                                        pageCount={Math.ceil(total / filters?.count)}
-                                        // pageCount={2}
-                                        previousLabel="< Previous"
-                                        renderOnZeroPageCount={null}
-                                        pageClassName={"pagination-item"}
-                                        activeClassName={"pagination-item-active"}
-                                    />
-                                </div>
+                    <span>Show <select
+                        className="form-control"
+                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                        value={filters.count}
+                    >
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                        <option value={150}>150</option>
+                        <option value={200}>200</option>
+                    </select> from {total} Users</span>
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabel="Next >"
+                        initialPage={filters?.page}
+                        onPageChange={pageChange}
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={1}
+                        pageCount={Math.ceil(total / filters?.count)}
+                        // pageCount={2}
+                        previousLabel="< Previous"
+                        renderOnZeroPageCount={null}
+                        pageClassName={"pagination-item"}
+                        activeClassName={"pagination-item-active"}
+                    />
+                </div>
 
                 {loaging ? <div className="text-center py-4">
                     <img src="/assets/img/loader.gif" className="pageLoader" />

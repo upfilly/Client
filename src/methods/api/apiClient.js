@@ -107,6 +107,7 @@ class ApiClient {
                         handleError(eres.data, hidError)
                         fulfill({ ...eres.data, success: false });
                     } else {
+                        localStorage.clear()
                         toast.error('Network Error')
                         reject(error);
                     }
