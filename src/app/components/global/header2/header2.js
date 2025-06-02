@@ -117,7 +117,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                 <input type="search"
                                     className='form-control quick-radius'
                                     placeholder='Search'
-                                    onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value })}
+                                    onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value ,page:1})}
                                     onKeyPress={handleKeyPress}
                                 />
                                 <i class="fa fa-search search_fa" onClick={() => {

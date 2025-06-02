@@ -6,12 +6,20 @@ import './style.scss';
 import methodModel from '@/methods/methods';
 import { useRouter, useParams } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
+import Swal from 'sweetalert2';
 
 const Detail = (p) => {
     const history = useRouter()
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
+    const [copied, setCopied] = useState(false);
+    const [showAffiliatesModal, setShowAffiliatesModal] = useState(false);
+    const [affiliates, setAffiliates] = useState([]);
+    const [loadingAffiliates, setLoadingAffiliates] = useState(false);
+
+    console.log(affiliates, "affiliatesaffiliates")
+
     const getDetail = (did) => {
         loader(true)
         ApiClient.get(`campaign`, { id: did }).then(res => {
@@ -22,9 +30,89 @@ const Detail = (p) => {
         })
     };
 
+    const getAffiliates = () => {
+        setLoadingAffiliates(true);
+        ApiClient.get(`campaign/all/affiliates`, { campaign: id, brand: user?.id || user?._id }).then(res => {
+            if (res.success) {
+                setAffiliates(res.data.data || []);
+            }
+            setLoadingAffiliates(false);
+        }).catch(err => {
+            console.error('Failed to fetch affiliates:', err);
+            setLoadingAffiliates(false);
+        });
+    };
+
+    const removeAffiliate = async (affiliateId) => {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to remove this affiliate',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        });
+
+        if (result.isConfirmed) {
+            // loader(true);
+            try {
+                const res = await ApiClient.post(`campaign/remove`, {
+                    affiliate_id: affiliateId,
+                    campaign_id: id,
+                    brand_id: user?.id || user?._id
+                });
+
+                if (res.success) {
+                    setAffiliates(prev => prev.filter(affiliate => affiliate.affiliate_id.id !== affiliateId));
+                    await Swal.fire(
+                        'Deleted!',
+                        'Affiliate removed successfully',
+                        'success'
+                    );
+                    // loader(false);
+                } else {
+                    await Swal.fire(
+                        'Error!',
+                        'Failed to remove affiliate',
+                        'error'
+                    );
+                }
+            } catch (err) {
+                console.error('Failed to remove affiliate:', err);
+                await Swal.fire(
+                    'Error!',
+                    'Failed to remove affiliate',
+                    'error'
+                );
+            } finally {
+                loader(false);
+            }
+        }
+    };
+
+    const openAffiliatesModal = () => {
+        setShowAffiliatesModal(true);
+        getAffiliates();
+    };
+
+    const closeAffiliatesModal = () => {
+        setShowAffiliatesModal(false);
+    };
+
     const back = () => {
         history.back()
     }
+
+    const handleCopyLink = () => {
+        const link = `https://upfilly.com?affiliate_id=${user?.id || user?._id}&url=${user?.website}&brand_id=${data?.addedBy}`;
+        navigator.clipboard.writeText(link).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    };
 
     useEffect(() => {
         getDetail(id)
@@ -35,13 +123,20 @@ const Detail = (p) => {
             <div className='sidebar-left-content'>
                 <div className='card'>
                     <div className='card-header'>
-                        <div className="main_title_head">
-                            <h3> 
-                                <a to="/campaign" onClick={back}>  
+                        <div className="main_title_head d-flex justify-content-between align-items-center">
+                            <h3 className="mb-0">
+                                <a to="/campaign" onClick={back}>
                                     <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i>
-                                </a>  
+                                </a>
                                 Campaign Detail
                             </h3>
+                            <button
+                                className="btn btn-info"
+                                onClick={openAffiliatesModal}
+                            >
+                                <i className="fa fa-users mr-2"></i>
+                                View Affiliates
+                            </button>
                         </div>
                     </div>
 
@@ -236,7 +331,7 @@ const Detail = (p) => {
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div className="d-flex flex-wrap">
-                                                    {data?.images?.length > 0 ? 
+                                                    {data?.images?.length > 0 ?
                                                         data?.images?.map((itm, index) => (
                                                             <div key={index} className="imagethumbWrapper mr-2 mb-2">
                                                                 <img src={methodModel.noImg(itm?.url)} className="img-thumbnail" alt={`Image ${index}`} />
@@ -258,13 +353,13 @@ const Detail = (p) => {
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div className="d-flex flex-wrap">
-                                                    {data?.documents?.length > 0 ? 
+                                                    {data?.documents?.length > 0 ?
                                                         data?.documents?.map((itm, index) => (
                                                             <div key={index} className="mr-2 mb-2">
-                                                                <img 
-                                                                    src="/assets/img/document.png" 
-                                                                    className="doc_icon" 
-                                                                    onClick={() => window.open(methodModel.noImg(itm?.url))} 
+                                                                <img
+                                                                    src="/assets/img/document.png"
+                                                                    className="doc_icon"
+                                                                    onClick={() => window.open(methodModel.noImg(itm?.url))}
                                                                     alt={`Document ${index}`}
                                                                     style={{ cursor: 'pointer' }}
                                                                 />
@@ -309,13 +404,32 @@ const Detail = (p) => {
                                         </div>
                                     </div>
 
+                                    {/* Campaign Link */}
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Campaign Link:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>
+                                                    <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}&brand_id=${data?.addedBy}`}</span>
+                                                    <button onClick={handleCopyLink} className='btn btn-primary ml-1 btn-sm'>
+                                                        {copied ? 'Copied!' : 'Copy Link'}
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {/* De-duplication Settings */}
                                     <div className='row'>
                                         <div className='col-12'>
                                             <h4 className='mt-4 mb-3'>De-duplication Settings</h4>
                                         </div>
                                     </div>
-                                    
+
                                     {data?.deDuplicate && Object.entries(data.deDuplicate).map(([key, value]) => (
                                         <div className='row' key={key}>
                                             <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -337,7 +451,7 @@ const Detail = (p) => {
                                             <h4 className='mt-4 mb-3'>Publisher Restrictions</h4>
                                         </div>
                                     </div>
-                                    
+
                                     {data?.publisher && Object.entries(data.publisher).map(([key, value]) => (
                                         <div className='row' key={key}>
                                             <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -359,7 +473,7 @@ const Detail = (p) => {
                                             <h4 className='mt-4 mb-3'>PPC Settings</h4>
                                         </div>
                                     </div>
-                                    
+
                                     {data?.ppc && Object.entries(data.ppc).map(([key, value]) => (
                                         <div className='row' key={key}>
                                             <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -381,7 +495,7 @@ const Detail = (p) => {
                                             <h4 className='mt-4 mb-3'>Transaction Settings</h4>
                                         </div>
                                     </div>
-                                    
+
                                     {data?.transaction && Object.entries(data.transaction).map(([key, value]) => (
                                         <div className='row' key={key}>
                                             <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -403,6 +517,122 @@ const Detail = (p) => {
                     </div>
                 </div>
             </div>
+
+            {/* Affiliates Modal */}
+            {showAffiliatesModal && (
+                <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">
+                                    <i className="fa fa-users mr-2"></i>
+                                    Campaign Affiliates
+                                </h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    onClick={closeAffiliatesModal}
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body p-0">
+                                {loadingAffiliates ? (
+                                    <div className="text-center py-4">
+                                        <i className="fa fa-spinner fa-spin fa-2x"></i>
+                                        <p className="mt-2">Loading affiliates...</p>
+                                    </div>
+                                ) : affiliates.length > 0 ? (
+                                    <div className="table-responsive" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                                        <table className="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Name</th>
+                                                    <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Email</th>
+                                                    {/* <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Website</th> */}
+                                                    <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Joined Date</th>
+                                                    <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {affiliates.map((affiliate) => (
+                                                    <tr key={affiliate.affiliate_id.id || affiliate.affiliate_id._id}>
+                                                        <td>
+                                                            <div className="d-flex align-items-center">
+                                                                <i className="fa fa-user-circle mr-2 text-primary"></i>
+                                                                {affiliate.affiliate_id.fullName || affiliate.affiliate_id.name || 'N/A'}
+                                                            </div>
+                                                        </td>
+                                                        <td>{affiliate.affiliate_id.email || 'N/A'}</td>
+                                                        {/* <td>
+                                                            {affiliate.affiliate_id.website ? (
+                                                                <a
+                                                                    href={affiliate.affiliate_id.website}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="text-primary"
+                                                                >
+                                                                    <i className="fa fa-external-link mr-1"></i>
+                                                                    {affiliate.affiliate_id.website}
+                                                                </a>
+                                                            ) : 'N/A'}
+                                                        </td> */}
+                                                        <td>
+                                                            {affiliate.affiliate_id.joinedDate ?
+                                                                new Date(affiliate.affiliate_id.joinedDate).toLocaleDateString() :
+                                                                affiliate.affiliate_id.createdAt ?
+                                                                    new Date(affiliate.affiliate_id.createdAt).toLocaleDateString() :
+                                                                    'N/A'
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {affiliate.status != "removed" && <button
+                                                                className="btn btn-sm btn-danger"
+                                                                onClick={() => removeAffiliate(affiliate.affiliate_id.id || affiliate.affiliate_id._id)}
+                                                                title="Remove Affiliate"
+                                                            >
+                                                                <i className="fa fa-trash mr-1"></i>
+                                                                Remove
+                                                            </button>}
+                                                            {affiliate.status == "removed" && <button
+                                                                className="btn btn-sm btn-danger"
+                                                                disabled
+                                                            // onClick={() => removeAffiliate(affiliate.affiliate_id.id || affiliate.affiliate_id._id)}
+                                                            // title="Remove Affiliate"
+                                                            >
+                                                                <i className="fa fa-trash mr-1"></i>
+                                                                Removed
+                                                            </button>}
+
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-4">
+                                        <i className="fa fa-users fa-3x text-muted mb-3"></i>
+                                        <h5 className="text-muted">No Affiliates Found</h5>
+                                        <p className="text-muted">This campaign doesn't have any affiliates yet.</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={closeAffiliatesModal}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </Layout>
     );
 };
