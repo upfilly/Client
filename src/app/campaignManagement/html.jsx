@@ -276,6 +276,7 @@ const Html = ({
             count: 10
         }
         setFilter({ ...filters, ...filter })
+        getData({...filter,page:1})
         setSelectedCurrency("USD")
         history.push("/campaignManagement")
     }
