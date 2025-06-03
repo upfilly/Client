@@ -275,6 +275,7 @@ const Html = ({
                                             { id: 'pending', name: 'Pending' },
                                             { id: 'accepted', name: 'Joined' },
                                             { id: 'rejected', name: 'Rejected' },
+                                            { id: 'removed', name: 'Removed' },
                                         ]}
                                     />
                                     <SelectDropdown
@@ -310,7 +311,7 @@ const Html = ({
                                                     <th scope="col" className='table_data'>Commission</th>
                                                     <th scope="col" className='table_data'>Status</th>
                                                     <th scope="col" className='table_data'>Request Status</th>
-
+                                                    
                                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>
                                                         Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
                                                     </th>
@@ -348,8 +349,8 @@ const Html = ({
                                                                 </span>
                                                             </span></td>
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.isActive}`}>
-                                                                <span className={!itm?.isActive ? (itm?.status == "accepted" && !itm?.isActive) ? "pending_status" : "inactive" : "contract"}>
-                                                                    {!itm?.isActive ? itm?.status == "rejected" ? "Rejected" :itm?.status == "accepted" ? "Removed" : (itm?.status == "accepted" && !itm?.isActive) ? "Switched" : 'Pending' : 'Joined'}
+                                                                <span className={!itm?.isActive ? (itm?.status == "accepted" && !itm?.isActive) ? itm?.status == "removed" ? "inactive" : "pending_status" : "inactive" : "contract"}>
+                                                                    {!itm?.isActive ? itm?.status == "removed" ? "Removed" : itm?.status == "rejected" ? "Rejected" : (itm?.status == "accepted" && !itm?.isActive) ? "Switched" : 'Pending' : 'Joined'}
                                                                 </span>
                                                             </span></td>
                                                             <td className='table_dats'>{datepipeModel.date(itm.campaign_detail?.createdAt)}</td>

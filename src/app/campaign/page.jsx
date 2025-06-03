@@ -22,7 +22,7 @@ const Users = () => {
     const [tab, setTab] = useState('list')
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
-    const [tableCols, setTableCols] = useState([])
+    const [activeTab, setActiveTab] = useState('active')
     const [form, setform] = useState(userType)
     const history=useRouter()
     
@@ -30,7 +30,7 @@ const Users = () => {
     useEffect(() => {
         if (user) {
             // setFilter({ ...filters ,page: filters?.page + 1 ,role})
-            getData({role, page: 1 })
+            getData({role, page: 1 , isArchive: false})
         }
     }, [role])
 
@@ -52,10 +52,11 @@ const Users = () => {
 
     const clear = () => {
         setFilter({ ...filters, search: '', page: 1 })
-        getData({ search: '', page: 1 })
+        getData({ search: '', page: 1 ,isArchive:false})
+        setActiveTab("active")
     }
 
-    const deleteItem = (id) => {
+    const deleteItem = (id,itm) => {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -64,19 +65,19 @@ const Users = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+            confirmButtonText: 'Yes'
+        }).then((result) => {
             if (result.isConfirmed) {
-            // loader(true)
-            ApiClient.delete('campaign', {id: id }).then(res => {
-                if (res.success) {
-                    toast.success(res.message)
-                    clear()
-                }
-                // loader(false)
-            })
+                // loader(true)
+                ApiClient.put('campaign', { id: id,name:itm?.name, isArchive: itm?.isArchive ? false : true }).then(res => {
+                    if (res.success) {
+                        toast.success(res.message)
+                        clear()
+                    }
+                    // loader(false)
+                })
             }
-          })
+        })
     }
 
     const pageChange = (e) => {
@@ -196,6 +197,8 @@ const Users = () => {
         user={user}
         getData={getData}
         statusChange={statusChange}
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab}
     />
     </>;
 };
