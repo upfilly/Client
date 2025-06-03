@@ -142,7 +142,7 @@ const Html = ({
                                             <FaCopy
                                                 onClick={() => copyToClipboard(`${environment?.api}/${itm?.url}`)}
                                                 className="copy-icon ml-2"
-                                                title="Copy CSV URL"
+                                                title={`Copy CSV URL ${`${environment?.api}/${itm?.xml}`}`}
                                             />
                                             <a className='ml-4' href={`${environment?.api}/${itm?.xml}`} target="_blank" rel="noopener noreferrer">
                                                 XML
@@ -150,7 +150,7 @@ const Html = ({
                                             <FaCopy
                                                 onClick={() => copyToClipboard(`${environment?.api}/${itm?.xml}`)}
                                                 className="copy-icon ml-2"
-                                                title="Copy XML URL"
+                                                title={`Copy XML URL ${`${environment?.api}/${itm?.xml}`}`}
                                             />
                                         </td> :
                                             <td className='table_dats'>
@@ -160,7 +160,7 @@ const Html = ({
                                                 <FaCopy
                                                     onClick={() => copyToClipboard(`${environment?.api}/${itm?.filePath}`)}
                                                     className="copy-icon ml-2"
-                                                    title="Copy CSV URL"
+                                                    title={`Copy CSV URL ${`${environment?.api}/${itm?.xml}`}`}
                                                 />
                                                 <a className='ml-4' href={`${environment?.api}/${itm?.xml}`} target="_blank" rel="noopener noreferrer">
                                                     XML
@@ -168,7 +168,7 @@ const Html = ({
                                                 <FaCopy
                                                     onClick={() => copyToClipboard(`${environment?.api}/${itm?.xml}`)}
                                                     className="copy-icon ml-2"
-                                                    title="Copy XML URL"
+                                                    title={`Copy XML URL ${`${environment?.api}/${itm?.xml}`}`}
                                                 />
                                             </td>}
                                     </tr>
