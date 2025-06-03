@@ -120,7 +120,7 @@ const Html = ({
                         {permission('campaign_add') && activeTab === 'active' && (
                             <button
                                 type="button"
-                                className="btn btn-primary add-button"
+                                className="btn btn-primary add-button d-flex align-items-center"
                                 onClick={e => add()}
                             >
                                 <i className="material-icons me-2">add</i>

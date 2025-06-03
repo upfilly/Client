@@ -250,6 +250,7 @@ i.material-icons.edit {
   .searchWrapper {
     height: 40px !important;
     padding: 5px 10px !important;
+    width: 100% !important;
   }
 }
 .affiliate {
@@ -277,5 +278,30 @@ i.material-icons.edit {
   .css-1jqq78o-placeholder {
     font-size: 14px !important;
   }
+  .css-13cymwt-control{
+    width: 100% !important;
+  }
 }
 
+
+.select_row{
+  width: 100% !important;
+  .multiSelectContainer{
+    width: 100% !important;
+    .searchWrapper{
+      width: 100% !important;
+    }
+  }
+}
+
+.custom-description {
+  .ql-toolbar {
+    border-radius: 20px 20px 0 0 !important;
+  }
+  .ql-container {
+    border-radius: 0 0 20px 20px !important;
+  }
+  .tuncketcls{
+    width: 100%;
+  }
+}
