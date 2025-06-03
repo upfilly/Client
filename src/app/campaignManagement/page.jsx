@@ -7,11 +7,12 @@ import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
 
 const Users = () => {
   const user = crendentialModel.getUser()
+  const searchParams = useSearchParams();
   const { role } = useParams()
   const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
   const [data, setData] = useState([])
@@ -21,12 +22,18 @@ const Users = () => {
   const [previoustotal, setPreviousTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
   const history = useRouter()
+  const params = Object.fromEntries(searchParams.entries());
+  console.log(params,"hjkjhjhjh")
 
   useEffect(() => {
     if (user) {
       // setFilter({ ...filters ,role})
-      getData({ role, page: 1 })
-      getPreviousData({ role, page: 1 })
+      getData({...params, role, page: 1 })
+      setFilter({
+        ...filters,
+        status:params?.status,
+      })
+      // getPreviousData({ role, page: 1 })
     }
   }, [role])
 
@@ -258,11 +265,6 @@ const SendPreviousRequest = async (campaign,brand) => {
       }
     });
   }
-  
-
-  const view = (id) => {
-    history.push("/campaignManagement/detail/" + id)
-  }
 
   const edit = (id) => {
     let url = `/campaign/edit/${id}`
@@ -318,7 +320,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     isAllow={isAllow}
     // reset={reset}
     add={add}
-    view={view}
+    // view={view}
     edit={edit}
     role={role}
     ChangeRole={ChangeRole}
@@ -340,6 +342,7 @@ const SendPreviousRequest = async (campaign,brand) => {
     SendPreviousRequest={SendPreviousRequest}
     getData={getData}
     sendRequest={sendRequest}
+    params={params}
   />
   </>;
 };

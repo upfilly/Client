@@ -13,7 +13,7 @@ import { regionData } from '../campaign/AddEditUser/regionCountries';
 import { CurencyData } from '../../methods/currency';
 
 const Html = ({
-    view,
+    // view,
     // reset,
     statusChange,
     pageChange,
@@ -30,6 +30,7 @@ const Html = ({
     SendPreviousRequest,
     sendRequest,
     ChangeStatus,
+    params
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false);
@@ -43,11 +44,13 @@ const Html = ({
     const [category, setCategory] = useState([])
     const [countries, setCountries] = useState([]);
     const [selectedCountries, setSelectedCountries] = useState([]);
-    const [selectedCurrency, setSelectedCurrency] = useState('USD');
+    const [selectedCurrency, setSelectedCurrency] = useState(params?.currency || 'USD');
     const [exchangeRate, setExchangeRate] = useState(null);
     const [expandedCategories, setExpandedCategories] = useState([]);
     const [expandedSubCategories, setExpandedSubCategories] = useState([]);
     const [expandedRegions, setExpandedRegions] = useState([]);
+
+    console.log(selectedRegion,"selectedCategoryselectedCategoryselectedCategory")
 
     const toggleRegionExpand = (region) => {
         setExpandedRegions((prev) =>
@@ -103,6 +106,22 @@ const Html = ({
             // toast.error('Error fetching exchange rate');
         }
     };
+
+    function parseStringToArray(input) {
+        if (typeof input !== "string") return [];
+      
+        // Split by comma and trim each element
+        return input.split(',').map(item => item.trim());
+      }
+
+    useEffect(()=>{
+        getExchangeRate(params?.currency)
+        setSelectedCategory(parseStringToArray(params?.category));
+        setSelectedSubCategory(parseStringToArray(params?.sub_category));
+        setSelectedSubSubCategory(parseStringToArray(params?.sub_child_category));
+        setSelectedRegion(parseStringToArray(params?.region));
+        setSelectedCountries(parseStringToArray(params?.countries));
+    },[])
 
     const handleCurrencyChange = (e) => {
         const currency = e.value;
@@ -212,6 +231,24 @@ const Html = ({
         getCategory()
     }, [categoryType])
 
+    const view = (id) => {
+        const filterParams = {
+          ...filters,
+          page:1,
+          currency: selectedCurrency,
+          region: selectedRegion?.join(","),
+          category_type: categoryType?.join(","),
+          category: selectedCategory?.join(","),
+          sub_category: selectedSubCategory?.join(","),
+          countries: selectedCountries?.join(","),
+          sub_child_category: selectedSubSubCategory?.join(",")
+        };
+      
+        const queryString = new URLSearchParams(filterParams).toString();
+      
+        history.push(`/campaignManagement/detail/${id}?${queryString}`);
+      };
+
     useEffect(() => {
         getData({
             page: 1,
@@ -229,6 +266,19 @@ const Html = ({
             filter();
         }
     };
+
+    const resetUrl = () =>{
+        let filter = {
+            status: '',
+            role: '',
+            search: '',
+            page: 1,
+            count: 10
+        }
+        setFilter({ ...filters, ...filter })
+        setSelectedCurrency("USD")
+        history.push("/campaignManagement")
+    }
 
     const handleCountChange = (count) => {
         setFilter({ ...filters, count: count, page: 1 });
@@ -287,6 +337,16 @@ const Html = ({
                                         result={handleCurrencyChange}
                                         options={CurencyData}
                                     />
+                                    {(filters.status) && (
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary reset-btn"
+                                    onClick={e => resetUrl()}
+                                >
+                                    {/* <i className="material-icons me-1">refresh</i> */}
+                                    Reset
+                                </button>
+                             )}
                                 </div>
                             </div>
                             <div className='mt-5'>

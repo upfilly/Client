@@ -5,12 +5,13 @@ import loader from '@/methods/loader';
 import './style.scss';
 import methodModel from '@/methods/methods';
 import rolesModel from '@/models/role.model';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
 
 const Detail = (p) => {
     const history = useRouter()
     const user = crendentialModel.getUser()
+    const searchParams = useSearchParams();
     const { id } = useParams()
     const [data, setData] = useState()
     const [copied, setCopied] = useState(false);
@@ -25,7 +26,9 @@ const Detail = (p) => {
     };
 
     const back = () => {
-        history.back()
+        const currentQueryString = window.location.search;
+        
+        history.push(`/campaignManagement${currentQueryString}`)
     }
 
     const handleCopyLink = () => {
