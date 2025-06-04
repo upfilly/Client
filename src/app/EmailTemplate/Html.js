@@ -121,7 +121,7 @@ const Html = ({ relatedAffiliate , form, setForm , handleSubmit }) => {
                                     </div>
                                 </div> */}
                                 <div className='col-md-12 '>
-                                    <div className='mb-3' >
+                                    <div className='mb-3 custom-description' >
                                         <label className='mb-2' >Description</label>
                                         <DynamicReactQuill
                                             theme="snow"

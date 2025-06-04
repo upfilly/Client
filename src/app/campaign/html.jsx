@@ -90,7 +90,7 @@ const Html = ({
                     </div>
 
                     {/* Right side controls with better spacing */}
-                    <div className="d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-center gap-2">
                         <div className="d-flex align-items-center gap-2">
                             <SelectDropdown
                                 theme="search"
@@ -108,7 +108,7 @@ const Html = ({
                             {filters.status && (
                                 <button
                                     type="button"
-                                    className="btn btn-outline-secondary reset-btn"
+                                    className="btn btn-primary d-flex align-items-center reset-btn"
                                     onClick={e => reset()}
                                 >
                                     <i className="material-icons me-1">refresh</i>

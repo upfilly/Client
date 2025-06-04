@@ -882,7 +882,7 @@ export default function Chat() {
                       <div class="loader"></div>
                     </div>}
                   </div>
-                  <div className="chat-footer">
+                  <div className="chat-footer align-items-baseline">
                     <div className=" position-relative w-100 set_message">
                       <textarea
                         type="text"
@@ -920,7 +920,7 @@ export default function Chat() {
                       </label>
                     </div>
                     <button
-                      className="ml-3"
+                      className="px-2"
                       type="submit"
                       onClick={(e) => handelSubmit(e)}
                       disabled={chat?.length > 0 && chat[0]?.rooms_details?.blocked_admin ? true : false}

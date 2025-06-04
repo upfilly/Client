@@ -803,7 +803,7 @@ export default function affilate() {
                   <Form.Label>Invitation Message</Form.Label>
                   <Form.Control
                     as="textarea"
-                    className='br0'
+                    className='rounded-4'
                     rows={3}
                     cols={6}
                     placeholder="Enter text"
@@ -847,7 +847,7 @@ export default function affilate() {
 
                 <Form.Group className='mb-3 d-flex justify-content-between flex-column width_label selectlabel' controlId="formBasicText">
                   <Form.Label>Tags</Form.Label>
-                  <div className='d-flex justify-content-between gap-3 input_adds'>
+                  <div className='d-flex justify-content-between gap-2 input_adds'>
                     <Form.Control
                       type='text'
                       placeholder="Enter text"

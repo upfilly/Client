@@ -293,7 +293,7 @@ const Html = () => {
                                             </div>
 
                                             <div className='addkey mt-3 d-flex justify-content-end'>
-                                                <button className='btn btn-primary btn-sm' onClick={() => setShowNewKeyForm(true)}>
+                                                <button className='btn btn-primary ' onClick={() => setShowNewKeyForm(true)}>
                                                     <i className='fa fa-plus mr-1'></i>Add Key
                                                 </button>
                                             </div>

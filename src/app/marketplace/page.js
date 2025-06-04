@@ -547,7 +547,7 @@ export default function MarketPlace() {
 
                             <div className="grid_lists_mkt ">
 
-                              <div className="subparttop d-flex align-items-center justify-content-between" onClick={() => history.push(`/marketplace/detail/${data?._id}`)}>
+                              <div className="subparttop d-flex align-items-center justify-content-between mb-3" onClick={() => history.push(`/marketplace/detail/${data?._id}`)}>
                                 <div className="leftshead">
                                   <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
                                   <div className="d-flex align-items-start set_gapbx flex-column">
@@ -558,10 +558,10 @@ export default function MarketPlace() {
 
                               </div>
 
-                              <div className="showin_mkt mt-4 mb-4" onClick={() => history.push(`/marketplace/detail/${data?._id}`)}>
-                                <h5 className="capital">Placements: {data?.placement?.map((itm) => itm).join(',\n') || ''}</h5>
+                              <div className="showin_mkt" onClick={() => history.push(`/marketplace/detail/${data?._id}`)}>
+                                <h5 className="capital mb-0">Placements: {data?.placement?.map((itm) => itm).join(',\n') || ''}</h5>
                                 <div key={index}>
-                                  <p className="descmkt" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}` }}></p>
+                                  <p className="descmkt mt-0" dangerouslySetInnerHTML={{ __html: showFullDescription[index] ? data?.description : `${data?.description.slice(0, 100)}` }}></p>
                                 </div>
 
                               </div>

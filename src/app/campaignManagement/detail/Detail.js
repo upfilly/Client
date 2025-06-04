@@ -265,9 +265,9 @@ const Detail = (p) => {
                                 </div>
                                 <div className='col-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>
+                                        <p className='headsub d-flex align-items-center'>
                                             <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}&brand_id=${data?.addedBy}`}</span>
-                                            <button onClick={handleCopyLink} className='btn btn-primary ml-1'>
+                                            <button onClick={handleCopyLink} className='btn btn-primary text-nowrap ml-1'>
                                                 {copied ? 'Copied!' : 'Copy Link'}
                                             </button>
                                         </p>

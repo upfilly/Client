@@ -108,7 +108,7 @@ const Html = ({
 
                     <article className="d-flex filterFlex phView">
                         {(user?.role == "brand" || permission('coupon_add')) && <>
-                            <a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
+                            <a className="btn btn-primary h-100 mb-0 set_reset" onClick={e => add()}>
                                 Add Coupon
                             </a>
                         </>}
@@ -126,7 +126,7 @@ const Html = ({
                         />
 
                         {filters.status ? <>
-                            <a className="btn btn-primary" onClick={e => reset()}>
+                            <a className="btn btn-primary h-100" onClick={e => reset()}>
                                 Reset
                             </a>
                         </> : <></>}

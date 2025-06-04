@@ -1240,8 +1240,9 @@ textarea.form-control-chat {
     color: #000;
     resize: none !important;
     border-radius: 50px;
-    padding: 0px 10px;
-    min-height: 40px; /* Initial height */
+    padding: 4px 10px;
+    height: 33px !important;
+    min-height: 33px; /* Initial height */
     max-height: 250px !important; /* Max height before scrolling */
     overflow-y: auto; /* Enable vertical scroll after max height */
 }

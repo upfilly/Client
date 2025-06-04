@@ -271,18 +271,18 @@ export default function affilate() {
 
             <div className='row'>
               <div className='card-header'>
-                <div className="main_title_head d-flex justify-content-between align-items-center">
+                <div className="main_title_head d-flex gap-2 justify-content-between align-items-center">
                   <h3 className="mb-2">
                     Affiliates Marketing Stats
                   </h3>
 
-                  <article className="d-flex filterFlex phView">
+                  <article className="d-flex gap-2 filterFlex phView">
                     <div className='searchInput'>
                       <input
                         type="text"
                         value={filters.search}
                         placeholder="Search"
-                        className="form-control"
+                        className="form-control h-100"
                         onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
                       // onKeyPress={handleKeyPress}
                       />

@@ -182,7 +182,7 @@ const Html = () => {
                                         </div>
 
                                         {selectedOption === 'csv' ? (
-                                            <div className="mb-3">
+                                            <div className="mb-3 gap-1">
                                                 <label>Upload CSV File <span onClick={openModal} style={{ color: 'red' }}>(See an example)</span></label>
                                                 <div className="form-group drag_drop">
                                                     <div className='upload_filebx'>
@@ -217,7 +217,7 @@ const Html = () => {
                                                 {error && <p style={{ color: "red" }}>{error}</p>}
                                             </div>
                                         ) : (
-                                            <div className="mb-3">
+                                            <div className="mb-3 gap-0">
                                                 <label>Enter URL</label>
                                                 <input
                                                     type="text"

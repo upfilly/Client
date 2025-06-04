@@ -93,7 +93,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicEmail">
-              <Form.Label>Sender Name</Form.Label>
+              <Form.Label className='mb-0'>Sender Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter name"
@@ -105,7 +105,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
             </Form.Group>
 
             <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicEmail">
-              <Form.Label>Reciever Name</Form.Label>
+              <Form.Label className='mb-0'>Reciever Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter name"
@@ -152,10 +152,10 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
             /></Form.Group> */}
 
             <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2 selectlabel' controlId="formBasicText">
-              <Form.Label>comments</Form.Label>
+              <Form.Label className='mb-0'>comments</Form.Label>
               <Form.Control
                 as="textarea"
-                className='br0'
+                className='rounded-4'
                 rows={3}
                 cols={6}
                 placeholder="Enter text"

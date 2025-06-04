@@ -57,7 +57,7 @@ const Html = ({
                                 Offers Management
                             </h3>
 
-                            <article className=" filterFlex phView flex-wrap d-flex gap-3">
+                            <article className=" filterFlex phView flex-wrap align-items-center d-flex gap-2">
                                 <div className='searchInput ml-0'>
                                     <input
                                         type="text"
@@ -98,7 +98,7 @@ const Html = ({
 
 
                                 {filters.search ? <>
-                                    <a className="btn btn-primary" onClick={e => reset()}>
+                                    <a className="btn btn-primary h-100" onClick={e => reset()}>
                                         Reset
                                     </a>
                                 </> : <></>}

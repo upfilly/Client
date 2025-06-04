@@ -324,7 +324,7 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
 
 .chip {
   background: #ff3d22;
-  margin-bottom: 0 !important;
+  margin-bottom: 5px !important;
 }
 
 .alignTopDate div.ant-picker-input {
@@ -1762,13 +1762,13 @@ a.btn.barlink.text-primary:active {
 }
 
 .highlightOption {
-  background: #ff3d22;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
   color: #fff;
 }
 
 .multiSelectContainer li:hover {
 
-  background: #0096fb !important;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
   color: #fff;
 }
 
@@ -2465,6 +2465,7 @@ ul.sales-listing {
 .form-check-input:checked[type=radio] :has(.main-card) {
   border: 1px solid #000;
 }
+
 
 .searchInput i {
   position: absolute;
@@ -5771,7 +5772,7 @@ input.width_full {
 
 .media_row .highlightOption,
 .media_row .highlightOptio:hover {
-  background: rgb(38, 125, 196);
+  background: rgb(38, 125, 196) !important;
   color: #fff;
 }
 
@@ -6066,6 +6067,7 @@ input.form-control {
 }
 
 .css-13cymwt-control {
+  width: 100%;
   border-radius: 50px !important;
 }
 
@@ -6086,6 +6088,8 @@ input.form-control {
   width: 38px !important;
   height: 38px !important;
 }
+
+// akshay css
 .custom-input {
   input {
     height: 40px !important;
@@ -6111,6 +6115,7 @@ input.form-control {
     line-height: 1.7;
   }
 }
+
 .custom-description {
   .ql-toolbar {
     border-radius: 20px 20px 0 0 !important;
@@ -6118,7 +6123,11 @@ input.form-control {
   .ql-container {
     border-radius: 0 0 20px 20px !important;
   }
+  .tuncketcls{
+    width: 100%;
+  }
 }
+
 
 .terms-textarea textarea{
   height: 307px !important;
@@ -6128,5 +6137,15 @@ input.form-control {
 }
 .bg-tab{
   padding:7px 12px !important;
-  background: #78acff !important;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
 }
+
+.css-tr4s17-option{
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
+}
+
+.form-check-input:checked[type=radio] {
+  background-color: #78acff !important;
+  border-color: #78acff !important;
+}
+
