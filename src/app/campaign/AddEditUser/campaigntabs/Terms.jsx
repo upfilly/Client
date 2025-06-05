@@ -131,7 +131,21 @@ YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT AND AGREE TO ALL ITS TERMS AND
         <div className="alert alert-warning mb-3">
           <strong>PLEASE NOTE:</strong> The following legal terms are only meant to be used as a guide. Should you wish to use part or any of the below terms, Upfilly.com cannot be held legally responsible for any potential revenue loss, legal disputes, or other liabilities that may arise. For any legal usage or implementation, we strongly recommend consulting with a qualified legal professional to ensure compliance with applicable laws and regulations.
           <br /><br />
-          Should you wish to use any part or the whole of the following agreement, replace MERCHANT and MERCHANT.COM with your information.
+          Should you wish to use any part or the whole of the following agreement, replace MERCHANT and MERCHANT.COM with your information.<br></br>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="agreeTerms"
+              onChange={(e) => {
+                setIsAgreed(!isAgreed);
+                onAcceptTerms(e.target.checked);
+              }}
+            />
+            <label className="form-check-label" htmlFor="agreeTerms">
+              I agree to the terms and conditions
+            </label>
+          </div>
         </div>
 
         <div className="flex-grow-1 mb-3">
@@ -149,20 +163,7 @@ YOU ACKNOWLEDGE THAT YOU HAVE READ THIS AGREEMENT AND AGREE TO ALL ITS TERMS AND
           />
         </div>
 
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="agreeTerms"
-            onChange={(e) => {
-              setIsAgreed(!isAgreed);
-              onAcceptTerms(e.target.checked);
-            }}
-          />
-          <label className="form-check-label" htmlFor="agreeTerms">
-            I agree to the terms and conditions
-          </label>
-        </div>
+
       </div>
     </div>
     //  </div>
