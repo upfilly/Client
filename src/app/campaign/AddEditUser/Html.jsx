@@ -206,7 +206,7 @@ const Html = ({
                                             theme='search'
                                             id="statusDropdown"
                                             displayValue="name"
-                                            placeholder="Select Type"
+                                            placeholder="Select Currency"
                                             intialValue={form?.currencies}
                                             result={e => {
                                                 setform({ ...form, currencies: e.value });
@@ -255,7 +255,7 @@ const Html = ({
                                         <MultiSelectValue
                                             id="statusDropdown"
                                             displayValue="name"
-                                            placeholder="Select Type"
+                                            placeholder="Select Event Type"
                                             intialValue={form?.event_type}
                                             disabled={!id}
                                             result={e => {
@@ -274,7 +274,7 @@ const Html = ({
                                             id="statusDropdown"
                                             singleSelect={true}
                                             displayValue="name"
-                                            placeholder="Select Type"
+                                            placeholder="Select Approval"
                                             intialValue={form?.campaign_type}
                                             disabled={!id ? false : true}
                                             result={e => {
@@ -319,7 +319,7 @@ const Html = ({
                                             value={form?.commission || ''}
                                             disabled={!id ? false : true}
                                             onChange={(e) => handleNumericInput(e, 'commission')}
-                                            placeholder="Enter Percentage"
+                                            placeholder="Enter Commission"
                                         />
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
                                     </div>
@@ -334,7 +334,7 @@ const Html = ({
                                             value={form?.commission || ''}
                                             disabled={!id ? false : true}
                                             onChange={(e) => handleNumericInput(e, 'commission')}
-                                            placeholder="Enter Amount"
+                                            placeholder="Enter Commission Amount"
                                         />
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}
                                         {id && <div className="invalid-feedback d-block">Note: Commission can't be changed on a published campaign.</div>}
