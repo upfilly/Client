@@ -131,7 +131,7 @@ const Detail = (p) => {
                                 Campaign Detail
                             </h3>
                             <button
-                                className="btn btn-info"
+                                className="btn btn-primary"
                                 onClick={openAffiliatesModal}
                             >
                                 <i className="fa fa-users mr-2"></i>
@@ -588,7 +588,7 @@ const Detail = (p) => {
                                                         </td>
                                                         <td>
                                                             {affiliate.status != "removed" && <button
-                                                                className="btn btn-sm btn-danger"
+                                                                className="btn btn-sm btn-outline-danger text-danger bg-light"
                                                                 onClick={() => removeAffiliate(affiliate.affiliate_id.id || affiliate.affiliate_id._id)}
                                                                 title="Remove Affiliate"
                                                             >

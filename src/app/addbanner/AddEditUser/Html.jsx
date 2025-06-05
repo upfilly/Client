@@ -211,7 +211,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-12 mb-3">
+                                <div className="col-md-12 mb-3 custom-description">
                                     <label>Description</label>
                                     {affiliateData && <DynamicReactQuill
                                         theme="snow"

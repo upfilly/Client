@@ -492,7 +492,7 @@ const Html = ({ user,
                               height: 200,
                             }}
                           /> */}
-                          <div className="rounded-5 descript_editpro">
+                          <div className="descript_editpro">
                             <DynamicReactQuill
                               theme="snow"
                               value={form?.description ? form?.description : ''}

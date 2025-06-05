@@ -99,7 +99,7 @@ const Detail = (p) => {
 
                                 {/* {isAllow('deleteAdmins') ?  */}
                                 <>
-                                    <button className='btn btn-danger br50' onClick={() => deleteItem(data.id)}>
+                                    <button className='btn btn-danger' onClick={() => deleteItem(data.id)}>
                                         <i className="material-icons delete text-white mr-2" title='Delete'> delete</i>
                                         Delete
                                     </button>

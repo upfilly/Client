@@ -351,7 +351,7 @@ span.mglass img {
 }
 
 .search_design {
-    border-radius: 50px;
+    border-radius: 6px;
     padding: 7px;
     width: 100%;
     border: 1px solid #dbd5d5;
@@ -380,7 +380,7 @@ i.fa.fa-paperclip {
 i.fa.send_msg.fa-paper-plane {
     background-image: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
     padding: 22px;
-    border-radius: 50px;
+    border-radius: 6px;
     color: #fff;
 }
 
@@ -1215,14 +1215,13 @@ textarea.form-control {
 
 
 .position-relative.w-100.set_message {
-    border-radius: 50px;
+    border-radius: 6px;
     background-color: #fff;
     resize: none !important;
     overflow: auto; /* Enables scrolling if needed but hides scrollbar */
     scrollbar-width: none; /* Firefox */
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: 50px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     width: 100%;
     display: flex;

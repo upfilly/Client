@@ -325,6 +325,7 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
 .chip {
   background: #ff3d22;
   margin-bottom: 5px !important;
+  border-radius: 6px !important;
 }
 
 .alignTopDate div.ant-picker-input {
@@ -429,7 +430,7 @@ label {
 .form-row>[class*=col-] {
   padding-right: 10px;
   padding-left: 5px;
-  align-items: center;
+  // align-items: center;
 }
 
 .col_side div span {
@@ -704,13 +705,14 @@ button.btn.btn-primary.loginclass {
   height: 38px;
   font-size: 14px;
   font-weight: 600;
-  padding: 5px 15px;
+  // padding: 5px 15px;
 }
 
 .btn-primary {
-  border-radius: 50px !important;
   border: unset !important;
   line-height: 1.6 !important;
+  border-radius: 6px !important;
+  padding: 0.475rem 0.75rem !important;
 }
 
 @media(max-width:768px) {
@@ -947,7 +949,7 @@ a.btn.btn-primary.mr-2 {
 .form-control {
   padding: 21px 10px;
   border: 1px solid #DCDCDC;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 select.form-control.types {
@@ -1671,7 +1673,7 @@ a.btn.btn-primary.profiles {
   border: 1px solid #c2c2c2 !important;
   height: auto;
   color: #fff !important;
-  border-radius: 12px;
+  border-radius: 6px;
   // font-weight: 600;
   display: flex;
   align-items: center;
@@ -1731,7 +1733,7 @@ a.discard {
   color: #202020 !important;
   font-size: 14px !important;
   height: 43px;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 button.btn.btn-primary.edit.ml-3 {
@@ -2107,9 +2109,12 @@ a.demo-button {
 }
 
 input.datepicker-field {
+  width: 244px;
   border: 1px solid #ccc;
   height: 38px;
-  border-radius: 50 px;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
@@ -2127,7 +2132,7 @@ input.datepicker-field {
 
 .filter-opt button.set-filter {
   height: 38px;
-  border-radius: 50px !important;
+  border-radius: 6px !important;
 }
 
 .filter_camp button {
@@ -2246,7 +2251,7 @@ p.checkbox-option-main span {
 
 .phoneInput.w-100 {
   border: 1px solid #ccc !important;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .react-tel-input.input_number input.form-control {
@@ -2259,7 +2264,7 @@ p.checkbox-option-main span {
 
 .back-btn {
   height: 38px !important;
-  border-radius: 50px !important;
+  border-radius: 6px !important;
 }
 
 .help-icon svg {
@@ -2272,12 +2277,12 @@ p.checkbox-option-main span {
 }
 
 .form-control {
-  border-radius: 50px !important;
+  border-radius: 6px !important;
 }
 
 .sidebar_main .nav-item .nav-link {
   background: #F8F9FA;
-  border-radius: 50px;
+  border-radius: 6px;
   // padding: 14px 13px !important;
   padding: 10px 12px !important;
 }
@@ -2477,7 +2482,7 @@ ul.sales-listing {
 
 .searchInput input {
   padding-right: 35px;
-  border-radius: 50px !important;
+  border-radius: 6px !important;
 }
 
 .searchInput {
@@ -2544,7 +2549,7 @@ span.contract {
   padding: 6px 12px;
   font-weight: 400;
   color: #222;
-  border-radius: 50px;
+  border-radius: 6px;
   background: #eef126;
   width: 100px;
   display: inline-flex;
@@ -2560,7 +2565,7 @@ textarea.form-control-chat::placeholder {
 
 
 select.form-select {
-  border-radius: 50px;
+  border-radius: 6px;
   text-transform: capitalize;
 }
 
@@ -2648,7 +2653,7 @@ select.form-select {
 
 a.nav-link.hoverclass.affilate.collapsed-m {
   background: #F8F9FA;
-  border-radius: 50px;
+  border-radius: 6px;
   padding: 10px 12px !important;
 }
 
@@ -3283,7 +3288,7 @@ input.overlap_mobile {
 .btn-cancel {
   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
   border: 1px solid #ffffff;
-  border-radius: 50px;
+  border-radius: 6px;
   color: #fff;
   font-size: 14px;
   padding: 4px 20px;
@@ -3431,7 +3436,7 @@ p.types_date {
   padding: 6px 12px !important;
   position: relative;
   min-height: 40px;
-  border-radius: 50px !important;
+  border-radius: 6px !important;
 
 }
 
@@ -3518,7 +3523,7 @@ p.types_date {
 }
 
 .btn-secondary {
-  border-radius: 50px !important;
+  border-radius: 6px !important;
   font-size: 14px !important;
 }
 
@@ -3640,7 +3645,7 @@ p.checkbox-option-main {
 }
 
 .btn.btn-primary.btn-sm {
-  padding: 8px 12px !important;
+  // padding: 8px 12px !important;
 }
 
 .ql-editor,
@@ -4155,7 +4160,7 @@ p.checkbox-option-main {
   }
 
   .select_parabx .search-wrapper.searchWrapper {
-    border-radius: 10px !important;
+    border-radius: 6px !important;
   }
 
   //payement page header css
@@ -5437,7 +5442,6 @@ div:where(.swal2-icon).swal2-warning {
 }
 
 .react-datepicker__view-calendar-icon input:focus-visible {
-  outline: 1px solid #ccc !important;
   border: 0px solid #ccc !important;
 }
 
@@ -5535,6 +5539,7 @@ input[type=checkbox].check_bx_input:checked+.checkbox-btn::after {
 .set_buttons a {
   font-size: 14px;
   font-weight: 600;
+  border-radius: 6px !important;
 }
 
 .ql-toolbar.ql-snow+.ql-container.ql-snow {
@@ -5694,7 +5699,7 @@ input[type=checkbox].check_bx_input:checked+.checkbox-btn::after {
 
 .border_description {
   border: 1px solid #d0d4da;
-  border-radius: 47px;
+  border-radius: 6px;
 }
 
 .border_description input.form-control {
@@ -5731,7 +5736,7 @@ input.width_full {
   padding: 6px 12px;
   background-color: #fff;
   color: #000000b8;
-  border-radius: 33px;
+  border-radius: 6px;
   z-index: 13;
   position: relative;
 }
@@ -5899,8 +5904,9 @@ img.no_data_img {
 }
 
 .btn-primary {
-  padding: 6px 12px !important;
+  // padding: 6px 12px !important;
   font-size: 14px !important;
+  border-radius: 6px !important;
 }
 
 
@@ -6068,11 +6074,13 @@ input.form-control {
 
 .css-13cymwt-control {
   width: 100%;
-  border-radius: 50px !important;
+  border-radius: 6px !important;
 }
 
 .css-t3ipsp-control {
-  border-radius: 50px !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  border-color: hsl(0, 0%, 80%) !important;
 }
 .action-btns{
   width: 32px !important;
@@ -6096,6 +6104,8 @@ input.form-control {
   }
 }
 .custom-dropdown{
+  width: 100% !important;
+  height: 100% !important;
   .searchWrapper{
     min-height: 40px;
   }
@@ -6110,7 +6120,7 @@ input.form-control {
   }
   .date_select{
     min-height: 40px ;
-    border-radius: 20px;
+    border-radius: 6px;
     font-size: 14px;
     line-height: 1.7;
   }
@@ -6118,10 +6128,10 @@ input.form-control {
 
 .custom-description {
   .ql-toolbar {
-    border-radius: 20px 20px 0 0 !important;
+    border-radius: 6px 6px 0 0 !important;
   }
   .ql-container {
-    border-radius: 0 0 20px 20px !important;
+    border-radius: 0 0 6px 6px !important;
   }
   .tuncketcls{
     width: 100%;

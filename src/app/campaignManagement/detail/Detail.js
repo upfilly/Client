@@ -356,7 +356,7 @@ const CampaignDetail = () => {
                                                     <div className="flex-fill bg-light p-2 rounded border small text-break">
                                                         {`https://upfilly.com?affiliate_id=${data?.id}&url=${user?.website}&brand_id=${data?.addedBy}`}
                                                     </div>
-                                                    <span onClick={handleCopyLink} className='custom-copy-btn'>
+                                                    <span onClick={handleCopyLink} className='btn btn-primary d-flex align-items-center'>
                                                         <i className={`fa fa-${copied ? 'check' : 'copy'} me-1`}></i>
                                                         {copied ? 'Copied!' : 'Copy'}
                                                     </span>

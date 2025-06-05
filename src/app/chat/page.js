@@ -605,7 +605,7 @@ export default function Chat() {
                         <h3 class="about_head" > <i onClick={() => router.push('/requests')} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
                       </div>
                       <div className="msg_info person-chat hide_icon_Group b-none">
-                        {user?.role == "brand" && <button className=" btn-group btn-sm" onClick={handleShow}>Create a Group</button>}
+                        {user?.role == "brand" && <button className=" btn-primary py-1 btn-sm" onClick={handleShow}>Create a Group</button>}
 
                       </div>
                     </div>
