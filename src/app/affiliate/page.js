@@ -76,6 +76,7 @@ export default function affilate() {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
   const [expandedSubCategories, setExpandedSubCategories] = useState([]);
   const [expandedCategories, setExpandedCategories] = useState([]);
+  const [camppaignData,setCamppaignData]= useState([]);
 
   const toggleCategoryExpand = (categoryId) => {
     setExpandedCategories(prev =>
@@ -84,6 +85,22 @@ export default function affilate() {
         : [...prev, categoryId]
     );
   };
+
+  const getCampaignData = (p = {}) => {
+    let url='campaign/brand/all'
+    ApiClient.get(url).then(res => {
+        if (res.success) {
+            setCamppaignData(res.data.data.map((dat)=>{
+              return({
+                name:dat?.name,
+                id:dat?.id || dat?._id
+              })
+            }))
+            // setTotal(res.data.total_count)
+        }
+    })
+}
+  
 
   const toggleSubCategoryExpand = (subCategoryId) => {
     setExpandedSubCategories(prev =>
@@ -305,13 +322,19 @@ export default function affilate() {
     getData({ invite_status: e, page: 1 })
   }
 
+  const ChangeCampaign = (e) => {
+    setFilter({ ...filters, campaign: e })
+    getData({ campaign: e, page: 1 })
+  }
+
   const reset = () => {
     let filter = {
       status: '',
       invite_status: '',
       role: '',
       search: '',
-      role: 'affiliate',
+      // role: 'affiliate',
+      campaign:"",
       page: 0,
       count: 10,
       end_date: '',
@@ -380,6 +403,7 @@ export default function affilate() {
   useEffect(() => {
     handleAffiliateGroup()
     handleCampaign()
+    getCampaignData()
   }, [])
 
   useEffect(() => {
@@ -589,6 +613,18 @@ export default function affilate() {
                     />
                   </div>
 
+                  <div class="w-25">
+                    <SelectDropdown theme='search'
+                      id="statusDropdown"
+                      displayValue="name"
+                      placeholder="All Campaign"
+                      className='mt-2 '
+                      intialValue={filters.campaign}
+                      result={e => { ChangeCampaign(e.value) }}
+                      options={camppaignData}
+                    />
+                  </div>
+
                   <div class="">
                     <DatePicker
                       className="datepicker-field"
@@ -633,7 +669,7 @@ export default function affilate() {
                     </div>
                   </div> */}
 
-                  {filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
+                  {filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
                     <a className="btn btn-primary   " onClick={e => reset()}>
                       Reset
                     </a>
