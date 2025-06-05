@@ -72,7 +72,7 @@ const Html = ({
                             Active Campaigns
                             {activeTab === 'active' && (
                                 <span className="badge bg-primary ms-2">
-                                    {data?.filter(item => !item.isArchive).length}
+                                    {total}
                                 </span>
                             )}
                         </button>
@@ -83,7 +83,8 @@ const Html = ({
                             Archived Campaigns
                             {activeTab === 'archived' && (
                                 <span className="badge bg-secondary ms-2">
-                                    {data?.filter(item => item.isArchive).length}
+                                    {/* {data?.filter(item => item.isArchive).length} */}
+                                    {total}
                                 </span>
                             )}
                         </button>
@@ -221,7 +222,7 @@ const Html = ({
                         <option value={100}>100</option>
                         <option value={150}>150</option>
                         <option value={200}>200</option>
-                    </select> from {filteredData?.length} Campaigns</span>
+                    </select> from {total} Campaigns</span>
                     <ReactPaginate
                         breakLabel="..."
                         nextLabel="Next >"

@@ -163,7 +163,7 @@ const SendPreviousRequest = async (campaign,brand) => {
         if (res.success) {
 
           toast.success(res.message)
-          getData({ page: filters?.page + 1 });
+          getData({ page: filters?.page });
         }
         loader(false);
       });

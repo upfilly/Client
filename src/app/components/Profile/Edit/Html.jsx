@@ -461,7 +461,7 @@ const Html = ({ user,
                             </div>
                           </div>
                         </div>
-                        <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
+                        {/*<div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
                           <div className='form-group'>
                             <div className="select_drop ">
                               <label>Default Currency</label>
@@ -478,7 +478,7 @@ const Html = ({ user,
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div>*/}
 
                         <div className=" col-12 col-sm-12 col-md-12">
                           <label>Description</label>

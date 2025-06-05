@@ -426,7 +426,7 @@ const Html = ({
                                                                             <i className='fa fa-times'></i>
                                                                         </button>
                                                                     </div>
-                                                                ) : itm?.status == 'rejected' ?
+                                                                ) :itm?.status == 'rejected' ? <div className="btn btn-danger mr-2">Removed</div>  : itm?.status == 'rejected' ?
                                                                     <div className="btn btn-primary mr-2">Rejected</div> :
                                                                     itm?.status == 'requested' ?
                                                                         <div className="btn btn-primary mr-2">Request Sent</div> : (
@@ -528,7 +528,7 @@ const Html = ({
                                         <option value={100}>100</option>
                                         <option value={150}>150</option>
                                         <option value={200}>200</option>
-                                    </select> from {total} Users</span>
+                                    </select> from {total} Campaigns</span>
                                     <ReactPaginate
                                         breakLabel="..."
                                         nextLabel="Next >"

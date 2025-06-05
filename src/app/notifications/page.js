@@ -66,7 +66,7 @@ const NotificationPage = () => {
                                 }
                             }}>
                                 <h3 className='noti_head'>{notification?.type == 'message' ? "" : notification?.type == 'make_offer' ? "Offer Request" : "Campaign"}</h3>
-                                {/* <h2>{notification.title}</h2> */}
+                                {notification?.type == 'message' && <p className='noti_text_msg'>You have a message from {notification?.addedBy_name?.slice(0, 10)}...</p>}
                                     <p>{isTrue ? <img
                                         // onClick={()=>router.push(`${`chat/userDetail/${activeUser[0]?.user_id}`}`)}
                                         src={`${environment.api}${notification.message}`}
@@ -82,7 +82,7 @@ const NotificationPage = () => {
                                                     width={55}></img>
 
                                         </a>
-                                      ) : notification.message}</p>
+                                      ) :notification?.type == 'campaign' ? <p className='noti_text_chat'>{notification?.message} by {notification?.addedBy_name}</p> : notification.message}</p>
                                 <span className="timestamp">{formatTimestamp(notification.createdAt)}</span>
                             </div>
                         )})
