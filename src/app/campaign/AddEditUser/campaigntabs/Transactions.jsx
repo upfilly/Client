@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 
-export default function Transactions({formTransactionData, setFormTransactionData,formTransactionFields}) {
+export default function Transactions({ formTransactionData, setFormTransactionData, formTransactionFields }) {
 
   const handleValueChange = (label, value) => {
     setFormTransactionData((prev) => ({
@@ -30,51 +30,57 @@ export default function Transactions({formTransactionData, setFormTransactionDat
 
       <div className="space-y-4">
         {formTransactionFields.map(({ label, showInput }) => (
-          <div key={label} className="border rounded-lg p-4 bg-white shadow-sm mb-3">
-            <div className="flex flex-col md:flex-row md:items-center gap-4">
-              {/* Field Label */}
-              <div className="md:w-1/2">
-                <p className="text-sm font-medium text-gray-700">{label}</p>
-              </div>
-
-              {/* Yes/No Radio Buttons */}
-              <div className="flex gap-4 md:w-1/4">
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name={`${label}-option`}
-                    value="Yes"
-                    checked={formTransactionData[label].value === "Yes"}
-                    onChange={() => handleValueChange(label, "Yes")}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-700">Yes</span>
-                </label>
-                <label className="inline-flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name={`${label}-option`}
-                    value="No"
-                    checked={formTransactionData[label].value === "No"}
-                    onChange={() => handleValueChange(label, "No")}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 ml-2"
-                  />
-                  <span className="text-sm text-gray-700">No</span>
-                </label>
-              </div>
-
-              {/* Conditional Textarea */}
-              {showInput && (
-                <div className="md:w-1/4">
-                  <textarea
-                    rows={3}
-                    className="w-full border border-gray-300 rounded-2 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Additional information"
-                    value={formTransactionData[label].additionalInfo}
-                    onChange={(e) => handleInfoChange(label, e.target.value)}
-                  />
+          <div key={label} className="card mb-3">
+            <div className="card-body p-3">
+              <div className="row align-items-center g-3">
+                {/* Field Label */}
+                <div className="col-md-3">
+                  <label className="form-label mb-0 fw-medium text-muted">{label}</label>
                 </div>
-              )}
+
+                {/* Yes/No Radio Buttons */}
+                <div className="col-md-3">
+                  <div className="d-flex gap-3">
+                    <div className="form-check">
+                      <input
+                        type="radio"
+                        id={`${label}-yes`}
+                        name={`${label}-option`}
+                        value="Yes"
+                        checked={formTransactionData[label].value === "Yes"}
+                        onChange={() => handleValueChange(label, "Yes")}
+                        className="form-check-input"
+                      />
+                      <label htmlFor={`${label}-yes`} className="form-check-label">Yes</label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        type="radio"
+                        id={`${label}-no`}
+                        name={`${label}-option`}
+                        value="No"
+                        checked={formTransactionData[label].value === "No"}
+                        onChange={() => handleValueChange(label, "No")}
+                        className="form-check-input"
+                      />
+                      <label htmlFor={`${label}-no`} className="form-check-label">No</label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Conditional Textarea */}
+                {showInput && (
+                  <div className="col-md-6">
+                    <textarea
+                      rows={3}
+                      className="form-control rounded-2 form-control-sm"
+                      placeholder="Additional information"
+                      value={formTransactionData[label].additionalInfo}
+                      onChange={(e) => handleInfoChange(label, e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}
