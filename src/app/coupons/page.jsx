@@ -10,7 +10,6 @@ import { toast } from 'react-toastify';
 import { useParams,useRouter } from 'next/navigation';
 import Swal from 'sweetalert2'
 
-
 const Coupons = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()

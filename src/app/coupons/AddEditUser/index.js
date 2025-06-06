@@ -9,6 +9,7 @@ import crendentialModel from "@/models/credential.model";
 
 const AddEditUser = () => {
     const { role, id } = useParams()
+    const history = useRouter()
     const user = crendentialModel.getUser()
     const [images, setImages] = useState('');
     const [form, setform] = useState({
@@ -28,7 +29,6 @@ const AddEditUser = () => {
     const [affiliateData, setAffiliateData] = useState();
     const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
     const [submitted, setSubmitted] = useState(false)
-    const history = useRouter()
     const [emailLoader, setEmailLoader] = useState(false)
     const [BrandData, setBrandData] = useState('')
     const [detail, setDetail] = useState()
@@ -104,6 +104,10 @@ const AddEditUser = () => {
         if (form?.visibility === 'Public') {
             delete value.media;
         }
+
+        if (form?.couponType === 'Campaign') {
+            delete value.commissionType;
+        }
     
         // Set status to 'Pending' if startDate is in the future
         const now = new Date();
@@ -118,7 +122,8 @@ const AddEditUser = () => {
         } else {
             delete value.id;
         }
-    
+    delete value?.couponCommissionValue;
+    delete value?.couponCommissionType;
         loader(true);
         ApiClient.allApi(url, value, method).then(res => {
             if (res.success) {
@@ -179,6 +184,7 @@ const AddEditUser = () => {
                         "startDate": value?.startDate,
                         "expirationDate": value?.expirationDate,
                         "commissionType":value?.commissionType,
+                        "couponAmount":value?.couponAmount,
                         "applicable":value?.applicable,
                         "visibility": value?.visibility,
                         "url":value?.url,
@@ -186,7 +192,7 @@ const AddEditUser = () => {
                         // "status": "Enabled"
                     })
                     setImages(value?.image)
-                    //     let payload = { ...defaultvalue };
+                    // let payload = { ...defaultvalue };
                     // let oarr = Object.keys(defaultvalue);
 
                     // oarr.forEach((itm) => {
