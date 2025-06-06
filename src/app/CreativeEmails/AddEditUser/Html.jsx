@@ -10,7 +10,7 @@ import EmailEditorTemplate from '../../email/emaileditor'
 
 const Html = () => {
   const { id } = useParams()
-  const [form, setform] = useState({ templateName: '', emailName: '', purpose: '', audience: '', format: 'Text', subject: '', from: '', htmlContent: '', textContent: '', personalizationTags: '', textJSONContent: {} });
+  const [form, setform] = useState({ templateName: '',content:"", emailName: '', format: 'Text', subject: '', from: '', htmlContent: '', textContent: '', personalizationTags: [], textJSONContent: {} });
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
   const specialChars = useRef([]);
@@ -21,8 +21,10 @@ const Html = () => {
   const childRef = useRef();
   const emailEditorRef = useRef(null);
 
+  console.log(form,"form?.content || form?.textContent")
+
   const exportHtml = (e) => {
-    if (e) e.preventDefault(); // Prevent form submission
+    if (e) e.preventDefault();
     
     const unlayer = emailEditorRef.current?.editor;
 
@@ -37,9 +39,8 @@ const Html = () => {
             textContent: html,
             textJSONContent: design || {}
           });
-          console.log(form,"klklklkl")
           // Call handleSubmit without the event to avoid double submission
-          // handleSubmit();
+          handleSubmit();
         }
       });
     }
@@ -61,6 +62,8 @@ const Html = () => {
     let value = {
       ...form, id: id
     };
+
+    delete value?.content;
     
     if (id && id != "add") {
       method = "put";
@@ -218,7 +221,7 @@ const Html = () => {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
-                            Email Name<span className="star">*</span>
+                            From Email<span className="star">*</span>
                           </label>
                           <input
                             type="email"
@@ -231,7 +234,7 @@ const Html = () => {
                           />
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      {/* <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
                             Purpose<span className="star">*</span>
@@ -246,8 +249,8 @@ const Html = () => {
                             required
                           />
                         </div>
-                      </div>
-                      <div className="col-md-6">
+                      </div> */}
+                      {/* <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
                             Audience<span className="star">*</span>
@@ -262,7 +265,7 @@ const Html = () => {
                             required
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
@@ -282,7 +285,7 @@ const Html = () => {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
-                            From<span className="star">*</span>
+                            Senders Name<span className="star">*</span>
                           </label>
                           <input
                             type="text"
@@ -397,12 +400,12 @@ const Html = () => {
                       </div> */}
                       <div className="col-md-12">
                         <div className="d-flex justify-content-end align-items-center gap-3">
-                          <button
+                          {/* <button
                             type="button"
                             className="btn btn-secondary"
-                            onClick={() => setTab("preview")}>
+                            onClick={(e) =>{ setTab("preview")}}>
                             Preview
-                          </button>
+                          </button> */}
                           <button
                             type="submit"
                             className="btn btn-primary">

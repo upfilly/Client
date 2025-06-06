@@ -107,7 +107,7 @@ const Html = ({
             <th scope="col" className='table_data' onClick={e => sorting('name')}>Template Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
             <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Email Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
             <th scope="col" className='table_data'>Subject</th>
-            <th scope="col" className='table_data'>Purpose</th>
+            {/* <th scope="col" className='table_data'>Purpose</th> */}
             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
             {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
             {user?.role != "affiliate" && <th scope="col" className='table_data'>Action</th>}
@@ -135,10 +135,10 @@ const Html = ({
                         </div>
                     </div></td>
                     <td className='table_dats'>{user?.role == "affiliate" ?  itm?.emailtemplate_details?.subject : itm?.subject}</td>
-                <td className='table_dats'>   <div className={`user_hours`}>
+                {/* <td className='table_dats'>   <div className={`user_hours`}>
                     <span className= ''
                     >{user?.role == "affiliate" ? itm?.emailtemplate_details?.purpose : itm?.purpose}</span>
-                </div></td>
+                </div></td> */}
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                 {/* <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td> */}
 
