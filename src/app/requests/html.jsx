@@ -97,7 +97,7 @@ const Html = ({
                                 />: <></>} */}
 
 
-                                {filters.search ? <>
+                                {filters.search || filters?.status ? <>
                                     <a className="btn btn-primary h-100" onClick={e => reset()}>
                                         Reset
                                     </a>

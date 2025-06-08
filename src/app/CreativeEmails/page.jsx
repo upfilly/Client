@@ -17,7 +17,7 @@ import Swal from 'sweetalert2'
 const Users = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 5, search: '',  isDeleted: false,status:'',})
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '',  isDeleted: false,status:'',})
     const [data, setData] = useState([])
     const [tab, setTab] = useState('list')
     const [total, setTotal] = useState(0)
@@ -107,7 +107,7 @@ const Users = () => {
 
         Swal.fire({
             title: ``,
-            text: `Do you want to ${status=='active'?'Activate':'Deactivate'} this user`,
+            text: `Do you want to ${status=='active'?'Activate':'Deactivate'} this E-mail`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -116,7 +116,7 @@ const Users = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                 loader(true)
-                ApiClient.put(`campaign/change-status`,{status,id:itm.id,model:'users'}).then(res=>{
+                ApiClient.put(`emailtemplate`,{from:itm?.from,subject:itm?.subject,emailName:itm?.emailName,templateName:itm?.templateName,status,id:itm.id || itm?._id}).then(res=>{
                     if(res.success){
                         getData()
                     }
@@ -193,7 +193,7 @@ const Users = () => {
         sorting={sorting}
         setFilter={setFilter}
         user={user}
-        // statusChange={statusChange}
+        statusChange={statusChange}
     />
     </>;
 };

@@ -25,7 +25,10 @@ const Detail = (p) => {
     };
 
     const back = () => {
-        history.back()
+        // history.back()
+        const searchParams = window.location.search;
+                
+        window.location.href = '/addbanner' + searchParams;
     }
 
     useEffect(() => {

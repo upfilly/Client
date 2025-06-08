@@ -59,6 +59,8 @@ const Html = ({
         activeTab === 'active' ? getData({ isArchive: false, page: 1 }) : getData({ isArchive: true, page: 1 });
     }, [activeTab])
 
+    console.log(filters,"ioioiooioio")
+
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Campaigns" filters={filters}>
             <div className='sidebar-left-content'>
@@ -98,13 +100,13 @@ const Html = ({
                                 id="statusDropdown"
                                 displayValue="name"
                                 placeholder="All Status"
-                                initialValue={filters.status}
+                                intialValue={filters.status}
                                 result={e => { ChangeStatus(e.value) }}
                                 options={[
                                     { id: 'active', name: 'Active' },
                                     { id: 'inactive', name: 'Inactive' },
                                 ]}
-                                className="status-filter-dropdown"
+                                // className="status-filter-dropdown"
                             />
                             {filters.status && (
                                 <button

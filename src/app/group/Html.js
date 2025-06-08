@@ -22,6 +22,7 @@ const Html = ({
   total,
   setFilter,
   user,
+  getData
 }) => {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -36,6 +37,11 @@ const Html = ({
       return false;
     }
   };
+
+  const handleCountChange = (count) => {
+    setFilter({ ...filters, count: count, page: 1 });
+    getData({ count: count, page: 1 });
+};
 
   return (
     <>
@@ -240,14 +246,18 @@ const Html = ({
             </div>
           </div>
         </div>
-        <div
-          className={`paginationWrapper ${
-            !loaging && total > filters?.count ? "" : "d-none"
-          }`}
-        >
-          <span>
-            Show {data?.length} from {total} Users
-          </span>
+        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+          <span>Show <select
+            className="form-control"
+            onChange={(e) => handleCountChange(parseInt(e.target.value))}
+            value={filters.count}
+          >
+            <option value={10}>10</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={150}>150</option>
+            <option value={200}>200</option>
+          </select> from {total} Groups</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"
@@ -256,6 +266,7 @@ const Html = ({
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}
+            // pageCount={2}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}

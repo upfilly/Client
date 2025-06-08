@@ -5,6 +5,7 @@ import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import './style.scss';
 import methodModel from '@/methods/methods';
+import SelectDropdown from '../components/common/SelectDropdown';
 
 const Html = ({
     reset,
@@ -19,6 +20,7 @@ const Html = ({
     setFilter,
     user,
     view,
+    ChangeStatus
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -28,6 +30,12 @@ const Html = ({
             filter();
         }
     };
+
+    const handleCountChange = (count) => {
+        setFilter({ ...filters, count: count, page: 1 });
+        getData({ count: count, page: 1 });
+    };
+
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={"Invitations"} filters={filters}>
             <div className='sidebar-left-content main_box'>
@@ -53,7 +61,8 @@ const Html = ({
                                     }} aria-hidden="true"></i>
                                 </div> */}
 
-                                {/* <SelectDropdown                                                     theme='search'
+                                <SelectDropdown                                                     
+                                    theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
                                     placeholder="All Status"
@@ -64,14 +73,14 @@ const Html = ({
                                         {id:'accepted',name:'Accepted'},
                                         {id:'rejected',name:'Rejected'},
                                     ]}
-                                /> */}
+                                />
 
 
-                                {/* {filters.search ? <>
+                                {filters.search || filters.status ? <>
                                     <a className="btn btn-primary" onClick={e => reset()}>
                                         Reset
                                     </a>
-                                </> : <></>} */}
+                                </> : <></>}
                             </article>
                         </div>
                     </div>
@@ -171,22 +180,33 @@ const Html = ({
 
 
 
-                        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                            <span>Show {data?.length} from {total} Customers</span>
-                            <ReactPaginate
-                                breakLabel="..."
-                                nextLabel="Next >"
-                                initialPage={filters?.page}
-                                onPageChange={pageChange}
-                                pageRangeDisplayed={2}
-                                marginPagesDisplayed={1}
-                                pageCount={Math.ceil(total / filters?.count)}
-                                previousLabel="< Previous"
-                                renderOnZeroPageCount={null}
-                                pageClassName={"pagination-item"}
-                                activeClassName={"pagination-item-active"}
-                            />
-                        </div>
+                        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                                    <span>Show <select
+                                        className="form-control"
+                                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                        value={filters.count}
+                                    >
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                        <option value={150}>150</option>
+                                        <option value={200}>200</option>
+                                    </select> from {total} Campaigns</span>
+                                    <ReactPaginate
+                                        breakLabel="..."
+                                        nextLabel="Next >"
+                                        initialPage={filters?.page}
+                                        onPageChange={pageChange}
+                                        pageRangeDisplayed={2}
+                                        marginPagesDisplayed={1}
+                                        pageCount={Math.ceil(total / filters?.count)}
+                                        // pageCount={2}
+                                        previousLabel="< Previous"
+                                        renderOnZeroPageCount={null}
+                                        pageClassName={"pagination-item"}
+                                        activeClassName={"pagination-item-active"}
+                                    />
+                                </div>
 
                         {loaging ? <div className="text-center py-4">
                             <img src="/assets/img/loader.gif" className="pageLoader" />

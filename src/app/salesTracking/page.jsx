@@ -7,7 +7,7 @@ import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams,useRouter } from 'next/navigation';
+import { useParams,useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
 
 
@@ -19,12 +19,13 @@ const untrackedSales = () => {
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
     const history=useRouter()
-    
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
 
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters ,page: filters?.page + 1 ,role})
-            getData({role, page: 1 })
+            setFilter({ ...filters ,page: filters?.page + 1 ,...params})
+            getData({role, page: 1 ,...params})
         }
     }, [role])
 
@@ -146,7 +147,15 @@ const untrackedSales = () => {
     }
 
     const view=(id)=>{
-        history.push("/salesTracking/detail/"+id)
+        const filterParams = {
+            ...filters,
+            page:1,
+          };
+        
+          const queryString = new URLSearchParams(filterParams).toString();
+        
+          history.push(`/salesTracking/detail/${id}?${queryString}`);
+        // history.push("/salesTracking/detail/"+id)
     }
 
     const edit=(id)=>{
@@ -172,6 +181,7 @@ const untrackedSales = () => {
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
+        history.push("/salesTracking")
         // dispatch(search_success(''))
     }
 
@@ -214,7 +224,7 @@ const untrackedSales = () => {
         setFilter={setFilter}
         user={user}
         statusChange={statusChange}
-        
+        getData={getData}
     />
     </>;
 };

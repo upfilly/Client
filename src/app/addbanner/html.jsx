@@ -24,6 +24,7 @@ const Html = ({
     total,
     setFilter,
     filter,
+    getData
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -44,6 +45,11 @@ const Html = ({
         }
     }
 
+    const handleCountChange = (count) => {
+        setFilter({ ...filters, count: count, page: 1 });
+        getData({ count: count, page: 1 });
+    };
+
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Banners" filters={filters}>
             <div className='sidebar-left-content'>
@@ -55,9 +61,11 @@ const Html = ({
                         intialValue={filters.status}
                         result={e => { ChangeStatus(e.value) }}
                         options={[
-                            { id: 'pending', name: 'Pending' },
-                            { id: 'accepted', name: 'Accepted' },
-                            { id: 'rejected', name: 'Rejected' },
+                            { id: 'active', name: 'Active' },
+                            { id: 'deactive', name: 'Inactive' },
+                            // { id: 'pending', name: 'Pending' },
+                            // { id: 'accepted', name: 'Accepted' },
+                            // { id: 'rejected', name: 'Rejected' },
                         ]}
                     />
 
@@ -116,7 +124,7 @@ const Html = ({
                                     <th scope="col" className='table_data'>Expiration Date</th>
                                     <th scope="col" className='table_data'>Activation Date</th>
                                     <th scope="col" className='table_data'>Availability Date</th>
-                                    {/* <th scope="col" className='table_data'>Status</th> */}
+                                    <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {user?.role == "brand" && <th scope="col" className='table_data'>Action</th>}
 
@@ -147,12 +155,12 @@ const Html = ({
                                         <td className='table_dats'>{datepipeModel.date(itm.expiration_date)}</td>
                                         <td className='table_dats'>{datepipeModel.date(itm.activation_date)}</td>
                                         <td className='table_dats'>{datepipeModel.date(itm.availability_date)}</td>
-                                        {/* <td className='table_dats'>   <div className={`user_hours`}>
-                    <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
-                    >
-                        {itm.status}
-                    </span>
-                </div></td> */}
+                                        <td className='table_dats'>   <div className={`user_hours`}>
+                                            <span className={itm?.status == "accepted" ? 'contract' : itm?.status == "pending" ? 'pending_status' : 'inactive'}
+                                            >
+                                                {itm.status}
+                                            </span>
+                                        </div></td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                                         {/* dropdown */}
@@ -187,22 +195,33 @@ const Html = ({
 
 
 
-                <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                    <span>Show {data?.length} from {total} Users</span>
-                    <ReactPaginate
-                        breakLabel="..."
-                        nextLabel="Next >"
-                        initialPage={filters?.page}
-                        onPageChange={pageChange}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={1}
-                        pageCount={Math.ceil(total / filters?.count)}
-                        previousLabel="< Previous"
-                        renderOnZeroPageCount={null}
-                        pageClassName={"pagination-item"}
-                        activeClassName={"pagination-item-active"}
-                    />
-                </div>
+                <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                                    <span>Show <select
+                                        className="form-control"
+                                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                        value={filters.count}
+                                    >
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                        <option value={150}>150</option>
+                                        <option value={200}>200</option>
+                                    </select> from {total} Banners</span>
+                                    <ReactPaginate
+                                        breakLabel="..."
+                                        nextLabel="Next >"
+                                        initialPage={filters?.page}
+                                        onPageChange={pageChange}
+                                        pageRangeDisplayed={2}
+                                        marginPagesDisplayed={1}
+                                        pageCount={Math.ceil(total / filters?.count)}
+                                        // pageCount={2}
+                                        previousLabel="< Previous"
+                                        renderOnZeroPageCount={null}
+                                        pageClassName={"pagination-item"}
+                                        activeClassName={"pagination-item-active"}
+                                    />
+                                </div>
 
                 {loaging ? <div className="text-center py-4">
                     <img src="/assets/img/loader.gif" className="pageLoader" />

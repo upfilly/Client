@@ -7,23 +7,26 @@ import Swal from 'sweetalert2';
 import Html from './Html';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const AffiliateTeam = () => {
 
     const user = crendentialModel.getUser()
     const [filters, setFilter] = useState({
-    brand_id:user?.addedBy ,page: 0, role:'', count: 10, search: '', isDeleted: false,status:''})
+    brand_id:user?.addedBy || user?.id ,page: 0, role:'', count: 10, search: '', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
     const history=useRouter()
-    
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
+
+    console.log(user,"klklklklkl")
 
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters})
-            getData({ page: 1 })
+            setFilter({ ...filters, ...params})
+            getData({ page: 1,...params })
         }
     }, [])
 
@@ -142,7 +145,16 @@ const AffiliateTeam = () => {
     }
 
     const view = (id) => {
-        history.push("/users/detail/" + id)
+        const filterParams = {
+            ...filters,
+            brand_id:user?.addedBy || user?.id,
+            page:1,
+          };
+        
+          const queryString = new URLSearchParams(filterParams).toString();
+        
+          history.push(`/users/detail/${id}?${queryString}`);
+        // history.push("/users/detail/" + id)
     }
 
     const edit = (id) => {
@@ -167,6 +179,7 @@ const AffiliateTeam = () => {
         }
         setFilter({ ...filters, ...filter })
         getData({ ...filter })
+        history.push('/users')
         // dispatch(search_success(''))
     }
 
@@ -207,6 +220,7 @@ const AffiliateTeam = () => {
             user={user}
             history={history}
             ChangeRole={ChangeRole}
+            getData={getData}
         />
     </>;
 };

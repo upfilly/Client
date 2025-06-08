@@ -22,7 +22,10 @@ const Detail = (p) => {
     };
 
     const back = () => {
-        history.back()
+        const searchParams = window.location.search;
+                
+        window.location.href = '/invitations' + searchParams;
+        // history.back()
     }
 
     useEffect(() => {

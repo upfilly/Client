@@ -7,7 +7,7 @@ import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
 
 const Users = () => {
@@ -25,12 +25,22 @@ const Users = () => {
 
     const currentEndDate = endDate ? new Date(endDate) : null;
     const formattedEndDate = endDate ? `${currentEndDate.getFullYear()}-${(currentEndDate.getMonth() + 1).toString().padStart(2, '0')}-${currentEndDate.getDate().toString().padStart(2, '0')}` : null
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
 
     useEffect(() => {
         if (user) {
-            getData({ role, page: 1 })
+            // setDateRange([formattedStartDate,formattedEndDate])
+            setFilter({ ...filters, ...params })
+            getData({ role, page: 1, ...params })
         }
-    }, [role,dateRange])
+    }, [role, dateRange])
+
+    useEffect(() => {
+        if (params?.start_date) {
+            setDateRange([params?.start_date, params?.end_date])
+        }
+    }, [])
 
     useEffect(() => {
         if (startDate && endDate) {
@@ -131,7 +141,16 @@ const Users = () => {
     }
 
     const view = (id) => {
-        history.push("/Offers/detail/" + id)
+        const filterParams = {
+            ...filters,
+            // start_date: formattedStartDate, end_date: formattedEndDate,
+            page: 1,
+        };
+
+        const queryString = new URLSearchParams(filterParams).toString();
+
+        history.push(`/Offers/detail/${id}?${queryString}`);
+        // history.push("/Offers/detail/" + id)
     }
 
     const edit = (id) => {
@@ -206,6 +225,7 @@ const Users = () => {
         startDate={startDate}
         endDate={endDate}
         user={user}
+        getData={getData}
     />
     </>;
 };
