@@ -22,6 +22,7 @@ const Html = ({
     setFilter,
     Tracklogin,
     user,
+    getData
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)

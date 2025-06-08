@@ -272,6 +272,7 @@ const Requests = () => {
     sendProposal={sendProposal}
     Tracklogin={Tracklogin}
     user={user}
+    getData={getData}
   />
   </>;
 };
