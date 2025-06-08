@@ -227,7 +227,7 @@ export default function CampaignReport() {
         </div>
 
         <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-          <span>Show {data?.length} from {total} Users</span>
+          <span>Show {data?.length} from {total} reports</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"

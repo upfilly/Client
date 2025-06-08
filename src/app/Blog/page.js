@@ -280,7 +280,7 @@ export default function Blog() {
             )}
 
             <div className={`paginationWrapper ${!loading && total > filters?.count ? '' : 'd-none'}`}>
-              <span>Show {filters?.count} from {total} Users</span>
+              <span>Show {filters?.count} from {total} Blogs</span>
               <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next >"
