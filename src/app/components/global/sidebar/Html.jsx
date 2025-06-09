@@ -111,13 +111,13 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" title="Affiliate Request">
+              {/* {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" title="Affiliate Request">
 
                 <div className="d-flex align-items-center icns_center">
                   <i class="material-icons svg_iconbx">payments</i >
                   <span className="side_head">Affiliate Request</span>
                 </div>
-              </ListItemLink>}
+              </ListItemLink>} */}
               {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requests" title="Sent Offers">
                 <i className="material-icons  svg_iconbx" title="campaignManagement">business</i>
                 <span className="side_head">Sent Offers</span>
@@ -254,6 +254,11 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             {<ListItemLink to="/notifications" title="Notification">
               <i class="material-icons  svg_iconbx">notifications_active</i>
               <span className="side_head">Notification</span>
+            </ListItemLink>}
+
+             {<ListItemLink to="/chat" title="Notification">
+              <i class="material-icons  svg_iconbx">question_answer</i>
+              <span className="side_head">Chats</span>
             </ListItemLink>}
 
             {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >

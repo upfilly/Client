@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import PageContainer from "../components/main/PageContainer";
-import Header from "../components/global/header";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 import ApiClient from "../../methods/api/apiClient";
@@ -18,6 +16,7 @@ import "react-single-image-viewer/dist/index.css";
 import loader from "@/methods/loader";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import Layout from "../components/global/layout";
 
 export default function Chat() {
   const user = crendentialModel.getUser();
@@ -591,9 +590,8 @@ export default function Chat() {
 
   return (
     <>
-      <Header settingData={settingData} />
-      <PageContainer title="Chat" description="Chat">
-
+      {/* <Header settingData={settingData} /> */}
+      <Layout title="Chat" description="Chat" name={"Chats"}>
         <div className="container chat-bg-main">
           <div className="chat-bg">
             <div className="row">
@@ -1126,7 +1124,7 @@ export default function Chat() {
 
 
 
-      </PageContainer>
+      </Layout>
     </>
   );
 }

@@ -17,7 +17,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     dashboard:['dashboard'],
     partnermanagement: ['campaignManagement','invitations'],
     marketplace:['requests','Offers'],
-    communication: ['EmailMessages','notifications'],
+    communication: ['EmailMessages','notifications','chat'],
     accountSettings:['addAccount','users'],
     commissionspayments:['payments','salesTracking'],
     performancereports:['reports','performance','reports'],
