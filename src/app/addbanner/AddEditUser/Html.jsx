@@ -11,6 +11,36 @@ import ReactDatePicker from "react-datepicker";
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
+
+    function isValidUrl(url) {
+        if (!url) return false;
+
+        if (!/^https?:\/\//i.test(url)) {
+            return false;
+        }
+
+        try {
+            const urlObj = new URL(url);
+
+            if (!['http:', 'https:'].includes(urlObj.protocol)) {
+                return false;
+            }
+
+            if (!urlObj.hostname ||
+                !/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname)) {
+                return false;
+            }
+
+            if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
+                return false;
+            }
+
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
     return <>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Banner"} filters={undefined}>
             <form onSubmit={handleSubmit}>
@@ -40,7 +70,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         <div className="select_drop ">
                                             <label>Select Access Type<span className='star'>*</span></label>
                                             <div className="select_row">
-                                                <SelectDropdown                                                     theme='search'
+                                                <SelectDropdown theme='search'
                                                     id="statusDropdown"
                                                     displayValue="name"
                                                     placeholder="Select type"
@@ -59,7 +89,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         <div className="select_drop ">
                                             <label>Select Affiliate<span className='star'>*</span></label>
                                             <div className="select_row">
-                                                <SelectDropdown                                                     theme='search'
+                                                <SelectDropdown theme='search'
                                                     id="statusDropdown"
                                                     displayValue="name"
                                                     placeholder="Select Affiliate"
@@ -82,12 +112,19 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                             type="text"
                                             className="form-control"
                                             value={form.destination_url}
-                                            onChange={e => setform({ ...form, destination_url: e.target.value })}
+                                            onChange={e => {
+                                                const url = e.target.value;
+                                                setform({ ...form, destination_url: url });
+                                            }}
+                                            style={!isValidUrl(form.destination_url) && form.destination_url ? { borderColor: 'red' } : {}}
                                         />
                                         {/* {form?.affiliate_id && <span className="input-group-text  ">? fp_sid={form?.affiliate_id}</span>} */}
                                     </div>
                                     {submitted && !form?.destination_url && (
                                         <div className="invalid-feedback d-block">Destination url is Required</div>
+                                    )}
+                                    {!isValidUrl(form.destination_url) && form.destination_url && (
+                                        <div className="text-danger">Please enter a valid URL (including http:// or https://)</div>
                                     )}
                                 </div>
 
@@ -97,7 +134,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         <div className="select_drop ">
                                             <label>Category<span className='star'>*</span></label>
                                             <div className="select_row">
-                                                <SelectDropdown                                                     theme='search'
+                                                <SelectDropdown theme='search'
                                                     id="statusDropdown"
                                                     displayValue="name"
                                                     placeholder="Select category"
@@ -134,7 +171,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         dateFormat="MM/dd/yyyy h:mm aa"
                                         showTimeInput
                                     />
-                                  
+
                                     {submitted && !form?.activation_date ? <div className="invalid-feedback d-block">Activation Date Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
@@ -151,7 +188,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         dateFormat="MM/dd/yyyy h:mm aa"
                                         showTimeInput
                                     />
-                                
+
                                     {submitted && !form?.availability_date ? <div className="invalid-feedback d-block">Availability Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3">
@@ -168,7 +205,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                         dateFormat="MM/dd/yyyy h:mm aa"
                                         showTimeInput
                                     />
-                          
+
                                     {submitted && !form?.expiration_date ? <div className="invalid-feedback d-block">Expiration Date is Required</div> : <></>}
                                 </div>
                                 <div className="col-md-6 mb-3 ">
@@ -251,7 +288,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
 
 
                             <div className="text-right edit-btns">
-                                <button type="submit" className="btn btn-primary">Save</button>
+                                <button type="submit" disabled={!isValidUrl(form.destination_url)} className="btn btn-primary">Save</button>
                             </div>
                         </div>
                     </div>

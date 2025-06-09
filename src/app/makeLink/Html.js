@@ -61,9 +61,9 @@ const Html = () => {
     };
 
     const getData = (p = {}) => {
-        let filter = {brand_id:user?.id}
+        let filter = { brand_id: user?.id }
         let url = 'getallaffiliatelisting'
-        ApiClient.get(url,filter).then(res => {
+        ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 const data = res.data
                 // const filteredData = data.filter(item => item !== null);
@@ -103,13 +103,42 @@ const Html = () => {
             if (res.success) {
                 const data = res?.data?.data?.map((data) => {
                     return ({
-                      id: data?.id || data?._id,
-                      name: data?.name
+                        id: data?.id || data?._id,
+                        name: data?.name
                     })
-                  })
+                })
                 setCampaignData(data)
             }
         })
+    }
+
+    function isValidUrl(url) {
+        if (!url) return false;
+
+        if (!/^https?:\/\//i.test(url)) {
+            return false;
+        }
+
+        try {
+            const urlObj = new URL(url);
+
+            if (!['http:', 'https:'].includes(urlObj.protocol)) {
+                return false;
+            }
+
+            if (!urlObj.hostname ||
+                !/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname)) {
+                return false;
+            }
+
+            if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
+                return false;
+            }
+
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     const copyText = () => {
@@ -142,7 +171,7 @@ const Html = () => {
         if (urlData || url) {
             const data = await axios.post('https://api.t.ly/api/v1/link/shorten', { long_url: urlData || url }, {
                 headers: {
-                    'Authorization':'Bearer KAxgeQzaEgrANTAdKImU25lQVbGZ3rkJTZ0vlN35FXqksFm65E3suA9opwee',
+                    'Authorization': 'Bearer KAxgeQzaEgrANTAdKImU25lQVbGZ3rkJTZ0vlN35FXqksFm65E3suA9opwee',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -168,8 +197,8 @@ const Html = () => {
         ApiClient.get('get-affilaite-link').then((res) => {
             if (res?.success) {
                 console.log(res?.data, "res?.datares?.datares?.data")
-                setUrl(res?.data?.link.replace('/?','/'))
-                generateShortLink(res?.data?.link.replace('/?','/'))
+                setUrl(res?.data?.link.replace('/?', '/'))
+                generateShortLink(res?.data?.link.replace('/?', '/'))
             }
             loader(false);
         });
@@ -177,7 +206,7 @@ const Html = () => {
 
     const handleSubmit = () => {
         setSubmited(true)
-        if(!DestinationUrl){
+        if (!DestinationUrl) {
             return
         }
         // if (hasBlankInput) {
@@ -194,8 +223,18 @@ const Html = () => {
         const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
 
         const domainParts = rawUrl.split('.');
-        const formattedDestinationUrl = domainParts.slice(0, -1).join('.')
-        const domainExtension = domainParts[domainParts.length - 1];
+        let subdomain = '';
+        let domainName = '';
+        let domainExtension = '';
+
+        if (domainParts.length >= 3) {
+            subdomain = domainParts[0];
+            domainName = domainParts[1];
+            domainExtension = domainParts.slice(2).join('.');
+        } else if (domainParts.length === 2) {
+            domainName = domainParts[0]; // "example"
+            domainExtension = domainParts[1]; // "com"
+        }
 
         // const urlParams = new URLSearchParams({
         //     fp_sid: selectedBrand,
@@ -216,7 +255,8 @@ const Html = () => {
 
         if (DestinationUrl) {
             // const destinationUrlWithParams = `${formattedDestinationUrl}?${urlParams}`;
-            const destinationUrlWithParams = `${formattedDestinationUrl}`;
+            const destinationUrlWithParams = `${domainName}`;
+            finalUrl.searchParams.set('hUrl', subdomain);
             finalUrl.searchParams.set('url', destinationUrlWithParams);
             finalUrl.searchParams.set('ext', domainExtension);
         }
@@ -229,8 +269,8 @@ const Html = () => {
             if (res?.success) {
                 toast.success(res?.message)
                 setSubmited(false)
-                setUrl(res?.data.replace('/?','/'));
-                generateShortLink(res?.data.replace('/?','/'))
+                setUrl(res?.data.replace('/?', '/'));
+                generateShortLink(res?.data.replace('/?', '/'))
                 if (!SelectDropdown) {
                     setSelectDropdown(!SelectDropdown)
                 }
@@ -286,19 +326,26 @@ const Html = () => {
                                             type="text"
                                             className="form-control"
                                             value={DestinationUrl}
-                                            onChange={(e) => setDestinationUrl(e.target.value)}
+                                            onChange={e => {
+                                                const url = e.target.value;
+                                                setDestinationUrl(url);
+                                            }}
+                                            style={!isValidUrl(DestinationUrl) && DestinationUrl ? { borderColor: 'red' } : {}}
                                         />
                                     </div>
                                     {(!DestinationUrl && isSubmited) && <div className="invalid-feedback d-block">Destination url is Required</div>}
+                                    {!isValidUrl(DestinationUrl) && DestinationUrl && (
+                                        <div className="text-danger">Please enter a valid URL (including http:// or https://)</div>
+                                    )}
                                 </div>
 
                                 <div className='col-12 col-md-12 mb-3'>
                                     {/* Show/Hide Custom Parameters Checkbox */}
                                     <div className="form-check">
-                                        <input 
-                                            className="form-check-input" 
-                                            type="checkbox" 
-                                            id="showCustomParameters" 
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="showCustomParameters"
                                             checked={showCustomParameters}
                                             onChange={toggleCustomParameters}
                                         />

@@ -88,7 +88,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 {form?.couponType === 'Custom' && (
                                     <>
                                         <div className="col-md-6 mb-3">
-                                            <label>Coupon Commission Type<span className="star">*</span></label>
+                                            <label>Custom Commission Type<span className="star">*</span></label>
                                             <SelectDropdown theme='search'
                                                 id="couponCommissionTypeDropdown"
                                                 displayValue="name"
@@ -172,7 +172,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                 </div> */}
 
                                 {form?.visibility == 'Exclusive to specific affiliate' && <div className="col-md-6 mb-3">
-                                    <label>Media<span className="star">*</span></label>
+                                    <label>Affiliates<span className="star">*</span></label>
                                     <div className="select_row media_row">
                                         <MultiSelectValue
                                             id="statusDropdown"
