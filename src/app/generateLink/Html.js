@@ -179,10 +179,10 @@ const Html = () => {
 
     const handleSubmit = () => {
         setSubmited(true)
-        if(!DestinationUrl){
+        if(!DestinationUrl || !selectedBrand){
             return
         }
-        const base_url = 'https://upfilly.com/';
+        const base_url = 'https://api.upfilly.com/';
         // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
         // const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
         // const formattedDestinationUrl = DestinationUrl
@@ -219,7 +219,7 @@ const Html = () => {
         let finalUrl = base_url;
         
         if (user?.id) {
-            finalUrl += `?affiliate_id=${user?.id}`;
+            finalUrl += `affiliate_id=${user?.id}`;
         }
         
         if (selectedBrand) {
@@ -230,7 +230,7 @@ const Html = () => {
             // const finalDestinationUrl = formattedDestinationUrl + (urlParams ? `?${urlParams}` : '');
             const finalDestinationUrl = domainName
             // finalUrl += `&url=${encodeURIComponent(finalDestinationUrl)}`;
-            finalUrl += `hUrl=${subdomain}&url=${finalDestinationUrl}&ext=${domainExtension}`;
+            finalUrl += `&hUrl=${subdomain}&url=${finalDestinationUrl}&ext=${domainExtension}`;
         }
         
         if (!finalUrl.includes('?')) {
@@ -278,6 +278,7 @@ const Html = () => {
                                                 <option key={brand.id} value={brand.id} >{brand.name}</option>
                                             ))}
                                         </select>
+    {(!selectedBrand && isSubmited) && <div className="invalid-feedback d-block">Please select a merchant</div>}
                                     </div>
                                 </div>
                                 <div className="col-md-12 mb-3 custom-input">
@@ -370,7 +371,14 @@ const Html = () => {
                             </div>
 
                             <div className='text-end'>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Generate URL</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={handleSubmit}
+                                    disabled={!isValidUrl(DestinationUrl)}
+                                >
+                                    Generate URL
+                                </button>
                             </div>
 
                             {permission('generate_link_get') && <div className='mb-3'>
@@ -382,8 +390,8 @@ const Html = () => {
                                             <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                         </div>
                                     </div>
-                                    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
-                                    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+                                    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}`}</p>}
+                                    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                                 </div>
                             </div>}
                             {copied && <div className="">Copied!</div>}
