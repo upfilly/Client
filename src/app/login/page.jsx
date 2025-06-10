@@ -186,9 +186,9 @@ export default function Login() {
   return (
     <PageContainer title='Login Page' description='Login Page' settingData={settingData}>
       <div className='card_parent'>
-        <div className="container ">
+        <div className="container h-100">
 
-          <div className="form-row align-items-center mx-auto">
+          <div className="form-row align-items-center mx-auto h-100">
             {/* <div className="col-md-4 px-0">
     <div className='banner_img'>
       <div className='logo_img'>
@@ -200,7 +200,7 @@ export default function Login() {
     </div>
   </div> */}
             <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-              <div className='right_side'>
+              <div className='right_side py-3'>
 
                 <form
                   className="centerLogin"
@@ -243,7 +243,7 @@ export default function Login() {
                     <div className='d-flex flex-wrap  justify-content-between  mt-2'>
                       <label className='d-flex align-items-center mb-0'><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2" /><span className='forbx '>Keep me logged</span></label>
 
-                      <Link href="/forgotpassword" className="text-primary  forbx text-black">Forgot Password</Link>
+                      <Link href="/forgotpassword" className="forbx text-black">Forgot Password ?</Link>
                     </div>
 
 

@@ -308,7 +308,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
             </> : <></>} */}
               {permission("commission_add") ? <>
                 <ListItemLink to="/commission/manualCommission/view" title="Commissions">
-                  <div className="d-flex align-items-center icns_center">
+                  <div className="d-flex align-items-center icns_center gap-0">
                     <i class="material-icons svg_iconbx">monetization_on</i >
                     <span className="side_head">Manual Commission</span>
                   </div>
@@ -351,7 +351,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
               {(user?.role == "brand" || addedUser?.role == "brand") ? <>
                 <ListItemLink to="/CreativeAsset" title="Data Feeds">
-                  <div className="d-flex align-items-center icns_center">
+                  <div className="d-flex align-items-center icns_center gap-0">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
                     <span className="side_head">Data Feeds</span>
                   </div>
@@ -360,7 +360,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
               {urlAllow('DataFeeds') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
                 <ListItemLink to="/DataFeeds" title="Data Feeds">
-                  <div className="d-flex align-items-center icns_center">
+                  <div className="d-flex align-items-center icns_center gap-0">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
                     <span className="side_head">Data Feeds</span>
                   </div>
@@ -381,7 +381,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </> : <></>} */}
               {urlAllow('CreativeEmails') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
                 <ListItemLink to="/CreativeEmails" title="Email Messages">
-                  <div className="d-flex align-items-center  icns_center">
+                  <div className="d-flex align-items-center  icns_center gap-0">
                     <i class="material-icons svg_iconbx">local_library</i>
                     <span className="side_head"> Emails</span>
                   </div>
@@ -389,7 +389,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </> : <></>}
               {(user?.role == "brand" || addedUser?.role == "brand") ? <>
                 <ListItemLink to="/CreativeEmails" title="Creative Email">
-                  <div className="d-flex align-items-center  icns_center">
+                  <div className="d-flex align-items-center  icns_center gap-0">
                     <i class="material-icons svg_iconbx">local_library</i>
                     <span className="side_head">Email</span>
                   </div>
