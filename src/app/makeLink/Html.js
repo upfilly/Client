@@ -32,6 +32,11 @@ const Html = () => {
     const [CampaignData, setCampaignData] = useState([])
     const [SelectedCampaign, setSelectedCampaign] = useState('')
     const [shrtlnk, setshrtlnk] = useState('')
+    const [errors, setErrors] = useState({
+        selectedBrand: '',
+        SelectedCampaign: '',
+        DestinationUrl: ''
+    });
 
     const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -84,10 +89,12 @@ const Html = () => {
 
     const handleBrandChange = event => {
         setSelectedBrand(event.target.value);
+        setErrors(prev => ({ ...prev, selectedBrand: '' }));
     };
 
     const handleCampaignChange = event => {
-        setSelectedCampaign(event.target.value)
+        setSelectedCampaign(event.target.value);
+        setErrors(prev => ({ ...prev, SelectedCampaign: '' }));
     }
 
     useEffect(() => {
@@ -153,7 +160,6 @@ const Html = () => {
         });
     };
 
-
     const copyShortText = () => {
         const textToCopy = document.getElementById("textShortToCopy").innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -165,7 +171,6 @@ const Html = () => {
             // console.error('Failed to copy: ', err);
         });
     };
-
 
     const generateShortLink = async (urlData) => {
         if (urlData || url) {
@@ -204,22 +209,27 @@ const Html = () => {
         });
     }, []);
 
+    const validateForm = () => {
+        const newErrors = {
+            selectedBrand: !selectedBrand ? 'Please select an affiliate' : '',
+            SelectedCampaign: !SelectedCampaign ? 'Please select a campaign' : '',
+            DestinationUrl: !DestinationUrl ? 'Destination URL is required' : 
+                            !isValidUrl(DestinationUrl) ? 'Please enter a valid URL (including http:// or https://)' : ''
+        };
+        
+        setErrors(newErrors);
+        return !Object.values(newErrors).some(error => error !== '');
+    };
+
     const handleSubmit = () => {
-        setSubmited(true)
-        if (!DestinationUrl) {
-            return
+        setSubmited(true);
+        
+        if (!validateForm()) {
+            return;
         }
-        // if (hasBlankInput) {
-        //     toast.error("Please fill in all required fields.");
-        //     return;
-        // }
 
         const base_url = 'https://api.upfilly.com/';
 
-        // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
-        // const formattedDestinationUrl = DestinationUrl
-        //     .replace(/^https?:\/\//i, '') 
-        //     .replace(/\.com$/i, '');
         const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
 
         const domainParts = rawUrl.split('.');
@@ -232,15 +242,10 @@ const Html = () => {
             domainName = domainParts[1];
             domainExtension = domainParts.slice(2).join('.');
         } else if (domainParts.length === 2) {
-            domainName = domainParts[0]; // "example"
-            domainExtension = domainParts[1]; // "com"
+            domainName = domainParts[0];
+            domainExtension = domainParts[1];
         }
 
-        // const urlParams = new URLSearchParams({
-        //     fp_sid: selectedBrand,
-        //     affiliate: selectedBrand,
-        //     brand: user?.id
-        // }).toString();
         const urlParams = `fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`;
 
         let finalUrl = new URL(base_url);
@@ -254,7 +259,6 @@ const Html = () => {
         }
 
         if (DestinationUrl) {
-            // const destinationUrlWithParams = `${formattedDestinationUrl}?${urlParams}`;
             const destinationUrlWithParams = `${domainName}`;
             finalUrl.searchParams.set('hUrl', subdomain);
             finalUrl.searchParams.set('url', destinationUrlWithParams);
@@ -263,8 +267,6 @@ const Html = () => {
 
         const finalUrlString = finalUrl.toString();
 
-
-        // loader(true);
         ApiClient.post('get-link', { "base_url": finalUrlString, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
@@ -274,12 +276,9 @@ const Html = () => {
                 if (!SelectDropdown) {
                     setSelectDropdown(!SelectDropdown)
                 }
-                // setSelectedBrand('')
             }
-            // loader(false);
         });
     };
-
 
     return (
         <>
@@ -297,46 +296,55 @@ const Html = () => {
                             <div className='row'>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3'>
-                                        <label className='mb-2' >Select Affiliate</label>
-                                        <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                        <label className='mb-2' >Select Affiliate<span className="star">*</span></label>
+                                        <select 
+                                            className={`form-select mb-2 ${errors.selectedBrand && 'is-invalid'}`} 
+                                            id="brandSelect" 
+                                            value={selectedBrand} 
+                                            onChange={handleBrandChange}
+                                        >
                                             <option value="">Select Affiliate</option>
                                             {brandData.map(brand => (
                                                 <option key={brand.id} value={brand.id} >{brand.name}</option>
                                             ))}
                                         </select>
+                                        {errors.selectedBrand && <div className="invalid-feedback d-block">{errors.selectedBrand}</div>}
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
-                                        <label className='mb-2' >Select Campaign</label>
-                                        <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
+                                        <label className='mb-2' >Select Campaign<span className="star">*</span></label>
+                                        <select 
+                                            className={`form-select mb-2 ${errors.SelectedCampaign && 'is-invalid'}`} 
+                                            id="brandSelect" 
+                                            value={SelectedCampaign} 
+                                            onChange={handleCampaignChange}
+                                        >
                                             <option value="">Select Campaign</option>
                                             {CampaignData.map(item => (
                                                 <option key={item.id || item._id} value={item.id || item._id} >{item.name}</option>
                                             ))}
                                         </select>
+                                        {errors.SelectedCampaign && <div className="invalid-feedback d-block">{errors.SelectedCampaign}</div>}
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>
                                         Destination Url<span className="star">*</span>
                                     </label>
-                                    <div className="input-group  border_description">
+                                    <div className="input-group border_description">
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={`form-control ${errors.DestinationUrl && 'is-invalid'}`}
                                             value={DestinationUrl}
                                             onChange={e => {
                                                 const url = e.target.value;
                                                 setDestinationUrl(url);
+                                                setErrors(prev => ({ ...prev, DestinationUrl: '' }));
                                             }}
-                                            style={!isValidUrl(DestinationUrl) && DestinationUrl ? { borderColor: 'red' } : {}}
                                         />
                                     </div>
-                                    {(!DestinationUrl && isSubmited) && <div className="invalid-feedback d-block">Destination url is Required</div>}
-                                    {!isValidUrl(DestinationUrl) && DestinationUrl && (
-                                        <div className="text-danger">Please enter a valid URL (including http:// or https://)</div>
-                                    )}
+                                    {errors.DestinationUrl && <div className="invalid-feedback d-block">{errors.DestinationUrl}</div>}
                                 </div>
 
                                 <div className='col-12 col-md-12 mb-3'>
@@ -357,7 +365,7 @@ const Html = () => {
 
                                 {showCustomParameters && (
                                     <div className='col-12 col-md-12'>
-                                        <div class="select_parabx mb-3" >
+                                        <div className="select_parabx mb-3" >
                                             <div className='mb-3' >
                                                 <label className='mb-2'>Select Custom Parameters</label>
                                                 <MultiSelectValue
@@ -400,7 +408,7 @@ const Html = () => {
                             </div>
 
                             <div className='text-end '>
-                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Genrate URL</button>
+                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Generate URL</button>
                             </div>
 
                             <h6 className="link_default m-0"> Your Link :</h6>
@@ -432,10 +440,10 @@ const Html = () => {
                 </div>
             </Layout>
             {showNewKeyForm && (
-                <div class="modal d-block">
-                    <div class="modal-dialog  modal-dialog-centered dateModal" role="document">
-                        <div class="modal-content ">
-                            <div class="modal-body">
+                <div className="modal d-block">
+                    <div className="modal-dialog  modal-dialog-centered dateModal" role="document">
+                        <div className="modal-content ">
+                            <div className="modal-body">
                                 <div className='d-flex justify-content-between'>
                                     <h5 className='mb-3'>Add New Key</h5>
                                     <i className='fa fa-times' onClick={() => setShowNewKeyForm(false)}></i>
@@ -450,7 +458,7 @@ const Html = () => {
                                     <input type="text" className='form-control' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />                            </div>
 
                                 <div className='text-end'>
-                                    <button type="button" class="btn btn-primary" onClick={handleAddNew} >Add Key</button>
+                                    <button type="button" className="btn btn-primary" onClick={handleAddNew} >Add Key</button>
                                 </div>
                             </div>
 

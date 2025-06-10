@@ -62,20 +62,20 @@ const handleSubmit = () => {
     ApiClient.post('emailmessage/send', payload).then((res) => {
         if (res?.success) {
             toast.success(res?.message)
-            setTimeout(()=>{
-                location.reload()
-            },2000)
+            // setTimeout(()=>{
+            //     location.reload()
+            // },2000)
         }
         // loader(false);
     });
 };
 
     const allGetAffiliate = (p = {}) => {
-        let url = 'getallaffiliatelisting'
+        let url = 'affiliate/count'
         ApiClient.get(url).then(res => {
             if (res.success) {
                 const data = res.data
-                const filteredData = data.filter(item => item !== null);
+                const filteredData = data
                 setAllAffiliate(filteredData)
             }
         })

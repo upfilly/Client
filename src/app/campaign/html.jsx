@@ -3,7 +3,6 @@ import Layout from '@/app/components/global/layout';
 import ReactPaginate from 'react-paginate';
 import './style.scss';
 import datepipeModel from '@/models/datepipemodel';
-import rolesModel from "@/models/role.model";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
 import methodModel from '../../methods/methods';
@@ -71,7 +70,7 @@ const Html = ({
                             className={`tab-button ${activeTab === 'active' ? 'active' : ''}`}
                             onClick={() => setActiveTab('active')}
                         >
-                            Active Campaigns
+                            Campaigns
                             {activeTab === 'active' && (
                                 <span className="badge bg-primary ms-2">
                                     {total}
@@ -141,6 +140,7 @@ const Html = ({
                                     <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Access Type</th>
+                                     <th scope="col" className='table_data'>Affiliates</th>
                                     <th scope="col" className='table_data'>Commission</th>
                                     <th scope="col" className='table_data'>Currency</th>
                                     <th scope="col" className='table_data'>Status</th>
@@ -170,6 +170,7 @@ const Html = ({
                                             </div>
                                         </td>
                                         <td className='table_dats'>{itm?.access_type}</td>
+                                        <td className='table_dats'>{itm?.affiliateCount}</td>
                                         <td className='table_dats'>{itm?.commission || "--"} {itm?.commission_type == "percentage" ? "%" : "$"}</td>
                                         <td className='table_dats'>{itm?.currencies || "--"}</td>
                                         <td className='table_dats'>
