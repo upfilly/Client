@@ -40,16 +40,7 @@ a.text-primary.ml-auto.text-black {
     font-size: 14px;
     opacity: 0.5;
 }
- .btn.btn-outline-white {
-    border: 1px solid #c3c3c3;
-    border-radius: 50px;
-    width: 100%;
-    margin-bottom: 10px;
-    position: relative;
-    padding: 8px 12px;
-    font-weight: 500;
-    font-size: 14px;
-}
+
 svg.google_right {
     position: absolute;
     left: 11px;
@@ -113,12 +104,6 @@ img.logo {
     padding: 4rem 2rem;
 }
 
-.right_side {
-    // height: 100vh;
-    // display: flex;
-    position: relative;
-    // justify-content: center;
-}
 p.accopunt {
     text-align: right;
     position: absolute;
@@ -144,7 +129,7 @@ a.sign_up {
 }
 
 .bginput { 
-    border-radius: 50px !important;
+    border-radius: 6px !important;
     border: 1px solid #E8E8E8 !important;
     height: 38px !important;
     font-size: 14px !important;
@@ -251,11 +236,7 @@ a.google_heading {
    
 }
 
-@media only screen and (min-width:320px) and (max-width:991px)  {
-    .right_side {
-        padding: 32px 0px;
-    }
-}
+
 .centerLogin {
     position: relative;
 }

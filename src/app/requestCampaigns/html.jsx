@@ -118,7 +118,7 @@ const Html = ({
                                                             <button onClick={() => statusChange("accepted", itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                                            <button onClick={() => statusChange("rejected", itm?.affiliate_id, itm?.id || itm?._id)} className="btn btn-danger bg-red mr-2 btn_actions">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div>

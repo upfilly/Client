@@ -297,17 +297,17 @@ export default function Login() {
   return (
     <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
       <div className='card_parent bg-black'>
-        <div className="container">
-          <div className="row align-items-center ">
+        <div className="container h-100">
+          <div className="row align-items-center h-100">
             <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-              <div className='right_side'>
+              <div className='right_side py-3'>
                 <form
                   className="centerLogin"
                   onSubmit={hendleSubmit}
                 >
                   <Link href="/"><i className="fa fa-angle-double-left back_button" aria-hidden="true"></i></Link>
                   <div className="text-center mb-2">
-                    <h3 className="text-center lgtext">Register Now </h3>
+                    <h3 className="text-center lgtext">Register Now</h3>
                   </div>
                   <div className="form-row">
                     <div className="col-12 col-sm-12 col col-md-6 ">
@@ -360,7 +360,7 @@ export default function Login() {
                     {submitted && errors.email && <p className='text-danger small mt-1'>{errors.email}</p>}
                   </div>
                   <div className="mb-3">
-                    <div className="inputWrapper">
+                    <div className="inputWrapper password-invalid">
                       <input
                         type={eyes.password ? 'text' : 'password'}
                         className={`form-control mb-0 bginput ${submitted && errors.password ? 'is-invalid' : ''}`}
@@ -376,7 +376,7 @@ export default function Login() {
                     {submitted && errors.password && <p className='text-danger small mt-1'>{errors.password}</p>}
                   </div>
                   <div className="mb-3">
-                    <div className="inputWrapper">
+                    <div className="inputWrapper password-invalid">
                       <input
                         type={eyes.confirmPassword ? 'text' : 'password'}
                         className={`form-control mb-0 bginput ${submitted && errors.confirmPassword ? 'is-invalid' : ''}`}

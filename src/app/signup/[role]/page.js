@@ -177,11 +177,11 @@ export default function Login() {
     
     <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
       <div className='card_parent bg-black'>
-      <div className="container">
+      <div className="container h-100">
         {/* <a className="p-3 d-block text-white" href="/">Back</a> */}
-        <div className="row align-items-center ">
+        <div className="row align-items-center h-100">
           <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-            <div className='right_side'>
+            <div className='right_side py-3'>
               <form
                 className="centerLogin"
                 onSubmit={hendleSubmit}
