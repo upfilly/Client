@@ -86,8 +86,9 @@ const Html = () => {
     // };
 
     const getData = (p = {}) => {
+        let filter = { brand_id: user?.id }
         let url = 'getallaffiliatelisting'
-        ApiClient.get(url).then(res => {
+        ApiClient.get(url,filter).then(res => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);

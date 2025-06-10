@@ -5,6 +5,7 @@ import './style.scss';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import methodModel from '../../../../methods/methods';
+import SelectDropdown from '@/app/components/common/SelectDropdown';
 
 const Html = ({
     edit,
@@ -21,7 +22,9 @@ const Html = ({
     total,
     setFilter,
     filter,
-    user
+    user,
+    affiliateData,
+    ChangeAffiliateStatus
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -40,22 +43,43 @@ const Html = ({
         }
     };
 
+    const handleCountChange = (count) => {
+        setFilter({ ...filters, count: count, page: 1 });
+        getData({ count: count, page: 1 });
+    };
+
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Manual Commission" filters={filters}>
             <div className='sidebar-left-content'>
                 <div className="d-flex justify-content-end gap-2 flex-wrap align-items-center all_flexbx">
-                    {/* <SelectDropdown                                                     theme='search'
+                    <SelectDropdown                                                     
+                        theme='search'
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="All Status"
-                        intialValue={filters.status}
+                        placeholder="All Commission type"
+                        intialValue={filters.commission_type}
                         result={e => { ChangeStatus(e.value) }}
-                        options={[
-                            { id: 'pending', name: 'Pending' },
-                            { id: 'accepted', name: 'Accepted' },
-                            { id: 'rejected', name: 'Rejected' },
-                        ]}
-                    /> */}
+                        options={[{
+                            id: "sales", name: "Sales"
+                        },
+                        {
+                            id: "lead", name: "Lead"
+                        },
+                        {
+                            id: "bonus", name: "Bonus"
+                        }]}
+                    />
+
+                     <SelectDropdown                                                     
+                        theme='search'
+                        id="statusDropdown"
+                        displayValue="name"
+                        placeholder="All Affiliate"
+                        intialValue={filters.affiliate}
+                        result={e => { ChangeAffiliateStatus(e.value) }}
+                        options={affiliateData}
+                    />
+
 
                     <article className="d-flex filterFlex phView">
                         <>
@@ -64,11 +88,11 @@ const Html = ({
                             </a>}
                         </>
 
-                        {/* {filters.status ? <>
+                        {(filters.affiliate || filters.commission_type) ? <>
                             <a className="btn btn-primary" onClick={e => reset()}>
                                 Reset
                             </a>
-                        </> : <></>} */}
+                        </> : <></>}
                     </article>
 
 
@@ -119,8 +143,18 @@ const Html = ({
                 </div>
 
 
-                <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                    <span>Show {data?.length} from {total} Commissions</span>
+               <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                    <span>Show <select
+                        className="form-control"
+                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                        value={filters.count}
+                    >
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                        <option value={150}>150</option>
+                        <option value={200}>200</option>
+                    </select> from {total} Campaigns</span>
                     <ReactPaginate
                         breakLabel="..."
                         nextLabel="Next >"
