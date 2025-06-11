@@ -188,7 +188,7 @@ const Profile = () => {
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-      <div className="pprofile1  edit-profile-page my-5">
+      <div className="pprofile1  edit-profile-page">
         <div className='container ' >
           <div className='row'>
             <div className="col-12 col-sm-12 col-md-12  col-lg-12 px-0">

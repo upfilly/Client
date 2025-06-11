@@ -176,9 +176,20 @@ const Html = ({ settingData, Logout }) => {
           <img src="/assets/img/logo.png" className="logo" alt="" />
         </Link>
       </nav>} */}
+
+        <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3">
+          <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
+            <img
+              src={`${environment?.api}${settingData?.logo}`}
+              className="logo"
+              alt=""
+              style={{ width: '200px', height: 'auto' }}
+            />
+          </Link>
+          </nav>
         {(!isDashboard && pathname != "/profile" && pathname != "/chat") &&
           <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
-            <Link href="/">
+            <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
               <img
                 src={`${environment?.api}${settingData?.logo}`}
                 className="logo"

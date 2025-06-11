@@ -600,7 +600,7 @@ export default function Chat() {
                   <div className="card p-0">
                     <div className="card-header pl-0 pr-0 p-0" id="headingOne">
                       <div className="pointer">
-                        <h3 class="about_head" > <i onClick={() => router.push('/requests')} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
+                        <h3 class="about_head" > <i onClick={() => router.back()} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
                       </div>
                       <div className="msg_info person-chat hide_icon_Group b-none">
                         {user?.role == "brand" && <button className=" btn-primary py-1 btn-sm" onClick={handleShow}>Create a Group</button>}
