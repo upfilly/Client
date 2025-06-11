@@ -95,12 +95,13 @@ const AffiliateTeam = () => {
     }
 
     const statusChange=(itm)=>{
+        console.log(itm,"klklklkl")
         let status='active'
         if(itm.status=='active') status='deactive'
 
         Swal.fire({
             title: ``,
-            text: `Do you want to ${status=='active'?'Active':'Inactive'} this group`,
+            text: `Do you want to ${status=='active'?'Active':'Inactive'} this User`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -109,7 +110,7 @@ const AffiliateTeam = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                 loader(true)
-                ApiClient.put(`change/status`,{status,id:itm.id,model:'users'}).then(res=>{
+                ApiClient.put(`change/status`,{status,id:itm.id || itm?._id,model:'users'}).then(res=>{
                     if(res.success){
                         getData({page:filters?.page + 1})
                     }
