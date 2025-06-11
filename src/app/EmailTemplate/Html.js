@@ -20,7 +20,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
 
     const generateEmailTemplate = (content = '') => {
     return `
-        <body style="font-family: sans-serif; margin: 0; padding: 0; background-color: #ffffff;">
+        <body style="font-family: sans-serif;width: 100%; margin: 0; padding: 0; background-color: #ffffff;">
             <div style="width: 100%; max-width: 600px; margin: 0 auto; padding: 20px 0;">
                 <!-- Main Container -->
                 <div style="width: 100%; margin: auto; margin-top: 2rem; box-shadow: 0px 0px 20px -15px #000; position: relative;">
