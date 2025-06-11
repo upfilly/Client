@@ -256,9 +256,9 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               <span className="side_head">Notification</span>
             </ListItemLink>}
 
-             {<ListItemLink to="/chat" title="Notification">
+             {<ListItemLink to="/chat" title="Messages">
               <i class="material-icons  svg_iconbx">question_answer</i>
-              <span className="side_head">Chats</span>
+              <span className="side_head">Messages</span>
             </ListItemLink>}
 
             {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >

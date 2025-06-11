@@ -125,6 +125,7 @@ const Html = ({
                     type="email"
                     className="form-control"
                     value={form?.email}
+                    disabled={id}
                     onChange={(e) =>
                       setform({ ...form, email: e.target.value })
                     }

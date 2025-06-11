@@ -13,6 +13,7 @@ import PaymentModal from './paymodal'
 import { toast } from 'react-toastify';
 import SelectDropdown from '../components/common/SelectDropdown';
 import { CurencyData } from '../../methods/currency';
+import datepipeModel from '@/models/datepipemodel';
 
 export default function affilate() {
   const history = useRouter()
@@ -100,12 +101,12 @@ export default function affilate() {
     }
 
     const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
-    if(selectedCurrency){
+    if (selectedCurrency) {
       return convertedCurrency((finalPrice + CalPrice).toFixed(2))
-    }else{
+    } else {
       return (finalPrice + CalPrice).toFixed(2)
     }
-    
+
   }
 
 
@@ -116,6 +117,21 @@ export default function affilate() {
       filter();
     }
   };
+
+  const sorting = (key) => {
+    let sorder = 'asc'
+    if (filters.key == key) {
+      if (filters?.sorder == 'asc') {
+        sorder = 'desc'
+      } else {
+        sorder = 'asc'
+      }
+    }
+
+    let sortBy = `${key} ${sorder}`;
+    let page = filters?.page;
+    filter({ sortBy, key, sorder, page })
+  }
 
   const getData = (p = {}) => {
 
@@ -138,6 +154,11 @@ export default function affilate() {
     })
   };
 
+  const handleCountChange = (count) => {
+    setFilter({ ...filters, count: count, page: 1 });
+    getData({ count: count, page: 1 });
+  };
+
   useEffect(() => {
 
     if (user.role == 'brand') {
@@ -157,21 +178,7 @@ export default function affilate() {
     setFilter({ ...filters, ...p })
     getData({ ...p, page: 1 })
   }
-
-  const sorting = (key) => {
-    let sorder = 'asc'
-    if (filters.key == key) {
-      if (filters?.sorder == 'asc') {
-        sorder = 'desc'
-      } else {
-        sorder = 'asc'
-      }
-    }
-
-    let sortBy = `${key} ${sorder}`;
-    filter({ sortBy, key, sorder })
-  }
-
+  
   const ChangeStatus = (e, key) => {
     setFilter({ ...filters, [key]: e })
     getData({ [key]: e, page: 1, user_id: user?.id })
@@ -358,12 +365,13 @@ export default function affilate() {
                           }, [])?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
-                          <th scope="col" >Affiliate</th>
-                          <th scope="col" >Brand</th>
+                          <th scope="col" onClick={e => sorting('affiliate_name')}>Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" onClick={e => sorting('brand_name')}>Brand{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th scope="col" >Currency</th>
-                          <th scope="col" >Order price</th>
+                          <th scope="col" onClick={e => sorting('price')}>Order price{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th scope="col" >Order Id</th>
-                          <th scope="col" >Commission</th>
+                          <th scope="col" onClick={e => sorting('timestamp')}>Transaction Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th scope="col" >Commission paid</th>
                           <th scope="col" >Commission Status</th>
                           <th scope="col" >Payment Status</th>
@@ -384,10 +392,11 @@ export default function affilate() {
                             <td className='name-person ml-2' >{itm?.currency}</td>
                             <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
+                            <td className='name-person ml-2' >{datepipeModel.date(itm?.timestamp)}</td>
                             <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
                             <td className='name-person ml-2' >
                               {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
-                              </td>
+                            </td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             <td className='table_dats d-flex align-items-center'>
@@ -429,8 +438,18 @@ export default function affilate() {
 
 
 
-        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-          <span>Show {data?.length} from {total} Users</span>
+        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+          <span>Show <select
+            className="form-control"
+            onChange={(e) => handleCountChange(parseInt(e.target.value))}
+            value={filters.count}
+          >
+            <option value={10}>10</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={150}>150</option>
+            <option value={200}>200</option>
+          </select> from {total} Requests</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"
@@ -439,6 +458,7 @@ export default function affilate() {
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}
+            // pageCount={2}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}
