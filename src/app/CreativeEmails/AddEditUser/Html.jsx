@@ -10,9 +10,22 @@ import EmailEditorTemplate from '../../email/emaileditor'
 
 const Html = () => {
   const { id } = useParams()
-  const [form, setform] = useState({ templateName: '',content:"", emailName: '', format: 'Text', subject: '', from: '', htmlContent: '', textContent: '', personalizationTags: [], textJSONContent: {} });
+  const [form, setform] = useState({ 
+    templateName: '',
+    content:"", 
+    emailName: '', 
+    format: 'Text', 
+    subject: '', 
+    from: '', 
+    htmlContent: '', 
+    textContent: '', 
+    personalizationTags: [], 
+    textJSONContent: {} 
+  });
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
+  const [previewContent, setPreviewContent] = useState('');
+  const [isGeneratingPreview, setIsGeneratingPreview] = useState(false);
   const specialChars = useRef([]);
   const [variables, setVariables] = useState('');
   const [htmlCode, setHtmlCode] = useState(false);
@@ -43,6 +56,62 @@ const Html = () => {
           handleSubmit();
         }
       });
+    }
+  };
+
+  // New function to generate preview for EmailEditor
+  const generateEmailEditorPreview = () => {
+    return new Promise((resolve) => {
+      const unlayer = emailEditorRef.current?.editor;
+      
+      if (unlayer) {
+        unlayer.exportHtml((data) => {
+          const { html, design } = data;
+          // Update form with latest content and design
+          setform(prevForm => ({
+            ...prevForm,
+            textContent: html || '',
+            textJSONContent: design || {}
+          }));
+          resolve(html || '');
+        });
+      } else {
+        resolve('');
+      }
+    });
+  };
+
+  // Enhanced preview handler
+  const handlePreview = async (e) => {
+    if (e) e.preventDefault();
+    
+    setIsGeneratingPreview(true);
+    
+    try {
+      let content = '';
+      
+      if (form?.format === 'Text') {
+        // For EmailEditor, we need to export HTML first and save the design
+        if (emailEditorRef.current?.editor) {
+          content = await generateEmailEditorPreview();
+          // Wait a moment for state to update
+          await new Promise(resolve => setTimeout(resolve, 100));
+        } else {
+          // Fallback to existing textContent if available
+          content = form?.textContent || '';
+        }
+      } else {
+        // For HTML textarea
+        content = form?.htmlContent || '';
+      }
+      
+      setPreviewContent(content);
+      setTab("preview");
+    } catch (error) {
+      console.error('Error generating preview:', error);
+      toast.error('Error generating preview');
+    } finally {
+      setIsGeneratingPreview(false);
     }
   };
 
@@ -83,9 +152,33 @@ const Html = () => {
     });
   };
   
-  const handleSaveFromPreview = (e) => {
-    e.preventDefault(); // Prevent default behavior
-    handleSubmit();
+  const handleSaveFromPreview = async (e) => {
+    e.preventDefault();
+    
+    // If we're previewing EmailEditor content, make sure we have the latest HTML
+    if (form?.format === 'Text' && emailEditorRef.current?.editor) {
+      setIsGeneratingPreview(true);
+      try {
+        const htmlContent = await generateEmailEditorPreview();
+        const updatedForm = {
+          ...form,
+          textContent: htmlContent
+        };
+        setform(updatedForm);
+        
+        // Now submit with updated content
+        setTimeout(() => {
+          handleSubmit();
+        }, 100);
+      } catch (error) {
+        console.error('Error saving from preview:', error);
+        toast.error('Error saving template');
+      } finally {
+        setIsGeneratingPreview(false);
+      }
+    } else {
+      handleSubmit();
+    }
   };
 
   useEffect(() => {
@@ -234,38 +327,6 @@ const Html = () => {
                           />
                         </div>
                       </div>
-                      {/* <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Purpose<span className="star">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={form?.purpose}
-                            onChange={(e) =>
-                              setform({ ...form, purpose: e.target.value })
-                            }
-                            required
-                          />
-                        </div>
-                      </div> */}
-                      {/* <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Audience<span className="star">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={form?.audience}
-                            onChange={(e) =>
-                              setform({ ...form, audience: e.target.value })
-                            }
-                            required
-                          />
-                        </div>
-                      </div> */}
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
@@ -339,7 +400,9 @@ const Html = () => {
                                       ...form,
                                       htmlContent: e.target.value,
                                     })
-                                  }></textarea>
+                                  }
+                                  placeholder="Enter your HTML code here..."
+                                ></textarea>
                               </>
                             ) : (
                               <>
@@ -355,57 +418,23 @@ const Html = () => {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Personalization Tags
-                          </label>
-
-                          <div className="d-flex gap-3 flex-row">
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={variables}
-                              onChange={(e) =>
-                                setVariables(e.target.value)
-                              }
-                              onKeyDown={handleKeyDown}
-                              required={!form?.personalizationTags || form?.personalizationTags?.length == 0}
-                            />
-                            <a onClick={handlepersonalize} className="d-flex justify-content-center align-items-center btn btn-primary">
-                              <i className="fa fa-plus" aria-hidden="true"></i>
-                            </a>
-                          </div>
-                          {submitted && form?.personalizationTags?.length <= 0 && <span className="text-danger">Please add personalization Tags</span>}
-
-                          <div className="d-flex gap-3 align-items-center flex-wrap mt-4">
-                            <div className="list-disc list-inside inside_bx d-flex align-items-center gap-3 flex-wrap">
-                              {form?.personalizationTags && form?.personalizationTags.map((itm, index) => {
-                                return (
-                                  <span
-                                    key={index}
-                                    className="pb-1 cursor-pointer btn btn-primary d-flex gap-2 align-items-center"
-                                    onClick={() => insertVariable(itm)}>
-                                    <span className="item_add">{itm}</span>
-                                    <i className="fa fa-close cloosebtn" onClick={(e) => {
-                                      e.stopPropagation(); // Prevent triggering the parent onClick
-                                      removepersonalize(itm);
-                                    }}></i>
-                                  </span>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                      </div> */}
                       <div className="col-md-12">
                         <div className="d-flex justify-content-end align-items-center gap-3">
-                          {/* <button
+                          <button
                             type="button"
                             className="btn btn-secondary"
-                            onClick={(e) =>{ setTab("preview")}}>
-                            Preview
-                          </button> */}
+                            onClick={handlePreview}
+                            disabled={isGeneratingPreview}
+                          >
+                            {isGeneratingPreview ? (
+                              <>
+                                <i className="fa fa-spinner fa-spin mr-2"></i>
+                                Generating Preview...
+                              </>
+                            ) : (
+                              'Preview'
+                            )}
+                          </button>
                           <button
                             type="submit"
                             className="btn btn-primary">
@@ -421,30 +450,91 @@ const Html = () => {
           ) : (
             <>
               <div className="pprofile1">
-                <h4 className="text-2xl font-semibold text-[#111827] mb-3">
-                  Preview
-                </h4>
-                <div
-                  className="shadow-box border !border-grey p-2 bg-white rounded-large"
-                  dangerouslySetInnerHTML={{ __html: form?.content || form?.textContent }}></div>
-                <div className="flex justify-end gap-2 mt-3 text-right">
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <h4 className="text-2xl font-semibold text-[#111827] mb-0">
+                    Email Preview
+                  </h4>
+                  <div className="badge badge-info">
+                    {form?.format === 'Text' ? 'Email Editor' : 'HTML Code'} Preview
+                  </div>
+                </div>
+                
+                {/* Email Header Info */}
+                <div className="preview-header mb-4 p-3 bg-light rounded">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <strong>From:</strong> {form?.from} &lt;{form?.emailName}&gt;
+                    </div>
+                    <div className="col-md-6">
+                      <strong>Subject:</strong> {form?.subject}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Email Content Preview */}
+                <div className="preview-content">
+                  <div
+                    className="shadow-box border !border-grey p-3 bg-white rounded-large"
+                    style={{ 
+                      minHeight: '400px',
+                      maxHeight: '80vh',
+                      overflowY: 'auto',
+                      border: '1px solid #e5e5e5'
+                    }}
+                    dangerouslySetInnerHTML={{ 
+                      __html: previewContent || form?.content || form?.textContent || form?.htmlContent || '<p>No content to preview</p>'
+                    }}
+                  ></div>
+                </div>
+
+                <div className="flex justify-end gap-2 mt-4 text-right">
                   <button
                     type="button"
                     className="btn btn-secondary mr-3"
-                    onClick={() => setTab("form")}>
-                    Back
+                    onClick={() => {
+                      setTab("form");
+                      // Small delay to ensure EmailEditor is mounted before trying to reload
+                      setTimeout(() => {
+                        if (emailEditorRef.current?.editor && form?.textJSONContent) {
+                          console.log('Reloading design when returning from preview');
+                          try {
+                            if (typeof form.textJSONContent === 'object') {
+                              emailEditorRef.current.editor.loadDesign(form.textJSONContent);
+                            } else if (typeof form.textJSONContent === 'string' && form.textJSONContent !== '{}') {
+                              const design = JSON.parse(form.textJSONContent);
+                              emailEditorRef.current.editor.loadDesign(design);
+                            }
+                          } catch (error) {
+                            console.error('Error reloading design:', error);
+                          }
+                        }
+                      }, 500);
+                    }}>
+                    <i className="fa fa-arrow-left mr-2"></i>
+                    Back to Edit
                   </button>
                   <button
-                    type="button" // Changed from button without type
+                    type="button"
+                    className="btn btn-success mr-3"
+                    onClick={handlePreview}
+                    disabled={isGeneratingPreview}>
+                    <i className="fa fa-refresh mr-2"></i>
+                    Refresh Preview
+                  </button>
+                  <button
+                    type="button"
                     className="btn btn-primary"
-                    onClick={handleSaveFromPreview}>
-                    Save
+                    onClick={handleSaveFromPreview}
+                    disabled={isGeneratingPreview}>
+                    <i className="fa fa-save mr-2"></i>
+                    Save Template
                   </button>
                 </div>
               </div>
             </>
           )}
 
+          {/* Modal remains the same */}
           <div>
             <div
               className="modal fade"
