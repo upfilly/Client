@@ -80,7 +80,7 @@ export default function affilate() {
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
 
-  console.log(params,"paramsparamsparams")
+  console.log(filters,"paramsparamsparams")
 
   const view = (id) => {
     const filterParams = {
@@ -346,8 +346,8 @@ const resetUrl = () =>{
   }, [])
 
   useEffect(() => {
-    setFilter({...params,count:10})
-    getData({...params, page: 1, cat_type: categoryType?.map((dat) => dat).join(","), category_id: selectedCategory?.map((dat) => dat).join(","), sub_category_id: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category_id: selectedSubSubCategory?.map((dat) => dat).join(",") })
+    setFilter({...params,...filters,count:10})
+    getData({...params,...filters, page: 1, cat_type: categoryType?.map((dat) => dat).join(","), category_id: selectedCategory?.map((dat) => dat).join(","), sub_category_id: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category_id: selectedSubSubCategory?.map((dat) => dat).join(",") })
   }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory])
 
   useEffect(() => {
@@ -395,7 +395,7 @@ const resetUrl = () =>{
       invite_status: '',
       role: '',
       search: '',
-      // role: 'affiliate',
+      role: 'affiliate',
       // campaign:"",
       page: 0,
       count: 10,
@@ -733,7 +733,7 @@ const resetUrl = () =>{
                     </div>
                   </div> */}
 
-                  {filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
+                  {selectedSubSubCategory?.length || selectedCategory?.length || selectedSubSubCategory?.length || filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
                     <a className="btn btn-primary   " onClick={e => reset()}>
                       Reset
                     </a>
