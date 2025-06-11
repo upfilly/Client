@@ -19,66 +19,100 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     const [errors, setErrors] = useState({});
 
     const generateEmailTemplate = (content = '') => {
-    return `
-        <body style="font-family: sans-serif;width: 100%; margin: 0; padding: 0; background-color: #ffffff;">
-            <div style="width: 100%; max-width: 600px; margin: 0 auto; padding: 20px 0;">
-                <!-- Main Container -->
-                <div style="width: 100%; margin: auto; margin-top: 2rem; box-shadow: 0px 0px 20px -15px #000; position: relative;">
-                    
-                    <!-- Banner Section -->
-                    <div style="text-align: center;">
-                        <div style="background: url('${environment.api}/images/banner.png'); background-size: cover; background-position: center; width: 100% !important; height: 260px;">
-                        </div>
+        return `
+    <div style="
+        width: 676px !important;
+        max-width: 676px !important;
+        min-width: 676px !important;
+        margin: 0 auto !important;
+        padding: 20px 0 !important;
+        background: transparent !important;
+    ">
+        <!-- Main Container -->
+        <div style="
+            width: 100% !important;
+            margin: auto !important;
+            margin-top: 2rem !important;
+            box-shadow: 0px 0px 20px -15px #000 !important;
+            position: relative !important;
+            background: white !important;
+        ">
+            <!-- Banner Section -->
+            <div style="text-align: center !important;">
+                <div style="
+                    background: url('${environment.api}/images/banner.png') !important;
+                    background-size: cover !important;
+                    background-position: center !important;
+                    width: 100% !important;
+                    height: 260px !important;
+                "></div>
+                
+                <!-- Content Card -->
+                <div style="margin-top: -190px !important;">
+                    <div style="
+                        width: 225px !important;
+                        height: auto !important;
+                        padding: 1.5rem !important;
+                        text-align: center !important;
+                        background: #fff !important;
+                        margin: auto !important;
+                        border-radius: 4px !important;
+                        box-sizing: border-box !important;
+                    ">
+                        <img src="${environment.api}/images/logo.png" alt="Company Logo" style="width:115px !important; height:40px !important; object-fit:contain !important;">
                         
-                        <!-- Content Card -->
-                        <div style="margin-top: -190px !important;">
-                            <div style="width: 225px; height: auto; padding: 1.5rem; text-align: center; background: #fff; margin: auto; border-radius: 4px; box-sizing: border-box;">
-                                <img src="${environment.api}/images/logo.png" alt="Company Logo" style="width:115px; height:40px; object-fit:contain;">
-                                
-                                <h1 style="margin: 10px 0 0; font-size: 18px; font-weight: normal;">
-                                    <span style="font-weight:400; color:#373737;">Hi </span> ${`{affiliateFullName}`},
-                                </h1>
-                                
-                                <p style="margin: 10px 0 0; font-size:14px; color:#373737;">
-                                    You have an email message from ${user?.fullName}
-                                </p>
+                        <h1 style="margin: 10px 0 0 !important; font-size: 18px !important; font-weight: normal !important;">
+                            <span style="font-weight:400 !important; color:#373737 !important;">Hi </span> ${`{affiliateFullName}`},
+                        </h1>
+                        
+                        <p style="margin: 10px 0 0 !important; font-size:14px !important; color:#373737 !important;">
+                            You have an email message from ${user?.fullName}
+                        </p>
 
-                                <h2 style="margin: 10px 0 0; font-size:14px; color:#373737;">
-                                ${form?.title || 'Your email title'}
-                                </h2>
-                                
-                                <!-- Message Content -->
-                                <div style="margin: 15px 0 0; padding: 15px; background: #f9f9f9; border-radius: 4px; text-align: left; font-size: 13px; line-height: 1.5; color: #333;">
-                                    ${content || 'Your message content goes here...'}
-                                </div>
-                            </div>
+                        <h2 style="margin: 10px 0 0 !important; font-size:14px !important; color:#373737 !important;">
+                            ${form?.title || 'Your email title'}
+                        </h2>
+                        
+                        <!-- Message Content -->
+                        <div style="
+                            margin: 15px 0 0 !important;
+                            padding: 15px !important;
+                            background: #f9f9f9 !important;
+                            border-radius: 4px !important;
+                            text-align: left !important;
+                            font-size: 13px !important;
+                            line-height: 1.5 !important;
+                            color: #333 !important;
+                        ">
+                            ${content || 'Your message content goes here...'}
                         </div>
                     </div>
                 </div>
-                
-                <!-- Social Media Icons -->
-                <div style="margin: 30px 0 20px; text-align: center;">
-                    <a href="#" style="text-decoration: none; display: inline-block; margin: 0 5px;">
-                        <img src="${environment.api}/Image1.png" style="width:40px; height:40px; object-fit:contain;">
-                    </a>
-                    <a href="#" style="text-decoration: none; display: inline-block; margin: 0 5px;">
-                        <img src="${environment.api}/Image2.png" style="width:40px; height:40px; object-fit:contain;">
-                    </a>
-                    <a href="#" style="text-decoration: none; display: inline-block; margin: 0 5px;">
-                        <img src="${environment.api}/Image3.png" style="width:40px; height:40px; object-fit:contain;">
-                    </a>
-                    <a href="#" style="text-decoration: none; display: inline-block; margin: 0 5px;">
-                        <img src="${environment.api}/Image4.png" style="width:40px; height:40px; object-fit:contain;">
-                    </a>
-                </div>
-                
-                <!-- Footer -->
-                <p style="color: #626262; font-size: 11px; text-align: center; margin-bottom: 0;">
-                    Copyright © ${new Date().getFullYear()} All Rights Reserved
-                </p>
             </div>
-        </body>
-        `;
+        </div>
+        
+        <!-- Social Media Icons -->
+        <div style="margin: 30px 0 20px !important; text-align: center !important;">
+            <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
+                <img src="${environment.api}/Image1.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+            </a>
+            <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
+                <img src="${environment.api}/Image2.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+            </a>
+            <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
+                <img src="${environment.api}/Image3.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+            </a>
+            <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
+                <img src="${environment.api}/Image4.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <p style="color: #626262 !important; font-size: 11px !important; text-align: center !important; margin-bottom: 0 !important;">
+            Copyright © ${new Date().getFullYear()} All Rights Reserved
+        </p>
+    </div>
+    `;
     };
 
     useEffect(() => {
