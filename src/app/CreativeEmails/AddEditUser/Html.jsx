@@ -330,7 +330,7 @@ const Html = () => {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
-                            Subject<span className="star">*</span>
+                            Email Subject<span className="star">*</span>
                           </label>
                           <input
                             type="text"

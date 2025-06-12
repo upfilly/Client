@@ -172,12 +172,12 @@ const untrackedSales = () => {
 
 
     const reset=()=>{
-        let filter={
+        let filter = {
             status: '',
-            role:'',
-            search:'',
-             page: 1,
-             count:5
+            role: '',
+            search: '',
+            page: 1,
+            count: 10
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })

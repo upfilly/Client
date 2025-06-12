@@ -110,7 +110,7 @@ const Users = () => {
             role:'',
             search:'',
              page: 1,
-             count:5, start_date:'', end_date: '',addedBy:user?.id
+             count:10, start_date:'', end_date: '',addedBy:user?.id
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
