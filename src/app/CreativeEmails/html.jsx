@@ -11,7 +11,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Html = ({
-    view,
     edit,
     add,
     getData,
@@ -25,12 +24,15 @@ const Html = ({
     total,
     setFilter,
     filter,
-    user
+    user,startDate, setStartDate,endDate, setEndDate
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+
+
+    const view = (id) => {
+        history.push("/CreativeEmails/detail/" + id + `?startDate=${startDate.toISOString().split('T')[0]}&endDate=${endDate.toISOString().split('T')[0]}`)
+    }
 
     const reset = () => {
         let filter = {

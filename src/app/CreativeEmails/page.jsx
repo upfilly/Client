@@ -10,44 +10,78 @@ import axios from 'axios';
 import environment from '../../environment';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams,useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
 
 
 const Users = () => {
     const user = crendentialModel.getUser()
-    const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 10, search: '',  isDeleted: false,status:'',})
+    const { role } = useParams()
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false, status: '', })
     const [data, setData] = useState([])
     const [tab, setTab] = useState('list')
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
     const [tableCols, setTableCols] = useState([])
     const [form, setform] = useState(userType)
-    const history=useRouter()
-    
-    useEffect(()=>{
-        getData({page:1})
-    },[])
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const history = useRouter()
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
 
+    console.log(params, "sgdhsgdhj")
+
+    useEffect(() => {
+        const start = params?.startDate ? new Date(params.startDate) : null;
+        const end = params?.endDate ? new Date(params.endDate) : null;
+
+        setStartDate(start);
+        setEndDate(end);
+
+        // Format dates for API call
+        const formattedStart = start ? start.toISOString() : null;
+        const formattedEnd = end ? end.toISOString() : null;
+
+        getData({
+            ...filters,
+            startDate: formattedStart,
+            endDate: formattedEnd,
+            page: 1
+        });
+    }, [params?.startDate]);
 
     const getData = (p = {}) => {
-        setLoader(true)
-        let filter = { ...filters, ...p }
-        if(user?.role == 'affiliate'){
-            filter = { ...filters, ...p ,affiliate_id:user?.id || user?._id}
-        }else{
-            filter = { ...filters, ...p , addedBy:user?.id || user?._id}
+        setLoader(true);
+
+        let filter = { ...filters, ...p };
+
+        if (filter.startDate instanceof Date) {
+            filter.startDate = filter.startDate.toISOString();
         }
-        let url= user?.role == 'affiliate' ?  'getUserEmailTemplate' : 'emailtemplate/getAll'
+        if (filter.endDate instanceof Date) {
+            filter.endDate = filter.endDate.toISOString();
+        }
+
+        if (user?.role === 'affiliate') {
+            filter = { ...filter, affiliate_id: user?.id || user?._id };
+        } else {
+            filter = { ...filter, addedBy: user?.id || user?._id };
+        }
+
+        const url = user?.role === 'affiliate' ? 'getUserEmailTemplate' : 'emailtemplate/getAll';
+
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
-                setData(res.data.data)
-                setTotal(res.data.total_count)
+                setData(res.data.data);
+                setTotal(res.data.total_count);
             }
-            setLoader(false)
-        })
-    }
+            setLoader(false);
+        }).catch(error => {
+            console.error('API Error:', error);
+            setLoader(false);
+        });
+    };
 
 
     const clear = () => {
@@ -65,18 +99,18 @@ const Users = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-            // loader(true)
-            ApiClient.delete('emailtemplate', {id: id }).then(res => {
-                if (res.success) {
-                    toast.success(res.message)
-                    clear()
-                }
-                // loader(false)
-            })
+                // loader(true)
+                ApiClient.delete('emailtemplate', { id: id }).then(res => {
+                    if (res.success) {
+                        toast.success(res.message)
+                        clear()
+                    }
+                    // loader(false)
+                })
             }
-          })
+        })
     }
 
     const pageChange = (e) => {
@@ -84,12 +118,12 @@ const Users = () => {
         getData({ page: e.selected + 1 })
     }
 
-    const filter = (p={}) => {
-        setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page})
+    const filter = (p = {}) => {
+        setFilter({ ...filters, ...p, page: 1 })
+        getData({ ...p, page: 1 })
     }
 
-    
+
 
     const ChangeRole = (e) => {
         setFilter({ ...filters, role: e, page: 1 })
@@ -100,44 +134,44 @@ const Users = () => {
         getData({ status: e, page: 1 })
     }
 
-    const statusChange=(itm)=>{
-        let modal='users'
-        let status='active'
-        if(itm.status=='active') status='deactive'
+    const statusChange = (itm) => {
+        let modal = 'users'
+        let status = 'active'
+        if (itm.status == 'active') status = 'deactive'
 
         Swal.fire({
             title: ``,
-            text: `Do you want to ${status=='active'?'Activate':'Deactivate'} this E-mail`,
+            text: `Do you want to ${status == 'active' ? 'Activate' : 'Deactivate'} this E-mail`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 loader(true)
-                ApiClient.put(`emailtemplate`,{from:itm?.from,subject:itm?.subject,emailName:itm?.emailName,templateName:itm?.templateName,status,id:itm.id || itm?._id}).then(res=>{
-                    if(res.success){
+                ApiClient.put(`emailtemplate`, { from: itm?.from, subject: itm?.subject, emailName: itm?.emailName, templateName: itm?.templateName, status, id: itm.id || itm?._id }).then(res => {
+                    if (res.success) {
                         getData()
                     }
                     loader(false)
                 })
             }
-          })
+        })
     }
 
-    const view=(id)=>{
-        history.push("/CreativeEmails/detail/"+id)
-    }
+    // const view=(id)=>{
+    //     history.push("/CreativeEmails/detail/"+id)
+    // }
 
-    const edit=(id)=>{
-        let url=`/CreativeEmails/edit/${id}`
-        if(role) url=`/campaign/${role}/edit/${id}`
+    const edit = (id) => {
+        let url = `/CreativeEmails/edit/${id}`
+        if (role) url = `/campaign/${role}/edit/${id}`
         history.push(url)
     }
 
-    const add=()=>{
-        let url=`/CreativeEmails/edit/add`
+    const add = () => {
+        let url = `/CreativeEmails/edit/add`
         history.push(url)
     }
 
@@ -153,11 +187,11 @@ const Users = () => {
         }
 
         let sortBy = `${key} ${sorder}`;
-        filter({ sortBy, key, sorder  })
+        filter({ sortBy, key, sorder })
     }
 
-    const isAllow=(key='')=>{
-        
+    const isAllow = (key = '') => {
+
         return true
     }
 
@@ -166,7 +200,7 @@ const Users = () => {
         isAllow={isAllow}
         // reset={reset}
         add={add}
-        view={view}
+        // view={view}
         edit={edit}
         role={role}
         ChangeRole={ChangeRole}
@@ -182,6 +216,10 @@ const Users = () => {
         user={user}
         statusChange={statusChange}
         getData={getData}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
     />
     </>;
 };
