@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import Layout from "../../components/global/layout";
 import "./style.scss";
 import ApiClient from "@/methods/api/apiClient";
 import loader from "@/methods/loader";
@@ -9,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import methodModel from "@/methods/methods";
 import crendentialModel from "@/models/credential.model";
+import Layout from "../components/global/layout";
 
 export default function Addcomminson() {
   const router = useRouter()
