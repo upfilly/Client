@@ -76,61 +76,61 @@ export default function affilate() {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
   const [expandedSubCategories, setExpandedSubCategories] = useState([]);
   const [expandedCategories, setExpandedCategories] = useState([]);
-  const [camppaignData,setCamppaignData]= useState([]);
+  const [camppaignData, setCamppaignData] = useState([]);
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
 
-  console.log(filters,"paramsparamsparams")
+  console.log(filters, "paramsparamsparams")
 
   const view = (id) => {
     const filterParams = {
       ...filters,
-      page:1,
+      page: 1,
       // currency: selectedCurrency,
       // region: selectedRegion?.join(","),
-      "start_date":startDate ? startDate.toISOString().split('T')[0] : null,
-      "end_date":endDate ? endDate.toISOString().split('T')[0] : null,
+      "start_date": startDate ? startDate.toISOString().split('T')[0] : null,
+      "end_date": endDate ? endDate.toISOString().split('T')[0] : null,
       category_type: categoryType?.join(","),
       category: selectedCategory?.join(","),
       sub_category: selectedSubCategory?.join(","),
       // countries: ?.join(","),
       sub_child_category: selectedSubSubCategory?.join(",")
     };
-  
+
     const queryString = new URLSearchParams(filterParams).toString();
-  
+
     history.push(`/affiliate/detail/${id}?${queryString}`);
   };
 
   function parseStringToArray(input) {
     if (typeof input !== "string") return [];
-  
+
     // Split by comma and trim each element
     return input.split(',').map(item => item.trim());
   }
 
-      useEffect(()=>{
-          // getExchangeRate(params?.currency)
-          setSelectedCategory(parseStringToArray(params?.category));
-          setSelectedSubCategory(parseStringToArray(params?.sub_category));
-          setSelectedSubSubCategory(parseStringToArray(params?.sub_child_category));
-          // setSelectedRegion(parseStringToArray(params?.region));
-          // setSelectedCountries(parseStringToArray(params?.countries));
-      },[])
+  useEffect(() => {
+    // getExchangeRate(params?.currency)
+    setSelectedCategory(parseStringToArray(params?.category));
+    setSelectedSubCategory(parseStringToArray(params?.sub_category));
+    setSelectedSubSubCategory(parseStringToArray(params?.sub_child_category));
+    // setSelectedRegion(parseStringToArray(params?.region));
+    // setSelectedCountries(parseStringToArray(params?.countries));
+  }, [])
 
-const resetUrl = () =>{
+  const resetUrl = () => {
     let filter = {
-        status: '',
-        role: '',
-        search: '',
-        page: 1,
-        count: 10
+      status: '',
+      role: '',
+      search: '',
+      page: 1,
+      count: 10
     }
     setFilter({ ...filters, ...filter })
-    getData({...filter,page:1})
+    getData({ ...filter, page: 1 })
     setSelectedCurrency("USD")
     history.push("/campaignManagement")
-}
+  }
 
   const toggleCategoryExpand = (categoryId) => {
     setExpandedCategories(prev =>
@@ -141,20 +141,20 @@ const resetUrl = () =>{
   };
 
   const getCampaignData = (p = {}) => {
-    let url='campaign/brand/all'
+    let url = 'campaign/brand/all'
     ApiClient.get(url).then(res => {
-        if (res.success) {
-            setCamppaignData(res.data.data.map((dat)=>{
-              return({
-                name:dat?.name,
-                id:dat?.id || dat?._id
-              })
-            }))
-            // setTotal(res.data.total_count)
-        }
+      if (res.success) {
+        setCamppaignData(res.data.data.map((dat) => {
+          return ({
+            name: dat?.name,
+            id: dat?.id || dat?._id
+          })
+        }))
+        // setTotal(res.data.total_count)
+      }
     })
-}
-  
+  }
+
 
   const toggleSubCategoryExpand = (subCategoryId) => {
     setExpandedSubCategories(prev =>
@@ -313,9 +313,9 @@ const resetUrl = () =>{
   const getData = (p = {}) => {
     setLoader(true)
     let filter = { ...filters, ...p }
-    if(filter?.start_date == null || filter?.start_date == "null" || !filter?.start_date){
-      filter ={
-        ...filters, ...p ,start_date:"",end_date:""
+    if (filter?.start_date == null || filter?.start_date == "null" || !filter?.start_date) {
+      filter = {
+        ...filters, ...p, start_date: "", end_date: ""
       }
     }
     ApiClient.get(`getAllAffiliateForBrand`, filter).then(res => {
@@ -339,16 +339,31 @@ const resetUrl = () =>{
   };
 
   useEffect(() => {
-    setFilter({ ...params ,page:1,count:10})
+    setFilter({ ...params, page: 1, count: 10 })
     setEndDate((params?.end_date == "null" || params?.end_date == null || !params?.end_date) ? null : new Date(params?.end_date))
-    setStartDate((params?.start_date == "null" || params?.start_date == null ||  !params?.start_date) ? "" : new Date(params?.start_date))
-    getData({...params,start_date:(params?.start_date == "null" || params?.start_date == null ||  !params?.start_date) ? "" : new Date(params?.start_date),end_date:(params?.end_date == "null" || params?.end_date == null || !params?.end_date) ? null : new Date(params?.end_date), page: 1 ,count:10})
+    setStartDate((params?.start_date == "null" || params?.start_date == null || !params?.start_date) ? "" : new Date(params?.start_date))
+    getData({ ...params, start_date: (params?.start_date == "null" || params?.start_date == null || !params?.start_date) ? "" : new Date(params?.start_date), end_date: (params?.end_date == "null" || params?.end_date == null || !params?.end_date) ? null : new Date(params?.end_date), page: 1, count: 10 })
   }, [])
 
   useEffect(() => {
-    setFilter({...params,...filters,count:10})
-    getData({...params,...filters, page: 1, cat_type: categoryType?.map((dat) => dat).join(","), category_id: selectedCategory?.map((dat) => dat).join(","), sub_category_id: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category_id: selectedSubSubCategory?.map((dat) => dat).join(",") })
-  }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory])
+    const hasCategoryType = categoryType?.length > 0;
+    const hasSelectedCategory = selectedCategory?.length > 0;
+    const hasSelectedSubCategory = selectedSubCategory?.length > 0;
+    const hasSelectedSubSubCategory = selectedSubSubCategory?.length > 0;
+
+    if (hasCategoryType || hasSelectedCategory || hasSelectedSubCategory || hasSelectedSubSubCategory) {
+      setFilter({ ...filters, ...params, count: 10 });
+      getData({
+        ...filters,
+        ...params,
+        page: 1,
+        cat_type: hasCategoryType ? categoryType.map((dat) => dat).join(",") : undefined,
+        category_id: hasSelectedCategory ? selectedCategory.map((dat) => dat).join(",") : undefined,
+        sub_category_id: hasSelectedSubCategory ? selectedSubCategory.map((dat) => dat).join(",") : undefined,
+        sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.map((dat) => dat).join(",") : undefined
+      });
+    }
+  }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
 
   useEffect(() => {
     getCategory()
@@ -396,8 +411,8 @@ const resetUrl = () =>{
       role: '',
       search: '',
       role: 'affiliate',
-      campaign:"",
-      page: 0,
+      campaign: "",
+      page: 1,
       count: 10,
       end_date: '',
       start_date: '',
@@ -415,10 +430,10 @@ const resetUrl = () =>{
     setSelectedSubSubCategory([]);
     setSelectedOptions([])
     setIsOpen(false)
-    setFilter({ ...filters, ...filter })
-    getData({...filter, page:1 })
+    setFilter({ ...filter })
+    getData({ ...filter, page: 1 })
     history.push("/affiliate")
-    
+
     // dispatch(search_success(''))
   }
 
