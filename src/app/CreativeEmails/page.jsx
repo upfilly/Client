@@ -86,7 +86,7 @@ const Users = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+        getData({ ...p , page:filters?.page})
     }
 
     
@@ -142,19 +142,6 @@ const Users = () => {
     }
 
 
-    const reset=()=>{
-        let filter={
-            status: '',
-            role:'',
-            search:'',
-             page: 1,
-             count:5
-        }
-        setFilter({ ...filters,...filter })
-        getData({ ...filter })
-        // dispatch(search_success(''))
-    }
-
     const sorting = (key) => {
         let sorder = 'asc'
         if (filters.key == key) {
@@ -177,7 +164,7 @@ const Users = () => {
     return <><Html
         filter={filter}
         isAllow={isAllow}
-        reset={reset}
+        // reset={reset}
         add={add}
         view={view}
         edit={edit}
@@ -194,6 +181,7 @@ const Users = () => {
         setFilter={setFilter}
         user={user}
         statusChange={statusChange}
+        getData={getData}
     />
     </>;
 };

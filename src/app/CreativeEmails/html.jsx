@@ -7,22 +7,20 @@ import datepipeModel from '@/models/datepipemodel';
 import rolesModel from "@/models/role.model";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from 'next/navigation';
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Html = ({
     view,
     edit,
-    reset,
     add,
-    statusChange,
-    ChangeStatus,
+    getData,
     sorting,
     pageChange,
     deleteItem,
     filters,
     loaging,
     data,
-    role,
     isAllow,
     total,
     setFilter,
@@ -31,6 +29,25 @@ const Html = ({
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    const reset = () => {
+        let filter = {
+            status: '',
+            role: '',
+            startDate:'',
+            endDate:'',
+            search: '',
+            page: 1,
+            count: 10
+        }
+        setStartDate(null);
+        setEndDate(null);
+        setFilter({ ...filters, ...filter })
+        getData({ ...filter })
+        // dispatch(search_success(''))
+    }
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -41,6 +58,13 @@ const Html = ({
     const handleCountChange = (count) => {
         setFilter({ ...filters, count: count, page: 1 });
         getData({ count: count, page: 1 });
+    };
+
+    const onChange = (dates) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+        filter({ "startDate": start.toISOString().split('T')[0], "endDate": end.toISOString().split('T')[0] })
     };
 
     return (
@@ -69,7 +93,19 @@ const Html = ({
                             }} aria-hidden="true"></i>
                         </div> */}
 
-
+                        <div class="">
+                            <DatePicker
+                                className="datepicker-field"
+                                selected={startDate}
+                                onChange={onChange}
+                                startDate={startDate}
+                                endDate={endDate}
+                                showIcon
+                                placeholderText=" Date Range"
+                                selectsRange
+                            // inline
+                            />
+                        </div>
 
 
                         {/* {!role ? <SelectDropdown                                                     theme='search'
@@ -95,7 +131,7 @@ const Html = ({
                         /> */}
 
 
-                        {filters.status ? <>
+                        {startDate ? <>
                             <a className="btn btn-primary" onClick={e => reset()}>
                                 Reset
                             </a>
