@@ -253,7 +253,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             {<ListItemLink to="/notifications" title="Notification">
               <i class="material-icons  svg_iconbx">notifications_active</i>
-              <span className="side_head">Notification</span>
+              <span className="side_head">Notifications</span>
             </ListItemLink>}
 
              {<ListItemLink to="/chat" title="Messages">
