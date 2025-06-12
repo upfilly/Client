@@ -24,7 +24,8 @@ const Html = ({
     filter,
     user,
     affiliateData,
-    ChangeAffiliateStatus
+    ChangeAffiliateStatus,
+    getData
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)

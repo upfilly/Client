@@ -396,7 +396,7 @@ const resetUrl = () =>{
       role: '',
       search: '',
       role: 'affiliate',
-      // campaign:"",
+      campaign:"",
       page: 0,
       count: 10,
       end_date: '',
