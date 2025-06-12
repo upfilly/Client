@@ -48,6 +48,7 @@ const Html = ({
         setEndDate(null);
         setFilter({ ...filters, ...filter })
         getData({ ...filter })
+        history.push('/CreativeEmails')
         // dispatch(search_success(''))
     }
 
