@@ -301,7 +301,7 @@ export default function affilate() {
                     <SelectDropdown theme='search'
                       id="statusDropdown"
                       displayValue="name"
-                      placeholder="Paid Status"
+                      placeholder="Commission Status"
                       intialValue={filters.commission_status}
                       result={e => { ChangeStatus(e.value, "commission_status") }}
                       options={[
@@ -326,7 +326,7 @@ export default function affilate() {
                       <SelectDropdown theme='search'
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="Commission Status"
+                        placeholder="Paid Status"
                         intialValue={filters.commission_paid}
                         result={e => { ChangeStatus(e.value, "commission_paid") }}
                         options={[
