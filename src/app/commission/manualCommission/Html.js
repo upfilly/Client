@@ -334,9 +334,9 @@ const Html = () => {
                                             <div className='col-md-12'>
                                                 <div className='mb-3'>
                                                     <div className="form-check form-check-inline ">
-                                                        <label className="form-check-label" >
-                                                            <span className='ml-2' >An email will be sent to the publishers containing the commission details</span>
-                                                        </label>
+                                                        {/* <label className="form-check-label" > */}
+                                                            An email will be sent to the publishers containing the commission details
+                                                        {/* </label> */}
                                                     </div>
                                                 </div>
                                             </div>
