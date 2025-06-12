@@ -177,7 +177,7 @@ const Html = ({ settingData, Logout }) => {
         </Link>
       </nav>} */}
 
-        {( pathname == "/profile" || pathname == "/chat")&&<nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3">
+        {(pathname == "profile/edit" || pathname == "/profile" || pathname == "/chat")&&<nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3">
           <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
             <img
               src={`${environment?.api}${settingData?.logo}`}
@@ -187,7 +187,7 @@ const Html = ({ settingData, Logout }) => {
             />
           </Link>
           </nav>}
-        {(!isDashboard && pathname != "/profile" && pathname != "/chat") &&
+        {(!isDashboard && pathname != "profile/edit" &&pathname != "/profile" && pathname != "/chat") &&
           <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
             <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
               <img
