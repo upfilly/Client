@@ -290,7 +290,7 @@ export default function affilate() {
                         value={filters.search}
                         placeholder="Search"
                         className="form-control h-100"
-                        onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
+                        onChange={(e) => e.target.value == "" ? reset() : setFilter({...filters, search: e.target.value })}
                       // onKeyPress={handleKeyPress}
                       />
                       <i class="fa fa-search search_fa" onClick={() => {
