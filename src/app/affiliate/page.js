@@ -1089,7 +1089,7 @@ export default function affilate() {
 
         {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
 
-        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
           <span>Show <select
             className="form-control"
             onChange={(e) => handleCountChange(parseInt(e.target.value))}

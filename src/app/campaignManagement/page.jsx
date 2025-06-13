@@ -17,7 +17,7 @@ const Users = () => {
   const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
-  const [previousfilters, setPreviousFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
+  const [previousfilters, setPreviousFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '', affiliate_id: user?.id || user?._id})
   const [previousdata, setPreviousData] = useState([])
   const [previoustotal, setPreviousTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -285,7 +285,7 @@ const SendPreviousRequest = async (campaign,brand) => {
   //     role: '',
   //     search: '',
   //     page: 1,
-  //     count: 5
+  //     count: 10
   //   }
   //   setFilter({ ...filters, ...filter })
   //   getData({ ...filter })

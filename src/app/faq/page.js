@@ -140,7 +140,7 @@ export default function Faq() {
 
             {!loaging && total == 0 ? <div className="py-3 text-center">No Data</div> : <></>}
 
-            <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+            <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
               <span>Show {filters?.count} from {total} faqs</span>
               <ReactPaginate
                 breakLabel="..."

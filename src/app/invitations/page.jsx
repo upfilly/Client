@@ -223,7 +223,7 @@ const Invitations = () => {
       role: '',
       search: '',
       page: 1,
-      count: 5
+      count: 10
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })

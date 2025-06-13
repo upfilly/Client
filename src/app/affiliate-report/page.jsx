@@ -106,7 +106,7 @@ export default function BrandReport() {
       role: '',
       search: '',
       page: 1,
-      count: 5,
+      count: 10,
       transaction_type: ''
     }
     setStartDate("");
@@ -225,7 +225,7 @@ export default function BrandReport() {
           </div>
         </div>
 
-        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
           <span>Show {data?.length} from {total} Users</span>
           <ReactPaginate
             breakLabel="..."

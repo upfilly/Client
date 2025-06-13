@@ -12,7 +12,7 @@ import methodModel from '@/methods/methods';
 
 export default function Commissions() {
   const user = crendentialModel.getUser()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', addedBy: user?.id })
+  const [filters, setFilter] = useState({ page: 0, count: 10, search: '', addedBy: user?.id })
   const [data, setData] = useState([])
   const [pendingData, setPendingData] = useState([])
   const [loaging, setLoader] = useState(true)
@@ -96,7 +96,7 @@ export default function Commissions() {
       role: '',
       search: '',
       page: 1,
-      count: 5
+      count: 10
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })

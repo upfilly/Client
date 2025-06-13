@@ -214,7 +214,7 @@ const Html = ({
                     </div>
                 </div>
 
-                <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+                <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
                     <span>Show <select
                         className="form-control"
                         onChange={(e) => handleCountChange(parseInt(e.target.value))}
