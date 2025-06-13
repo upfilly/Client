@@ -339,11 +339,34 @@ export default function affilate() {
   };
 
   useEffect(() => {
-    setFilter({ ...params, page: 1, count: 10 })
-    setEndDate((params?.end_date == "null" || params?.end_date == null || !params?.end_date) ? null : new Date(params?.end_date))
-    setStartDate((params?.start_date == "null" || params?.start_date == null || !params?.start_date) ? "" : new Date(params?.start_date))
-    getData({ ...params, start_date: (params?.start_date == "null" || params?.start_date == null || !params?.start_date) ? "" : new Date(params?.start_date), end_date: (params?.end_date == "null" || params?.end_date == null || !params?.end_date) ? null : new Date(params?.end_date), page: 1, count: 10 })
-  }, [])
+    const params = Object.fromEntries(searchParams.entries());
+
+    const startDateParam = params.start_date && params.start_date !== "null"
+      ? new Date(params.start_date)
+      : null;
+    const endDateParam = params.end_date && params.end_date !== "null"
+      ? new Date(params.end_date)
+      : null;
+
+    setFilter({
+      ...params,
+      page: 1,
+      count: 10,
+      start_date: startDateParam ? startDateParam.toISOString().split('T')[0] : "",
+      end_date: endDateParam ? endDateParam.toISOString().split('T')[0] : ""
+    });
+
+    setEndDate(endDateParam);
+    setStartDate(startDateParam);
+
+    getData({
+      ...params,
+      page: 1,
+      count: 10,
+      start_date: startDateParam ? startDateParam.toISOString().split('T')[0] : "",
+      end_date: endDateParam ? endDateParam.toISOString().split('T')[0] : ""
+    });
+  }, []);
 
   useEffect(() => {
     const hasCategoryType = categoryType?.length > 0;
