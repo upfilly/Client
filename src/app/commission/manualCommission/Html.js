@@ -26,9 +26,24 @@ const Html = () => {
     const [errors, setErrors] = useState({});
     const history = useRouter()
 
-    const handleDownload = () => {
-        const url = '/searchspring.csv';
-        window.open(url, '_blank');
+    const downloadCSVTemplate = () => {
+        // CSV content with headers and sample data
+        const csvContent = [
+            'affiliate_id,commission_type,amount_of_sale,amount_of_commission,order_reference,commission_status,notes',
+            '12345,sales,100.00,10.00,ORDER123,pending,Sample commission entry',
+            '12346,lead,0.00,25.00,LEAD456,confirmed,Sample lead commission'
+        ].join('\n');
+
+        // Create download link
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'manual_commission_template.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     const handleClose = () => setShow(false);
@@ -387,50 +402,55 @@ const Html = () => {
                                 <Modal show={show} onHide={handleClose} className="shadowboxmodal csv_modal">
                                     <Modal.Header className='align-items-center p-0 pb-3' closeButton>
                                         <h5 className='modal-title'>Sample CSV File</h5>
-                                        <button className='btn btn-primary ml-2' onClick={handleDownload}>Download CSV</button>
+                                        <button className='btn btn-primary ml-2' onClick={downloadCSVTemplate}>Download CSV</button>
                                     </Modal.Header>
                                     <Modal.Body className='p-0'>
                                         <div className="table-responsive">
-                                            <table className="table table-striped table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Product ID</th>
-                                                        <th>SKU</th>
-                                                        <th>Name</th>
-                                                        <th>Price</th>
-                                                        <th>Retail Price</th>
-                                                        <th>Category</th>
-                                                        <th>Brand</th>
-                                                        <th>Size</th>
-                                                        <th>Color</th>
-                                                        <th>Season</th>
-                                                        <th>Avg Rating</th>
-                                                        <th>Rating Count</th>
-                                                        <th>Inventory Count</th>
-                                                        <th>Product URL</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {csvData.map((product, index) => (
-                                                        <tr key={index}>
-                                                            <td>{product["Product ID"]}</td>
-                                                            <td>{product["SKU"]}</td>
-                                                            <td>{product["Name"]}</td>
-                                                            <td>{product["Price"]}</td>
-                                                            <td>{product["Retail Price"]}</td>
-                                                            <td>{product["Category"]}</td>
-                                                            <td>{product["Brand"]}</td>
-                                                            <td>{product["Size"]}</td>
-                                                            <td>{product["Color"]}</td>
-                                                            <td>{product["Season"]}</td>
-                                                            <td>{product["Rating Avg"]}</td>
-                                                            <td>{product["Rating Count"]}</td>
-                                                            <td>{product["Inventory Count"]}</td>
-                                                            <td>{product["Product URL"]}</td>
+
+                                            <div className="table-responsive">
+                                                <table className="table table-bordered">
+                                                    <thead className="table-light">
+                                                        <tr>
+                                                            <th>Affiliate ID</th>
+                                                            <th>Commission Type</th>
+                                                            <th>Amount of Sale</th>
+                                                            <th>Amount of Commission</th>
+                                                            <th>Order Reference</th>
+                                                            <th>Commission Status</th>
                                                         </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>12345</td>
+                                                            <td>sales</td>
+                                                            <td>100.00</td>
+                                                            <td>10.00</td>
+                                                            <td>ORDER123</td>
+                                                            <td>pending</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>12346</td>
+                                                            <td>lead</td>
+                                                            <td>0.00</td>
+                                                            <td>25.00</td>
+                                                            <td>LEAD456</td>
+                                                            <td>confirmed</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div className="mt-4">
+                                                <h5>Instructions:</h5>
+                                                <ul>
+                                                    <li>Keep the column headers exactly as shown</li>
+                                                    <li><strong>Commission Type:</strong> Must be "sales", "lead", or "bonus"</li>
+                                                    <li><strong>Commission Status:</strong> Must be "pending" or "confirmed"</li>
+                                                    <li>Amount fields should be numbers only (decimals allowed)</li>
+                                                    <li>Do not add or remove columns</li>
+                                                    <li>Remove the sample data before uploading your own</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </Modal.Body>
                                 </Modal>

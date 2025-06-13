@@ -40,7 +40,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             {urlAllow('dashboard') ? <>
               <div className="nav-item">
-                <CustomTooltip text="dashboard">
+                <CustomTooltip text="Dashboard">
                   <a className={` side_titles  nav-link hoverclass affilate ${tabclass('dashboard') || tab == 'dashboard' ? '' : 'collapsed-m'}`} onClick={() => tabChange('dashboard')} >
                     <i class="material-icons  svg_iconbx">space_dashboard</i>
                     <span className="  side_head" >Dashboard
@@ -251,7 +251,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </ListItemLink>
             </> : <></>}
 
-            {<ListItemLink to="/notifications" title="Notification">
+            {<ListItemLink to="/notifications" title="Notifications">
               <i class="material-icons  svg_iconbx">notifications_active</i>
               <span className="side_head">Notifications</span>
             </ListItemLink>}
@@ -322,7 +322,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
               {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Marketing">
                 <i class="material-icons svg_iconbx">compare_arrows</i>
-                <span className="side_head">Affiliate Marketing stats</span>
+                <span className="side_head">Transactions</span>
               </ListItemLink>}
 
             </div></>}

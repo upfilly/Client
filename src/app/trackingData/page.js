@@ -393,10 +393,14 @@ export default function affilate() {
                             <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
                             <td className='name-person ml-2' >{itm?.order_id}</td>
                             <td className='name-person ml-2' >{datepipeModel.date(itm?.timestamp)}</td>
-                            <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : "$"}</td>
-                            <td className='name-person ml-2' >
+                            <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
+                            {!itm?.amount_of_commission ? <td className='name-person ml-2' >
                               {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
+                            </td> : 
+                            <td className='name-person ml-2' >
+                              {`$${convertedCurrency(itm?.amount_of_commission)}`}
                             </td>
+                            }
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             <td className='table_dats d-flex align-items-center'>
