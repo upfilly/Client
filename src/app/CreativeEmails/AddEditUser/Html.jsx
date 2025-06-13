@@ -298,7 +298,7 @@ const Html = () => {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
-                            Template Name<span className="star">*</span>
+                            Email Name<span className="star">*</span>
                           </label>
                           <input
                             type="text"
