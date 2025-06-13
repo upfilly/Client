@@ -163,7 +163,7 @@ const SendPreviousRequest = async (campaign,brand) => {
         if (res.success) {
 
           toast.success(res.message)
-          getData({ page: filters?.page });
+          getData({ page: 1 });
         }
         loader(false);
       });
@@ -194,7 +194,7 @@ const SendPreviousRequest = async (campaign,brand) => {
           ApiClient.put('campaign/change-status', { status: itm, id: id, affiliate_id:user?.id || user?._id , reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page:1 });
             }
             loader(false);
           });
