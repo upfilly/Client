@@ -39,7 +39,9 @@ const CampaignDetail = () => {
     });
 
     const back = () => {
-        history.back()
+        const searchParams = window.location.search;
+                
+        window.location.href = '/campaignManagement' + searchParams;
     }
 
     const handleCopyLink = () => {

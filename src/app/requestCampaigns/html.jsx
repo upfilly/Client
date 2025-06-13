@@ -5,6 +5,7 @@ import './style.scss';
 import methodModel from '../../methods/methods';
 import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
+import SelectDropdown from '../components/common/SelectDropdown';
 
 const Html = ({
     view,
@@ -19,6 +20,7 @@ const Html = ({
     sorting,
     getData,
     setFilter,
+    ChangeStatus,
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false);
@@ -44,7 +46,31 @@ const Html = ({
                             <h3 className="">
                                 Campaign Request
                             </h3>
-
+                            <div className='d-flex align-items-center gap-2'>
+                                <SelectDropdown theme='search'
+                                    id="statusDropdown"
+                                    displayValue="name"
+                                    placeholder="All Status"
+                                    intialValue={filters.status}
+                                    result={e => { ChangeStatus(e.value) }}
+                                    options={[
+                                        { id: 'pending', name: 'Pending' },
+                                        { id: 'accepted', name: 'Joined' },
+                                        { id: 'rejected', name: 'Rejected' },
+                                        { id: 'removed', name: 'Removed' },
+                                    ]}
+                                />
+                                {(filters.status) && (
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary reset-btn"
+                                        onClick={e => reset()}
+                                    >
+                                        {/* <i className="material-icons me-1">refresh</i> */}
+                                        Reset
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className='card-body'>
@@ -117,33 +143,33 @@ const Html = ({
                             </div>
                         </div>
 
-                        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
-                                    <span>Show <select
-                                        className="form-control"
-                                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
-                                        value={filters.count}
-                                    >
-                                        <option value={10}>10</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                        <option value={150}>150</option>
-                                        <option value={200}>200</option>
-                                    </select> from {total} Users</span>
-                                    <ReactPaginate
-                                        breakLabel="..."
-                                        nextLabel="Next >"
-                                        initialPage={filters?.page}
-                                        onPageChange={pageChange}
-                                        pageRangeDisplayed={2}
-                                        marginPagesDisplayed={1}
-                                        pageCount={Math.ceil(total / filters?.count)}
-                                        // pageCount={2}
-                                        previousLabel="< Previous"
-                                        renderOnZeroPageCount={null}
-                                        pageClassName={"pagination-item"}
-                                        activeClassName={"pagination-item-active"}
-                                    />
-                                </div>
+                        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
+                            <span>Show <select
+                                className="form-control"
+                                onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                value={filters.count}
+                            >
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                                <option value={150}>150</option>
+                                <option value={200}>200</option>
+                            </select> from {total} Users</span>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Next >"
+                                initialPage={filters?.page}
+                                onPageChange={pageChange}
+                                pageRangeDisplayed={2}
+                                marginPagesDisplayed={1}
+                                pageCount={Math.ceil(total / filters?.count)}
+                                // pageCount={2}
+                                previousLabel="< Previous"
+                                renderOnZeroPageCount={null}
+                                pageClassName={"pagination-item"}
+                                activeClassName={"pagination-item-active"}
+                            />
+                        </div>
 
                         {loaging && <div className="text-center py-4">
                             <img src="/assets/img/loader.gif" className="pageLoader" />

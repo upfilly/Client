@@ -171,7 +171,7 @@ const Users = () => {
   }
 
   const view = (id) => {
-    history.push("/campaignManagement/detail/" + id)
+    // history.push("/requestCampaigns/detail/" + id)
   }
 
   const edit = (id) => {
@@ -193,10 +193,11 @@ const Users = () => {
       role: '',
       search: '',
       page: 1,
-      count: 5
+      count: 10
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })
+    history.push("/requestCampaigns")
     // dispatch(search_success(''))
   }
 

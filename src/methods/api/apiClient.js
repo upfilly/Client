@@ -33,7 +33,7 @@ const handleError = (err, hideError) => {
         if (!message) message = err.message
         // if (!message) message = 'Server Error'
     }
-    // if (!hideError) toast.error(message);
+    if (!hideError && err && err.error && err.error.code != 401) toast.error(message);
 }
 
 class ApiClient {
@@ -107,7 +107,7 @@ class ApiClient {
                         handleError(eres.data, hidError)
                         fulfill({ ...eres.data, success: false });
                     } else {
-                        localStorage.clear()
+                        // localStorage.clear()
                         toast.error('Network Error')
                         reject(error);
                     }

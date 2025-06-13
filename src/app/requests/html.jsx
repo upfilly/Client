@@ -22,6 +22,7 @@ const Html = ({
     setFilter,
     Tracklogin,
     user,
+    getData
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -97,7 +98,7 @@ const Html = ({
                                 />: <></>} */}
 
 
-                                {filters.search ? <>
+                                {filters.search || filters?.status ? <>
                                     <a className="btn btn-primary h-100" onClick={e => reset()}>
                                         Reset
                                     </a>
@@ -194,7 +195,7 @@ const Html = ({
 
 
 
-                        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
                             <span>Show <select
                                 className="form-control"
                                 onChange={(e) => handleCountChange(parseInt(e.target.value))}
@@ -205,7 +206,7 @@ const Html = ({
                                 <option value={100}>100</option>
                                 <option value={150}>150</option>
                                 <option value={200}>200</option>
-                            </select> from {total} Users</span>
+                            </select> from {total} Requests</span>
                             <ReactPaginate
                                 breakLabel="..."
                                 nextLabel="Next >"

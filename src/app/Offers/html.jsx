@@ -26,7 +26,7 @@ const Html = ({
     total,
     setFilter,
     filter,
-    statusChange, dateRange, setDateRange, startDate, endDate, user
+    statusChange, dateRange, setDateRange, startDate, endDate, user,getData
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -44,6 +44,11 @@ const Html = ({
             return false
         }
     }
+
+    const handleCountChange = (count) => {
+        setFilter({ ...filters, count: count, page: 1 });
+        getData({ count: count, page: 1 });
+    };
 
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Add Offers" filters={filters}>
@@ -82,7 +87,7 @@ const Html = ({
                                 onChange={(update) => {
                                     setDateRange([update[0], update[1]])
                                 }}
-                                isClearable
+                                // isClearable
                                 // minDate={new Date()}
                                 withPortal
                                 dateFormat={"dd/MM/yyyy"}
@@ -106,7 +111,7 @@ const Html = ({
 
 
 
-                        {filters.status ? <>
+                        {(filters.status || filters.search || dateRange?.[0]) ? <>
                             <a className="btn btn-primary " onClick={e => reset()}>
                                 Reset
                             </a>
@@ -185,22 +190,33 @@ const Html = ({
 
 
 
-                <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                    <span>Show {data?.length} from {total} Users</span>
-                    <ReactPaginate
-                        breakLabel="..."
-                        nextLabel="Next >"
-                        initialPage={filters?.page}
-                        onPageChange={pageChange}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={1}
-                        pageCount={Math.ceil(total / filters?.count)}
-                        previousLabel="< Previous"
-                        renderOnZeroPageCount={null}
-                        pageClassName={"pagination-item"}
-                        activeClassName={"pagination-item-active"}
-                    />
-                </div>
+                <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
+                                    <span>Show <select
+                                        className="form-control"
+                                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                        value={filters.count}
+                                    >
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                        <option value={150}>150</option>
+                                        <option value={200}>200</option>
+                                    </select> from {total} Offers</span>
+                                    <ReactPaginate
+                                        breakLabel="..."
+                                        nextLabel="Next >"
+                                        initialPage={filters?.page}
+                                        onPageChange={pageChange}
+                                        pageRangeDisplayed={2}
+                                        marginPagesDisplayed={1}
+                                        pageCount={Math.ceil(total / filters?.count)}
+                                        // pageCount={2}
+                                        previousLabel="< Previous"
+                                        renderOnZeroPageCount={null}
+                                        pageClassName={"pagination-item"}
+                                        activeClassName={"pagination-item-active"}
+                                    />
+                                </div>
 
                 {loaging ? <div className="text-center py-4">
                     <img src="/assets/img/loader.gif" className="pageLoader" />

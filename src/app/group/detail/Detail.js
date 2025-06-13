@@ -27,7 +27,9 @@ const Detail = (p) => {
     // console.log(data, "=========")
 
     const back = () => {
-        history.back()
+        const searchParams = window.location.search;
+                
+        window.location.href = '/group' + searchParams;
     }
 
     const edit = (id) => {

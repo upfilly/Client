@@ -10,7 +10,7 @@ import axios from 'axios';
 import environment from '../../environment';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams,useRouter } from 'next/navigation';
+import { useParams,useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
 import methodModel from '../../methods/methods';
 
@@ -25,12 +25,13 @@ const Users = () => {
     const [activeTab, setActiveTab] = useState('active')
     const [form, setform] = useState(userType)
     const history=useRouter()
-    
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
 
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters ,page: filters?.page + 1 ,role})
-            getData({role, page: 1 , isArchive: false})
+            setFilter({ ...filters ,page: filters?.page + 1 ,...params})
+            getData({role, page: 1 , isArchive: false,...params})
         }
     }, [role])
 
@@ -87,7 +88,7 @@ const Users = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+        getData({ ...p , page:1})
     }
 
     
@@ -97,6 +98,7 @@ const Users = () => {
         getData({ role: e, page: 1 })
     }
     const ChangeStatus = (e) => {
+        console.log(e,"klklkl")
         setFilter({ ...filters, status: e, page: 1 })
         getData({ status: e, page: 1 })
     }
@@ -108,7 +110,7 @@ const Users = () => {
 
         Swal.fire({
             title: ``,
-            text: `Do you want to ${status=='active'?'Activate':'Deactivate'} this user`,
+            text: `Do you want to ${status=='active'?'Activate':'Deactivate'} this Campaign`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -128,7 +130,15 @@ const Users = () => {
     }
 
     const view=(id)=>{
-        history.push("/campaign/detail/"+id)
+        const filterParams = {
+            ...filters,
+            page:1,
+          };
+        
+          const queryString = new URLSearchParams(filterParams).toString();
+        
+          history.push(`/campaign/detail/${id}?${queryString}`);
+        // history.push("/campaign/detail/"+id)
     }
 
     const edit=(id)=>{
@@ -154,6 +164,7 @@ const Users = () => {
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
+        history.push("/campaign")
         // dispatch(search_success(''))
     }
 

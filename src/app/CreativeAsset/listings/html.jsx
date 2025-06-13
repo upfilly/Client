@@ -32,7 +32,7 @@ const Html = ({
                                 </tr>
                             </thead>
                             <tbody>
-                                {!loaging && data && data.map((itm, i) => {
+                                {!loaging && data && data?.slice(0,10).map((itm, i) => {
                                     return <tr className='data_row' key={i}>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
@@ -73,8 +73,8 @@ const Html = ({
 
 
 
-            <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-                <span>Show {data?.length} from {total} Users</span>
+            {/* <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
+                <span>Show {data?.length} from {total} Emails</span>
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel="Next >"
@@ -88,7 +88,7 @@ const Html = ({
                     pageClassName={"pagination-item"}
                     activeClassName={"pagination-item-active"}
                 />
-            </div>
+            </div> */}
 
             {loaging ? <div className="text-center py-4">
                 <img src="/assets/img/loader.gif" className="pageLoader" />

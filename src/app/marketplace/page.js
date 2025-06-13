@@ -617,7 +617,7 @@ export default function MarketPlace() {
 
 
             </div>
-            <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+            <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
               <span>Show {data?.length} from {total} Offers</span>
               <ReactPaginate
                 breakLabel="..."

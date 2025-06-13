@@ -14,15 +14,17 @@ import loader from '@/methods/loader';
 const Manualcommission = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role:role||'', isDeleted: false,status:'',addedBy:user?.id || user?._id})
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:'',addedBy:user?.id || user?._id})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
+    const [affiliateData,setAffiliateData] =  useState([])
     const [loaging, setLoader] = useState(true)
     const history=useRouter()
     
     useEffect(() => {
         if (user) {
             // setFilter({ ...filters ,page: filters?.page + 1 ,role})
+            getAffiliateData()
             getData({role, page: 1 })
         }
     }, [role])
@@ -96,6 +98,23 @@ const Manualcommission = () => {
         }
       };
 
+    const getAffiliateData = (p = {}) => {
+        let filter = { brand_id: user?.id }
+        let url = 'getallaffiliatelisting'
+        ApiClient.get(url, filter).then(res => {
+            if (res.success) {
+                const data = res.data
+                const filteredData = data.filter(item => item !== null);
+                const manipulateData = filteredData.map((itm) => {
+                    return {
+                        name: itm?.fullName || itm?.firstName, id: itm?.id || itm?._id
+                    }
+                })
+                setAffiliateData(manipulateData)
+            }
+        })
+    }
+
     const deleteItem = (id) => {
 
         Swal.fire({
@@ -130,13 +149,14 @@ const Manualcommission = () => {
         getData({ ...p , page:filters?.page + 1})
     }
 
-    const ChangeRole = (e) => {
-        setFilter({ ...filters, role: e, page: 1 })
-        getData({ role: e, page: 1 })
+    const ChangeAffiliateStatus = (e) => {
+        setFilter({ ...filters, affiliate: e, page: 1 })
+        getData({ affiliate: e, page: 1 })
     }
+
     const ChangeStatus = (e) => {
-        setFilter({ ...filters, status: e, page: 1 })
-        getData({ status: e, page: 1 })
+        setFilter({ ...filters, commission_type: e, page: 1 })
+        getData({ commission_type: e, page: 1 })
     }
 
     const view=(id)=>{
@@ -156,15 +176,15 @@ const Manualcommission = () => {
     }
 
 
-    const reset=()=>{
-        let filter={
-            status: '',
-            role:'',
-            search:'',
-             page: 1,
-             count:5
+    const reset = () => {
+        let filter = {
+            affiliate: '',
+            commission_type: '',
+            search: '',
+            page: 1,
+            count: 10
         }
-        setFilter({ ...filters,...filter })
+        setFilter({ ...filters, ...filter })
         getData({ ...filter })
         // dispatch(search_success(''))
     }
@@ -196,7 +216,7 @@ const Manualcommission = () => {
         view={view}
         edit={edit}
         role={role}
-        ChangeRole={ChangeRole}
+        ChangeAffiliateStatus={ChangeAffiliateStatus}
         ChangeStatus={ChangeStatus}
         pageChange={pageChange}
         deleteItem={deleteItem}
@@ -208,6 +228,8 @@ const Manualcommission = () => {
         setFilter={setFilter}
         user={user}
         statusChange={statusChange}
+        affiliateData={affiliateData}
+        getData={getData}
     />
     </>;
 };

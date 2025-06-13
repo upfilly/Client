@@ -32,6 +32,11 @@ const Html = () => {
     const [CampaignData, setCampaignData] = useState([])
     const [SelectedCampaign, setSelectedCampaign] = useState('')
     const [shrtlnk, setshrtlnk] = useState('')
+    const [errors, setErrors] = useState({
+        selectedBrand: '',
+        SelectedCampaign: '',
+        DestinationUrl: ''
+    });
 
     const handleInputChange = (selected, value) => {
         setInputValues(prevState => ({
@@ -61,9 +66,9 @@ const Html = () => {
     };
 
     const getData = (p = {}) => {
-        let filter = {brand_id:user?.id}
+        let filter = { brand_id: user?.id }
         let url = 'getallaffiliatelisting'
-        ApiClient.get(url,filter).then(res => {
+        ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 const data = res.data
                 // const filteredData = data.filter(item => item !== null);
@@ -84,10 +89,12 @@ const Html = () => {
 
     const handleBrandChange = event => {
         setSelectedBrand(event.target.value);
+        setErrors(prev => ({ ...prev, selectedBrand: '' }));
     };
 
     const handleCampaignChange = event => {
-        setSelectedCampaign(event.target.value)
+        setSelectedCampaign(event.target.value);
+        setErrors(prev => ({ ...prev, SelectedCampaign: '' }));
     }
 
     useEffect(() => {
@@ -103,13 +110,42 @@ const Html = () => {
             if (res.success) {
                 const data = res?.data?.data?.map((data) => {
                     return ({
-                      id: data?.id || data?._id,
-                      name: data?.name
+                        id: data?.id || data?._id,
+                        name: data?.name
                     })
-                  })
+                })
                 setCampaignData(data)
             }
         })
+    }
+
+    function isValidUrl(url) {
+        if (!url) return false;
+
+        if (!/^https?:\/\//i.test(url)) {
+            return false;
+        }
+
+        try {
+            const urlObj = new URL(url);
+
+            if (!['http:', 'https:'].includes(urlObj.protocol)) {
+                return false;
+            }
+
+            if (!urlObj.hostname ||
+                !/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname)) {
+                return false;
+            }
+
+            if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
+                return false;
+            }
+
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     const copyText = () => {
@@ -124,7 +160,6 @@ const Html = () => {
         });
     };
 
-
     const copyShortText = () => {
         const textToCopy = document.getElementById("textShortToCopy").innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -137,12 +172,11 @@ const Html = () => {
         });
     };
 
-
     const generateShortLink = async (urlData) => {
         if (urlData || url) {
             const data = await axios.post('https://api.t.ly/api/v1/link/shorten', { long_url: urlData || url }, {
                 headers: {
-                    'Authorization':'Bearer KAxgeQzaEgrANTAdKImU25lQVbGZ3rkJTZ0vlN35FXqksFm65E3suA9opwee',
+                    'Authorization': 'Bearer KAxgeQzaEgrANTAdKImU25lQVbGZ3rkJTZ0vlN35FXqksFm65E3suA9opwee',
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
@@ -168,40 +202,50 @@ const Html = () => {
         ApiClient.get('get-affilaite-link').then((res) => {
             if (res?.success) {
                 console.log(res?.data, "res?.datares?.datares?.data")
-                setUrl(res?.data?.link.replace('/?','/'))
-                generateShortLink(res?.data?.link.replace('/?','/'))
+                setUrl(res?.data?.link.replace('/?', '/'))
+                generateShortLink(res?.data?.link.replace('/?', '/'))
             }
             loader(false);
         });
     }, []);
 
+    const validateForm = () => {
+        const newErrors = {
+            selectedBrand: !selectedBrand ? 'Please select an affiliate' : '',
+            SelectedCampaign: !SelectedCampaign ? 'Please select a campaign' : '',
+            DestinationUrl: !DestinationUrl ? 'Destination URL is required' : 
+                            !isValidUrl(DestinationUrl) ? 'Please enter a valid URL (including http:// or https://)' : ''
+        };
+        
+        setErrors(newErrors);
+        return !Object.values(newErrors).some(error => error !== '');
+    };
+
     const handleSubmit = () => {
-        setSubmited(true)
-        if(!DestinationUrl){
-            return
+        setSubmited(true);
+        
+        if (!validateForm()) {
+            return;
         }
-        // if (hasBlankInput) {
-        //     toast.error("Please fill in all required fields.");
-        //     return;
-        // }
 
         const base_url = 'https://api.upfilly.com/';
 
-        // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
-        // const formattedDestinationUrl = DestinationUrl
-        //     .replace(/^https?:\/\//i, '') 
-        //     .replace(/\.com$/i, '');
         const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
 
         const domainParts = rawUrl.split('.');
-        const formattedDestinationUrl = domainParts.slice(0, -1).join('.')
-        const domainExtension = domainParts[domainParts.length - 1];
+        let subdomain = '';
+        let domainName = '';
+        let domainExtension = '';
 
-        // const urlParams = new URLSearchParams({
-        //     fp_sid: selectedBrand,
-        //     affiliate: selectedBrand,
-        //     brand: user?.id
-        // }).toString();
+        if (domainParts.length >= 3) {
+            subdomain = domainParts[0];
+            domainName = domainParts[1];
+            domainExtension = domainParts.slice(2).join('.');
+        } else if (domainParts.length === 2) {
+            domainName = domainParts[0];
+            domainExtension = domainParts[1];
+        }
+
         const urlParams = `fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`;
 
         let finalUrl = new URL(base_url);
@@ -215,31 +259,26 @@ const Html = () => {
         }
 
         if (DestinationUrl) {
-            // const destinationUrlWithParams = `${formattedDestinationUrl}?${urlParams}`;
-            const destinationUrlWithParams = `${formattedDestinationUrl}`;
+            const destinationUrlWithParams = `${domainName}`;
+            finalUrl.searchParams.set('hUrl', subdomain);
             finalUrl.searchParams.set('url', destinationUrlWithParams);
             finalUrl.searchParams.set('ext', domainExtension);
         }
 
         const finalUrlString = finalUrl.toString();
 
-
-        // loader(true);
         ApiClient.post('get-link', { "base_url": finalUrlString, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
                 setSubmited(false)
-                setUrl(res?.data.replace('/?','/'));
-                generateShortLink(res?.data.replace('/?','/'))
+                setUrl(res?.data.replace('/?', '/'));
+                generateShortLink(res?.data.replace('/?', '/'))
                 if (!SelectDropdown) {
                     setSelectDropdown(!SelectDropdown)
                 }
-                // setSelectedBrand('')
             }
-            // loader(false);
         });
     };
-
 
     return (
         <>
@@ -257,48 +296,64 @@ const Html = () => {
                             <div className='row'>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3'>
-                                        <label className='mb-2' >Select Affiliate</label>
-                                        <select class="form-select mb-2" id="brandSelect" value={selectedBrand} onChange={handleBrandChange}>
+                                        <label className='mb-2' >Select Affiliate<span className="star">*</span></label>
+                                        <select 
+                                            className={`form-select mb-2 ${errors.selectedBrand && 'is-invalid'}`} 
+                                            id="brandSelect" 
+                                            value={selectedBrand} 
+                                            onChange={handleBrandChange}
+                                        >
                                             <option value="">Select Affiliate</option>
                                             {brandData.map(brand => (
                                                 <option key={brand.id} value={brand.id} >{brand.name}</option>
                                             ))}
                                         </select>
+                                        {errors.selectedBrand && <div className="invalid-feedback d-block">{errors.selectedBrand}</div>}
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-6'>
                                     <div className='mb-3' >
-                                        <label className='mb-2' >Select Campaign</label>
-                                        <select class="form-select mb-2" id="brandSelect" value={SelectedCampaign} onChange={handleCampaignChange}>
+                                        <label className='mb-2' >Select Campaign<span className="star">*</span></label>
+                                        <select 
+                                            className={`form-select mb-2 ${errors.SelectedCampaign && 'is-invalid'}`} 
+                                            id="brandSelect" 
+                                            value={SelectedCampaign} 
+                                            onChange={handleCampaignChange}
+                                        >
                                             <option value="">Select Campaign</option>
                                             {CampaignData.map(item => (
                                                 <option key={item.id || item._id} value={item.id || item._id} >{item.name}</option>
                                             ))}
                                         </select>
+                                        {errors.SelectedCampaign && <div className="invalid-feedback d-block">{errors.SelectedCampaign}</div>}
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>
                                         Destination Url<span className="star">*</span>
                                     </label>
-                                    <div className="input-group  border_description">
+                                    <div className="input-group border_description">
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={`form-control ${errors.DestinationUrl && 'is-invalid'}`}
                                             value={DestinationUrl}
-                                            onChange={(e) => setDestinationUrl(e.target.value)}
+                                            onChange={e => {
+                                                const url = e.target.value;
+                                                setDestinationUrl(url);
+                                                setErrors(prev => ({ ...prev, DestinationUrl: '' }));
+                                            }}
                                         />
                                     </div>
-                                    {(!DestinationUrl && isSubmited) && <div className="invalid-feedback d-block">Destination url is Required</div>}
+                                    {errors.DestinationUrl && <div className="invalid-feedback d-block">{errors.DestinationUrl}</div>}
                                 </div>
 
                                 <div className='col-12 col-md-12 mb-3'>
                                     {/* Show/Hide Custom Parameters Checkbox */}
                                     <div className="form-check">
-                                        <input 
-                                            className="form-check-input" 
-                                            type="checkbox" 
-                                            id="showCustomParameters" 
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="showCustomParameters"
                                             checked={showCustomParameters}
                                             onChange={toggleCustomParameters}
                                         />
@@ -310,7 +365,7 @@ const Html = () => {
 
                                 {showCustomParameters && (
                                     <div className='col-12 col-md-12'>
-                                        <div class="select_parabx mb-3" >
+                                        <div className="select_parabx mb-3" >
                                             <div className='mb-3' >
                                                 <label className='mb-2'>Select Custom Parameters</label>
                                                 <MultiSelectValue
@@ -353,7 +408,7 @@ const Html = () => {
                             </div>
 
                             <div className='text-end '>
-                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Genrate URL</button>
+                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Generate URL</button>
                             </div>
 
                             <h6 className="link_default m-0"> Your Link :</h6>
@@ -385,10 +440,10 @@ const Html = () => {
                 </div>
             </Layout>
             {showNewKeyForm && (
-                <div class="modal d-block">
-                    <div class="modal-dialog  modal-dialog-centered dateModal" role="document">
-                        <div class="modal-content ">
-                            <div class="modal-body">
+                <div className="modal d-block">
+                    <div className="modal-dialog  modal-dialog-centered dateModal" role="document">
+                        <div className="modal-content ">
+                            <div className="modal-body">
                                 <div className='d-flex justify-content-between'>
                                     <h5 className='mb-3'>Add New Key</h5>
                                     <i className='fa fa-times' onClick={() => setShowNewKeyForm(false)}></i>
@@ -403,7 +458,7 @@ const Html = () => {
                                     <input type="text" className='form-control' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} placeholder="Enter Label" />                            </div>
 
                                 <div className='text-end'>
-                                    <button type="button" class="btn btn-primary" onClick={handleAddNew} >Add Key</button>
+                                    <button type="button" className="btn btn-primary" onClick={handleAddNew} >Add Key</button>
                                 </div>
                             </div>
 

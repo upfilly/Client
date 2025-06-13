@@ -8,7 +8,7 @@ import ApiClient from '@/methods/api/apiClient';
 import SelectDropdown from '../components/common/SelectDropdown';
 import datepipeModel from '@/models/datepipemodel';
 import ReactPaginate from 'react-paginate';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Dropdown, DropdownButton, DropdownItem } from 'react-bootstrap';
@@ -76,7 +76,61 @@ export default function affilate() {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
   const [expandedSubCategories, setExpandedSubCategories] = useState([]);
   const [expandedCategories, setExpandedCategories] = useState([]);
-  const [camppaignData,setCamppaignData]= useState([]);
+  const [camppaignData, setCamppaignData] = useState([]);
+  const searchParams = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
+
+  console.log(filters, "paramsparamsparams")
+
+  const view = (id) => {
+    const filterParams = {
+      ...filters,
+      page: 1,
+      // currency: selectedCurrency,
+      // region: selectedRegion?.join(","),
+      "start_date": startDate ? startDate.toISOString().split('T')[0] : null,
+      "end_date": endDate ? endDate.toISOString().split('T')[0] : null,
+      category_type: categoryType?.join(","),
+      category: selectedCategory?.join(","),
+      sub_category: selectedSubCategory?.join(","),
+      // countries: ?.join(","),
+      sub_child_category: selectedSubSubCategory?.join(",")
+    };
+
+    const queryString = new URLSearchParams(filterParams).toString();
+
+    history.push(`/affiliate/detail/${id}?${queryString}`);
+  };
+
+  function parseStringToArray(input) {
+    if (typeof input !== "string") return [];
+
+    // Split by comma and trim each element
+    return input.split(',').map(item => item.trim());
+  }
+
+  useEffect(() => {
+    // getExchangeRate(params?.currency)
+    setSelectedCategory(parseStringToArray(params?.category));
+    setSelectedSubCategory(parseStringToArray(params?.sub_category));
+    setSelectedSubSubCategory(parseStringToArray(params?.sub_child_category));
+    // setSelectedRegion(parseStringToArray(params?.region));
+    // setSelectedCountries(parseStringToArray(params?.countries));
+  }, [])
+
+  const resetUrl = () => {
+    let filter = {
+      status: '',
+      role: '',
+      search: '',
+      page: 1,
+      count: 10
+    }
+    setFilter({ ...filters, ...filter })
+    getData({ ...filter, page: 1 })
+    setSelectedCurrency("USD")
+    history.push("/campaignManagement")
+  }
 
   const toggleCategoryExpand = (categoryId) => {
     setExpandedCategories(prev =>
@@ -87,20 +141,20 @@ export default function affilate() {
   };
 
   const getCampaignData = (p = {}) => {
-    let url='campaign/brand/all'
+    let url = 'campaign/brand/all'
     ApiClient.get(url).then(res => {
-        if (res.success) {
-            setCamppaignData(res.data.data.map((dat)=>{
-              return({
-                name:dat?.name,
-                id:dat?.id || dat?._id
-              })
-            }))
-            // setTotal(res.data.total_count)
-        }
+      if (res.success) {
+        setCamppaignData(res.data.data.map((dat) => {
+          return ({
+            name: dat?.name,
+            id: dat?.id || dat?._id
+          })
+        }))
+        // setTotal(res.data.total_count)
+      }
     })
-}
-  
+  }
+
 
   const toggleSubCategoryExpand = (subCategoryId) => {
     setExpandedSubCategories(prev =>
@@ -192,14 +246,14 @@ export default function affilate() {
     setform({ ...form, tags: newTags });
   };
 
-  const Commission = [
-    { id: "Program Standard Commission Rates", name: "Program Standard Commission Rates" },
-    { id: "Default 8% Commission", name: "Default 8% Commission" },
-    { id: "Padel/Sports Publisher", name: "Padel/Sports Publisher" },
-    { name: "2% Commission Increase (10%)" },
-    { id: "5% Commission Increase (13%)", name: "5% Commission Increase (13%)" },
-    { id: "2% Commission Increase (7%)", name: "2% Commission Increase (7%)" }
-  ]
+  // const Commission = [
+  //   { id: "Program Standard Commission Rates", name: "Program Standard Commission Rates" },
+  //   { id: "Default 8% Commission", name: "Default 8% Commission" },
+  //   { id: "Padel/Sports Publisher", name: "Padel/Sports Publisher" },
+  //   { name: "2% Commission Increase (10%)" },
+  //   { id: "5% Commission Increase (13%)", name: "5% Commission Increase (13%)" },
+  //   { id: "2% Commission Increase (7%)", name: "2% Commission Increase (7%)" }
+  // ]
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -238,28 +292,32 @@ export default function affilate() {
     return item?.id
   })
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
-  const handleCheckboxChange = (option) => {
-    if (selectedOptions.some((selectedOption) => selectedOption.id === option.id)) {
-      setSelectedOptions(selectedOptions.filter((selectedOption) => selectedOption.id !== option.id));
-    } else {
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
+  // const handleCheckboxChange = (option) => {
+  //   if (selectedOptions.some((selectedOption) => selectedOption.id === option.id)) {
+  //     setSelectedOptions(selectedOptions.filter((selectedOption) => selectedOption.id !== option.id));
+  //   } else {
+  //     setSelectedOptions([...selectedOptions, option]);
+  //   }
+  // };
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
     filter({ "start_date": start.toISOString().split('T')[0], "end_date": end.toISOString().split('T')[0] })
-
   };
 
   const getData = (p = {}) => {
     setLoader(true)
     let filter = { ...filters, ...p }
+    if (filter?.start_date == null || filter?.start_date == "null" || !filter?.start_date) {
+      filter = {
+        ...filters, ...p, start_date: "", end_date: ""
+      }
+    }
     ApiClient.get(`getAllAffiliateForBrand`, filter).then(res => {
       if (res.success) {
         setData(res?.data)
@@ -281,12 +339,54 @@ export default function affilate() {
   };
 
   useEffect(() => {
-    getData({ page: 1 })
-  }, [])
+    const params = Object.fromEntries(searchParams.entries());
+
+    const startDateParam = params.start_date && params.start_date !== "null"
+      ? new Date(params.start_date)
+      : null;
+    const endDateParam = params.end_date && params.end_date !== "null"
+      ? new Date(params.end_date)
+      : null;
+
+    setFilter({
+      ...params,
+      page: 1,
+      count: 10,
+      start_date: startDateParam ? startDateParam.toISOString().split('T')[0] : "",
+      end_date: endDateParam ? endDateParam.toISOString().split('T')[0] : ""
+    });
+
+    setEndDate(endDateParam);
+    setStartDate(startDateParam);
+
+    getData({
+      ...params,
+      page: 1,
+      count: 10,
+      start_date: startDateParam ? startDateParam.toISOString().split('T')[0] : "",
+      end_date: endDateParam ? endDateParam.toISOString().split('T')[0] : ""
+    });
+  }, []);
 
   useEffect(() => {
-    getData({ page: 1, cat_type: categoryType?.map((dat) => dat).join(","), category_id: selectedCategory?.map((dat) => dat).join(","), sub_category_id: selectedSubCategory?.map((dat) => dat).join(","), sub_child_category_id: selectedSubSubCategory?.map((dat) => dat).join(",") })
-  }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory])
+    const hasCategoryType = categoryType?.length > 0;
+    const hasSelectedCategory = selectedCategory?.length > 0;
+    const hasSelectedSubCategory = selectedSubCategory?.length > 0;
+    const hasSelectedSubSubCategory = selectedSubSubCategory?.length > 0;
+
+    if (hasCategoryType || hasSelectedCategory || hasSelectedSubCategory || hasSelectedSubSubCategory) {
+      setFilter({ ...filters, ...params, count: 10 });
+      getData({
+        ...filters,
+        ...params,
+        page: 1,
+        cat_type: hasCategoryType ? categoryType.map((dat) => dat).join(",") : undefined,
+        category_id: hasSelectedCategory ? selectedCategory.map((dat) => dat).join(",") : undefined,
+        sub_category_id: hasSelectedSubCategory ? selectedSubCategory.map((dat) => dat).join(",") : undefined,
+        sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.map((dat) => dat).join(",") : undefined
+      });
+    }
+  }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
 
   useEffect(() => {
     getCategory()
@@ -300,7 +400,7 @@ export default function affilate() {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page + 1 })
+    getData({ ...p, page: 1 })
   }
 
   const sorting = (key) => {
@@ -333,9 +433,9 @@ export default function affilate() {
       invite_status: '',
       role: '',
       search: '',
-      // role: 'affiliate',
-      campaign:"",
-      page: 0,
+      role: 'affiliate',
+      campaign: "",
+      page: 1,
       count: 10,
       end_date: '',
       start_date: '',
@@ -345,22 +445,24 @@ export default function affilate() {
       category_id: '',
       cat_type: ''
     }
-    setStartDate("");
-    setEndDate("");
+    setStartDate(null);
+    setEndDate(null);
     setCategoryType([]);
     setSelectedCategory([]);
     setSelectedSubCategory([]);
     setSelectedSubSubCategory([]);
     setSelectedOptions([])
     setIsOpen(false)
-    setFilter({ ...filters, ...filter })
-    // getData({ ...filter })
+    setFilter({ ...filter })
+    getData({ ...filter, page: 1 })
+    history.push("/affiliate")
+
     // dispatch(search_success(''))
   }
 
-  const view = (id) => {
-    history.push("/affiliate/detail/" + id)
-  }
+  // const view = (id) => {
+  //   history.push("/affiliate/detail/" + id)
+  // }
 
   const handleAffiliateGroup = () => {
     ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id, group_type: 'affiliate' }).then(res => {
@@ -407,7 +509,7 @@ export default function affilate() {
   }, [])
 
   useEffect(() => {
-    if (selectedOptions) {
+    if (selectedOptions?.length > 0) {
       filter({ ...filters, "affiliate_group_id": selectedGroupId.join(',') })
     }
   }, [selectedOptions])
@@ -669,7 +771,7 @@ export default function affilate() {
                     </div>
                   </div> */}
 
-                  {filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
+                  {selectedSubSubCategory?.length || selectedCategory?.length || selectedSubSubCategory?.length || filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
                     <a className="btn btn-primary   " onClick={e => reset()}>
                       Reset
                     </a>
@@ -987,7 +1089,7 @@ export default function affilate() {
 
         {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>}
 
-        <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
           <span>Show <select
             className="form-control"
             onChange={(e) => handleCountChange(parseInt(e.target.value))}
@@ -998,7 +1100,7 @@ export default function affilate() {
             <option value={100}>100</option>
             <option value={150}>150</option>
             <option value={200}>200</option>
-          </select> from {total} Users</span>
+          </select> from {total} Affiliates</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"

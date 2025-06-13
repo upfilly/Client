@@ -148,7 +148,7 @@ const Html = ({
 
                           
 
-                            <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+                            <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
                                 <span>Show {data?.length} from {total} campaignManagement</span>
                                 <ReactPaginate
                                     breakLabel="..."

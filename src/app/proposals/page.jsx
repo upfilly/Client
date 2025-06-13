@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
 const Users = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '', brand_id: user?.id ,affiliate_id:user.id})
+  const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '', brand_id: user?.id ,affiliate_id:user.id})
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -202,7 +202,7 @@ const Users = () => {
       role: '',
       search: '',
       page: 1,
-      count: 5
+      count: 10
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })

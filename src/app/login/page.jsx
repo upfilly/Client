@@ -11,7 +11,6 @@ import crendentialModel from "../../models/credential.model";
 import { requestForToken } from '../firebase/function';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 export default function Login() {
   const history = useRouter()
@@ -174,7 +173,7 @@ export default function Login() {
           // }
           ;
       }
-      toast.error(res?.error?.message)
+      // toast.error(res?.error?.message)
       loader(false)
     })
   };

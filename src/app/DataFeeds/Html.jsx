@@ -182,7 +182,7 @@ const Html = ({
                     </div>
                 </div>
 
-                <div className={`paginationWrapper ${!loaging ? '' : 'd-none'}`}>
+                <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
                     <span>Show <select
                         className="form-control"
                         onChange={(e) => handleCountChange(parseInt(e.target.value))}
@@ -193,7 +193,7 @@ const Html = ({
                         <option value={100}>100</option>
                         <option value={150}>150</option>
                         <option value={200}>200</option>
-                    </select> from {total} Users</span>
+                    </select> from {total} Data Feeds</span>
                     <ReactPaginate
                         breakLabel="..."
                         nextLabel="Next >"

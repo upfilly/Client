@@ -14,7 +14,7 @@ import axios from 'axios';
 const Requests = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '' })
+  const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '' })
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -212,7 +212,7 @@ const Requests = () => {
       role: '',
       search: '',
       page: 1,
-      count: 5
+      count: 10
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })

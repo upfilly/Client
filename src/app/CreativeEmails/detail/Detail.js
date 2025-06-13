@@ -64,8 +64,15 @@ const Detail = (p) => {
         })
     };
 
+    // const back = () => {
+    //     history.back()
+    // }
+
     const back = () => {
-        history.back()
+        const searchParams = window.location.search;
+
+        window.location.href = '/CreativeEmails' + searchParams;
+        // history.back()
     }
 
     useEffect(() => {
@@ -92,7 +99,7 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Template Name:</p>
+                                                <p className='headmain'>Email Name:</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>

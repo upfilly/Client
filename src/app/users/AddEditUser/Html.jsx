@@ -40,7 +40,7 @@ const Html = ({
                 ></i>
               </a>
               <h3 className="Profilehedding add_title">
-                {form && form?.id ? "Edit" : "Add"}{" "}
+                {id ? "Edit" : "Add"}{" "}
                 {role ? rolesModel.name(role) : "User"}
               </h3>
             </div>
@@ -48,7 +48,7 @@ const Html = ({
             <div className="  add_team_bx ">
               <div className="form-row ">
                 <div className="col-md-12 mb-3">
-                  <label>Select Role</label>
+                  <label>Select Role<span className="star">*</span></label>
                   <div className="select_row custom-dropdown">
                     <SelectDropdown
                       theme="search"
@@ -56,7 +56,7 @@ const Html = ({
                       displayValue="name"
                       placeholder="Select Role"
                       intialValue={form?.role}
-                      // disabled={form?.id ? true : false}
+                      disabled={id ? true : false}
                       result={(e) => {
                         setform({ ...form, role: e.value });
                       }}
@@ -73,6 +73,13 @@ const Html = ({
                         { id: "publisher", name: "Publisher" },
                       ]}
                     />
+                    {submitted && !form?.role ? (
+                    <div className="invalid-feedback d-block">
+                      Role is Required
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
@@ -125,6 +132,7 @@ const Html = ({
                     type="email"
                     className="form-control"
                     value={form?.email}
+                    disabled={id}
                     onChange={(e) =>
                       setform({ ...form, email: e.target.value })
                     }

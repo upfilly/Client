@@ -106,7 +106,7 @@ export default function CampaignReport() {
       role: '',
       search: '',
       page: 1,
-      count: 5,
+      count: 10,
       transaction_type: ''
     }
     setStartDate("");
@@ -226,8 +226,8 @@ export default function CampaignReport() {
           </div>
         </div>
 
-        <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
-          <span>Show {data?.length} from {total} Users</span>
+        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
+          <span>Show {data?.length} from {total} reports</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"

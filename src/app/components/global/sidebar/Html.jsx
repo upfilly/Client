@@ -40,7 +40,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
 
             {urlAllow('dashboard') ? <>
               <div className="nav-item">
-                <CustomTooltip text="dashboard">
+                <CustomTooltip text="Dashboard">
                   <a className={` side_titles  nav-link hoverclass affilate ${tabclass('dashboard') || tab == 'dashboard' ? '' : 'collapsed-m'}`} onClick={() => tabChange('dashboard')} >
                     <i class="material-icons  svg_iconbx">space_dashboard</i>
                     <span className="  side_head" >Dashboard
@@ -111,13 +111,13 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                   </div>
                 </ListItemLink>
               </> : <></>}
-              {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" title="Affiliate Request">
+              {/* {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" title="Affiliate Request">
 
                 <div className="d-flex align-items-center icns_center">
                   <i class="material-icons svg_iconbx">payments</i >
                   <span className="side_head">Affiliate Request</span>
                 </div>
-              </ListItemLink>}
+              </ListItemLink>} */}
               {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requests" title="Sent Offers">
                 <i className="material-icons  svg_iconbx" title="campaignManagement">business</i>
                 <span className="side_head">Sent Offers</span>
@@ -251,9 +251,14 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
               </ListItemLink>
             </> : <></>}
 
-            {<ListItemLink to="/notifications" title="Notification">
+            {<ListItemLink to="/notifications" title="Notifications">
               <i class="material-icons  svg_iconbx">notifications_active</i>
-              <span className="side_head">Notification</span>
+              <span className="side_head">Notifications</span>
+            </ListItemLink>}
+
+             {<ListItemLink to="/chat" title="Messages">
+              <i class="material-icons  svg_iconbx">question_answer</i>
+              <span className="side_head">Messages</span>
             </ListItemLink>}
 
             {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
@@ -315,9 +320,9 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </ListItemLink>
               </> : <></>}
 
-              {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Marketing">
+              {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Transactions">
                 <i class="material-icons svg_iconbx">compare_arrows</i>
-                <span className="side_head">Affiliate Marketing stats</span>
+                <span className="side_head">Transactions</span>
               </ListItemLink>}
 
             </div></>}

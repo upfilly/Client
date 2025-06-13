@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import PageContainer from "../components/main/PageContainer";
-import Header from "../components/global/header";
 import "./style.scss";
 import { useRouter } from "next/navigation";
 import ApiClient from "../../methods/api/apiClient";
@@ -18,6 +16,7 @@ import "react-single-image-viewer/dist/index.css";
 import loader from "@/methods/loader";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import Layout from "../components/global/layout";
 
 export default function Chat() {
   const user = crendentialModel.getUser();
@@ -591,9 +590,8 @@ export default function Chat() {
 
   return (
     <>
-      <Header settingData={settingData} />
-      <PageContainer title="Chat" description="Chat">
-
+      {/* <Header settingData={settingData} /> */}
+      <Layout title="Chat" description="Chat" name={"Chats"}>
         <div className="container chat-bg-main">
           <div className="chat-bg">
             <div className="row">
@@ -602,7 +600,7 @@ export default function Chat() {
                   <div className="card p-0">
                     <div className="card-header pl-0 pr-0 p-0" id="headingOne">
                       <div className="pointer">
-                        <h3 class="about_head" > <i onClick={() => router.push('/requests')} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
+                        <h3 class="about_head" > <i onClick={() => router.back()} className="fa  fa-angle-left mr-1"></i> All Chats{" "} </h3>
                       </div>
                       <div className="msg_info person-chat hide_icon_Group b-none">
                         {user?.role == "brand" && <button className=" btn-primary py-1 btn-sm" onClick={handleShow}>Create a Group</button>}
@@ -1126,7 +1124,7 @@ export default function Chat() {
 
 
 
-      </PageContainer>
+      </Layout>
     </>
   );
 }

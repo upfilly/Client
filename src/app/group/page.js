@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import Html from './Html';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import methodModel from '../../methods/methods';
 
 const Categories = () => {
@@ -20,12 +20,13 @@ const Categories = () => {
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
     const history=useRouter()
-    
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
 
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters})
-            getData({ page: 1 })
+            setFilter({ ...filters,...params})
+            getData({...params, page: 1 })
         }
     }, [])
 
@@ -139,7 +140,15 @@ const Categories = () => {
     }
 
     const view = (id) => {
-        history.push("/group/detail/" + id)
+        const filterParams = {
+            ...filters,
+            page:1,
+          };
+        
+          const queryString = new URLSearchParams(filterParams).toString();
+        
+          history.push(`/group/detail//${id}?${queryString}`);
+        // history.push("/group/detail/" + id)
     }
 
     const edit = (id) => {
@@ -164,6 +173,7 @@ const Categories = () => {
         }
         setFilter({ ...filters, ...filter })
         getData({ ...filter })
+        history.push("/group")
         // dispatch(search_success(''))
     }
 
@@ -188,6 +198,7 @@ const Categories = () => {
             filter={filter}
             reset={reset}
             sorting={sorting}
+            getData={getData}
             add={add}
             view={view}
             edit={edit}

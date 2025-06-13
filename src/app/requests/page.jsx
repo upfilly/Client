@@ -7,24 +7,26 @@ import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
 import axios from 'axios';
 
 const Requests = () => {
   const user = crendentialModel.getUser()
   const { role } = useParams()
-  const [filters, setFilter] = useState({ page: 0, count: 5, search: '', role: role || '', isDeleted: false, status: '' })
+  const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role: role || '', isDeleted: false, status: '' })
   const [data, setData] = useState([])
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
   const [ip,setIP]=useState("")
   const history = useRouter()
+  const searchParams = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
 
   useEffect(() => {
     if (user) {
-      // setFilter({ ...filters ,role})
-      getData({ role, page: 1 })
+      setFilter({ ...filters ,...params})
+      getData({ ...params, page: 1 })
     }
   }, [role])
 
@@ -190,7 +192,15 @@ const Requests = () => {
   }
 
   const view = (id) => {
-    history.push("/requests/detail/" + id)
+    const filterParams = {
+      ...filters,
+      page:1,
+    };
+  
+    const queryString = new URLSearchParams(filterParams).toString();
+  
+    history.push(`/requests/detail/${id}?${queryString}`);
+    // history.push("/requests/detail/" + id)
   }
 
   const edit = (id) => {
@@ -212,10 +222,11 @@ const Requests = () => {
       role: '',
       search: '',
       page: 1,
-      count: 5
+      count: 10
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })
+    history.push("/requests")
     // dispatch(search_success(''))
   }
 
@@ -261,6 +272,7 @@ const Requests = () => {
     sendProposal={sendProposal}
     Tracklogin={Tracklogin}
     user={user}
+    getData={getData}
   />
   </>;
 };

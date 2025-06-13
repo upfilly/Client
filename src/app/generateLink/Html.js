@@ -89,6 +89,35 @@ const Html = () => {
         generateShortLink(url)
     }, [url])
 
+    function isValidUrl(url) {
+        if (!url) return false;
+
+        if (!/^https?:\/\//i.test(url)) {
+            return false;
+        }
+
+        try {
+            const urlObj = new URL(url);
+
+            if (!['http:', 'https:'].includes(urlObj.protocol)) {
+                return false;
+            }
+
+            if (!urlObj.hostname ||
+                !/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname)) {
+                return false;
+            }
+
+            if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
+                return false;
+            }
+
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
     const copyText = () => {
         const textToCopy = document.getElementById("textToCopy").innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -150,11 +179,11 @@ const Html = () => {
 
     const handleSubmit = () => {
         setSubmited(true)
-        if(!DestinationUrl){
+        if(!DestinationUrl || !selectedBrand){
             return
         }
-        const base_url = 'https://upfilly.com/';
-        const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
+        const base_url = 'https://api.upfilly.com/';
+        // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
         // const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
         // const formattedDestinationUrl = DestinationUrl
         //     .replace(/^https?:\/\//i, '') 
@@ -163,8 +192,18 @@ const Html = () => {
         const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
 
         const domainParts = rawUrl.split('.');
-        const formattedDestinationUrl = domainParts.slice(0, -1).join('.')
-        const domainExtension = domainParts[domainParts.length - 1];
+        let subdomain = '';
+        let domainName = '';
+        let domainExtension = '';
+
+        if (domainParts.length >= 3) {
+            subdomain = domainParts[0];
+            domainName = domainParts[1];
+            domainExtension = domainParts.slice(2).join('.');
+        } else if (domainParts.length === 2) {
+            domainName = domainParts[0]; // "example"
+            domainExtension = domainParts[1]; // "com"
+        }
         
         const baseParams = new URLSearchParams({
             affiliate_id: user?.id,
@@ -180,7 +219,7 @@ const Html = () => {
         let finalUrl = base_url;
         
         if (user?.id) {
-            finalUrl += `?affiliate_id=${user?.id}`;
+            finalUrl += `affiliate_id=${user?.id}`;
         }
         
         if (selectedBrand) {
@@ -189,9 +228,9 @@ const Html = () => {
         
         if (DestinationUrl) {
             // const finalDestinationUrl = formattedDestinationUrl + (urlParams ? `?${urlParams}` : '');
-            const finalDestinationUrl = formattedDestinationUrl
+            const finalDestinationUrl = domainName
             // finalUrl += `&url=${encodeURIComponent(finalDestinationUrl)}`;
-            finalUrl += `&url=${finalDestinationUrl}&ext=${domainExtension}`;
+            finalUrl += `&hUrl=${subdomain}&url=${finalDestinationUrl}&ext=${domainExtension}`;
         }
         
         if (!finalUrl.includes('?')) {
@@ -239,6 +278,7 @@ const Html = () => {
                                                 <option key={brand.id} value={brand.id} >{brand.name}</option>
                                             ))}
                                         </select>
+    {(!selectedBrand && isSubmited) && <div className="invalid-feedback d-block">Please select a merchant</div>}
                                     </div>
                                 </div>
                                 <div className="col-md-12 mb-3 custom-input">
@@ -250,10 +290,18 @@ const Html = () => {
                                             type="text"
                                             className="form-control"
                                             value={DestinationUrl}
-                                            onChange={(e) => setDestinationUrl(e.target.value)}
+                                             onChange={e => {
+                                                const url = e.target.value;
+                                                setDestinationUrl(url);
+                                            }}
+                                            style={!isValidUrl(DestinationUrl) && DestinationUrl ? { borderColor: 'red' } : {}}
+                                            // onChange={(e) => setDestinationUrl(e.target.value)}
                                         />
                                     </div>
                                     {(!DestinationUrl && isSubmited) && <div className="invalid-feedback d-block">Destination url is Required</div>}
+                                    {!isValidUrl(DestinationUrl) && DestinationUrl && (
+                                        <div className="text-danger">Please enter a valid URL (including http:// or https://)</div>
+                                    )}
                                 </div>
 
                                 {/* Custom Parameters Checkbox */}
@@ -323,7 +371,14 @@ const Html = () => {
                             </div>
 
                             <div className='text-end'>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Generate URL</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={handleSubmit}
+                                    disabled={!isValidUrl(DestinationUrl)}
+                                >
+                                    Generate URL
+                                </button>
                             </div>
 
                             {permission('generate_link_get') && <div className='mb-3'>
@@ -335,8 +390,8 @@ const Html = () => {
                                             <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                         </div>
                                     </div>
-                                    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}`}</p>}
-                                    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://upfilly.com/?affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+                                    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}`}</p>}
+                                    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                                 </div>
                             </div>}
                             {copied && <div className="">Copied!</div>}

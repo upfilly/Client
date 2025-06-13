@@ -73,6 +73,12 @@ const Html = () => {
                 return
             }
         }
+        if(selectedOption != "csv"){
+            if(!url){
+                setError("Url required")
+                return
+            }
+        }
         //  else {
         //     if (!url || !urlPattern.test(url)) {
         //         setError("Please enter a valid URL.");

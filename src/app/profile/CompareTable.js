@@ -75,7 +75,7 @@ import methodModel from '../../methods/methods';
       role: '',
       search: '',
       page: 1,
-      count: 5,
+      count: 10,
       transaction_type: ''
     }
     setStartDate("");
@@ -180,7 +180,7 @@ import methodModel from '../../methods/methods';
 
 
 
-      <div className={`paginationWrapper ${!loaging && total > filters?.count ? '' : 'd-none'}`}>
+      <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
         <span>Show {data?.length} from {total} Users</span>
         <ReactPaginate
           breakLabel="..."
