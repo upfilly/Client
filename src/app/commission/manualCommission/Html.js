@@ -295,7 +295,7 @@ const Html = () => {
                                                 <div className='mb-3' >
                                                     <label>Amount of Sale </label>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         className={`form-control ${errors.amount_of_sale ? 'is-invalid' : ''}`}
                                                         placeholder="Enter your Amount of Sale"
                                                         value={formData?.amount_of_sale}
@@ -307,7 +307,7 @@ const Html = () => {
                                                 <div className='mb-3' >
                                                     <label>Amount of Commission </label>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         className={`form-control ${errors.amount_of_commission ? 'is-invalid' : ''}`}
                                                         placeholder="Enter your Amount of Commission"
                                                         value={formData?.amount_of_commission}
