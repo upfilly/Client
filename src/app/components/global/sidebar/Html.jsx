@@ -320,7 +320,7 @@ const Html = ({ tabChange, tab, ListItemLink, tabclass, urlAllow, setActiveSideb
                 </ListItemLink>
               </> : <></>}
 
-              {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Marketing">
+              {user && user?.role == "brand" && <ListItemLink to="/trackingData" title="Transactions">
                 <i class="material-icons svg_iconbx">compare_arrows</i>
                 <span className="side_head">Transactions</span>
               </ListItemLink>}
