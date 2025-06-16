@@ -271,7 +271,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
 
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='mb-3' >
-                                        <label className='mb-2' >Title <span className="text-danger">*</span></label>
+                                        <label className='mb-2' >Subject <span className="text-danger">*</span></label>
                                         <input
                                             type="text"
                                             className={`form-control ${errors.title ? 'is-invalid' : ''}`}
@@ -285,6 +285,36 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                                 {errors.title}
                                             </div>
                                         )}
+                                    </div>
+                                </div>
+
+                                <div className='col-12 col-sm-6 col-md-6'>
+                                    <div className='mb-3' >
+                                        <label className='mb-2' >Sender Email</label>
+                                        <input
+                                            type="email"
+                                            className={`form-control`}
+                                            // placeholder="Enter Title"
+                                            value={'jc@jcsoftwaresolution.in'}
+                                            autoComplete="off"
+                                            disabled
+                                            // onChange={handleTitleChange}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className='col-12 col-sm-6 col-md-6'>
+                                    <div className='mb-3' >
+                                        <label className='mb-2' >Report Date</label>
+                                        <input
+                                            type="email"
+                                            className={`form-control`}
+                                            // placeholder="Enter Title"
+                                            value={new Date()}
+                                            autoComplete="off"
+                                            disabled
+                                            // onChange={handleTitleChange}
+                                        />
                                     </div>
                                 </div>
 

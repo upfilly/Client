@@ -13,6 +13,7 @@ const Html = () => {
     const user = crendentialModel.getUser()
     const [isSubmited, setSubmited] = useState(false);
     const [url, setUrl] = useState('');
+    const [showNewLink, setShowNewLink] = useState(false);
     const [copied, setCopied] = useState(false);
     const [SelectDropdown, setSelectDropdown] = useState(true);
     const [newKey, setNewKey] = useState('');
@@ -167,7 +168,7 @@ const Html = () => {
         if(urlData || url){
         const data = await axios.post('https://api.t.ly/api/v1/link/shorten',{long_url:urlData || url}, {
             headers: {
-                'Authorization':'Bearer KAxgeQzaEgrANTAdKImU25lQVbGZ3rkJTZ0vlN35FXqksFm65E3suA9opwee',
+                'Authorization':'Bearer IOjsD8bJKmNq8I9ESfMT3t0z6nAYrvx3KAc7RsfQLentCBeZ90RCO13cdlND',
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
@@ -240,6 +241,7 @@ const Html = () => {
         ApiClient.post('get-link', { "base_url": finalUrl, "parameters": inputValues }).then((res) => {
             if (res?.success) {
                 toast.success(res?.message)
+                setShowNewLink(true)
                 setSubmited(false)
                 setUrl(res?.data);
                 generateShortLink(res?.data)
@@ -381,33 +383,35 @@ const Html = () => {
                                 </button>
                             </div>
 
-                            {permission('generate_link_get') && <div className='mb-3'>
-                                <h6 className="link_default m-0"> Your Link :</h6>
+                           {showNewLink &&  <>
+                                {permission('generate_link_get') && <div className='mb-3'>
+                                    <h6 className="link_default m-0"> Your Link :</h6>
 
-                                <div className="input-group my-2">
-                                    <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
-                                        <div className="input-group-text">
-                                            <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                    <div className="input-group my-2">
+                                        <div className="input-group-prepend pointer" title='Copy text' onClick={copyText}>
+                                            <div className="input-group-text">
+                                                <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                            </div>
                                         </div>
+                                        {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}`}</p>}
+                                        {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                                     </div>
-                                    {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}`}</p>}
-                                    {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
-                                </div>
-                            </div>}
-                            {copied && <div className="">Copied!</div>}
-
-                            {permission('generate_link_get') && <div className='mb-3' >
-                                <h6 className="link_default m-0"> Your Short Link : </h6>
-
-                                {shrtlnk && <div className="input-group my-2">
-                                    <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
-                                        <div className="input-group-text">
-                                            <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
-                                        </div>
-                                    </div>
-                                    <p id="textShortToCopy" className="form-control gen_links br0 mb-0 heauto" >{shrtlnk}</p>
                                 </div>}
-                            </div>}
+                                {copied && <div className="">Copied!</div>}
+
+                                {permission('generate_link_get') && <div className='mb-3' >
+                                    <h6 className="link_default m-0"> Your Short Link : </h6>
+
+                                    {shrtlnk && <div className="input-group my-2">
+                                        <div className="input-group-prepend pointer" title='Copy text' onClick={copyShortText}>
+                                            <div className="input-group-text">
+                                                <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
+                                            </div>
+                                        </div>
+                                        <p id="textShortToCopy" className="form-control gen_links br0 mb-0 heauto" >{shrtlnk}</p>
+                                    </div>}
+                                </div>}
+                            </>}
                         </div>
                     </div>
                 </div>

@@ -61,7 +61,7 @@ const handleSubmit = () => {
     // loader(true);
     ApiClient.post('emailmessage/send', payload).then((res) => {
         if (res?.success) {
-            toast.success(res?.message)
+            toast.success("E-mail Sent")
             // setTimeout(()=>{
             //     location.reload()
             // },2000)
