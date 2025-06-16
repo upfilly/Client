@@ -251,6 +251,7 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+
             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
@@ -304,6 +305,45 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+
+             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
+              <div className="fixi-ic">
+                <div className="d-flex align-items-center flex-wrap">
+
+                  {user.role == "brand" ? (
+                    <div className="ml-2 ">
+                      <div className="d-flex items-center gap-2">
+                        <div className="img-div-first">
+                          <img
+                            className="fixi-boxx purchase"
+                            src="/assets/img/approved.png"
+                            alt=""
+                          ></img>
+                        </div>
+                        <div className="d-flex flex-column justify-content-center">
+                          <p className="revuh">Active Affiliates</p>
+
+                          <h3 className="dollars-t">
+                            {campaignData?.affiliates_active_count}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="">
+                  {/* <div className='text-right'>
+                  <p className='colrs-blues'>2-56</p>
+                  <p className='week-last'>Last week</p>
+                </div> */}
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
