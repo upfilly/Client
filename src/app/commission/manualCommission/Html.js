@@ -12,7 +12,14 @@ import Papa from 'papaparse';
 
 const Html = () => {
     const user = crendentialModel.getUser()
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        transaction_date: '',
+        amount_of_sale: '',
+        amount_of_commission: '',
+        order_reference: '',
+        publisher_id: '',
+        commission_status: ''
+    });
     const [data, setData] = useState([]);
     const [formType, setFormType] = useState('single');
     const [isChecked, setIsChecked] = useState(false);
@@ -29,9 +36,9 @@ const Html = () => {
     const downloadCSVTemplate = () => {
         // CSV content with headers and sample data
         const csvContent = [
-            'affiliate_id,commission_type,amount_of_sale,amount_of_commission,order_reference,commission_status,notes',
-            '12345,sales,100.00,10.00,ORDER123,pending,Sample commission entry',
-            '12346,lead,0.00,25.00,LEAD456,confirmed,Sample lead commission'
+            'affiliate_id,commission_type,amount_of_sale,amount_of_commission,order_reference,commission_status,transaction_date,notes',
+            '12345,sales,100.00,10.00,ORDER123,pending,2023-01-15,Sample commission entry',
+            '12346,lead,0.00,25.00,LEAD456,confirmed,2023-01-16,Sample lead commission'
         ].join('\n');
 
         // Create download link
@@ -88,6 +95,13 @@ const Html = () => {
         setCommissionType(e.target.value)
     }
 
+    const handleNumberChange = (e, field) => {
+        const value = e.target.value;
+        if (/^\d*\.?\d*$/.test(value) || value === "") {
+            setFormData({ ...formData, [field]: value });
+        }
+    };
+
     const getData = (p = {}) => {
         let filter = { brand_id: user?.id }
         let url = 'getallaffiliatelisting'
@@ -140,7 +154,7 @@ const Html = () => {
             newErrors.publisher_id = 'Affiliate Name is required';
         }
 
-        if (!formData?.amount_of_sale) {
+        if (!formData?.amount_of_sale && commissionSelectType != "lead") {
             newErrors.amount_of_sale = 'Amount of Sale is required';
         }
 
@@ -152,8 +166,12 @@ const Html = () => {
             newErrors.commission_status = 'Commission Status is required';
         }
 
-        if (!formData?.order_reference) {
+        if (!formData?.order_reference && commissionSelectType != "lead") {
             newErrors.order_reference = 'Order Reference is required';
+        }
+
+        if (!formData?.transaction_date) {
+            newErrors.transaction_date = 'Transaction Date is required';
         }
 
         setErrors(newErrors);
@@ -186,13 +204,19 @@ const Html = () => {
                 "order_reference": formData?.order_reference,
                 "affiliate_id": formData?.publisher_id,
                 "is_send_email_to_publisher": isChecked,
-                "commission_status": formData?.commission_status
+                "commission_status": formData?.commission_status,
+                "transaction_date": formData?.transaction_date
             }
         } else {
             payload = {
                 "batch_file": `/documents/${file}`,
                 "isContain_headers": hasHeader ? "yes" : "no",
             }
+        }
+
+        if(commissionSelectType == "lead"){
+            delete payload.amount_of_sale
+            delete payload.order_reference
         }
 
         ApiClient.post('add-commission', payload).then((res) => {
@@ -210,7 +234,8 @@ const Html = () => {
                     "batch_file": "",
                     "isContain_headers": false,
                     "locality": '',
-                    "commission_status": ""
+                    "commission_status": "",
+                    "transaction_date": ""
                 })
             }
         });
@@ -291,27 +316,27 @@ const Html = () => {
                                                     {errors.publisher_id && <div className="invalid-feedback d-block">{errors.publisher_id}</div>}
                                                 </div>
                                             </div>
-                                            <div className='col-md-6 '>
+                                            {commissionSelectType != "lead" && <div className='col-md-6 '>
                                                 <div className='mb-3' >
-                                                    <label>Amount of Sale </label>
+                                                    <label>Sale Amount</label>
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         className={`form-control ${errors.amount_of_sale ? 'is-invalid' : ''}`}
                                                         placeholder="Enter your Amount of Sale"
                                                         value={formData?.amount_of_sale}
-                                                        onChange={(e) => setFormData({ ...formData, amount_of_sale: e.target.value })} />
+                                                        onChange={(e) => handleNumberChange(e, 'amount_of_sale')} />
                                                     {errors.amount_of_sale && <div className="invalid-feedback">{errors.amount_of_sale}</div>}
                                                 </div>
-                                            </div>
+                                            </div>}
                                             <div className='col-md-6 '>
                                                 <div className='mb-3' >
-                                                    <label>Amount of Commission </label>
+                                                    <label>Commission Amount</label>
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         className={`form-control ${errors.amount_of_commission ? 'is-invalid' : ''}`}
                                                         placeholder="Enter your Amount of Commission"
                                                         value={formData?.amount_of_commission}
-                                                        onChange={(e) => setFormData({ ...formData, amount_of_commission: e.target.value })} />
+                                                        onChange={(e) => handleNumberChange(e, 'amount_of_commission')} />
                                                     {errors.amount_of_commission && <div className="invalid-feedback">{errors.amount_of_commission}</div>}
                                                 </div>
                                             </div>
@@ -333,7 +358,7 @@ const Html = () => {
                                                 </div>
                                             </div>
 
-                                            <div className='col-md-6 '>
+                                            {commissionSelectType != "lead" &&<div className='col-md-6 '>
                                                 <div className='mb-3' >
                                                     <label>Order Reference</label>
                                                     <input
@@ -344,14 +369,25 @@ const Html = () => {
                                                         onChange={(e) => setFormData({ ...formData, order_reference: e?.target?.value })} />
                                                     {errors.order_reference && <div className="invalid-feedback">{errors.order_reference}</div>}
                                                 </div>
+                                            </div>}
+
+                                            <div className='col-md-6 '>
+                                                <div className='mb-3' >
+                                                    <label>Transaction Date</label>
+                                                    <input
+                                                        type="date"
+                                                        className={`form-control ${errors.transaction_date ? 'is-invalid' : ''}`}
+                                                        value={formData?.transaction_date}
+                                                        onChange={(e) => setFormData({ ...formData, transaction_date: e.target.value })}
+                                                    />
+                                                    {errors.transaction_date && <div className="invalid-feedback">{errors.transaction_date}</div>}
+                                                </div>
                                             </div>
 
                                             <div className='col-md-12'>
                                                 <div className='mb-3'>
                                                     <div className="form-check form-check-inline ">
-                                                        {/* <label className="form-check-label" > */}
-                                                            An email will be sent to the publishers containing the commission details
-                                                        {/* </label> */}
+                                                        An email will be sent to the publishers containing the commission details
                                                     </div>
                                                 </div>
                                             </div>
@@ -417,6 +453,7 @@ const Html = () => {
                                                             <th>Amount of Commission</th>
                                                             <th>Order Reference</th>
                                                             <th>Commission Status</th>
+                                                            <th>Transaction Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -427,6 +464,7 @@ const Html = () => {
                                                             <td>10.00</td>
                                                             <td>ORDER123</td>
                                                             <td>pending</td>
+                                                            <td>2023-01-15</td>
                                                         </tr>
                                                         <tr>
                                                             <td>12346</td>
@@ -435,6 +473,7 @@ const Html = () => {
                                                             <td>25.00</td>
                                                             <td>LEAD456</td>
                                                             <td>confirmed</td>
+                                                            <td>2023-01-16</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -446,6 +485,7 @@ const Html = () => {
                                                     <li>Keep the column headers exactly as shown</li>
                                                     <li><strong>Commission Type:</strong> Must be "sales", "lead", or "bonus"</li>
                                                     <li><strong>Commission Status:</strong> Must be "pending" or "confirmed"</li>
+                                                    <li><strong>Transaction Date:</strong> Must be in YYYY-MM-DD format</li>
                                                     <li>Amount fields should be numbers only (decimals allowed)</li>
                                                     <li>Do not add or remove columns</li>
                                                     <li>Remove the sample data before uploading your own</li>

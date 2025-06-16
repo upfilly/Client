@@ -303,6 +303,7 @@ const Html = () => {
                           <input
                             type="text"
                             className="form-control"
+                            placeholder="Email Name"
                             value={form?.templateName}
                             onChange={(e) =>
                               setform({ ...form, templateName: e.target.value })
@@ -318,6 +319,7 @@ const Html = () => {
                           </label>
                           <input
                             type="email"
+                            placeholder="From Email"
                             className="form-control"
                             value={form?.emailName}
                             onChange={(e) =>
@@ -334,6 +336,7 @@ const Html = () => {
                           </label>
                           <input
                             type="text"
+                            placeholder="Email Subject"
                             className="form-control"
                             value={form?.subject}
                             onChange={(e) =>
@@ -346,10 +349,11 @@ const Html = () => {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
-                            Senders Name<span className="star">*</span>
+                            Sender Name<span className="star">*</span>
                           </label>
                           <input
                             type="text"
+                            placeholder="Sender Name"
                             className="form-control"
                             value={form?.from}
                             onChange={(e) =>
