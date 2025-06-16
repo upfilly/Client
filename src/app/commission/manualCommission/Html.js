@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import environment from '@/environment';
 import { Modal } from 'react-bootstrap';
 import Papa from 'papaparse';
+import moment from 'moment';
 
 const Html = () => {
     const user = crendentialModel.getUser()
@@ -379,6 +380,7 @@ const Html = () => {
                                                         className={`form-control ${errors.transaction_date ? 'is-invalid' : ''}`}
                                                         value={formData?.transaction_date}
                                                         onChange={(e) => setFormData({ ...formData, transaction_date: e.target.value })}
+                                                        max={moment().format('YYYY-MM-DD')}
                                                     />
                                                     {errors.transaction_date && <div className="invalid-feedback">{errors.transaction_date}</div>}
                                                 </div>

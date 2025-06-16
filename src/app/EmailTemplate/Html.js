@@ -260,6 +260,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                             placeholder="Select date"
                                             value={moment(form?.acceptedDate).format('YYYY-MM-DD')}
                                             onChange={handleDateChange}
+                                            max={moment().format('YYYY-MM-DD')}
                                         />
                                         {errors.acceptedDate && (
                                             <div className="invalid-feedback">
