@@ -271,7 +271,7 @@ const Html = () => {
             return;
         }
 
-        const base_url = 'https://api.upfilly.com/';
+        const base_url = 'https://api.upfilly.com/link/';
 
         const rawUrl = DestinationUrl.replace(/^https?:\/\//i, '');
 

@@ -183,7 +183,7 @@ const Html = () => {
         if(!DestinationUrl || !selectedBrand){
             return
         }
-        const base_url = 'https://api.upfilly.com/';
+        const base_url = 'https://api.upfilly.com/link/';
         // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
         // const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
         // const formattedDestinationUrl = DestinationUrl
@@ -393,8 +393,8 @@ const Html = () => {
                                                 <i className="fa fa-clipboard copy_icon" aria-hidden="true" ></i>
                                             </div>
                                         </div>
-                                        {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}`}</p>}
-                                        {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
+                                        {!selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/link/affiliate_id=${user?.id}`}</p>}
+                                        {selectedBrand && <p id="textToCopy" className="form-control gen_links heauto br0 mb-0" >{url || `https://api.upfilly.com/link/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}</p>}
                                     </div>
                                 </div>}
                                 {copied && <div className="">Copied!</div>}
