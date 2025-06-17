@@ -1,20 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
-import './style.scss'
+import './style.scss';
 import crendentialModel from '@/models/credential.model';
-import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import moment from 'moment'
+import moment from 'moment';
 import environment from '@/environment';
 import { Editor } from '@tinymce/tinymce-react';
 
-const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
 const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
-    const user = crendentialModel.getUser()
-    const history = useRouter()
-    const editorRef = useRef(null);
+    const user = crendentialModel.getUser();
     const [emailTemplate, setEmailTemplate] = useState('');
     const [errors, setErrors] = useState({});
 
@@ -118,12 +112,8 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     useEffect(() => {
         const initialTemplate = generateEmailTemplate(form?.content);
         setEmailTemplate(initialTemplate);
-
         if (!form?.emailTemplate) {
-            setForm(prev => ({
-                ...prev,
-                emailTemplate: initialTemplate
-            }));
+            setForm(prev => ({ ...prev, emailTemplate: initialTemplate }));
         }
     }, [form?.content, form?.title]);
 
@@ -134,232 +124,184 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
             content: newContent,
             emailTemplate: generateEmailTemplate(newContent)
         }));
-
-        // Clear content error when user starts typing
-        if (errors.content) {
-            setErrors(prev => ({ ...prev, content: '' }));
-        }
+        if (errors.content) setErrors(prev => ({ ...prev, content: '' }));
     };
 
     const handleTitleChange = (e) => {
         const newTitle = e.target.value;
         setForm(prev => ({ ...prev, title: newTitle }));
-
-        // Clear title error when user starts typing
-        if (errors.title) {
-            setErrors(prev => ({ ...prev, title: '' }));
-        }
+        if (errors.title) setErrors(prev => ({ ...prev, title: '' }));
     };
 
     const handleDateChange = (e) => {
         setForm(prev => ({ ...prev, acceptedDate: e.target.value }));
+        if (errors.acceptedDate) setErrors(prev => ({ ...prev, acceptedDate: '' }));
+    };
 
-        // Clear date error when user selects a date
-        if (errors.acceptedDate) {
-            setErrors(prev => ({ ...prev, acceptedDate: '' }));
-        }
+    const handleRecipientChange = (type) => {
+        setForm(prev => ({
+            ...prev,
+            isAllJoined: type === 'allJoined',
+            affiliateStatus: type === 'activeAffiliates'
+        }));
+    };
+
+    const handleTimeIntervalChange = (interval) => {
+        setForm(prev => ({
+            ...prev,
+            timeInterval: interval,
+            acceptedDate: interval ? prev.acceptedDate : ''
+        }));
     };
 
     const validateForm = () => {
         const newErrors = {};
-
-        // Check if title is required and empty
-        if (!form?.title || form.title.trim() === '') {
-            newErrors.title = 'Email title is required';
+        if (!form?.title) newErrors.title = 'Email title is required';
+        if (!form?.content) newErrors.content = 'Email content is required';
+        if (!form?.isAllJoined && !form?.affiliateStatus) {
+            newErrors.recipientType = 'Please select a recipient type';
         }
-
-        // Check if content is required and empty
-        if (!form?.content || form.content.trim() === '') {
-            newErrors.content = 'Email content is required';
-        }
-
-        // Check if date is required when before/after is selected
-        if ((form?.timeInterval === 'before' || form?.timeInterval === 'after') && !form?.acceptedDate) {
+        if (form?.timeInterval && !form?.acceptedDate) {
             newErrors.acceptedDate = 'Date is required when selecting before/after';
         }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmitWithValidation = () => {
-        if (validateForm()) {
-            handleSubmit();
-        }
+    const handleSubmitWithValidation = (e) => {
+        e.preventDefault();
+        if (validateForm()) handleSubmit();
     };
 
     return (
-        <>
-            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Send E-mail" filters={''} >
-                <div className='sidebar-left-content'>
-                    <div className="card">
-                        <div className='card-header'>
-                            <div className='main_title_head d-flex justify-content-between align-items-center'>
-                                <h3 className="link_default m-0"><i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send E-mail
-                                </h3>
-                            </div>
-                        </div>
-                        <div className='card-body'>
+        <Layout name="Send E-mail">
+            <div className='sidebar-left-content'>
+                <div className="card">
+                    <div className='card-header'>
+                        <h3 className="link_default m-0">
+                            <i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send E-mail
+                        </h3>
+                    </div>
+                    <div className='card-body'>
+                        <form onSubmit={handleSubmitWithValidation}>
                             <div className='row'>
-                                <div className='col-12 col-sm-3 col-md-3'>
-                                    <div className='form-check mb-3' >
-                                        <input
-                                            type="radio"
-                                            className='form-check-input'
-                                            placeholder="Enter Title"
-                                            checked={form?.isAllJoined}
-                                            autoComplete="off"
-                                            onChange={(e) => setForm({ ...form, isAllJoined: e.target.checked, timeInterval: '', affiliateStatus: false, acceptedDate: '' })}
-                                        />
-                                        <label className='form-check-label' >All Joined {`(${relatedAffiliate?.totalJoined})`}</label>
-                                    </div>
-                                    <div className='form-check mb-3' >
-                                        <input
-                                            type="radio"
-                                            className='form-check-input'
-                                            placeholder="Enter Title"
-                                            checked={form?.affiliateStatus}
-                                            autoComplete="off"
-                                            onChange={(e) => setForm({ ...form, isAllJoined: false, timeInterval: '', affiliateStatus: e.target.checked, acceptedDate: '' })}
-                                        />
-                                        <label className=' form-check-label' >Active Affiliates {`(${relatedAffiliate?.totalActive})`}</label>
-                                    </div>
-                                </div>
-                                <div className='col-12 col-sm-3 col-md-3'>
-                                    <div className='form-check mb-3' >
-                                        <input
-                                            type="radio"
-                                            className='form-check-input'
-                                            placeholder="Enter Title"
-                                            checked={form?.timeInterval === 'before'}
-                                            autoComplete="off"
-                                            onChange={(e) => setForm({ ...form, isAllJoined: false, timeInterval: 'before', affiliateStatus: false })}
-                                        />
-                                        <label className='form-check-label' >before</label>
-                                    </div>
-                                    <div className='form-check mb-3' >
-                                        <input
-                                            type="radio"
-                                            className='form-check-input'
-                                            placeholder="Enter Title"
-                                            checked={form?.timeInterval === 'after'}
-                                            autoComplete="off"
-                                            onChange={(e) => setForm({ ...form, isAllJoined: false, timeInterval: 'after', affiliateStatus: false })}
-                                        />
-                                        <label className='form-check-label' >after</label>
+                                {/* Recipient Type Selection */}
+                                <div className='col-12 col-sm-6 col-md-4'>
+                                    <div className='form-group'>
+                                        <label className='form-label'>Recipient Type</label>
+                                        <div className='form-check mb-3'>
+                                            <input
+                                                type="radio"
+                                                className='form-check-input'
+                                                checked={form?.isAllJoined}
+                                                onChange={() => handleRecipientChange('allJoined')}
+                                            />
+                                            <label className='form-check-label'>
+                                                All Joined ({relatedAffiliate?.totalJoined})
+                                            </label>
+                                        </div>
+                                        <div className='form-check mb-3'>
+                                            <input
+                                                type="radio"
+                                                className='form-check-input'
+                                                checked={form?.affiliateStatus}
+                                                onChange={() => handleRecipientChange('activeAffiliates')}
+                                            />
+                                            <label className='form-check-label'>
+                                                Active Affiliates ({relatedAffiliate?.totalActive})
+                                            </label>
+                                        </div>
+                                        {errors.recipientType && (
+                                            <div className="text-danger small">{errors.recipientType}</div>
+                                        )}
                                     </div>
                                 </div>
 
-                                <div className='col-12 col-sm-6 col-md-6'>
-                                    <div className=' mb-3' >
-                                        <label className='form-label' >Joined Date</label>
+                                {/* Time Interval Selection */}
+                                <div className='col-12 col-sm-6 col-md-4'>
+                                    <div className='form-group'>
+                                        <label className='form-label'>Time Interval (Optional)</label>
+                                        <div className='form-check mb-3'>
+                                            <input
+                                                type="radio"
+                                                className='form-check-input'
+                                                checked={form?.timeInterval === 'before'}
+                                                onChange={() => handleTimeIntervalChange('before')}
+                                            />
+                                            <label className='form-check-label'>Before</label>
+                                        </div>
+                                        <div className='form-check mb-3'>
+                                            <input
+                                                type="radio"
+                                                className='form-check-input'
+                                                checked={form?.timeInterval === 'after'}
+                                                onChange={() => handleTimeIntervalChange('after')}
+                                            />
+                                            <label className='form-check-label'>After</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Date Selection */}
+                                <div className='col-12 col-sm-6 col-md-4'>
+                                    <div className='form-group mb-3'>
+                                        <label className='form-label'>Joined Date</label>
                                         <input
                                             type="date"
                                             className={`form-control ${errors.acceptedDate ? 'is-invalid' : ''}`}
                                             disabled={!form?.timeInterval}
-                                            placeholder="Select date"
                                             value={moment(form?.acceptedDate).format('YYYY-MM-DD')}
                                             onChange={handleDateChange}
                                             max={moment().format('YYYY-MM-DD')}
                                         />
                                         {errors.acceptedDate && (
-                                            <div className="invalid-feedback">
-                                                {errors.acceptedDate}
-                                            </div>
+                                            <div className="invalid-feedback">{errors.acceptedDate}</div>
                                         )}
                                     </div>
                                 </div>
 
+                                {/* Rest of the form fields... */}
                                 <div className='col-12 col-sm-6 col-md-6'>
-                                    <div className='mb-3' >
-                                        <label className='mb-2' >Subject <span className="text-danger">*</span></label>
+                                    <div className='form-group mb-3'>
+                                        <label className='form-label'>Subject <span className="text-danger">*</span></label>
                                         <input
                                             type="text"
                                             className={`form-control ${errors.title ? 'is-invalid' : ''}`}
-                                            placeholder="Enter Title"
-                                            value={form?.title ? form?.title : ''}
-                                            autoComplete="off"
+                                            value={form?.title || ''}
                                             onChange={handleTitleChange}
                                         />
-                                        {errors.title && (
-                                            <div className="invalid-feedback">
-                                                {errors.title}
-                                            </div>
-                                        )}
+                                        {errors.title && <div className="invalid-feedback">{errors.title}</div>}
                                     </div>
                                 </div>
 
-                                <div className='col-12 col-sm-6 col-md-6'>
-                                    <div className='mb-3' >
-                                        <label className='mb-2' >Sender Email</label>
-                                        <input
-                                            type="email"
-                                            className={`form-control`}
-                                            // placeholder="Enter Title"
-                                            value={'jc@jcsoftwaresolution.in'}
-                                            autoComplete="off"
-                                            disabled
-                                            // onChange={handleTitleChange}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className='col-12 col-sm-6 col-md-6'>
-                                    <div className='mb-3' >
-                                        <label className='mb-2' >Report Date</label>
-                                        <input
-                                            type="email"
-                                            className={`form-control`}
-                                            // placeholder="Enter Title"
-                                            value={new Date()}
-                                            autoComplete="off"
-                                            disabled
-                                            // onChange={handleTitleChange}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className='col-md-12'>
-                                    <div className='mb-3'>
-                                        <label className='mb-2'>Email Content <span className="text-danger">*</span></label>
+                                <div className='col-12'>
+                                    <div className='form-group mb-3'>
+                                        <label className='form-label'>Email Content <span className="text-danger">*</span></label>
                                         <textarea
                                             className={`form-control ${errors.content ? 'is-invalid' : ''}`}
                                             rows="5"
-                                            placeholder="Enter your email content here"
                                             value={form?.content || ''}
                                             onChange={handleContentChange}
                                         />
-                                        {errors.content && (
-                                            <div className="invalid-feedback">
-                                                {errors.content}
-                                            </div>
-                                        )}
+                                        {errors.content && <div className="invalid-feedback">{errors.content}</div>}
                                     </div>
                                 </div>
 
-                                <div className='col-md-12'>
-                                    <div className='mb-3 custom-description'>
-                                        <label className='mb-2'>Email Template Preview</label>
+                                <div className='col-12'>
+                                    <div className='form-group mb-3'>
+                                        <label className='form-label'>Email Template Preview</label>
                                         <Editor
-                                            apiKey='zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g'
+                                            apiKey='your-api-key'
                                             value={emailTemplate}
                                             onEditorChange={(newValue) => {
                                                 setEmailTemplate(newValue);
-                                                setForm(prev => ({ ...prev, "emailTemplate": newValue }));
+                                                setForm(prev => ({ ...prev, emailTemplate: newValue }));
                                             }}
                                             init={{
                                                 height: 500,
                                                 menubar: false,
-                                                plugins: [
-                                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                                ],
-                                                toolbar: 'undo redo | blocks | ' +
-                                                    'bold italic forecolor | alignleft aligncenter ' +
-                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                    'removeformat | help',
-                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                                plugins: ['lists', 'link', 'image', 'table', 'code'],
+                                                toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat'
                                             }}
                                         />
                                     </div>
@@ -367,13 +309,15 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                             </div>
 
                             <div className='text-end mt-3'>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmitWithValidation}>Send E-mail</button>
+                                <button type="submit" className="btn btn-primary">
+                                    Send E-mail
+                                </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </Layout>
-        </>
+            </div>
+        </Layout>
     );
 };
 

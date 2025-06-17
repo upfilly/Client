@@ -58,13 +58,15 @@ const handleSubmit = () => {
         delete form?.acceptedDate
         delete form?.isAllJoined
     }
+
+    console.log(payload,"payloadpayload")
     // loader(true);
     ApiClient.post('emailmessage/send', payload).then((res) => {
         if (res?.success) {
             toast.success("E-mail Sent")
-            // setTimeout(()=>{
-            //     location.reload()
-            // },2000)
+            setTimeout(()=>{
+                location.reload()
+            },2000)
         }
         // loader(false);
     });

@@ -1,5 +1,5 @@
 'use client'
-import react, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
 import crendentialModel from '@/models/credential.model';
@@ -15,10 +15,10 @@ import SelectDropdown from '../components/common/SelectDropdown';
 import { CurencyData } from '../../methods/currency';
 import datepipeModel from '@/models/datepipemodel';
 
-export default function affilate() {
+export default function Affiliate() {
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false })
+  const [filters, setFilter] = useState({ page: 1, count: 10, search: '', isDeleted: false })
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
@@ -33,15 +33,6 @@ export default function affilate() {
   const handleShow = (price, commission, commission_type, id) => {
     setAssociateId(id)
     calculateCommission(commission_type, price, commission)
-    // if(commission_type == "percentage"){
-    //   const CalPrice = price*commission/100
-    //   setCalculatedAmount(CalPrice)
-    //   setShowModal(true)
-    // }else{
-    //   const CalPrice = price - commission
-    //   setCalculatedAmount(CalPrice)
-    //   setShowModal(true)
-    // }
   };
 
   const getExchangeRate = async (currency) => {
@@ -53,12 +44,10 @@ export default function affilate() {
         setExchangeRate(data.conversion_rate);
       } else {
         setExchangeRate("")
-        // toast.error('Failed to fetch exchange rate');
       }
     } catch (err) {
       setExchangeRate("")
       console.error(err);
-      // toast.error('Error fetching exchange rate');
     }
   };
 
@@ -106,9 +95,7 @@ export default function affilate() {
     } else {
       return (finalPrice + CalPrice).toFixed(2)
     }
-
   }
-
 
   const handleClose = () => setShowModal(false);
 
@@ -134,7 +121,6 @@ export default function affilate() {
   }
 
   const getData = (p = {}) => {
-
     setLoader(true)
     let filter;
 
@@ -150,7 +136,6 @@ export default function affilate() {
         setTotal(res?.data?.total_count)
         setLoader(false)
       }
-
     })
   };
 
@@ -160,13 +145,11 @@ export default function affilate() {
   };
 
   useEffect(() => {
-
     if (user.role == 'brand') {
       getData({ page: 1 })
     } else if (user.role != 'brand') {
       getData({ page: 1 })
     }
-
   }, [])
 
   const pageChange = (e) => {
@@ -186,18 +169,14 @@ export default function affilate() {
 
   const statusChange = (itm, id) => {
     if (itm === 'accepted') {
-      // loader(true);
       ApiClient.put('update/commission/status', { commission_status: itm, id: id }).then((res) => {
         if (res.success) {
-
           toast.success(res.message)
           getData({ page: filters?.page + 1 });
         }
-        // loader(false);
       });
     } else {
       Swal.fire({
-
         html: `
          <h2 style="" class="modal-title-main pt-0">Deny Commission</h2>
             <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
@@ -244,7 +223,6 @@ export default function affilate() {
     setIsOpen(false)
     setFilter({ ...filters, ...filter })
     getData({ ...filter })
-    // dispatch(search_success(''))
   }
 
   const view = (id) => {
@@ -255,6 +233,52 @@ export default function affilate() {
     setFilter({ ...filters, transaction_type: e, page: 0 })
     getData({ transaction_type: e, page: 1, user_id: user?.id })
   }
+
+  const exportToExcel = async () => {
+    let filter;
+
+    if (user?.role == "brand") {
+      filter = {...filters, brand_id: user?.id, export_to_xls: "yes" };
+    } else {
+      filter = {...filters, affiliate_id: user?.id, export_to_xls: "yes" };
+    }
+
+    delete filter?.search
+
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+      myHeaders.append("Cookie", "sails.sid=s%3AZt0ciPk2dIjb8j5sjaC8Z_PyD36QeF_C.ZfQkttpL0BhEUCkJnb9f74vjK6g%2BtcZrprMYHBL8cGI");
+
+      const queryParams = new URLSearchParams(filter).toString();
+      const url = `https://api.upfilly.com/affiliatelink/all?isDeleted=false&search=&role=&commission_paid=&commission_status=&${queryParams}`;
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+
+      const response = await fetch(url, requestOptions);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = 'Transactions.xlsx'; // or whatever filename you expect
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+    } catch (error) {
+      console.error("Error exporting to Excel:", error);
+      // Handle the error appropriately
+    }
+  };
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
     if (itm?.urlParams && typeof itm.urlParams === 'object') {
@@ -267,20 +291,16 @@ export default function affilate() {
     return headers;
   }, []);
 
-
-
-
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Track Data" filters={filters}>
         <div className='nmain-list  mb-3 main_box'>
           <div className='container-fluid'>
-
             <div className='row'>
               <div className='card-header'>
                 <div className="main_title_head d-flex gap-2 justify-content-between align-items-center">
                   <h3 className="mb-2">
-                  Commission Transactions
+                    Commission Transactions
                   </h3>
 
                   <article className="d-flex gap-2 filterFlex phView">
@@ -291,9 +311,8 @@ export default function affilate() {
                         placeholder="Search"
                         className="form-control h-100"
                         onChange={(e) => e.target.value == "" ? reset() : setFilter({...filters, search: e.target.value })}
-                      // onKeyPress={handleKeyPress}
                       />
-                      <i class="fa fa-search search_fa" onClick={() => {
+                      <i className="fa fa-search search_fa" onClick={() => {
                         filter()
                       }} aria-hidden="true"></i>
                     </div>
@@ -308,7 +327,6 @@ export default function affilate() {
                         { id: 'pending', name: 'Pending' },
                         { id: 'accepted', name: 'Accepted' },
                         { id: 'rejected', name: 'Rejected' },
-
                       ]}
                     />
 
@@ -337,6 +355,14 @@ export default function affilate() {
                       />
                     </div>
 
+                    <button 
+                      className="btn btn-primary"
+                      onClick={exportToExcel}
+                      disabled={loaging || total === 0}
+                    >
+                      <i className="fa fa-download mr-2"></i> Export
+                    </button>
+
                     {filters.search || filters.commission_paid || filters.commission_status ? <>
                       <a className="btn btn-primary" onClick={e => reset()}>
                         Reset
@@ -350,19 +376,10 @@ export default function affilate() {
               <div className='respon_data'>
                 <div className='table_section '>
                   <div className='table-responsive '>
-                    <table class="table table-striped ">
+                    <table className="table table-striped ">
                       <thead className="thead-clr">
                         <tr>
-                          {data?.data?.reduce((headers, itm) => {
-                            if (itm?.urlParams && typeof itm.urlParams === 'object') {
-                              Object.keys(itm.urlParams).forEach(key => {
-                                if (!headers.includes(key)) {
-                                  headers.push(key);
-                                }
-                              })
-                            };
-                            return headers;
-                          }, [])?.map(key => (
+                          {uniqueKeys?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
                           <th scope="col" onClick={e => sorting('affiliate_name')}>Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}</th>
@@ -381,7 +398,6 @@ export default function affilate() {
 
                       <tbody>
                         {!loaging && data?.data?.map((itm, i) => {
-
                           return <tr className='data_row' key={i}>
                             {uniqueKeys?.map(key => {
                               const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
@@ -421,9 +437,7 @@ export default function affilate() {
                               )}
                             </td>
                           </tr>
-
-                        })
-                        }
+                        })}
                       </tbody>
                     </table>
                     {loaging ? <div className="text-center py-4">
@@ -434,13 +448,8 @@ export default function affilate() {
                 </div>
               </div>
             </div>
-
-
           </div>
-
         </div>
-
-
 
         <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
           <span>Show <select
@@ -462,7 +471,6 @@ export default function affilate() {
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}
-            // pageCount={2}
             previousLabel="< Previous"
             renderOnZeroPageCount={null}
             pageClassName={"pagination-item"}

@@ -215,7 +215,7 @@ const Html = () => {
             }
         }
 
-        if(commissionSelectType == "lead"){
+        if (commissionSelectType == "lead") {
             delete payload.amount_of_sale
             delete payload.order_reference
         }
@@ -359,7 +359,7 @@ const Html = () => {
                                                 </div>
                                             </div>
 
-                                            {commissionSelectType != "lead" &&<div className='col-md-6 '>
+                                            {commissionSelectType != "lead" && <div className='col-md-6 '>
                                                 <div className='mb-3' >
                                                     <label>Order Reference</label>
                                                     <input
