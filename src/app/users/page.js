@@ -106,7 +106,7 @@ const AffiliateTeam = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                 loader(true)
-                ApiClient.put(`changeStatus?status=${status}&id=${itm.id || itm?._id}`).then(res=>{
+                ApiClient.put(`changeStatus`,{status:status,id:itm.id || itm?._id}).then(res=>{
                     if(res.success){
                         getData({page:filters?.page + 1})
                     }
