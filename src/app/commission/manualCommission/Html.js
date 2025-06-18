@@ -223,7 +223,8 @@ const Html = () => {
                 "affiliate_id": formData?.publisher_id,
                 "is_send_email_to_publisher": isChecked,
                 "commission_status": formData?.commission_status,
-                "transaction_date": formData?.transaction_date
+                "transaction_date": formData?.transaction_date,
+                "campaign_id": formData?.campaign_id
             }
         } else {
             payload = {
