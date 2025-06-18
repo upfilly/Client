@@ -306,7 +306,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
+             {user.role == "brand" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
 
@@ -341,7 +341,7 @@ export default function Dashboard() {
                   <div></div>
                 </div>
               </div>
-            </div>
+            </div>}
 
 
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">

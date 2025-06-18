@@ -142,7 +142,7 @@ export default function affilate() {
 
   const getCampaignData = (p = {}) => {
     let url = 'campaign/brand/all'
-    ApiClient.get(url).then(res => {
+    ApiClient.get(url,{brand_id:user?.id}).then(res => {
       if (res.success) {
         setCamppaignData(res.data.data.map((dat) => {
           return ({

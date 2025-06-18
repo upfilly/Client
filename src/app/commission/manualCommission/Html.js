@@ -31,6 +31,7 @@ const Html = () => {
     const [submitted, setsubmitted] = useState(false)
     const [show, setShow] = useState(false);
     const [csvData, setCsvData] = useState([]);
+    const [camppaignData, setCamppaignData] = useState([]);
     const [errors, setErrors] = useState({});
     const history = useRouter()
 
@@ -79,6 +80,21 @@ const Html = () => {
             }
         })
     };
+
+      const getCampaignData = (p = {}) => {
+        let url = 'campaign/brand/all'
+        ApiClient.get(url,{brand_id:user?.id}).then(res => {
+          if (res.success) {
+            setCamppaignData(res.data.data.map((dat) => {
+              return ({
+                name: dat?.name,
+                id: dat?.id || dat?._id
+              })
+            }))
+            // setTotal(res.data.total_count)
+          }
+        })
+      }
 
     const handleLocaleChange = (event) => {
         setLocale(event.target.value);
@@ -142,6 +158,7 @@ const Html = () => {
     useEffect(() => {
         getData()
         fetchCSV();
+        getCampaignData();
     }, [])
 
     const validateForm = () => {
@@ -356,6 +373,21 @@ const Html = () => {
                                                         ]}
                                                     />
                                                     {errors.commission_status && <div className="invalid-feedback d-block">{errors.commission_status}</div>}
+                                                </div>
+                                            </div>
+
+                                            <div className='col-md-6 '>
+                                                <div className='mb-3' >
+                                                    <label>Campaign</label>
+                                                    <SelectDropdown theme='search'
+                                                        id="statusDropdown"
+                                                        displayValue="name"
+                                                        placeholder="select"
+                                                        intialValue={formData?.campaign_id}
+                                                        result={e => { setFormData({ ...formData, campaign_id: e.value }) }}
+                                                        options={camppaignData}
+                                                    />
+                                                    {/* {errors.campaign_id && <div className="invalid-feedback d-block">{errors.campaign_id}</div>} */}
                                                 </div>
                                             </div>
 

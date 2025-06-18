@@ -130,7 +130,13 @@ const Html = ({
                                                 <td className='table_dats'>{itm?.brand_details?.fullName}</td>
                                                 <td className='table_dats'>{itm?.campaign_detail?.name}</td>
                                                 <td className='table_dats'>{itm?.tags?.map((data) => data).join(",") || "--"}</td>
-                                                <td className={itm?.status == 'deactive' ? "inactive" : "contract"}>{methodModel.capitalizeFirstLetter(itm?.status)}</td>
+                                                <td className={
+                                                    itm?.status === 'pending' ? "text-warning" :
+                                                        itm?.status === 'rejected' ? "text-danger" :
+                                                            "text-success"
+                                                }>
+                                                    {methodModel.capitalizeFirstLetter(itm?.status)}
+                                                </td>
                                                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
                                                 {<td className='table_dats d-flex flex-nowrap set_iconstabls justify-content-cente'>
                                                     {user && user?.role == "affiliate" && <>
@@ -138,20 +144,23 @@ const Html = ({
                                                             <button onClick={() => {
                                                                 statusChange("accepted", itm?.id || itm?._id)
                                                                 // Tracklogin(itm?.campaign_unique_id)
-                                                            }} className="btn btn-primary action-btns circle_icons mb-0 mr-2">
+                                                            }} className="btn btn-primary action-btns circle_icons mb-0 mr-2" title="Accepted">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger action-btns br50 bg-red circle_icons mb-0">
+                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} 
+                                                            className="btn btn-danger action-btns br50 bg-red circle_icons mb-0" title="Rejected">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div> :
                                                             itm?.status == 'rejected' ?
-                                                                <div className="btn btn-danger action-btns" title="Rejected">
-                                                                    <i className="fa fa-times"></i>
+                                                                <div className="btn btn-danger" title="Rejected">
+                                                                    {/* <i className="fa fa-times"></i> */}
+                                                                    Rejected campaign
                                                                 </div>
                                                                 :
-                                                                <div className="btn btn-primary py-2 action-btns" title="Accepted">
-                                                                    <i className="fa fa-check"></i>
+                                                                <div className="btn btn-primary py-2" title="Accepted">
+                                                                    {/* <i className="fa fa-check"></i> */}
+                                                                    Leave Campaign
                                                                 </div>
                                                         }
                                                     </>}

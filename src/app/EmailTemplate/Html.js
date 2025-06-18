@@ -181,6 +181,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         <h3 className="link_default m-0">
                             <i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send E-mail
                         </h3>
+                        Count:{form?.affiliateStatus ? relatedAffiliate?.totalActive : relatedAffiliate?.totalJoined}
                     </div>
                     <div className='card-body'>
                         <form onSubmit={handleSubmitWithValidation}>
