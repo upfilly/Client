@@ -28,12 +28,33 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                             </div>
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
+                                    <label>Title<span className="star">*</span></label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={form.title}
+                                        onChange={e => setform({ ...form, title: e.target.value })}
+                                        placeholder="Enter coupon title"
+                                    />
+                                    {submitted && !form?.title && <p className="invalid-feedback d-block">Title is required</p>}
+                                </div>
+                                <div className="col-md-6 mb-3">
                                     <label>Coupon Code</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={form.couponCode}
                                         onChange={e => setform({ ...form, couponCode: e.target.value })}
+                                    />
+                                </div>
+                                <div className="col-md-12 mb-3">
+                                    <label>Description</label>
+                                    <textarea
+                                        className="form-control"
+                                        value={form.description}
+                                        onChange={e => setform({ ...form, description: e.target.value })}
+                                        placeholder="Enter coupon description"
+                                        rows={3}
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
@@ -56,6 +77,8 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                             ]}
                                         />
                                     </div>
+                                    {submitted && !form?.visibility && <p className="invalid-feedback d-block">Type is required</p>}
+
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label>Commission Type<span className="star">*</span></label>
@@ -69,9 +92,6 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                                 setform({
                                                     ...form,
                                                     couponType: e.value,
-                                                    // Reset coupon commission fields when changing type
-                                                    // commissionType: e.value === 'Campaign' ? null : form.commissionType,
-                                                    // couponCommissionValue: e.value === 'Campaign' ? null : form.couponCommissionValue
                                                 })
                                             }}
                                             options={[{
@@ -98,11 +118,8 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                                     setform({
                                                         ...form,
                                                         commissionType: e.value,
-                                                        // Reset value when changing type
-                                                        // couponCommissionValue: ''
                                                     })
                                                 }}
-                                                // Percentage Commission, Fixed amount
                                                 options={[{
                                                     name: 'Fixed amount', id: 'Fixed amount'
                                                 },
@@ -136,40 +153,6 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                         </div>
                                     </>
                                 )}
-
-                                {/* <div className="col-md-6 mb-3">
-                                    <label>Coupon Type <span className="star">*</span></label>
-                                    <div className="select_row">
-                                        <SelectDropdown theme='search'
-                                            id="statusDropdown"
-                                            displayValue="name"
-                                            placeholder="Select Coupon Type"
-                                            intialValue={form?.couponType}
-                                            result={e => {
-                                                setform({ ...form, couponType: e.value })
-                                            }}
-                                            options={[{
-                                                id: 'percentage-based', name: 'Percentage-based'
-                                            },
-                                            {
-                                                id: 'fixed', name: 'Fixed'
-                                            },
-                                            {
-                                                id: 'bogo', name: 'BOGO'
-                                            },
-                                            {
-                                                id: 'minimum purchase', name: 'Minimum Purchase'
-                                            },
-                                            {
-                                                id: 'New Customer', name: 'new customer'
-                                            },
-                                            {
-                                                id: 'other', name: 'Other'
-                                            }]}
-                                        />
-                                        {submitted && !form?.couponType ? <div className="invalid-feedback d-block">Coupon Type is Required</div> : <></>}
-                                    </div>
-                                </div> */}
 
                                 {form?.visibility == 'Exclusive to specific affiliate' && <div className="col-md-6 mb-3">
                                     <label>Affiliates<span className="star">*</span></label>

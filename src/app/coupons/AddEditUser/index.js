@@ -13,7 +13,7 @@ const AddEditUser = () => {
     const user = crendentialModel.getUser()
     const [images, setImages] = useState('');
     const [form, setform] = useState({
-        "id":"",
+        "id": "",
         "media": "",
         "couponCode": "",
         "couponType": "",
@@ -24,7 +24,7 @@ const AddEditUser = () => {
         "visibility": "",
         "url": "",
         "couponCommission": "",
-        "status":"Enabled"
+        "status": "Enabled"
     })
     const [affiliateData, setAffiliateData] = useState();
     const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
@@ -33,7 +33,7 @@ const AddEditUser = () => {
     const [BrandData, setBrandData] = useState('')
     const [detail, setDetail] = useState()
     const [category, setCategory] = useState([])
-    const [relatedAffiliate,setAllAffiliate] = useState([])
+    const [relatedAffiliate, setAllAffiliate] = useState([])
 
     const getCategory = (p = {}) => {
         let url = 'main-category/all'
@@ -51,9 +51,11 @@ const AddEditUser = () => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);
-                const manipulateData = filteredData.map((itm)=>{return{
-                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
-                }})
+                const manipulateData = filteredData.map((itm) => {
+                    return {
+                        name: itm?.fullName || itm?.firstName, id: itm?.id || itm?._id
+                    }
+                })
                 setAllAffiliate(manipulateData)
             }
         })
@@ -87,19 +89,72 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-    
+
+        // Validate all required fields
+        const requiredFields = {
+            title: 'Title',
+            visibility: 'Type',  // Added type/visibility as required field
+            couponType: 'Commission Type',
+            startDate: 'Start Date',
+            expirationDate: 'Expiration Date',
+            url: 'Site URL'
+        };
+
+        // Additional validation for Custom commission type
+        if (form?.couponType === 'Custom') {
+            requiredFields.commissionType = 'Custom Commission Type';
+            requiredFields.couponAmount = 'Commission Value';
+        }
+
+        // Validation for Private coupons
+        if (form?.visibility === 'Exclusive to specific affiliate') {
+            requiredFields.media = 'Affiliates';
+        }
+
+        // Check for empty required fields
+        const missingFields = Object.keys(requiredFields).filter(
+            field => !form[field] || (Array.isArray(form[field]) && form[field].length === 0)
+        );
+
+        if (missingFields.length > 0) {
+            const fieldNames = missingFields.map(field => requiredFields[field]).join(', ');
+            toast.error(`Please fill all required fields: ${fieldNames}`);
+            return;
+        }
+
+        // Validate date range
+        if (new Date(form.expirationDate) < new Date(form.startDate)) {
+            toast.error('Expiration date must be after start date');
+            return;
+        }
+
+        // Validate commission value for percentage
+        if (form?.commissionType === 'Percentage Commission' && form?.couponAmount > 100) {
+            toast.error('Percentage commission cannot exceed 100%');
+            return;
+        }
+
+        // Validate URL format
+        try {
+            new URL(form.url);
+        } catch (e) {
+            toast.error('Please enter a valid URL');
+            return;
+        }
+
+        // Rest of your submission logic remains the same...
         let method = 'post';
         let url = 'coupon/add';
-    
+
         let value = {
             ...form,
         };
-    
+
         // Convert media to string if it exists
         if (value?.media) {
             value = { ...value, media: value?.media?.value.toString() };
         }
-    
+
         // If visibility is Public, remove media
         if (form?.visibility === 'Public') {
             delete value.media;
@@ -107,33 +162,38 @@ const AddEditUser = () => {
 
         if (form?.couponType === 'Campaign') {
             delete value.commissionType;
+            delete value.couponAmount;
         }
-    
+
         // Set status to 'Pending' if startDate is in the future
         const now = new Date();
         const startDate = new Date(form?.startDate);
         if (startDate > now) {
             value.status = 'Pending';
         }
-    
+
         if (value.id) {
             method = 'put';
             url = 'coupon/edit';
         } else {
             delete value.id;
         }
-    delete value?.couponCommissionValue;
-    delete value?.couponCommissionType;
+
+        delete value?.couponCommissionValue;
+        delete value?.couponCommissionType;
+
         loader(true);
         ApiClient.allApi(url, value, method).then(res => {
             if (res.success) {
-                toast.success("Coupon Added Successfully.");
+                toast.success(value.id ? "Coupon Updated Successfully." : "Coupon Added Successfully.");
                 let redirectUrl = '/coupons';
                 if (role) redirectUrl = "/coupons/" + role;
                 history.push(redirectUrl);
             }
             loader(false);
-            setSubmitted(true);
+        }).catch(error => {
+            loader(false);
+            toast.error(error.message || "An error occurred while saving the coupon");
         });
     };
 
@@ -176,19 +236,19 @@ const AddEditUser = () => {
                 if (res.success) {
                     let value = res.data
                     setDetail(value)
-                        setform({
-                        "id":value?.id,
-                        "media":value?.media,
-                        "couponCode":value?.couponCode,
-                        "couponType":value?.couponType,
+                    setform({
+                        "id": value?.id,
+                        "media": value?.media,
+                        "couponCode": value?.couponCode,
+                        "couponType": value?.couponType,
                         "startDate": value?.startDate,
                         "expirationDate": value?.expirationDate,
-                        "commissionType":value?.commissionType,
-                        "couponAmount":value?.couponAmount,
-                        "applicable":value?.applicable,
+                        "commissionType": value?.commissionType,
+                        "couponAmount": value?.couponAmount,
+                        "applicable": value?.applicable,
                         "visibility": value?.visibility,
-                        "url":value?.url,
-                        "couponCommission":value?.couponCommission,
+                        "url": value?.url,
+                        "couponCommission": value?.couponCommission,
                         // "status": "Enabled"
                     })
                     setImages(value?.image)
@@ -224,9 +284,11 @@ const AddEditUser = () => {
             if (res.success) {
                 const data = res.data
                 const filteredData = data.filter(item => item !== null);
-                const manipulateData = filteredData.map((itm)=>{return{
-                    name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
-                }})
+                const manipulateData = filteredData.map((itm) => {
+                    return {
+                        name: itm?.fullName || itm?.firstName, id: itm?.id || itm?._id
+                    }
+                })
                 setAffiliateData(manipulateData)
             }
         })
