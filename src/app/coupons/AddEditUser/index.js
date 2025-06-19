@@ -248,8 +248,10 @@ const AddEditUser = () => {
                         "applicable": value?.applicable,
                         "visibility": value?.visibility,
                         "url": value?.url,
-                        "couponCommission": value?.couponCommission,
-                        // "status": "Enabled"
+                        // "couponCommission": value?.couponCommission,
+                        "description":value?.description,
+                        "title":value?.title,
+                        "status": value?.status
                     })
                     setImages(value?.image)
                     // let payload = { ...defaultvalue };
