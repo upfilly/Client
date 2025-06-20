@@ -133,10 +133,10 @@ const Html = ({
                     </article>
 
                     {/* Add Export Buttons */}
-                    {user?.role == "affiliate" && <div className="d-flex gap-2">
+                    <div className="d-flex gap-2">
                         <button className="btn btn-success rounded-pill" onClick={exportCSV}>Export CSV</button>
                         <button className="btn btn-warning rounded-pill" onClick={exportXML}>Export XML</button>
-                    </div>}
+                    </div>
 
                 </div>
 
