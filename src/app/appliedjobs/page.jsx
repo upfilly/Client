@@ -77,7 +77,7 @@ const Users = () => {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page + 1 })
+    getData({ ...p, page: 1 })
   }
 
   const ChangeRole = (e) => {
@@ -111,7 +111,7 @@ const Users = () => {
         if (res.success) {
 
           toast.success(res.message)
-          getData({ page: filters?.page + 1 });
+          getData({ page: 1 });
         }
         loader(false);
       });
@@ -142,7 +142,7 @@ const Users = () => {
           ApiClient.put('brand/changerequeststatus', { status: itm, affiliate_id: id, reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });
@@ -177,7 +177,7 @@ const Users = () => {
         ApiClient.post('proposal', { "brand_id": brand_id, description: descriptionData }).then((res) => {
           if (res.success) {
             toast.success(res.message)
-            getData({ page: filters?.page + 1 });
+            getData({ page: 1 });
           }
           loader(false);
         });

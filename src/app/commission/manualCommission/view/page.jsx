@@ -23,7 +23,7 @@ const Manualcommission = () => {
     
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters ,page: filters?.page + 1 ,role})
+            // setFilter({ ...filters ,page: 1 ,role})
             getAffiliateData()
             getData({role, page: 1 })
         }
@@ -58,7 +58,7 @@ const Manualcommission = () => {
             if (res.success) {
     
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });
@@ -89,7 +89,7 @@ const Manualcommission = () => {
               ApiClient.put('update/status', { status: itm, id: id, reason: denialReason }).then((res) => {
                 if (res.success) {
                   toast.success(res.message)
-                  getData({ page: filters?.page + 1 });
+                  getData({ page: 1 });
                 }
                 loader(false);
               });

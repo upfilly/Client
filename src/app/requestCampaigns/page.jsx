@@ -97,7 +97,7 @@ const Users = () => {
         if (res.success) {
 
           toast.success(res.message)
-          getData({ page: filters?.page + 1 });
+          getData({ page: 1 });
         }
         loader(false);
       });
@@ -127,7 +127,7 @@ const Users = () => {
           ApiClient.put('campaign-request/change-status', { status: itm,affiliate_id:affiliate_id, id: id,reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });
@@ -162,7 +162,7 @@ const Users = () => {
         ApiClient.post('proposal', { "brand_id": brand_id, description: descriptionData }).then((res) => {
           if (res.success) {
             toast.success(res.message)
-            getData({ page: filters?.page + 1 });
+            getData({ page: 1 });
           }
           loader(false);
         });

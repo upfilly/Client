@@ -24,7 +24,7 @@ const untrackedSales = () => {
 
     useEffect(() => {
         if (user) {
-            setFilter({ ...filters ,page: filters?.page + 1 ,...params})
+            setFilter({ ...filters ,page: 1 ,...params})
             getData({role, page: 1 ,...params})
         }
     }, [role])
@@ -63,7 +63,7 @@ const untrackedSales = () => {
             if (res.success) {
     
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });
@@ -94,7 +94,7 @@ const untrackedSales = () => {
               ApiClient.put('update/status', { status: itm, id: id, reason: denialReason }).then((res) => {
                 if (res.success) {
                   toast.success(res.message)
-                  getData({ page: filters?.page + 1 });
+                  getData({ page: 1 });
                 }
                 loader(false);
               });
@@ -134,7 +134,7 @@ const untrackedSales = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+        getData({ ...p , page:1})
     }
 
     const ChangeRole = (e) => {

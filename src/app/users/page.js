@@ -88,7 +88,7 @@ const AffiliateTeam = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+        getData({ ...p , page:1})
     }
 
     const statusChange=(itm)=>{
@@ -108,7 +108,7 @@ const AffiliateTeam = () => {
                 loader(true)
                 ApiClient.put(`changeStatus`,{status:status,id:itm.id || itm?._id}).then(res=>{
                     if(res.success){
-                        getData({page:filters?.page + 1})
+                        getData({page:1})
                     }
                     loader(false)
                 })
@@ -133,7 +133,7 @@ const AffiliateTeam = () => {
                 loader(true)
                 ApiClient.put(`common/toggle-key`,{key,id:itm.id,model:'affiliatemanagement'}).then(res=>{
                     if(res.success){
-                        getData({page:filters?.page + 1})
+                        getData({page:1})
                     }
                     loader(false)
                 })

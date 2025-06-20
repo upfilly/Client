@@ -21,7 +21,7 @@ const DataFeedslisting = ({ file , loaderData}) => {
 
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters ,page: filters?.page + 1 ,role})
+            // setFilter({ ...filters ,page: 1 ,role})
             getData({ role, page: 1 })
         }
     }, [file,loaderData])
@@ -72,7 +72,7 @@ const DataFeedslisting = ({ file , loaderData}) => {
 
     const filter = (p = {}) => {
         setFilter({ ...filters, ...p })
-        getData({ ...p, page: filters?.page + 1 })
+        getData({ ...p, page: 1 })
     }
 
     const ChangeRole = (e) => {

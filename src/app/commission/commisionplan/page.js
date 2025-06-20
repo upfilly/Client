@@ -86,8 +86,8 @@ export default function Commissions() {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page + 1 })
-    getPendingData({...p,page: filters?.page + 1})
+    getData({ ...p, page: 1 })
+    getPendingData({...p,page: 1})
   }
 
   const reset = () => {

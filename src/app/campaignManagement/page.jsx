@@ -107,8 +107,8 @@ const Users = () => {
   // const filter = (p = {}) => {
   //   setFilter({ ...filters, ...p })
   //   setPreviousFilter({ ...previousfilters, page: e.selected })
-  //   getData({ ...p, page: filters?.page + 1 })
-  //   getData({ ...p, page: filters?.page + 1 })
+  //   getData({ ...p, page: 1 })
+  //   getData({ ...p, page: 1 })
   // }
 
   const filter = (p = {}) => {
@@ -229,7 +229,7 @@ const SendPreviousRequest = async (campaign,brand) => {
   //       ApiClient.post('proposal', { "brand_id": brand_id, description: descriptionData }).then((res) => {
   //         if (res.success) {
   //           toast.success(res.message)
-  //           getData({ page: filters?.page + 1 });
+  //           getData({ page: 1 });
   //         }
   //         loader(false);
   //       });
@@ -258,7 +258,7 @@ const SendPreviousRequest = async (campaign,brand) => {
         }).then((res) => {
           if (res.success) {
             toast.success(res.message);
-            getData({ page: filters?.page + 1 });
+            getData({ page: 1 });
           }
           loader(false);
         });

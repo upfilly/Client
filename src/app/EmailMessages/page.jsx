@@ -71,7 +71,7 @@ const EmailMessages = () => {
 
     const filter = (p = {}) => {
         setFilter({ ...filters, ...p })
-        getData({ ...p, page: filters?.page + 1, addedBy: user?.id })
+        getData({ ...p, page: 1, addedBy: user?.id })
     }
 
 

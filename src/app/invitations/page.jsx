@@ -82,7 +82,7 @@ const Invitations = () => {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page + 1 })
+    getData({ ...p, page: 1 })
   }
 
   const ChangeRole = (e) => {
@@ -118,7 +118,7 @@ const Invitations = () => {
         if (res.success) {
 
           toast.success(res.message)
-          getData({ page: filters?.page + 1 });
+          getData({ page: 1 });
         }
         loader(false);
       });
@@ -149,7 +149,7 @@ const Invitations = () => {
           ApiClient.put('update/status', { status: itm, id: id, reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });
@@ -184,7 +184,7 @@ const Invitations = () => {
   //       ApiClient.post('proposal', { "brand_id": brand_id, description: descriptionData }).then((res) => {
   //         if (res.success) {
   //           toast.success(res.message)
-  //           getData({ page: filters?.page + 1 });
+  //           getData({ page: 1 });
   //         }
   //         loader(false);
   //       });

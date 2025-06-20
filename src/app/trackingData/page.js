@@ -172,7 +172,7 @@ export default function Affiliate() {
       ApiClient.put('update/commission/status', { commission_status: itm, id: id }).then((res) => {
         if (res.success) {
           toast.success(res.message)
-          getData({ page: filters?.page + 1 });
+          getData({ page: 1 });
         }
       });
     } else {
@@ -200,7 +200,7 @@ export default function Affiliate() {
           ApiClient.put('update/commission/status', { commission_status: itm, id: id, reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });

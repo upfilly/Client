@@ -228,7 +228,7 @@ export default function affilate() {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page + 1 })
+    getData({ ...p, page: 1 })
   }
 
   const sorting = (key) => {
@@ -350,7 +350,7 @@ export default function affilate() {
         loader(true)
         ApiClient.put(`change/status`, { status, id: itm._id, model: 'users' }).then(res => {
           if (res.success) {
-            getData({ page: filters?.page + 1 })
+            getData({ page: 1 })
           }
           loader(false)
         })

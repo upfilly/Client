@@ -100,7 +100,7 @@ const Users = () => {
 
     const filter = (p = {}) => {
         setFilter({ ...filters, ...p })
-        getData({ ...p, page: filters?.page + 1 })
+        getData({ ...p, page: 1 })
     }
 
 

@@ -30,7 +30,7 @@ const Users = () => {
 
     useEffect(() => {
         if (user) {
-            setFilter({ ...filters ,page: filters?.page + 1 ,...params})
+            setFilter({ ...filters ,page: 1 ,...params})
             getData({role, page: 1 , isArchive: false,...params})
         }
     }, [role])

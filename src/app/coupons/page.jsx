@@ -23,7 +23,7 @@ const Coupons = () => {
 
     useEffect(() => {
         if (user) {
-            setFilter({ ...filters ,page: filters?.page + 1 ,...params})
+            setFilter({ ...filters ,page: 1 ,...params})
             getData({role, page: 1 ,...params})
         }
     }, [role])
@@ -62,7 +62,7 @@ const Coupons = () => {
             if (res.success) {
     
               toast.success(res.message)
-              getData({ page: filters?.page + 1 });
+              getData({ page: 1 });
             }
             loader(false);
           });
@@ -93,7 +93,7 @@ const Coupons = () => {
               ApiClient.put('update/status', { status: itm, id: id, reason: denialReason }).then((res) => {
                 if (res.success) {
                   toast.success(res.message)
-                  getData({ page: filters?.page + 1 });
+                  getData({ page: 1 });
                 }
                 loader(false);
               });
@@ -133,7 +133,7 @@ const Coupons = () => {
 
     const filter = (p={}) => {
         setFilter({ ...filters, ...p})
-        getData({ ...p , page:filters?.page + 1})
+        getData({ ...p , page:1})
     }
 
     const ChangeRole = (e) => {
