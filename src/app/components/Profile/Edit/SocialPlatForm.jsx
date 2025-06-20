@@ -529,7 +529,7 @@ const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
                     <div>
                       <button
                         type="button"
-                        className="btn btn-success rounded-pill w-100 d-flex align-items-center justify-content-center gap-2"
+                        className="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2"
                         onClick={addCustomPlatform}
                         disabled={!newPlatform.trim()}
                       >

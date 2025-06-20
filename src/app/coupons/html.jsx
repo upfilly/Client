@@ -134,8 +134,8 @@ const Html = ({
 
                     {/* Add Export Buttons */}
                     <div className="d-flex gap-2">
-                        <button className="btn btn-success rounded-pill" onClick={exportCSV}>Export CSV</button>
-                        <button className="btn btn-warning rounded-pill" onClick={exportXML}>Export XML</button>
+                        <button className="btn btn-success" onClick={exportCSV}>Export CSV</button>
+                        <button className="btn btn-warning" onClick={exportXML}>Export XML</button>
                     </div>
 
                 </div>
