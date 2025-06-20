@@ -138,7 +138,7 @@ const Html = ({
                             <thead className='table_head'>
                                 <tr className='heading_row'>
                                     <th scope="col" className='table_data' onClick={e => sorting('name')}>Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    <th scope="col" className='table_data'>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Event Type{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Access Type</th>
                                      <th scope="col" className='table_data'>Affiliates</th>
                                     <th scope="col" className='table_data'>Commission</th>
