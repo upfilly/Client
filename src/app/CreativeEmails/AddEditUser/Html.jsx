@@ -3,54 +3,54 @@ import { toast } from "react-toastify";
 import ApiClient from "@/methods/api/apiClient";
 import loader from "@/methods/loader";
 import methodModel from "@/methods/methods";
-import Layout from '../../components/global/layout';
-import 'react-quill/dist/quill.snow.css';
-import { useParams, useRouter } from 'next/navigation';
-import EmailEditorTemplate from '../../email/emaileditor'
+import Layout from "../../components/global/layout";
+import "react-quill/dist/quill.snow.css";
+import { useParams, useRouter } from "next/navigation";
+import EmailEditorTemplate from "../../email/emaileditor";
 
 const Html = () => {
-  const { id } = useParams()
-  const [form, setform] = useState({ 
-    templateName: '',
-    content:"", 
-    emailName: '', 
-    format: 'Text', 
-    subject: '', 
-    from: '', 
-    htmlContent: '', 
-    textContent: '', 
-    personalizationTags: [], 
-    textJSONContent: {} 
+  const { id } = useParams();
+  const [form, setform] = useState({
+    templateName: "",
+    content: "",
+    emailName: "",
+    format: "Text",
+    subject: "",
+    from: "",
+    htmlContent: "",
+    textContent: "",
+    personalizationTags: [],
+    textJSONContent: {},
   });
   const [tab, setTab] = useState("form");
   const [submitted, setSubmitted] = useState(false);
-  const [previewContent, setPreviewContent] = useState('');
+  const [previewContent, setPreviewContent] = useState("");
   const [isGeneratingPreview, setIsGeneratingPreview] = useState(false);
   const specialChars = useRef([]);
-  const [variables, setVariables] = useState('');
+  const [variables, setVariables] = useState("");
   const [htmlCode, setHtmlCode] = useState(false);
   const formValidation = [{ key: "subject", required: true }];
-  const router = useRouter()
+  const router = useRouter();
   const childRef = useRef();
   const emailEditorRef = useRef(null);
 
-  console.log(form,"form?.content || form?.textContent")
+  console.log(form, "form?.content || form?.textContent");
 
   const exportHtml = (e) => {
     if (e) e.preventDefault();
-    
+
     const unlayer = emailEditorRef.current?.editor;
 
     if (unlayer) {
       unlayer.exportHtml((data) => {
         const { design, html } = data;
-        console.log(data,"dadadadad")
+        console.log(data, "dadadadad");
 
         if (html) {
           setform({
             ...form,
             textContent: html,
-            textJSONContent: design || {}
+            textJSONContent: design || {},
           });
           // Call handleSubmit without the event to avoid double submission
           handleSubmit();
@@ -63,20 +63,20 @@ const Html = () => {
   const generateEmailEditorPreview = () => {
     return new Promise((resolve) => {
       const unlayer = emailEditorRef.current?.editor;
-      
+
       if (unlayer) {
         unlayer.exportHtml((data) => {
           const { html, design } = data;
           // Update form with latest content and design
-          setform(prevForm => ({
+          setform((prevForm) => ({
             ...prevForm,
-            textContent: html || '',
-            textJSONContent: design || {}
+            textContent: html || "",
+            textJSONContent: design || {},
           }));
-          resolve(html || '');
+          resolve(html || "");
         });
       } else {
-        resolve('');
+        resolve("");
       }
     });
   };
@@ -84,32 +84,32 @@ const Html = () => {
   // Enhanced preview handler
   const handlePreview = async (e) => {
     if (e) e.preventDefault();
-    
+
     setIsGeneratingPreview(true);
-    
+
     try {
-      let content = '';
-      
-      if (form?.format === 'Text') {
+      let content = "";
+
+      if (form?.format === "Text") {
         // For EmailEditor, we need to export HTML first and save the design
         if (emailEditorRef.current?.editor) {
           content = await generateEmailEditorPreview();
           // Wait a moment for state to update
-          await new Promise(resolve => setTimeout(resolve, 100));
+          await new Promise((resolve) => setTimeout(resolve, 100));
         } else {
           // Fallback to existing textContent if available
-          content = form?.textContent || '';
+          content = form?.textContent || "";
         }
       } else {
         // For HTML textarea
-        content = form?.htmlContent || '';
+        content = form?.htmlContent || "";
       }
-      
+
       setPreviewContent(content);
       setTab("preview");
     } catch (error) {
-      console.error('Error generating preview:', error);
-      toast.error('Error generating preview');
+      console.error("Error generating preview:", error);
+      toast.error("Error generating preview");
     } finally {
       setIsGeneratingPreview(false);
     }
@@ -117,62 +117,63 @@ const Html = () => {
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault(); // Prevent form submission
-    
+
     setSubmitted(true);
-    
+
     let invalid = methodModel.getFormError(formValidation, form);
     if (invalid) {
       setTab("form");
       return;
     }
-    
+
     let method = "post";
     let url = "emailtemplate";
     let value = {
-      ...form, id: id
+      ...form,
+      id: id,
     };
 
     delete value?.content;
-    
+
     if (id && id != "add") {
       method = "put";
       url = `emailtemplate`;
     } else {
       delete value.id;
     }
-    
+
     loader(true);
 
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
-        toast.success(res?.message)
+        toast.success(res?.message);
         router.push("/CreativeEmails");
       }
       loader(false);
     });
   };
-  
+
   const handleSaveFromPreview = async (e) => {
     e.preventDefault();
-    
+
     // If we're previewing EmailEditor content, make sure we have the latest HTML
-    if (form?.format === 'Text' && emailEditorRef.current?.editor) {
+    if (form?.format === "Text" && emailEditorRef.current?.editor) {
       setIsGeneratingPreview(true);
       try {
         const htmlContent = await generateEmailEditorPreview();
         const updatedForm = {
           ...form,
-          textContent: htmlContent
+          textContent: htmlContent,
         };
         setform(updatedForm);
-        
+
         // Now submit with updated content
         setTimeout(() => {
           handleSubmit();
         }, 100);
       } catch (error) {
-        console.error('Error saving from preview:', error);
-        toast.error('Error saving template');
+        console.error("Error saving from preview:", error);
+        toast.error("Error saving template");
       } finally {
         setIsGeneratingPreview(false);
       }
@@ -184,27 +185,26 @@ const Html = () => {
   useEffect(() => {
     if (id) {
       loader(true);
-      ApiClient.get("emailtemplate", { id: id }).then(
-        (res) => {
-          if (res.success) {
-            let value = res.data;
-            let payload = form;
-            Object.keys(payload).map((itm) => {
-              payload[itm] = value[itm];
-            });
-            setform({
-              ...payload, id: id
-            });
-          }
-          loader(false);
+      ApiClient.get("emailtemplate", { id: id }).then((res) => {
+        if (res.success) {
+          let value = res.data;
+          let payload = form;
+          Object.keys(payload).map((itm) => {
+            payload[itm] = value[itm];
+          });
+          setform({
+            ...payload,
+            id: id,
+          });
         }
-      );
+        loader(false);
+      });
     }
   }, []);
 
-  const onSelect = (e) => { };
+  const onSelect = (e) => {};
 
-  const onRemove = (e) => { };
+  const onRemove = (e) => {};
 
   const textAreaRef = useRef(null);
 
@@ -228,11 +228,11 @@ const Html = () => {
       // Ensure the textarea maintains focus after insertion
       textarea.focus();
       textAreaRef.current.selectionEnd = end + variable.length + 2;
-    } catch (err) { }
+    } catch (err) {}
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       handlepersonalize();
     }
@@ -240,28 +240,31 @@ const Html = () => {
 
   const handlepersonalize = () => {
     if (!variables) {
-      return
+      return;
     } else {
-      let personalize = form?.personalizationTags || []
-      personalize.push(variables)
-      setform({ ...form, personalizationTags: personalize })
-      setVariables('')
+      let personalize = form?.personalizationTags || [];
+      personalize.push(variables);
+      setform({ ...form, personalizationTags: personalize });
+      setVariables("");
     }
-  }
-  
+  };
+
   const removepersonalize = (name) => {
-    let personalize = form?.personalizationTags || []
+    let personalize = form?.personalizationTags || [];
     if (personalize?.length == 0) {
-      return
+      return;
     }
-    personalize = personalize.filter(itm => itm != name)
-    setform({ ...form, personalizationTags: personalize })
-  }
+    personalize = personalize.filter((itm) => itm != name);
+    setform({ ...form, personalizationTags: personalize });
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    
-    if (form?.format == 'Text' && (!form?.textJSONContent || !form?.textContent)) {
+
+    if (
+      form?.format == "Text" &&
+      (!form?.textJSONContent || !form?.textContent)
+    ) {
       exportHtml(e);
     } else {
       handleSubmit(e);
@@ -278,8 +281,12 @@ const Html = () => {
                 <div className="pprofile1">
                   <div className="flex items-center mb-8">
                     <div className="d-flex align-items-center add_memeber_bx">
-                      <a onClick={() => router.back()}>  
-                        <i className="fa fa-arrow-left left_arrows" title="Back" aria-hidden="true"></i>
+                      <a onClick={() => router.back()}>
+                        <i
+                          className="fa fa-arrow-left left_arrows"
+                          title="Back"
+                          aria-hidden="true"
+                        ></i>
                       </a>
                       <div className="Profilehedding">
                         <h3 className="add_email">
@@ -372,27 +379,35 @@ const Html = () => {
                             <ul className="nav nav-tabs flex mb-2 d-flex justify-content-start gap-2 flex-wrap align-items-center border-bottom-0 pb-0 pb-md-2">
                               <li className="nav-item flex mr-0 cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` ${form?.format == 'Text'
-                                    ? " btn btn-outline-light"
-                                    : " btn btn-primary"
-                                    }`}
-                                  onClick={() => setform({ ...form, format: 'HTML' })}>
+                                  className={` ${
+                                    form?.format == "Text"
+                                      ? " btn btn-outline-light"
+                                      : " btn btn-primary"
+                                  }`}
+                                  onClick={() =>
+                                    setform({ ...form, format: "HTML" })
+                                  }
+                                >
                                   Html Code
                                 </a>
                               </li>
                               <li className="nav-item cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` ${form?.format !== 'Text'
-                                    ? " btn btn-outline-light"
-                                    : " btn btn-primary"
-                                    }`}
-                                  onClick={() => setform({ ...form, format: 'Text' })}>
+                                  className={` ${
+                                    form?.format !== "Text"
+                                      ? " btn btn-outline-light"
+                                      : " btn btn-primary"
+                                  }`}
+                                  onClick={() =>
+                                    setform({ ...form, format: "Text" })
+                                  }
+                                >
                                   Editor
                                 </a>
                               </li>
                             </ul>
 
-                            {form?.format !== 'Text' ? (
+                            {form?.format !== "Text" ? (
                               <>
                                 <textarea
                                   ref={textAreaRef}
@@ -410,11 +425,11 @@ const Html = () => {
                               </>
                             ) : (
                               <>
-                                <EmailEditorTemplate 
-                                  state={form} 
-                                  setstate={setform} 
-                                  ref={childRef} 
-                                  exportHtml={exportHtml} 
+                                <EmailEditorTemplate
+                                  state={form}
+                                  setstate={setform}
+                                  ref={childRef}
+                                  exportHtml={exportHtml}
                                   emailEditorRef={emailEditorRef}
                                 />
                               </>
@@ -436,12 +451,10 @@ const Html = () => {
                                 Generating Preview...
                               </>
                             ) : (
-                              'Preview'
+                              "Preview"
                             )}
                           </button>
-                          <button
-                            type="submit"
-                            className="btn btn-primary">
+                          <button type="submit" className="btn btn-primary">
                             Save
                           </button>
                         </div>
@@ -459,15 +472,17 @@ const Html = () => {
                     Email Preview
                   </h4>
                   <div className="badge badge-info">
-                    {form?.format === 'Text' ? 'Email Editor' : 'HTML Code'} Preview
+                    {form?.format === "Text" ? "Email Editor" : "HTML Code"}{" "}
+                    Preview
                   </div>
                 </div>
-                
+
                 {/* Email Header Info */}
                 <div className="preview-header mb-4 p-3 bg-light rounded">
                   <div className="row">
                     <div className="col-md-6">
-                      <strong>From:</strong> {form?.from} &lt;{form?.emailName}&gt;
+                      <strong>From:</strong> {form?.from} &lt;{form?.emailName}
+                      &gt;
                     </div>
                     <div className="col-md-6">
                       <strong>Subject:</strong> {form?.subject}
@@ -477,18 +492,34 @@ const Html = () => {
 
                 {/* Email Content Preview */}
                 <div className="preview-content">
-                  <div
-                    className="shadow-box border !border-grey p-3 bg-white rounded-large"
-                    style={{ 
-                      minHeight: '400px',
-                      maxHeight: '80vh',
-                      overflowY: 'auto',
-                      border: '1px solid #e5e5e5'
-                    }}
-                    dangerouslySetInnerHTML={{ 
-                      __html: previewContent || form?.content || form?.textContent || form?.htmlContent || '<p>No content to preview</p>'
-                    }}
-                  ></div>
+                  {previewContent ||
+                  form?.content ||
+                  form?.textContent ||
+                  form?.htmlContent ? (
+                    <div
+                      className="shadow-box border !border-grey p-3 bg-white rounded-large"
+                      style={{
+                        minHeight: "400px",
+                        maxHeight: "80vh",
+                        overflowY: "auto",
+                        border: "1px solid #e5e5e5",
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          previewContent ||
+                          form?.content ||
+                          form?.textContent ||
+                          form?.htmlContent ||
+                          "<p>No content to preview</p>",
+                      }}
+                    ></div>
+                  ) : (
+                    <>
+                      <div className="no-data">
+                        <img src="/assets/img/no-data-placeholder.svg" alt="img" />
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <div className="flex justify-end gap-2 mt-4 text-right">
@@ -499,21 +530,32 @@ const Html = () => {
                       setTab("form");
                       // Small delay to ensure EmailEditor is mounted before trying to reload
                       setTimeout(() => {
-                        if (emailEditorRef.current?.editor && form?.textJSONContent) {
-                          console.log('Reloading design when returning from preview');
+                        if (
+                          emailEditorRef.current?.editor &&
+                          form?.textJSONContent
+                        ) {
+                          console.log(
+                            "Reloading design when returning from preview"
+                          );
                           try {
-                            if (typeof form.textJSONContent === 'object') {
-                              emailEditorRef.current.editor.loadDesign(form.textJSONContent);
-                            } else if (typeof form.textJSONContent === 'string' && form.textJSONContent !== '{}') {
+                            if (typeof form.textJSONContent === "object") {
+                              emailEditorRef.current.editor.loadDesign(
+                                form.textJSONContent
+                              );
+                            } else if (
+                              typeof form.textJSONContent === "string" &&
+                              form.textJSONContent !== "{}"
+                            ) {
                               const design = JSON.parse(form.textJSONContent);
                               emailEditorRef.current.editor.loadDesign(design);
                             }
                           } catch (error) {
-                            console.error('Error reloading design:', error);
+                            console.error("Error reloading design:", error);
                           }
                         }
                       }, 500);
-                    }}>
+                    }}
+                  >
                     <i className="fa fa-arrow-left mr-2"></i>
                     Back to Edit
                   </button>
@@ -521,7 +563,8 @@ const Html = () => {
                     type="button"
                     className="btn btn-success mr-3"
                     onClick={handlePreview}
-                    disabled={isGeneratingPreview}>
+                    disabled={isGeneratingPreview}
+                  >
                     <i className="fa fa-refresh mr-2"></i>
                     Refresh Preview
                   </button>
@@ -529,7 +572,8 @@ const Html = () => {
                     type="button"
                     className="btn btn-primary"
                     onClick={handleSaveFromPreview}
-                    disabled={isGeneratingPreview}>
+                    disabled={isGeneratingPreview}
+                  >
                     <i className="fa fa-save mr-2"></i>
                     Save Template
                   </button>
@@ -546,8 +590,12 @@ const Html = () => {
               tabIndex="-1"
               role="dialog"
               aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div className="modal-dialog modal-dialog-centered" role="document">
+              aria-hidden="true"
+            >
+              <div
+                className="modal-dialog modal-dialog-centered"
+                role="document"
+              >
                 <div className="modal-content">
                   <div className="modal-header">
                     <h5 className="modal-title" id="exampleModalLabel">
@@ -557,19 +605,22 @@ const Html = () => {
                       type="button"
                       className="close"
                       data-dismiss="modal"
-                      aria-label="Close">
+                      aria-label="Close"
+                    >
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div className="modal-body">
                     <span
-                      dangerouslySetInnerHTML={{ __html: form?.content }}></span>
+                      dangerouslySetInnerHTML={{ __html: form?.content }}
+                    ></span>
                   </div>
                   <div className="modal-footer">
                     <button
                       type="button"
                       className="btn btn-secondary"
-                      data-dismiss="modal">
+                      data-dismiss="modal"
+                    >
                       Close
                     </button>
                   </div>
