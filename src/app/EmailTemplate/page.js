@@ -77,7 +77,7 @@ const GenerateLink = () => {
         let filters;
         if (form?.timeInterval == 'before') {
             filters = { before: moment(form?.acceptedDate).format('YYYY-MM-DD') }
-        } else {
+        } else if (form?.timeInterval == 'after') {
             filters = { after: moment(form?.acceptedDate).format('YYYY-MM-DD') }
         }
         ApiClient.get(url,filters).then(res => {

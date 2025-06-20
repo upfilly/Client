@@ -64,7 +64,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         </p>
 
                         <h2 style="margin: 10px 0 0 !important; font-size:14px !important; color:#373737 !important;">
-                            ${form?.title || 'Your email title'}
+                           Subject :- ${form?.title || 'Your email subject'}
                         </h2>
                         
                         <!-- Message Content -->
@@ -272,6 +272,19 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                             onChange={handleTitleChange}
                                         />
                                         {errors.title && <div className="invalid-feedback">{errors.title}</div>}
+                                    </div>
+                                </div>
+
+                                <div className='col-12 col-sm-6 col-md-6'>
+                                    <div className='form-group mb-3'>
+                                        <label className='form-label'>Sent Date</label>
+                                        <input
+                                            type="date"
+                                            className={`form-control ${errors.title ? 'is-invalid' : ''}`}
+                                            value={new Date().toISOString().split('T')[0]}
+                                            disabled
+                                        />
+                                        {/* {errors.title && <div className="invalid-feedback">{errors.title}</div>} */}
                                     </div>
                                 </div>
 
