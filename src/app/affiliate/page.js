@@ -394,8 +394,10 @@ export default function affilate() {
 
 
   const pageChange = (e) => {
-    setFilter({ ...filters, page: e.selected })
-    getData({ page: e.selected + 1 })
+    if (e.selected) {
+      setFilter({ ...filters, page: e.selected })
+      getData({ page: e.selected + 1 })
+    }
   }
 
   const filter = (p = {}) => {
