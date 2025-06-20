@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@/app/components/global/layout";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import '../style.scss';
@@ -7,10 +7,37 @@ import dynamic from 'next/dynamic';
 import ImageUpload from "@/app/components/common/ImageUpload";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from "react-datepicker";
+import MultiSelectDropdownData from "../../campaign/MultiSelectDropdownData"
+import ApiClient from "@/methods/api/apiClient";
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setform, submitted, images, imageResult, getError, setEyes, eyes, back, emailCheck, emailErr, emailLoader }) => {
+const Html = ({ 
+    form, 
+    affiliateData,
+    handleSubmit, 
+    setform, 
+    submitted, 
+    images, 
+    imageResult, 
+    back,
+    selectedItems,
+    setSelectedItems }) => {
+    const [categories, setCategories] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const getCategory = () => {
+        let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
+        ApiClient.get(url).then((res) => {
+            if (res.success) {
+                setCategories(res.data.data);
+            }
+        });
+    };
+
+    useEffect(()=>{
+     getCategory()
+    },[])
 
     function isValidUrl(url) {
         if (!url) return false;
@@ -129,7 +156,7 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
                                 </div>
 
 
-                                <div className='col-12 col-sm-12 col-md-6'>
+                                {/* <div className='col-12 col-sm-12 col-md-6'>
                                     <div className='form-group'>
                                         <div className="select_drop ">
                                             <label>Category<span className='star'>*</span></label>
@@ -147,6 +174,20 @@ const Html = ({ id, BrandData, category, form, affiliateData, handleSubmit, setf
 
                                         </div>
                                     </div>
+                                </div> */}
+
+                                <div className="col-md-12 mb-3 category-dropdown" onClick={() => setIsOpen(false)}>
+                                    <label>Select Category<span className="star">*</span></label>
+                                    <div className="drops category-input">
+                                        <MultiSelectDropdownData
+                                            isOpen={isOpen}
+                                            setIsOpen={setIsOpen}
+                                            data={categories}
+                                            selectedItems={selectedItems}
+                                            setSelectedItems={setSelectedItems}
+                                        />
+                                    </div>
+                                    {/* {submitted && selectedItems?.categories?.length === 0 && <div className="invalid-feedback d-block">{errors?.categories}</div>} */}
                                 </div>
 
                                 <div className="col-md-6 mb-3">

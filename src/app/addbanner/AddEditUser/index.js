@@ -32,6 +32,11 @@ const AddEditUser = () => {
     const [BrandData, setBrandData] = useState('') 
     const [detail, setDetail] = useState()
     const [category, setCategory] = useState([])
+    const [selectedItems, setSelectedItems] = useState({
+        categories: [],
+        subCategories: [],
+        subSubCategories: [],
+    });
     // const [ActivationDate,setActivationDate] = useState('')
     // const [AvailabilityDate,setAvailabilityDate] = useState('')
     // const [ExpirationDate,setExpirationDate] =  useState('')
@@ -75,13 +80,13 @@ const AddEditUser = () => {
         e.preventDefault()
 
         if(form?.access_type == "private"){
-            if(!form?.title || !form?.destination_url || !form?.category_id || !form?.activation_date || !form?.availability_date
+            if(!form?.title || !form?.destination_url || !form?.activation_date || !form?.availability_date
                 || !form?.expiration_date || !images || !form?.access_type || !form?.access_type || !form?.affiliate_id){
                    setSubmitted(true)
                    return;
                }
         }else{
-            if(!form?.title || !form?.destination_url || !form?.category_id || !form?.activation_date || !form?.availability_date
+            if(!form?.title || !form?.destination_url || !form?.activation_date || !form?.availability_date
                 || !form?.expiration_date || !images || !form?.access_type){
                    setSubmitted(true)
                    return;
@@ -95,6 +100,9 @@ const AddEditUser = () => {
         let value = {
             ...form,
             image: images,
+            category_id: selectedItems?.categories,
+            subCategory: selectedItems?.subCategories,
+            subChildCategory: selectedItems?.subSubCategories,
         };
         
         if (form?.access_type === "private") {
@@ -176,14 +184,21 @@ const AddEditUser = () => {
                         "destination_url": `${value?.destination_url}`,
                         "description": value?.description,
                         "seo_attributes": value?.seo_attributes,
-                        "category_id": value?.category_id?.id,
+                        "access_type":value?.access_type,
+                        "affiliate_id":value?.affiliate_id,
+                        // "category_id": value?.category_id?.id,
                         "activation_date": new Date(value?.activation_date),
                         "availability_date": new Date(value?.availability_date),
                         "expiration_date": new Date(value?.expiration_date),
                         "image": value?.image,
                         "is_animation": value?.is_animation,
                         "is_deep_linking": value?.is_deep_linking,
-                        "mobile_creative": value?.mobile_creative
+                        "mobile_creative": value?.mobile_creative,
+                    })
+                     setSelectedItems({
+                        categories: value?.category_id,
+                        subCategories: value?.subCategory,
+                        subSubCategories: value?.subChildCategory,
                     })
                     setImages(value?.image)
                 }
@@ -244,6 +259,8 @@ const AddEditUser = () => {
             affiliateData={affiliateData}
             BrandData={BrandData}
             category={category}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
             // setActivationDate={setActivationDate}
             // setAvailabilityDate={setAvailabilityDate}
             // setExpirationDate={setExpirationDate}

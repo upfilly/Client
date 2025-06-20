@@ -11,8 +11,8 @@ import { ConnectSocket, SocketURL } from "./socket";
 import moment from "moment";
 import environment from "@/environment";
 import { Navbar, Dropdown, Button, Modal } from "react-bootstrap";
-import ImageView from "react-single-image-viewer";
-import "react-single-image-viewer/dist/index.css";
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 import loader from "@/methods/loader";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -455,6 +455,7 @@ export default function Chat() {
           type: "TEXT",
           // sender: user.id,
           content: isTrue ? `images/users/${image}` : `documents/${res?.data?.imagePath}`,
+          fileName: file.name
           // proposal_id: proposaldata?._id,
           // campaign_id: proposaldata?.campaign_id,
           // chat_file:fileName
@@ -817,7 +818,14 @@ export default function Chat() {
                                       <div className="mt-2">
                                         <span className="ellipschat">
                                           {isImage ? (
-                                            <ImageView width={"50px"} height={"50px"} src={`${environment?.api}${itm?.content}`} />
+                                            <Zoom>
+                                              <img
+                                                width={"50px"}
+                                                height={"50px"}
+                                                src={`${environment?.api}${itm?.content}`}
+                                                alt=""
+                                              />
+                                            </Zoom>
                                           ) : isURL(itm.content) ? (
                                             <div className="pdf_btn">
                                               <div className="pdf_inner_layout ">
@@ -831,10 +839,10 @@ export default function Chat() {
                                                   <a
                                                     href={`${environment?.api}${itm.content}`}
                                                     download="document.pdf"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
                                                   >
-                                                    {" "}
-                                                    <i className="fa fa-download"></i>{" "}
-
+                                                    <i className="fa fa-download"></i>
                                                   </a>
                                                 ) : null}
                                               </div>
