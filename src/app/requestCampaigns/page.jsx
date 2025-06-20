@@ -77,8 +77,8 @@ const Users = () => {
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
     // setPreviousFilter({ ...previousfilters, page: e.selected })
-    getData({ ...p, page: filters?.page + 1 })
-    getData({ ...p, page: filters?.page + 1 })
+    getData({ ...p, page: 1 })
+    getData({ ...p, page: 1 })
   }
 
   const ChangeRole = (e) => {
