@@ -14,6 +14,8 @@ import { toast } from 'react-toastify';
 import SelectDropdown from '../components/common/SelectDropdown';
 import { CurencyData } from '../../methods/currency';
 import datepipeModel from '@/models/datepipemodel';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Affiliate() {
   const history = useRouter()
@@ -22,6 +24,8 @@ export default function Affiliate() {
   const [data, setData] = useState({})
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [associateId, setAssociateId] = useState("");
@@ -33,6 +37,13 @@ export default function Affiliate() {
   const handleShow = (price, commission, commission_type, id) => {
     setAssociateId(id)
     calculateCommission(commission_type, price, commission)
+  };
+
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+    filter({ "startDate": start.toISOString().split('T')[0], "endDate": end.toISOString().split('T')[0] })
   };
 
   const getExchangeRate = async (currency) => {
@@ -352,6 +363,21 @@ export default function Affiliate() {
                           { id: 'paid', name: 'Paid' },
                           { id: 'unpaid', name: 'unpaid' },
                         ]}
+                      />
+                    </div>
+
+                    <div class="">
+                      <DatePicker
+                        className="datepicker-field"
+                        selected={startDate}
+                        onChange={onChange}
+                        startDate={startDate}
+                        endDate={endDate}
+                        showIcon
+                        placeholderText=" Date Range"
+                        selectsRange
+
+                      // inline
                       />
                     </div>
 
