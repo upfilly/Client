@@ -537,11 +537,12 @@ export default function Chat() {
   const handleShow = () => setShow(true);
 
   const handleGroup = () => {
-    loader(true)
+   
     if (!group?.group_name) {
       setSummitGroup(true)
       return;
     }
+     loader(true)
     axios.post(`${SocketURL}chat/user/group/create`, group).then((res) => {
       if (res?.data?.success) {
         //  getData()
