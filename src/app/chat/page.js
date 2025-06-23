@@ -973,7 +973,7 @@ export default function Chat() {
                         {picLoader ?
                           <div className="text-success text-center top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
                           : <div>
-                            <label className="btn btn-primary">
+                            <label className="btn btn-primary mr-2">
                               <input
                                 id="bannerImage"
                                 type="file"
