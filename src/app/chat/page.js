@@ -703,7 +703,7 @@ export default function Chat() {
                                     onClick={isImage ? "" : () => {
                                       setActiveData(itm);
                                       localStorage.setItem("roomId", itm?.room_id);
-                                      handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
+                                      // handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
                                       userMessage(itm?.room_id, itm?.room_members[0]?.user_id);
                                       setRoomId(itm?.room_id);
                                       joinRoom(itm?.room_id);
