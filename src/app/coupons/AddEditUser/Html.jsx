@@ -179,7 +179,7 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                             type="date"
                                             className="width_full"
                                             value={form.startDate}
-                                            max={new Date().toISOString().split('T')[0]}
+                                            // max={new Date().toISOString().split('T')[0]}
                                             onChange={e => setform({ ...form, startDate: e.target.value })}
                                         />
                                         {submitted && !form?.startDate ? <div className="invalid-feedback d-block">Start Date is Required</div> : <></>}
