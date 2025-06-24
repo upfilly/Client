@@ -57,6 +57,22 @@ export default function Chat() {
   const [searchText, setSearchText] = useState('');
   const [uploadModalShow, setUploadModalShow] = useState(false);
   const [uploadType, setUploadType] = useState('');
+  const [showAffiliatesModal, setShowAffiliatesModal] = useState(false);
+  const [affiliatesSearch, setAffiliatesSearch] = useState('');
+  const [allAffiliates, setAllAffiliates] = useState([]);
+  const [activeAffiliateId, setActiveAffiliateId] = useState(null);
+  const activeAffiliateRef = useRef(null);
+
+  const handleAffiliatesModalShow = () => {
+    getAllAffiliates();
+    setShowAffiliatesModal(true);
+  };
+
+  const handleUserId = (id) => {
+    localStorage.setItem("chatId", id);
+    setActiveAffiliateId(id);
+    window.location.reload();
+  };
 
   ConnectSocket.on('user-online', (data) => {
     // console.log(data,"daataaOnline")
@@ -75,7 +91,17 @@ export default function Chat() {
     }
   });
 
+  const getAllAffiliates = () => {
+  ApiClient.get(`users/list?role=${user?.role == "brand" ? "affiliate" : "brand"}&isDeleted=false`)
+    .then(res => {
+      if (res.success) {
+        setAllAffiliates(res?.data?.data);
+      }
+    });
+};
+
   useEffect(() => {
+    getAllAffiliates()
     ConnectSocket.connect()
   }, [])
 
@@ -193,7 +219,16 @@ export default function Chat() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [chat]);
+  }, [chat,id]);
+
+  useEffect(() => {
+    if (activeAffiliateRef.current) {
+      activeAffiliateRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  }, [activeAffiliateId, chatList]);
 
   // useEffect(() => {
   //   let proposaldataa = JSON.parse(localStorage.getItem("proposal"));
@@ -438,7 +473,6 @@ export default function Chat() {
   };
 
   const uploadImage = (e) => {
-    alert("innn")
     let files = e.target.files;
     if (!files || files.length === 0) return;
 
@@ -597,9 +631,10 @@ export default function Chat() {
     getGroupListMember()
   }
 
-  const handleUserId = (id) => {
-    localStorage.setItem("chatId", id)
-  }
+  // const handleUserId = (id) => {
+  //   localStorage.setItem("chatId", id)
+  //   window.location.reload()
+  // }
 
   return (
     <>
@@ -624,23 +659,28 @@ export default function Chat() {
                     <div className="card-body p-0">
                       <div className="search_chat">
                         {/* <form method="get"> */}
-                        <div className="form-group position-relative">
-                          <input
-                            type="text"
-                            // value={filters?.search}
-                            placeholder="Search"
-                            className="from-control search_design"
-                            id="searchright"
-                            value={searchText}
-                            onChange={e => setSearchText(e.target.value)}
-                          // onChange={(e) =>
-                          //   filter({ search: e.target.value })
-                          // }
-                          />
-                          <span className="mglass">
-                            {" "}
-                            <img src="../../../assets/img/search.svg" />
-                          </span>
+                        <div className="search_chat" style={{ display: 'flex', alignItems: 'center' }}>
+                          <div className="form-group position-relative" style={{ flex: 1 }}>
+                            <input
+                              type="text"
+                              placeholder="Search"
+                              className="from-control search_design"
+                              id="searchright"
+                              value={searchText}
+                              onChange={e => setSearchText(e.target.value)}
+                            />
+                            <span className="mglass">
+                              <img src="../../../assets/img/search.svg" />
+                            </span>
+                          </div>
+                          <button
+                            className="btn mb-2"
+                            title="All Members"
+                            onClick={() => setShowAffiliatesModal(true)}
+                            style={{ whiteSpace: 'nowrap' }} // Prevents button text from wrapping
+                          >
+                            <i className="material-icons svg_iconbx">forum</i>
+                          </button>
                         </div>
                         {/* </form> */}
                       </div>
@@ -653,22 +693,21 @@ export default function Chat() {
                             filteredChatList?.length > 0
                               ?
                               filteredChatList?.map((itm, indx) => {
-                                // console.log(itm,"itmmmmmm=====")
-                                return (<>
+                                const isActive = itm?.room_id == roomId || itm?.room_members?.[0]?.user_id === activeAffiliateId;
 
+                                return (
                                   <li
-                                    className={itm?.room_id == roomId ? "person-list-inner chat_active" : "person-list-inner"}
+                                    ref={isActive ? activeAffiliateRef : null}
+                                    className={isActive ? "person-list-inner chat_active" : "person-list-inner"}
                                     key={indx}
                                     onClick={isImage ? "" : () => {
-
-                                      setActiveData(itm)
-                                      localStorage.setItem("roomId", itm?.room_id)
-                                      handleUserId(itm?.user_id)
+                                      setActiveData(itm);
+                                      localStorage.setItem("roomId", itm?.room_id);
+                                      handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
                                       userMessage(itm?.room_id, itm?.room_members[0]?.user_id);
-                                      setRoomId(itm?.room_id)
+                                      setRoomId(itm?.room_id);
                                       joinRoom(itm?.room_id);
-                                      getGroupListMember(itm?.room_id)
-
+                                      getGroupListMember(itm?.room_id);
                                     }}
                                   >
 
@@ -721,8 +760,7 @@ export default function Chat() {
                                     </div>
 
                                   </li>
-
-                                </>);
+                                );
                               })
                               : <div className="text-center">
                                 <p>No chat found</p>
@@ -1211,7 +1249,60 @@ export default function Chat() {
           </Modal.Body>
         </Modal>
 
+        {/* All Affiliates Modal */}
+        <Modal show={showAffiliatesModal} onHide={() => setShowAffiliatesModal(false)} className="shadowboxmodal">
+          <Modal.Body>
+            <div className="d-flex justify-content-between bb1">
+              <p className="fw600">All Affiliates</p>
+              <p onClick={() => setShowAffiliatesModal(false)} className=""><i className="fa fa-times"></i></p>
+            </div>
 
+            <div className="mt-3">
+              <div className="form-group position-relative mb-3">
+                <input
+                  type="text"
+                  placeholder="Search affiliates..."
+                  className="form-control"
+                  value={affiliatesSearch}
+                  onChange={(e) => setAffiliatesSearch(e.target.value)}
+                />
+              </div>
+
+              <div className="affiliates-list" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                {allAffiliates
+                  .filter(affiliate =>
+                    affiliate.fullName?.toLowerCase().includes(affiliatesSearch.toLowerCase()) ||
+                    affiliate.email?.toLowerCase().includes(affiliatesSearch.toLowerCase())
+                  )
+                  .map((affiliate, index) => (
+                    <div
+                      key={index}
+                      className="d-flex align-items-center justify-content-between p-2 border-bottom pointer hover-bg"
+                      onClick={() => {
+                        handleUserId(affiliate.id);
+                        setShowAffiliatesModal(false);
+                      }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <img
+                          src={affiliate.image ? `${environment.api}${affiliate.image}` : '../../../assets/img/person.jpg'}
+                          width="40"
+                          height="40"
+                          className="rounded-circle mr-3"
+                        />
+                        <div>
+                          <h6 className="mb-0">{affiliate.fullName}</h6>
+                          <small className="text-muted">{affiliate.email}</small>
+                        </div>
+                      </div>
+                      <i className="fa fa-comment-o"></i>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
       </Layout>
     </>
   );

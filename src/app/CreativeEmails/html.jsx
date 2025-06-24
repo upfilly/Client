@@ -150,9 +150,9 @@ const Html = ({
                         <table className="table table-striped table-width">
                             <thead className='table_head'>
                                 <tr className='heading_row'>
-                                    <th scope="col" className='table_data' onClick={e => sorting('name')}>Template Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Email Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    <th scope="col" className='table_data'>Subject</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('templateName')}>Title{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    {/* <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Email Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    <th scope="col" className='table_data'>Subject</th> */}
                                     {/* <th scope="col" className='table_data'>Status</th> */}
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
@@ -171,7 +171,7 @@ const Html = ({
                                                     </h4>
                                                 </div>
                                             </div></td>
-                                        <td className='table_dats'>
+                                        {/* <td className='table_dats'>
 
                                             <div className='user_detail'>
                                                 <div className='user_name'>
@@ -180,7 +180,7 @@ const Html = ({
                                                     </h4>
                                                 </div>
                                             </div></td>
-                                        <td className='table_dats'>{user?.role == "affiliate" ? itm?.emailtemplate_details?.subject : itm?.subject}</td>
+                                        <td className='table_dats'>{user?.role == "affiliate" ? itm?.emailtemplate_details?.subject : itm?.subject}</td> */}
 
                                         {/* <td className="table_dats">
                                 {" "}

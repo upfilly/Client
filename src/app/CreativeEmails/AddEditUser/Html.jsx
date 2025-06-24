@@ -16,7 +16,7 @@ const Html = () => {
     emailName: "",
     format: "Text",
     subject: "",
-    from: "",
+    // from: "",
     htmlContent: "",
     textContent: "",
     personalizationTags: [],
@@ -29,7 +29,7 @@ const Html = () => {
   const specialChars = useRef([]);
   const [variables, setVariables] = useState("");
   const [htmlCode, setHtmlCode] = useState(false);
-  const formValidation = [{ key: "subject", required: true }];
+  const formValidation = [{ key: "templateName", required: true }];
   const router = useRouter();
   const childRef = useRef();
   const emailEditorRef = useRef(null);
@@ -130,6 +130,9 @@ const Html = () => {
     let url = "emailtemplate";
     let value = {
       ...form,
+      emailName:form?.templateName,
+      subject:form?.templateName,
+      from:form?.templateName,
       id: id,
     };
 
@@ -305,7 +308,7 @@ const Html = () => {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
-                            Email Name<span className="star">*</span>
+                            Email Title<span className="star">*</span>
                           </label>
                           <input
                             type="text"
@@ -319,7 +322,7 @@ const Html = () => {
                           />
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      {/* <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label">
                             From Email<span className="star">*</span>
@@ -369,7 +372,7 @@ const Html = () => {
                             required
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-md-12">
                         <div className="mb-3">
                           <label className="text-sm font-normal text-[#75757A] block !mb-3">
@@ -478,7 +481,7 @@ const Html = () => {
                 </div>
 
                 {/* Email Header Info */}
-                <div className="preview-header mb-4 p-3 bg-light rounded">
+                {/* <div className="preview-header mb-4 p-3 bg-light rounded">
                   <div className="row">
                     <div className="col-md-6">
                       <strong>From:</strong> {form?.from} &lt;{form?.emailName}
@@ -488,7 +491,7 @@ const Html = () => {
                       <strong>Subject:</strong> {form?.subject}
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Email Content Preview */}
                 <div className="preview-content">
