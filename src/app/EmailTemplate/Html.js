@@ -305,7 +305,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                     <div className='form-group mb-3'>
                                         <label className='form-label'>Email Template Preview</label>
                                         <Editor
-                                            apiKey='your-api-key'
+                                            apiKey='zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g'
                                             value={emailTemplate}
                                             onEditorChange={(newValue) => {
                                                 setEmailTemplate(newValue);
