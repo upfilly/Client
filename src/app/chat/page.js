@@ -55,6 +55,9 @@ export default function Chat() {
   const [submitGroup, setSummitGroup] = useState(false)
   const [filteredArray, setFilteredArray] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [uploadModalShow, setUploadModalShow] = useState(false);
+  const [uploadType, setUploadType] = useState('');
+
   ConnectSocket.on('user-online', (data) => {
     // console.log(data,"daataaOnline")
     setOnlineUserId(data?.data?.user_id);
@@ -435,35 +438,43 @@ export default function Chat() {
   };
 
   const uploadImage = (e) => {
+    alert("innn")
     let files = e.target.files;
-    let file = files.item(0);
+    if (!files || files.length === 0) return;
+
+    let file = files[0];
     const fileExtension = file?.name?.split(".").pop().toLowerCase();
-    let isTrue = imageExtensions.includes(fileExtension);
+    let isImage = imageExtensions.includes(fileExtension);
 
+    // Check file size
+    const maxSize = isImage ? 5 * 1024 * 1024 : 10 * 1024 * 1024; // 5MB for images, 10MB for docs
+    if (file.size > maxSize) {
+      toast.error(`File too large! Maximum size is ${isImage ? '5MB' : '10MB'}`);
+      return;
+    }
 
-    let url = isTrue
+    setImage(true);
+
+    let url = isImage
       ? "upload/image?modelName=users"
       : "upload/document?modelName=documents";
 
-    setImage(true);
     ApiClient.postFormData(url, { file: file }).then((res) => {
       if (res.success) {
         let image = res.data.fullpath;
-        // setFileName(file?.name)
         const payload = {
           room_id: roomId,
           type: "TEXT",
-          // sender: user.id,
-          content: isTrue ? `images/users/${image}` : `documents/${res?.data?.imagePath}`,
+          content: isImage ? `images/users/${image}` : `documents/${res?.data?.imagePath}`,
           fileName: file.name
-          // proposal_id: proposaldata?._id,
-          // campaign_id: proposaldata?.campaign_id,
-          // chat_file:fileName
         };
         ConnectSocket.emit(`send-message`, payload);
         setChatMsg("");
       }
       setImage(false);
+    }).catch(err => {
+      setImage(false);
+      toast.error("Upload failed. Please try again.");
     });
   };
 
@@ -818,7 +829,7 @@ export default function Chat() {
                                     <div className="msg_showing ml-2">
                                       <div className="mt-2">
                                         <span className="ellipschat">
-                                          {isImage ? (
+                                          {isImage ? (<>
                                             <Zoom>
                                               <img
                                                 width={"50px"}
@@ -827,7 +838,9 @@ export default function Chat() {
                                                 alt=""
                                               />
                                             </Zoom>
-                                          ) : isURL(itm.content) ? (
+                                            {itm.fileName}
+                                            </>
+                                          ) : isURL(itm.content) ? (<>
                                             <div className="pdf_btn">
                                               <div className="pdf_inner_layout ">
                                                 <span className="pdficon">
@@ -846,9 +859,13 @@ export default function Chat() {
                                                     <i className="fa fa-download"></i>
                                                   </a>
                                                 ) : null}
+                                                
                                               </div>
+                                             
 
                                             </div>
+                                             {itm.fileName}
+                                             </>
                                           ) : (
                                             itm.content
                                           )}
@@ -911,7 +928,7 @@ export default function Chat() {
                         }}
                         disabled={chat?.length > 0 && chat[0]?.rooms_details?.blocked_admin ? true : false}
                       />
-                      <label className="pointer-upload-chart">
+                      {/* <label className="pointer-upload-chart">
                         <input
                           id="bannerImage"
                           type="file"
@@ -924,6 +941,12 @@ export default function Chat() {
                         />
                         <i class="fa fa-paperclip" aria-hidden="true"></i>
 
+                      </label> */}
+                      <label
+                        className="pointer-upload-chart"
+                        onClick={() => setUploadModalShow(true)}
+                      >
+                        <i class="fa fa-paperclip" aria-hidden="true"></i>
                       </label>
                     </div>
                     <button
@@ -1130,7 +1153,63 @@ export default function Chat() {
 
         </Modal>
 
+        {/* Upload Options Modal */}
+        <Modal show={uploadModalShow} onHide={() => setUploadModalShow(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Upload File</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="upload-options">
+              <div className="mb-3">
+                <h5>Choose file type to upload:</h5>
+                <div className="d-flex justify-content-around mt-4">
+                  {/* Image Upload */}
+                  <div>
+                    <input
+                      id="imageUploadInput"
+                      type="file"
+                      className="d-none"
+                      accept="image/*"
+                      onChange={(e) => {
+                        setUploadType('image');
+                        uploadImage(e);
+                        setUploadModalShow(false);
+                      }}
+                    />
+                    <label htmlFor="imageUploadInput" className="btn btn-primary">
+                      <i className="fa fa-image mr-2"></i> Image
+                    </label>
+                  </div>
 
+                  {/* Document Upload */}
+                  <div>
+                    <input
+                      id="documentUploadInput"
+                      type="file"
+                      className="d-none"
+                      accept=".pdf,.doc,.docx"
+                      onChange={(e) => {
+                        setUploadType('document');
+                        uploadImage(e);
+                        setUploadModalShow(false);
+                      }}
+                    />
+                    <label htmlFor="documentUploadInput" className="btn btn-secondary">
+                      <i className="fa fa-file-text mr-2"></i> Document
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="file-requirements mt-4">
+                <p className="text-muted small">
+                  <strong>Requirements:</strong><br />
+                  Images: JPG, PNG, GIF (Max 5MB)<br />
+                  Documents: PDF, DOC, DOCX (Max 10MB)
+                </p>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
 
 
       </Layout>
