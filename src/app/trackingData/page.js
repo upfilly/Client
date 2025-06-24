@@ -223,6 +223,8 @@ export default function Affiliate() {
   const reset = () => {
     let filter = {
       user_id: user?.id,
+      "startDate": "",
+      "endDate": "",
       role: '',
       search: '',
       page: 1,
@@ -230,7 +232,8 @@ export default function Affiliate() {
       commission_paid: '',
       commission_status: ''
     }
-
+    setEndDate(null)
+    setStartDate(null)
     setIsOpen(false)
     setFilter({ ...filters, ...filter })
     getData({ ...filter })
@@ -389,7 +392,7 @@ export default function Affiliate() {
                       <i className="fa fa-download mr-2"></i> Export
                     </button>
 
-                    {filters.search || filters.commission_paid || filters.commission_status ? <>
+                    {startDate || endDate || filters.search || filters.commission_paid || filters.commission_status ? <>
                       <a className="btn btn-primary" onClick={e => reset()}>
                         Reset
                       </a>
