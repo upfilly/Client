@@ -206,7 +206,10 @@ export default function affilate() {
     let url = `categoryWithSub?page&count&search&cat_type=${categoryType}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
-        const data = res.data.data;
+         const data = res.data.data
+                    .map(data => data.parent_cat_name ? data : undefined)
+                    .filter(item => item !== undefined);
+                // setCategories(data);
         setCategory(data);
       }
     });

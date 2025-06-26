@@ -611,7 +611,7 @@ export default function affilate() {
                                             onChange={() => handleCategoryChange(category)}
                                           />
                                           <label className="form-check-label ms-2" htmlFor={category._id}>
-                                            {category.parent_cat_name}
+                                            {category.parent_cat_name || "Promotional Models"}
                                           </label>
                                         </div>
                                         {category.subCategories?.length > 0 && (

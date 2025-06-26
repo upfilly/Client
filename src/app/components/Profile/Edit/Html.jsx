@@ -211,7 +211,10 @@ const Html = ({ user,
     let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
-        setCategories(res.data.data);
+         const data = res.data.data
+                    .map(data => data.parent_cat_name ? data : undefined)
+                    .filter(item => item !== undefined);
+                setCategories(data);
       }
     });
   };

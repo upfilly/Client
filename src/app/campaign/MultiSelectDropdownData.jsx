@@ -14,6 +14,8 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
+  console.log(data,"datadatadatadata")
+
   // Add these functions to your MultiSelectDropdown component
 
   // Function to search within the entire hierarchy
@@ -23,12 +25,12 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
     const term = searchTerm.toLowerCase();
 
     // Check if category name matches
-    if (category.parent_cat_name?.toLowerCase().includes(term)) {
+    if (category?.parent_cat_name?.toLowerCase().includes(term)) {
       return true;
     }
 
     // Check if any subcategory matches
-    if (category.subCategories?.some(sub => {
+    if (category?.subCategories?.some(sub => {
       // Check subcategory name
       if (sub.name?.toLowerCase().includes(term)) {
         return true;
@@ -102,14 +104,14 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
   // Helper function to find parent category of a subcategory
   const findParentCategory = (subcategoryId) => {
     return data.find(category =>
-      category.subCategories.some(sub => sub.id === subcategoryId)
+      category?.subCategories.some(sub => sub.id === subcategoryId)
     );
   };
 
   // Helper function to find parent subcategory of a sub-subcategory
   const findParentSubCategory = (subSubCategoryId) => {
     for (const category of data) {
-      for (const subCategory of category.subCategories) {
+      for (const subCategory of category?.subCategories) {
         if (subCategory.subchildcategory &&
           subCategory.subchildcategory.some(subSub => subSub._id === subSubCategoryId)) {
           return { category, subCategory };
@@ -162,8 +164,8 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
             }
 
             // Add parent category if not already selected
-            if (!newCategories.includes(parentInfo.category._id)) {
-              newCategories.push(parentInfo.category._id);
+            if (!newCategories.includes(parentInfo.category?._id)) {
+              newCategories.push(parentInfo.category?._id);
             }
           }
         } else {
@@ -199,24 +201,24 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
       if (!checked) {
         // Clean up parent selections only when deselecting
         data.forEach((category) => {
-          const hasSelectedChild = category.subCategories.some(sub =>
+          const hasSelectedChild = category?.subCategories.some(sub =>
             newSubCategories.includes(sub.id) ||
             (sub.subchildcategory && sub.subchildcategory.some(subSub =>
               newSubSubCategories.includes(subSub._id)
             ))
           );
           // Only remove category if we're deselecting and it has no selected children
-          if (!hasSelectedChild && newCategories.includes(category._id) && categoryId === category._id) {
+          if (!hasSelectedChild && newCategories.includes(category?._id) && categoryId === category?._id) {
             // This category is being deselected, so it's OK to remove it
-          } else if (!hasSelectedChild && newCategories.includes(category._id) && !categoryId) {
+          } else if (!hasSelectedChild && newCategories.includes(category?._id) && !categoryId) {
             // This category was auto-selected but now has no children, so remove it
-            newCategories = newCategories.filter((id) => id !== category._id);
+            newCategories = newCategories.filter((id) => id !== category?._id);
           }
         });
 
         // Clean up subcategory selections only when deselecting
         data
-          .flatMap((category) => category.subCategories)
+          .flatMap((category) => category?.subCategories)
           .forEach((subCategory) => {
             if (subCategory.subchildcategory && subCategory.subchildcategory.length > 0) {
               const hasSelectedChild = subCategory.subchildcategory.some(subSub =>
@@ -269,10 +271,10 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
   const isIndeterminate = (parentId, type) => {
     let selected = [];
     if (type === 'category') {
-      selected = data.find((category) => category._id === parentId)?.subCategories || [];
+      selected = data.find((category) => category?._id === parentId)?.subCategories || [];
     } else if (type === 'subcategory') {
       selected = data
-        .flatMap((category) => category.subCategories)
+        .flatMap((category) => category?.subCategories)
         .find((subcategory) => subcategory.id === parentId)?.subchildcategory || [];
     }
 
@@ -332,22 +334,22 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
     return data
       .filter((cat) => searchInHierarchy(cat, searchTerm))
       .map((category) => (
-        <div key={category._id} className="category-container">
+        <div key={category?._id} className="category-container">
           <div className="dropdown-item">
             <input
               type="checkbox"
-              checked={selectedItems && selectedItems?.categories?.includes(category._id)}
+              checked={selectedItems && selectedItems?.categories?.includes(category?._id)}
               ref={(input) => {
                 if (input) {
-                  input.indeterminate = isIndeterminate(category._id, 'category');
+                  input.indeterminate = isIndeterminate(category?._id, 'category');
                 }
               }}
-              onChange={(e) => handleSelection(category._id, "", "", e.target.checked)}
+              onChange={(e) => handleSelection(category?._id, "", "", e.target.checked)}
             />
-            <label onClick={() => toggleCategory(category._id)}>{category.parent_cat_name}</label>
+            <label onClick={() => toggleCategory(category?._id)}>{category?.parent_cat_name}</label>
           </div>
 
-          {expandedCategories[category._id] && renderSubcategories(category._id, category.subCategories)}
+          {expandedCategories[category?._id] && renderSubcategories(category?._id, category?.subCategories)}
         </div>
       ));
   };

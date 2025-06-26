@@ -319,7 +319,10 @@ const EditProfile = () => {
     let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then(res => {
       if (res.success) {
-        const data = res.data.data
+         const data = res.data.data
+                    .map(data => data.parent_cat_name ? data : undefined)
+                    .filter(item => item !== undefined);
+                // setCategories(data);
         setCategory(data)
       }
     })
