@@ -329,7 +329,7 @@ export default function affilate() {
   };
 
   const getCategory = (p = {}) => {
-    let url = `categoryWithSub?page&count&search&cat_type=${categoryType?.map((dat) => dat).join(",")}&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=promotional_models,property_types&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data.data;
@@ -374,7 +374,7 @@ export default function affilate() {
     const hasSelectedSubCategory = selectedSubCategory?.length > 0;
     const hasSelectedSubSubCategory = selectedSubSubCategory?.length > 0;
 
-    if (hasCategoryType || hasSelectedCategory || hasSelectedSubCategory || hasSelectedSubSubCategory) {
+    // if (hasCategoryType || hasSelectedCategory || hasSelectedSubCategory || hasSelectedSubSubCategory) {
       setFilter({ ...filters, ...params, count: 10 });
       getData({
         ...filters,
@@ -385,7 +385,7 @@ export default function affilate() {
         sub_category_id: hasSelectedSubCategory ? selectedSubCategory.map((dat) => dat).join(",") : undefined,
         sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.map((dat) => dat).join(",") : undefined
       });
-    }
+    // }
   }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
 
   useEffect(() => {
@@ -553,7 +553,7 @@ export default function affilate() {
                     </div>
                     <div className="modal-body">
                       <div className='height_fixed'>
-                        <div className="accordion" id="accordionExample">
+                        {/* <div className="accordion" id="accordionExample">
                           <div className="accordion-item">
                             <h2 className="accordion-header">
                               <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
@@ -584,7 +584,7 @@ export default function affilate() {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="accordion" id="accordionExample">
                           <div className="accordion-item">

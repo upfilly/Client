@@ -6,11 +6,20 @@ import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import environment from '@/environment';
 import { Editor } from '@tinymce/tinymce-react';
+import EmailLogsModal from '../EmailTemplate/EmailModal'
 
 const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     const user = crendentialModel.getUser();
     const [emailTemplate, setEmailTemplate] = useState('');
     const [errors, setErrors] = useState({});
+    const [editorRef, setEditorRef] = useState(null);
+    const [showLogsModal, setShowLogsModal] = useState(false);
+
+    const shortcodes = [
+        { label: 'Brand Name', value: '{brandFullName}' },
+        { label: 'Affiliate Link', value: '{affiliateLink}' },
+        { label: 'Current Date', value: '{currentDate}' },
+    ];
 
     const generateEmailTemplate = (content = '') => {
         return `
@@ -173,6 +182,36 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
         if (validateForm()) handleSubmit();
     };
 
+    const insertShortcode = (shortcode) => {
+        if (editorRef) {
+            editorRef.insertContent(shortcode);
+        } else {
+            // Fallback for textarea
+            const textarea = document.querySelector('textarea[name="content"]');
+            if (textarea) {
+                const startPos = textarea.selectionStart;
+                const endPos = textarea.selectionEnd;
+                const currentValue = textarea.value;
+
+                textarea.value = currentValue.substring(0, startPos) +
+                    shortcode +
+                    currentValue.substring(endPos, currentValue.length);
+
+                // Update form state
+                setForm(prev => ({
+                    ...prev,
+                    content: textarea.value,
+                    emailTemplate: generateEmailTemplate(textarea.value)
+                }));
+
+                // Set cursor position after inserted shortcode
+                textarea.selectionStart = startPos + shortcode.length;
+                textarea.selectionEnd = startPos + shortcode.length;
+                textarea.focus();
+            }
+        }
+    };
+
     return (
         <Layout name="Send E-mail">
             <div className='sidebar-left-content'>
@@ -182,6 +221,14 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                             <i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send E-mail
                         </h3>
                         Count:{form?.affiliateStatus ? relatedAffiliate?.totalActive : relatedAffiliate?.totalJoined}
+
+                        <button
+                            type="button"
+                            className="btn btn-outline-primary me-2"
+                            onClick={() => setShowLogsModal(true)}
+                        >
+                            View Email Logs
+                        </button>
                     </div>
                     <div className='card-body'>
                         <form onSubmit={handleSubmitWithValidation}>
@@ -261,7 +308,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                     </div>
                                 </div>
 
-                                {/* Rest of the form fields... */}
                                 <div className='col-12 col-sm-6 col-md-6'>
                                     <div className='form-group mb-3'>
                                         <label className='form-label'>Subject <span className="text-danger">*</span></label>
@@ -284,18 +330,19 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                             value={new Date().toISOString().split('T')[0]}
                                             disabled
                                         />
-                                        {/* {errors.title && <div className="invalid-feedback">{errors.title}</div>} */}
                                     </div>
                                 </div>
 
                                 <div className='col-12'>
                                     <div className='form-group mb-3'>
                                         <label className='form-label'>Email Content <span className="text-danger">*</span></label>
+
                                         <textarea
                                             className={`form-control ${errors.content ? 'is-invalid' : ''}`}
                                             rows="5"
                                             value={form?.content || ''}
                                             onChange={handleContentChange}
+                                            name="content"
                                         />
                                         {errors.content && <div className="invalid-feedback">{errors.content}</div>}
                                     </div>
@@ -304,6 +351,25 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                 <div className='col-12'>
                                     <div className='form-group mb-3'>
                                         <label className='form-label'>Email Template Preview</label>
+
+                                        {/* Shortcode buttons for the editor */}
+                                        <div className="mb-3">
+                                            <label className="form-label">Insert Shortcodes:</label>
+                                            <div className="d-flex flex-wrap gap-2">
+                                                {shortcodes.map((shortcode, index) => (
+                                                    <button
+                                                        key={index}
+                                                        type="button"
+                                                        className="btn btn-outline-secondary btn-sm"
+                                                        onClick={() => insertShortcode(shortcode.value)}
+                                                        title={shortcode.label}
+                                                    >
+                                                        {shortcode.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
                                         <Editor
                                             apiKey='zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g'
                                             value={emailTemplate}
@@ -311,11 +377,13 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                                                 setEmailTemplate(newValue);
                                                 setForm(prev => ({ ...prev, emailTemplate: newValue }));
                                             }}
+                                            onInit={(evt, editor) => setEditorRef(editor)}
                                             init={{
                                                 height: 500,
                                                 menubar: false,
                                                 plugins: ['lists', 'link', 'image', 'table', 'code'],
-                                                toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat'
+                                                toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat',
+                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                             }}
                                         />
                                     </div>
@@ -331,6 +399,10 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                     </div>
                 </div>
             </div>
+            <EmailLogsModal
+                show={showLogsModal}
+                handleClose={() => setShowLogsModal(false)}
+            />
         </Layout>
     );
 };

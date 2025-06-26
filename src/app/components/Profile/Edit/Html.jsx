@@ -208,7 +208,7 @@ const Html = ({ user,
   };
 
   const getCategory = () => {
-    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models" : "advertiser_categories"}&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         setCategories(res.data.data);
