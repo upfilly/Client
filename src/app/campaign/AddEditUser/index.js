@@ -248,7 +248,7 @@ const AddEditUser = () => {
             value = {
                 ...form,
                 commission_type: "percentage",
-                commission: "1",
+                // commission: "",
                 region: selectedRegionItems?.regions,
                 region_continents: selectedRegionItems?.countries,
                 campaign_type: form?.campaign_type?.[0],

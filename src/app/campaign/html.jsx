@@ -142,6 +142,7 @@ const Html = ({
                                     <th scope="col" className='table_data'>Access Type</th>
                                      <th scope="col" className='table_data'>Affiliates</th>
                                     <th scope="col" className='table_data'>Commission</th>
+                                    <th scope="col" className='table_data'>Lead Amount</th>
                                     <th scope="col" className='table_data'>Currency</th>
                                     <th scope="col" className='table_data'>Status</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
@@ -172,6 +173,7 @@ const Html = ({
                                         <td className='table_dats'>{itm?.access_type}</td>
                                         <td className='table_dats'>{itm?.affiliateCount}</td>
                                         <td className='table_dats'>{itm?.commission || "--"} {itm?.commission_type == "percentage" ? "%" : "$"}</td>
+                                        <td className='table_dats'>{`$ ${itm?.lead_amount || "--"}`}</td>
                                         <td className='table_dats'>{itm?.currencies || "--"}</td>
                                         <td className='table_dats'>
                                             <span className={`active_btn${itm?.status}`} onClick={() => statusChange(itm)}>
