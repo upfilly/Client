@@ -7,6 +7,8 @@ import datepipeModel from '../../models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import ApiClient from '@/methods/api/apiClient';
 import SelectDropdown from '../components/common/SelectDropdown';
+import { Tooltip } from 'react-tooltip';
+import environment from '@/environment';
 
 const Html = ({
     view,
@@ -28,6 +30,7 @@ const Html = ({
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
+    const [copied, setCopied] = useState({ csv: false, xml: false })
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -43,42 +46,47 @@ const Html = ({
         }
     }
 
+    const getExportUrl = (type) => {
+        const baseUrl = `${environment.api}coupon/getAll`;
+        const params = new URLSearchParams({
+            media: user?.id,
+            [type]: "yes",
+            visibility: "Public"
+        }).toString();
+        return `${baseUrl}?${params}`;
+    };
+
     const exportCSV = () => {
-        let url = 'coupon/getAll'
-        let payload = { media: user?.id, csv: "yes", visibility: "Public", }
-        ApiClient.get(url, payload).then(res => {
+        const url = getExportUrl('csv');
+        ApiClient.get(url).then(res => {
             if (res) {
-                const xmlContent = res;
-
-                const blob = new Blob([xmlContent], { type: 'application/xml' });
-
+                const blob = new Blob([res], { type: 'application/xml' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-
                 link.download = 'Coupons.csv';
-
                 link.click();
             }
         })
     };
 
     const exportXML = () => {
-        let url = 'coupon/getAll';
-        let payload = { media: user?.id, xml: "yes", visibility: "Public" };
-
-        ApiClient.get(url, payload).then(res => {
+        const url = getExportUrl('xml');
+        ApiClient.get(url).then(res => {
             if (res) {
-                const xmlContent = res;
-
-                const blob = new Blob([xmlContent], { type: 'application/xml' });
-
+                const blob = new Blob([res], { type: 'application/xml' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-
                 link.download = 'CouponsXml.xml';
-
                 link.click();
             }
+        });
+    };
+
+    const copyToClipboard = (type) => {
+        const url = getExportUrl(type);
+        navigator.clipboard.writeText(url).then(() => {
+            setCopied({ ...copied, [type]: true });
+            setTimeout(() => setCopied({ ...copied, [type]: false }), 2000);
         });
     };
 
@@ -87,17 +95,14 @@ const Html = ({
         getData({ count: count, page: 1 });
     };
 
-    // Function to determine the status based on dates
     const getCouponStatus = (item) => {
         const currentDate = new Date();
         const startDate = new Date(item.startDate);
 
-        // If start date is in the future, show "Pending"
         if (startDate > currentDate) {
             return "Pending";
         }
 
-        // Otherwise return the original status
         return item.status;
     };
 
@@ -132,11 +137,46 @@ const Html = ({
                         </> : <></>}
                     </article>
 
-                    {/* Add Export Buttons */}
-                    <div className="d-flex gap-2">
-                        <button className="btn btn-success" onClick={exportCSV}>Export CSV</button>
-                        <button className="btn btn-warning" onClick={exportXML}>Export XML</button>
+                    <div className="d-flex gap-2 align-items-center">
+                        <div className="export-group">
+                            <button
+                                className="btn btn-success"
+                                onClick={exportCSV}
+                                data-tooltip-id="csv-tooltip"
+                                data-tooltip-content={getExportUrl('csv')}
+                            >
+                                Export CSV
+                            </button>
+                            <button
+                                className="btn btn-outline-secondary copy-btn"
+                                onClick={() => copyToClipboard('csv')}
+                                title="Copy CSV URL"
+                            >
+                                {copied.csv ? 'Copied!' : 'Copy URL'}
+                            </button>
+                        </div>
+
+                        <div className="export-group">
+                            <button
+                                className="btn btn-warning"
+                                onClick={exportXML}
+                                data-tooltip-id="xml-tooltip"
+                                data-tooltip-content={getExportUrl('xml')}
+                            >
+                                Export XML
+                            </button>
+                            <button
+                                className="btn btn-outline-secondary copy-btn"
+                                onClick={() => copyToClipboard('xml')}
+                                title="Copy XML URL"
+                            >
+                                {copied.xml ? 'Copied!' : 'Copy URL'}
+                            </button>
+                        </div>
                     </div>
+
+                    <Tooltip id="csv-tooltip" place="bottom" effect="solid" />
+                    <Tooltip id="xml-tooltip" place="bottom" effect="solid" />
 
                 </div>
 
@@ -145,10 +185,10 @@ const Html = ({
                         <table className="table table-striped table-width">
                             <thead className='table_head'>
                                 <tr className='heading_row'>
-                                    <th scope="col" className='table_data' 
-                                    onClick={e => sorting('title')}
+                                    <th scope="col" className='table_data'
+                                        onClick={e => sorting('title')}
                                     >Title
-                                    {filters?.sorder === "asc" ? "↑" : "↓"}
+                                        {filters?.sorder === "asc" ? "↑" : "↓"}
                                     </th>
                                     <th scope="col" className='table_data' onClick={e => sorting('couponCode')}>Coupon Code {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data' >Coupon Type</th>
@@ -237,7 +277,6 @@ const Html = ({
                                         </td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
-                                        {/* dropdown */}
                                         {user?.role == 'brand' && <td className='table_dats'>
                                             <div className="action_icons gap-3 ">
                                                 {(user?.role == 'brand' || permission('coupon_edit')) && <>
@@ -282,7 +321,6 @@ const Html = ({
                         pageRangeDisplayed={2}
                         marginPagesDisplayed={1}
                         pageCount={Math.ceil(total / filters?.count)}
-                        // pageCount={2}
                         previousLabel="< Previous"
                         renderOnZeroPageCount={null}
                         pageClassName={"pagination-item"}

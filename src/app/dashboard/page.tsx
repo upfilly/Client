@@ -137,7 +137,7 @@ export default function Dashboard() {
       if (user?.role == "brand") {
         filter = { brand_id: user?.id || user?._id }
       }
-      ApiClient.get("total-campaigns", filter).then((data) => {
+      ApiClient.get("affiliate/count", filter).then((data) => {
         setCampaignData(data);
       });
       getClicksData()
@@ -270,7 +270,7 @@ export default function Dashboard() {
                           <p className="revuh">Joined Affiliates</p>
 
                           <h3 className="dollars-t">
-                            {campaignData?.associatedAffiliatesCount}
+                            {campaignData?.totalJoined}
                           </h3>
                         </div>
                       </div>
@@ -324,7 +324,7 @@ export default function Dashboard() {
                           <p className="revuh">Active Affiliates</p>
 
                           <h3 className="dollars-t">
-                            {campaignData?.affiliates_active_count}
+                            {campaignData?.totalActive}
                           </h3>
                         </div>
                       </div>
