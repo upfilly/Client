@@ -50,7 +50,7 @@ const Html = ({
     const [expandedSubCategories, setExpandedSubCategories] = useState([]);
     const [expandedRegions, setExpandedRegions] = useState([]);
 
-    console.log(selectedRegion,"selectedCategoryselectedCategoryselectedCategory")
+    console.log(selectedRegion, "selectedCategoryselectedCategoryselectedCategory")
 
     const toggleRegionExpand = (region) => {
         setExpandedRegions((prev) =>
@@ -109,19 +109,19 @@ const Html = ({
 
     function parseStringToArray(input) {
         if (typeof input !== "string") return [];
-      
+
         // Split by comma and trim each element
         return input.split(',').map(item => item.trim());
-      }
+    }
 
-    useEffect(()=>{
+    useEffect(() => {
         getExchangeRate(params?.currency)
         setSelectedCategory(parseStringToArray(params?.category));
         setSelectedSubCategory(parseStringToArray(params?.sub_category));
         setSelectedSubSubCategory(parseStringToArray(params?.sub_child_category));
         setSelectedRegion(parseStringToArray(params?.region));
         setSelectedCountries(parseStringToArray(params?.countries));
-    },[])
+    }, [])
 
     const handleCurrencyChange = (e) => {
         const currency = e.value;
@@ -159,7 +159,7 @@ const Html = ({
         let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
         ApiClient.get(url).then((res) => {
             if (res.success) {
-                 const data = res.data.data
+                const data = res.data.data
                     .map(data => data.parent_cat_name ? data : undefined)
                     .filter(item => item !== undefined);
                 // setCategories(data);
@@ -236,21 +236,21 @@ const Html = ({
 
     const view = (id) => {
         const filterParams = {
-          ...filters,
-          page:1,
-          currency: selectedCurrency,
-          region: selectedRegion?.join(","),
-          category_type: categoryType?.join(","),
-          category: selectedCategory?.join(","),
-          sub_category: selectedSubCategory?.join(","),
-          countries: selectedCountries?.join(","),
-          sub_child_category: selectedSubSubCategory?.join(",")
+            ...filters,
+            page: 1,
+            currency: selectedCurrency,
+            region: selectedRegion?.join(","),
+            category_type: categoryType?.join(","),
+            category: selectedCategory?.join(","),
+            sub_category: selectedSubCategory?.join(","),
+            countries: selectedCountries?.join(","),
+            sub_child_category: selectedSubSubCategory?.join(",")
         };
-      
+
         const queryString = new URLSearchParams(filterParams).toString();
-      
+
         history.push(`/campaignManagement/detail/${id}?${queryString}`);
-      };
+    };
 
     useEffect(() => {
         getData({
@@ -270,7 +270,7 @@ const Html = ({
         }
     };
 
-    const resetUrl = () =>{
+    const resetUrl = () => {
         let filter = {
             status: '',
             role: '',
@@ -279,7 +279,7 @@ const Html = ({
             count: 10
         }
         setFilter({ ...filters, ...filter })
-        getData({...filter,page:1})
+        getData({ ...filter, page: 1 })
         setSelectedCurrency("USD")
         history.push("/campaignManagement")
     }
@@ -342,15 +342,15 @@ const Html = ({
                                         options={CurencyData}
                                     />
                                     {(filters.status) && (
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-secondary reset-btn"
-                                    onClick={e => resetUrl()}
-                                >
-                                    {/* <i className="material-icons me-1">refresh</i> */}
-                                    Reset
-                                </button>
-                             )}
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-secondary reset-btn"
+                                            onClick={e => resetUrl()}
+                                        >
+                                            {/* <i className="material-icons me-1">refresh</i> */}
+                                            Reset
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                             <div className='mt-5'>
@@ -373,9 +373,10 @@ const Html = ({
                                                         Event Type
                                                     </th>
                                                     <th scope="col" className='table_data'>Commission</th>
+                                                    <th scope="col" className='table_data'>Lead Amount</th>
                                                     <th scope="col" className='table_data'>Status</th>
                                                     <th scope="col" className='table_data'>Request Status</th>
-                                                    
+
                                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>
                                                         Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
                                                     </th>
@@ -407,6 +408,7 @@ const Html = ({
                                                             {<td className='table_dats'>{itm?.campaign_type || "--"}</td>}
                                                             {itm?.campaign_detail?.event_type && <td className='table_dats'>{itm?.campaign_detail?.event_type.join(",")}</td>}
                                                             <td className='table_dats'> {itm?.campaign_detail?.commission_type == "percentage" ? `${itm?.campaign_detail?.commission}%` : selectedCurrency ? `${convertedCurrency(itm?.campaign_detail?.commission)}` : `$${convertedCurrency(itm?.campaign_detail?.commission)}`}</td>
+                                                            <td className='table_dats'> {`$ ${convertedCurrency(itm?.lead_amount)}`}</td>
                                                             <td className='table_dats'>   <span className={`active_btn${itm?.status}`} >
                                                                 <span className={itm?.status == 'deactive' ? "inactive" : "contract"}>
                                                                     {itm?.status == 'deactive' ? 'Inactive' : 'Active'}
@@ -429,7 +431,7 @@ const Html = ({
                                                                             <i className='fa fa-times'></i>
                                                                         </button> */}
                                                                     </div>
-                                                                ) :itm?.status == 'rejected' ? <div className="btn btn-danger mr-2">Removed</div>  : itm?.status == 'rejected' ?
+                                                                ) : itm?.status == 'rejected' ? <div className="btn btn-danger mr-2">Removed</div> : itm?.status == 'rejected' ?
                                                                     <div className="btn btn-primary mr-2">Rejected</div> :
                                                                     itm?.status == 'requested' ?
                                                                         <div className="btn btn-primary mr-2">Request Sent</div> : (
