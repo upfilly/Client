@@ -78,6 +78,7 @@ const EmailLogsModal = ({ show, handleClose }) => {
                                         <th>Subject</th>
                                         <th>Recipient Type</th>
                                         <th>Sent To</th>
+                                        <th>Sent To Email</th>
                                         <th>Date Sent</th>
                                         {/* <th>Status</th> */}
                                     </tr>
@@ -89,7 +90,8 @@ const EmailLogsModal = ({ show, handleClose }) => {
                                                 <td>{(pagination.currentPage - 1) * pagination.itemsPerPage + index + 1}</td>
                                                 <td>{log.title}</td>
                                                 <td>{log.isAllJoined ? 'All Joined' : 'Active Affiliates'}</td>
-                                                <td>{log.sentToCount || 0}</td>
+                                                <td>{log.affiliate_name || "--"}</td>
+                                                <td>{log.affiliate_email || "--"}</td>
                                                 <td>{moment(log.createdAt).format('MMM D, YYYY h:mm A')}</td>
                                                 {/* <td>
                                                     <span className={`badge ${log.status === 'sent' ? 'bg-success' : 'bg-warning'}`}>
