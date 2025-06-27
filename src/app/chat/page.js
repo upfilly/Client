@@ -69,8 +69,13 @@ export default function Chat() {
 
   useEffect(() => {
     setOriginalArray(allAffiliates);
-    setFilteredArrayAdd(allAffiliates);
-  }, []);
+  }, [allAffiliates]);
+
+  useEffect(() => {
+    if (originalArray.length > 0) {
+      setFilteredArrayAdd(originalArray);
+    }
+  }, [originalArray]);
 
   useEffect(() => {
     setFilteredAffiliates(allAffiliates || []);
@@ -606,7 +611,7 @@ export default function Chat() {
   // modal
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () =>{setShow(true); setSearchTerm(''); getAllAffiliates()};
 
   const handleGroup = () => {
 
@@ -656,6 +661,7 @@ export default function Chat() {
   const handleAddMemberGroup = () => {
     setAddMemberShow(true)
     getGroupListMember()
+    getAllAffiliates()
   }
 
   // const handleUserId = (id) => {
@@ -1237,7 +1243,7 @@ export default function Chat() {
                       />
                     </div>
 
-                    {filteredArrayAdd.length > 0 ?
+                    {filteredArrayAdd && filteredArrayAdd.length > 0 ? (
                       filteredArrayAdd.map((data, index) => {
                         return (
                           <div className="w-100 mb-3 d-flex pointer bb1_grey pb-2 align-items-center">
@@ -1257,9 +1263,13 @@ export default function Chat() {
                           </div>
                         )
                       })
-                      :
-                      <div className="text-center">No Members</div>
-                    }
+                    ) : (
+                      originalArray.length === 0 ? (
+                        <div className="text-center">Loading members...</div>
+                      ) : (
+                        <div className="text-center">No members found</div>
+                      )
+                    )}
                   </div>
                   <div className="d-flex justify-content-center align-items-center mt-4">
                     <button className="btn btn-primary widthsame closebg mr-3" onClick={() => setnextPage(false)}>Back</button>
