@@ -169,7 +169,7 @@ const Html = ({
                                             <div className='user_detail'>
                                                 <div className='user_name'>
                                                     <h4 className='user'>
-                                                        {methodModel.capitalizeFirstLetter(itm.title)}
+                                                        {itm.title ? methodModel.capitalizeFirstLetter(itm.title) : "--"}
                                                     </h4>
                                                 </div>
                                             </div>
@@ -178,7 +178,7 @@ const Html = ({
                                             <div className='user_detail'>
                                                 <div className='user_name'>
                                                     <h4 className='user'>
-                                                        {methodModel.capitalizeFirstLetter(itm.couponCode)}
+                                                        {itm.couponCode ? methodModel.capitalizeFirstLetter(itm.couponCode) : "--"}
                                                     </h4>
                                                 </div>
                                             </div>
