@@ -422,12 +422,12 @@ const Html = ({
                                                             <td className='table_dats d-flex gap-1 align-items-center'>
                                                                 {itm?.status == 'pending' ? (
                                                                     <div className='d-flex gap-1 align-items-center'>
-                                                                        <button onClick={itm?.campaign_type == 'manual' ? () => sendRequest(itm?._id, itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                                                        <button onClick={(itm?.campaign_type == 'manual' && itm?.campaign_type != "private") ? () => sendRequest(itm?._id, itm?.brand_id, itm?.campaign_id) : () => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
                                                                             <i className='fa fa-check'></i>
                                                                         </button>
-                                                                        <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                                                        {/* <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                                                             <i className='fa fa-times'></i>
-                                                                        </button>
+                                                                        </button> */}
                                                                     </div>
                                                                 ) :itm?.status == 'rejected' ? <div className="btn btn-danger mr-2">Removed</div>  : itm?.status == 'rejected' ?
                                                                     <div className="btn btn-primary mr-2">Rejected</div> :
