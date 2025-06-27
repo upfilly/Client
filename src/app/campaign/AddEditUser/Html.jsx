@@ -139,6 +139,16 @@ const Html = ({
         }
     };
 
+    const handleNumericCommissionInput = (e, field) => {
+        const value = e.target.value;
+        if (value === '' || /^[0-9]*\.?[0-9]*$/.test(value)) {
+            const numericValue = parseFloat(value);
+            if (value === '' || (!isNaN(numericValue) && numericValue <= 100)) {
+                setform(prev => ({ ...prev, [field]: value }));
+            }
+        }
+    };
+
     const handleAcceptTerms = (isAccepted) => {
         setIsTermsAccepted(isAccepted);
         console.log('Terms accepted:', isAccepted);
@@ -321,7 +331,7 @@ const Html = ({
                                             className="form-control"
                                             value={form?.commission || ''}
                                             disabled={!id ? false : true}
-                                            onChange={(e) => handleNumericInput(e, 'commission')}
+                                            onChange={(e) => handleNumericCommissionInput(e, 'commission')}
                                             placeholder="Enter Commission"
                                         />
                                         {submitted && !form?.commission && <div className="invalid-feedback d-block">{errors?.commission}</div>}

@@ -1,21 +1,44 @@
-.selectDropdown {
-    position: relative;
+.select-container {
+  width: 100%;
+  font-family: inherit;
+  
+  /* Additional global styles if needed */
+}
+
+/* These styles will enhance the customStyles */
+.react-select {
+  &__menu {
+    margin-top: 2px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  &__value-container {
+    padding: 2px 8px;
+  }
+  
+  &__indicator-separator {
+    display: none;
+  }
+  
+  &__dropdown-indicator {
+    color: #666;
     
-    // Style for action items inside the dropdown
-    :global(.action-option) {
-        background-color: #f8f9fa !important;
-        border-bottom: 1px solid #dee2e6 !important;
-        font-weight: 600 !important;
-        color: #495057 !important;
-        
-        &:hover {
-            background-color: #e9ecef !important;
-        }
+    &:hover {
+      color: #333;
     }
+  }
+  
+  &__clear-indicator {
+    color: #999;
     
-    // Optional: Add some spacing after action items
-    :global(.optionContainer .action-option:last-of-type) {
-        margin-bottom: 4px;
-        border-bottom: 2px solid #dee2e6 !important;
+    &:hover {
+      color: #d0021b;
     }
+  }
+  
+  &__placeholder {
+    color: #999;
+  }
 }

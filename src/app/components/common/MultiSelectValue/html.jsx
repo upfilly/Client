@@ -1,98 +1,145 @@
 import React, { useMemo } from "react";
+import Select from 'react-select';
 import './style.scss';
-import Multiselect from 'multiselect-react-dropdown';
 
-const Html = ({ 
-    options = [], 
+const Html = ({
+    options = [],
     selectedValues = [],
-    handleChange, 
-    displayValue, 
-    id, 
-    name, 
-    singleSelect, 
+    handleChange,
+    displayValue,
+    id,
+    name,
+    singleSelect,
     placeholder,
     showSelectAll = true,
     showReset = true
 }) => {
-    
+
     const enhancedOptions = useMemo(() => {
-        if (singleSelect) {
-            return options;
-        }
-        
+        if (singleSelect) return options.map(o => ({ ...o, label: o[displayValue], value: o }));
+
         const actionOptions = [];
-        
+
         if (showSelectAll && selectedValues.length < options.length) {
             actionOptions.push({
-                [displayValue]: "🔲 Select All",
+                label: "🔲 Select All",
+                value: "__select_all__",
                 isSelectAll: true,
-                isActionItem: true,
-                id: 'select-all-action' // Unique identifier
+                isActionItem: true
             });
         }
-        
+
         if (showReset && selectedValues.length > 0) {
             actionOptions.push({
-                [displayValue]: "❌ Reset",
+                label: "❌ Reset",
+                value: "__reset__",
                 isReset: true,
-                isActionItem: true,
-                id: 'reset-action' // Unique identifier
+                isActionItem: true
             });
         }
-        
-        return [...actionOptions, ...options];
+
+        return [
+            ...actionOptions,
+            ...options.map(option => ({
+                ...option,
+                label: option[displayValue],
+                value: option
+            }))
+        ];
     }, [options, displayValue, singleSelect, showSelectAll, showReset, selectedValues]);
-    
-    const handleSelect = (selectedList, selectedItem) => {
+
+    const onChange = (selected, actionMeta) => {
         if (!handleChange) return;
-        
-        if (selectedItem?.isSelectAll) {
-            // Select all actual options (exclude action items)
-            const allRealOptions = options.filter(option => !option?.isActionItem);
-            handleChange([...selectedValues, ...allRealOptions.filter(opt => 
-                !selectedValues.some(selected => selected[displayValue] === opt[displayValue])
-            )], 'selectAll');
+
+        if (singleSelect) {
+            handleChange(selected ? [selected.value] : [], actionMeta.action);
             return;
         }
-        
-        if (selectedItem?.isReset) {
-            // Reset selection - clear everything
-            handleChange([], 'reset');
-            return;
+
+        if (Array.isArray(selected)) {
+            const lastSelected = selected[selected.length - 1];
+
+            if (lastSelected?.isSelectAll) {
+                handleChange([...options], 'select-all');
+                return;
+            }
+
+            if (lastSelected?.isReset) {
+                handleChange([], 'reset');
+                return;
+            }
+
+            handleChange(selected.map(item => item.value).filter(item => !item.isActionItem), actionMeta.action);
         }
-        
-        // Normal selection - filter out action items and ensure we don't duplicate
-        const filteredList = selectedList.filter(item => !item?.isActionItem);
-        handleChange(filteredList, 'select');
     };
-    
-    const handleRemove = (selectedList, removedItem) => {
-        if (!handleChange) return;
-        
-        // Filter out action items from the list
-        const filteredList = selectedList.filter(item => !item?.isActionItem);
-        handleChange(filteredList, 'remove');
+
+    const customStyles = {
+        control: (base, state) => ({
+            ...base,
+            minHeight: '40px',
+            borderColor: state.isFocused ? '#2684FF' : '#ccc',
+            boxShadow: state.isFocused ? '0 0 0 1px #2684FF' : 'none',
+            '&:hover': {
+                borderColor: state.isFocused ? '#2684FF' : '#999'
+            }
+        }),
+        option: (base, { isFocused, isSelected, data }) => ({
+            ...base,
+            backgroundColor: data?.isActionItem
+                ? '#f8f8f8'
+                : isSelected
+                    ? '#0066cc'
+                    : isFocused
+                        ? '#f0f7ff'
+                        : 'white',
+            color: data?.isActionItem
+                ? '#333'
+                : isSelected
+                    ? 'white'
+                    : '#333',
+            fontWeight: data?.isActionItem ? 'bold' : 'normal',
+            cursor: 'pointer'
+        }),
+        multiValue: (base) => ({
+            ...base,
+            backgroundColor: '#e6f3ff'
+        }),
+        multiValueLabel: (base) => ({
+            ...base,
+            color: '#0066cc'
+        }),
+        multiValueRemove: (base) => ({
+            ...base,
+            ':hover': {
+                backgroundColor: 'transparent',
+                color: '#003366'
+            }
+        })
     };
-    
-    // Filter selectedValues to exclude action items (they shouldn't stay selected)
-    const filteredSelectedValues = selectedValues.filter(item => !item?.isActionItem);
-    
+
     return (
-        <div className="selectDropdown">
-            <Multiselect
+        <div className="select-container">
+            <Select
                 options={enhancedOptions}
-                singleSelect={singleSelect || false}
-                placeholder={placeholder}
-                selectedValues={filteredSelectedValues}
-                onSelect={handleSelect}
-                onRemove={handleRemove}
-                displayValue={displayValue}
-                id={id}
-                showArrow
-                name={name}
-                optionObjectClassName={(option) => 
-                    option?.isActionItem ? 'action-option' : ''
+                isMulti={!singleSelect}
+                value={singleSelect
+                    ? (selectedValues[0] ? {
+                        label: selectedValues[0][displayValue],
+                        value: selectedValues[0]
+                    } : null)
+                    : selectedValues.map(item => ({
+                        label: item[displayValue],
+                        value: item
+                    }))
                 }
+                onChange={onChange}
+                styles={customStyles}
+                instanceId={id}
+                name={name}
+                placeholder={placeholder}
+                closeMenuOnSelect={singleSelect}
+                hideSelectedOptions={false}
+                classNamePrefix="react-select"
             />
         </div>
     );
