@@ -165,6 +165,15 @@ const Html = ({
                                             <div className='user_detail'>
                                                 <div className='user_name'>
                                                     <h4 className='user'>
+                                                        {methodModel.capitalizeFirstLetter(itm.title)}
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className='table_dats'>
+                                            <div className='user_detail'>
+                                                <div className='user_name'>
+                                                    <h4 className='user'>
                                                         {methodModel.capitalizeFirstLetter(itm.couponCode)}
                                                     </h4>
                                                 </div>
