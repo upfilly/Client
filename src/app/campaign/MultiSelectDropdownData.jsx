@@ -14,11 +14,6 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  console.log(data,"datadatadatadata")
-
-  // Add these functions to your MultiSelectDropdown component
-
-  // Function to search within the entire hierarchy
   const searchInHierarchy = (category, searchTerm) => {
     if (!searchTerm) return true;
 
@@ -245,22 +240,114 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
   const handleSelectAll = (checked) => {
     if (checked) {
-      const allCategories = data.map((parentCategory) => parentCategory._id);
-      const allSubCategories = data.flatMap((parentCategory) => parentCategory.subCategories.map((subCategory) => subCategory.id));
-      const allSubSubCategories = data.flatMap((parentCategory) => parentCategory.subCategories.flatMap((subCategory) => subCategory.subchildcategory.map((subSubCategory) => subSubCategory._id)));
-      setSelectedItems({
-        categories: allCategories,
-        subCategories: allSubCategories,
-        subSubCategories: allSubSubCategories,
-      });
+      // Get all visible items based on search term
+      const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
+
+      const allCategories = visibleCategories.map(category => category._id);
+
+      const allSubCategories = visibleCategories.flatMap(category =>
+        category.subCategories
+          .filter(sub => shouldShowSubCategory(sub, searchTerm))
+          .map(sub => sub.id)
+      );
+
+      const allSubSubCategories = visibleCategories.flatMap(category =>
+        category.subCategories.flatMap(sub =>
+          getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
+            .map(subSub => subSub._id)
+        )
+      );
+
+      setSelectedItems(prev => ({
+        categories: [...new Set([...prev.categories, ...allCategories])],
+        subCategories: [...new Set([...prev.subCategories, ...allSubCategories])],
+        subSubCategories: [...new Set([...prev.subSubCategories, ...allSubSubCategories])],
+      }));
     } else {
-      setSelectedItems({
-        categories: [],
-        subCategories: [],
-        subSubCategories: [],
-      });
+      // Get all visible items based on search term to deselect only those
+      const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
+
+      const allCategories = visibleCategories.map(category => category._id);
+
+      const allSubCategories = visibleCategories.flatMap(category =>
+        category.subCategories
+          .filter(sub => shouldShowSubCategory(sub, searchTerm))
+          .map(sub => sub.id)
+      );
+
+      const allSubSubCategories = visibleCategories.flatMap(category =>
+        category.subCategories.flatMap(sub =>
+          getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
+            .map(subSub => subSub._id)
+        )
+      );
+
+      setSelectedItems(prev => ({
+        categories: prev.categories.filter(id => !allCategories.includes(id)),
+        subCategories: prev.subCategories.filter(id => !allSubCategories.includes(id)),
+        subSubCategories: prev.subSubCategories.filter(id => !allSubSubCategories.includes(id)),
+      }));
     }
   };
+
+  const isAllVisibleSelected = () => {
+  if (!data.length) return false;
+  
+  const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
+  if (!visibleCategories.length) return false;
+  
+  // Check categories
+  const allCategoriesSelected = visibleCategories.every(category => 
+    selectedItems?.categories?.includes(category._id)
+  );
+  if (!allCategoriesSelected) return false;
+  
+  // Check subcategories
+  const allSubCategoriesSelected = visibleCategories.every(category => 
+    category.subCategories
+      .filter(sub => shouldShowSubCategory(sub, searchTerm))
+      .every(sub => selectedItems?.subCategories?.includes(sub.id))
+  );
+  if (!allSubCategoriesSelected) return false;
+  
+  // Check sub-subcategories
+  const allSubSubCategoriesSelected = visibleCategories.every(category => 
+    category.subCategories.every(sub => 
+      getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
+        .every(subSub => selectedItems?.subSubCategories?.includes(subSub._id))
+  ))
+  
+  return allSubSubCategoriesSelected;
+};
+
+const isSomeVisibleSelected = () => {
+  if (!data.length) return false;
+  
+  const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
+  if (!visibleCategories.length) return false;
+  
+  // Check if any category is selected
+  const anyCategorySelected = visibleCategories.some(category => 
+    selectedItems?.categories?.includes(category._id)
+  );
+  
+  // Check if any subcategory is selected
+  const anySubCategorySelected = visibleCategories.some(category => 
+    category.subCategories
+      .filter(sub => shouldShowSubCategory(sub, searchTerm))
+      .some(sub => selectedItems?.subCategories?.includes(sub.id))
+  );
+  
+  // Check if any sub-subcategory is selected
+  const anySubSubCategorySelected = visibleCategories.some(category => 
+    category.subCategories.some(sub => 
+      getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
+        .some(subSub => selectedItems?.subSubCategories?.includes(subSub._id))
+    )
+  );
+  
+  return anyCategorySelected || anySubCategorySelected || anySubSubCategorySelected;
+};
 
   const handleRemoveAll = () => {
     setSelectedItems({ categories: [], subCategories: [], subSubCategories: [] });
@@ -393,14 +480,48 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
   };
 
   useEffect(() => {
-    if (selectedItems) {
-      setDisplaySelections({
-        categories: selectedItems.categories || [],
-        subCategories: selectedItems.subCategories || [],
-        subSubCategories: selectedItems.subSubCategories || []
+    if (searchTerm) {
+      // Expand all categories that match the search or have matching children
+      const newExpandedCategories = {};
+      const newExpandedSubCategories = {};
+
+      data.forEach(category => {
+        // Check if category itself matches
+        const categoryMatches = category?.parent_cat_name?.toLowerCase().includes(searchTerm.toLowerCase());
+
+        // Check if any subcategories match
+        const hasMatchingSubCategories = category?.subCategories?.some(sub => {
+          const subMatches = sub.name?.toLowerCase().includes(searchTerm.toLowerCase());
+          const hasMatchingSubSub = sub.subchildcategory?.some(
+            subSub => subSub.name?.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          return subMatches || hasMatchingSubSub;
+        });
+
+        if (categoryMatches || hasMatchingSubCategories) {
+          newExpandedCategories[category._id] = true;
+
+          // Expand matching subcategories
+          category.subCategories?.forEach(sub => {
+            const subMatches = sub.name?.toLowerCase().includes(searchTerm.toLowerCase());
+            const hasMatchingSubSub = sub.subchildcategory?.some(
+              subSub => subSub.name?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            if (subMatches || hasMatchingSubSub) {
+              newExpandedSubCategories[sub.id] = true;
+            }
+          });
+        }
       });
+
+      setExpandedCategories(newExpandedCategories);
+      setExpandedSubCategories(newExpandedSubCategories);
+    } else {
+      setExpandedCategories({});
+      setExpandedSubCategories({});
     }
-  }, [selectedItems]);
+  }, [searchTerm, data]);
 
   const handleSave = () => {
     // Save the current selections to be displayed in the toggle
@@ -448,7 +569,12 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
               type="checkbox"
               id="selectAll"
               onChange={(e) => handleSelectAll(e.target.checked)}
-              checked={selectedItems && selectedItems?.categories?.length === data.length}
+              checked={isAllVisibleSelected()}
+              ref={(input) => {
+                if (input) {
+                  input.indeterminate = isSomeVisibleSelected() && !isAllVisibleSelected();
+                }
+              }}
             />
             <label htmlFor="selectAll">Select All</label>
             <span className="remove-all-btn ml-2" title="Remove" onClick={handleRemoveAll}>

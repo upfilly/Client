@@ -208,6 +208,38 @@ input#selectAll {
   margin-bottom: 5px;
 }
 
+.search-container {
+  position: relative;
+  display: inline-block;
+  width: 100%; /* or your preferred width */
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 30px 8px 12px; /* right padding to make space for the × button */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 8px;
+  top: 40%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.clear-search-btn:hover {
+  color: #666;
+}
+
 
 /* Styling for the dropdown when it's closed (hidden by default) */
 /* .dropdown .dropdown-menu {

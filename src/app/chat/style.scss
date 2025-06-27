@@ -1268,3 +1268,156 @@ img#custom-img{
   padding: 10px;
   border-radius: 5px;
 }
+
+/* Modal Container */
+.shadowboxmodal {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: none;
+}
+
+/* Modal Body */
+.shadowboxmodal .modal-body {
+  padding: 20px;
+}
+
+/* Header Section */
+.bb1 {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.fw600 {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Close Button */
+.modal-body .fa-times {
+  font-size: 20px;
+  cursor: pointer;
+  color: #6c757d;
+  transition: color 0.2s;
+}
+
+.modal-body .fa-times:hover {
+  color: #343a40;
+}
+
+/* Profile Image Section */
+.profile-edit-sec {
+  margin-bottom: 20px;
+}
+
+.profileuserimg {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #e9ecef;
+}
+
+.samebtn_width {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.top_loading {
+  font-size: 14px;
+  color: #28a745;
+}
+
+/* Group Name Input */
+.groupnameadd input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.groupnameadd input:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Members List */
+.gorupinner {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.bb1_grey {
+  border-bottom: 1px solid #e9ecef;
+  padding: 8px 0;
+}
+
+.gorupinner label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.gorupinner img {
+  border-radius: 50%;
+}
+
+/* Buttons Section */
+.buttons_close {
+  margin-top: 20px;
+}
+
+.widthsame {
+  min-width: 120px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.closebg {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.closebg:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.addmnebers {
+  gap: 15px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+  .samebtn_width {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .buttons_close {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .widthsame {
+    width: 100%;
+  }
+}
+
+/* Error Messages */
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}

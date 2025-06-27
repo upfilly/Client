@@ -62,6 +62,33 @@ export default function Chat() {
   const [allAffiliates, setAllAffiliates] = useState([]);
   const [activeAffiliateId, setActiveAffiliateId] = useState(null);
   const activeAffiliateRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredAffiliates, setFilteredAffiliates] = useState([]);
+  const [originalArray, setOriginalArray] = useState([]);
+   const [filteredArrayAdd, setFilteredArrayAdd] = useState([]);
+
+  useEffect(() => {
+    setOriginalArray(allAffiliates);
+    setFilteredArrayAdd(allAffiliates);
+  }, []);
+
+  useEffect(() => {
+    setFilteredAffiliates(allAffiliates || []);
+  }, [allAffiliates]);
+
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    if (term === '') {
+      setFilteredAffiliates(allAffiliates || []);
+    } else {
+      const filtered = (allAffiliates || []).filter(affiliate =>
+        affiliate.fullName.toLowerCase().includes(term)
+      );
+      setFilteredAffiliates(filtered);
+    }
+  };
 
   const handleAffiliatesModalShow = () => {
     getAllAffiliates();
@@ -92,13 +119,13 @@ export default function Chat() {
   });
 
   const getAllAffiliates = () => {
-  ApiClient.get(`users/list?role=${user?.role == "brand" ? "affiliate" : "brand"}&isDeleted=false`)
-    .then(res => {
-      if (res.success) {
-        setAllAffiliates(res?.data?.data);
-      }
-    });
-};
+    ApiClient.get(`users/list?role=${user?.role == "brand" ? "affiliate" : "brand"}&isDeleted=false`)
+      .then(res => {
+        if (res.success) {
+          setAllAffiliates(res?.data?.data);
+        }
+      });
+  };
 
   useEffect(() => {
     getAllAffiliates()
@@ -120,7 +147,7 @@ export default function Chat() {
   const filterArrays = () => {
     const secondArrayIds = chatMembers.map(item => item.user_id);
 
-    const filtered = affiliate.filter(item => !secondArrayIds.includes(item.id));
+    const filtered = allAffiliates.filter(item => !secondArrayIds.includes(item.id));
 
     setFilteredArray(filtered);
   };
@@ -219,7 +246,7 @@ export default function Chat() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [chat,id]);
+  }, [chat, id]);
 
   useEffect(() => {
     if (activeAffiliateRef.current) {
@@ -582,12 +609,12 @@ export default function Chat() {
   const handleShow = () => setShow(true);
 
   const handleGroup = () => {
-   
+
     if (!group?.group_name) {
       setSummitGroup(true)
       return;
     }
-     loader(true)
+    loader(true)
     axios.post(`${SocketURL}chat/user/group/create`, group).then((res) => {
       if (res?.data?.success) {
         //  getData()
@@ -877,7 +904,7 @@ export default function Chat() {
                                               />
                                             </Zoom>
                                             {itm.fileName}
-                                            </>
+                                          </>
                                           ) : isURL(itm.content) ? (<>
                                             <div className="pdf_btn">
                                               <div className="pdf_inner_layout ">
@@ -897,13 +924,13 @@ export default function Chat() {
                                                     <i className="fa fa-download"></i>
                                                   </a>
                                                 ) : null}
-                                                
+
                                               </div>
-                                             
+
 
                                             </div>
-                                             {itm.fileName}
-                                             </>
+                                            {itm.fileName}
+                                          </>
                                           ) : (
                                             itm.content
                                           )}
@@ -1010,53 +1037,62 @@ export default function Chat() {
         </div>
         {/* group modal open */}
         <Modal show={show} onHide={handleClose} className="shadowboxmodal">
-
           <Modal.Body>
-
             <div className="d-flex justify-content-between bb1">
               <p className="fw600">Create a Group</p>
               <p onClick={handleClose} className=""><i className="fa fa-times"></i></p>
             </div>
 
-
             <div className="mt-4 mb-2">
-
               <div className='col-12 col-sm-12 col-md-12'>
-                <div className='profile-edit-sec '>
-                  <div className='user-profile-edit '>
+                <div className='profile-edit-sec'>
+                  <div className='user-profile-edit'>
                     <div className='text-center mb-3'>
                       <label className="">
-                        <img src={methodModel.userImg(group && group.image)} className="profileuserimg rounded" />
+                        <img
+                          src={group.image || methodModel.userImg(group.image)}
+                          className="profileuserimg rounded"
+                          alt="Group preview"
+                        />
                       </label>
 
                       <div className='samebtn_width'>
-
-                        {picLoader ?
-                          <div className="text-success text-center top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
-                          : <div>
+                        {picLoader ? (
+                          <div className="text-success text-center top_loading">
+                            Uploading... <i className="fa fa-spinner fa-spin"></i>
+                          </div>
+                        ) : (
+                          <div>
                             <label className="btn btn-primary mr-2">
                               <input
                                 id="bannerImage"
                                 type="file"
                                 className="d-none"
                                 accept="image/*"
-                                // value={form.baseImg ? form.baseImg : ''}
-                                onChange={(e) => { uploadGroupImage(e) }}
-                              /> <i class="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>
-                              {group.image ? 'Change' : 'Upload'} Image</label>
-                          </div>}
+                                onChange={uploadGroupImage}
+                              />
+                              <i className="fa fa-pencil-square-o mr-2" aria-hidden="true"></i>
+                              {group.image ? 'Change' : 'Upload'} Image
+                            </label>
+                          </div>
+                        )}
                         <div>
-                          {group.image ? <label className="btn btn-secondary" onClick={e => setGroup({ ...group, image: "" })}>Remove Image</label> : <></>}
+                          {group.image && (
+                            <label
+                              className="btn btn-secondary"
+                              onClick={() => setGroup({ ...group, image: "" })}
+                            >
+                              Remove Image
+                            </label>
+                          )}
                         </div>
-                        {/* <input type="hidden" name='image' required value={form.image} /> */}
-                        {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="groupnameadd ">
+              <div className="groupnameadd">
                 <input
                   placeholder="Add group name"
                   type="text"
@@ -1066,129 +1102,180 @@ export default function Chat() {
                   value={group.group_name}
                   onChange={handleInputChange}
                 />
-                {submitGroup && !group?.group_name ? <div className="invalid-feedback d-block">Group name is required</div> : <></>}
+                {submitGroup && !group.group_name && (
+                  <div className="invalid-feedback d-block">Group name is required</div>
+                )}
               </div>
 
+              {/* Search input for affiliates */}
+              <div className="mt-3">
+                <input
+                  type="text"
+                  className="form-control mb-3"
+                  placeholder="Search affiliates..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              </div>
 
               <div className="mt-3 gorupinner">
                 <div>
-
-                  {affiliate.map((data, index) => {
-                    return <div className="w-100 mb-3 d-flex pointer bb1_grey pb-2 align-items-center">
-                      <label for={index}>
-                        <input
-                          id={index}
-                          className="mr-3"
-                          type="checkbox"
-                          name="users"
-                          value={data?.id}
-                          checked={group?.users?.some(user => user.user_id === data?.id)}
-                          onChange={handleInputChange}
-                        />
-                        <img className="mr-2" width="40" src="../../../assets/img/person.jpg" />
-
-                        {data?.fullName}
-                      </label>
+                  {filteredAffiliates.length > 0 ? (
+                    filteredAffiliates.map((data, index) => (
+                      <div
+                        key={data.id}
+                        className="w-100 mb-3 d-flex pointer bb1_grey pb-2 align-items-center"
+                      >
+                        <label htmlFor={`affiliate-${data.id}`}>
+                          <input
+                            id={`affiliate-${data.id}`}
+                            className="mr-3"
+                            type="checkbox"
+                            name="users"
+                            value={data.id}
+                            checked={group.users?.some(user => user.user_id === data.id)}
+                            onChange={handleInputChange}
+                          />
+                          <img
+                            className="mr-2"
+                            width="40"
+                            src={data.image || "../../../assets/img/person.jpg"}
+                            alt={data.fullName}
+                          />
+                          {data.fullName}
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-3">
+                      No affiliates found matching your search
                     </div>
-                  })}
+                  )}
                 </div>
               </div>
 
               <div className="buttons_close addmnebers d-flex justify-content-center align-items-center mt-4">
-                <button className="btn btn-primary widthsame closebg mr-3" onClick={handleClose}>  Close</button>
-
-                <Button variant="primary" className=" widthsame" onClick={handleGroup}>
+                <button
+                  className="btn btn-primary widthsame closebg mr-3"
+                  onClick={handleClose}
+                >
+                  Close
+                </button>
+                <Button
+                  variant="primary"
+                  className="widthsame"
+                  onClick={handleGroup}
+                >
                   Create Group
                 </Button>
               </div>
-
-
             </div>
-
-
           </Modal.Body>
-
         </Modal>
 
         {/* add member modal open */}
         <Modal show={addMembershow} onHide={handleAddMemberClose} className="shadowboxmodal">
-
           <Modal.Body>
             <div>
               <div className="d-flex justify-content-between align-items-center bb1 pb-3">
                 <p className="fw600 mb-0">{chatMembers && chatMembers[0]?.room_name}</p>
-                {user?.role == "brand" ? <button onClick={() => deleteGroup()} className="deletebtn btn-sm p-2">  Delete group</button> :
+                {user?.role == "brand" ?
+                  <button onClick={() => deleteGroup()} className="deletebtn btn-sm p-2">Delete group</button> :
                   <button onClick={() => remove()} className="deletebtn btn-sm p-2">Leave Group</button>
                 }
-                {/* <p onClick={handleAddMemberClose} className=""><i className="fa fa-times"></i></p> */}
               </div>
 
-              {!nextpage ? <div>
-
-
-                <div className="my-4">{chatMembers.map((data) => {
-                  return <><div className="d-flex align-items-center justify-content-between mb-3 pb-3  bb1">
-                    <div className="d-flex align-items-center">
-                      <img className="mr-2" width="50" src="../../../assets/img/person.jpg" />
-                      <h6 className="m-0"> {data?.user_name}</h6>
+              {!nextpage ?
+                <div>
+                  <div className="my-4">
+                    {chatMembers.map((data) => {
+                      return (
+                        <div className="d-flex align-items-center justify-content-between mb-3 pb-3 bb1">
+                          <div className="d-flex align-items-center">
+                            <img className="mr-2" width="50" src="../../../assets/img/person.jpg" />
+                            <h6 className="m-0"> {data?.user_name}</h6>
+                          </div>
+                          <p className="m-0">{data?.role && <span>{`-${methodModel.capitalizeFirstLetter(data?.role)}`}</span>}</p>
+                          {data?.role != "admin" && user?.role == "brand" &&
+                            <a onClick={() => deleteMember(data?.user_id, data?.room_id)}>
+                              <i title="delete member" class="fa fa-trash"></i>
+                            </a>
+                          }
+                        </div>
+                      )
+                    })}
+                  </div>
+                  {user?.role == "brand" &&
+                    <div className="buttons_close addmnebers d-flex justify-content-center align-items-center mt-4">
+                      <button className="btn btn-primary widthsame closebg mr-3" onClick={handleAddMemberClose}>Close</button>
+                      <Button variant="primary" className="widthsame" onClick={() => setnextPage(true)}>
+                        Add member
+                      </Button>
                     </div>
-                    <p className="m-0">{data?.role && <span>{`-${methodModel.capitalizeFirstLetter(data?.role)}`}</span>}</p>
-                    {data?.role != "admin" && user?.role == "brand" && <a onClick={() => deleteMember(data?.user_id, data?.room_id)}>
-                      <i title="delete member" class="fa fa-trash"></i>
-                    </a>}
-                  </div></>
-                })
-
-                }</div>
-                {user?.role == "brand" && <div className="buttons_close addmnebers d-flex justify-content-center align-items-center mt-4">
-                  <button className="btn btn-primary widthsame closebg mr-3" onClick={handleAddMemberClose}>  Close</button>
-
-                  <Button variant="primary" className=" widthsame" onClick={() => setnextPage(true)}>
-                    Add member
-                  </Button>
-                </div>}
-              </div>
+                  }
+                </div>
                 :
                 <div className="mt-4 gorupinner">
                   <div>
-
                     <div className="hedingmains mb-4">
                       <h6>Add Members</h6>
                     </div>
 
-                    {filteredArray.length > 0 ? filteredArray.map((data, index) => {
-                      return <div className="w-100 mb-3 d-flex pointer bb1_grey pb-2 align-items-center">
-                        <label for={index}>
-                          <input
-                            id={index}
-                            className="mr-3"
-                            type="checkbox"
-                            name="users"
-                            value={data?.id}
-                            checked={addMembers?.updatedUsers?.some(id => id === data?.id)}
-                            onChange={handleAddMemberInputChange}
-                          />
-                          <img className="mr-2" width="40" src="../../../assets/img/person.jpg" />
+                    {/* Add search input here */}
+                    <div className="mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search members..."
+                        className="form-control"
+                        onChange={(e) => {
+                          const searchTerm = e.target.value.toLowerCase();
+                          const filtered = originalArray.filter(user =>
+                            user.fullName.toLowerCase().includes(searchTerm)
+                          );
+                          setFilteredArrayAdd(filtered);
+                        }}
+                      />
+                    </div>
 
-                          {data?.fullName}
-                        </label>
-                      </div>
-                    }) : <><div className="text-center">No Members</div></>}
+                    {filteredArrayAdd.length > 0 ?
+                      filteredArrayAdd.map((data, index) => {
+                        return (
+                          <div className="w-100 mb-3 d-flex pointer bb1_grey pb-2 align-items-center">
+                            <label htmlFor={index}>
+                              <input
+                                id={index}
+                                className="mr-3"
+                                type="checkbox"
+                                name="users"
+                                value={data?.id}
+                                checked={addMembers?.updatedUsers?.some(id => id === data?.id)}
+                                onChange={handleAddMemberInputChange}
+                              />
+                              <img className="mr-2" width="40" src="../../../assets/img/person.jpg" />
+                              {data?.fullName}
+                            </label>
+                          </div>
+                        )
+                      })
+                      :
+                      <div className="text-center">No Members</div>
+                    }
                   </div>
                   <div className="d-flex justify-content-center align-items-center mt-4">
                     <button className="btn btn-primary widthsame closebg mr-3" onClick={() => setnextPage(false)}>Back</button>
-
-                    <Button variant="primary" disabled={addMembers?.updatedUsers?.length > 0 ? false : true} className=" widthsame" onClick={addMember}>
+                    <Button
+                      variant="primary"
+                      disabled={addMembers?.updatedUsers?.length > 0 ? false : true}
+                      className="widthsame"
+                      onClick={addMember}
+                    >
                       Add member
                     </Button>
                   </div>
-                </div>}
-
+                </div>
+              }
             </div>
-
-
           </Modal.Body>
-
         </Modal>
 
         {/* Upload Options Modal */}
