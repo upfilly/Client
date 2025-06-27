@@ -146,11 +146,11 @@ const Html = ({
                             <thead className='table_head'>
                                 <tr className='heading_row'>
                                     <th scope="col" className='table_data' 
-                                    // onClick={e => sorting('title')}
+                                    onClick={e => sorting('title')}
                                     >Title
-                                    {/* {filters?.sorder === "asc" ? "↑" : "↓"} */}
+                                    {filters?.sorder === "asc" ? "↑" : "↓"}
                                     </th>
-                                    <th scope="col" className='table_data' >Coupon Code</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('couponCode')}>Coupon Code {filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data' >Coupon Type</th>
                                     <th scope="col" className="table_data">Brand Name</th>
                                     <th scope="col" className='table_data' >Visibility</th>
