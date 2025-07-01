@@ -248,21 +248,21 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
 
           <div className="selection-controls">
             <div className="select-actions">
-              <button 
+              <span 
                 className="action-btn add-all"
                 onClick={handleAddAllVisible}
               >
                 Add All Visible
-              </button>
-              <button 
+              </span>
+              <span 
                 className="action-btn remove-all"
                 onClick={handleRemoveAllVisible}
                 disabled={selectedCount === 0}
               >
                 Remove All Visible
-              </button>
+              </span>
             </div>
-            <div className="select-checkbox">
+            {/* <div className="select-checkbox">
               <input
                 className="form-check-input"
                 type="checkbox"
@@ -283,7 +283,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
                 }
               />
               <label htmlFor="selectAll">Select All Visible</label>
-            </div>
+            </div> */}
           </div>
 
           <div className="dropdown-content">

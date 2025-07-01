@@ -225,7 +225,7 @@ input#selectAll {
 .clear-search-btn {
   position: absolute;
   right: 8px;
-  top: 40%;
+  top: 70%;
   transform: translateY(-50%);
   background: transparent;
   border: none;
@@ -238,6 +238,135 @@ input#selectAll {
 
 .clear-search-btn:hover {
   color: #666;
+}
+
+/* Clear selection cross in the dropdown toggle */
+.dropdown-toggle {
+  position: relative;
+  padding-right: 25px; /* Make space for the × */
+}
+
+.clear-selection {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+.clear-selection:hover {
+  color: #ff4444;
+  background-color: #f8f8f8;
+}
+
+/* Clear search button */
+.search-container {
+  position: relative;
+}
+
+.clear-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 5px;
+}
+
+.clear-search:hover {
+  color: #ff4444;
+}
+
+/* Add/Remove action buttons */
+.selection-controls {
+  margin: 8px 0;
+}
+
+.select-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.action-btn.add-all {
+  color: #2e7d32;
+  border-color: #c8e6c9;
+  background-color: #e8f5e9;
+}
+
+.action-btn.add-all:hover {
+  background-color: #dcedc8;
+}
+
+.action-btn.remove-all {
+  color: #c62828;
+  border-color: #ffcdd2;
+  background-color: #ffebee;
+}
+
+.action-btn.remove-all:hover {
+  background-color: #ffccbc;
+}
+
+.action-btn.remove-all:disabled {
+  color: #bdbdbd;
+  border-color: #eee;
+  background-color: #fafafa;
+  cursor: not-allowed;
+}
+
+/* Checkbox for select all */
+.select-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.select-checkbox input[type="checkbox"] {
+  margin: 0;
+}
+
+.select-checkbox label {
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+
+/* No results message */
+.no-results {
+  padding: 10px;
+  color: #757575;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Item count in region labels */
+.item-count {
+  font-size: 12px;
+  color: #757575;
+  margin-left: 5px;
 }
 
 
