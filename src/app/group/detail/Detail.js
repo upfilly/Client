@@ -11,7 +11,26 @@ import './style.scss';
 const Detail = (p) => {
     const history = useRouter()
     const { id } = useParams();
-    const [data, setData] = useState()
+    const [data, setData] = useState({
+        createdAt: "2024-12-17T06:07:07.517Z",
+        updatedAt: "2025-04-04T05:41:42.488Z",
+        id: "6761150b20f83e94cadcfb28",
+        group_name: "ddfdf",
+        group_code: "fdjxq6cf7ytf",
+        group_type: "affiliate",
+        isDefaultAffiliateGroup: false,
+        isArchive: false,
+        isPreRegisterLeads: false,
+        commision: "",
+        status: "active",
+        isDeleted: false,
+        addedBy: "66dab098231607c158aa25be",
+        updatedBy: "66dab098231607c158aa25be",
+        addedAffiliates: [
+            "simos vlassis",
+            "new affiliate"
+        ]
+    })
 
     const getDetail = (did) => {
         loader(true)
@@ -24,27 +43,17 @@ const Detail = (p) => {
             })
     };
 
-    // console.log(data, "=========")
-
     const back = () => {
         const searchParams = window.location.search;
-                
         window.location.href = '/group' + searchParams;
     }
 
     const edit = (id) => {
         let url = `/group/edit/${id}`
-        // if(role) url=`/users/${role}/edit/${id}`
         history.push(url)
     }
 
-    // const clear = () => {
-    //     setFilter({ ...filters, search: '', page: 1 })
-    //     getData({ search: '', page: 1 })
-    // }
-
     const deleteItem = (id) => {
-
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -59,7 +68,6 @@ const Detail = (p) => {
                 ApiClient.delete(`delete?model=affiliatemanagement&id=${id}`).then(res => {
                     if (res.success) {
                         toast.success(res.message)
-                        // clear()
                         history.push(`/group`)
                     }
                     loader(false)
@@ -74,64 +82,67 @@ const Detail = (p) => {
         }
     }, [id])
 
-    return (<>
+    return (
         <Layout>
             <div className='view_page sidebar-left-content '>
                 <div className=' card '>
                     <div className="card-header">
                         <div className="d-flex justify-content-between align-items-center  gap-3 flex-wrap ">
-
                             <div className='main_title_head'>
                                 <div className='d-flex gap-2 align-items-center '>
-                                    <button onClick={back} type='button' className='btn btn-primary px-2 py-0 ' ><i className="fa fa-arrow-left " title='Back' aria-hidden="true"></i></button>
+                                    <button onClick={back} type='button' className='btn btn-primary px-2 py-0 ' >
+                                        <i className="fa fa-arrow-left " title='Back' aria-hidden="true"></i>
+                                    </button>
                                     <h3 className=" ">
-                                        {/* <a to="/categories"  className="back_icon">  </a> */}
                                         Group Details
                                     </h3>
-
                                 </div>
-
                             </div>
                             <div>
-                                <>
-                                    <button className='btn btn-primary mr-2 ' title="Edit" onClick={e => edit(data.id)}>
-                                        <i className="material-icons edit text-white mr-2" title="Edit">edit</i>
-                                        Edit
-                                    </button>
-                                </>
-                                {/* // : <></>} */}
-
-                                {/* {isAllow('deleteAdmins') ?  */}
-                                <>
-                                    <button className='btn btn-danger br50' onClick={() => deleteItem(data.id)}>
-                                        <i className="material-icons delete text-white mr-2" title='Delete'> delete</i>
-                                        Delete
-                                    </button>
-                                </>
+                                <button className='btn btn-primary mr-2 ' title="Edit" onClick={e => edit(data.id)}>
+                                    <i className="material-icons edit text-white mr-2" title="Edit">edit</i>
+                                    Edit
+                                </button>
+                                <button className='btn btn-danger br50' onClick={() => deleteItem(data.id)}>
+                                    <i className="material-icons delete text-white mr-2" title='Delete'> delete</i>
+                                    Delete
+                                </button>
                             </div>
                         </div>
-
-
-
                     </div>
 
                     <div className='card-body'>
                         <div className='main-view-pages '>
                             <div className="row">
                                 <div className=" col-md-12">
-
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
-                                            
                                             <div className='userdata'>
                                                 <p className='headmain'>Group Name:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.group_name}</p>
+                                                <p className='headsub'>{data?.group_name || 'N/A'}</p>
                                             </div>
                                         </div>
-                                      
-                                  
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Group Code:</p>
+                                            </div>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data?.group_code || 'N/A'}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Group Type:</p>
+                                            </div>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data?.group_type ? data.group_type.charAt(0).toUpperCase() + data.group_type.slice(1) : 'N/A'}</p>
+                                            </div>
+                                        </div>
+
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Creation Date:</p>
@@ -140,61 +151,76 @@ const Detail = (p) => {
                                                 <p className='headsub'>{datepipeModel.date(data?.createdAt)}</p>
                                             </div>
                                         </div>
-                                       
-                                    
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Last Updated:</p>
+                                            </div>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{datepipeModel.date(data?.updatedAt)}</p>
+                                            </div>
+                                        </div>
+
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Status:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.status}</p>
+                                                <p className='headsub'>{data?.status ? data.status.charAt(0).toUpperCase() + data.status.slice(1) : 'N/A'}</p>
                                             </div>
                                         </div>
-                                     
-                                  
+
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Commision:</p>
+                                                <p className='headmain'>Commission:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub' dangerouslySetInnerHTML={{ __html: data && data?.commision }} />
+                                                <p className='headsub' dangerouslySetInnerHTML={{ __html: data?.commision || 'N/A' }} />
                                             </div>
                                         </div>
-                                      
-                                    
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Default Group:</p>
+                                            </div>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data?.isDefaultAffiliateGroup ? 'Yes' : 'No'}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className='col-12 col-sm-12 col-md-6 col-lg-4 mb-4'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Archived:</p>
+                                            </div>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data?.isArchive ? 'Yes' : 'No'}</p>
+                                            </div>
+                                        </div>
+
                                         <div className='col-12 col-sm-12 col-md-12 col-lg-12 mb-4'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Added Affiliates:</p>
                                             </div>
                                             <div className='name-dtls d-flex flex-wrap'>
                                                 <ul className='ulclass flex-wrap'>
-
-                                                    {data && data?.addedAffiliates && data.addedAffiliates.map((item) => {
-                                                        return <li className="mr-2 progs_data mb-2">{item}</li>
-                                                    })}
-
-
+                                                    {data?.addedAffiliates?.length > 0 ? (
+                                                        data.addedAffiliates.map((item, index) => (
+                                                            <li key={index} className="mr-2 progs_data mb-2">{item}</li>
+                                                        ))
+                                                    ) : (
+                                                        <li className="mr-2 progs_data mb-2">No affiliates added</li>
+                                                    )}
                                                 </ul>
-
                                             </div>
                                         </div>
-                                      
                                     </div>
-
-
-
-
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </Layout>
-    </>
     );
 };
 

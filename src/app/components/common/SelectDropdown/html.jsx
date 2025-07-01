@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './style.scss';
 import Select from "react-select";
 import methodModel from "@/methods/methods";
@@ -14,12 +14,30 @@ const Html = ({ options, selectedValues, handleChange, displayValue, id, placeho
         {theme == 'search' ? <>
 
             <Select
-                options={options?.map(itm => { return { value: itm.id, label: itm[displayValue] } }) || []}
+                options={options?.map(itm => ({
+                    value: itm.id,
+                    label: itm[displayValue],
+                    isDefault: itm.isDefault // Pass through the isDefault flag
+                })) || []}
                 placeholder={placeholder}
                 value={categoryVal()}
                 isClearable={true}
                 name={name}
                 onChange={e => handleChange(e?.value || '')}
+                formatOptionLabel={(option, { context }) => (
+                    <div>
+                        {option.label}
+                        {option.isDefault && (
+                            <span style={{ marginLeft: '8px', color: '#666', fontSize: '0.8em' }}>
+                                (Default)
+                            </span>
+                        )}
+                    </div>
+                )}
+                defaultValue={options?.find(o => o.isDefault) ? {
+                    value: options.find(o => o.isDefault).id,
+                    label: options.find(o => o.isDefault)[displayValue]
+                } : undefined}
             />
         </> : <>
             <div className="selectDropdown">

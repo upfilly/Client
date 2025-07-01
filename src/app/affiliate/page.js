@@ -16,6 +16,7 @@ import methodModel from '../../methods/methods';
 import environment from '../../environment/index'
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import React from 'react';
 
 export default function affilate() {
   const history = useRouter()
@@ -25,7 +26,6 @@ export default function affilate() {
     count: 10,
     role: "affiliate",
     search: '',
-    // createBybrand_id: user?.id,
     isDeleted: false,
     status: '',
     invite_status: '',
@@ -40,7 +40,6 @@ export default function affilate() {
   const [form, setform] = useState({
     "message": "",
     "tags": [],
-    // "commission": "",
     "campaign_id": ""
   })
   const [groupForm, setGroupform] = useState({
@@ -60,25 +59,26 @@ export default function affilate() {
   const [groupShow, setGroupShow] = useState(false);
   const [tagInput, setTagInput] = useState('');
   const [selectedAffiliteid, setselectedAffiliteid] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState(null);
-  // const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  // const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(null);
   const [expandedRowId, setExpandedRowId] = useState([]);
-  // const [categoryType, SetCategoryType] = useState('')
   const [Campaigns, setCampaign] = useState([])
+
+  // Category filter states
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState([]);
+  const [expandedSubCategories, setExpandedSubCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+  const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
+  const [categoryType, setCategoryType] = useState([]);
+  const [camppaignData, setCamppaignData] = useState([]);
+
+  const searchParams = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
+
   const handleClose = () => { setShow(false), setselectedAffiliteid([]) };
   const handleShow = () => setShow(true);
   const handleGroupClose = () => setGroupShow(false);
   const handleGroupShow = () => setGroupShow(true);
-  const [categoryType, setCategoryType] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [selectedSubCategory, setSelectedSubCategory] = useState([]);
-  const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
-  const [expandedSubCategories, setExpandedSubCategories] = useState([]);
-  const [expandedCategories, setExpandedCategories] = useState([]);
-  const [camppaignData, setCamppaignData] = useState([]);
-  const searchParams = useSearchParams();
-  const params = Object.fromEntries(searchParams.entries());
 
   console.log(filters, "paramsparamsparams")
 
@@ -86,36 +86,27 @@ export default function affilate() {
     const filterParams = {
       ...filters,
       page: 1,
-      // currency: selectedCurrency,
-      // region: selectedRegion?.join(","),
       "start_date": startDate ? startDate.toISOString().split('T')[0] : null,
       "end_date": endDate ? endDate.toISOString().split('T')[0] : null,
       category_type: categoryType?.join(","),
       category: selectedCategory?.join(","),
       sub_category: selectedSubCategory?.join(","),
-      // countries: ?.join(","),
       sub_child_category: selectedSubSubCategory?.join(",")
     };
 
     const queryString = new URLSearchParams(filterParams).toString();
-
     history.push(`/affiliate/detail/${id}?${queryString}`);
   };
 
   function parseStringToArray(input) {
     if (typeof input !== "string") return [];
-
-    // Split by comma and trim each element
     return input.split(',').map(item => item.trim());
   }
 
   useEffect(() => {
-    // getExchangeRate(params?.currency)
     setSelectedCategory(parseStringToArray(params?.category));
     setSelectedSubCategory(parseStringToArray(params?.sub_category));
     setSelectedSubSubCategory(parseStringToArray(params?.sub_child_category));
-    // setSelectedRegion(parseStringToArray(params?.region));
-    // setSelectedCountries(parseStringToArray(params?.countries));
   }, [])
 
   const resetUrl = () => {
@@ -142,7 +133,7 @@ export default function affilate() {
 
   const getCampaignData = (p = {}) => {
     let url = 'campaign/brand/all'
-    ApiClient.get(url,{brand_id:user?.id}).then(res => {
+    ApiClient.get(url, { brand_id: user?.id }).then(res => {
       if (res.success) {
         setCamppaignData(res.data.data.map((dat) => {
           return ({
@@ -150,11 +141,9 @@ export default function affilate() {
             id: dat?.id || dat?._id
           })
         }))
-        // setTotal(res.data.total_count)
       }
     })
   }
-
 
   const toggleSubCategoryExpand = (subCategoryId) => {
     setExpandedSubCategories(prev =>
@@ -188,16 +177,8 @@ export default function affilate() {
     );
   };
 
-  // const reset = () => {
-  //   setCategoryType([]);
-  //   setSelectedCategory([]);
-  //   setSelectedSubCategory([]);
-  //   setSelectedSubSubCategory([]);
-  // };
-
   const handleRowClick = (id) => {
     const isExpanded = expandedRowId.includes(id);
-
     if (isExpanded) {
       setExpandedRowId(expandedRowId.filter(rowId => rowId !== id));
     } else {
@@ -216,7 +197,6 @@ export default function affilate() {
   const categoryTypes = [
     { id: 'promotional_models', name: 'Promotional Models' },
     { id: 'property_types', name: 'Property Types' },
-    // { id: 'advertiser_categories', name: 'Advertiser Categories' },
   ]
 
   const handleCountChange = (count) => {
@@ -239,21 +219,11 @@ export default function affilate() {
     }
   };
 
-
   const handleDeleteTag = (index) => {
     const newTags = [...form.tags];
     newTags.splice(index, 1);
     setform({ ...form, tags: newTags });
   };
-
-  // const Commission = [
-  //   { id: "Program Standard Commission Rates", name: "Program Standard Commission Rates" },
-  //   { id: "Default 8% Commission", name: "Default 8% Commission" },
-  //   { id: "Padel/Sports Publisher", name: "Padel/Sports Publisher" },
-  //   { name: "2% Commission Increase (10%)" },
-  //   { id: "5% Commission Increase (13%)", name: "5% Commission Increase (13%)" },
-  //   { id: "2% Commission Increase (7%)", name: "2% Commission Increase (7%)" }
-  // ]
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -292,17 +262,6 @@ export default function affilate() {
     return item?.id
   })
 
-  // const toggleDropdown = () => {
-  //   setIsOpen(!isOpen);
-  // };
-
-  // const handleCheckboxChange = (option) => {
-  //   if (selectedOptions.some((selectedOption) => selectedOption.id === option.id)) {
-  //     setSelectedOptions(selectedOptions.filter((selectedOption) => selectedOption.id !== option.id));
-  //   } else {
-  //     setSelectedOptions([...selectedOptions, option]);
-  //   }
-  // };
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -324,7 +283,6 @@ export default function affilate() {
         setTotal(res?.data?.total)
         setLoader(false)
       }
-
     })
   };
 
@@ -374,24 +332,21 @@ export default function affilate() {
     const hasSelectedSubCategory = selectedSubCategory?.length > 0;
     const hasSelectedSubSubCategory = selectedSubSubCategory?.length > 0;
 
-    // if (hasCategoryType || hasSelectedCategory || hasSelectedSubCategory || hasSelectedSubSubCategory) {
-      setFilter({ ...filters, ...params, count: 10 });
-      getData({
-        ...filters,
-        ...params,
-        page: 1,
-        cat_type: hasCategoryType ? categoryType.map((dat) => dat).join(",") : undefined,
-        category_id: hasSelectedCategory ? selectedCategory.map((dat) => dat).join(",") : undefined,
-        sub_category_id: hasSelectedSubCategory ? selectedSubCategory.map((dat) => dat).join(",") : undefined,
-        sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.map((dat) => dat).join(",") : undefined
-      });
-    // }
+    setFilter({ ...filters, ...params, count: 10 });
+    getData({
+      ...filters,
+      ...params,
+      page: 1,
+      cat_type: hasCategoryType ? categoryType.map((dat) => dat).join(",") : undefined,
+      category_id: hasSelectedCategory ? selectedCategory.map((dat) => dat).join(",") : undefined,
+      sub_category_id: hasSelectedSubCategory ? selectedSubCategory.map((dat) => dat).join(",") : undefined,
+      sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.map((dat) => dat).join(",") : undefined
+    });
   }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
 
   useEffect(() => {
     getCategory()
   }, [categoryType])
-
 
   const pageChange = (e) => {
     if (e.selected) {
@@ -458,13 +413,7 @@ export default function affilate() {
     setFilter({ ...filter })
     getData({ ...filter, page: 1 })
     history.push("/affiliate")
-
-    // dispatch(search_success(''))
   }
-
-  // const view = (id) => {
-  //   history.push("/affiliate/detail/" + id)
-  // }
 
   const handleAffiliateGroup = () => {
     ApiClient.get('affiliate-groups', { status: "active", addedBy: user?.id, group_type: 'affiliate' }).then(res => {
@@ -480,7 +429,8 @@ export default function affilate() {
         const data = res?.data?.data?.map((data) => {
           return ({
             id: data?.id || data?._id,
-            name: data?.name
+            name: data?.name,
+            isDefault: data?.isDefault
           })
         })
         setCampaign(data)
@@ -495,12 +445,10 @@ export default function affilate() {
       affiliate_group: groupForm?.affiliate_group
     }
     ApiClient.put('edit/profile', data).then(res => {
-
       if (res.success == true) {
         handleGroupClose()
         getData({ search: '', page: 1 })
       }
-      // setLoader(false)
     })
   }
 
@@ -536,200 +484,253 @@ export default function affilate() {
     history.push('/campaign/add')
   };
 
+  const handleSelectAll = (e) => {
+  if (e.target.checked) {
+    // Select all not-invited affiliates
+    const allNotInvitedIds = data?.data
+      .filter(itm => itm.invite_status === 'not_invited')
+      .map(itm => itm.id);
+    setselectedAffiliteid(allNotInvitedIds);
+  } else {
+    // Deselect all
+    setselectedAffiliteid([]);
+  }
+};
+
+  const getSelectedCategoryNames = () => {
+    const names = [];
+    selectedCategory.forEach(catId => {
+      const cat = category.find(c => c._id === catId);
+      if (cat) names.push(cat.parent_cat_name || "Promotional Models");
+    });
+    selectedSubCategory.forEach(subCatId => {
+      category.forEach(cat => {
+        const subCat = cat.subCategories?.find(sc => sc.id === subCatId);
+        if (subCat) names.push(subCat.name);
+      });
+    });
+    selectedSubSubCategory.forEach(subSubCatId => {
+      category.forEach(cat => {
+        cat.subCategories?.forEach(subCat => {
+          const subSubCat = subCat.subchildcategory?.find(ssc => ssc._id === subSubCatId);
+          if (subSubCat) names.push(subSubCat.name);
+        });
+      });
+    });
+    return names;
+  }
+
+  const [categorySearchTerm, setCategorySearchTerm] = useState('');
+
+  // Filter categories based on search term
+  const filteredCategories = category.filter(cat => {
+    const matchesSearch = cat.parent_cat_name?.toLowerCase().includes(categorySearchTerm.toLowerCase()) ||
+      cat.subCategories?.some(subCat =>
+        subCat.name.toLowerCase().includes(categorySearchTerm.toLowerCase()) ||
+        subCat.subchildcategory?.some(subSubCat =>
+          subSubCat.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
+        )
+      );
+
+    return matchesSearch;
+  });
+
+  // Automatically expand categories when searching
+  useEffect(() => {
+    if (categorySearchTerm) {
+      const expandedIds = [];
+      category.forEach(cat => {
+        if (cat.parent_cat_name?.toLowerCase().includes(categorySearchTerm.toLowerCase())) {
+          expandedIds.push(cat._id);
+        }
+        cat.subCategories?.forEach(subCat => {
+          if (subCat.name.toLowerCase().includes(categorySearchTerm.toLowerCase())) {
+            expandedIds.push(cat._id);
+          }
+        });
+      });
+      setExpandedCategories([...new Set(expandedIds)]);
+    }
+  }, [categorySearchTerm]);
+
 
   return (
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Affiliates" filters={filters}>
-        <div className='nmain-list   mb-3'>
+        <div className='nmain-list mb-3'>
           <div className='row align-items-center mx-0'>
             <div className='col-12 col-md-12 col-lg-12'>
+              <div className='set_modal postion-relative'>
+                <div className='d-flex gap-2 align-items-center flex-wrap'>
 
-              <div className="modal filter_modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header align-items-center bg_headers">
-                      <h2 className="modal-title fs-5" id="exampleModalLabel">All Filter</h2>
-                      <i data-bs-dismiss="modal" aria-label="Close" className="fa fa-times clse" aria-hidden="true"></i>
-                    </div>
-                    <div className="modal-body">
-                      <div className='height_fixed'>
-                        {/* <div className="accordion" id="accordionExample">
-                          <div className="accordion-item">
-                            <h2 className="accordion-header">
-                              <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebxone" aria-expanded="true" aria-controls="collapsebxone">
-                                <b>Select Category Type</b>
-                                <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
-                              </button>
-                            </h2>
-                            <div id="collapsebxone" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                              <div className="accordion-body">
-                                <ul className="filter_ullist">
-                                  {categoryTypes.map(category1 => (
-                                    <li key={category1.id}>
-                                      <div className="form-check">
-                                        <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          id={category1.id}
-                                          name="categoryType"
-                                          value={category1.id}
-                                          checked={categoryType.includes(category1.id)}
-                                          onChange={() => handleCategoryTypeChange(category1.id)}
-                                        />
-                                        <label className="form-check-label" htmlFor={category1.id}>{category1.name}</label>
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </div>
+                  {/* Category Filter Dropdown */}
+                  <div className="dropdown position-relative">
+                    <button
+                      className="btn btn-outline-secondary dropdown-toggle"
+                      type="button"
+                      onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
+                    >
+                      {getSelectedCategoryNames().length > 0
+                        ? `Categories (${getSelectedCategoryNames().length})`
+                        : 'Select Categories'
+                      }
+                    </button>
+
+                    {categoryDropdownOpen && (
+                      <div className="dropdown-menu show position-absolute" style={{
+                        maxHeight: '400px',
+                        overflowY: 'auto',
+                        width: '350px',
+                        zIndex: 1050,
+                        padding: '10px'
+                      }}>
+                        <div className="p-2">
+                          <h6 className="mb-3">Select Category of Affiliate</h6>
+
+                          {/* Search input for categories */}
+                          <div className="mb-3">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Search categories..."
+                              value={categorySearchTerm}
+                              onChange={(e) => setCategorySearchTerm(e.target.value)}
+                            />
                           </div>
-                        </div> */}
 
-                        <div className="accordion" id="accordionExample">
-                          <div className="accordion-item">
-                            <h2 className="accordion-header">
-                              <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsebx1" aria-expanded="true" aria-controls="collapsebx1">
-                                <b>Select Category of Affiliate</b>
-                                <i className="fa fa-angle-down down_typs" aria-hidden="true"></i>
-                              </button>
-                            </h2>
-                            <div id="collapsebx1" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                              <div className="accordion-body">
-                                <ul className="filter_ullist">
-                                  {category.map(category => (
-                                    <li key={category._id}>
-                                      <div className="form-check d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            id={category._id}
-                                            name="category"
-                                            value={category._id}
-                                            checked={selectedCategory?.includes(category._id)}
-                                            onChange={() => handleCategoryChange(category)}
-                                          />
-                                          <label className="form-check-label ms-2" htmlFor={category._id}>
-                                            {category.parent_cat_name || "Promotional Models"}
-                                          </label>
-                                        </div>
-                                        {category.subCategories?.length > 0 && (
-                                          <i
-                                            className={`fa fa-angle-${expandedCategories.includes(category._id) ? 'down' : 'right'} cursor-pointer`}
-                                            onClick={() => toggleCategoryExpand(category._id)}
-                                            aria-hidden="true"
-                                          ></i>
-                                        )}
-                                      </div>
+                          <ul className="list-unstyled">
+                            {filteredCategories.length > 0 ? (
+                              filteredCategories.map(categoryItem => (
+                                <li key={categoryItem._id} className="mb-2">
+                                  <div className="form-check d-flex justify-content-between align-items-center">
+                                    <div>
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id={`cat-${categoryItem._id}`}
+                                        checked={selectedCategory?.includes(categoryItem._id)}
+                                        onChange={() => handleCategoryChange(categoryItem)}
+                                      />
+                                      <label className="form-check-label ms-2" htmlFor={`cat-${categoryItem._id}`}>
+                                        {categoryItem.parent_cat_name || "Promotional Models"}
+                                      </label>
+                                    </div>
+                                    {categoryItem.subCategories?.length > 0 && (
+                                      <i
+                                        className={`fa fa-angle-${expandedCategories.includes(categoryItem._id) ? 'down' : 'right'} cursor-pointer`}
+                                        onClick={() => toggleCategoryExpand(categoryItem._id)}
+                                      ></i>
+                                    )}
+                                  </div>
 
-                                      {expandedCategories.includes(category._id) && (
-                                        <ul className="sub_ulbx ms-4">
-                                          {category.subCategories.map((subCategory) => (
-                                            <li key={subCategory.id}>
-                                              <div className="form-check d-flex justify-content-between align-items-center">
-                                                <div>
-                                                  <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    id={subCategory.id}
-                                                    name="subCategory"
-                                                    value={subCategory.id}
-                                                    checked={selectedSubCategory?.includes(subCategory.id)}
-                                                    onChange={() => handleSubCategoryChange(subCategory)}
-                                                  />
-                                                  <label className="form-check-label ms-2" htmlFor={subCategory.id}>
-                                                    {subCategory.name}
-                                                  </label>
-                                                </div>
-                                                {subCategory.subchildcategory?.length > 0 && (
-                                                  <i
-                                                    className={`fa fa-angle-${expandedSubCategories.includes(subCategory.id) ? 'down' : 'right'} cursor-pointer`}
-                                                    onClick={() => toggleSubCategoryExpand(subCategory.id)}
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                )}
+                                  {expandedCategories.includes(categoryItem._id) && (
+                                    <ul className="list-unstyled ms-4 mt-2">
+                                      {categoryItem.subCategories
+                                        .filter(subCat =>
+                                          !categorySearchTerm ||
+                                          subCat.name.toLowerCase().includes(categorySearchTerm.toLowerCase()) ||
+                                          subCat.subchildcategory?.some(subSubCat =>
+                                            subSubCat.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
+                                          )
+                                        )
+                                        .map((subCategory) => (
+                                          <li key={subCategory.id} className="mb-1">
+                                            <div className="form-check d-flex justify-content-between align-items-center">
+                                              <div>
+                                                <input
+                                                  className="form-check-input"
+                                                  type="checkbox"
+                                                  id={`subcat-${subCategory.id}`}
+                                                  checked={selectedSubCategory?.includes(subCategory.id)}
+                                                  onChange={() => handleSubCategoryChange(subCategory)}
+                                                />
+                                                <label className="form-check-label ms-2" htmlFor={`subcat-${subCategory.id}`}>
+                                                  {subCategory.name}
+                                                </label>
                                               </div>
+                                              {subCategory.subchildcategory?.length > 0 && (
+                                                <i
+                                                  className={`fa fa-angle-${expandedSubCategories.includes(subCategory.id) ? 'down' : 'right'} cursor-pointer`}
+                                                  onClick={() => toggleSubCategoryExpand(subCategory.id)}
+                                                ></i>
+                                              )}
+                                            </div>
 
-                                              {expandedSubCategories.includes(subCategory.id) && subCategory.subchildcategory?.length > 0 && (
-                                                <ul className="ms-4">
-                                                  {subCategory.subchildcategory.map((subSubCategory) => (
-                                                    <li key={subSubCategory._id}>
+                                            {expandedSubCategories.includes(subCategory.id) && subCategory.subchildcategory?.length > 0 && (
+                                              <ul className="list-unstyled ms-4 mt-1">
+                                                {subCategory.subchildcategory
+                                                  .filter(subSubCat =>
+                                                    !categorySearchTerm ||
+                                                    subSubCat.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
+                                                  )
+                                                  .map((subSubCategory) => (
+                                                    <li key={subSubCategory._id} className="mb-1">
                                                       <div className="form-check">
                                                         <input
                                                           className="form-check-input"
                                                           type="checkbox"
-                                                          id={subSubCategory._id}
-                                                          name="subSubCategory"
-                                                          value={subSubCategory._id}
+                                                          id={`subsubcat-${subSubCategory._id}`}
                                                           checked={selectedSubSubCategory?.includes(subSubCategory._id)}
                                                           onChange={() => handleSubSubCategoryChange(subSubCategory)}
                                                         />
-                                                        <label className="form-check-label" htmlFor={subSubCategory._id}>
+                                                        <label className="form-check-label ms-2" htmlFor={`subsubcat-${subSubCategory._id}`}>
                                                           {subSubCategory.name}
                                                         </label>
                                                       </div>
                                                     </li>
                                                   ))}
-                                                </ul>
-                                              )}
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      )}
-                                    </li>
-                                  ))}
-
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
+                                              </ul>
+                                            )}
+                                          </li>
+                                        ))}
+                                    </ul>
+                                  )}
+                                </li>
+                              ))
+                            ) : (
+                              <li className="text-muted">No categories found</li>
+                            )}
+                          </ul>
                         </div>
                       </div>
-                    </div>
-                    <div className="modal-footer gap-3">
-                      <button type="button" className="btn btn-outline-secondary m-0" data-bs-dismiss="modal" onClick={reset}>Clear all Filter</button>
-                    </div>
+                    )}
                   </div>
-                </div>
-              </div>
 
-
-              <div className='set_modal postion-relative '>
-                <div className='d-flex gap-2 align-items-center flex-wrap'>
-                  <div className='filter-opt'>
-                    <button className='set-filter' type="button" class="set-filter abs_butsn" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" width="14px" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><path d="M0 2.48v2h2.09a3.18 3.18 0 006.05 0H14v-2H8.14a3.18 3.18 0 00-6.05 0zm3.31 1a1.8 1.8 0 111.8 1.81 1.8 1.8 0 01-1.8-1.82zm2.2 6.29H0v2h5.67a3.21 3.21 0 005.89 0H14v-2h-2.29a3.19 3.19 0 00-6.2 0zm1.3.76a1.8 1.8 0 111.8 1.79 1.81 1.81 0 01-1.8-1.79z"></path></svg> Filter</button>
-                  </div>
-                  <div class="w-25">
-                    <SelectDropdown theme='search'
+                  {/* Invitation Status Filter */}
+                  <div className="w-25">
+                    <SelectDropdown
+                      theme='search'
                       id="statusDropdown"
                       displayValue="name"
-                      placeholder="All"
-                      className='mt-2 '
+                      placeholder="All Status"
+                      className='mt-2'
                       intialValue={filters.invite_status}
                       result={e => { ChangeStatus(e.value) }}
                       options={[
                         { id: 'not_invited', name: 'Not Invited' },
                         { id: 'accepted', name: 'Accepted' },
                         { id: 'pending', name: 'Pending' },
-                        { id: 'rejected', name: 'rejected' },
+                        { id: 'rejected', name: 'Rejected' },
                       ]}
                     />
                   </div>
 
-                  <div class="w-25">
-                    <SelectDropdown theme='search'
-                      id="statusDropdown"
+                  {/* Campaign Filter */}
+                  <div className="w-25">
+                    <SelectDropdown
+                      theme='search'
+                      id="campaignDropdown"
                       displayValue="name"
                       placeholder="All Campaign"
-                      className='mt-2 '
+                      className='mt-2'
                       intialValue={filters.campaign}
                       result={e => { ChangeCampaign(e.value) }}
                       options={camppaignData}
                     />
                   </div>
 
-                  <div class="">
+                  {/* Date Range Filter */}
+                  <div className="">
                     <DatePicker
                       className="datepicker-field"
                       selected={startDate}
@@ -737,199 +738,200 @@ export default function affilate() {
                       startDate={startDate}
                       endDate={endDate}
                       showIcon
-                      placeholderText=" Date Range"
+                      placeholderText="Date Range"
                       selectsRange
-
-                    // inline
                     />
                   </div>
 
-                  {/* <div className={`checkbox-inner checkbox-dropdown ${isOpen ? 'open' : ''} ml_3`}>
-                    <div className="newselectmulti position-relative" onClick={toggleDropdown}>
-                      {selectedOptions.length === 0 ? "Select Groups " : (
-                        <p className='checkbox-option-main'>
-                          {selectedOptions.map((selectedOption) => (
-                            <span>{selectedOption.group_name}</span>
-                          ))}
-                        </p>
-                      )}
+                  {/* Reset Button */}
+                  {(selectedSubSubCategory?.length || selectedCategory?.length || selectedSubCategory?.length ||
+                    filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id ||
+                    filters.end_date || filters.start_date) && (
+                      <button className="btn btn-primary" onClick={reset}>
+                        Reset
+                      </button>
+                    )}
 
-                      <i className='fa fa-chevron-down donabsolute'></i>
-                    </div>
-                    <div className="checkbox-options">
-                      {affiliategroup?.map((option) => (
-                        <label className='text-sm' key={option.id}>
-                          <input
-                            type="checkbox"
-                            value={option.id}
-                            checked={selectedOptions.some((selectedOption) => selectedOption.id === option.id)}
-                            onChange={() => {
-                              handleCheckboxChange(option);
-                            }}
-                          />
-                          {option.group_name}
-                        </label>
-                      ))}
-                    </div>
-                  </div> */}
-
-                  {selectedSubSubCategory?.length || selectedCategory?.length || selectedSubSubCategory?.length || filters.invite_status || filters.campaign || filters.status || filters.affiliate_group_id || filters.end_date || filters.start_date ? <>
-                    <a className="btn btn-primary   " onClick={e => reset()}>
-                      Reset
-                    </a>
-                  </> : <></>}
-                  {(user?.role == 'brand' || permission('affiliate_group')) && (
-                    <>
-                      {selectedAffiliteid?.length > 1 && (
-                        <DropdownButton
-                          variant="primary"
-                          id="dropdown-basic-button"
-                          title={<>Action</>}
-                          className=""
-                        >
-                          <Dropdown.Item as="button" onClick={() => handleShow()}>
-                            Send multiple invites to affiliates
-                          </Dropdown.Item>
-                          {/* You can add more items here if needed */}
-                        </DropdownButton>
-                      )}
-                    </>
+                  {/* Action Dropdown for Multiple Selection */}
+                  {(user?.role == 'brand' || permission('affiliate_group')) && selectedAffiliteid?.length > 1 && (
+                    <DropdownButton
+                      variant="primary"
+                      id="dropdown-basic-button"
+                      title="Action"
+                    >
+                      <Dropdown.Item as="button" onClick={handleShow}>
+                        Send multiple invites to affiliates
+                      </Dropdown.Item>
+                    </DropdownButton>
                   )}
                 </div>
-
               </div>
             </div>
-
-
-            {/* <div className='col-12 col-md-2 col-lg-3'>
-              <div className='text-end d-flex align-items-center justify-content-end' onClick={handleCleanData}>
-                  <Link href="/affiliate-form/StageFirstStep" className='btn btn-primary d-flex align-items-center'><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i>
-                    New Affilate</Link>
-                </div>
-            </div> */}
           </div>
+
+          {/* Close dropdown when clicking outside */}
+          {categoryDropdownOpen && (
+            <div
+              className="position-fixed w-100 h-100"
+              style={{ top: 0, left: 0, zIndex: 1040 }}
+              onClick={() => setCategoryDropdownOpen(false)}
+            />
+          )}
+
+          {/* Rest of your component remains the same - table, modals, pagination, etc. */}
           <div className='row mx-0 mt-3'>
             <div className='col-md-12'>
 
               <div className='table-responsive'>
-                <table class="table table-striped ">
-                  <thead class="thead-clr">
-                    <tr >
-                      {/* <th></th> */}
-                      <th scope="col" onClick={e => sorting('fullName')}>Affiliate {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                <table className="table table-striped">
+                  <thead className="thead-clr">
+                    <tr>
+                      <th scope="col">
+                        <label className='d-flex align-items-center gap-2'>
+                          <input
+                            type='checkbox'
+                            className='form-check-input check_bx_input'
+                            checked={selectedAffiliteid.length === data?.data?.length}
+                            onChange={handleSelectAll}
+                          />
+                          <span className="checkbox-btn"></span>
+                        </label>
                       </th>
-                      <th scope="col" onClick={e => sorting('email')}>Email {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      <th scope="col" onClick={e => sorting('fullName')}>
+                        Affiliate {filters?.sorder === "asc" ? <i className="fa fa-caret-up" aria-hidden="true"></i> : <i className="fa fa-caret-down" aria-hidden="true"></i>}
                       </th>
-                      <th scope="col" onClick={e => sorting('affiliate_group_name')}>Affilate Group {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      <th scope="col" onClick={e => sorting('email')}>
+                        Email {filters?.sorder === "asc" ? <i className="fa fa-caret-up" aria-hidden="true"></i> : <i className="fa fa-caret-down" aria-hidden="true"></i>}
                       </th>
-                      <th scope="col" onClick={e => sorting('createdAt')}>Join Date {filters?.sorder === "asc" ? <i class="fa fa-caret-up" aria-hidden="true"></i> : <i class="fa fa-caret-down" aria-hidden="true"></i>}
+                      <th scope="col" onClick={e => sorting('affiliate_group_name')}>
+                        Affiliate Group {filters?.sorder === "asc" ? <i className="fa fa-caret-up" aria-hidden="true"></i> : <i className="fa fa-caret-down" aria-hidden="true"></i>}
+                      </th>
+                      <th scope="col">Campaign</th>
+                      <th scope="col" onClick={e => sorting('createdAt')}>
+                        Join Date {filters?.sorder === "asc" ? <i className="fa fa-caret-up" aria-hidden="true"></i> : <i className="fa fa-caret-down" aria-hidden="true"></i>}
                       </th>
                       <th scope="col">Invitation Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {!loaging && data?.data?.map((itm) => <><tr className='table_row' >
-                      <td className='profile_height' >
-
-                        <label className='d-flex align-items-center gap-2 pb-3 ml-3'>
-                          {permission('affiliate_invite') && <input type='checkbox' className='form-check-input check_bx_input' checked={selectedAffiliteid?.includes(itm.id) ? true : false} disabled={itm.invite_status == 'not_invited' ? false : true} onChange={e => MultiSelectAffliates(e.target.checked, itm.id)} />}
-                          <span className={itm.invite_status == 'not_invited' ? "checkbox-btn" : 'disable_check'} ></span>
-                          <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
-                            {itm?.image ?
-                              <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
-                              :
-                              <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
-                            }
-                            <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
-                          </div>
-                        </label>
-
-
-                        {!expandedRowId.includes(itm.id) ? (
-                          <span className='show_morebx' onClick={() => handleRowClick(itm.id)}>
-                            Show More
-                          </span>
-                        ) : (
-                          <span className='show_morebx' onClick={() => handleRowClick(itm.id)}>
-                            Show Less
-                          </span>
-                        )}
-
-                      </td>
-                      <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
-                      <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
-                      <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
-                      <td className='table_dats'>   <span className={`active_btn${itm?.status}`}
-                      // onClick={() => statusChange(itm)}
-                      >
-                        <span className={itm.status}>
-                          {itm.invite_status == 'accepted' ? 'Accepted' : itm.invite_status == 'not_invited' ? "Not Invited" : "Pending"}
-                        </span>
-                      </span></td>
-
-                      <td>
-                        <div className='action_icons'>
-                          {/* <a className='edit_icon edit-main' title="Edit" onClick={itm.status == "deactive" ? null : (e) => edit(itm.id)} >
-                        <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
-                      </a> */}
-
-                          {/* <a className='edit_icon' onClick={() => deleteItem(itm.id)}>
-                            <i className={`material-icons delete`} title='Delete'> delete</i>
-                          </a> */}
-                          {(user?.role == 'brand' || permission('affiliate_invite')) && <button disabled={itm.invite_status == 'not_invited' ? false : true} className="btn btn-primary btn_primary" onClick={() => { handleShow(); setselectedAffiliteid([itm?.id]) }}>
-                            <i className='fa fa-plus fa_icns' title='Invite'></i>
-                          </button>}
-                          <span className='btn btn-primary btn_primary '
-                            onClick={() => {
-                              history.push(`/chat`)
-                              localStorage.setItem("chatId", itm?._id || itm?.id)
-                            }}>
-                            <i className='fa fa-comment-o fa_icns' title='Chat'></i>
-                          </span>
-                          {(user?.role == 'brand' || permission('affiliate_group')) && <button className="btn btn-primary btn_primary " onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}>
-                            <i class="fa-solid fa-people-group fa_icns" title='Add Group'></i>
-                          </button>}
-                        </div>
-                      </td>
-
-                    </tr>
-                      {expandedRowId.includes(itm.id) && (
-                        <tr class="table_row  show_mores">
+                    {!loaging && data?.data?.map((itm) => (
+                      <React.Fragment key={itm.id}>
+                        <tr className='table_row'>
                           <td>
-
-                            <label className='form-label' >Affiliate Type:</label>
-                            <p className='affi_tabbls' >{itm.affiliate_type || "--"}</p>
-
+                            <label className='d-flex align-items-center gap-2'>
+                              <input
+                                type='checkbox'
+                                className='form-check-input check_bx_input'
+                                checked={selectedAffiliteid?.includes(itm.id) ? true : false}
+                                disabled={itm.invite_status == 'not_invited' ? false : true}
+                                onChange={e => MultiSelectAffliates(e.target.checked, itm.id)}
+                              />
+                              <span className={itm.invite_status == 'not_invited' ? "checkbox-btn" : 'disable_check'}></span>
+                            </label>
                           </td>
-                          <td>
+                          <td className='profile_height'>
+                            <div className='d-flex align-items-center' onClick={e => view(itm.id)}>
+                              {itm?.image ?
+                                <img className='person-img' src={`${environment?.api}/${itm?.image}`} alt=''></img>
+                                :
+                                <img className='person-img' src='/assets/img/likjh.jpeg' alt=''></img>
+                              }
+                              <p className='name-person ml-2'>{methodModel?.capitalizeFirstLetter(itm?.fullName)}</p>
+                            </div>
 
-
-                            <label className='form-label' >Social Media Platforms:</label>
-                            <p className='affi_tabbls' >{itm.social_media_platforms.map((itm) => itm).join(",") || "--"}</p>
-
+                            {!expandedRowId.includes(itm.id) ? (
+                              <span className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                                Show More
+                              </span>
+                            ) : (
+                              <span className='show_morebx' onClick={() => handleRowClick(itm.id)}>
+                                Show Less
+                              </span>
+                            )}
                           </td>
+                          <td><p className='name-person ml-2' href=''>{itm?.email}</p></td>
+                          <td><p className='name-person ml-2' href=''>{itm?.affiliate_group_name || "--"}</p></td>
                           <td>
-
-
-                            <label className='form-label' >Category Type:</label>
-                            <p className='affi_tabbls' >{itm.cat_type == "promotional_models" ? "Promotional Models" : itm.cat_type == "property_types" ? "Property Type" : itm.cat_type == "advertiser_categories" ? "Advertiser Categories" : "" || "--"}</p>
+                            <p className='name-person ml-2' href=''>
+                              {itm?.campaign_details?.name || "--"}
+                            </p>
                           </td>
+                          <td><p className='td-set'>{datepipeModel.date(itm?.createdAt)}</p></td>
+                          <td className='table_dats'>
+                            <span className={`active_btn${itm?.status}`}>
+                              <span className={itm.status}>
+                                {itm.invite_status == 'accepted' ? 'Accepted' :
+                                  itm.invite_status == 'not_invited' ? "Not Invited" : "Pending"}
+                              </span>
+                            </span>
+                          </td>
+
                           <td>
-
-
-                            <label className='form-label' >Country:</label>
-                            <p className='affi_tabbls' >{itm.country || "--"}</p>
-
+                            <div className='action_icons'>
+                              {(user?.role == 'brand' || permission('affiliate_invite')) &&
+                                <button
+                                  disabled={itm.invite_status == 'not_invited' ? false : true}
+                                  className="btn btn-primary btn_primary"
+                                  onClick={() => { handleShow(); setselectedAffiliteid([itm?.id]) }}
+                                >
+                                  <i className='fa fa-plus fa_icns' title='Invite'></i>
+                                </button>
+                              }
+                              <span
+                                className='btn btn-primary btn_primary'
+                                onClick={() => {
+                                  history.push(`/chat`)
+                                  localStorage.setItem("chatId", itm?._id || itm?.id)
+                                }}
+                              >
+                                <i className='fa fa-comment-o fa_icns' title='Chat'></i>
+                              </span>
+                              {(user?.role == 'brand' || permission('affiliate_group')) &&
+                                <button
+                                  className="btn btn-primary btn_primary"
+                                  onClick={() => { handleGroupShow(); setselectedAffiliteid(itm?.id || itm?._id) }}
+                                >
+                                  <i className="fa-solid fa-people-group fa_icns" title='Add Group'></i>
+                                </button>
+                              }
+                            </div>
                           </td>
                         </tr>
-                      )}
-                    </>
-                    )}
+
+                        {expandedRowId.includes(itm.id) && (
+                          <tr className="table_row show_mores">
+                            <td>
+                              <label className='form-label'>Affiliate Type:</label>
+                              <p className='affi_tabbls'>{itm.affiliate_type || "--"}</p>
+                            </td>
+                            <td>
+                              <label className='form-label'>Social Media Platforms:</label>
+                              <p className='affi_tabbls'>
+                                {itm.social_media_platforms?.length > 0 ?
+                                  itm.social_media_platforms.join(",") : "--"}
+                              </p>
+                            </td>
+                            <td>
+                              <label className='form-label'>Category Type:</label>
+                              <p className='affi_tabbls'>
+                                {itm.cat_type == "promotional_models" ? "Promotional Models" :
+                                  itm.cat_type == "property_types" ? "Property Type" :
+                                    itm.cat_type == "advertiser_categories" ? "Advertiser Categories" : "" || "--"}
+                              </p>
+                            </td>
+                            <td>
+                              <label className='form-label'>Country:</label>
+                              <p className='affi_tabbls'>{itm.country || "--"}</p>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    ))}
                   </tbody>
                 </table>
-
               </div>
+
             </div>
           </div>
 

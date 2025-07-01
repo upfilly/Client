@@ -437,13 +437,13 @@ const Html = ({
                                                                         <div className="btn btn-primary mr-2">Request Sent</div> : (
                                                                             <div className="btn btn-primary mr-2">Accepted</div>
                                                                         )}
-                                                                <button className='btn btn-primary btn_actions'
+                                                                {/* <button className='btn btn-primary btn_actions'
                                                                     onClick={() => {
                                                                         history.push(`/chat`);
                                                                         localStorage.setItem("chatId", itm?.brand_id);
                                                                     }}>
                                                                     <i className='fa fa-comment-o'></i>
-                                                                </button>
+                                                                </button> */}
                                                             </td>
                                                         </tr>
                                                     )

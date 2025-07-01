@@ -108,9 +108,9 @@ const Html = ({
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('title')}>Click Ref{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
                                     <th scope="col" className='table_data' >Commisssion Type</th>
                                     <th scope="col" className='table_data' >Affiliate</th>
-                                    <th scope="col" className='table_data'>Amount of Sale</th>
-                                    <th scope="col" className='table_data'>Amount of Commission</th>
-                                    <th scope="col" className='table_data'>Order Reference</th>
+                                    <th scope="col" className='table_data'>Order price</th>
+                                    <th scope="col" className='table_data'>Commission</th>
+                                    <th scope="col" className='table_data'>Order Id</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data'>Action</th> */}
 

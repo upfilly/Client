@@ -199,13 +199,13 @@ const Html = ({
                                                     </a>
                                                 )}
 
-                                                {permission('campaign_edit') && (
+                                                {/* {permission('campaign_edit') && (
                                                     <a className='edit_icon action-btn' onClick={() => {
                                                         history.push(`/chat`)
                                                     }}>
                                                         <i className='fa fa-comment-o text-white'></i>
                                                     </a>
-                                                )}
+                                                )} */}
                                             </div>
                                         </td>
                                     </tr>

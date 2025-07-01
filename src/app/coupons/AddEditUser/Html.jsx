@@ -44,7 +44,10 @@ const Html = ({ category, relatedAffiliate, form, handleSubmit, setform, submitt
                                         type="text"
                                         className="form-control"
                                         value={form.couponCode}
-                                        onChange={e => setform({ ...form, couponCode: e.target.value })}
+                                        onChange={e => {
+                                            const value = e.target.value.replace(/\s/g, '');
+                                            setform({ ...form, couponCode: value });
+                                        }}
                                     />
                                 </div>
                                 <div className="col-md-12 mb-3">
