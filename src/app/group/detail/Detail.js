@@ -201,16 +201,25 @@ const Detail = (p) => {
                                             <div className='userdata'>
                                                 <p className='headmain'>Added Affiliates:</p>
                                             </div>
-                                            <div className='name-dtls d-flex flex-wrap'>
-                                                <ul className='ulclass flex-wrap'>
-                                                    {data?.addedAffiliates?.length > 0 ? (
-                                                        data.addedAffiliates.map((item, index) => (
-                                                            <li key={index} className="mr-2 progs_data mb-2">{item}</li>
-                                                        ))
-                                                    ) : (
-                                                        <li className="mr-2 progs_data mb-2">No affiliates added</li>
-                                                    )}
-                                                </ul>
+                                            <div className='name-dtls'>
+                                                {data?.addedAffiliates?.length > 0 ? (
+                                                    <ul className='list-unstyled'>
+                                                        {data.addedAffiliates.map((affiliate, index) => (
+                                                            <li key={`affiliate-${index}`} className="mb-2">
+                                                                <div className="d-flex align-items-center gap-2 flex-wrap">
+                                                                    <span className="badge bg-primary rounded-pill">
+                                                                        {affiliate.fullName || 'No name'}
+                                                                    </span>
+                                                                    <span className="text-muted small">
+                                                                        {affiliate.email || 'No email'}
+                                                                    </span>
+                                                                </div>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                ) : (
+                                                    <p className="text-muted">No affiliates added</p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
