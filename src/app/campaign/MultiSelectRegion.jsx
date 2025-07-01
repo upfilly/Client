@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MultiSelectDropdownData.css";
 import { regionData } from "./AddEditUser/regionCountries";
 
@@ -7,6 +7,14 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   const [expandedCategories, setExpandedCategories] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [savedSelections, setSavedSelections] = useState(null);
+  const [filteredData, setFilteredData] = useState({});
+  const [selectedCount, setSelectedCount] = useState(0);
+
+  useEffect(() => {
+    // Calculate total selected items whenever selectedItems changes
+    const count = selectedItems.regions.length + selectedItems.countries.length;
+    setSelectedCount(count);
+  }, [selectedItems]);
 
   const toggleDropdown = () => setRegionIsOpen(!isRegionOpen);
 
@@ -16,6 +24,30 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
       [categoryId]: !prev[categoryId],
     }));
   };
+
+  useEffect(() => {
+    if (searchTerm) {
+      const newFilteredData = {};
+      const newExpandedCategories = {};
+
+      Object.keys(data).forEach(region => {
+        const matchingCountries = data[region].filter(country => 
+          country.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        
+        if (region.toLowerCase().includes(searchTerm.toLowerCase()) || matchingCountries.length > 0) {
+          newFilteredData[region] = matchingCountries.length > 0 ? matchingCountries : data[region];
+          newExpandedCategories[region] = true;
+        }
+      });
+
+      setFilteredData(newFilteredData);
+      setExpandedCategories(newExpandedCategories);
+    } else {
+      setFilteredData(data);
+      setExpandedCategories({});
+    }
+  }, [searchTerm, data]);
 
   const handleSelection = (region, country, checked) => {
     setSelectedItems((prevState) => {
@@ -32,11 +64,15 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
             newSelectedCountries.push(country);
           }
         }
-        // If selecting a region, select the region and all its countries
+        // If selecting a region, select the region and all its visible countries
         else if (region && !newSelectedRegions.includes(region)) {
           newSelectedRegions.push(region);
-          // Add all countries in this region if not already selected
-          data[region].forEach(c => {
+          // Add all visible countries in this region if not already selected
+          const countriesToAdd = searchTerm 
+            ? filteredData[region] || [] 
+            : data[region];
+          
+          countriesToAdd.forEach(c => {
             if (!newSelectedCountries.includes(c)) {
               newSelectedCountries.push(c);
             }
@@ -69,35 +105,82 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
     });
   };
 
-  const handleSearch = (e) => setSearchTerm(e.target.value.toLowerCase());
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm("");
+  };
 
   const handleSave = () => {
     setSavedSelections({ ...selectedItems });
     setRegionIsOpen(false);
-    // You can add additional logic here, such as sending the data to a parent component or API
   };
 
   const handleRemoveAll = () => {
     setSelectedItems({ regions: [], countries: [] });
   };
 
-  const renderCategories = () => {
-    return Object.keys(data)
-      .filter((region) => region.toLowerCase().includes(searchTerm))
-      .map((region) => (
-        <div key={region} className="category-container">
-          <div className="dropdown-item">
-            <input
-              type="checkbox"
-              checked={selectedItems.regions.includes(region)}
-              onChange={(e) => handleSelection(region, "", e.target.checked)}
-            />
-            <label onClick={() => toggleCategory(region)}>{region}</label>
-          </div>
+  const handleAddAllVisible = () => {
+    setSelectedItems(prev => {
+      const visibleRegions = searchTerm ? Object.keys(filteredData) : Object.keys(data);
+      const visibleCountries = searchTerm 
+        ? Object.values(filteredData).flat() 
+        : Object.values(data).flat();
+      
+      // Merge with existing selections
+      const newRegions = [...new Set([...prev.regions, ...visibleRegions])];
+      const newCountries = [...new Set([...prev.countries, ...visibleCountries])];
+      
+      return { regions: newRegions, countries: newCountries };
+    });
+  };
 
-          {expandedCategories[region] && renderSubcategories(region, data[region])}
+  const handleRemoveAllVisible = () => {
+    if (!searchTerm) {
+      handleRemoveAll();
+      return;
+    }
+
+    setSelectedItems(prev => {
+      const visibleRegions = Object.keys(filteredData);
+      const visibleCountries = Object.values(filteredData).flat();
+      
+      // Remove only visible items
+      const newRegions = prev.regions.filter(region => !visibleRegions.includes(region));
+      const newCountries = prev.countries.filter(country => !visibleCountries.includes(country));
+      
+      return { regions: newRegions, countries: newCountries };
+    });
+  };
+
+  const renderCategories = () => {
+    const displayData = searchTerm ? filteredData : data;
+    
+    if (Object.keys(displayData).length === 0) {
+      return <div className="no-results">No matching regions or countries found</div>;
+    }
+    
+    return Object.keys(displayData).map((region) => (
+      <div key={region} className="category-container">
+        <div className="dropdown-item">
+          <input
+            type="checkbox"
+            checked={selectedItems.regions.includes(region)}
+            onChange={(e) => handleSelection(region, null, e.target.checked)}
+          />
+          <label onClick={() => toggleCategory(region)}>
+            {region} 
+            <span className="item-count">
+              ({selectedItems.countries.filter(c => data[region].includes(c)).length}/{data[region].length})
+            </span>
+          </label>
         </div>
-      ));
+
+        {(expandedCategories[region] || searchTerm) && renderSubcategories(region, displayData[region])}
+      </div>
+    ));
   };
 
   const renderSubcategories = (region, countries) => (
@@ -119,63 +202,93 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   );
 
   const getSelectedValuesText = () => {
-    // Combine selected regions and countries into a string
-    const selectedRegionsText = selectedItems.regions.join(", ");
-    const selectedCountriesText = selectedItems.countries.join(", ");
-    let displayText = "Select Regions";
+    if (selectedCount === 0) return "Select Regions";
+    
+    const selectedRegionsText = selectedItems.regions.length > 0 
+      ? `${selectedItems.regions.length} region${selectedItems.regions.length !== 1 ? 's' : ''}`
+      : '';
+    
+    const selectedCountriesText = selectedItems.countries.length > 0
+      ? `${selectedItems.countries.length} countr${selectedItems.countries.length !== 1 ? 'ies' : 'y'}`
+      : '';
 
-    if (selectedRegionsText) {
-      displayText = selectedRegionsText;
-    }
-    if (selectedCountriesText) {
-      if (displayText !== "Select Regions") {
-        displayText += " - "; // Add separator between regions and countries
-      }
-      displayText += selectedCountriesText;
-    }
-
-    return displayText || "Select Regions";
+    return [selectedRegionsText, selectedCountriesText].filter(Boolean).join(', ');
   };
 
   return (
     <div className="dropdown-container show-drop">
       <span onClick={toggleDropdown} className="dropdown-toggle">
         {getSelectedValuesText()}
+        {selectedCount > 0 && (
+          <span className="clear-selection" onClick={(e) => {
+            e.stopPropagation();
+            handleRemoveAll();
+          }}>
+            ×
+          </span>
+        )}
       </span>
 
       {isRegionOpen && (
         <div className="dropdown-menu">
-          <input
-            type="text"
-            placeholder="Search Regions..."
-            value={searchTerm}
-            onChange={handleSearch}
-            className="search-input"
-          />
-
-          <div className="select-actions">
+          <div className="search-container">
             <input
-              className="form-check-input"
-              type="checkbox"
-              id="selectAll"
-              onChange={(e) => {
-                if (e.target.checked) {
-                  const allRegions = Object.keys(data);
-                  const allCountries = Object.values(data).flat();
-                  setSelectedItems({ regions: allRegions, countries: allCountries });
-                } else {
-                  setSelectedItems({ regions: [], countries: [] });
-                }
-              }}
-              checked={selectedItems.regions.length === Object.keys(data).length}
+              type="text"
+              placeholder="Search regions or countries..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="search-input"
             />
-            <label htmlFor="selectAll">Select All</label>
-            <span className="remove-all-btn ml-2" title="Remove" onClick={handleRemoveAll}>
-              Remove All
-            </span>
+            {searchTerm && (
+              <button className="clear-search" onClick={handleClearSearch}>
+                ×
+              </button>
+            )}
           </div>
 
-          {renderCategories()}
+          <div className="selection-controls">
+            <div className="select-actions">
+              <button 
+                className="action-btn add-all"
+                onClick={handleAddAllVisible}
+              >
+                Add All Visible
+              </button>
+              <button 
+                className="action-btn remove-all"
+                onClick={handleRemoveAllVisible}
+                disabled={selectedCount === 0}
+              >
+                Remove All Visible
+              </button>
+            </div>
+            <div className="select-checkbox">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="selectAll"
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    handleAddAllVisible();
+                  } else {
+                    handleRemoveAllVisible();
+                  }
+                }}
+                checked={
+                  searchTerm
+                    ? selectedItems.regions.length === Object.keys(filteredData).length &&
+                      selectedItems.countries.length === Object.values(filteredData).flat().length
+                    : selectedItems.regions.length === Object.keys(data).length &&
+                      selectedItems.countries.length === Object.values(data).flat().length
+                }
+              />
+              <label htmlFor="selectAll">Select All Visible</label>
+            </div>
+          </div>
+
+          <div className="dropdown-content">
+            {renderCategories()}
+          </div>
 
           <div className="save-container">
             <button
@@ -190,7 +303,6 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
 
       {savedSelections && (
         <div className="saved-selections">
-          {/* <h4>Selected Values:</h4> */}
           {savedSelections.regions.length > 0 && (
             <div>
               <strong>Regions:</strong> {savedSelections.regions.join(", ")}
