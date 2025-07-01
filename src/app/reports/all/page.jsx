@@ -175,18 +175,18 @@ export default function AnalyticsDashboard() {
         getClicksAnalyticsData({
             startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-            affiliate_id: selectedAffiliate.map((dat)=>dat).join(",") || "",
-            brand_id: selectedBrand.map((dat)=>dat).join(",") || "",
-            campaign: campaignId.map((dat)=>dat).join(",") || "",
+            affiliate_id: selectedAffiliate?.map((dat)=>dat).join(",") || "",
+            brand_id: selectedBrand?.map((dat)=>dat).join(",") || "",
+            campaign: campaignId?.map((dat)=>dat).join(",") || "",
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
         getAnalyticsData({
             startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
             endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-            campaign: campaignId.map((dat)=>dat).join(",") || "",
-            affiliate_id: selectedAffiliate.map((dat)=>dat).join(",") || "",
-            brand_id: selectedBrand.map((dat)=>dat).join(",") || "",
+            campaign: campaignId?.map((dat)=>dat).join(",") || "",
+            affiliate_id: selectedAffiliate?.map((dat)=>dat).join(",") || "",
+            brand_id: selectedBrand?.map((dat)=>dat).join(",") || "",
             startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
             endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
         })
