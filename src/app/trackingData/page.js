@@ -419,8 +419,8 @@ export default function Affiliate() {
                           <th scope="col" onClick={e => sorting('timestamp')}>Transaction Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th scope="col" >Commission paid</th>
-                          <th scope="col" >Commission Status</th>
-                          <th scope="col" >Payment Status</th>
+                          <th scope="col" onClick={e => sorting('commission_status')}>Commission Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" onClick={e => sorting('commission_paid')}>Payment Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th>Action</th>
                         </tr>
                       </thead>
