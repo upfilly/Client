@@ -566,10 +566,10 @@ const Profile = () => {
                                       </div> */}
                                       <div className="flex-grow-1">
                                         <h6 className="mb-1 font-weight-bold">{dat?.id}</h6>
-                                        <div className="mb-1">
+                                        {/* <div className="mb-1">
                                           <span className="text-muted">Type:</span>
                                           <span className="ml-1 font-weight-bold">{dat?.name}</span>
-                                        </div>
+                                        </div> */}
                                         <div className="text-truncate text-wrap">
                                           <span className="text-muted">Link:</span>
                                           <a href={dat?.url} style={{wordBreak:'break-all'}} className="ml-1 font-weight-bold text-primary " target="_blank" rel="noopener noreferrer">
