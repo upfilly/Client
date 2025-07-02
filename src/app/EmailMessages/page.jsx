@@ -71,7 +71,7 @@ const EmailMessages = () => {
 
     const filter = (p = {}) => {
         setFilter({ ...filters, ...p })
-        getData({ ...p, page: 1, addedBy: user?.id })
+        getData({ ...p, page: 1})
     }
 
 
@@ -141,19 +141,20 @@ const EmailMessages = () => {
         // dispatch(search_success(''))
     }
 
-    const sorting = (key) => {
-        let sorder = 'asc'
-        if (filters.key == key) {
-            if (filters?.sorder == 'asc') {
-                sorder = 'desc'
-            } else {
-                sorder = 'asc'
-            }
-        }
-
-        let sortBy = `${key} ${sorder}`;
-        filter({ sortBy, key, sorder })
+     const sorting = (key) => {
+    let sorder = 'asc'
+    if (filters.key == key) {
+      if (filters?.sorder == 'asc') {
+        sorder = 'desc'
+      } else {
+        sorder = 'asc'
+      }
     }
+
+    let sortBy = `${key} ${sorder}`;
+    filter({ sortBy, key, sorder })
+  }
+
 
     const isAllow = (key = '') => {
 

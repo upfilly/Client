@@ -38,13 +38,20 @@ const Html = ({
             });
         }
 
+        // Filter out selected values from the regular options
+        const regularOptions = options.filter(option => 
+            !selectedValues.some(selected => 
+                JSON.stringify(selected) === JSON.stringify(option)
+            )
+        ).map(option => ({
+            ...option,
+            label: option[displayValue],
+            value: option
+        }));
+
         return [
             ...actionOptions,
-            ...options.map(option => ({
-                ...option,
-                label: option[displayValue],
-                value: option
-            }))
+            ...regularOptions
         ];
     }, [options, displayValue, singleSelect, showSelectAll, showReset, selectedValues]);
 
@@ -56,20 +63,23 @@ const Html = ({
             return;
         }
 
+        if (actionMeta.option?.isSelectAll) {
+            handleChange([...options], 'select-all');
+            return;
+        }
+
+        if (actionMeta.option?.isReset) {
+            handleChange([], 'reset');
+            return;
+        }
+
         if (Array.isArray(selected)) {
-            const lastSelected = selected[selected.length - 1];
-
-            if (lastSelected?.isSelectAll) {
-                handleChange([...options], 'select-all');
-                return;
-            }
-
-            if (lastSelected?.isReset) {
-                handleChange([], 'reset');
-                return;
-            }
-
-            handleChange(selected.map(item => item.value).filter(item => !item.isActionItem), actionMeta.action);
+            handleChange(
+                selected
+                    .map(item => item.value)
+                    .filter(item => !item?.isActionItem), 
+                actionMeta.action
+            );
         }
     };
 
@@ -140,6 +150,10 @@ const Html = ({
                 closeMenuOnSelect={singleSelect}
                 hideSelectedOptions={false}
                 classNamePrefix="react-select"
+                filterOption={(option, searchText) => {
+                    if (option.data.isActionItem) return true;
+                    return option.label.toLowerCase().includes(searchText.toLowerCase());
+                }}
             />
         </div>
     );
