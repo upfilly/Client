@@ -17,7 +17,7 @@ const Html = ({ options, selectedValues, handleChange, displayValue, id, placeho
                 options={options?.map(itm => ({
                     value: itm.id,
                     label: itm[displayValue],
-                    isDefault: itm.isDefault // Pass through the isDefault flag
+                    isDefault: itm.isDefault
                 })) || []}
                 placeholder={placeholder}
                 value={categoryVal()}

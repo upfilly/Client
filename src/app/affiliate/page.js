@@ -61,8 +61,6 @@ export default function affilate() {
   const [selectedAffiliteid, setselectedAffiliteid] = useState([]);
   const [expandedRowId, setExpandedRowId] = useState([]);
   const [Campaigns, setCampaign] = useState([])
-
-  // Category filter states
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState([]);
   const [expandedSubCategories, setExpandedSubCategories] = useState([]);
@@ -138,7 +136,8 @@ export default function affilate() {
         setCamppaignData(res.data.data.map((dat) => {
           return ({
             name: dat?.name,
-            id: dat?.id || dat?._id
+            id: dat?.id || dat?._id,
+            isDefault:dat?.isDefault
           })
         }))
       }
