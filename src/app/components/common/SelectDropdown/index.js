@@ -1,13 +1,27 @@
 import React from "react";
 import Html from "./html";
 
-const SelectDropdown = ({intialValue,options,result,displayValue='name',id,placeholder="Select Status",disabled=false,name,required=false,noDefault=false,className='',theme='normal'}) => {
-    const handleChange=(e)=>{
-        result({event:"value",value:e})
-    }
+const SelectDropdown = ({
+  intialValue,
+  options,
+  result,
+  displayValue = "name",
+  id,
+  placeholder = "Select Status",
+  disabled,
+  name,
+  required = false,
+  noDefault = false,
+  className = "",
+  theme = "normal",
+}) => {
+  const handleChange = (e) => {
+    result({ event: "value", value: e });
+  };
 
-    return <>
-        <Html
+  return (
+    <>
+      <Html
         theme={theme}
         id={id}
         name={name}
@@ -20,8 +34,9 @@ const SelectDropdown = ({intialValue,options,result,displayValue='name',id,place
         options={options}
         selectedValues={intialValue}
         handleChange={handleChange}
-        />
+      />
     </>
-}
+  );
+};
 
-export default SelectDropdown
+export default SelectDropdown;

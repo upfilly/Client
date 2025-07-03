@@ -25,19 +25,20 @@ const Html = () => {
     { id: "newparam1", label: "newparam1" },
   ]);
   const [brandData, setBrandData] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
   const [inputValues, setInputValues] = useState({});
-  const [DestinationUrl, setDestinationUrl] = useState("");
   const [CampaignData, setCampaignData] = useState([]);
   const [SelectedCampaign, setSelectedCampaign] = useState("");
   const [shrtlnk, setshrtlnk] = useState("");
+  const [DestinationUrl, setDestinationUrl] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
   const [errors, setErrors] = useState({
     selectedBrand: "",
     SelectedCampaign: "",
     DestinationUrl: "",
     websiteAllowed: "",
   });
+  console.log(DestinationUrl, "DestinationUrlDestinationUrl");
 
   console.log(selectedBrand, "selectedBrand");
   console.log(CampaignData, "CampaignData");
