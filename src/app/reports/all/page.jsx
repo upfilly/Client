@@ -236,6 +236,7 @@ export default function AnalyticsDashboard() {
     setCompDates([new Date(), new Date()]);
     setSelectedAffiliate(null);
     setSelectedBrand(null);
+    setCampaignId(null);
   };
 
   return (
