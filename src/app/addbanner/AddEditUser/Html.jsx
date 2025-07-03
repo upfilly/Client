@@ -28,13 +28,6 @@ const Html = ({
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const user = crendentialModel.getUser();
-  const [DestinationUrl, setDestinationUrl] = useState("");
-  const [errors, setErrors] = useState({
-    selectedBrand: "",
-    SelectedCampaign: "",
-    DestinationUrl: "",
-    websiteAllowed: "",
-  });
 
   const getCategory = () => {
     let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
@@ -58,6 +51,9 @@ const Html = ({
     if (!/^https?:\/\//i.test(url)) {
       return false;
     }
+    if (form.destination_url !== user?.website) {
+      return false;
+    }
 
     try {
       const urlObj = new URL(url);
@@ -76,7 +72,6 @@ const Html = ({
       if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
         return false;
       }
-      
 
       return true;
     } catch (e) {
@@ -86,7 +81,6 @@ const Html = ({
 
   return (
     <>
-    
       <Layout
         handleKeyPress={undefined}
         setFilter={undefined}
