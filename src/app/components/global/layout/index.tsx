@@ -35,6 +35,7 @@ export default function Layout({ title,description, children , handleKeyPress, s
     pathname.includes('/inviteUsers') || pathname.includes('/users') || pathname.includes('/salesTracking') || pathname.includes('makeLink') || pathname.includes('/generateLink') || pathname.includes('/Trackings') || pathname.includes('/invites') || pathname.includes('/requests') || pathname.includes('/addAccount/detail') ||
     pathname.includes('/Offers') || pathname.includes('/proposals') || pathname.includes('/dashboard') ||
     pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') || pathname.includes('/group') || pathname.includes('/commission') || pathname.includes('/payments') || pathname.includes('/chat')
+    
   const isAuthenticate = pathname.includes('/reports') || pathname.includes('/brand-report') || pathname.includes('/affiliate-report') || pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate') ||
     pathname.includes('/profile') || pathname.includes('/payments') || pathname.includes('/proposals') || pathname.includes('/commission')
   

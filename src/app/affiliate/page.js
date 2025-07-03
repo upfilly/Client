@@ -133,13 +133,15 @@ export default function affilate() {
     let url = 'campaign/brand/all'
     ApiClient.get(url, { brand_id: user?.id }).then(res => {
       if (res.success) {
-        setCamppaignData(res.data.data.map((dat) => {
+        const campaign = res.data.data.map((dat) => {
           return ({
             name: dat?.name,
             id: dat?.id || dat?._id,
             isDefault:dat?.isDefault
           })
-        }))
+        })
+        campaign.sort((a,b)=> (b.isDefault) - (a.isDefault))
+        setCamppaignData(campaign);
       }
     })
   }
