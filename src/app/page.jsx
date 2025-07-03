@@ -248,12 +248,16 @@ export default function Home() {
                   </h2>
 
                   <p className="desc">
-                    Connect with top affiliates, grow your brand, and track every conversion — all in one performance-driven platform.
+                    Connect with top affiliates, grow your brand, and track
+                    every conversion — all in one performance-driven platform.
                   </p>
 
                   {/* {(user?.role == "brand" || !user) && <a className='btn btn-primary mt-3 mr-2' href="/pricing">Book a Demo</a>} */}
                   {(user?.role == "brand" || !user) && (
-                    <a className="btn btn-outline-primary mt-3" href="/merchant">
+                    <a
+                      className="btn btn-outline-primary mt-3"
+                      href="/merchant"
+                    >
                       Get Started
                     </a>
                   )}
@@ -296,7 +300,9 @@ export default function Home() {
             <div className="col-md-6 text-center">
               <div className="p-4">
                 <h3>Merchants</h3>
-                <p>Launch and manage a scalable affiliate program in minutes.</p>
+                <p>
+                  Launch and manage a scalable affiliate program in minutes.
+                </p>
               </div>
             </div>
             <div className="col-md-6 text-center">
@@ -335,7 +341,9 @@ export default function Home() {
             <div className="col-md-3 text-center">
               <div className="p-4">
                 <h4>Managed Program Option</h4>
-                <p>Let our experts handle strategy, outreach, and optimization.</p>
+                <p>
+                  Let our experts handle strategy, outreach, and optimization.
+                </p>
               </div>
             </div>
           </div>
@@ -346,12 +354,14 @@ export default function Home() {
             <h2 class="display-5 fw-semibold mb-4">
               Start your affiliate program today — no setup fees.
             </h2>
-            <a href="/track/signup/affiliate" class="btn btn-light btn-lg px-4 py-2 fw-medium">
+            <a
+              href="/track/signup/affiliate"
+              class="btn btn-light btn-lg px-4 py-2 fw-medium"
+            >
               Start Free
             </a>
           </div>
         </div>
-
 
         <div className="container">
           <div className="sponsor-wrapper cuspadding2  pb-0">
@@ -480,11 +490,10 @@ export default function Home() {
               <div className="row">
                 <div className="col-md-12 text-center  mb-0">
                   <h2 className="leading_heading mb-0">
-                    Affiliate marketing made simple for merchants and affiliates.
+                    Affiliate marketing made simple for merchants and
+                    affiliates.
                   </h2>
-                  <p>
-                    Providing best developers to create your affiliates
-                  </p>
+                  <p>Providing best developers to create your affiliates</p>
                 </div>
               </div>
 
@@ -501,7 +510,10 @@ export default function Home() {
                       weekly calls
                     </p>
 
-                    <div className="arrow" onClick={() => history.push("/pricing")}>
+                    <div
+                      className="arrow"
+                      onClick={() => history.push("/pricing")}
+                    >
                       <img
                         src="/assets/img/arrow.png"
                         className="arrow_icon"
@@ -526,7 +538,7 @@ export default function Home() {
                         />
                         Strategic planning
                       </li>
-                      <li className='mb-0'>
+                      <li className="mb-0">
                         <img
                           src="/assets/img/checkmark.png"
                           className="chckrk"
@@ -549,7 +561,10 @@ export default function Home() {
                       metrics .
                     </p>
 
-                    <div className="arrow" onClick={() => history.push("/guidetracking")}>
+                    <div
+                      className="arrow"
+                      onClick={() => history.push("/guidetracking")}
+                    >
                       <img
                         src="/assets/img/arrow.png"
                         className="arrow_icon"
@@ -574,7 +589,7 @@ export default function Home() {
                         />
                         conversions
                       </li>
-                      <li className='mb-0'>
+                      <li className="mb-0">
                         <img
                           src="/assets/img/checkmark.png"
                           className="chckrk"
@@ -622,7 +637,7 @@ export default function Home() {
                         />
                         Track Performance
                       </li>
-                      <li className='mb-0'>
+                      <li className="mb-0">
                         <img
                           src="/assets/img/checkmark.png"
                           className="chckrk"
@@ -644,7 +659,9 @@ export default function Home() {
                   <h1 className="text-black set_lensbx text-md-left text-center">
                     Use a Lens <br /> Performance
                   </h1>
-                  <p className='text-md-left text-center'>Getting Started is Simple</p>
+                  <p className="text-md-left text-center">
+                    Getting Started is Simple
+                  </p>
                   <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                     <b>Understand Buyers</b>
                     <img
@@ -707,7 +724,9 @@ export default function Home() {
                   <h1 className="text-black set_lensbx text-md-left text-center">
                     Scale The Right <br /> Channels
                   </h1>
-                  <p className='text-md-left text-center'>Let Us Handle Your Affiliate Program for You</p>
+                  <p className="text-md-left text-center">
+                    Let Us Handle Your Affiliate Program for You
+                  </p>
                   <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                     <b>A dedicated affiliate marketing specialist.</b>
                     <img
@@ -752,7 +771,9 @@ export default function Home() {
                   <h1 className="text-black set_lensbx text-md-left text-center">
                     Simplify Your <br /> Growth
                   </h1>
-                  <p className='text-md-left text-center'>Why Choose UpFilly?</p>
+                  <p className="text-md-left text-center">
+                    Why Choose UpFilly?
+                  </p>
                   <div className="d-flex justify-content-between border-bottom mt-3 pt-2 mb-3 pb-3 flex_list">
                     <b>Expert-Led Campaigns</b>
                     <img
