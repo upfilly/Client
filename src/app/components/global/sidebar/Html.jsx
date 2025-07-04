@@ -269,7 +269,7 @@ const Html = ({
                       >
                         recent_actors
                       </i>
-                      <span className="side_head">Manage Campaign</span>
+                      <span className="side_head">Manage Campaigns</span>
                     </ListItemLink>
                   ))}
 
@@ -282,7 +282,7 @@ const Html = ({
                       >
                         alarm_add
                       </i>
-                      <span className="side_head">Campaign Request</span>
+                      <span className="side_head">Campaign Requests</span>
                     </ListItemLink>
                   ))}
               </div>
