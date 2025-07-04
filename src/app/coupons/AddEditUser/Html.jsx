@@ -13,17 +13,12 @@ const Html = ({
   setform,
   submitted,
   back,
+  DestinationUrl,
+  setDestinationUrl,
+  errors, 
+  setErrors
 }) => {
   const user = crendentialModel.getUser();
-  const [DestinationUrl, setDestinationUrl] = useState("");
-  const [errors, setErrors] = useState({
-    selectedBrand: "",
-    SelectedCampaign: "",
-    DestinationUrl: "",
-    websiteAllowed: "",
-  });
-  console.log(user, "user");
-  console.log(user?.website);
 
   const handleRemove = (valueToRemove) => {
     const updatedValues = form?.applicable?.filter(
@@ -35,27 +30,6 @@ const Html = ({
   const filtered = category?.filter((item) =>
     form?.applicable?.includes(item?.id)
   );
-
-  const validateForm = () => {
-    let websiteAllowedError = "";
-
-    if (DestinationUrl) {
-      if (DestinationUrl !== user?.website) {
-        websiteAllowedError = "Please enter a valid url";
-      }
-    } else {
-      websiteAllowedError = "Site URL is required";
-    }
-
-    const newErrors = {
-      ...errors,
-      DestinationUrl: !DestinationUrl ? "Site URL is required" : "",
-      websiteAllowed: websiteAllowedError,
-    };
-
-    setErrors(newErrors);
-    return !Object.values(newErrors).some((error) => error !== "");
-  };
 
   return (
     <>
@@ -69,9 +43,7 @@ const Html = ({
       >
         <form
           onSubmit={(e) => {
-            if (validateForm()) {
-              handleSubmit(e);
-            }
+             handleSubmit(e);
           }}
         >
           <div className="sidebar-left-content">
@@ -118,7 +90,9 @@ const Html = ({
                       className="form-control"
                       value={form.couponCode}
                       onChange={(e) => {
-                        const value = e.target.value.replace(/\s/g, "");
+                        const value = e.target.value
+                          .replace(/\s/g, "")
+                          .replace(/[^a-zA-Z0-9]/g, "");
                         setform({ ...form, couponCode: value });
                       }}
                     />
@@ -351,10 +325,7 @@ const Html = ({
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${
-                        (errors.DestinationUrl || errors.websiteAllowed) &&
-                        "is-invalid"
-                      }`}
+                      className={`form-control`}
                       value={DestinationUrl}
                       onChange={(e) => {
                         const url = e.target.value;
@@ -367,9 +338,14 @@ const Html = ({
                       }}
                       placeholder="https://example.com"
                     />
-                    {(errors.DestinationUrl || errors.websiteAllowed) && (
+                    {errors.DestinationUrl && (
                       <div className="invalid-feedback d-block">
-                        {errors.DestinationUrl || errors.websiteAllowed}
+                        {errors.DestinationUrl}
+                      </div>
+                    )}
+                    {errors.websiteAllowed && (
+                      <div className="invalid-feedback d-block">
+                        {errors.websiteAllowed}
                       </div>
                     )}
                   </div>

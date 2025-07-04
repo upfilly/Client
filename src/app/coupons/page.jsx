@@ -33,7 +33,7 @@ const Coupons = () => {
         setLoader(true)
         let filter={ ...filters, ...p }
         if(user?.role == 'brand'){
-            filter = { ...filters, ...p }
+            filter = { ...filters, ...p ,addedBy:user?.id || user?._id}
         }else{
             filter = { ...filters, ...p ,visibility:"Public",media:user?.id || user?._id}
         }

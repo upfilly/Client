@@ -245,7 +245,7 @@ export default function AnalyticsDashboard() {
         <aside className="sidebar">
           <h1 className="sidebar-title">Insights</h1>
           <nav className="sidebar-nav">
-            <button className="sidebar-button">Program Overview</button>
+            {/* <button className="sidebar-button">Program Overview</button> */}
             {/* <button className="sidebar-button">Performance</button>
                         <button className="sidebar-button">Customer Analysis</button> */}
           </nav>

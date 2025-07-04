@@ -36,6 +36,13 @@ const AddEditUser = () => {
   const [detail, setDetail] = useState();
   const [category, setCategory] = useState([]);
   const [relatedAffiliate, setAllAffiliate] = useState([]);
+  const [DestinationUrl, setDestinationUrl] = useState("");
+  const [errors, setErrors] = useState({
+    selectedBrand: "",
+    SelectedCampaign: "",
+    DestinationUrl: "",
+    websiteAllowed: "",
+  });
 
   const getCategory = (p = {}) => {
     let url = "main-category/all";
@@ -89,10 +96,108 @@ const AddEditUser = () => {
     return methodModel.getError(key, form, formValidation);
   };
 
+  function isValidUrl(url) {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  const isWebsiteAllowed = (url) => {
+    if (!user || !user?.website) {
+      return {
+        allowed: false,
+        message:
+          "Please update your website in your profile to use this feature",
+      };
+    }
+
+    const allowedDomains =
+      typeof user.website === "string"
+        ? [user.website]
+        : Array.isArray(user.website)
+          ? user.website
+          : [];
+
+    if (allowedDomains.length === 0) {
+      return {
+        allowed: false,
+        message:
+          "Please update your website in your profile to use this feature",
+      };
+    }
+
+    const cleanedUrl = url.toString().trim();
+
+    try {
+      let urlToParse = cleanedUrl;
+      if (!/^https?:\/\//i.test(cleanedUrl)) {
+        urlToParse = "https://" + cleanedUrl;
+      }
+
+      // const urlObj = new URL(urlToParse);
+      // const hostname = urlObj.hostname.replace('www.', '').toLowerCase();
+
+      const isAllowed = allowedDomains.some((domain) => {
+        const domainStr = String(domain).replace("www.", "").toLowerCase();
+        console.log(domainStr, urlToParse, "11121212");
+        return (
+          urlToParse === domainStr ||
+          (urlToParse.endsWith(`.${domainStr}`) &&
+            urlToParse.split(".").length - 1 === domainStr.split(".").length)
+        );
+      });
+
+      console.log(isAllowed, "isAllowedisAllowed");
+
+      return {
+        allowed: isAllowed,
+        message: isAllowed
+          ? ""
+          : `URL must be from allowed domains: ${allowedDomains.join(", ")}`,
+      };
+    } catch (e) {
+      console.error("Error parsing URL:", e);
+      return {
+        allowed: false,
+        message: `Invalid URL format: ${cleanedUrl}`,
+      };
+    }
+  };
+
+  const validateForm = () => {
+    let websiteAllowedError = "";
+
+    if (DestinationUrl) {
+      if (!isValidUrl(DestinationUrl)) {
+        websiteAllowedError =
+          "Please enter a valid URL (including http:// or https://)";
+      } else {
+        const websiteCheck = isWebsiteAllowed(DestinationUrl);
+        if (!websiteCheck.allowed) {
+          websiteAllowedError = websiteCheck.message;
+        }
+      }
+    }
+
+    const newErrors = {
+      DestinationUrl: !DestinationUrl ? "Destination URL is required" : "",
+      websiteAllowed: websiteAllowedError,
+    };
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some((error) => error !== "");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
 
+    if (!validateForm()) {
+      return;
+    }
     // Validate all required fields
     const requiredFields = {
       title: "Title",
@@ -320,6 +425,7 @@ const AddEditUser = () => {
     allGetAffiliate();
   }, []);
 
+
   return (
     <>
       <Html
@@ -343,6 +449,10 @@ const AddEditUser = () => {
         affiliateData={affiliateData}
         BrandData={BrandData}
         relatedAffiliate={relatedAffiliate}
+        DestinationUrl={DestinationUrl}
+        setDestinationUrl={setDestinationUrl}
+        errors={errors}
+        setErrors={setErrors}
       />
     </>
   );

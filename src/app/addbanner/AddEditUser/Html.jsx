@@ -24,6 +24,7 @@ const Html = ({
   back,
   selectedItems,
   setSelectedItems,
+  errors, setErrors
 }) => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,40 +45,6 @@ const Html = ({
   useEffect(() => {
     getCategory();
   }, []);
-
-  function isValidUrl(url) {
-    if (!url) return false;
-
-    if (!/^https?:\/\//i.test(url)) {
-      return false;
-    }
-    if (form.destination_url !== user?.website) {
-      return false;
-    }
-
-    try {
-      const urlObj = new URL(url);
-
-      if (!["http:", "https:"].includes(urlObj.protocol)) {
-        return false;
-      }
-
-      if (
-        !urlObj.hostname ||
-        !/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname)
-      ) {
-        return false;
-      }
-
-      if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 
   return (
     <>
@@ -203,13 +170,12 @@ const Html = ({
                         onChange={(e) => {
                           const url = e.target.value;
                           setform({ ...form, destination_url: url });
+                          setErrors((prev) => ({
+                            ...prev,
+                            DestinationUrl: "",
+                            websiteAllowed: "",
+                          }));
                         }}
-                        style={
-                          !isValidUrl(form.destination_url) &&
-                          form.destination_url
-                            ? { borderColor: "red" }
-                            : {}
-                        }
                       />
                       {/* {form?.affiliate_id && <span className="input-group-text  ">? fp_sid={form?.affiliate_id}</span>} */}
                     </div>
@@ -218,13 +184,23 @@ const Html = ({
                         Destination url is Required
                       </div>
                     )}
-                    {!isValidUrl(form.destination_url) &&
+                    {errors.DestinationUrl && (
+                      <div className="invalid-feedback d-block">
+                        {errors.DestinationUrl}
+                      </div>
+                    )}
+                    {errors.websiteAllowed && (
+                      <div className="invalid-feedback d-block">
+                        {errors.websiteAllowed}
+                      </div>
+                    )}
+                    {/* {!isValidUrl(form.destination_url) &&
                       form.destination_url && (
                         <div className="text-danger">
                           Please enter a valid URL (including http:// or
                           https://)
                         </div>
-                      )}
+                      )} */}
                   </div>
 
                   {/* <div className='col-12 col-sm-12 col-md-6'>
@@ -471,7 +447,7 @@ const Html = ({
                 <div className="text-right edit-btns">
                   <button
                     type="submit"
-                    disabled={!isValidUrl(form.destination_url)}
+                    // disabled={!isValidUrl(form.destination_url)}
                     className="btn btn-primary"
                   >
                     Save
