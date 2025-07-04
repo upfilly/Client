@@ -407,7 +407,7 @@ const Html = ({
                       >
                         business_center
                       </i>
-                      <span className="side_head">Offer Request</span>
+                      <span className="side_head">Offer Requests</span>
                     </ListItemLink>
                   ))}
 
