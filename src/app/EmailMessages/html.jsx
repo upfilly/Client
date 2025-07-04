@@ -143,7 +143,7 @@ const Html = ({
                                     <th scope="col" className='table_data' onClick={e => sorting('email')}>E-mail{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data'>Title</th>
                                     <th scope="col" className='table_data'>Content</th>
-                                    <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Sended Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Date Sent{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data'>Action</th> */}
                                 </tr>
                             </thead>
