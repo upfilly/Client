@@ -416,12 +416,19 @@ const Html = ({
                             onClick={(e) => sorting("event_type")}
                           >
                             Event Type
+                            {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data">
+                          <th scope="col" className="table_data"
+                          onClick={(e) => sorting("campaign_commission")}
+                          >
                             Commission
+                            {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data">
+                          <th scope="col" className="table_data"
+                          onClick={(e) => sorting("lead_amount")}
+                          >
                             Lead Amount
+                            {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
                           <th scope="col" className="table_data">
                             Status
