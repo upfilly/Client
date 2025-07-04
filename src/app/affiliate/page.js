@@ -755,15 +755,18 @@ export default function affilate() {
 
                   {/* Action Dropdown for Multiple Selection */}
                   {(user?.role == 'brand' || permission('affiliate_group')) && selectedAffiliteid?.length > 1 && (
-                    <DropdownButton
-                      variant="primary"
-                      id="dropdown-basic-button"
-                      title="Action"
-                    >
-                      <Dropdown.Item as="button" onClick={handleShow}>
-                        Send multiple invites to affiliates
-                      </Dropdown.Item>
-                    </DropdownButton>
+                    // <DropdownButton
+                    //   variant="primary"
+                    //   id="dropdown-basic-button"
+                    //   title="Action"
+                    // >
+                    //   <Dropdown.Item as="button" onClick={handleShow}>
+                    //     Send multiple invites to affiliates
+                    //   </Dropdown.Item>
+                    // </DropdownButton>
+                    <button className="btn btn-primary" onClick={handleShow}>
+                      Sent Invites
+                    </button>
                   )}
                 </div>
               </div>
