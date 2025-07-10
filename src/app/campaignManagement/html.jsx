@@ -683,7 +683,7 @@ const Html = ({
                                 </td>
                                 <td className="table_dats">
                                   {" "}
-                                  {selectedCurrency ? `${convertedCurrency(itm?.lead_amount)}` : `$ ${convertedCurrency(itm?.lead_amount)}`}
+                                  {(selectedCurrency && exchangeRate) ? `${convertedCurrency(itm?.lead_amount)}` : `$ ${convertedCurrency(itm?.lead_amount)}`}
                                 </td>
                                 <td className="table_dats">
                                   {" "}

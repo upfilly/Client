@@ -57,7 +57,7 @@ const AddEditUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if(!form?.title || !form?.brand_id || !form?.amount || !form?.commission || !form?.customer_reference
+        if(!form?.title || !form?.brand_id || !form?.amount || !form?.commission
             || !form?.order_date || !form?.type || !form?.title || !form?.description){
                setSubmitted(true)
                return;

@@ -8,8 +8,6 @@ import { useRouter } from "next/navigation";
 import ApiClient from "@/methods/api/apiClient";
 import MyHoriBarChart from "../components/common/BarChart/Horizontalbarchart";
 import environment from "@/environment";
-import BarChart from "../components/common/BarChart/Barchart";
-import PieChart from "../components/common/PieChart/Piechat";
 import { Modal, Button } from 'react-bootstrap';
 import loader from "@/methods/loader";
 

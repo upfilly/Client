@@ -99,8 +99,14 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
     },
   ];
 
+  // Calculate the maximum value across all datasets
+  const maxValue = Math.max(
+    ...chartDatasets.flatMap(dataset => dataset.data)
+  );
+
   const options = {
     indexAxis: 'y',
+    responsive: true,
     plugins: {
       legend: {
         position: 'top',
@@ -113,12 +119,11 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
         callbacks: {
           label: (context) => {
             let label = context.dataset.label || '';
-  
             if (label) {
               label += ': ';
             }
             if (context.parsed.x !== null) {
-              label += context.parsed.x;
+              label += context.parsed.x.toLocaleString();
             }
             return label;
           },
@@ -128,15 +133,17 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
     scales: {
       x: {
         beginAtZero: true,
+        max: maxValue * 1.1, // Add 10% padding to the max value
         title: {
           display: true,
           text: 'Value'
         },
         ticks: {
           callback: function (value) {
-            return value.toLocaleString()
+            return value.toLocaleString();
           },
-          stepSize: 5000,
+          stepSize: Math.ceil(maxValue / 5), // Divide axis into ~5 steps
+          maxTicksLimit: 6
         },
       },
       y: {
@@ -147,7 +154,6 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
       },
     },
   };
-  
 
   return <Bar data={{ labels: chartLabels, datasets: chartDatasets }} options={options} />;
 };

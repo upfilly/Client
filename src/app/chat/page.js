@@ -88,10 +88,18 @@ export default function Chat() {
     if (term === '') {
       setFilteredAffiliates(allAffiliates || []);
     } else {
-      const filtered = (allAffiliates || []).filter(affiliate =>
-        affiliate.fullName.toLowerCase().includes(term)
-      );
-      setFilteredAffiliates(filtered);
+      const affiliates = allAffiliates || [];
+      const filtered = affiliates
+        .map(affiliate => ({
+          ...affiliate,
+          // Add a score for sorting (2: starts with term, 1: contains term)
+          matchScore: affiliate.fullName.toLowerCase().startsWith(term) ? 2 :
+            affiliate.fullName.toLowerCase().includes(term) ? 1 : 0
+        }))
+        .filter(affiliate => affiliate.matchScore > 0)
+        .sort((a, b) => b.matchScore - a.matchScore);
+
+      setFilteredAffiliates(filtered.map(({ matchScore, ...rest }) => rest));
     }
   };
 

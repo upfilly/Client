@@ -59,7 +59,7 @@ const untrackedSales = () => {
         if (itm === 'accepted') {
 
             loader(true);
-          ApiClient.put('update/status', { status: itm, id: id }).then((res) => {
+          ApiClient.put('updateSales', {brand_id:user?.id || user?._id, status: itm, id: id }).then((res) => {
             if (res.success) {
     
               toast.success(res.message)
