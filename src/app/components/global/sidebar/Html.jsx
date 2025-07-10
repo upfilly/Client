@@ -400,7 +400,7 @@ const Html = ({
                 {(urlAllow("requests") && permission("offer_get")) ||
                   ((user?.role == "affiliate" ||
                     addedUser?.role == "affiliate") && (
-                    <ListItemLink to="/requests" title="Offer Request">
+                    <ListItemLink to="/requests" title="Offer Requests">
                       <i
                         className="material-icons  svg_iconbx "
                         title="campaignManagement"

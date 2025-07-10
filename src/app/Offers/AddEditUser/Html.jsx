@@ -3,7 +3,6 @@ import methodModel from "@/methods/methods";
 import Layout from "@/app/components/global/layout";
 import MultiSelectDropdown from "@/app/components/common/MultiSelectDropdown";
 import ApiClient from "@/methods/api/apiClient";
-// import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 import "../style.scss";
 import { useRouter } from "next/navigation";
@@ -28,6 +27,8 @@ const Html = ({
   const [imgLoder, setImgLoder] = useState();
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [showOtherOpportunityInput, setShowOtherOpportunityInput] = useState(false);
+  const [otherOpportunityValue, setOtherOpportunityValue] = useState('');
   const history = useRouter();
 
   const uploadImage = async (e, key) => {
@@ -47,13 +48,7 @@ const Html = ({
       if (res.success) {
         let path = res?.data?.fullpath;
         if (form?.image.length <= 9) {
-          form?.image?.push(
-            `images/campaign/${path}`
-            // {
-            // name: `images/campaign/${path}`,
-            // url: `images/campaign/${path}`
-            // }
-          );
+          form?.image?.push(`images/campaign/${path}`);
         }
       }
       i++;
@@ -92,18 +87,26 @@ const Html = ({
     setform({ ...form, payment_model: updatedValues });
   };
 
+  const handleAddOtherOpportunity = () => {
+    if (otherOpportunityValue.trim()) {
+      const updatedOpportunities = [...(form.opportunity_type || []), otherOpportunityValue];
+      setform({ ...form, opportunity_type: updatedOpportunities });
+      setOtherOpportunityValue('');
+      setShowOtherOpportunityInput(false);
+    }
+  };
+
   const getCategory = () => {
-    let url = `categoryWithSub?page&count&search&cat_type=${
-      user?.role == "affiliate"
+    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate"
         ? "promotional_models,property_types"
         : "advertiser_categories"
-    }&status=active`;
+      }&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
-         const data = res.data.data
-                    .map(data => data.parent_cat_name ? data : undefined)
-                    .filter(item => item !== undefined);
-                setCategories(data);
+        const data = res.data.data
+          .map(data => data.parent_cat_name ? data : undefined)
+          .filter(item => item !== undefined);
+        setCategories(data);
       }
     });
   };
@@ -111,6 +114,13 @@ const Html = ({
   useEffect(() => {
     getCategory();
   }, []);
+
+  const opportunityOptions = [
+    { name: "Single Placement", id: "single_placement" },
+    { name: "Package", id: "package" },
+    { name: "Social", id: "social" },
+    { name: "Other", id: "other" }
+  ];
 
   return (
     <>
@@ -208,39 +218,6 @@ const Html = ({
                         </div>
                       </div>
 
-                      {/* <div className="select_drop col-md-6 mb-3">
-                                    <label>Category<span className="star">*</span></label>
-                                    <div className="select_row">
-                                        <SelectDropdown                                                     theme='search'
-                                            id="statusDropdown"
-                                            displayValue="name"
-                                            placeholder="Select category"
-                                            intialValue={form?.category_id}
-                                            result={e => setform({ ...form, category_id: e.value })}
-                                            options={category}
-                                            required
-                                        />
-                                    </div>
-                                    {submitted && !form?.category_id ? (
-                                        <div className="invalid-feedback d-block">Category is Required</div>
-                                    ) : (
-                                        <></>
-                                    )}
-                                </div>
-                                {form?.category_id &&  <div className="select_drop col-md-6 mb-3">
-                                    <label>Sub Category</label>
-                                    <div className="select_row">
-                                        <SelectDropdown                                                     theme='search'
-                                            id="statusDropdown"
-                                            displayValue="name"
-                                            placeholder="Select Sub Category"
-                                            intialValue={form?.sub_category_id}
-                                            result={e => setform({ ...form, sub_category_id: e.value })}
-                                            options={subCategory}
-                                            required
-                                        />
-                                    </div>
-                                </div>} */}
                       <div className="select_type select_drop col-md-12 mb-3 ">
                         <label>
                           Placement<span className="star">*</span>
@@ -294,20 +271,38 @@ const Html = ({
                             displayValue="name"
                             placeholder="Select Opportunity"
                             intialValue={form?.opportunity_type}
-                            result={(e) =>
-                              setform({ ...form, opportunity_type: e.value })
-                            }
-                            options={[
-                              {
-                                name: "Single Placement",
-                                id: "single_placement",
-                              },
-                              { name: "Package", id: "package" },
-                              { name: "Social", id: "social" },
-                            ]}
+                            result={(e) => {
+                              if (e.value.includes("other")) {
+                                setShowOtherOpportunityInput(true);
+                              } else {
+                                setShowOtherOpportunityInput(false);
+                              }
+                              setform({ ...form, opportunity_type: e.value });
+                            }}
+                            options={opportunityOptions}
                             required
                           />
                         </div>
+
+                        {showOtherOpportunityInput && (
+                          <div className="d-flex mt-2">
+                            <input
+                              type="text"
+                              className="form-control mr-2"
+                              value={otherOpportunityValue}
+                              onChange={(e) => setOtherOpportunityValue(e.target.value)}
+                              placeholder="Enter custom opportunity type"
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-primary"
+                              onClick={handleAddOtherOpportunity}
+                            >
+                              Add
+                            </button>
+                          </div>
+                        )}
+
                         {form?.opportunity_type?.length > 0 && (
                           <div className="selected_offrs">
                             {form?.opportunity_type.map((value, index) => (
@@ -391,16 +386,6 @@ const Html = ({
                           />
                         </div>
 
-                        {/* <Editor apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
-                                        onEditorChange={(newValue, editor) => {
-                                            setform({ ...form, description: newValue })
-                                        }}
-
-                                        init={{
-                                            selector: 'textarea#autocompleter-cardmenuitem',
-                                            height: 250,
-                                        }}
-                                    /> */}
                         {submitted && !form?.description ? (
                           <div className="invalid-feedback d-block">
                             Description is Required
@@ -426,7 +411,6 @@ const Html = ({
                                 className="form-control-file w-100 over_input pointer"
                                 accept="image/*"
                                 multiple={true}
-                                // disabled={loader}
                                 onChange={(e) => {
                                   setImgLoder(true);
                                   uploadImage(e, "image");
