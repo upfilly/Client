@@ -377,6 +377,9 @@
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 24px;
+  canvas{
+    display: unset !important;
+  }
 }
 
 .btnsgroup .btn.btn-outline-primary:hover {
