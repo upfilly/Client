@@ -5,7 +5,6 @@ import datepipeModel from '@/models/datepipemodel';
 import { useRouter } from 'next/navigation';
 import './style.scss';
 import methodModel from '@/methods/methods';
-import SelectDropdown from '../components/common/SelectDropdown';
 
 const Html = ({
     reset,
@@ -61,7 +60,7 @@ const Html = ({
                                     }} aria-hidden="true"></i>
                                 </div> */}
 
-                                <SelectDropdown                                                     
+                                {/* <SelectDropdown                                                     
                                     theme='search'
                                     id="statusDropdown"
                                     displayValue="name"
@@ -73,14 +72,14 @@ const Html = ({
                                         {id:'accepted',name:'Accepted'},
                                         {id:'rejected',name:'Rejected'},
                                     ]}
-                                />
+                                /> */}
 
 
-                                {filters.search || filters.status ? <>
+                                {/* {filters.search || filters.status ? <>
                                     <a className="btn btn-primary" onClick={e => reset()}>
                                         Reset
                                     </a>
-                                </> : <></>}
+                                </> : <></>} */}
                             </article>
                         </div>
                     </div>
@@ -147,8 +146,8 @@ const Html = ({
                                                             }} className="btn btn-primary action-btns circle_icons mb-0 mr-2" title="Accepted">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
-                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} 
-                                                            className="btn btn-danger action-btns br50 bg-red circle_icons mb-0" title="Rejected">
+                                                            <button onClick={() => statusChange("rejected", itm?.id || itm?._id)}
+                                                                className="btn btn-danger action-btns br50 bg-red circle_icons mb-0" title="Rejected">
                                                                 <i className='fa fa-times'></i>
                                                             </button>
                                                         </div> :
@@ -164,13 +163,13 @@ const Html = ({
                                                                 </div>
                                                         }
                                                     </>}
-                                                        <button type='button' className='btn btn-primary action-btns circle_icons mb-0'
-                                                            onClick={() => {
-                                                                history.push(`/chat`)
-                                                                localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)
-                                                            }}>
-                                                            <i className='fa fa-comment-o'></i>
-                                                        </button>
+                                                    <button type='button' className='btn btn-primary action-btns circle_icons mb-0'
+                                                        onClick={() => {
+                                                            history.push(`/chat`)
+                                                            localStorage.setItem("chatId", itm?.addedBy?._id || itm?.addedBy?.id)
+                                                        }}>
+                                                        <i className='fa fa-comment-o'></i>
+                                                    </button>
 
 
 
@@ -190,32 +189,32 @@ const Html = ({
 
 
                         <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
-                                    <span>Show <select
-                                        className="form-control"
-                                        onChange={(e) => handleCountChange(parseInt(e.target.value))}
-                                        value={filters.count}
-                                    >
-                                        <option value={10}>10</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                        <option value={150}>150</option>
-                                        <option value={200}>200</option>
-                                    </select> from {total} Campaigns</span>
-                                    <ReactPaginate
-                                        breakLabel="..."
-                                        nextLabel="Next >"
-                                        initialPage={filters?.page}
-                                        onPageChange={pageChange}
-                                        pageRangeDisplayed={2}
-                                        marginPagesDisplayed={1}
-                                        pageCount={Math.ceil(total / filters?.count)}
-                                        // pageCount={2}
-                                        previousLabel="< Previous"
-                                        renderOnZeroPageCount={null}
-                                        pageClassName={"pagination-item"}
-                                        activeClassName={"pagination-item-active"}
-                                    />
-                                </div>
+                            <span>Show <select
+                                className="form-control"
+                                onChange={(e) => handleCountChange(parseInt(e.target.value))}
+                                value={filters.count}
+                            >
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                                <option value={150}>150</option>
+                                <option value={200}>200</option>
+                            </select> from {total} Campaigns</span>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Next >"
+                                initialPage={filters?.page}
+                                onPageChange={pageChange}
+                                pageRangeDisplayed={2}
+                                marginPagesDisplayed={1}
+                                pageCount={Math.ceil(total / filters?.count)}
+                                // pageCount={2}
+                                previousLabel="< Previous"
+                                renderOnZeroPageCount={null}
+                                pageClassName={"pagination-item"}
+                                activeClassName={"pagination-item-active"}
+                            />
+                        </div>
 
                         {loaging ? <div className="text-center py-4">
                             <img src="/assets/img/loader.gif" className="pageLoader" />

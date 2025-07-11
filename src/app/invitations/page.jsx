@@ -34,7 +34,7 @@ const Invitations = () => {
   const getData = (p = {}) => {
     setLoader(true)
     // const brand_id = user?.role == 'brand' ? user?.id : null
-    let filter = { ...filters, ...p ,affiliate_id:user?.id}
+    let filter = { ...filters, ...p ,affiliate_id:user?.id, status:"pending"}
     let url = 'getAllInviteDetails'
     ApiClient.get(url, filter).then(res => {
       if (res.success) {

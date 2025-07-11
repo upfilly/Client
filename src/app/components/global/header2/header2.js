@@ -27,7 +27,8 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
         '/campaignManagement',
         '/CreativeEmails',
         '/addbanner',
-        '/coupons'
+        '/coupons',
+        '/invitations'
     ];
 
     const isDashboard = validPaths.includes(pathname);
