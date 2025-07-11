@@ -96,7 +96,7 @@ const Html = ({
                                             <th scope="col" class="table_data" >Message</th>
                                             <th scope="col" className='table_data' >Brand Name</th>
                                             <th scope="col" className='table_data' >Campaign Name</th>
-                                            <th scope="col" className='table_data' >Tags</th>
+                                            {/* <th scope="col" className='table_data' >Tags</th> */}
                                             <th scope="col" className='table_data' >Status</th>
                                             <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                             <th> Action</th>
@@ -128,7 +128,7 @@ const Html = ({
                                                     </div></td>
                                                 <td className='table_dats'>{itm?.brand_details?.fullName}</td>
                                                 <td className='table_dats'>{itm?.campaign_detail?.name}</td>
-                                                <td className='table_dats'>{itm?.tags?.map((data) => data).join(",") || "--"}</td>
+                                                {/* <td className='table_dats'>{itm?.tags?.map((data) => data).join(",") || "--"}</td> */}
                                                 <td className={
                                                     itm?.status === 'pending' ? "text-warning" :
                                                         itm?.status === 'rejected' ? "text-danger" :
