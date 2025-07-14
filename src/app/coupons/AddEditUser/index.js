@@ -118,8 +118,8 @@ const AddEditUser = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-          ? user.website
-          : [];
+        ? user.website
+        : [];
 
     if (allowedDomains.length === 0) {
       return {
@@ -283,7 +283,7 @@ const AddEditUser = () => {
     const now = new Date();
     const startDate = new Date(form?.startDate);
     if (startDate > now) {
-      value.status = "Pending";
+      value.status = "Enabled";
     }
 
     if (value.id) {
@@ -424,7 +424,6 @@ const AddEditUser = () => {
     getCategory();
     allGetAffiliate();
   }, []);
-
 
   return (
     <>

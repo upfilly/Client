@@ -294,7 +294,6 @@ const Html = ({
   };
 
   return (
-
     <Layout
       activeSidebar={activeSidebar}
       handleKeyPress={handleKeyPress}
@@ -384,9 +383,13 @@ const Html = ({
                             <div className="filter-section-body">
                               <ul className="filter-list">
                                 {category.map((category) => {
-                                  const isCategoryExpanded = expandedCategories.includes(category._id);
+                                  const isCategoryExpanded =
+                                    expandedCategories.includes(category._id);
                                   return (
-                                    <li key={category._id} className="filter-list-item">
+                                    <li
+                                      key={category._id}
+                                      className="filter-list-item"
+                                    >
                                       <div className="form-check d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
                                           <input
@@ -395,77 +398,143 @@ const Html = ({
                                             id={`cat-${category._id}`}
                                             name="category"
                                             value={category._id}
-                                            checked={selectedCategory?.includes(category._id)}
-                                            onChange={() => handleCategoryChange(category)}
+                                            checked={selectedCategory?.includes(
+                                              category._id
+                                            )}
+                                            onChange={() =>
+                                              handleCategoryChange(category)
+                                            }
                                           />
-                                          <label className="form-check-label filter-label" htmlFor={`cat-${category._id}`}>
+                                          <label
+                                            className="form-check-label filter-label"
+                                            htmlFor={`cat-${category._id}`}
+                                          >
                                             {category.parent_cat_name}
                                           </label>
                                         </div>
                                         {category.subCategories?.length > 0 && (
                                           <button
                                             className="btn-expand-toggle"
-                                            onClick={() => toggleCategory(category._id)}
+                                            onClick={() =>
+                                              toggleCategory(category._id)
+                                            }
                                           >
-                                            <i className={`fa fa-angle-${isCategoryExpanded ? "down" : "right"}`} />
+                                            <i
+                                              className={`fa fa-angle-${
+                                                isCategoryExpanded
+                                                  ? "down"
+                                                  : "right"
+                                              }`}
+                                            />
                                           </button>
                                         )}
                                       </div>
                                       {isCategoryExpanded && (
                                         <ul className="sub-filter-list">
-                                          {category.subCategories.map((subCategory) => {
-                                            const isSubExpanded = expandedSubCategories.includes(subCategory.id);
-                                            return (
-                                              <li key={subCategory.id} className="sub-filter-list-item">
-                                                <div className="form-check d-flex justify-content-between align-items-center">
-                                                  <div className="d-flex align-items-center">
-                                                    <input
-                                                      className="form-check-input filter-checkbox"
-                                                      type="checkbox"
-                                                      id={`subcat-${subCategory.id}`}
-                                                      name="subCategory"
-                                                      value={subCategory.id}
-                                                      checked={selectedSubCategory?.includes(subCategory.id)}
-                                                      onChange={() => handleSubCategoryChange(subCategory)}
-                                                    />
-                                                    <label className="form-check-label filter-label" htmlFor={`subcat-${subCategory.id}`}>
-                                                      {subCategory.name}
-                                                    </label>
+                                          {category.subCategories.map(
+                                            (subCategory) => {
+                                              const isSubExpanded =
+                                                expandedSubCategories.includes(
+                                                  subCategory.id
+                                                );
+                                              return (
+                                                <li
+                                                  key={subCategory.id}
+                                                  className="sub-filter-list-item"
+                                                >
+                                                  <div className="form-check d-flex justify-content-between align-items-center">
+                                                    <div className="d-flex align-items-center">
+                                                      <input
+                                                        className="form-check-input filter-checkbox"
+                                                        type="checkbox"
+                                                        id={`subcat-${subCategory.id}`}
+                                                        name="subCategory"
+                                                        value={subCategory.id}
+                                                        checked={selectedSubCategory?.includes(
+                                                          subCategory.id
+                                                        )}
+                                                        onChange={() =>
+                                                          handleSubCategoryChange(
+                                                            subCategory
+                                                          )
+                                                        }
+                                                      />
+                                                      <label
+                                                        className="form-check-label filter-label"
+                                                        htmlFor={`subcat-${subCategory.id}`}
+                                                      >
+                                                        {subCategory.name}
+                                                      </label>
+                                                    </div>
+                                                    {subCategory
+                                                      .subchildcategory
+                                                      ?.length > 0 && (
+                                                      <button
+                                                        className="btn-expand-toggle"
+                                                        onClick={() =>
+                                                          toggleSubCategory(
+                                                            subCategory.id
+                                                          )
+                                                        }
+                                                      >
+                                                        <i
+                                                          className={`fa fa-angle-${
+                                                            isSubExpanded
+                                                              ? "down"
+                                                              : "right"
+                                                          }`}
+                                                        />
+                                                      </button>
+                                                    )}
                                                   </div>
-                                                  {subCategory.subchildcategory?.length > 0 && (
-                                                    <button
-                                                      className="btn-expand-toggle"
-                                                      onClick={() => toggleSubCategory(subCategory.id)}
-                                                    >
-                                                      <i className={`fa fa-angle-${isSubExpanded ? "down" : "right"}`} />
-                                                    </button>
-                                                  )}
-                                                </div>
-                                                {isSubExpanded && subCategory.subchildcategory?.length > 0 && (
-                                                  <ul className="sub-sub-filter-list">
-                                                    {subCategory.subchildcategory.map((subSubCategory) => (
-                                                      <li key={subSubCategory._id} className="sub-sub-filter-list-item">
-                                                        <div className="form-check">
-                                                          <input
-                                                            className="form-check-input filter-checkbox"
-                                                            type="checkbox"
-                                                            id={`subsubcat-${subSubCategory._id}`}
-                                                            name="subSubCategory"
-                                                            value={subSubCategory._id}
-                                                            checked={selectedSubSubCategory?.includes(subSubCategory._id)}
-                                                            onChange={() => handleSubSubCategoryChange(subSubCategory)}
-                                                          />
-                                                          <label className="form-check-label filter-label" htmlFor={`subsubcat-${subSubCategory._id}`}>
-                                                            {subSubCategory.name}
-                                                          </label>
-                                                        </div>
-                                                      </li>
-                                                    ))}
-                                                  </ul>
-                                                )}
-                                              </li>
-                                            );
-                                          })}
+                                                  {isSubExpanded &&
+                                                    subCategory.subchildcategory
+                                                      ?.length > 0 && (
+                                                      <ul className="sub-sub-filter-list">
+                                                        {subCategory.subchildcategory.map(
+                                                          (subSubCategory) => (
+                                                            <li
+                                                              key={
+                                                                subSubCategory._id
+                                                              }
+                                                              className="sub-sub-filter-list-item"
+                                                            >
+                                                              <div className="form-check">
+                                                                <input
+                                                                  className="form-check-input filter-checkbox"
+                                                                  type="checkbox"
+                                                                  id={`subsubcat-${subSubCategory._id}`}
+                                                                  name="subSubCategory"
+                                                                  value={
+                                                                    subSubCategory._id
+                                                                  }
+                                                                  checked={selectedSubSubCategory?.includes(
+                                                                    subSubCategory._id
+                                                                  )}
+                                                                  onChange={() =>
+                                                                    handleSubSubCategoryChange(
+                                                                      subSubCategory
+                                                                    )
+                                                                  }
+                                                                />
+                                                                <label
+                                                                  className="form-check-label filter-label"
+                                                                  htmlFor={`subsubcat-${subSubCategory._id}`}
+                                                                >
+                                                                  {
+                                                                    subSubCategory.name
+                                                                  }
+                                                                </label>
+                                                              </div>
+                                                            </li>
+                                                          )
+                                                        )}
+                                                      </ul>
+                                                    )}
+                                                </li>
+                                              );
+                                            }
+                                          )}
                                         </ul>
                                       )}
                                     </li>
@@ -478,7 +547,9 @@ const Html = ({
                           {/* Region & Country Section */}
                           <div className="filter-section-card">
                             <div className="filter-section-header">
-                              <h5 className="section-title">Select Region & Country</h5>
+                              <h5 className="section-title">
+                                Select Region & Country
+                              </h5>
                             </div>
                             <div className="filter-section-body">
                               <ul className="filter-list">
@@ -491,24 +562,42 @@ const Html = ({
                                           type="checkbox"
                                           id={`region-${region}`}
                                           value={region}
-                                          checked={selectedRegion?.includes(region)}
-                                          onChange={() => handleRegionChange(region)}
+                                          checked={selectedRegion?.includes(
+                                            region
+                                          )}
+                                          onChange={() =>
+                                            handleRegionChange(region)
+                                          }
                                         />
-                                        <label className="form-check-label filter-label region-label" htmlFor={`region-${region}`}>
+                                        <label
+                                          className="form-check-label filter-label region-label"
+                                          htmlFor={`region-${region}`}
+                                        >
                                           {region}
                                         </label>
                                       </div>
                                       <button
                                         className="btn-expand-toggle"
-                                        onClick={() => toggleRegionExpand(region)}
+                                        onClick={() =>
+                                          toggleRegionExpand(region)
+                                        }
                                       >
-                                        <i className={`fa fa-angle-${expandedRegions.includes(region) ? "down" : "right"}`} />
+                                        <i
+                                          className={`fa fa-angle-${
+                                            expandedRegions.includes(region)
+                                              ? "down"
+                                              : "right"
+                                          }`}
+                                        />
                                       </button>
                                     </div>
                                     {expandedRegions.includes(region) && (
                                       <ul className="sub-filter-list region-countries">
                                         {regionData[region].map((country) => (
-                                          <li key={country} className="sub-filter-list-item">
+                                          <li
+                                            key={country}
+                                            className="sub-filter-list-item"
+                                          >
                                             <div className="form-check">
                                               <input
                                                 className="form-check-input filter-checkbox"
@@ -516,10 +605,17 @@ const Html = ({
                                                 id={`country-${country}`}
                                                 name="country"
                                                 value={country}
-                                                checked={selectedCountries?.includes(country)}
-                                                onChange={() => handleCountryChange(country)}
+                                                checked={selectedCountries?.includes(
+                                                  country
+                                                )}
+                                                onChange={() =>
+                                                  handleCountryChange(country)
+                                                }
                                               />
-                                              <label className="form-check-label filter-label" htmlFor={`country-${country}`}>
+                                              <label
+                                                className="form-check-label filter-label"
+                                                htmlFor={`country-${country}`}
+                                              >
                                                 {country}
                                               </label>
                                             </div>
@@ -591,20 +687,24 @@ const Html = ({
                             Event Type
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data"
+                          <th
+                            scope="col"
+                            className="table_data"
                             onClick={(e) => sorting("campaign_commission")}
                           >
                             Commission
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data"
+                          <th
+                            scope="col"
+                            className="table_data"
                             onClick={(e) => sorting("lead_amount")}
                           >
                             Lead Amount
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
                           <th scope="col" className="table_data">
-                            Status
+                            Campaign Status
                           </th>
                           <th scope="col" className="table_data">
                             Request Status
@@ -639,7 +739,7 @@ const Html = ({
                                   onClick={(e) =>
                                     view(
                                       itm.campaign_detail?.id ||
-                                      itm?.campaign_detail?._id
+                                        itm?.campaign_detail?._id
                                     )
                                   }
                                 >
@@ -671,19 +771,23 @@ const Html = ({
                                 <td className="table_dats">
                                   {" "}
                                   {itm?.campaign_detail?.commission_type ==
-                                    "percentage"
+                                  "percentage"
                                     ? `${itm?.campaign_detail?.commission}%`
                                     : selectedCurrency
-                                      ? `${convertedCurrency(
+                                    ? `${convertedCurrency(
                                         itm?.campaign_detail?.commission
                                       )}`
-                                      : `$${convertedCurrency(
+                                    : `$${convertedCurrency(
                                         itm?.campaign_detail?.commission
                                       )}`}
                                 </td>
                                 <td className="table_dats">
                                   {" "}
-                                  {(selectedCurrency && exchangeRate) ? `${convertedCurrency(itm?.lead_amount)}` : `$ ${convertedCurrency(itm?.lead_amount)}`}
+                                  {selectedCurrency && exchangeRate
+                                    ? ` ${convertedCurrency(itm?.lead_amount)}`
+                                    : `$ ${convertedCurrency(
+                                        itm?.lead_amount
+                                      )}`}
                                 </td>
                                 <td className="table_dats">
                                   {" "}
@@ -722,11 +826,11 @@ const Html = ({
                                         ? itm?.status == "removed"
                                           ? "Removed"
                                           : itm?.status == "rejected"
-                                            ? "Rejected"
-                                            : itm?.status == "accepted" &&
-                                              !itm?.isActive
-                                              ? "Switched"
-                                              : "Pending"
+                                          ? "Rejected"
+                                          : itm?.status == "accepted" &&
+                                            !itm?.isActive
+                                          ? "Switched"
+                                          : "Pending"
                                         : "Joined"}
                                     </span>
                                   </span>
@@ -743,18 +847,18 @@ const Html = ({
                                       <button
                                         onClick={
                                           itm?.campaign_type == "manual" &&
-                                            itm?.campaign_type != "private"
+                                          itm?.campaign_type != "private"
                                             ? () =>
-                                              sendRequest(
-                                                itm?._id,
-                                                itm?.brand_id,
-                                                itm?.campaign_id
-                                              )
+                                                sendRequest(
+                                                  itm?._id,
+                                                  itm?.brand_id,
+                                                  itm?.campaign_id
+                                                )
                                             : () =>
-                                              statusChange(
-                                                "accepted",
-                                                itm?.id || itm?._id
-                                              )
+                                                statusChange(
+                                                  "accepted",
+                                                  itm?.id || itm?._id
+                                                )
                                         }
                                         className="btn btn-primary mr-2 btn_actions"
                                       >
@@ -891,8 +995,9 @@ const Html = ({
                 {/* {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>} */}
 
                 <div
-                  className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
-                    }`}
+                  className={`paginationWrapper ${
+                    !loaging && total > 10 ? "" : "d-none"
+                  }`}
                 >
                   <span>
                     Show{" "}
@@ -1031,10 +1136,11 @@ const Html = ({
 
                                         {category.subCategories?.length > 0 && (
                                           <i
-                                            className={`fa fa-angle-${isCategoryExpanded
-                                              ? "down"
-                                              : "right"
-                                              } toggle-arrow`}
+                                            className={`fa fa-angle-${
+                                              isCategoryExpanded
+                                                ? "down"
+                                                : "right"
+                                            } toggle-arrow`}
                                             onClick={() =>
                                               toggleCategory(category._id)
                                             }
@@ -1082,21 +1188,22 @@ const Html = ({
                                                     {subCategory
                                                       .subchildcategory
                                                       ?.length > 0 && (
-                                                        <i
-                                                          className={`fa fa-angle-${isSubExpanded
+                                                      <i
+                                                        className={`fa fa-angle-${
+                                                          isSubExpanded
                                                             ? "down"
                                                             : "right"
-                                                            } toggle-arrow`}
-                                                          onClick={() =>
-                                                            toggleSubCategory(
-                                                              subCategory.id
-                                                            )
-                                                          }
-                                                          style={{
-                                                            cursor: "pointer",
-                                                          }}
-                                                        ></i>
-                                                      )}
+                                                        } toggle-arrow`}
+                                                        onClick={() =>
+                                                          toggleSubCategory(
+                                                            subCategory.id
+                                                          )
+                                                        }
+                                                        style={{
+                                                          cursor: "pointer",
+                                                        }}
+                                                      ></i>
+                                                    )}
                                                   </div>
 
                                                   {isSubExpanded &&
@@ -1210,10 +1317,11 @@ const Html = ({
                                             </label>
                                           </div>
                                           <i
-                                            className={`fa fa-angle-${expandedRegions.includes(region)
-                                              ? "down"
-                                              : "right"
-                                              } cursor-pointer`}
+                                            className={`fa fa-angle-${
+                                              expandedRegions.includes(region)
+                                                ? "down"
+                                                : "right"
+                                            } cursor-pointer`}
                                             onClick={() =>
                                               toggleRegionExpand(region)
                                             }

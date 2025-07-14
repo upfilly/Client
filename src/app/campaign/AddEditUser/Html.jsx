@@ -78,6 +78,15 @@ const Html = ({
         text: "This campaign is now set as default. Type is set to Public.",
         confirmButtonText: "OK",
       });
+    } else if (checked) {
+      setform((prev) => ({ ...prev, access_type: "private" }));
+      setIsTypeDisabled(true);
+      Swal.fire({
+        icon: "info",
+        title: "Default Campaign Selected",
+        text: "This campaign is now set as default. Type is set to Public.",
+        confirmButtonText: "OK",
+      });
     } else {
       setIsTypeDisabled(false);
     }
@@ -245,7 +254,16 @@ const Html = ({
                       intialValue={form?.access_type}
                       disabled={isTypeDisabled}
                       result={(e) => {
-                        setform({ ...form, access_type: e.value });
+                        const newAccessType = e.value;
+                        const isPrivate = newAccessType === "private";
+
+                        setform((prev) => ({
+                          ...prev,
+                          access_type: newAccessType,
+                          ...(isPrivate && {
+                            campaign_type: "automatic",
+                          }),
+                        }));
                       }}
                       options={[
                         { id: "public", name: "Public" },
@@ -336,7 +354,7 @@ const Html = ({
                       displayValue="name"
                       placeholder="Select Event Type"
                       intialValue={form?.event_type}
-                      disabled={!id}
+                      disabled={id}
                       result={(e) => {
                         setform({ ...form, event_type: e.value });
                       }}
@@ -360,10 +378,16 @@ const Html = ({
                       singleSelect={true}
                       displayValue="name"
                       placeholder="Select Approval"
-                      intialValue={form?.campaign_type}
-                      disabled={!id ? false : true}
+                      intialValue={
+                        Array.isArray(form?.campaign_type)
+                          ? form?.campaign_type
+                          : form?.campaign_type
+                          ? [form?.campaign_type]
+                          : []
+                      }
+                      disabled={form?.access_type == "private" || id}
                       result={(e) => {
-                        setform({ ...form, campaign_type: e.value });
+                        setform({ ...form, campaign_type: e.value[0] });
                       }}
                       options={[
                         { id: "manual", name: "Manual" },
