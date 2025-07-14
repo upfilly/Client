@@ -100,7 +100,7 @@ const Html = ({
                 {/* Title Field */}
                 <div className="col-md-6 mb-4">
                   <label className="form-label">
-                    Title<span className="required-star">*</span>
+                    Title<span className="star">*</span>
                   </label>
                   <input
                     type="text"
@@ -121,7 +121,7 @@ const Html = ({
                 {/* Brand Selection */}
                 <div className="col-md-6 mb-4">
                   <label className="form-label">
-                    Select Brand<span className="required-star">*</span>
+                    Select Brand<span className="star">*</span>
                   </label>
                   <SelectDropdown
                     theme="search"
@@ -141,7 +141,7 @@ const Html = ({
                 {/* Amount Field */}
                 <div className="col-md-6 mb-4">
                   <label className="form-label">
-                    Amount<span className="required-star">*</span>
+                    Amount<span className="star">*</span>
                   </label>
                   <input
                     type="text"
@@ -208,7 +208,7 @@ const Html = ({
                 {/* Commission Field */}
                 <div className="col-md-6 mb-4">
                   <label className="form-label">
-                    Commission<span className="required-star">*</span>
+                    Commission<span className="star">*</span>
                   </label>
                   <input
                     type="text"
@@ -248,7 +248,7 @@ const Html = ({
                 {/* Order Reference */}
                 <div className="col-md-6 mb-4">
                   <label className="form-label">
-                    Order Reference<span className="required-star">*</span>
+                    Order Reference<span className="star">*</span>
                   </label>
                   <input
                     type="text"
@@ -271,7 +271,7 @@ const Html = ({
                 {/* Order Date */}
                 <div className="col-md-6 mb-4">
                   <label className="form-label">
-                    Order Date<span className="required-star">*</span>
+                    Order Date<span className="star">*</span>
                   </label>
                   <input
                     type="date"
