@@ -31,7 +31,7 @@ const Html = ({
 
 
     const view = (id) => {
-        history.push("/CreativeEmails/detail/" + id + `?startDate=${startDate.toISOString().split('T')[0]}&endDate=${endDate.toISOString().split('T')[0]}`)
+        history.push("/CreativeEmails/detail/" + id + `?startDate=${startDate ? startDate.toISOString().split('T')[0] : ""}&endDate=${endDate ? endDate.toISOString().split('T')[0] : ""}`)
     }
 
     const reset = () => {
@@ -151,8 +151,8 @@ const Html = ({
                             <thead className='table_head'>
                                 <tr className='heading_row'>
                                     <th scope="col" className='table_data' onClick={e => sorting('templateName')}>Title{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    {/* <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Email Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                                    <th scope="col" className='table_data'>Subject</th> */}
+                                    {/* <th scope="col" className='table_data' onClick={e => sorting('event_type')}>Email Name{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
+                                    <th scope="col" className='table_data'>{user?.role == "affiliate" ? "Brand" : "Subject"}</th>
                                     {/* <th scope="col" className='table_data'>Status</th> */}
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Created Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
@@ -179,8 +179,8 @@ const Html = ({
                                                         {user?.role == "affiliate" ? itm?.emailtemplate_details?.emailName : itm?.emailName}
                                                     </h4>
                                                 </div>
-                                            </div></td>
-                                        <td className='table_dats'>{user?.role == "affiliate" ? itm?.emailtemplate_details?.subject : itm?.subject}</td> */}
+                                            </div></td>*/}
+                                        <td className='table_dats'>{user?.role == "affiliate" ? itm?.brand_details?.fullName : itm?.subject}</td> 
 
                                         {/* <td className="table_dats">
                                 {" "}

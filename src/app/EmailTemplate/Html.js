@@ -16,7 +16,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     const [showLogsModal, setShowLogsModal] = useState(false);
 
     const shortcodes = [
-        { label: 'Brand Name', value: '{brandFullName}' },
+        { label: 'Affiliate Name', value: '{affiliateFullName}' },
         { label: 'Affiliate Link', value: '{affiliateLink}' },
         { label: 'Current Date', value: '{currentDate}' },
     ];
