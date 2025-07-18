@@ -109,8 +109,7 @@ const AddEditUser = () => {
     if (!user || !user?.website) {
       return {
         allowed: false,
-        message:
-          "Please update your website in your profile to use this feature",
+        message: "Please update your website in your profile to use this feature",
       };
     }
 
@@ -118,14 +117,13 @@ const AddEditUser = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-        ? user.website
-        : [];
+          ? user.website
+          : [];
 
     if (allowedDomains.length === 0) {
       return {
         allowed: false,
-        message:
-          "Please update your website in your profile to use this feature",
+        message: "Please update your website in your profile to use this feature",
       };
     }
 
@@ -137,20 +135,30 @@ const AddEditUser = () => {
         urlToParse = "https://" + cleanedUrl;
       }
 
-      // const urlObj = new URL(urlToParse);
-      // const hostname = urlObj.hostname.replace('www.', '').toLowerCase();
+      const urlObj = new URL(urlToParse);
+      const inputHostname = urlObj.hostname.replace('www.', '').toLowerCase();
 
       const isAllowed = allowedDomains.some((domain) => {
-        const domainStr = String(domain).replace("www.", "").toLowerCase();
-        console.log(domainStr, urlToParse, "11121212");
-        return (
-          urlToParse === domainStr ||
-          (urlToParse.endsWith(`.${domainStr}`) &&
-            urlToParse.split(".").length - 1 === domainStr.split(".").length)
-        );
-      });
+        // Clean the allowed domain
+        let domainStr = String(domain).trim().toLowerCase();
 
-      console.log(isAllowed, "isAllowedisAllowed");
+        // Remove protocol if present
+        if (domainStr.startsWith('http://') || domainStr.startsWith('https://')) {
+          try {
+            const domainUrl = new URL(domainStr);
+            domainStr = domainUrl.hostname;
+          } catch (e) {
+            domainStr = domainStr.replace(/^https?:\/\//, '');
+          }
+        }
+
+        // Remove www. and trailing slashes
+        domainStr = domainStr.replace('www.', '').replace(/\/+$/, '');
+
+        // Compare the hostnames
+        return inputHostname === domainStr ||
+          inputHostname.endsWith(`.${domainStr}`);
+      });
 
       return {
         allowed: isAllowed,
@@ -172,8 +180,7 @@ const AddEditUser = () => {
 
     if (DestinationUrl) {
       if (!isValidUrl(DestinationUrl)) {
-        websiteAllowedError =
-          "Please enter a valid URL (including http:// or https://)";
+        websiteAllowedError = "Please enter a valid URL (including http:// or https://)";
       } else {
         const websiteCheck = isWebsiteAllowed(DestinationUrl);
         if (!websiteCheck.allowed) {
