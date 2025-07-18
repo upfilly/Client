@@ -57,6 +57,7 @@ b {
   border: 1px solid #000 !important;
   border-radius: 6px !important;
 }
+
 .btn.btn-outline-white {
   border: 1px solid #c3c3c3;
   border-radius: 6px;
@@ -149,7 +150,7 @@ li.pagination-item a {
   margin: 0;
   position: relative;
 
-  > i {
+  >i {
     position: absolute;
     bottom: -3px;
     right: -3px;
@@ -274,7 +275,7 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
   display: flex;
   // justify-content: space-between;
 
-  > *:first-child {
+  >*:first-child {
     width: 60px;
   }
 
@@ -314,7 +315,7 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
   margin-left: 15px;
   margin-right: 15px;
 
-  > span {
+  >span {
     font-size: 13px;
     display: flex;
     white-space: nowrap;
@@ -345,7 +346,7 @@ button:focus:not(:focus-visible) {
     align-items: center;
     column-gap: 10px;
 
-    > li {
+    >li {
       margin: 0 !important;
       font-size: 13px !important;
       padding: 7px 13px !important;
@@ -425,8 +426,8 @@ label {
   color: #202020;
 }
 
-.form-row > .col,
-.form-row > [class*="col-"] {
+.form-row>.col,
+.form-row>[class*="col-"] {
   padding-right: 10px;
   padding-left: 5px;
   // align-items: center;
@@ -448,43 +449,27 @@ label {
   border-color: #e4e4e4 !important;
 }
 
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-range
-  .ant-picker-active-bar {
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-range .ant-picker-active-bar {
   background: #765aa6 !important;
 }
 
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-selected
-  .ant-picker-cell-inner,
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-range-start
-  .ant-picker-cell-inner,
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-range-end
-  .ant-picker-cell-inner {
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner,
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
   color: #fff;
   background: #765aa6 !important;
 }
 
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-in-range::before {
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-in-range::before {
   background: #7557a63b !important;
 }
 
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-range-start:not(
-    .ant-picker-cell-range-start-single
-  )::before,
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-range-end:not(
-    .ant-picker-cell-range-end-single
-  )::before {
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before {
   background: #7557a63b !important;
 }
 
-:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown
-  .ant-picker-cell-in-view.ant-picker-cell-today
-  .ant-picker-cell-inner::before {
+:where(.css-dev-only-do-not-override-14wwjjs).ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
   border: 1px solid #765aa6 !important;
 }
 
@@ -723,6 +708,7 @@ button.btn.btn-primary.loginclass {
   border-radius: 6px !important;
   padding: 0.475rem 0.75rem !important;
 }
+
 .btn.btn-danger {
   border-radius: 6px !important;
   border: none !important;
@@ -768,7 +754,7 @@ button.btn.btn-primary.loginclass {
   justify-content: center;
   height: 100vh;
 
-  > .container {
+  >.container {
     .shadow {
       border-top: 3px solid $primaryColor;
     }
@@ -787,11 +773,13 @@ button.btn.btn-primary.loginclass {
 }
 
 .password-invalid {
+
   .form-control.is-invalid,
   .was-validated .form-control:invalid {
     background-position: right calc(0.375em + 1.8rem) center;
   }
 }
+
 .empty-box {
   padding: 15px;
   text-align: center;
@@ -854,7 +842,7 @@ button.btn.btn-primary.loginclass {
 .upload-btn {
   position: relative;
 
-  > input {
+  >input {
     position: absolute;
     right: 0;
     top: 0;
@@ -866,7 +854,7 @@ button.btn.btn-primary.loginclass {
 }
 
 .pagination {
-  > li {
+  >li {
     padding: 2px;
 
     a {
@@ -1033,7 +1021,7 @@ input.searchbar.mr-2 {
     margin-top: 0px;
   }
 
-  .min-sidebar ~ div > .main-sidebar {
+  .min-sidebar~div>.main-sidebar {
     display: none !important;
   }
 
@@ -1056,7 +1044,7 @@ input.searchbar.mr-2 {
     display: none;
   }
 
-  .min-sidebar ~ div > main.main {
+  .min-sidebar~div>main.main {
     width: 100% !important;
   }
 
@@ -1121,7 +1109,7 @@ input.searchbar.mr-2 {
 }
 
 @media only screen and (min-width: 601px) and (max-width: 990px) {
-  .min-sidebar ~ div > .main-sidebar {
+  .min-sidebar~div>.main-sidebar {
     display: none !important;
   }
 
@@ -1148,7 +1136,7 @@ input.searchbar.mr-2 {
     display: none;
   }
 
-  .min-sidebar ~ div > main.main {
+  .min-sidebar~div>main.main {
     width: 100% !important;
   }
 
@@ -1305,7 +1293,7 @@ input.searchbar.mr-2 {
   //   display: block !important;
   // }
 
-  .min-sidebar ~ div > .main-sidebar {
+  .min-sidebar~div>.main-sidebar {
     display: none !important;
   }
 
@@ -1328,7 +1316,7 @@ input.searchbar.mr-2 {
     display: none;
   }
 
-  .min-sidebar ~ div > main.main {
+  .min-sidebar~div>main.main {
     width: 100% !important;
   }
 
@@ -1413,7 +1401,7 @@ input.searchbar.mr-2 {
     margin-top: 15px;
   }
 
-  .min-sidebar ~ div > .main-sidebar {
+  .min-sidebar~div>.main-sidebar {
     display: none !important;
   }
 
@@ -1436,7 +1424,7 @@ input.searchbar.mr-2 {
     display: none;
   }
 
-  .min-sidebar ~ div > main.main {
+  .min-sidebar~div>main.main {
     width: 100% !important;
   }
 
@@ -1707,7 +1695,7 @@ button.btn.btn-primary.edit.ml-3 {
   font-size: 14px;
 }
 
-.table-striped > tbody > tr:nth-of-type(odd) > * {
+.table-striped>tbody>tr:nth-of-type(odd)>* {
   --bs-table-color-type: #202020 !important;
   --bs-table-bg-type: rgb(249 249 249 / 100%) !important;
 }
@@ -1726,20 +1714,16 @@ a.btn.barlink.text-primary:active {
 }
 
 .highlightOption {
-  background: linear-gradient(
-    40deg,
-    #032e72 -25.12%,
-    #00baff 76.03%
-  ) !important;
+  background: linear-gradient(40deg,
+      #032e72 -25.12%,
+      #00baff 76.03%) !important;
   color: #fff;
 }
 
 .multiSelectContainer li:hover {
-  background: linear-gradient(
-    40deg,
-    #032e72 -25.12%,
-    #00baff 76.03%
-  ) !important;
+  background: linear-gradient(40deg,
+      #032e72 -25.12%,
+      #00baff 76.03%) !important;
   color: #fff;
 }
 
@@ -1749,12 +1733,12 @@ a.btn.barlink.text-primary:active {
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .min-sidebar ~ div > .main-sidebar a.col_side:hover {
+  .min-sidebar~div>.main-sidebar a.col_side:hover {
     justify-content: center;
     margin: 8px 14px !important;
   }
 
-  .min-sidebar ~ div > .main-sidebar {
+  .min-sidebar~div>.main-sidebar {
     display: block !important;
     max-width: 250px;
     min-width: 250px;
@@ -1768,7 +1752,7 @@ a.btn.barlink.text-primary:active {
     display: flex;
   }
 
-  .min-sidebar ~ div > .main-sidebar a.nav-link.hoverclass {
+  .min-sidebar~div>.main-sidebar a.nav-link.hoverclass {
     padding: 9px 16px;
     border-radius: 12px !important;
     margin-right: 10px !important;
@@ -1777,7 +1761,7 @@ a.btn.barlink.text-primary:active {
     width: auto !important;
   }
 
-  .min-sidebar ~ div > .main-sidebar a.col_side {
+  .min-sidebar~div>.main-sidebar a.col_side {
     padding: 9px 16px;
     border-radius: 12px !important;
     margin-right: 10px !important;
@@ -1786,18 +1770,18 @@ a.btn.barlink.text-primary:active {
     width: auto !important;
   }
 
-  .min-sidebar ~ div > .main-sidebar .nav-link span {
+  .min-sidebar~div>.main-sidebar .nav-link span {
     display: block;
   }
 
-  .min-sidebar ~ div > .main-sidebar a.col_side span {
+  .min-sidebar~div>.main-sidebar a.col_side span {
     display: flex;
     font-size: 15px;
     font-weight: 300;
     color: #202020;
   }
 
-  .min-sidebar ~ div > .main-sidebar i {
+  .min-sidebar~div>.main-sidebar i {
     margin-right: 8px !important;
   }
 
@@ -1816,7 +1800,7 @@ a.btn.barlink.text-primary:active {
 }
 
 @media (min-width: 768px) {
-  .main-navbar.min-sidebar ~ div > .main-sidebar {
+  .main-navbar.min-sidebar~div>.main-sidebar {
     display: block !important;
   }
 }
@@ -1932,9 +1916,7 @@ p.card-text.text-truncate p {
   color: red;
 }
 
-.card-expiry
-  .react-datepicker__input-container
-  .react-datepicker__calendar-icon {
+.card-expiry .react-datepicker__input-container .react-datepicker__calendar-icon {
   padding: 0 0 0 15px !important;
   top: 50% !important;
   transform: translateY(-50%);
@@ -2085,9 +2067,7 @@ input.datepicker-field {
   outline: none !important;
 }
 
-.react-datepicker-wrapper
-  .react-datepicker__input-container
-  .react-datepicker__calendar-icon {
+.react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
   position: absolute;
   box-sizing: content-box;
   padding: 0.375rem 0.75rem;
@@ -2192,11 +2172,9 @@ p.checkbox-option-main span {
 
 .checkbox-custom:checked::before {
   transform: translateX(100%);
-  background: linear-gradient(
-    40deg,
-    #032e72 -25.12%,
-    #00baff 76.03%
-  ) !important;
+  background: linear-gradient(40deg,
+      #032e72 -25.12%,
+      #00baff 76.03%) !important;
 }
 
 .edit_icon.edit-main {
@@ -2778,13 +2756,13 @@ p.checkbox-option-main {
   cursor: pointer;
 }
 
-.campaine_detls_wrapper > * {
+.campaine_detls_wrapper>* {
   margin-bottom: 10px;
   border-bottom: 1px solid whitesmoke;
   padding-bottom: 5px;
 }
 
-.campaine_detls_wrapper > *:last-child {
+.campaine_detls_wrapper>*:last-child {
   border-bottom: none;
   margin-bottom: None;
 }
@@ -2902,14 +2880,17 @@ a.btn.btn-primary.edit {
     margin: 40px 0px;
   }
 }
+
 .right_side {
   // padding: 10px !important;
   //   height: 100vh;
   //   display: flex;
   // align-items: center;
 }
+
 input.is-invalid::after {
-  content: none; /* This would remove the icon */
+  content: none;
+  /* This would remove the icon */
   /* OR you can restyle it: */
   color: blue !important;
   font-size: 14px;
@@ -3079,9 +3060,7 @@ input.overlap_mobile {
   padding: 80px 0px;
 }
 
-.react-datepicker__input-container.react-datepicker__view-calendar-icon
-  svg
-  path {
+.react-datepicker__input-container.react-datepicker__view-calendar-icon svg path {
   fill: #007bb9;
 }
 
@@ -3120,14 +3099,14 @@ input.overlap_mobile {
 }
 
 /* When the checkbox is checked, add a blue background */
-.container_checks input:checked ~ .checkmark {
+.container_checks input:checked~.checkmark {
   // box-shadow: 3px 3px 0px rgb(183, 183, 183);
   transition: all 0.2s;
   opacity: 1;
   // background-image: linear-gradient(45deg, rgb(100, 61, 219) 0%, rgb(217, 21, 239) 100%);
 }
 
-.container_checks input ~ .checkmark {
+.container_checks input~.checkmark {
   transition: all 0.2s;
   opacity: 1;
   // box-shadow: 1px 1px 0px rgb(183, 183, 183);
@@ -3142,7 +3121,7 @@ input.overlap_mobile {
 }
 
 /* Show the checkmark when checked */
-.container_checks input:checked ~ .checkmark:after {
+.container_checks input:checked~.checkmark:after {
   opacity: 1;
   transition: all 0.2s;
 }
@@ -3163,6 +3142,7 @@ input.overlap_mobile {
   padding: 20px 20px;
   border-radius: 10px;
   color: #fff;
+
   .selectDropdown {
     input::placeholder {
       color: white !important;
@@ -3742,7 +3722,7 @@ p.checkbox-option-main {
   justify-content: center;
 }
 
-.phoneInput > *:first-child {
+.phoneInput>*:first-child {
   width: unset !important;
 }
 
@@ -5028,6 +5008,7 @@ input.mr-2.radio {
   padding-left: 13px;
   transition: 0.5s ease-in-out !important;
 }
+
 .sidebar_main.active {
   .top_scrollbx {
     .tooltip-container {
@@ -5249,7 +5230,7 @@ input[type="radio"].profile_radio {
   top: 4px;
 }
 
-input[type="radio"].profile_radio:checked + .radio-btn::after {
+input[type="radio"].profile_radio:checked+.radio-btn::after {
   content: "";
   display: block;
   width: 10px;
@@ -5284,7 +5265,7 @@ input[type="checkbox"].check_bx_input {
   top: 4px;
 }
 
-input[type="checkbox"].check_bx_input:checked + .checkbox-btn::after {
+input[type="checkbox"].check_bx_input:checked+.checkbox-btn::after {
   content: "";
   display: block;
   width: 100%;
@@ -5325,7 +5306,7 @@ input[type="checkbox"].check_bx_input:checked + .checkbox-btn::after {
   border-radius: 6px !important;
 }
 
-.ql-toolbar.ql-snow + .ql-container.ql-snow {
+.ql-toolbar.ql-snow+.ql-container.ql-snow {
   border-top: 0px;
   background-color: #fff;
 }
@@ -5849,6 +5830,7 @@ input.form-control {
   box-shadow: none !important;
   border-color: hsl(0, 0%, 80%) !important;
 }
+
 .action-btns {
   width: 32px !important;
   height: 32px !important;
@@ -5880,21 +5862,27 @@ input.form-control {
     height: 40px !important;
   }
 }
+
 .custom-dropdown {
   width: 100% !important;
+
   // height: 100% !important;
   .searchWrapper {
     min-height: 40px;
   }
+
   select {
     min-height: 40px !important;
   }
+
   .css-1fdsijx-ValueContainer {
     min-height: 40px;
+
     .css-1dimb5e-singleValue {
       font-size: 14px;
     }
   }
+
   .date_select {
     min-height: 40px;
     border-radius: 6px;
@@ -5907,9 +5895,11 @@ input.form-control {
   .ql-toolbar {
     border-radius: 6px 6px 0 0 !important;
   }
+
   .ql-container {
     border-radius: 0 0 6px 6px !important;
   }
+
   .tuncketcls {
     width: 100%;
   }
@@ -5918,24 +5908,22 @@ input.form-control {
 .terms-textarea textarea {
   height: 307px !important;
 }
+
 .tab-height {
   height: 307px !important;
 }
+
 .bg-tab {
   padding: 7px 12px !important;
-  background: linear-gradient(
-    40deg,
-    #032e72 -25.12%,
-    #00baff 76.03%
-  ) !important;
+  background: linear-gradient(40deg,
+      #032e72 -25.12%,
+      #00baff 76.03%) !important;
 }
 
 .css-tr4s17-option {
-  background: linear-gradient(
-    40deg,
-    #032e72 -25.12%,
-    #00baff 76.03%
-  ) !important;
+  background: linear-gradient(40deg,
+      #032e72 -25.12%,
+      #00baff 76.03%) !important;
 }
 
 .form-check-input:checked[type="radio"] {
@@ -5952,8 +5940,89 @@ input.dateselect {
   height: 150px;
   margin: auto;
   opacity: 40%;
+
   img {
     width: 100%;
     height: 100%;
   }
 }
+
+
+
+@media all and (min-width: 768px) and (max-width: 991px) {
+    .set-border-top {
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+
+  }
+
+  .main_title_head h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+}
+
+@media all and (min-width: 576px) and (max-width: 767px) {
+  .set-border-top {
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+
+  }
+
+  .main_title_head h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+}
+
+@media all and (min-width: 320px) and (max-width: 575px) {
+  .showngmkt.lists_mkt {
+    padding: 20px 0px;
+    margin-bottom: 0px;
+  }
+
+
+  .heading_lists {
+    margin-bottom: 10px;
+  }
+
+
+
+  .notifications .dropdown-menu {
+    max-width: 14rem !important;
+    min-width: 6px;
+    transform: translate3d(37px, 43px, 0px) !important;
+  }
+
+  .affilitate-top-dropdowns {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+
+
+ .select-category {
+  width: 220px !important;
+ }
+
+ .All-status-dropdown .css-13cymwt-control {
+    width: 200px !important;
+ }
+
+
+
+
+
+
+}
+
+
+
+// .campaingh-dropdown {
+//   position: absolute !important;
+//   z-index: 9999 !important;
+//  
+// }

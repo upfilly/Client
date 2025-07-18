@@ -624,7 +624,7 @@ export default function affilate() {
           <div className="row align-items-center mx-0">
             <div className="col-12 col-md-12 col-lg-12">
               <div className="set_modal postion-relative">
-                <div className="d-flex gap-2 align-items-center flex-wrap">
+                <div className="d-flex gap-2 align-items-center affilitate-top-dropdowns flex-wrap">
                   {/* Category Filter Dropdown */}
                   <div className="dropdown position-relative">
                     <button
@@ -641,7 +641,7 @@ export default function affilate() {
 
                     {categoryDropdownOpen && (
                       <div
-                        className="dropdown-menu show position-absolute"
+                        className="dropdown-menu  select-category show position-absolute"
                         style={{
                           maxHeight: "400px",
                           overflowY: "auto",
@@ -841,7 +841,7 @@ export default function affilate() {
                   </div>
 
                   {/* Invitation Status Filter */}
-                  <div className="w-25">
+                  <div className="w-25 All-status-dropdown" >
                     <SelectDropdown
                       theme="search"
                       id="statusDropdown"

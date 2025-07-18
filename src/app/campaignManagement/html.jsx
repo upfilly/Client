@@ -305,13 +305,14 @@ const Html = ({
     >
       <div className="mapping-wrapper">
         <div className="row">
-          <div className="col-12 col-sm-12 col-md-6 col-lg-12">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-12">
             <div className="lists_marketplace">
-              <div className="set-border-top">
+              <div className="set-border-top " >
                 <div className="main_title_head d-flex justify-content-flex-start align-items-center">
-                  <h3 className="">Campaign Management</h3>
+                  <h3 className="">Campaign Management </h3>
                 </div>
-                <div className="d-flex align-items-center gap-2">
+
+                <div className="d-flex Campaign-Management-dropdpwns  align-items-center gap-2">
                   <SelectDropdown
                     theme="search"
                     id="statusDropdown"

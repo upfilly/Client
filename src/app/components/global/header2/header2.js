@@ -8,6 +8,7 @@ import datepipeModel from '@/models/datepipemodel';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from "react-bootstrap";
+// import "/m"
 
 export default function Header2({ handleKeyPress, setFilter, reset, filter, name, filters, settingData }) {
     const user = crendentialModel.getUser()
@@ -102,7 +103,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
 
                 <div className='d-flex justify-content-between header-right align-items-center set-header-icon'>
                     <div className='d-flex align-items-center header-logo '>
-                        <a href={!user ? '/':'/dashboard'}>
+                        <a href={!user ? '/' : '/dashboard'}>
                             <img src="/assets/img/logo.png" className="upfilly_logo" alt="" /></a>
                         <span className="ml-2 page-name" > / {name}</span>
                     </div>
@@ -118,7 +119,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                 <input type="search"
                                     className='form-control quick-radius'
                                     placeholder='Search'
-                                    onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value ,page:1})}
+                                    onChange={(e) => e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value, page: 1 })}
                                     onKeyPress={handleKeyPress}
                                 />
                                 <i class="fa fa-search search_fa" onClick={() => {
@@ -212,7 +213,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                                         <h4 className='noti_head'>{itm?.type == 'message' ? "" : itm?.type == 'make_offer' ? "Offer Request" : "Campaign"}</h4>
                                                         <span>{itm?.type == 'message' ?
                                                             <p className='noti_text_msg'>You have a message from {itm?.addedBy_name?.slice(0, 10)}...</p>
-                                                            :itm?.type == 'campaign' ? <p className='noti_text_chat'>{itm?.message} by {itm?.addedBy_name}</p> : itm?.type == 'make_offer' ? " " : <p className='noti_text_chat'>{itm?.message?.slice(0, 50)}</p>}</span>
+                                                            : itm?.type == 'campaign' ? <p className='noti_text_chat'>{itm?.message} by {itm?.addedBy_name}</p> : itm?.type == 'make_offer' ? " " : <p className='noti_text_chat'>{itm?.message?.slice(0, 50)}</p>}</span>
                                                         {itm?.type == 'message' && <p className='noti_text_chat'>{itm?.message?.slice(0, 50)} </p>}
                                                         {itm?.type == 'make_offer' && <p className='noti_text_chat'>{itm?.message} by {itm?.addedBy_name}</p>}
                                                         <p className='noti_date_chat'>{datepipeModel.datetime(itm?.createdAt)}</p>
@@ -229,7 +230,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                         </div>
 
 
-                        <div className="profile-img">
+                        <div className="profile-img ">
                             {user && <>
                                 <Dropdown className="ml-auto ml-2 proifle_dropbx">
                                     <Dropdown.Toggle className="d-flex p-0 align-items-center drpdown_new" variant="" id="">
@@ -239,14 +240,22 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
                                         </div> */}
                                     </Dropdown.Toggle>
 
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/')}><i class="fa fa-dashboard mr-2 " /> Home</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2" /> Profile</Dropdown.Item>
+                                    <Dropdown.Menu  className='campaingh-dropdown'>
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/')}>
+                                            <i className="fa fa-dashboard mr-2" /> Home
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}>
+                                            <i className="fa fa-user mr-2" /> Profile
+                                        </Dropdown.Item>
                                         {/* <Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}> <i class="fa-solid fa-chart-simple mr-2"></i> MarketPlace</Dropdown.Item> */}
-                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
-                                        <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout</Dropdown.Item>
-
+                                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}>
+                                            <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password
+                                        </Dropdown.Item>
+                                        <Dropdown.Item className="has-icon" onClick={() => Logout()}>
+                                            <i className="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout
+                                        </Dropdown.Item>
                                     </Dropdown.Menu>
+
 
                                 </Dropdown>
                             </>}

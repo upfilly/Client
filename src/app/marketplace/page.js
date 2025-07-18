@@ -530,14 +530,10 @@ export default function MarketPlace() {
                       {filters?.search && <button className="btn btn-primary" onClick={(e) => reset()}> Reset</button>}
 
                     </div>
-
-
-
-
                   </div>
 
 
-                  <div className="mt-5">
+                  <div className="mt-3 mt-md-5">
 
                     <div className="heading_lists">
                       <h4 className="filtes_herd">Opportunity Marketplace</h4>
@@ -554,7 +550,7 @@ export default function MarketPlace() {
                                 <div className="leftshead">
                                   <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
                                   <div className="d-flex align-items-start set_gapbx flex-column">
-                                    <p className="types_dates" >Type:</p>
+                                    <p className="types_dates" >Type: </p>
                                     <p className="mb-0 date_types" > <span className="types_main"> {data?.opportunity_type?.map((itm) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p>
                                   </div>
                                 </div>

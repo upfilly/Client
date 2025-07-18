@@ -126,7 +126,8 @@ export default function Layout({ title,description, children , handleKeyPress, s
           {(!user || !isDashboard) && <Header setShowPopup={setShowPopup} settingData={settingData}/>}
 
           {isDashboard ? <div className={!activeSidebar ? 'sidebar_main' : 'sidebar_main active'}>
-            <div className='left_sidebar'><Sidebar setActiveSidebar={setActiveSidebar} activeSidebar={activeSidebar}/></div>
+            <div className='left_sidebar'>
+              <Sidebar setActiveSidebar={setActiveSidebar} activeSidebar={activeSidebar}/></div>
             <div className='layout_right'>
               <Header2 settingData={settingData}  handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name={name} filters={filters}/>
               {children}
