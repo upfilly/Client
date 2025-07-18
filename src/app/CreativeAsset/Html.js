@@ -17,9 +17,14 @@ const Html = () => {
     const [file, setFile] = useState(null);
     const [loaderData, setloaderData] = useState(false)
     const [relatedAffiliate, setAllAffiliate] = useState([])
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState({
+        docName: '',
+        file: '',
+        url: ''
+    });
     const [selectedOption, setSelectedOption] = useState('csv');
     const [url, setUrl] = useState('');
+    const [docName, setDocName] = useState('');
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -36,13 +41,28 @@ const Html = () => {
         setSelectedOption(e.target.value);
         setFile(null);
         setUrl('');
-        setError('');
+        setErrors({
+            ...errors,
+            file: '',
+            url: ''
+        });
     };
 
     const handleUrlChange = (e) => {
         const urlValue = e.target.value;
         setUrl(urlValue);
-        setError("");
+        setErrors({
+            ...errors,
+            url: ''
+        });
+    };
+
+    const handleDocNameChange = (e) => {
+        setDocName(e.target.value);
+        setErrors({
+            ...errors,
+            docName: ''
+        });
     };
 
     const allGetAffiliate = (p = {}) => {
@@ -60,61 +80,70 @@ const Html = () => {
         const selectedFile = event.target.files[0];
         ApiClient.postFormData('upload/document', { file: selectedFile }).then((res) => {
             if (res?.success) {
-                setFile(res?.data?.imagePath)
+                setFile(res?.data?.imagePath);
+                setErrors({
+                    ...errors,
+                    file: ''
+                });
             }
         })
     };
 
     const handleSubmit = () => {
-        const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w .-]*)*\/?$/;
-        if (selectedOption == "csv") {
+        let hasError = false;
+        const newErrors = {
+            docName: '',
+            file: '',
+            url: ''
+        };
+
+        // Validate document name
+        if (!docName) {
+            newErrors.docName = "Document name is required";
+            hasError = true;
+        }
+
+        // Validate based on selected option
+        if (selectedOption === "csv") {
             if (!file) {
-                setError("Upload Csv file first")
-                return
+                newErrors.file = "Upload CSV file first";
+                hasError = true;
+            }
+        } else {
+            if (!url) {
+                newErrors.url = "URL is required";
+                hasError = true;
             }
         }
-        if(selectedOption != "csv"){
-            if(!url){
-                setError("Url required")
-                return
-            }
+
+        setErrors(newErrors);
+
+        if (hasError) {
+            return;
         }
-        //  else {
-        //     if (!url || !urlPattern.test(url)) {
-        //         setError("Please enter a valid URL.");
-        //         return
-        //     }
-        // }
 
-
-        setloaderData(true)
+        setloaderData(true);
 
         let payload = {
-            // addedBy: user?.id,
-            // user_id: form?.user_id,
             "brand_id": user?.id || user?._id,
-            "type": "csv",
-            "filePath": `/documents/${file}`,
-        }
+            "type": selectedOption,
+            "doc_name": docName,
+        };
 
-        if (url) {
-            payload = {
-                // addedBy: user?.id,
-                // user_id: form?.user_id,
-                "brand_id": user?.id || user?._id,
-                "type": "url",
-                "url": url,
-            }
+        if (selectedOption === "csv") {
+            payload.filePath = `/documents/${file}`;
+        } else {
+            payload.url = url;
         }
 
         ApiClient.post('dataset/send', payload).then((res) => {
             if (res?.success) {
-                toast.success(res?.message)
-                setloaderData(false)
-                fetchCSV()
-                setUrl("")
-                setFile(null)
-                // setForm({})
+                toast.success(res?.message);
+                setloaderData(false);
+                fetchCSV();
+                setUrl("");
+                setFile(null);
+                setDocName("");
             }
         });
     };
@@ -135,6 +164,7 @@ const Html = () => {
                 skipEmptyLines: true,
             });
         } catch (err) {
+            console.error(err);
         }
     };
 
@@ -159,6 +189,20 @@ const Html = () => {
                             {!loaderData ?
                                 <div className='row'>
                                     <div className='col-md-12'>
+                                        {/* Document Name Field */}
+                                        <div className="mb-3">
+                                            <label>Document Name <span className="text-danger">*</span></label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.docName ? 'is-invalid' : ''}`}
+                                                placeholder="Enter document name"
+                                                value={docName}
+                                                onChange={handleDocNameChange}
+                                                required
+                                            />
+                                            {errors.docName && <div className="invalid-feedback">{errors.docName}</div>}
+                                        </div>
+
                                         <div className='mb-3 options'>
                                             <label>Choose an option:</label>
                                             <div className="form-check">
@@ -197,7 +241,7 @@ const Html = () => {
                                                                 <button className="btn btn-primary upload_image">Upload CSV File</button>
                                                                 <input
                                                                     type="file"
-                                                                    className="form-control file_input"
+                                                                    className={`form-control file_input ${errors.file ? 'is-invalid' : ''}`}
                                                                     accept=".csv"
                                                                     multiple={false}
                                                                     onChange={handleFileChange}
@@ -219,20 +263,20 @@ const Html = () => {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    {errors.file && <div className="invalid-feedback d-block">{errors.file}</div>}
                                                 </div>
-                                                {error && <p style={{ color: "red" }}>{error}</p>}
                                             </div>
                                         ) : (
                                             <div className="mb-3 gap-0">
                                                 <label>Enter URL</label>
                                                 <input
                                                     type="text"
-                                                    className="form-control"
+                                                    className={`form-control ${errors.url ? 'is-invalid' : ''}`}
                                                     placeholder="Enter the URL here"
                                                     value={url}
                                                     onChange={handleUrlChange}
                                                 />
-                                                {error && <p style={{ color: "red" }}>{error}</p>}
+                                                {errors.url && <div className="invalid-feedback">{errors.url}</div>}
                                             </div>
                                         )}
                                     </div>
@@ -295,11 +339,11 @@ const Html = () => {
                             </Modal>
 
                             {!loaderData && <div className='text-end mt-3'>
-                                <button type="button" class="btn btn-primary" onClick={handleSubmit} >Send Data</button>
+                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Send Data</button>
                             </div>}
                         </div>
                     </div>
-                    <DataFeedslisting file={file} loaderData={loaderData}/>
+                    <DataFeedslisting file={file} loaderData={loaderData} />
                 </div>
             </Layout>
         </>
