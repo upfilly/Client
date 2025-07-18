@@ -27,13 +27,19 @@ const Html = ({
                         <table className="table table-striped table-width">
                             <thead className='table_head'>
                                 <tr className='heading_row'>
+                                    <th scope="col" className='table_data' onClick={e => sorting('doc_name')}>Document Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    <th scope="col" className='table_data' >No. of products</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('lastImportedDate')}>Last Import Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     <th scope="col" className='table_data' onClick={e => sorting('createdAt')}>Sent At{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {user?.role == 'brand' && <th scope="col" className='table_data'>Action</th>}
                                 </tr>
                             </thead>
                             <tbody>
-                                {!loaging && data && data?.slice(0,10).map((itm, i) => {
+                                {!loaging && data && data?.slice(0, 10).map((itm, i) => {
                                     return <tr className='data_row' key={i}>
+                                        <td className='table_dats'>{itm.doc_name || "--"}</td>
+                                        <td className='table_dats'>{itm.noOfProducts}</td>
+                                        <td className='table_dats'>{datepipeModel.date(itm.lastImportedDate)}</td>
                                         <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
 
                                         {/* dropdown */}

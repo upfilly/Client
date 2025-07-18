@@ -7,6 +7,7 @@ import loader from '@/methods/loader';
 import ApiClient from '@/methods/api/apiClient';
 import environment from '../../environment';
 import { FaCopy } from 'react-icons/fa'; // import the copy icon from react-icons
+import datepipeModel from '@/models/datepipemodel';
 
 const Html = ({
     reset,
@@ -19,7 +20,7 @@ const Html = ({
     filter,
     getData,
     comprehensiveTemplate,
-    uniqueKeysArray,
+    sorting,
 }) => {
     const [activeSidebar, setActiveSidebar] = useState(false);
     const [show, setShow] = useState(false);
@@ -125,7 +126,10 @@ const Html = ({
                         <table className="table table-striped table-width">
                             {total !== 0 && <thead className='table_head'>
                                 <tr className='heading_row'>
-                                    <th scope="col" className='table_data'>Brand Name</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('doc_name')}>Document Name{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                                    <th scope="col" className='table_data' >Brand Name</th>
+                                    <th scope="col" className='table_data'>No. of Products</th>
+                                    <th scope="col" className='table_data' onClick={e => sorting('lastImportedDate')}>Last Updated{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                                     {/* <th scope="col" className='table_data'>Type</th> */}
                                     <th scope="col" className='table_data'>Action</th>
                                 </tr>
@@ -133,7 +137,10 @@ const Html = ({
                             <tbody>
                                 {!loaging && data && data.map((itm, i) => {
                                     return <tr className='data_row' key={i}>
+                                        <td className='table_dats'>{itm?.doc_name || "--"}</td>
                                         <td className='table_dats'>{itm?.brand_id?.fullName}</td>
+                                        <td className='table_dats'>{itm?.noOfProducts || "--"}</td>
+                                        <td className='table_dats'>{datepipeModel.date(itm.lastImportedDate)}</td>
                                         {/* <td className='table_dats'>{itm?.url ? "URL" : "CSV"}</td> */}
                                         {itm?.url ? <td className='table_dats'>
                                             <a href={`${environment?.api}/${itm?.url}`} target="_blank" rel="noopener noreferrer">
