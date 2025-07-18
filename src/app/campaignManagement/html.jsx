@@ -703,11 +703,13 @@ const Html = ({
                             Lead Amount
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data">
+                          <th scope="col" className="table_data" onClick={(e) => sorting("status")}>
                             Campaign Status
+                            {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data">
+                          <th scope="col" className="table_data" onClick={(e) => sorting("isActive")}>
                             Request Status
+                            {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
 
                           <th
