@@ -113,7 +113,7 @@ const Users = () => {
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
-    getData({ ...p, page: filters?.page })
+    getData({ ...p, page: 1 })
   }
 
   const ChangeRole = (e) => {
