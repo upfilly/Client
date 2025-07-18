@@ -17,7 +17,7 @@ const CustomCard = ({ title, children, isExpanded, onExpand }) => (
   </div>
 );
 
-const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurrency,exchangeRate,comparisonPeriod}) => {
+const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurrency, exchangeRate, comparisonPeriod }) => {
   const { selection1, selection2 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
 
@@ -31,6 +31,8 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
 
   const getAllDatesInRange = (startDate, endDate) => {
     const dates = [];
+    if (!startDate || !endDate) return dates;
+
     let currentDate = new Date(startDate);
     const end = new Date(endDate);
     while (currentDate <= end) {
@@ -68,14 +70,17 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
   };
 
   const formatLegendLabel = (selection, percentage) => {
-    const startDate = selection.startDate ? selection.startDate.toLocaleDateString() : "";
-    const endDate = selection.endDate ? selection.endDate.toLocaleDateString() : "";
+    if (!selection || !selection.startDate || !selection.endDate) {
+      return "";
+    }
+    const startDate = selection.startDate.toLocaleDateString();
+    const endDate = selection.endDate.toLocaleDateString();
     return `${startDate} - ${endDate} (${percentage})`;
   };
 
   // Get all dates in the selected range
-  const allDates1 = getAllDatesInRange(selection1.startDate, selection1.endDate);
-  const allDates2 = getAllDatesInRange(selection2.startDate, selection2.endDate);
+  const allDates1 = getAllDatesInRange(selection1?.startDate, selection1?.endDate);
+  const allDates2 = getAllDatesInRange(selection2?.startDate, selection2?.endDate);
 
   // Extract data
   const revenueData1 = data?.[0]?.revenue || [];
@@ -111,91 +116,126 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state,convertedCurre
 
   // Update legend labels with overall percentages
   const legendRevenue1 = formatLegendLabel(selection1, revenuePercentage);
-  const legendRevenue2 = selection2 ? formatLegendLabel(selection2, revenuePercentage) : "";
+  const legendRevenue2 = comparisonPeriod !== 'none' ? formatLegendLabel(selection2, revenuePercentage) : "";
 
   const legendActions1 = formatLegendLabel(selection1, actionPercentage);
-  const legendActions2 = selection2 ? formatLegendLabel(selection2, actionPercentage) : "";
+  const legendActions2 = comparisonPeriod !== 'none' ? formatLegendLabel(selection2, actionPercentage) : "";
 
   const legendClicks1 = formatLegendLabel(selection1, clickPercentage);
-  const legendClicks2 = selection2 ? formatLegendLabel(selection2, clickPercentage) : "";
+  const legendClicks2 = comparisonPeriod !== 'none' ? formatLegendLabel(selection2, clickPercentage) : "";
 
-  const revenueChartOption = {
-    title: { text: comparisonPeriod == 'none' ? 'Revenue Over Time' : 'Revenue Over Time Comparison' },
-    tooltip: {
-      trigger: 'axis',
-      formatter: function (params) {
-        let tooltipContent = '';
-        params.forEach(item => {
-          const date = allDates1[item.dataIndex];
-          const value1 = item.data;
-          const value2 = params[1]?.data;
-          const percentageDifference = calculatePercentageDifference(value1, value2);
-          tooltipContent += `<div>${date}: ${!exchangeRate ? `$${value1}` :`${convertedCurrency(value1)}`} (${percentageDifference})</div>`;
-        });
-        return tooltipContent;
+  const createChartOption = (title, legend1, legend2, data1, data2, isRevenue = false) => {
+    const legendData = [legend1, legend2].filter(label => label);
+    const series = [
+      legend1 && {
+        name: legend1,
+        data: data1,
+        type: 'line',
+        smooth: true,
+        areaStyle: {},
+        lineStyle: { width: 2 },
+        itemStyle: { color: '#1E90FF' }
       },
-    },
-    legend: { data: [legendRevenue1, legendRevenue2], bottom: 0, left: 'center' },
-    xAxis: { type: 'category', data: allDates1, boundaryGap: false },
-    yAxis: { type: 'value', axisLabel: { show: false } },
-    series: [
-      { name: legendRevenue1, data: revenuePrices1, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#1E90FF' } },
-      { name: legendRevenue2, data: revenuePrices2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
-    ],
+      legend2 && {
+        name: legend2,
+        data: data2,
+        type: 'line',
+        smooth: true,
+        areaStyle: {},
+        lineStyle: { width: 2 },
+        itemStyle: { color: '#4682B4' }
+      }
+    ].filter(Boolean);
+
+    return {
+      title: { text: comparisonPeriod === 'none' ? title : `${title} Comparison` },
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          let tooltipContent = '';
+          params.forEach(item => {
+            const date = allDates1[item.dataIndex];
+            const value1 = item.data;
+            const value2 = params[1]?.data;
+            const percentageDifference = calculatePercentageDifference(value1, value2);
+            tooltipContent += `<div>${date}: ${isRevenue ?
+              (!exchangeRate ? `$${value1}` : `${convertedCurrency(value1)}`) :
+              value1} (${percentageDifference})</div>`;
+          });
+          return tooltipContent;
+        },
+      },
+      legend: {
+        data: legendData,
+        bottom: 0,
+        left: 'center'
+      },
+      xAxis: {
+        type: 'category',
+        data: allDates1,
+        boundaryGap: false
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: { show: false }
+      },
+      series
+    };
   };
-  
-  const actionsChartOption = {
-    title: { text:comparisonPeriod == 'none' ? 'Actions' : 'Actions Comparison' },
-    tooltip: revenueChartOption.tooltip,
-    legend: { data: [legendActions1, legendActions2], bottom: 0, left: 'center' },
-    xAxis: { type: 'category', data: allDates1, boundaryGap: false },
-    yAxis: { type: 'value', axisLabel: { show: false } },
-    series: [
-      { name: legendActions1, data: actionCounts1, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#1E90FF' } },
-      { name: legendActions2, data: actionCounts2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
-    ],
-  };
-  
-  const clicksChartOption = {
-    title: { text:comparisonPeriod == "none" ? 'Clicks' : 'Clicks Comparison' },
-    tooltip: revenueChartOption.tooltip,
-    legend: { data: [legendClicks1, legendClicks2], bottom: 0, left: 'center' },
-    xAxis: { type: 'category', data: allDates1, boundaryGap: false },
-    yAxis: { type: 'value', axisLabel: { show: false } },
-    series: [
-      { name: legendClicks1, data: clickCounts1, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#1E90FF' } },
-      { name: legendClicks2, data: clickCounts2, type: 'line', smooth: true, areaStyle: {}, lineStyle: { width: 2 }, itemStyle: { color: '#4682B4' } },
-    ],
-  };
+
+  const revenueChartOption = createChartOption(
+    'Revenue Over Time',
+    legendRevenue1,
+    legendRevenue2,
+    revenuePrices1,
+    revenuePrices2,
+    true
+  );
+
+  const actionsChartOption = createChartOption(
+    'Actions',
+    legendActions1,
+    legendActions2,
+    actionCounts1,
+    actionCounts2
+  );
+
+  const clicksChartOption = createChartOption(
+    'Clicks',
+    legendClicks1,
+    legendClicks2,
+    clickCounts1,
+    clickCounts2
+  );
 
   return (
     <div className="analytics-container">
       <div className="row">
         <div className={expandedCard === "Revenue Over Time" ? "col-12 mt-3" : "col-lg-6 mt-3"}>
-          <CustomCard 
-            title="Revenue Over Time" 
-            isExpanded={expandedCard === "Revenue Over Time"} 
+          <CustomCard
+            title="Revenue Over Time"
+            isExpanded={expandedCard === "Revenue Over Time"}
             onExpand={() => toggleExpand("Revenue Over Time")}
           >
             <ReactECharts option={revenueChartOption} className="chart" />
           </CustomCard>
         </div>
-        
+
         <div className={expandedCard === "Actions" ? "col-12 mt-3" : "col-md-6 mt-3"}>
-          <CustomCard 
-            title="Actions"  
-            isExpanded={expandedCard === "Actions"} 
+          <CustomCard
+            title="Actions"
+            isExpanded={expandedCard === "Actions"}
             onExpand={() => toggleExpand("Actions")}
           >
             <ReactECharts option={actionsChartOption} className="chart" />
           </CustomCard>
         </div>
-        
-        <div className={expandedCard === "Clicks Comparison" ? "col-12 mt-3" : "col-md-6 mt-3"}>
-          <CustomCard 
-            title="Clicks"  
-            isExpanded={expandedCard === "Clicks Comparison"} 
-            onExpand={() => toggleExpand("Clicks Comparison")}
+
+        <div className={expandedCard === "Clicks" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+          <CustomCard
+            title="Clicks"
+            isExpanded={expandedCard === "Clicks"}
+            onExpand={() => toggleExpand("Clicks")}
           >
             <ReactECharts option={clicksChartOption} className="chart" />
           </CustomCard>

@@ -200,34 +200,61 @@ export default function AnalyticsDashboard() {
   }, [selectedAffiliate, selectedBrand, campaignId]);
 
   const ApplyDateFilter = () => {
+    // Ensure compDates are valid when switching from "none" to another period
+    let effectiveCompDates = compDates;
+    if (comparisonPeriod !== "none" && (!compDates[0] || !compDates[1])) {
+      // Set default comparison dates based on the selected period
+      const today = new Date();
+      const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+      switch (comparisonPeriod) {
+        case "previousPeriod":
+          const duration = baseDates[1] - baseDates[0];
+          effectiveCompDates = [
+            new Date(baseDates[0].getTime() - duration - 1),
+            new Date(baseDates[1].getTime() - duration - 1)
+          ];
+          break;
+        case "previousYear":
+          effectiveCompDates = [
+            new Date(baseDates[0].getFullYear() - 1, baseDates[0].getMonth(), baseDates[0].getDate()),
+            new Date(baseDates[1].getFullYear() - 1, baseDates[1].getMonth(), baseDates[1].getDate())
+          ];
+          break;
+        default:
+          effectiveCompDates = [firstDayOfMonth, today];
+      }
+      setCompDates(effectiveCompDates);
+    }
+
     getClicksAnalyticsData({
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      // affiliate_id: selectedAffiliate || "",
-      // brand_id: selectedBrand || "",
-      startDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(compDates?.[0]).format("YYYY-MM-DD"),
-      endDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(compDates?.[1]).format("YYYY-MM-DD"),
+      affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
+      brand_id: selectedBrand?.map((dat) => dat).join(",") || "",
+      campaign: campaignId?.map((dat) => dat).join(",") || "",
+      startDate2: comparisonPeriod == "none"
+        ? ""
+        : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
+      endDate2: comparisonPeriod == "none"
+        ? ""
+        : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
     });
+
     getAnalyticsData({
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      // affiliate_id: selectedAffiliate || "",
-      // brand_id: selectedBrand || "",
-      startDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(compDates?.[0]).format("YYYY-MM-DD"),
-      endDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(compDates?.[1]).format("YYYY-MM-DD"),
+      affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
+      brand_id: selectedBrand?.map((dat) => dat).join(",") || "",
+      campaign: campaignId?.map((dat) => dat).join(",") || "",
+      startDate2: comparisonPeriod == "none"
+        ? ""
+        : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
+      endDate2: comparisonPeriod == "none"
+        ? ""
+        : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
     });
+
     setHandleDateFilter(false);
   };
 
