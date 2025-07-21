@@ -270,7 +270,7 @@ export default function AnalyticsDashboard() {
     <Layout name="Reports">
       <div className="dashboard">
         <aside className="sidebar">
-          <h1 className="sidebar-title">Insights</h1>
+          <h1 className="sidebar-title">Insights </h1>
           <nav className="sidebar-nav">
             {/* <button className="sidebar-button">Program Overview</button> */}
             {/* <button className="sidebar-button">Performance</button>
@@ -279,78 +279,87 @@ export default function AnalyticsDashboard() {
         </aside>
 
         <main className="main-content">
-          <div className="d-flex custom-dropdown">
-            <span
-              className="form-select position-relative date_select"
-              onClick={(e) => setHandleDateFilter(!handleDateFilter)}
-              onBlur={(e) => setHandleDateFilter(false)}
-            >
-              {baseDates?.[0] ||
-                baseDates?.[1] ||
-                compDates?.[0] ||
-                compDates?.[1]
-                ? comparisonPeriod == "none"
-                  ? `${moment(baseDates?.[0]).format(
-                    "MMMM DD, YYYY"
-                  )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
-                  : `${moment(baseDates?.[0]).format(
-                    "MMMM DD, YYYY"
-                  )} - ${moment(baseDates?.[1]).format(
-                    "MMMM DD, YYYY"
-                  )} ⇆ ${moment(compDates?.[0]).format(
-                    "MMMM DD, YYYY"
-                  )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
-                : "Select Date Range"}
-            </span>
+          <div className="custom-dropdown">
+            <div className="dropdown-item">
+              <span
+                className="form-select position-relative date_select"
+                onClick={() => setHandleDateFilter(!handleDateFilter)}
+                onBlur={() => setHandleDateFilter(false)}
+              >
+                {baseDates?.[0] ||
+                  baseDates?.[1] ||
+                  compDates?.[0] ||
+                  compDates?.[1]
+                  ? comparisonPeriod == "none"
+                    ? `${moment(baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(
+                      baseDates?.[1]
+                    ).format("MMMM DD, YYYY")}`
+                    : `${moment(baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(
+                      baseDates?.[1]
+                    ).format("MMMM DD, YYYY")} ⇆ ${moment(compDates?.[0]).format(
+                      "MMMM DD, YYYY"
+                    )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
+                  : "Select Date Range"}
+              </span>
+            </div>
 
-            {user.role != "brand" ? (
+            <div className="dropdown-item">
+              {user.role !== "brand" ? (
+                <MultiSelectValue
+                  id="statusDropdown"
+                  displayValue="fullName"
+                  placeholder="Select Brand"
+                  intialValue={selectedBrand}
+                  result={(e) => setSelectedBrand(e.value)}
+                  options={brands}
+                />
+              ) : (
+                <MultiSelectValue
+                  id="statusDropdown"
+                  displayValue="fullName"
+                  placeholder="Select Affiliate"
+                  intialValue={selectedAffiliate}
+                  result={(e) => setSelectedAffiliate(e.value)}
+                  options={affiliateData}
+                />
+              )}
+            </div>
+
+            <div className="dropdown-item">
               <MultiSelectValue
                 id="statusDropdown"
-                displayValue="fullName"
-                placeholder="Select Brand"
-                // singleSelect={true}
-                intialValue={selectedBrand}
-                result={(e) => {
-                  setSelectedBrand(e.value);
-                }}
-                options={brands}
+                displayValue="name"
+                placeholder="Select Campaign"
+                intialValue={campaignId}
+                result={(e) => setCampaignId(e.value)}
+                options={CampaignData}
               />
-            ) : (
-              <MultiSelectValue
-                id="statusDropdown"
-                displayValue="fullName"
-                placeholder="Select Affiliate"
-                // singleSelect={true}
-                intialValue={selectedAffiliate}
-                result={(e) => {
-                  setSelectedAffiliate(e.value);
-                }}
-                options={affiliateData}
+            </div>
+
+            <div className="dropdown-item">
+              <SelectDropdown
+                theme="search"
+                id="currencyDropdown"
+                displayValue="name"
+                placeholder="Select Currency"
+                intialValue={selectedCurrency}
+                result={handleCurrencyChange}
+                options={CurencyData}
               />
-            )}
-
-            <MultiSelectValue
-              id="statusDropdown"
-              displayValue="name"
-              placeholder="Select Campaign"
-              // singleSelect={true}
-              intialValue={campaignId}
-              result={(e) => {
-                setCampaignId(e.value);
-              }}
-              options={CampaignData}
-            />
-
-            <SelectDropdown
-              theme="search"
-              id="currencyDropdown"
-              displayValue="name"
-              placeholder="Select Currency"
-              intialValue={selectedCurrency}
-              result={handleCurrencyChange}
-              options={CurencyData}
-            />
+            </div>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
           <div className="controls mt-2">
             {/* {handleDateFilter && (

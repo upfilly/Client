@@ -174,6 +174,7 @@ p.bg-light.rounded.py-2.fieldcls {
   white-space: nowrap;
   column-gap: 10px;
   flex-wrap: wrap;
+  line-height: 24px;
 }
 
 .ViewUser {
@@ -259,7 +260,7 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
 .bg_hover .dropdown-item.active,
 .bg_hover .dropdown-item:active {
   text-decoration: none;
-  background-color: rgb(38 125 196);
+  // background-color: rgb(38 125 196);
   color: #ffffff !important;
   border-radius: 8px;
   padding: 0.25rem 1rem;
@@ -501,10 +502,12 @@ i.fa {
   gap: 12px;
 }
 
+
+
 a.edit_icon {
   border: 1px solid #dcdcdc;
-  height: 32px;
-  width: 32px;
+  height: 38px;
+  width: 38px;
   align-items: center;
   display: flex;
   justify-content: center;
@@ -2538,6 +2541,7 @@ select.form-select {
 
 .main-dashboards {
   padding: 30px 0 0 0;
+
 }
 
 .main-top {
@@ -4184,7 +4188,7 @@ p.checkbox-option-main {
 
 .textarea_offers {
   padding: 10px;
-  border-radius: 60px;
+  border-radius: 5px;
   border: 1px solid #ddd;
 }
 
@@ -5864,9 +5868,16 @@ input.form-control {
 }
 
 .custom-dropdown {
-  width: 100% !important;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 
-  // height: 100% !important;
+  .dropdown-item {
+    width: 50%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
   .searchWrapper {
     min-height: 40px;
   }
@@ -5879,17 +5890,44 @@ input.form-control {
     min-height: 40px;
 
     .css-1dimb5e-singleValue {
-      font-size: 14px;
+      font-size: 11px;
     }
   }
 
   .date_select {
     min-height: 40px;
     border-radius: 6px;
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 12px;
+    line-height: 2.7;
+    display: block;
+    width: 100%;
   }
 }
+
+.custom-dropdown .selectDropdown {
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .custom-description {
   .ql-toolbar {
@@ -5915,16 +5953,16 @@ input.form-control {
 
 .bg-tab {
   padding: 7px 12px !important;
-  background: linear-gradient(40deg,
-      #032e72 -25.12%,
-      #00baff 76.03%) !important;
+  // background: linear-gradient(40deg,
+  //     #032e72 -25.12%,
+  //     #00baff 76.03%) !important;
 }
 
-.css-tr4s17-option {
-  background: linear-gradient(40deg,
-      #032e72 -25.12%,
-      #00baff 76.03%) !important;
-}
+// .css-tr4s17-option {
+//   background: linear-gradient(40deg,
+//       #032e72 -25.12%,
+//       #00baff 76.03%) !important;
+// }
 
 .form-check-input:checked[type="radio"] {
   background-color: #78acff !important;
@@ -5949,21 +5987,22 @@ input.dateselect {
 
 
 
-@media all and (min-width: 768px) and (max-width: 991px) {
-    .set-border-top {
-    display: flex;
-    flex-direction: column;
-    align-items: start !important;
 
+@media all and (min-width: 992px) and (max-width: 1200px) {
+  .date_select {
+    min-height: 40px !important;
+    line-height: 2.7 !important;
+    font-size: 10px !important;
+    width: 100% !important;
   }
 
-  .main_title_head h3 {
-    margin-bottom: 20px;
-    font-size: 20px;
+  .export-group .export-btn {
+
+    font-size: 16px !important;
   }
 }
 
-@media all and (min-width: 576px) and (max-width: 767px) {
+@media all and (min-width: 768px) and (max-width: 991px) {
   .set-border-top {
     display: flex;
     flex-direction: column;
@@ -5976,9 +6015,57 @@ input.dateselect {
     font-size: 20px;
   }
 
+  .custom-dropdown .dropdown-item {
+    width: 100%;
+  }
+
+  .export-group .export-btn {
+
+    font-size: 16px !important;
+  }
+
+
+}
+
+@media all and (min-width: 576px) and (max-width: 767px) {
+  .set-border-top {
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+
+  }
+
+  .button-container {
+    margin-bottom: 15px;
+  }
+
+  .main_title_head h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .custom-dropdown .dropdown-item {
+    width: 100%;
+  }
+
+  .export-group .export-btn {
+
+    font-size: 16px !important;
+  }
+
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
+  .export-group .export-btn {
+
+    font-size: 16px !important;
+  }
+
+
+  .button-container {
+    margin-bottom: 15px;
+  }
+
   .showngmkt.lists_mkt {
     padding: 20px 0px;
     margin-bottom: 0px;
@@ -6004,25 +6091,103 @@ input.dateselect {
 
 
 
- .select-category {
-  width: 220px !important;
- }
+  .select-category {
+    width: 220px !important;
+  }
 
- .All-status-dropdown .css-13cymwt-control {
+  .All-status-dropdown .css-13cymwt-control {
     width: 200px !important;
- }
+  }
+
+  .notification-page-heading {
+    font-size: 22px !important;
+    display: flex;
+    text-align: start;
+  }
+
+  .tx_detailsbx {
+    padding: 10px;
+  }
+
+  .form-title {
+    font-size: 20px;
+  }
+
+  .sidebar-title {
+    font-size: 22px !important;
+    margin-bottom: 0px;
+  }
+
+  .sidebar {
+    padding: 13px 12px !important;
+  }
+
+  .main-content {
+    padding: 10px !important;
+  }
 
 
 
 
+  .reset-filters-container {
+    justify-content: flex-start !important;
+  }
+
+  .custom-card {
+    padding: 0px !important;
+  }
+
+  .react-datepicker {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: scroll !important;
+    height: 300px;
+    top: 20px;
+  }
 
 
+  .date_select {
+    display: inline-block;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+
+  .custom-dropdown .dropdown-item {
+    width: 100%;
+  }
+
+  .date_select {
+    min-width: 100% !important;
+  }
 }
 
+.dropdown-item:active {
+  background-color: unset !important;
+}
 
+.user-action-delete-btn {
+  background-color: red !important;
+}
 
-// .campaingh-dropdown {
-//   position: absolute !important;
-//   z-index: 9999 !important;
-//  
-// }
+.user-action-delete-btn-icon {
+  color: white !important;
+}
+
+.export-group .copy-btn {
+  line-height: 24px !important;
+}
+
+.export-group .copy-btn:hover {
+  color: #6c757d !important;
+}
+
+.request-page-search-bar {
+  height: calc(1.5em + .75rem + 2px) !important;
+}
+
+.add_users {
+  line-height: 24px !important;
+}

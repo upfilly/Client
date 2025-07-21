@@ -195,3 +195,16 @@ input[type=number] {
     }
   }
 }
+
+
+@media all and (min-width: 320px) and (max-width: 575px) {
+ .coupons-page-top-export-options  {
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+ }
+
+ .export-group-wrapper {
+  display: flex !important;
+  flex-direction: column;
+ }
+}

@@ -92,7 +92,7 @@ const Detail = (p) => {
                             </div>
                             <div>
                                 <>
-                                    <button className='btn btn-primary mr-2 ' title="Edit" onClick={e => edit(data.id)}>
+                                    <button className='btn btn-primary mr-2  ' title="Edit" onClick={e => edit(data.id)}>
                                         <i className="material-icons edit text-white mr-2" title="Edit">edit</i>
                                         Edit
                                     </button>

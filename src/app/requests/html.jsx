@@ -64,7 +64,7 @@ const Html = ({
                                         type="text"
                                         value={filters.search}
                                         placeholder="Search"
-                                        className="form-control"
+                                        className="form-control request-page-search-bar"
                                         onChange={(e) => e.target.value == "" ? reset() : setFilter({ search: e.target.value })}
                                         onKeyPress={handleKeyPress}
                                     />

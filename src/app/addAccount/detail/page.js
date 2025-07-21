@@ -1219,7 +1219,7 @@ export default function addAffiliateAccount() {
                                 <div className='col-md-12 '>
                                   <div className='mb-4 mt-5 text-right '>
                                     {/* <button className='back-btns' onClick={() => back()}>Back</button> */}
-                                    < button className='btn btn-primary login ml-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
+                                    < button className='btn btn-primary login ml-md-3 ' onClick={(e) => handleSubmit(e)}>Save & Continue</button>
                                   </div>
                                 </div>
                               </div>

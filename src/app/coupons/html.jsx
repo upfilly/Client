@@ -109,16 +109,16 @@ const Html = ({
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Coupons" filters={filters}>
             <div className='sidebar-left-content'>
-                <div className="d-flex justify-content-end gap-2 flex-wrap align-items-center all_flexbx">
+                <div className="d-flex justify-content-end gap-2 flex-md-wrap align-items-center all_flexbx">
 
-                    <article className="d-flex filterFlex phView">
+                    <article className="d-flex coupons-page-top-export-options   filterFlex phView">
                         {(user?.role == "brand" || permission('coupon_add')) && <>
                             <a className="btn btn-primary h-100 mb-0 set_reset" onClick={e => add()}>
                                 Add Coupon
                             </a>
                         </>}
                         <SelectDropdown theme='search'
-                            id="statusDropdown" className="mr-2 "
+                            id="statusDropdown" className="mr-2 all-status-dropdown-btn "
                             displayValue="name"
                             placeholder="All Status"
                             intialValue={filters?.status}
@@ -137,10 +137,10 @@ const Html = ({
                         </> : <></>}
                     </article>
 
-                    <div className="d-flex gap-2 align-items-center">
+                    <div className="d-flex gap-2 align-items-center export-group-wrapper">
                         <div className="export-group">
                             <button
-                                className="btn btn-success"
+                                className="btn btn-success export-btn "
                                 onClick={exportCSV}
                                 data-tooltip-id="csv-tooltip"
                                 data-tooltip-content={getExportUrl('csv')}
@@ -158,7 +158,7 @@ const Html = ({
 
                         <div className="export-group">
                             <button
-                                className="btn btn-warning"
+                                className="btn btn-warning export-btn "
                                 onClick={exportXML}
                                 data-tooltip-id="xml-tooltip"
                                 data-tooltip-content={getExportUrl('xml')}
