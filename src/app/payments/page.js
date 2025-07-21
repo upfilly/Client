@@ -150,7 +150,7 @@ export default function affilate() {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
-                <div className="d-flex flex-wrap gap-2 all_flexbx justify-content-end">
+                <div className="d-flex flex-wrap gap-2 all_flexbx justify-content-md-end">
                   {/* <div className='searchInput'>
                     <input
                       type="text"

@@ -49,11 +49,11 @@ const Html = ({
         <>
             <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Users" filters={filters} >
 
-                <div className='nmain-list main_box '>
+                <div className='nmain-list main_box ' >
                     <div className='container-fluid'>
                         <div className='row '>
                             <div className='col-lg-12 '>
-                                <div className=" all_bxbtns flex-wrap  gap-2 d-flex filterFlex phView align-items-center   justify-content-end">
+                                <div className=" all_bxbtns flex-wrap  gap-2 d-flex filterFlex phView align-items-center    justify-content-md-end">
                                     <SelectDropdown                                                     theme='search'
                                         id="statusDropdown" className=" "
                                         displayValue="name"
@@ -144,8 +144,8 @@ const Html = ({
                                                                         <i className={`material-icons edit ${itm.status == "deactive" ? 'disabled' : ''}`} title="Edit">edit</i>
                                                                     </a>}
 
-                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || permission("user_delete")) &&<a className='edit_icon action-btns' onClick={() => deleteItem(itm.user_id)}>
-                                                                        <i className={`material-icons delete`} title='Delete'> delete</i>
+                                                                    {(user?.role == 'affiliate' || user?.role == 'brand' || permission("user_delete")) &&<a className='edit_icon action-btns  user-action-delete-btn' onClick={() => deleteItem(itm.user_id)}>
+                                                                        <i className={`material-icons delete user-action-delete-btn-icon `} title='Delete'> delete</i>
                                                                     </a>}
                                                                     {/* <a className='edit_icon action-btn' onClick={() => {
                                                                         history.push(`/chat`)

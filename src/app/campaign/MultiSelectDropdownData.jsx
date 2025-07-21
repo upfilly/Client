@@ -577,7 +577,7 @@ const isSomeVisibleSelected = () => {
               }}
             />
             <label htmlFor="selectAll">Select All</label>
-            <span className="remove-all-btn ml-2" title="Remove" onClick={handleRemoveAll}>
+            <span className="remove-all-btn ml-md-2" title="Remove" onClick={handleRemoveAll}>
               Remove All
             </span>
           </div>

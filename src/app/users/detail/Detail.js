@@ -79,23 +79,24 @@ const Detail = (p) => {
             <div className='view_page sidebar-left-content '>
                 <div className=' card '>
                     <div className="card-header">
-                        <div className="d-flex justify-content-between align-items-center ">
+                        <div className="d-flex justify-content-between align-items-center gap-2 ">
 
                             <div className=''>
                                 <div className='main_title_head '>
-                                    <h3 className=" ">
-                                        <a to="/categories" onClick={back} className="back_icon">  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>
+                                    <h3 className=" d-flex align-items-center">
+                                        <a to="/categories" onClick={back} className="back_icon"> 
+                                         <i className="fa fa-arrow-left left_arrows mr-2" title='Back' aria-hidden="true"></i></a>
                                         Member Details
                                     </h3>
 
                                 </div>
 
                             </div>
-                            <div>
+                            <div className='d-flex mt-0'>
                                 <>
-                                    <button className='btn btn-primary mr-2 ' title="Edit" onClick={e => edit(data.user_id)}>
+                                    <button className='btn btn-primary mr-2  d-flex align-items-center ' title="Edit" onClick={e => edit(data.user_id)}>
                                         <i className="material-icons edit text-white mr-2" title="Edit">edit</i>
-                                        Edit
+                                        Edit 
                                     </button>
                                 </>
                                 {/* // : <></>} */}

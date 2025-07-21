@@ -175,7 +175,7 @@ const CustomDatePicker = ({
         </div>
       </div>
       <div className="date-picker-wrapper">
-        <div className="d-flex gap-3">
+        <div className="d-flex gap-3 date-picker-inner justify-content-center justify-content-lg-end">
           <DateRange
             ranges={[
               {
@@ -183,7 +183,7 @@ const CustomDatePicker = ({
                 endDate: baseDates[1],
                 key: "selection",
               },
-            ]}
+            ]}  
             onChange={(ranges) =>
               setBaseDates([
                 ranges.selection.startDate,

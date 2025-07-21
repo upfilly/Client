@@ -300,7 +300,7 @@ const Html = () => {
                     className="fa fa-bullhorn link_icon"
                     aria-hidden="true"
                   ></i>{" "}
-                  Default Links
+                  Default Links 
                 </h3>
               </div>
             </div>
@@ -329,7 +329,7 @@ const Html = () => {
                     )}
                   </div>
                 </div>
-                <div className="col-md-12 mb-3 custom-input">
+                <div className="col-md-12 mb-3 custom-input" id= "random">
                   <label>
                     Destination Url<span className="star">*</span>
                   </label>
@@ -439,7 +439,7 @@ const Html = () => {
                 )}
               </div>
 
-              <div className="text-end">
+              <div className="text-md-end">
                 <button
                   type="button"
                   className="btn btn-primary"

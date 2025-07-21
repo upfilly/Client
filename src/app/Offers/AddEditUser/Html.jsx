@@ -222,9 +222,10 @@ const Html = ({
                         <label>
                           Placement<span className="star">*</span>
                         </label>
-                        <div className="select_row select_arrowbx custom-dropdown">
+                        <div className="select_row select_arrowbx  custom-dropdown">
                           <MultiSelectDropdown
                             id="statusDropdown"
+                            className=""
                             displayValue="name"
                             placeholder="Select Placement"
                             intialValue={form?.placement}
