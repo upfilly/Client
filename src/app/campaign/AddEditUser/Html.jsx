@@ -387,7 +387,7 @@ const Html = ({
                       }
                       disabled={form?.access_type == "private" || id}
                       result={(e) => {
-                        setform({ ...form, campaign_type: e.value[0] });
+                        setform({ ...form, campaign_type: e.value });
                       }}
                       options={[
                         { id: "manual", name: "Manual" },

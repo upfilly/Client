@@ -316,14 +316,14 @@ const Html = ({
                     theme="search"
                     id="statusDropdown"
                     displayValue="name"
-                    placeholder="All Status"
+                    placeholder="Status"
                     intialValue={filters.status}
                     result={(e) => {
                       ChangeStatus(e.value);
                     }}
                     options={[
                       { id: "pending", name: "Pending" },
-                      { id: "accepted", name: "Joined" },
+                      { id: "accepted", name: "Accepted" },
                       { id: "rejected", name: "Rejected" },
                       { id: "removed", name: "Removed" },
                     ]}
@@ -676,8 +676,13 @@ const Html = ({
                           >
                             Brand Name {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data">
+                          <th
+                            scope="col"
+                            className="table_data"
+                            onClick={(e) => sorting("affiliate_name")}
+                          >
                             Affiliate Approval
+                            {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
                           <th
                             scope="col"
@@ -703,11 +708,19 @@ const Html = ({
                             Lead Amount
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data" onClick={(e) => sorting("status")}>
+                          <th
+                            scope="col"
+                            className="table_data"
+                            onClick={(e) => sorting("status")}
+                          >
                             Campaign Status
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th scope="col" className="table_data" onClick={(e) => sorting("isActive")}>
+                          <th
+                            scope="col"
+                            className="table_data"
+                            onClick={(e) => sorting("isActive")}
+                          >
                             Request Status
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>

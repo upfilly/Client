@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import "./style.scss";
 import Layout from "../components/global/layout";
+import "./style.scss";
 
 export default function Partners() {
   return (

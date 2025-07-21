@@ -15,8 +15,8 @@ const Html = ({
   back,
   DestinationUrl,
   setDestinationUrl,
-  errors, 
-  setErrors
+  errors,
+  setErrors,
 }) => {
   const user = crendentialModel.getUser();
 
@@ -43,7 +43,7 @@ const Html = ({
       >
         <form
           onSubmit={(e) => {
-             handleSubmit(e);
+            handleSubmit(e);
           }}
         >
           <div className="sidebar-left-content">
@@ -139,41 +139,43 @@ const Html = ({
                       </p>
                     )}
                   </div>
-                  <div className="col-md-6 mb-3">
-                    <label>
-                      Commission Type<span className="star">*</span>
-                    </label>
-                    <div className="select_row">
-                      <SelectDropdown
-                        theme="search"
-                        id="commissionTypeDropdown"
-                        displayValue="name"
-                        placeholder="Select Commission Type"
-                        intialValue={form?.couponType}
-                        result={(e) => {
-                          setform({
-                            ...form,
-                            couponType: e.value,
-                          });
-                        }}
-                        options={[
-                          {
-                            name: "Campaign",
-                            id: "Campaign",
-                          },
-                          {
-                            name: "Custom",
-                            id: "Custom",
-                          },
-                        ]}
-                      />
-                      {!form?.couponType && submitted && (
-                        <p className="invalid-feedback d-block">
-                          Commission Type is required
-                        </p>
-                      )}
+                  {form?.visibility === "Public" ? (
+                    <div className="col-md-6 mb-3">
+                      <label>
+                        Commission Type<span className="star">*</span>
+                      </label>
+                      <div className="select_row">
+                        <SelectDropdown
+                          theme="search"
+                          id="commissionTypeDropdown"
+                          displayValue="name"
+                          placeholder="Select Commission Type"
+                          intialValue={form?.couponType}
+                          result={(e) => {
+                            setform({
+                              ...form,
+                              couponType: e.value,
+                            });
+                          }}
+                          options={[
+                            {
+                              name: "Campaign",
+                              id: "Campaign",
+                            },
+                            {
+                              name: "Custom",
+                              id: "Custom",
+                            },
+                          ]}
+                        />
+                        {!form?.couponType && submitted && (
+                          <p className="invalid-feedback d-block">
+                            Commission Type is required
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  ) : null}
 
                   {form?.couponType === "Custom" && (
                     <>
