@@ -630,9 +630,7 @@ export default function affilate() {
                     <button
                       className="btn btn-outline-secondary dropdown-toggle"
                       type="button"
-                      onClick={() =>
-                        setCategoryDropdownOpen(!categoryDropdownOpen)
-                      }
+                      onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
                     >
                       {getSelectedCategoryNames().length > 0
                         ? `Categories (${getSelectedCategoryNames().length})`
@@ -641,7 +639,7 @@ export default function affilate() {
 
                     {categoryDropdownOpen && (
                       <div
-                        className="dropdown-menu  select-category show position-absolute"
+                        className="dropdown-menu select-category show position-absolute"
                         style={{
                           maxHeight: "400px",
                           overflowY: "auto",
@@ -660,179 +658,196 @@ export default function affilate() {
                               className="form-control"
                               placeholder="Search categories..."
                               value={categorySearchTerm}
-                              onChange={(e) =>
-                                setCategorySearchTerm(e.target.value)
-                              }
+                              onChange={(e) => setCategorySearchTerm(e.target.value)}
                             />
                           </div>
 
                           <ul className="list-unstyled">
                             {filteredCategories.length > 0 ? (
-                              filteredCategories.map((categoryItem) => (
-                                <li key={categoryItem._id} className="mb-2">
-                                  <div className="form-check d-flex justify-content-between align-items-center">
-                                    <div>
-                                      <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id={`cat-${categoryItem._id}`}
-                                        checked={selectedCategory?.includes(
-                                          categoryItem._id
-                                        )}
-                                        onChange={() =>
-                                          handleCategoryChange(categoryItem)
-                                        }
-                                      />
-                                      <label
-                                        className="form-check-label ms-2"
-                                        htmlFor={`cat-${categoryItem._id}`}
-                                      >
-                                        {categoryItem.parent_cat_name ||
-                                          "Promotional Models"}
-                                      </label>
-                                    </div>
-                                    {categoryItem.subCategories?.length > 0 && (
-                                      <i
-                                        className={`fa fa-angle-${
-                                          expandedCategories.includes(
-                                            categoryItem._id
-                                          )
-                                            ? "down"
-                                            : "right"
-                                        } cursor-pointer`}
-                                        onClick={() =>
-                                          toggleCategoryExpand(categoryItem._id)
-                                        }
-                                      ></i>
-                                    )}
-                                  </div>
-
-                                  {expandedCategories.includes(
-                                    categoryItem._id
-                                  ) && (
-                                    <ul className="list-unstyled ms-4 mt-2">
-                                      {categoryItem.subCategories
-                                        .filter(
-                                          (subCat) =>
-                                            !categorySearchTerm ||
-                                            subCat.name
-                                              .toLowerCase()
-                                              .includes(
-                                                categorySearchTerm.toLowerCase()
-                                              ) ||
-                                            subCat.subchildcategory?.some(
-                                              (subSubCat) =>
-                                                subSubCat.name
-                                                  .toLowerCase()
-                                                  .includes(
-                                                    categorySearchTerm.toLowerCase()
-                                                  )
-                                            )
-                                        )
-                                        .map((subCategory) => (
-                                          <li
-                                            key={subCategory.id}
-                                            className="mb-1"
-                                          >
-                                            <div className="form-check d-flex justify-content-between align-items-center">
-                                              <div>
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id={`subcat-${subCategory.id}`}
-                                                  checked={selectedSubCategory?.includes(
-                                                    subCategory.id
-                                                  )}
-                                                  onChange={() =>
-                                                    handleSubCategoryChange(
-                                                      subCategory
-                                                    )
-                                                  }
-                                                />
-                                                <label
-                                                  className="form-check-label ms-2"
-                                                  htmlFor={`subcat-${subCategory.id}`}
-                                                >
-                                                  {subCategory.name}
-                                                </label>
-                                              </div>
-                                              {subCategory.subchildcategory
-                                                ?.length > 0 && (
-                                                <i
-                                                  className={`fa fa-angle-${
-                                                    expandedSubCategories.includes(
-                                                      subCategory.id
-                                                    )
-                                                      ? "down"
-                                                      : "right"
-                                                  } cursor-pointer`}
-                                                  onClick={() =>
-                                                    toggleSubCategoryExpand(
-                                                      subCategory.id
-                                                    )
-                                                  }
-                                                ></i>
-                                              )}
+                              // Group categories by cat_type and sort alphabetically
+                              Object.entries(
+                                filteredCategories.reduce((acc, category) => {
+                                  const type = category.cat_type || 'Other';
+                                  if (!acc[type]) acc[type] = [];
+                                  acc[type].push(category);
+                                  return acc;
+                                }, {})
+                              )
+                                // Sort the groups (cat_types) alphabetically
+                                .sort(([typeA], [typeB]) => typeA.localeCompare(typeB))
+                                .map(([type, categories]) => (
+                                  <li key={type}>
+                                    <h6 className="mt-3 mb-2 text-muted">{type == "promotional_models" ? "Promotional Models" : "Property Types"}</h6>
+                                    {/* Sort categories alphabetically within each group */}
+                                    {categories
+                                      .sort((a, b) => (a.parent_cat_name || "").localeCompare(b.parent_cat_name || ""))
+                                      .map((categoryItem) => (
+                                        <li key={categoryItem._id} className="mb-2">
+                                          <div className="form-check d-flex justify-content-between align-items-center">
+                                            <div>
+                                              <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                id={`cat-${categoryItem._id}`}
+                                                checked={selectedCategory?.includes(
+                                                  categoryItem._id
+                                                )}
+                                                onChange={() =>
+                                                  handleCategoryChange(categoryItem)
+                                                }
+                                              />
+                                              <label
+                                                className="form-check-label ms-2"
+                                                htmlFor={`cat-${categoryItem._id}`}
+                                              >
+                                                {categoryItem.parent_cat_name ||
+                                                  "Promotional Models"}
+                                              </label>
                                             </div>
+                                            {categoryItem.subCategories?.length > 0 && (
+                                              <i
+                                                className={`fa fa-angle-${expandedCategories.includes(
+                                                  categoryItem._id
+                                                )
+                                                  ? "down"
+                                                  : "right"
+                                                  } cursor-pointer`}
+                                                onClick={() =>
+                                                  toggleCategoryExpand(categoryItem._id)
+                                                }
+                                              ></i>
+                                            )}
+                                          </div>
 
-                                            {expandedSubCategories.includes(
-                                              subCategory.id
-                                            ) &&
-                                              subCategory.subchildcategory
-                                                ?.length > 0 && (
-                                                <ul className="list-unstyled ms-4 mt-1">
-                                                  {subCategory.subchildcategory
-                                                    .filter(
-                                                      (subSubCat) =>
-                                                        !categorySearchTerm ||
-                                                        subSubCat.name
-                                                          .toLowerCase()
-                                                          .includes(
-                                                            categorySearchTerm.toLowerCase()
-                                                          )
-                                                    )
-                                                    .map((subSubCategory) => (
-                                                      <li
-                                                        key={subSubCategory._id}
-                                                        className="mb-1"
-                                                      >
-                                                        <div className="form-check">
+                                          {expandedCategories.includes(
+                                            categoryItem._id
+                                          ) && (
+                                              <ul className="list-unstyled ms-4 mt-2">
+                                                {/* Sort subcategories alphabetically */}
+                                                {categoryItem.subCategories
+                                                  .filter(
+                                                    (subCat) =>
+                                                      !categorySearchTerm ||
+                                                      subCat.name
+                                                        .toLowerCase()
+                                                        .includes(
+                                                          categorySearchTerm.toLowerCase()
+                                                        ) ||
+                                                      subCat.subchildcategory?.some(
+                                                        (subSubCat) =>
+                                                          subSubCat.name
+                                                            .toLowerCase()
+                                                            .includes(
+                                                              categorySearchTerm.toLowerCase()
+                                                            )
+                                                      )
+                                                  )
+                                                  .sort((a, b) => a.name.localeCompare(b.name))
+                                                  .map((subCategory) => (
+                                                    <li
+                                                      key={subCategory.id}
+                                                      className="mb-1"
+                                                    >
+                                                      <div className="form-check d-flex justify-content-between align-items-center">
+                                                        <div>
                                                           <input
                                                             className="form-check-input"
                                                             type="checkbox"
-                                                            id={`subsubcat-${subSubCategory._id}`}
-                                                            checked={selectedSubSubCategory?.includes(
-                                                              subSubCategory._id
+                                                            id={`subcat-${subCategory.id}`}
+                                                            checked={selectedSubCategory?.includes(
+                                                              subCategory.id
                                                             )}
                                                             onChange={() =>
-                                                              handleSubSubCategoryChange(
-                                                                subSubCategory
+                                                              handleSubCategoryChange(
+                                                                subCategory
                                                               )
                                                             }
                                                           />
                                                           <label
                                                             className="form-check-label ms-2"
-                                                            htmlFor={`subsubcat-${subSubCategory._id}`}
+                                                            htmlFor={`subcat-${subCategory.id}`}
                                                           >
-                                                            {
-                                                              subSubCategory.name
-                                                            }
+                                                            {subCategory.name}
                                                           </label>
                                                         </div>
-                                                      </li>
-                                                    ))}
-                                                </ul>
-                                              )}
-                                          </li>
-                                        ))}
-                                    </ul>
-                                  )}
-                                </li>
-                              ))
+                                                        {subCategory.subchildcategory
+                                                          ?.length > 0 && (
+                                                            <i
+                                                              className={`fa fa-angle-${expandedSubCategories.includes(
+                                                                subCategory.id
+                                                              )
+                                                                ? "down"
+                                                                : "right"
+                                                                } cursor-pointer`}
+                                                              onClick={() =>
+                                                                toggleSubCategoryExpand(
+                                                                  subCategory.id
+                                                                )
+                                                              }
+                                                            ></i>
+                                                          )}
+                                                      </div>
+
+                                                      {expandedSubCategories.includes(
+                                                        subCategory.id
+                                                      ) &&
+                                                        subCategory.subchildcategory
+                                                          ?.length > 0 && (
+                                                          <ul className="list-unstyled ms-4 mt-1">
+                                                            {/* Sort sub-subcategories alphabetically */}
+                                                            {subCategory.subchildcategory
+                                                              .filter(
+                                                                (subSubCat) =>
+                                                                  !categorySearchTerm ||
+                                                                  subSubCat.name
+                                                                    .toLowerCase()
+                                                                    .includes(
+                                                                      categorySearchTerm.toLowerCase()
+                                                                    )
+                                                              )
+                                                              .sort((a, b) => a.name.localeCompare(b.name))
+                                                              .map((subSubCategory) => (
+                                                                <li
+                                                                  key={subSubCategory._id}
+                                                                  className="mb-1"
+                                                                >
+                                                                  <div className="form-check">
+                                                                    <input
+                                                                      className="form-check-input"
+                                                                      type="checkbox"
+                                                                      id={`subsubcat-${subSubCategory._id}`}
+                                                                      checked={selectedSubSubCategory?.includes(
+                                                                        subSubCategory._id
+                                                                      )}
+                                                                      onChange={() =>
+                                                                        handleSubSubCategoryChange(
+                                                                          subSubCategory
+                                                                        )
+                                                                      }
+                                                                    />
+                                                                    <label
+                                                                      className="form-check-label ms-2"
+                                                                      htmlFor={`subsubcat-${subSubCategory._id}`}
+                                                                    >
+                                                                      {
+                                                                        subSubCategory.name
+                                                                      }
+                                                                    </label>
+                                                                  </div>
+                                                                </li>
+                                                              ))}
+                                                          </ul>
+                                                        )}
+                                                    </li>
+                                                  ))}
+                                              </ul>
+                                            )}
+                                        </li>
+                                      ))}
+                                  </li>
+                                ))
                             ) : (
-                              <li className="text-muted">
-                                No categories found
-                              </li>
+                              <li className="text-muted">No categories found</li>
                             )}
                           </ul>
                         </div>
