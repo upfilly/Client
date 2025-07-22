@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Layout from "../components/global/layout";
 import "./style.scss";
 import crendentialModel from "@/models/credential.model";
@@ -14,6 +14,9 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
   const [errors, setErrors] = useState({});
   const [editorRef, setEditorRef] = useState(null);
   const [showLogsModal, setShowLogsModal] = useState(false);
+  const [showPasteModal, setShowPasteModal] = useState(false);
+  const [htmlToPaste, setHtmlToPaste] = useState("");
+  const pasteTextareaRef = useRef(null);
 
   const shortcodes = [
     { label: "Affiliate Name", value: "{affiliateFullName}" },
@@ -21,7 +24,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     { label: "Current Date", value: "{currentDate}" },
   ];
 
-  const generateEmailTemplate = (content = "") => {
+  const generateEmailTemplate = (content = "", title = "") => {
     return `
     <div style="
         width: 676px !important;
@@ -77,7 +80,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         </p>
 
                         <h2 style="margin: 10px 0 0 !important; font-size:14px !important; color:#373737 !important;">
-                           Subject :- ${form?.title || "Your email subject"}
+                           Subject :- ${title || "Your email subject"}
                         </h2>
                         
                         <!-- Message Content -->
@@ -138,6 +141,27 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     }
   }, [form?.content, form?.title]);
 
+  const handlePasteHtml = () => {
+    if (!htmlToPaste.trim()) return;
+
+    if (!/<[a-z][\s\S]*>/i.test(htmlToPaste)) {
+      alert("The text doesn't appear to contain valid HTML");
+      return;
+    }
+
+    if (editorRef) {
+      editorRef.setContent(htmlToPaste);
+      setEmailTemplate(htmlToPaste);
+      setForm((prev) => ({
+        ...prev,
+        emailTemplate: htmlToPaste,
+        content: htmlToPaste,
+      }));
+    }
+    setShowPasteModal(false);
+    setHtmlToPaste("");
+  };
+
   const handleContentChange = (e) => {
     const newContent = e.target.value;
     setForm((prev) => ({
@@ -188,8 +212,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!form?.title) newErrors.title = "Email title is required";
-    if (!form?.content) newErrors.content = "Email content is required";
     if (!form?.isAllJoined && !form?.affiliateStatus) {
       newErrors.recipientType = "Please select a recipient type";
     }
@@ -209,7 +231,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     if (editorRef) {
       editorRef.insertContent(shortcode);
     } else {
-      // Fallback for textarea
       const textarea = document.querySelector('textarea[name="content"]');
       if (textarea) {
         const startPos = textarea.selectionStart;
@@ -221,18 +242,35 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
           shortcode +
           currentValue.substring(endPos, currentValue.length);
 
-        // Update form state
         setForm((prev) => ({
           ...prev,
           content: textarea.value,
           emailTemplate: generateEmailTemplate(textarea.value),
         }));
 
-        // Set cursor position after inserted shortcode
         textarea.selectionStart = startPos + shortcode.length;
         textarea.selectionEnd = startPos + shortcode.length;
         textarea.focus();
       }
+    }
+  };
+
+  const file_picker_callback = (callback, value, meta) => {
+    if (meta.filetype === "image") {
+      const input = document.createElement("input");
+      input.setAttribute("type", "file");
+      input.setAttribute("accept", "image/*");
+      input.onchange = function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            callback(e.target.result, { alt: file.name });
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
     }
   };
 
@@ -260,7 +298,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
           <div className="card-body">
             <form onSubmit={handleSubmitWithValidation}>
               <div className="row">
-                {/* Recipient Type Selection */}
                 <div className="col-12 col-sm-6 col-md-4">
                   <div className="form-group">
                     <label className="form-label">Recipient Type</label>
@@ -296,7 +333,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                   </div>
                 </div>
 
-                {/* Time Interval Selection */}
                 <div className="col-12 col-sm-6 col-md-4">
                   <div className="form-group">
                     <label className="form-label">
@@ -332,7 +368,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                   </div>
                 </div>
 
-                {/* Date Selection */}
                 <div className="col-12 col-sm-6 col-md-4">
                   <div className="form-group mb-3">
                     <label className="form-label">Joined Date</label>
@@ -354,65 +389,10 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                   </div>
                 </div>
 
-                <div className="col-12 col-sm-6 col-md-6">
-                  <div className="form-group mb-3">
-                    <label className="form-label">
-                      Subject <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className={`form-control ${
-                        errors.title ? "is-invalid" : ""
-                      }`}
-                      value={form?.title || ""}
-                      onChange={handleTitleChange}
-                    />
-                    {errors.title && (
-                      <div className="invalid-feedback">{errors.title}</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-12 col-sm-6 col-md-6">
-                  <div className="form-group mb-3">
-                    <label className="form-label">Sent Date</label>
-                    <input
-                      type="date"
-                      className={`form-control ${
-                        errors.title ? "is-invalid" : ""
-                      }`}
-                      value={new Date().toISOString().split("T")[0]}
-                      disabled
-                    />
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="form-group mb-3">
-                    <label className="form-label">
-                      Email Content <span className="text-danger">*</span>
-                    </label>
-
-                    <textarea
-                      className={`form-control ${
-                        errors.content ? "is-invalid" : ""
-                      }`}
-                      rows="5"
-                      value={form?.content || ""}
-                      onChange={handleContentChange}
-                      name="content"
-                    />
-                    {errors.content && (
-                      <div className="invalid-feedback">{errors.content}</div>
-                    )}
-                  </div>
-                </div>
-
                 <div className="col-12">
                   <div className="form-group mb-3">
                     <label className="form-label">Email Template Preview</label>
 
-                    {/* Shortcode buttons for the editor */}
                     <div className="mb-3">
                       <label className="form-label">Insert Shortcodes:</label>
                       <div className="d-flex flex-wrap gap-2">
@@ -427,6 +407,13 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                             {shortcode.label}
                           </button>
                         ))}
+                        <button
+                          type="button"
+                          className="btn btn-outline-primary btn-sm"
+                          onClick={() => setShowPasteModal(true)}
+                        >
+                          Paste HTML
+                        </button>
                       </div>
                     </div>
 
@@ -446,9 +433,10 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         menubar: false,
                         plugins: ["lists", "link", "image", "table", "code"],
                         toolbar:
-                          "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat",
+                          "undo redo | formatselect | bold italic forecolor backcolor image | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat",
                         content_style:
                           "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                        file_picker_callback,
                       }}
                     />
                   </div>
@@ -464,10 +452,65 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
           </div>
         </div>
       </div>
+
       <EmailLogsModal
         show={showLogsModal}
         handleClose={() => setShowLogsModal(false)}
       />
+
+      {showPasteModal && (
+        <div
+          className="modal show"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Paste HTML</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => {
+                    setShowPasteModal(false);
+                    setHtmlToPaste("");
+                  }}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <textarea
+                  ref={pasteTextareaRef}
+                  className="form-control"
+                  rows={10}
+                  value={htmlToPaste}
+                  onChange={(e) => setHtmlToPaste(e.target.value)}
+                  placeholder="Paste your HTML code here..."
+                  autoFocus
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setShowPasteModal(false);
+                    setHtmlToPaste("");
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handlePasteHtml}
+                  disabled={!htmlToPaste.trim()}
+                >
+                  Insert HTML
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };

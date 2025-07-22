@@ -177,74 +177,76 @@ const Html = ({
                     </div>
                   ) : null}
 
-                  {form?.couponType === "Custom" && (
-                    <>
-                      <div className="col-md-6 mb-3">
-                        <label>
-                          Custom Commission Type<span className="star">*</span>
-                        </label>
-                        <SelectDropdown
-                          theme="search"
-                          id="couponCommissionTypeDropdown"
-                          displayValue="name"
-                          placeholder="Select Commission Type"
-                          intialValue={form?.commissionType}
-                          result={(e) => {
-                            setform({
-                              ...form,
-                              commissionType: e.value,
-                            });
-                          }}
-                          options={[
-                            {
-                              name: "Fixed amount",
-                              id: "Fixed amount",
-                            },
-                            {
-                              name: "Percentage",
-                              id: "Percentage Commission",
-                            },
-                          ]}
-                        />
-                        {submitted && !form?.commissionType && (
-                          <div className="invalid-feedback d-block">
-                            Commission Type is Required
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label>
-                          Commission Value<span className="star">*</span>
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder={
-                            form?.commissionType === "Percentage"
-                              ? "Enter percentage"
-                              : "Enter amount"
-                          }
-                          value={form.couponAmount || ""}
-                          onChange={(e) =>
-                            setform({ ...form, couponAmount: e.target.value })
-                          }
-                        />
-                        {submitted && !form?.couponAmount && (
-                          <div className="invalid-feedback d-block">
-                            {form?.commissionType === "Percentage"
-                              ? "Percentage is required"
-                              : "Amount is required"}
-                          </div>
-                        )}
-                        {form?.commissionType === "Percentage" &&
-                          form?.couponCommissionValue > 100 && (
+                  {form?.couponType === "Custom" &&
+                    form?.visibility === "Public" && (
+                      <>
+                        <div className="col-md-6 mb-3">
+                          <label>
+                            Custom Commission Type
+                            <span className="star">*</span>
+                          </label>
+                          <SelectDropdown
+                            theme="search"
+                            id="couponCommissionTypeDropdown"
+                            displayValue="name"
+                            placeholder="Select Commission Type"
+                            intialValue={form?.commissionType}
+                            result={(e) => {
+                              setform({
+                                ...form,
+                                commissionType: e.value,
+                              });
+                            }}
+                            options={[
+                              {
+                                name: "Fixed amount",
+                                id: "Fixed amount",
+                              },
+                              {
+                                name: "Percentage",
+                                id: "Percentage Commission",
+                              },
+                            ]}
+                          />
+                          {submitted && !form?.commissionType && (
                             <div className="invalid-feedback d-block">
-                              Percentage cannot exceed 100%
+                              Commission Type is Required
                             </div>
                           )}
-                      </div>
-                    </>
-                  )}
+                        </div>
+                        <div className="col-md-6 mb-3">
+                          <label>
+                            Commission Value<span className="star">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder={
+                              form?.commissionType === "Percentage"
+                                ? "Enter percentage"
+                                : "Enter amount"
+                            }
+                            value={form.couponAmount || ""}
+                            onChange={(e) =>
+                              setform({ ...form, couponAmount: e.target.value })
+                            }
+                          />
+                          {submitted && !form?.couponAmount && (
+                            <div className="invalid-feedback d-block">
+                              {form?.commissionType === "Percentage"
+                                ? "Percentage is required"
+                                : "Amount is required"}
+                            </div>
+                          )}
+                          {form?.commissionType === "Percentage" &&
+                            form?.couponCommissionValue > 100 && (
+                              <div className="invalid-feedback d-block">
+                                Percentage cannot exceed 100%
+                              </div>
+                            )}
+                        </div>
+                      </>
+                    )}
 
                   {form?.visibility == "Exclusive to specific affiliate" && (
                     <div className="col-md-6 mb-3">
