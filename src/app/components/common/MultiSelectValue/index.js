@@ -24,20 +24,6 @@ const MultiSelectValue = ({
     result(selected);
   };
 
-  useEffect(() => {
-    if (initialValue) {
-      if (typeof initialValue === "object" && initialValue.id) {
-        const found = options.find((opt) => opt.id === initialValue.id);
-        setSelectedValue(found || null);
-      } else if (initialValue) {
-        const found = options.find((opt) => opt.id === initialValue);
-        setSelectedValue(found || null);
-      }
-    } else {
-      setSelectedValue(null);
-    }
-  }, [initialValue, options]);
-
   return (
     <Html
       id={id}

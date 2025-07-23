@@ -355,30 +355,37 @@ const Html = ({
                       displayValue="name"
                       isClearable={true}
                       placeholder="Select Event Type"
-                      intialValue={
-                        form?.event_type?.map(
-                          (type) =>
-                            EventType.find((et) => et.id === type) || {
-                              id: type,
-                              name: type,
-                            }
-                        ) || []
+                      initialValue={
+                        Array.isArray(form?.event_type)
+                          ? form.event_type.map(
+                              (type) =>
+                                EventType.find((et) => et.id === type) || {
+                                  id: type,
+                                  name: type,
+                                }
+                            )
+                          : []
                       }
                       disabled={!!id}
                       result={(selectedOptions) => {
+                        const selectedValues = Array.isArray(selectedOptions)
+                          ? selectedOptions.map((opt) => opt.id)
+                          : [];
+
                         setform({
                           ...form,
-                          event_type: selectedOptions.map((opt) => opt.id),
+                          event_type: selectedValues,
                         });
                       }}
                       options={EventType}
                     />
                   </div>
-                  {submitted && form?.event_type?.length === 0 && (
-                    <div className="invalid-feedback d-block">
-                      {errors?.event_type}
-                    </div>
-                  )}
+                  {submitted &&
+                    (!form?.event_type || form.event_type.length === 0) && (
+                      <div className="invalid-feedback d-block">
+                        {errors?.event_type}
+                      </div>
+                    )}
                 </div>
                 <div className="col-md-6 mb-3">
                   <label>
