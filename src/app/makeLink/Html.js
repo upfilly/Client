@@ -149,7 +149,8 @@ const Html = () => {
     if (!user || !user?.website) {
       return {
         allowed: false,
-        message: "Please update your website in your profile to use this feature",
+        message:
+          "Please update your website in your profile to use this feature",
       };
     }
 
@@ -157,13 +158,14 @@ const Html = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-          ? user.website
-          : [];
+        ? user.website
+        : [];
 
     if (allowedDomains.length === 0) {
       return {
         allowed: false,
-        message: "Please update your website in your profile to use this feature",
+        message:
+          "Please update your website in your profile to use this feature",
       };
     }
 
@@ -176,22 +178,25 @@ const Html = () => {
       }
 
       const urlObj = new URL(urlToParse);
-      const hostname = urlObj.hostname.replace('www.', '').toLowerCase();
+      const hostname = urlObj.hostname.replace("www.", "").toLowerCase();
 
       const isAllowed = allowedDomains.some((domain) => {
         let domainStr = String(domain).trim().toLowerCase();
 
-        if (domainStr.startsWith('http://') || domainStr.startsWith('https://')) {
+        if (
+          domainStr.startsWith("http://") ||
+          domainStr.startsWith("https://")
+        ) {
           try {
             const domainUrl = new URL(domainStr);
             domainStr = domainUrl.hostname;
           } catch (e) {
-            domainStr = domainStr.replace(/^https?:\/\//, '');
+            domainStr = domainStr.replace(/^https?:\/\//, "");
           }
         }
 
         // Remove www. and trailing slashes
-        domainStr = domainStr.replace('www.', '').replace(/\/+$/, '');
+        domainStr = domainStr.replace("www.", "").replace(/\/+$/, "");
 
         // Compare the base domains
         return hostname === domainStr || hostname.endsWith(`.${domainStr}`);
@@ -402,8 +407,9 @@ const Html = () => {
                       Select Affiliate<span className="star">*</span>
                     </label>
                     <select
-                      className={`form-select mb-2 ${errors.selectedBrand && "is-invalid"
-                        }`}
+                      className={`form-select mb-2 ${
+                        errors.selectedBrand && "is-invalid"
+                      }`}
                       id="brandSelect"
                       value={selectedBrand}
                       onChange={handleBrandChange}
@@ -428,8 +434,9 @@ const Html = () => {
                       Select Campaign<span className="star">*</span>
                     </label>
                     <select
-                      className={`form-select mb-2 ${errors.SelectedCampaign && "is-invalid"
-                        }`}
+                      className={`form-select mb-2 ${
+                        errors.SelectedCampaign && "is-invalid"
+                      }`}
                       id="brandSelect"
                       value={SelectedCampaign}
                       onChange={handleCampaignChange}
@@ -459,9 +466,10 @@ const Html = () => {
                   <div className="input-group border_description">
                     <input
                       type="text"
-                      className={`form-control ${(errors.DestinationUrl || errors.websiteAllowed) &&
+                      className={`form-control ${
+                        (errors.DestinationUrl || errors.websiteAllowed) &&
                         "is-invalid"
-                        }`}
+                      }`}
                       value={DestinationUrl}
                       onChange={(e) => {
                         const url = e.target.value;

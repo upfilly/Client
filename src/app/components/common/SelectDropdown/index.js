@@ -31,7 +31,7 @@ const SelectDropdown = ({
         disabled={disabled}
         placeholder={placeholder}
         displayValue={displayValue}
-        options={options}
+        options={options} 
         selectedValues={intialValue}
         handleChange={handleChange}
       />

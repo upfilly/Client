@@ -44,8 +44,9 @@ const Html = ({
   formPpcFields,
   formTransactionFields,
   formPublisherFields,
+  campaignType,
 }) => {
-  console.log(form, "formform");
+  console.log(form?.campaign_type, "form?.campaign_type");
 
   const [loadDocerr, setDocLoader] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
@@ -350,24 +351,42 @@ const Html = ({
                   </label>
                   <div className="select_row event-select">
                     <MultiSelectValue
-                      id="statusDropdown"
+                      id="eventTypeDropdown"
                       displayValue="name"
+                      isClearable={true}
                       placeholder="Select Event Type"
-                      intialValue={form?.event_type}
-                      disabled={id}
-                      result={(e) => {
-                        setform({ ...form, event_type: e.value });
+                      initialValue={
+                        Array.isArray(form?.event_type)
+                          ? form.event_type.map(
+                              (type) =>
+                                EventType.find((et) => et.id === type) || {
+                                  id: type,
+                                  name: type,
+                                }
+                            )
+                          : []
+                      }
+                      disabled={!!id}
+                      result={(selectedOptions) => {
+                        const selectedValues = Array.isArray(selectedOptions)
+                          ? selectedOptions.map((opt) => opt.id)
+                          : [];
+
+                        setform({
+                          ...form,
+                          event_type: selectedValues,
+                        });
                       }}
                       options={EventType}
                     />
                   </div>
-                  {submitted && form?.event_type?.length === 0 && (
-                    <div className="invalid-feedback d-block">
-                      {errors?.event_type}
-                    </div>
-                  )}
+                  {submitted &&
+                    (!form?.event_type || form.event_type.length === 0) && (
+                      <div className="invalid-feedback d-block">
+                        {errors?.event_type}
+                      </div>
+                    )}
                 </div>
-
                 <div className="col-md-6 mb-3">
                   <label>
                     Affiliate Approval:<span className="star">*</span>
@@ -376,22 +395,25 @@ const Html = ({
                     <MultiSelectValue
                       id="statusDropdown"
                       singleSelect={true}
-                      displayValue="name"
+                      displayValue="label"
+                      isClearable={true}
                       placeholder="Select Approval"
                       intialValue={
                         Array.isArray(form?.campaign_type)
                           ? form?.campaign_type
                           : form?.campaign_type
-                          ? [form?.campaign_type]
-                          : []
                       }
                       disabled={form?.access_type == "private" || id}
                       result={(e) => {
-                        setform({ ...form, campaign_type: e.value });
+                        console.log(e, "eee");
+                        setform((prevState) => ({
+                          ...prevState,
+                          campaign_type: e,
+                        }));
                       }}
                       options={[
-                        { id: "manual", name: "Manual" },
-                        { id: "automatic", name: "Automatic" },
+                        { value: "manual", label: "Manual" },
+                        { value: "automatic", label: "Automatic" },
                       ]}
                     />
                   </div>
@@ -512,23 +534,27 @@ const Html = ({
                   </div>
                 )}
 
-                <div className="col-md-12 mb-3">
-                  <label>Default Campaign</label>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      checked={form?.isDefault || false}
-                      onChange={handleDefaultCampaignChange}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="defaultCampaign"
-                    >
-                      Set this as the default campaign
-                    </label>
+                {form?.access_type === "private" ? (
+                  <></>
+                ) : (
+                  <div className="col-md-12 mb-3">
+                    <label>Default Campaign</label>
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={form?.isDefault || false}
+                        onChange={handleDefaultCampaignChange}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="defaultCampaign"
+                      >
+                        Set this as the default campaign
+                      </label>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div
                   className="col-md-12 mb-3 category-dropdown"
@@ -596,6 +622,7 @@ const Html = ({
                           { list: "bullet" },
                           { indent: "-1" },
                           { indent: "+1" },
+                          campaignType,
                         ],
                         ["link", "image", "video"],
                         ["clean"],

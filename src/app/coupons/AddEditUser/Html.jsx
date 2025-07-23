@@ -17,7 +17,10 @@ const Html = ({
   setDestinationUrl,
   errors,
   setErrors,
+  campaignType,
 }) => {
+  console.log(campaignType, "campaignType");
+
   const user = crendentialModel.getUser();
 
   const handleRemove = (valueToRemove) => {
@@ -152,6 +155,7 @@ const Html = ({
                           placeholder="Select Commission Type"
                           intialValue={form?.couponType}
                           result={(e) => {
+                            console.log(e, "====");
                             setform({
                               ...form,
                               couponType: e.value,
@@ -176,6 +180,33 @@ const Html = ({
                       </div>
                     </div>
                   ) : null}
+
+                  {form?.couponType === "Campaign" &&
+                    form?.visibility === "Public" && (
+                      <div className="col-md-6 mb-3 event-select affiliate">
+                        <label>
+                          Select Campaign<span className="star">*</span>
+                        </label>
+                        <div className="select_row">
+                          <MultiSelectValue
+                            id="statusDropdown"
+                            displayValue="label"
+                            placeholder="Select Campaign"
+                            intialValue={form?.affiliate_id}
+                            isClearable={true}
+                            result={(e) => {
+                              setform({ ...form, affiliate_id: e });
+                            }}
+                            options={campaignType}
+                          />
+                        </div>
+                        {submitted && !form?.affiliate_id && (
+                          <div className="invalid-feedback d-block">
+                            {errors?.affiliate_id}
+                          </div>
+                        )}
+                      </div>
+                    )}
 
                   {form?.couponType === "Custom" &&
                     form?.visibility === "Public" && (
@@ -260,6 +291,8 @@ const Html = ({
                           placeholder="Select Media"
                           intialValue={form?.media}
                           result={(e) => {
+                            console.log(e, "SelectedValue");
+
                             setform({ ...form, media: e });
                           }}
                           isSingle={false}
