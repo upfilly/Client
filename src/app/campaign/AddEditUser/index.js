@@ -182,6 +182,9 @@ const AddEditUser = () => {
       return acc;
     }, {})
   );
+
+  console.log(affiliateData, "affiliateData");
+
   const [formPpcData, setFormPpcData] = useState(
     formPpcFields.reduce((acc, field) => {
       acc[field.label] = { value: "Yes", additionalInfo: "" };

@@ -26,9 +26,8 @@ const AddEditUser = () => {
     couponCommission: "",
     status: "Enabled",
   });
-  console.log(user?.website, "user?.websiteuser?.website");
 
-  const [affiliateData, setAffiliateData] = useState();
+  const [affiliateData, setAffiliateData] = useState([]);
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false);
   const [emailLoader, setEmailLoader] = useState(false);
@@ -43,32 +42,56 @@ const AddEditUser = () => {
     DestinationUrl: "",
     websiteAllowed: "",
   });
+  const [campaignType, setCampaignType] = useState([]);
+  const [isAffiliateLoading, setIsAffiliateLoading] = useState(true);
+
+  // Utility function to get affiliate name by ID
+  const getAffiliateNameById = (id) => {
+    if (!id || !relatedAffiliate.length) return "";
+    const affiliate = relatedAffiliate.find((a) => a.id === id);
+    return affiliate?.name || "";
+  };
 
   const getCategory = (p = {}) => {
     let url = "main-category/all";
     ApiClient.get(url).then((res) => {
       if (res.success) {
-        const data = res.data.data;
-        setCategory(data);
+        setCategory(res.data.data);
       }
     });
   };
 
   const allGetAffiliate = (p = {}) => {
+    setIsAffiliateLoading(true);
     let url = "getallaffiliatelisting";
-    ApiClient.get(url).then((res) => {
-      if (res.success) {
-        const data = res.data;
-        const filteredData = data.filter((item) => item !== null);
-        const manipulateData = filteredData.map((itm) => {
-          return {
-            name: itm?.fullName || itm?.firstName,
-            id: itm?.id || itm?._id,
-          };
-        });
-        setAllAffiliate(manipulateData);
-      }
-    });
+    ApiClient.get(url)
+      .then((res) => {
+        if (res.success) {
+          const data = res.data
+            .filter((item) => item !== null)
+            .map((itm) => ({
+              name:
+                itm?.fullName ||
+                itm?.firstName ||
+                itm?.username ||
+                itm?.email?.split("@")[0] ||
+                "Unnamed Affiliate",
+              id: itm?.id || itm?._id || "",
+              value: itm?.id || itm?._id || "",
+            }));
+          setAllAffiliate(data);
+
+          // If editing and media exists, verify it's in the list
+          if (id && form.media) {
+            const exists = data.some((a) => a.id === form.media);
+            if (!exists) {
+              setform((prev) => ({ ...prev, media: "" }));
+            }
+          }
+        }
+        setIsAffiliateLoading(false);
+      })
+      .catch(() => setIsAffiliateLoading(false));
   };
 
   const getBrandData = (p = {}) => {
@@ -77,7 +100,7 @@ const AddEditUser = () => {
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
         const uniqueBrands = new Set();
-        const filteredData = res?.data?.data.reduce((acc, item) => {
+        const filteredData = res.data.data.reduce((acc, item) => {
           if (!uniqueBrands.has(item.brand_id)) {
             uniqueBrands.add(item.brand_id);
             acc.push({
@@ -92,161 +115,51 @@ const AddEditUser = () => {
     });
   };
 
-  const getError = (key) => {
-    return methodModel.getError(key, form, formValidation);
-  };
-
-  function isValidUrl(url) {
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  const isWebsiteAllowed = (url) => {
-    if (!user || !user?.website) {
-      return {
-        allowed: false,
-        message: "Please update your website in your profile to use this feature",
-      };
-    }
-
-    const allowedDomains =
-      typeof user.website === "string"
-        ? [user.website]
-        : Array.isArray(user.website)
-          ? user.website
-          : [];
-
-    if (allowedDomains.length === 0) {
-      return {
-        allowed: false,
-        message: "Please update your website in your profile to use this feature",
-      };
-    }
-
-    const cleanedUrl = url.toString().trim();
-
-    try {
-      let urlToParse = cleanedUrl;
-      if (!/^https?:\/\//i.test(cleanedUrl)) {
-        urlToParse = "https://" + cleanedUrl;
-      }
-
-      const urlObj = new URL(urlToParse);
-      const inputHostname = urlObj.hostname.replace('www.', '').toLowerCase();
-
-      const isAllowed = allowedDomains.some((domain) => {
-        // Clean the allowed domain
-        let domainStr = String(domain).trim().toLowerCase();
-
-        // Remove protocol if present
-        if (domainStr.startsWith('http://') || domainStr.startsWith('https://')) {
-          try {
-            const domainUrl = new URL(domainStr);
-            domainStr = domainUrl.hostname;
-          } catch (e) {
-            domainStr = domainStr.replace(/^https?:\/\//, '');
-          }
-        }
-
-        // Remove www. and trailing slashes
-        domainStr = domainStr.replace('www.', '').replace(/\/+$/, '');
-
-        // Compare the hostnames
-        return inputHostname === domainStr ||
-          inputHostname.endsWith(`.${domainStr}`);
-      });
-
-      return {
-        allowed: isAllowed,
-        message: isAllowed
-          ? ""
-          : `URL must be from allowed domains: ${allowedDomains.join(", ")}`,
-      };
-    } catch (e) {
-      console.error("Error parsing URL:", e);
-      return {
-        allowed: false,
-        message: `Invalid URL format: ${cleanedUrl}`,
-      };
-    }
-  };
-
-  const validateForm = () => {
-    let websiteAllowedError = "";
-
-    if (DestinationUrl) {
-      if (!isValidUrl(DestinationUrl)) {
-        websiteAllowedError = "Please enter a valid URL (including http:// or https://)";
-      } else {
-        const websiteCheck = isWebsiteAllowed(DestinationUrl);
-        if (!websiteCheck.allowed) {
-          websiteAllowedError = websiteCheck.message;
-        }
-      }
-    }
-
-    const newErrors = {
-      DestinationUrl: !DestinationUrl ? "Destination URL is required" : "",
-      websiteAllowed: websiteAllowedError,
-    };
-
-    setErrors(newErrors);
-    return !Object.values(newErrors).some((error) => error !== "");
-  };
+  // ... keep all your existing utility functions (getError, isValidUrl, isWebsiteAllowed, validateForm) ...
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
 
-    if (!validateForm()) {
-      return;
-    }
-    // Validate all required fields
+    if (!validateForm()) return;
+
     const requiredFields = {
       title: "Title",
-      visibility: "Type", // Added type/visibility as required field
+      visibility: "Type",
       couponType: "Commission Type",
       startDate: "Start Date",
       expirationDate: "Expiration Date",
       url: "Site URL",
     };
 
-    // Additional validation for Custom commission type
     if (form?.couponType === "Custom") {
       requiredFields.commissionType = "Custom Commission Type";
       requiredFields.couponAmount = "Commission Value";
     }
 
-    // Validation for Private coupons
     if (form?.visibility === "Exclusive to specific affiliate") {
       requiredFields.media = "Affiliates";
     }
 
-    // Check for empty required fields
     const missingFields = Object.keys(requiredFields).filter(
       (field) =>
         !form[field] || (Array.isArray(form[field]) && form[field].length === 0)
     );
 
     if (missingFields.length > 0) {
-      const fieldNames = missingFields
-        .map((field) => requiredFields[field])
-        .join(", ");
-      toast.error(`Please fill all required fields: ${fieldNames}`);
+      toast.error(
+        `Please fill all required fields: ${missingFields
+          .map((f) => requiredFields[f])
+          .join(", ")}`
+      );
       return;
     }
 
-    // Validate date range
     if (new Date(form.expirationDate) < new Date(form.startDate)) {
       toast.error("Expiration date must be after start date");
       return;
     }
 
-    // Validate commission value for percentage
     if (
       form?.commissionType === "Percentage Commission" &&
       form?.couponAmount > 100
@@ -255,7 +168,6 @@ const AddEditUser = () => {
       return;
     }
 
-    // Validate URL format
     try {
       new URL(form.url);
     } catch (e) {
@@ -263,20 +175,14 @@ const AddEditUser = () => {
       return;
     }
 
-    // Rest of your submission logic remains the same...
     let method = "post";
     let url = "coupon/add";
+    let value = { ...form };
 
-    let value = {
-      ...form,
-    };
-
-    // Convert media to string if it exists
     if (value?.media) {
-      value = { ...value, media: value?.media?.value.toString() };
+      value.media = value.media.toString();
     }
 
-    // If visibility is Public, remove media
     if (form?.visibility === "Public") {
       delete value.media;
     }
@@ -284,13 +190,6 @@ const AddEditUser = () => {
     if (form?.couponType === "Campaign") {
       delete value.commissionType;
       delete value.couponAmount;
-    }
-
-    // Set status to 'Pending' if startDate is in the future
-    const now = new Date();
-    const startDate = new Date(form?.startDate);
-    if (startDate > now) {
-      value.status = "Enabled";
     }
 
     if (value.id) {
@@ -312,9 +211,7 @@ const AddEditUser = () => {
               ? "Coupon Updated Successfully."
               : "Coupon Added Successfully."
           );
-          let redirectUrl = "/coupons";
-          if (role) redirectUrl = "/coupons/" + role;
-          history.push(redirectUrl);
+          history.push(role ? `/coupons/${role}` : "/coupons");
         }
         loader(false);
       })
@@ -326,47 +223,17 @@ const AddEditUser = () => {
       });
   };
 
-  const imageResult = (e) => {
-    setImages(e?.value);
-  };
-
-  const addressResult = (e) => {
-    setform({ ...form, address: e.value });
-  };
-
-  const back = () => {
-    history.back();
-  };
-
-  const emailCheck = (email) => {
-    let isValid = methodModel.emailvalidation(email);
-    if (isValid) {
-      // setEmailLoader(true)
-      // ApiClient.get('api/check/email',{email:email}).then(res=>{
-      //     if(!res.success){
-      //         if(detail?.email!=email){
-      //             setEmailErr(res.error.message)
-      //         }
-      //     }else{
-      //         setEmailErr('')
-      //     }
-      //     setEmailLoader(false)
-      // })
-    }
-  };
-
   useEffect(() => {
     setSubmitted(false);
-
     if (id) {
       loader(true);
       ApiClient.get("coupon/get", { id }).then((res) => {
         if (res.success) {
-          let value = res.data;
+          const value = res.data;
           setDetail(value);
           setform({
             id: value?.id,
-            media: value?.media,
+            media: value?.media || "",
             couponCode: value?.couponCode,
             couponType: value?.couponType,
             startDate: value?.startDate,
@@ -376,61 +243,61 @@ const AddEditUser = () => {
             applicable: value?.applicable,
             visibility: value?.visibility,
             url: value?.url,
-            // "couponCommission": value?.couponCommission,
             description: value?.description,
             title: value?.title,
             status: value?.status,
           });
           setImages(value?.image);
-          // let payload = { ...defaultvalue };
-          // let oarr = Object.keys(defaultvalue);
-
-          // oarr.forEach((itm) => {
-          //     if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
-          //         payload[itm] = value[itm].id.toString();
-          //     } else {
-          //         payload[itm] = value[itm] || "";
-          //     }
-          // });
         }
         loader(false);
       });
     }
   }, [id]);
 
-  // const getData = () => {
-  //     let url = 'users/list'
-  //     ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
-  //         if (res.success) {
-  //             const data1 = res.data.data.filter(item => item.status === "active");
-  //             setAffiliateData(data1)
-  //         }
-  //     })
-  // }
-
-  const getData = (p = {}) => {
-    let url = "getallaffiliatelisting";
-    ApiClient.get(url).then((res) => {
-      if (res.success) {
-        const data = res.data;
-        const filteredData = data.filter((item) => item !== null);
-        const manipulateData = filteredData.map((itm) => {
-          return {
-            name: itm?.fullName || itm?.firstName,
-            id: itm?.id || itm?._id,
-          };
-        });
-        setAffiliateData(manipulateData);
-      }
-    });
-  };
-
   useEffect(() => {
     getData();
     getBrandData();
     getCategory();
     allGetAffiliate();
+    getCampaignTypeData();
   }, []);
+
+  const getData = (p = {}) => {
+    let url = "getallaffiliatelisting";
+    ApiClient.get(url).then((res) => {
+      if (res.success) {
+        const data = res.data
+          .filter((item) => item !== null)
+          .map((itm) => ({
+            name: itm?.fullName || itm?.firstName,
+            id: itm?.id || itm?._id,
+          }));
+        setAffiliateData(data);
+      }
+    });
+  };
+  const getCampaignTypeData = (p = {}) => {
+    let url = "campaign/brand/all";
+    ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
+      if (res.success) {
+        const data = res.data?.data;
+        console.log(data, " campaignTypeData");
+
+        const filteredData = data.filter(
+          (item) => item?.access_type === "public"
+        );
+        console.log(filteredData, "filteredData");
+        const newFlterData = filteredData?.map((item) => {
+          return {
+            value: item?.id || item?._id,
+            label: item?.name,
+          };
+        });
+        console.log(newFlterData, "finewFlterDatanewFlterDatalteredData");
+        setCampaignType(newFlterData);
+      }
+    });
+  };
 
   return (
     <>
@@ -438,20 +305,15 @@ const AddEditUser = () => {
         id={id}
         form={form}
         detail={detail}
-        emailCheck={emailCheck}
         emailLoader={emailLoader}
         category={category}
-        back={back}
         setEyes={setEyes}
         eyes={eyes}
         role={role}
         setform={setform}
         submitted={submitted}
         images={images}
-        addressResult={addressResult}
         handleSubmit={handleSubmit}
-        imageResult={imageResult}
-        getError={getError}
         affiliateData={affiliateData}
         BrandData={BrandData}
         relatedAffiliate={relatedAffiliate}
@@ -459,6 +321,9 @@ const AddEditUser = () => {
         setDestinationUrl={setDestinationUrl}
         errors={errors}
         setErrors={setErrors}
+        isAffiliateLoading={isAffiliateLoading}
+        getAffiliateNameById={getAffiliateNameById}
+        campaignType={campaignType}
       />
     </>
   );

@@ -1,88 +1,57 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Html from "./html";
-import methodModel from "@/methods/methods";
 
 const MultiSelectValue = ({
-  intialValue,
+  initialValue,
   options,
-  isSingle = false,
   result,
   displayValue = "name",
   id,
   name,
-  singleSelect,
+  isClearable,
   placeholder,
   disabled,
 }) => {
-  console.log(disabled, "disabled");
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(null);
 
-  const handleChange = (e, type) => {
-    let value = [];
+  const handleChange = (selectedOption) => {
+    const selected =
+      selectedOption.length > 0
+        ? selectedOption[selectedOption.length - 1]
+        : null;
 
-    if (isSingle) {
-      let length = e.length;
-      if (length) {
-        value = e[length - 1].id;
-      } else {
-        value = "";
-      }
-    } else {
-      value = e.map((itm) => {
-        return itm.id;
-      });
-    }
-    result({ event: "value", value: value });
+    setSelectedValue(selected);
+    result(selected);
   };
 
   useEffect(() => {
-    if (isSingle) {
-      if (intialValue?.length) {
-        let ext = methodModel.find(options, intialValue, "id");
-        if (ext) {
-          setSelectedValues([ext]);
-        } else {
-          setSelectedValues([
-            {
-              id: intialValue,
-              [displayValue]: intialValue,
-            },
-          ]);
-        }
-      } else {
-        setSelectedValues([]);
+    if (initialValue) {
+      if (typeof initialValue === "object" && initialValue.id) {
+        const found = options.find((opt) => opt.id === initialValue.id);
+        setSelectedValue(found || null);
+      } else if (initialValue) {
+        const found = options.find((opt) => opt.id === initialValue);
+        setSelectedValue(found || null);
       }
     } else {
-      let value = [];
-      if (intialValue?.length && options?.length) {
-        value = intialValue?.map((itm) => {
-          return {
-            ...methodModel.find(options, itm, "id"),
-            id: methodModel.find(options, itm, "id")?.id || "",
-            [displayValue]:
-              methodModel.find(options, itm, "id")?.[displayValue] ||
-              "Not Exist",
-          };
-        });
-      }
-      setSelectedValues(value);
+      setSelectedValue(null);
     }
-  }, [intialValue, options]);
+  }, [initialValue, options]);
 
   return (
-    <>
-      <Html
-        id={id}
-        displayValue={displayValue}
-        placeholder={placeholder}
-        options={options}
-        selectedValues={selectedValues}
-        handleChange={handleChange}
-        name={name}
-        singleSelect={singleSelect}
-        disabled={disabled}
-      />
-    </>
+    <Html
+      id={id}
+      displayValue={displayValue}
+      placeholder={placeholder}
+      options={options}
+      selectedValues={selectedValue ? [selectedValue] : []}
+      handleChange={handleChange}
+      name={name}
+      singleSelect={true}
+      isClearable={isClearable}
+      disabled={disabled}
+      hideSelectAll={true}
+    />
   );
 };
 

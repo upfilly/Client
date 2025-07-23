@@ -360,7 +360,10 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                       <input
                         type="radio"
                         className="form-check-input"
-                        checked={form?.timeInterval === "none"}
+                        checked={
+                          form?.timeInterval === "none" ||
+                          form?.timeInterval === ""
+                        }
                         onChange={() => handleTimeIntervalChange("none")}
                       />
                       <label className="form-check-label">None</label>

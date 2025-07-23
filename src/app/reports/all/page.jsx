@@ -46,7 +46,7 @@ export default function AnalyticsDashboard() {
   const [compDates, setCompDates] = useState([firstDayOfMonth, today]);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [exchangeRate, setExchangeRate] = useState(null);
-  const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
+  const [comparisonPeriod, setComparisonPeriod] = useState("none");
   const [CampaignData, setCamapign] = useState([]);
   const [campaignId, setCampaignId] = useState([]);
 
@@ -205,20 +205,32 @@ export default function AnalyticsDashboard() {
     if (comparisonPeriod !== "none" && (!compDates[0] || !compDates[1])) {
       // Set default comparison dates based on the selected period
       const today = new Date();
-      const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      const firstDayOfMonth = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1
+      );
 
       switch (comparisonPeriod) {
         case "previousPeriod":
           const duration = baseDates[1] - baseDates[0];
           effectiveCompDates = [
             new Date(baseDates[0].getTime() - duration - 1),
-            new Date(baseDates[1].getTime() - duration - 1)
+            new Date(baseDates[1].getTime() - duration - 1),
           ];
           break;
         case "previousYear":
           effectiveCompDates = [
-            new Date(baseDates[0].getFullYear() - 1, baseDates[0].getMonth(), baseDates[0].getDate()),
-            new Date(baseDates[1].getFullYear() - 1, baseDates[1].getMonth(), baseDates[1].getDate())
+            new Date(
+              baseDates[0].getFullYear() - 1,
+              baseDates[0].getMonth(),
+              baseDates[0].getDate()
+            ),
+            new Date(
+              baseDates[1].getFullYear() - 1,
+              baseDates[1].getMonth(),
+              baseDates[1].getDate()
+            ),
           ];
           break;
         default:
@@ -233,12 +245,14 @@ export default function AnalyticsDashboard() {
       affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
       brand_id: selectedBrand?.map((dat) => dat).join(",") || "",
       campaign: campaignId?.map((dat) => dat).join(",") || "",
-      startDate2: comparisonPeriod == "none"
-        ? ""
-        : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
-      endDate2: comparisonPeriod == "none"
-        ? ""
-        : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
+      startDate2:
+        comparisonPeriod == "none"
+          ? ""
+          : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
+      endDate2:
+        comparisonPeriod == "none"
+          ? ""
+          : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
     });
 
     getAnalyticsData({
@@ -247,12 +261,14 @@ export default function AnalyticsDashboard() {
       affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
       brand_id: selectedBrand?.map((dat) => dat).join(",") || "",
       campaign: campaignId?.map((dat) => dat).join(",") || "",
-      startDate2: comparisonPeriod == "none"
-        ? ""
-        : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
-      endDate2: comparisonPeriod == "none"
-        ? ""
-        : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
+      startDate2:
+        comparisonPeriod == "none"
+          ? ""
+          : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
+      endDate2:
+        comparisonPeriod == "none"
+          ? ""
+          : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
     });
 
     setHandleDateFilter(false);
@@ -287,18 +303,20 @@ export default function AnalyticsDashboard() {
                 onBlur={() => setHandleDateFilter(false)}
               >
                 {baseDates?.[0] ||
-                  baseDates?.[1] ||
-                  compDates?.[0] ||
-                  compDates?.[1]
+                baseDates?.[1] ||
+                compDates?.[0] ||
+                compDates?.[1]
                   ? comparisonPeriod == "none"
-                    ? `${moment(baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(
-                      baseDates?.[1]
-                    ).format("MMMM DD, YYYY")}`
-                    : `${moment(baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(
-                      baseDates?.[1]
-                    ).format("MMMM DD, YYYY")} ⇆ ${moment(compDates?.[0]).format(
-                      "MMMM DD, YYYY"
-                    )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
+                    ? `${moment(baseDates?.[0]).format(
+                        "MMMM DD, YYYY"
+                      )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
+                    : `${moment(baseDates?.[0]).format(
+                        "MMMM DD, YYYY"
+                      )} - ${moment(baseDates?.[1]).format(
+                        "MMMM DD, YYYY"
+                      )} ⇆ ${moment(compDates?.[0]).format(
+                        "MMMM DD, YYYY"
+                      )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
                   : "Select Date Range"}
               </span>
             </div>
@@ -348,18 +366,6 @@ export default function AnalyticsDashboard() {
               />
             </div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
           <div className="controls mt-2">
             {/* {handleDateFilter && (

@@ -8,6 +8,7 @@ const Html = ({
   handleChange,
   displayValue,
   id,
+  isClearable,
   name,
   singleSelect,
   placeholder,
@@ -76,7 +77,7 @@ const Html = ({
       return;
     }
 
-    if (actionMeta.option?.isReset) {
+    if (actionMeta.option?.isResetlabel) {
       handleChange([], "reset");
       return;
     }
@@ -158,6 +159,7 @@ const Html = ({
         closeMenuOnSelect={singleSelect}
         hideSelectedOptions={false}
         classNamePrefix="react-select"
+        isClearable={isClearable}
         filterOption={(option, searchText) => {
           if (option.data.isActionItem) return true;
           return option.label.toLowerCase().includes(searchText.toLowerCase());
