@@ -351,33 +351,18 @@ const Html = ({
                   </label>
                   <div className="select_row event-select">
                     <MultiSelectValue
-                      id="eventTypeDropdown"
-                      displayValue="name"
-                      isClearable={true}
-                      placeholder="Select Event Type"
-                      initialValue={
-                        Array.isArray(form?.event_type)
-                          ? form.event_type.map(
-                              (type) =>
-                                EventType.find((et) => et.id === type) || {
-                                  id: type,
-                                  name: type,
-                                }
-                            )
-                          : []
-                      }
-                      disabled={!!id}
-                      result={(selectedOptions) => {
-                        const selectedValues = Array.isArray(selectedOptions)
-                          ? selectedOptions.map((opt) => opt.id)
-                          : [];
-
-                        setform({
-                          ...form,
-                          event_type: selectedValues,
-                        });
+                      intialValue={form.event_type} // Array of IDs like ["1", "2"] or single ID
+                      options={EventType} // Array of {id, name} objects
+                      result={(res) => {
+                        // For multi-select:
+                        setform({ ...form, event_type: res.value });
+                        // For single select:
+                        // setform({ ...form, event_type: res.value });
                       }}
-                      options={EventType}
+                      displayValue="name"
+                      placeholder="Select Event Type"
+                      disabled={!!id}
+                      isSingle={false} // Set to true for single-select mode
                     />
                   </div>
                   {submitted &&
@@ -394,26 +379,27 @@ const Html = ({
                   <div className="select_row event-select affiliate">
                     <MultiSelectValue
                       id="statusDropdown"
-                      singleSelect={true}
+                      isSingle={true}
                       displayValue="label"
-                      isClearable={true}
                       placeholder="Select Approval"
                       intialValue={
-                        Array.isArray(form?.campaign_type)
-                          ? form?.campaign_type
-                          : form?.campaign_type
+                        form?.campaign_type
+                          ? Array.isArray(form.campaign_type)
+                            ? form.campaign_type[0]
+                            : form.campaign_type
+                          : undefined
                       }
-                      disabled={form?.access_type == "private" || id}
+                      disabled={form?.access_type == "private" || !!id}
                       result={(e) => {
-                        console.log(e, "eee");
+                        console.log("Selection result:", e);
                         setform((prevState) => ({
                           ...prevState,
-                          campaign_type: e,
+                          campaign_type: e.value,
                         }));
                       }}
                       options={[
-                        { value: "manual", label: "Manual" },
-                        { value: "automatic", label: "Automatic" },
+                        { id: "manual", label: "Manual" },
+                        { id: "automatic", label: "Automatic" },
                       ]}
                     />
                   </div>

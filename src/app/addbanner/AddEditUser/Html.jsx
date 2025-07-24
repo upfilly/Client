@@ -24,7 +24,8 @@ const Html = ({
   back,
   selectedItems,
   setSelectedItems,
-  errors, setErrors
+  errors,
+  setErrors,
 }) => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);

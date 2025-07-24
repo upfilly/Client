@@ -28,6 +28,8 @@ const Html = ({
   emailCheck,
   emailErr,
   emailLoader,
+  handleClick,
+  dateInputRef,
 }) => {
   const [imageError, setImageError] = useState("");
   const [profileData, setProfileData] = useState();
@@ -91,7 +93,7 @@ const Html = ({
                       aria-hidden="true"
                     ></i>
                   </a>
-                  {form?.id ? "Edit" : "Add"} Untracked Sales 
+                  {form?.id ? "Edit" : "Add"} Untracked Sales
                 </h3>
                 <hr className="form-divider" />
               </div>
@@ -275,6 +277,8 @@ const Html = ({
                   </label>
                   <input
                     type="date"
+                    onClick={handleClick}
+                    ref={dateInputRef}
                     className={`form-control ${
                       submitted && !form?.order_date ? "is-invalid" : ""
                     }`}

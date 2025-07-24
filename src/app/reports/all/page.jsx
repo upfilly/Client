@@ -336,6 +336,7 @@ export default function AnalyticsDashboard() {
                   id="statusDropdown"
                   displayValue="fullName"
                   placeholder="Select Affiliate"
+                  isClearable={true}
                   intialValue={selectedAffiliate}
                   result={(e) => setSelectedAffiliate(e.value)}
                   options={affiliateData}
@@ -348,6 +349,8 @@ export default function AnalyticsDashboard() {
                 id="statusDropdown"
                 displayValue="name"
                 placeholder="Select Campaign"
+                isClearable={true}
+                singleSelect={false}
                 intialValue={campaignId}
                 result={(e) => setCampaignId(e.value)}
                 options={CampaignData}

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import Layout from "@/app/components/global/layout";
-import SelectDropdown from "@/app/components/common/SelectDropdown";
-import "../style.scss";
 import MultiSelectValue from "@/app/components/common/MultiSelectValue";
+import SelectDropdown from "@/app/components/common/SelectDropdown";
+import Layout from "@/app/components/global/layout";
 import crendentialModel from "@/models/credential.model";
+import "../style.scss";
 
 const Html = ({
   category,
@@ -18,6 +17,10 @@ const Html = ({
   errors,
   setErrors,
   campaignType,
+  dateRef1,
+  handleClick1,
+  dateRef2,
+  handleClick2,
 }) => {
   console.log(campaignType, "campaignType");
 
@@ -53,7 +56,12 @@ const Html = ({
             <div className=" pprofile1 card card-shadow p-4">
               <div className="">
                 <div className="main_title_head profile-card">
-                  <h3 className="VieUser">
+                  <h3
+                    className="VieUse dateRef1={dateRef1}
+        handleClick1={handleClick1}
+        dateRef2={dateRef2}
+        handleClick2={handleClick2}r"
+                  >
                     <a to="/campaign" onClick={(e) => back()}>
                       {" "}
                       <i
@@ -316,6 +324,8 @@ const Html = ({
                     <div className="position-relative">
                       <input
                         type="date"
+                        ref={dateRef1}
+                        onClick={handleClick1}
                         className="width_full"
                         value={form.startDate}
                         min={new Date().toISOString().split("T")[0]}
@@ -339,6 +349,8 @@ const Html = ({
                     <div className="position-relative">
                       <input
                         type="date"
+                        ref={dateRef2}
+                        onClick={handleClick2}
                         className="width_full"
                         min={form.startDate}
                         value={form.expirationDate}

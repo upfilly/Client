@@ -258,7 +258,7 @@ const AddEditUser = () => {
       // commission: "1",
       region: selectedRegionItems?.regions,
       region_continents: selectedRegionItems?.countries,
-      campaign_type: form?.campaign_type?.[0],
+      campaign_type: "manual" || "automatic",
       category: selectedItems?.categories,
       sub_category: selectedItems?.subCategories,
       sub_child_category: selectedItems?.subSubCategories,

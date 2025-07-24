@@ -57,7 +57,7 @@ const Html = ({
                     <SelectDropdown                                                     theme='search'
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="All Status"
+                        placeholder="Status"
                         intialValue={filters.status}
                         result={e => { ChangeStatus(e.value) }}
                         options={[

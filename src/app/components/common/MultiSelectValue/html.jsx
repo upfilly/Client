@@ -40,7 +40,6 @@ const Html = ({
       });
     }
 
-    // Filter out selected values from the regular options
     const regularOptions = options
       .filter(
         (option) =>

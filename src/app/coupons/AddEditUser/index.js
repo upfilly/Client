@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import ApiClient from "../../../methods/api/apiClient";
 import loader from "../../../methods/loader";
 import methodModel from "../../../methods/methods";
@@ -298,7 +298,20 @@ const AddEditUser = () => {
       }
     });
   };
+  const useDatePicker = () => {
+    const ref = useRef(null);
 
+    const handleClick = useCallback(() => {
+      if (ref.current && !ref.current.disabled) {
+        ref.current.showPicker();
+      }
+    }, []);
+
+    return [ref, handleClick];
+  };
+
+  const [dateRef1, handleClick1] = useDatePicker();
+  const [dateRef2, handleClick2] = useDatePicker();
   return (
     <>
       <Html
@@ -324,6 +337,10 @@ const AddEditUser = () => {
         isAffiliateLoading={isAffiliateLoading}
         getAffiliateNameById={getAffiliateNameById}
         campaignType={campaignType}
+        dateRef1={dateRef1}
+        handleClick1={handleClick1}
+        dateRef2={dateRef2}
+        handleClick2={handleClick2}
       />
     </>
   );

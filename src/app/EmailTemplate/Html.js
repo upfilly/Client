@@ -274,6 +274,14 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     }
   };
 
+  const dateInputRef = useRef(null);
+
+  const handleClick = () => {
+    if (dateInputRef.current && !dateInputRef.current.disabled) {
+      dateInputRef.current.showPicker();
+    }
+  };
+
   return (
     <Layout name="Send E-mail">
       <div className="sidebar-left-content">
@@ -375,6 +383,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                   <div className="form-group mb-3">
                     <label className="form-label">Joined Date</label>
                     <input
+                      ref={dateInputRef}
                       type="date"
                       className={`form-control ${
                         errors.acceptedDate ? "is-invalid" : ""
@@ -382,6 +391,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                       disabled={!form?.timeInterval}
                       value={moment(form?.acceptedDate).format("YYYY-MM-DD")}
                       onChange={handleDateChange}
+                      onClick={handleClick}
                       max={moment().format("YYYY-MM-DD")}
                     />
                     {errors.acceptedDate && (
@@ -391,7 +401,6 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                     )}
                   </div>
                 </div>
-
                 <div className="col-12">
                   <div className="form-group mb-3">
                     <label className="form-label">Email Template Preview</label>

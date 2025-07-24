@@ -116,7 +116,7 @@ const Html = ({
                 }}
                 options={[
                   { id: "active", name: "Active" },
-                  { id: "inactive", name: "Inactive" },
+                  { id: "deactive", name: "Inactive" },
                 ]}
                 // className="status-filter-dropdown"
               />

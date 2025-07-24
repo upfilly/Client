@@ -22,7 +22,7 @@ const Html = ({
   total,
   setFilter,
   user,
-  getData
+  getData,
 }) => {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -41,7 +41,7 @@ const Html = ({
   const handleCountChange = (count) => {
     setFilter({ ...filters, count: count, page: 1 });
     getData({ count: count, page: 1 });
-};
+  };
 
   return (
     <>
@@ -58,7 +58,10 @@ const Html = ({
             <div className="col-lg-12">
               <div className="d-flex gap-2 flex-wrap filterFlex phView align-items-center   justify-content-end">
                 {permission("group_add") && (
-                  <a className="btn btn-primary ms-2 px-3" onClick={(e) => add()}>
+                  <a
+                    className="btn btn-primary ms-2 px-3"
+                    onClick={(e) => add()}
+                  >
                     <i className="fa fa-plus mr-1"></i> Add
                   </a>
                 )}
@@ -67,7 +70,7 @@ const Html = ({
                   id="statusDropdown"
                   className="mr-2 "
                   displayValue="name"
-                  placeholder="All Status"
+                  placeholder="Status"
                   intialValue={filters?.status}
                   result={(e) => {
                     ChangeStatus(e.value);
@@ -246,18 +249,26 @@ const Html = ({
             </div>
           </div>
         </div>
-        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
-          <span>Show <select
-            className="form-control"
-            onChange={(e) => handleCountChange(parseInt(e.target.value))}
-            value={filters.count}
-          >
-            <option value={10}>10</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-            <option value={150}>150</option>
-            <option value={200}>200</option>
-          </select> from {total} Groups</span>
+        <div
+          className={`paginationWrapper ${
+            !loaging && total > 10 ? "" : "d-none"
+          }`}
+        >
+          <span>
+            Show{" "}
+            <select
+              className="form-control"
+              onChange={(e) => handleCountChange(parseInt(e.target.value))}
+              value={filters.count}
+            >
+              <option value={10}>10</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+              <option value={150}>150</option>
+              <option value={200}>200</option>
+            </select>{" "}
+            from {total} Groups
+          </span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"
