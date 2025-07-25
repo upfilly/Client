@@ -67,9 +67,10 @@ const Html = ({
   };
 
   const getExportUrl = (type) => {
-    const baseUrl = `${environment.api}coupon/getAll`;
+    const baseUrl = `coupon/getAll`;
     const params = new URLSearchParams({
       media: user?.id,
+      selectedCoupon:selectedRows.map((dat)=>dat).join(","),
       [type]: "yes",
       visibility: "Public",
     }).toString();
@@ -103,7 +104,7 @@ const Html = ({
   };
 
   const copyToClipboard = (type) => {
-    const url = getExportUrl(type);
+    const url = `${environment.api}${getExportUrl(type)}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopied({ ...copied, [type]: true });
       setTimeout(() => setCopied({ ...copied, [type]: false }), 2000);
@@ -175,7 +176,7 @@ const Html = ({
                 className="btn btn-success export-btn"
                 onClick={exportCSV}
                 data-tooltip-id="csv-tooltip"
-                data-tooltip-content={getExportUrl("csv")}
+                data-tooltip-content={`${environment.api}${getExportUrl("csv")}`}
               >
                 Export CSV
               </button>
@@ -192,7 +193,7 @@ const Html = ({
                 className="btn btn-warning export-btn"
                 onClick={exportXML}
                 data-tooltip-id="xml-tooltip"
-                data-tooltip-content={getExportUrl("xml")}
+                data-tooltip-content={`${environment.api}${getExportUrl("xml")}`}
               >
                 Export XML
               </button>

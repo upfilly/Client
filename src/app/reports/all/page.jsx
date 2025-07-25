@@ -124,20 +124,30 @@ export default function AnalyticsDashboard() {
   };
 
   const getData = (p = {}) => {
-    let url = "getallaffiliatelisting";
-    ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
+    let url = "campaign/affiliate";
+    ApiClient.get(url, { campaign:campaignId?.map((dat)=>dat).join(",")}).then((res) => {
       if (res.success) {
         const data = res.data;
-        const filteredData = data.filter((item) => item !== null);
-        setAffiliateData(filteredData);
+        const filteredData = data.affiliateFetch?.filter((item) => item !== null);
+        const uniqueData = filteredData?.filter((item, index, self) =>
+          index === self.findIndex((t) => (
+            t.id === item.id
+          ))
+        );
+        setAffiliateData(uniqueData);
+      }else{
+        setAffiliateData([]);
       }
     });
   };
 
   useEffect(() => {
-    getData();
     getBrandData();
   }, []);
+
+  useEffect(() => {
+    getData();
+  }, [campaignId]);
 
   const getAnalyticsData = (p = {}) => {
     let filter = { ...p };
@@ -322,6 +332,19 @@ export default function AnalyticsDashboard() {
             </div>
 
             <div className="dropdown-item">
+              <MultiSelectValue
+                id="statusDropdown"
+                displayValue="name"
+                placeholder="Select Campaign"
+                isClearable={true}
+                singleSelect={false}
+                intialValue={campaignId}
+                result={(e) => setCampaignId(e.value)}
+                options={CampaignData}
+              />
+            </div>
+
+            <div className="dropdown-item">
               {user.role !== "brand" ? (
                 <MultiSelectValue
                   id="statusDropdown"
@@ -344,18 +367,7 @@ export default function AnalyticsDashboard() {
               )}
             </div>
 
-            <div className="dropdown-item">
-              <MultiSelectValue
-                id="statusDropdown"
-                displayValue="name"
-                placeholder="Select Campaign"
-                isClearable={true}
-                singleSelect={false}
-                intialValue={campaignId}
-                result={(e) => setCampaignId(e.value)}
-                options={CampaignData}
-              />
-            </div>
+           
 
             <div className="dropdown-item">
               <SelectDropdown

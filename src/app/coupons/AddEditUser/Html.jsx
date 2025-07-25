@@ -309,7 +309,7 @@ const Html = ({
                       </div>
                       {submitted && !form?.media ? (
                         <div className="invalid-feedback d-block">
-                          Brand is Required
+                          Affiliate is Required
                         </div>
                       ) : (
                         <></>

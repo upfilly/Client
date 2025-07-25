@@ -716,7 +716,7 @@ const Html = ({
                           <th
                             scope="col"
                             className="table_data"
-                            onClick={(e) => sorting("affiliate_name")}
+                            onClick={(e) => sorting("campaign_type")}
                           >
                             Affiliate Approval
                             {filters?.sorder === "asc" ? "↑" : "↓"}
