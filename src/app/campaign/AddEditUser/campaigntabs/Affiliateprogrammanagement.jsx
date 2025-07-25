@@ -68,16 +68,16 @@ const AffiliateProgramManagement = ({
   };
 
   return (
-    <div className="container-fluid vh-100 d-flex flex-column p-3">
+    <div className="container-fluid vh-100 d-flex flex-column p-2">
       <div className="row flex-grow-1">
-        <div className="col-12 d-flex flex-column h-100 ">
+        <div className="col-12 d-flex flex-column h-100 p-0 ">
 
           {/* Tab Navigation */}
-          <ul className="nav nav-tabs flex-shrink-0 pb-3" id="affiliateTab" role="tablist">
+          <ul className="nav nav-tabs  custom-nav-tabs-class flex-shrink-0 pb-3" id="affiliateTab" role="tablist">
             {tabsData.map((tab) => (
               <li className="nav-item" role="presentation" key={tab.id}>
                 <button
-                  className={`nav-link shadow-none border-0 ${activeTab === tab.id ? 'active fw-semibold  text-white bg-tab' : 'text-dark bg-transparent'}`}
+                  className={`nav-link shadow-none border-0 ${activeTab === tab.id ? 'active fw-semibold  text-primary bg-tab' : 'text-dark bg-transparent'}`}
                   id={`${tab.id}-tab`}
                   type="button"
                   role="tab"
@@ -93,7 +93,7 @@ const AffiliateProgramManagement = ({
 
           {/* Tab Content */}
           <div
-            className="tab-content border border-top-0 rounded-bottom shadow-sm flex-grow-1 d-flex flex-column"
+            className="tab-content  custom-tab-content-class   border border-top-0 rounded-bottom  shadow-sm flex-grow-1 d-flex flex-column"
             id="affiliateTabContent"
           >
             {tabsData.map((tab) => (<>
@@ -105,7 +105,7 @@ const AffiliateProgramManagement = ({
                 role="tabpanel"
                 aria-labelledby={`${tab.id}-tab`}
               >
-                {(activeTab == tab.id) && <div className="p-4 flex-grow-1 overflow-auto tab-height">
+                {(activeTab == tab.id) && <div className="p-2 p-sm-4 flex-grow-1 overflow-auto border border-[#000] tab-height">
                   {tab.content}
                 </div>}
               </div>}

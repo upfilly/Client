@@ -1449,7 +1449,7 @@ input.searchbar.mr-2 {
 
   .nav-tabs {
     border-radius: 3px !important;
-    height: 40px !important;
+    height: 77px !important;
     background: none !important;
     border: none !important;
     margin-top: 1rem;
@@ -1618,6 +1618,8 @@ input.searchbar.mr-2 {
   h5.heading_holidays {
     margin-top: 30px !important;
   }
+
+
 }
 
 // profile changes
@@ -5908,27 +5910,6 @@ input.form-control {
   width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .custom-description {
   .ql-toolbar {
     border-radius: 6px 6px 0 0 !important;
@@ -6056,9 +6037,17 @@ input.dateselect {
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
-  .export-group .export-btn {
 
+  input.form-control-file.over_input {
+    height: 0px !important;
+  }
+
+  .export-group .export-btn {
     font-size: 16px !important;
+  }
+
+  .transaction-heading {
+    font-size: 15px;
   }
 
 
@@ -6126,9 +6115,6 @@ input.dateselect {
     padding: 10px !important;
   }
 
-
-
-
   .reset-filters-container {
     justify-content: flex-start !important;
   }
@@ -6162,7 +6148,51 @@ input.dateselect {
   .date_select {
     min-width: 100% !important;
   }
+
+  .sidebar_main .nav-item .nav-link {
+    padding: 4px !important;
+    font-size: 14px;
+  }
+
+  .sidebar_main .nav-item .nav-link i {
+    font-size: 18px !important;
+  }
+
+
+  .fixed-topbar {
+    padding: 0px 8px !important;
+  }
+
+  .set-header-icon {
+    height: 43px !important;
+  }
+
+  .help-icon svg {
+    width: 17px;
+  }
+
+  .notifications svg {
+    width: 17px;
+  }
+
+  .profile-img .dropdown img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
 }
+
+@media (max-width: 420px) {
+  .custom-tab-content-class {
+    margin-top: 50px !important;
+  }
+}
+
+.custom-nav-tabs-class {
+  margin-bottom: 0px !important;
+}
+
+
 
 .dropdown-item:active {
   background-color: unset !important;

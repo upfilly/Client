@@ -208,7 +208,7 @@ const Html = ({
     >
       <form onSubmit={handleSubmit}>
         <div className="sidebar-left-content">
-          <div className="pprofile1 card card-shadow p-4">
+          <div className="pprofile1 card card-shadow p-3 p-sm-4">
             <div className="">
               <div className="main_title_head profile-card">
                 <h3 className="VieUser">
@@ -219,7 +219,7 @@ const Html = ({
                       aria-hidden="true"
                     ></i>
                   </a>
-                  {form && form.id ? "Edit" : "Add"} Campaign
+                  {form && form.id ? "Edit" : "Add"} Campaign 
                 </h3>
                 <hr />
               </div>
@@ -538,7 +538,7 @@ const Html = ({
                         className="form-check-label"
                         htmlFor="defaultCampaign"
                       >
-                        Set this as the default campaign
+                        Set this as the default campaign 
                       </label>
                     </div>
                   </div>
@@ -740,10 +740,12 @@ const Html = ({
                 </div>
               </div>
 
-              <div className="text-right edit-btns">
+              
+
+              <div className="text-right edit-btns mt-3">
                 {!isTermsAccepted && (
                   <p className="text-danger">
-                    *Accept terms and conditions of legal terms
+                    *Accept terms and conditions of legal terms 
                   </p>
                 )}
                 <button
