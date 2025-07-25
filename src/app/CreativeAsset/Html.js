@@ -191,7 +191,7 @@ const Html = () => {
                                     <div className='col-md-12'>
                                         {/* Document Name Field */}
                                         <div className="mb-3">
-                                            <label>Document Name <span className="text-danger">*</span></label>
+                                            <label>Document Name  <span className="text-danger">*</span></label>
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.docName ? 'is-invalid' : ''}`}
@@ -338,7 +338,7 @@ const Html = () => {
                                 </Modal.Body>
                             </Modal>
 
-                            {!loaderData && <div className='text-end mt-3'>
+                            {!loaderData && <div className='text-start  text-sm-end mt-3'>
                                 <button type="button" className="btn btn-primary" onClick={handleSubmit}>Send Data</button>
                             </div>}
                         </div>

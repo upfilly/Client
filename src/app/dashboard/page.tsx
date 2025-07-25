@@ -459,7 +459,8 @@ export default function Dashboard() {
         </div>
         <div className="mt-3">
           <div className="container-fluid">
-            <div className="row mb-3 justify-content-end">
+            <div className="row mb-3 justify-content-center justify-content-sm-end">
+              
               <div className="col-auto">
                 <div className="btn-group btnsgroup" role="group" aria-label="Filter">
                   <button
