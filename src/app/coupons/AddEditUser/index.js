@@ -289,8 +289,8 @@ const AddEditUser = () => {
         console.log(filteredData, "filteredData");
         const newFlterData = filteredData?.map((item) => {
           return {
-            value: item?.id || item?._id,
-            label: item?.name,
+            id: item?.id || item?._id,
+            name: item?.name,
           };
         });
         console.log(newFlterData, "finewFlterDatanewFlterDatalteredData");

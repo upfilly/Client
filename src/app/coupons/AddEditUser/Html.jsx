@@ -198,19 +198,19 @@ const Html = ({
                         <div className="select_row">
                           <MultiSelectValue
                             id="statusDropdown"
-                            displayValue="label"
+                            displayValue="name"
                             placeholder="Select Campaign"
-                            intialValue={form?.affiliate_id}
+                            intialValue={form?.campaign_id}
                             isClearable={true}
                             result={(e) => {
-                              setform({ ...form, affiliate_id: e });
+                              setform({ ...form, campaign_id: e.value });
                             }}
                             options={campaignType}
                           />
                         </div>
-                        {submitted && !form?.affiliate_id && (
+                        {submitted && !form?.campaign_id && (
                           <div className="invalid-feedback d-block">
-                            {errors?.affiliate_id}
+                            {errors?.campaign_id}
                           </div>
                         )}
                       </div>
@@ -301,7 +301,7 @@ const Html = ({
                           result={(e) => {
                             console.log(e, "SelectedValue");
 
-                            setform({ ...form, media: e });
+                            setform({ ...form, media: e.value });
                           }}
                           isSingle={false}
                           options={relatedAffiliate}

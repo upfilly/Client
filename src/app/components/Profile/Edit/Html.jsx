@@ -43,16 +43,16 @@ const Html = ({ user,
   category,
   setForm,
   websites,
-  platforms, 
+  platforms,
   setPlatforms,
   setWebsites,
-  history,}) => {
+  history, }) => {
   const [inputFocused, setInputFocused] = useState(false)
   const [categories, setCategories] = useState([]);
   const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
   const [isOpen, setIsOpen] = useState(false);
   const [newItem, setNewItem] = useState("");
-   const [customItems, setCustomItems] = useState(data);
+  const [customItems, setCustomItems] = useState(data);
   const allTimeZone = [
     { "name": "Pacific/Midway", "id": "Pacific/Midway" },
     { "name": "US/Samoa", "id": "US/Samoa" },
@@ -155,7 +155,7 @@ const Html = ({ user,
     { "name": "Pacific/Tongatapu", "id": "Pacific/Tongatapu" }
   ]
 
-  console.log(selectedItems,"selectedItemsselectedItems")
+  console.log(selectedItems, "selectedItemsselectedItems")
 
   const handleAddNewItem = () => {
     if (newItem.trim() !== "" && !customItems.includes(newItem)) {
@@ -211,10 +211,10 @@ const Html = ({ user,
     let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models,property_types" : "advertiser_categories"}&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
-         const data = res.data.data
-                    .map(data => data.parent_cat_name ? data : undefined)
-                    .filter(item => item !== undefined);
-                setCategories(data);
+        const data = res.data.data
+          .map(data => data.parent_cat_name ? data : undefined)
+          .filter(item => item !== undefined);
+        setCategories(data);
       }
     });
   };
@@ -432,7 +432,7 @@ const Html = ({ user,
                             <div className="select_drop ">
                               <label>Timezone</label>
                               <div className="select_row">
-                                <SelectDropdown 
+                                <SelectDropdown
                                   theme='search'
                                   id="statusDropdown"
                                   displayValue="name"
@@ -451,7 +451,7 @@ const Html = ({ user,
                             <div className="select_drop ">
                               <label>Currency</label>
                               <div className="select_row">
-                                <MultiSelectValue 
+                                <MultiSelectValue
                                   theme='search'
                                   id="statusDropdown"
                                   displayValue="name"
@@ -597,15 +597,17 @@ const Html = ({ user,
 
 
                         <div className="col-md-12 mb-3 custom-dropdown">
-                          <label>Select Category<span className="star">*</span></label>
-                          <div className="drops category-input">
-                            <MultiSelectDropdown
-                              isOpen={isOpen}
-                              setIsOpen={setIsOpen}
-                              data={categories}
-                              selectedItems={selectedItems}
-                              setSelectedItems={setSelectedItems}
-                            />
+                          <div className='w-100'>
+                            <label className='d-block'>Select Category<span className="star">*</span></label>
+                            <div className="drops category-input">
+                              <MultiSelectDropdown
+                                isOpen={isOpen}
+                                setIsOpen={setIsOpen}
+                                data={categories}
+                                selectedItems={selectedItems}
+                                setSelectedItems={setSelectedItems}
+                              />
+                            </div>
                           </div>
                           {/* {submitted && selectedItems?.categories?.length == 0 && <div className="invalid-feedback d-block">{errors?.categories}</div>} */}
                         </div>
@@ -613,7 +615,7 @@ const Html = ({ user,
 
                         {user?.role == 'affiliate' &&
                           <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
-                            <div className='form-group'>
+                            <div className='form-group w-100'>
                               <div className="select_drop ">
                                 <label>Type</label>
                                 <div className="select_row">
