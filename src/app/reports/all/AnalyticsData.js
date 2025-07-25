@@ -217,7 +217,9 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
             isExpanded={expandedCard === "Revenue Over Time"}
             onExpand={() => toggleExpand("Revenue Over Time")}
           >
-            <ReactECharts option={revenueChartOption} className="chart" />
+            <div className='w-100'>
+              <ReactECharts option={revenueChartOption} className="chart" />
+            </div>
           </CustomCard>
         </div>
 
@@ -227,7 +229,10 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
             isExpanded={expandedCard === "Actions"}
             onExpand={() => toggleExpand("Actions")}
           >
-            <ReactECharts option={actionsChartOption} className="chart" />
+            <div className='w-100'>
+
+              <ReactECharts option={actionsChartOption} className="chart" />
+            </div>
           </CustomCard>
         </div>
 
@@ -237,7 +242,10 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
             isExpanded={expandedCard === "Clicks"}
             onExpand={() => toggleExpand("Clicks")}
           >
-            <ReactECharts option={clicksChartOption} className="chart" />
+            <div className='w-100'>
+
+              <ReactECharts option={clicksChartOption} className="chart" />
+            </div>
           </CustomCard>
         </div>
       </div>
