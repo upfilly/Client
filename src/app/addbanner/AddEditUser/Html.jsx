@@ -264,12 +264,16 @@ const Html = ({
                       placeholderText="Select Activation Date"
                       selected={form?.activation_date}
                       className="form-control"
-                      onChange={(date) =>
-                        setform({ ...form, activation_date: date })
-                      }
+                      onChange={(date) => setform({ ...form, activation_date: date })}
                       timeInputLabel="Time:"
                       dateFormat="MM/dd/yyyy h:mm aa"
                       showTimeInput
+                      minDate={new Date()}
+                      filterTime={(time) => {
+                        const selectedDate = new Date(time);
+                        const now = new Date();
+                        return selectedDate >= now;
+                      }}
                     />
 
                     {submitted && !form?.activation_date ? (
