@@ -309,9 +309,14 @@ const AddEditUser = () => {
 
     return [ref, handleClick];
   };
-
   const [dateRef1, handleClick1] = useDatePicker();
   const [dateRef2, handleClick2] = useDatePicker();
+
+  const goBack = () => {
+    let url = "/coupons";
+    history.push(url);
+  };
+
   return (
     <>
       <Html
@@ -341,6 +346,7 @@ const AddEditUser = () => {
         handleClick1={handleClick1}
         dateRef2={dateRef2}
         handleClick2={handleClick2}
+        back={goBack}
       />
     </>
   );
