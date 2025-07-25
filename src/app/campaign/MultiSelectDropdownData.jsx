@@ -480,6 +480,7 @@ const isSomeVisibleSelected = () => {
   };
 
   useEffect(() => {
+     setDisplaySelections(selectedItems)
     if (searchTerm) {
       // Expand all categories that match the search or have matching children
       const newExpandedCategories = {};
@@ -517,6 +518,7 @@ const isSomeVisibleSelected = () => {
 
       setExpandedCategories(newExpandedCategories);
       setExpandedSubCategories(newExpandedSubCategories);
+     
     } else {
       setExpandedCategories({});
       setExpandedSubCategories({});
