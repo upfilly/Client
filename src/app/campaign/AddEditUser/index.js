@@ -183,7 +183,7 @@ const AddEditUser = () => {
     }, {})
   );
 
-  console.log(affiliateData, "affiliateData");
+  console.log(detail, "detail");
 
   const [formPpcData, setFormPpcData] = useState(
     formPpcFields.reduce((acc, field) => {
@@ -279,7 +279,7 @@ const AddEditUser = () => {
         // commission: "",
         region: selectedRegionItems?.regions,
         region_continents: selectedRegionItems?.countries,
-        campaign_type: form?.campaign_type?.[0],
+        campaign_type: form?.campaign_type,
         category: selectedItems?.categories,
         sub_category: selectedItems?.subCategories,
         sub_child_category: selectedItems?.subSubCategories,
@@ -385,6 +385,7 @@ const AddEditUser = () => {
             commission: value?.commission,
             commission_type: value?.commission_type,
             campaign_type: [value?.campaign_type],
+            currencies: value?.currencies,
             lead_amount: value?.lead_amount,
             access_type: value?.access_type,
             description: value?.description,

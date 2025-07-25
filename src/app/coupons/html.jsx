@@ -32,6 +32,26 @@ const Html = ({
   const [activeSidebar, setActiveSidebar] = useState(false);
   const [copied, setCopied] = useState({ csv: false, xml: false });
 
+  // Checkbox state
+  const [selectedRows, setSelectedRows] = useState([]);
+  const allIds = data?.map((itm) => itm.id || itm._id) || [];
+  const isAllSelected =
+    allIds.length > 0 && selectedRows.length === allIds.length;
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedRows(allIds);
+    } else {
+      setSelectedRows([]);
+    }
+  };
+
+  const handleRowSelect = (id) => {
+    setSelectedRows((prev) =>
+      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+    );
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       filter();
@@ -118,21 +138,19 @@ const Html = ({
     >
       <div className="sidebar-left-content">
         <div className="d-flex justify-content-end gap-2 flex-md-wrap align-items-center all_flexbx">
-          <article className="d-flex coupons-page-top-export-options   filterFlex phView">
+          <article className="d-flex coupons-page-top-export-options filterFlex phView">
             {(user?.role == "brand" || permission("coupon_add")) && (
-              <>
-                <a
-                  className="btn btn-primary h-100 mb-0 set_reset"
-                  onClick={(e) => add()}
-                >
-                  Add Coupon
-                </a>
-              </>
+              <a
+                className="btn btn-primary h-100 mb-0 set_reset"
+                onClick={(e) => add()}
+              >
+                Add Coupon
+              </a>
             )}
             <SelectDropdown
               theme="search"
               id="statusDropdown"
-              className="mr-2 all-status-dropdown-btn "
+              className="mr-2 all-status-dropdown-btn"
               displayValue="name"
               placeholder="Status"
               intialValue={filters?.status}
@@ -145,22 +163,16 @@ const Html = ({
                 { id: "Pending", name: "Pending" },
               ]}
             />
-
-            {filters.status ? (
-              <>
-                <a className="btn btn-primary h-100" onClick={(e) => reset()}>
-                  Reset
-                </a>
-              </>
-            ) : (
-              <></>
+            {filters.status && (
+              <a className="btn btn-primary h-100" onClick={(e) => reset()}>
+                Reset
+              </a>
             )}
           </article>
-
           <div className="d-flex gap-2 align-items-center export-group-wrapper">
             <div className="export-group">
               <button
-                className="btn btn-success export-btn "
+                className="btn btn-success export-btn"
                 onClick={exportCSV}
                 data-tooltip-id="csv-tooltip"
                 data-tooltip-content={getExportUrl("csv")}
@@ -175,10 +187,9 @@ const Html = ({
                 {copied.csv ? "Copied!" : "Copy URL"}
               </button>
             </div>
-
             <div className="export-group">
               <button
-                className="btn btn-warning export-btn "
+                className="btn btn-warning export-btn"
                 onClick={exportXML}
                 data-tooltip-id="xml-tooltip"
                 data-tooltip-content={getExportUrl("xml")}
@@ -194,16 +205,22 @@ const Html = ({
               </button>
             </div>
           </div>
-
           <Tooltip id="csv-tooltip" place="bottom" effect="solid" />
           <Tooltip id="xml-tooltip" place="bottom" effect="solid" />
         </div>
-
         <div className="table_section">
           <div className="table-responsive ">
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
+                  <th>
+                    <input
+                      type="checkbox"
+                      checked={isAllSelected}
+                      onChange={handleSelectAll}
+                      title="Select All"
+                    />
+                  </th>
                   <th
                     scope="col"
                     className="table_data"
@@ -256,12 +273,18 @@ const Html = ({
                   data &&
                   data.map((itm, i) => {
                     const displayStatus = getCouponStatus(itm);
+                    const rowId = itm.id || itm._id;
                     return (
                       <tr className="data_row" key={i}>
-                        <td
-                          className="table_dats"
-                          onClick={(e) => view(itm.id || itm?._id)}
-                        >
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={selectedRows.includes(rowId)}
+                            onChange={() => handleRowSelect(rowId)}
+                            title="Select Row"
+                          />
+                        </td>
+                        <td className="table_dats" onClick={(e) => view(rowId)}>
                           <div className="user_detail">
                             <div className="user_name">
                               <h4 className="user">
@@ -272,6 +295,7 @@ const Html = ({
                             </div>
                           </div>
                         </td>
+                        {/* ...rest of your columns... */}
                         <td className="table_dats">
                           <div className="user_detail">
                             <div className="user_name">
@@ -319,21 +343,17 @@ const Html = ({
                           </div>
                         </td>
                         <td className="table_dats">
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {datepipeModel.date(itm.startDate)}
-                              </h4>
-                            </div>
+                          <div className="user_name">
+                            <h4 className="user">
+                              {datepipeModel.date(itm.startDate)}
+                            </h4>
                           </div>
                         </td>
                         <td className="table_dats">
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {datepipeModel.date(itm.expirationDate)}
-                              </h4>
-                            </div>
+                          <div className="user_name">
+                            <h4 className="user">
+                              {datepipeModel.date(itm.expirationDate)}
+                            </h4>
                           </div>
                         </td>
                         <td className="table_dats">
@@ -354,7 +374,6 @@ const Html = ({
                         <td className="table_dats">
                           {datepipeModel.date(itm.createdAt)}
                         </td>
-
                         {user?.role == "brand" && (
                           <td className="table_dats">
                             <div className="action_icons gap-3 ">
@@ -364,7 +383,7 @@ const Html = ({
                                   <a
                                     className="edit_icon action-btn"
                                     title="Edit"
-                                    onClick={(e) => edit(itm.id || itm?._id)}
+                                    onClick={(e) => edit(rowId)}
                                   >
                                     <i
                                       className="material-icons edit"
@@ -378,7 +397,7 @@ const Html = ({
                                     onClick={
                                       displayStatus == "accepted"
                                         ? ""
-                                        : () => deleteItem(itm.id || itm?._id)
+                                        : () => deleteItem(rowId)
                                     }
                                   >
                                     <i
@@ -410,7 +429,7 @@ const Html = ({
             )}
           </div>
         </div>
-
+        {/* ...existing pagination and loader code... */}
         <div
           className={`paginationWrapper ${
             !loaging && total > 10 ? "" : "d-none"
@@ -445,7 +464,6 @@ const Html = ({
             activeClassName={"pagination-item-active"}
           />
         </div>
-
         {loaging ? (
           <div className="text-center py-4">
             <img src="/assets/img/loader.gif" className="pageLoader" />
