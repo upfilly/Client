@@ -2064,7 +2064,7 @@ a.demo-button {
 }
 
 input.datepicker-field {
-  width: 244px;
+  width: 230px;
   border: 1px solid #ccc;
   height: 38px;
   border-radius: 6px !important;
@@ -3906,7 +3906,7 @@ p.checkbox-option-main {
   }
 
   .main_title_head h3 {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   .profileImageLabel .profileImage {
@@ -6005,6 +6005,10 @@ input.dateselect {
     font-size: 16px !important;
   }
 
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 35% !important;
+  }
+
 
 }
 
@@ -6030,13 +6034,50 @@ input.dateselect {
   }
 
   .export-group .export-btn {
-
     font-size: 16px !important;
   }
+
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 35% !important;
+  }
+
+    .coupans-page-button-wrapper {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+
+
+
+
+
+
 
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
+
+  .affilitate-top-dropdowns {
+    flex-wrap: wrap;
+  }
+
+  .react-datepicker {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: scroll !important;
+    height: 300px;
+    max-width: 230px;
+    right: 0;
+    top: 20px;
+  }
+
+
+
+  .dropdown-toggle h4.filtes_herd {
+    font-size: 15px;
+    line-height: 21px;
+  }
+
   .headsub {
     padding: 6px 0px;
   }
@@ -6056,6 +6097,14 @@ input.dateselect {
   .export-group .export-btn {
     font-size: 16px !important;
   }
+
+  .coupans-page-button-wrapper {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+
+
 
   .transaction-heading {
     font-size: 15px;
@@ -6077,27 +6126,14 @@ input.dateselect {
   }
 
 
-
   .notifications .dropdown-menu {
     max-width: 14rem !important;
     min-width: 6px;
     transform: translate3d(37px, 43px, 0px) !important;
   }
 
-  .affilitate-top-dropdowns {
-    display: flex !important;
-    flex-direction: column !important;
-  }
 
 
-
-  .select-category {
-    width: 220px !important;
-  }
-
-  .All-status-dropdown .css-13cymwt-control {
-    width: 200px !important;
-  }
 
   .notification-page-heading {
     font-size: 22px !important;
@@ -6134,13 +6170,7 @@ input.dateselect {
     padding: 0px !important;
   }
 
-  .react-datepicker {
-    display: flex !important;
-    flex-direction: column !important;
-    overflow-y: scroll !important;
-    height: 300px;
-    top: 20px;
-  }
+
 
 
   .date_select {
@@ -6191,37 +6221,93 @@ input.dateselect {
     height: 20px !important;
   }
 
-  .react-datepicker__view-calendar-icon input  {
-  padding: 6px 12px 5px 29px !important
+  .react-datepicker__view-calendar-icon input {
+    padding: 6px 12px 5px 29px !important
   }
 
-  // .react-datepicker__close-icon::after {
-  //   left: 20px !important;
-  //   position: absolute !important;
-  // }
+  .form-check {
+    font-size: 14px;
+  }
 
+  h4.filtes_herd {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .paginationWrapper>span {
+    position: relative;
+    left: -40px;
+  }
+
+  .paginationWrapper ul {
+    position: relative;
+    left: -40px;
+  }
 }
 
 
 
+@media all and (min-width: 421px) and (max-width: 575px) {
+
+  .affilitate-top-dropdowns .All-status-dropdown {
+    width: 50% !important;
+  }
+
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 52% !important;
+  }
 
 
 
-
-
-
-
-
-
-
-
+}
 
 
 @media (max-width: 420px) {
+
+
+  .affilitate-top-dropdowns .dropdown {
+    width: 100% !important;
+  }
+
+  .affilitate-top-dropdowns .dropdown .dropdown-toggle {
+    width: 100%;
+  }
+
+  .affilitate-top-dropdowns .All-status-dropdown {
+    width: 100% !important;
+  }
+
+  .affilitate-top-dropdowns .All-status-dropdown .css-b62m3t-container {
+    width: 100%;
+  }
+
+  .select-category {
+    width: 220px !important;
+  }
+
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 100% !important;
+  }
+
+  .affilitate-top-dropdowns .datepicker-dropdown-wrapper {
+    width: 100%;
+  }
+
+  .affilitate-top-dropdowns .datepicker-dropdown-wrapper input.datepicker-field {
+    width: 100%;
+  }
+
+
+
+
   .custom-tab-content-class {
     margin-top: 50px !important;
   }
 }
+
+
+
+
 
 .custom-nav-tabs-class {
   margin-bottom: 0px !important;
@@ -6256,3 +6342,5 @@ input.dateselect {
 .add_users {
   line-height: 24px !important;
 }
+
+// ============ //

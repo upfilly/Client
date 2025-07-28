@@ -59,7 +59,7 @@ const EmailLogsModal = ({ show, handleClose }) => {
     return (
         <Modal show={show} onHide={handleClose} size="lg" className="email-logs-modal" centered>
             <Modal.Header closeButton>
-                <Modal.Title>Email Logs</Modal.Title>
+                <Modal.Title>Email Logs </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {loading ? (

@@ -126,7 +126,7 @@ const Detail = (p) => {
             <div className='sidebar-left-content'>
                 <div className='card'>
                     <div className='card-header'>
-                        <div className="main_title_head d-flex justify-content-between align-items-center">
+                        <div className="main_title_head d-flex justify-content-between align-items-center gap-2">
                             <h3 className="mb-0">
                                 <a to="/campaign" onClick={back}>
                                     <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i>

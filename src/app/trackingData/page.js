@@ -314,11 +314,11 @@ export default function Affiliate() {
               <div className='card-header'>
                 <div className="main_title_head d-flex gap-2 justify-content-between align-items-center">
                   <h3 className="mb-2">
-                    Commission Transactions
+                    Commission Transactions 
                   </h3>
 
                   <article className="d-flex gap-2 filterFlex phView">
-                    <div className='searchInput'>
+                    <div className='searchInput m-0'>
                       <input
                         type="text"
                         value={filters.search}

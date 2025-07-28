@@ -103,7 +103,7 @@ const Html = ({
           </div>
 
           {/* Right side controls with better spacing */}
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex align-items-center gap-2 flex-wrap">
             <div className="d-flex align-items-center gap-2">
               <SelectDropdown
                 theme="search"

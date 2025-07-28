@@ -202,8 +202,8 @@ const Html = () => {
                                             />
                                             {errors.docName && <div className="invalid-feedback">{errors.docName}</div>}
                                         </div>
-
-                                        <div className='mb-3 options'>
+                               
+                                        <div className='mb-3 options flex-wrap'>
                                             <label>Choose an option:</label>
                                             <div className="form-check">
                                                 <input
