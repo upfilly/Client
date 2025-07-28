@@ -384,3 +384,13 @@ input#selectAll {
     max-height: 200px;
   }
 }
+
+@media (max-width: 575px)  {
+  #selectAll+label {
+    font-size: 12px;
+  }
+
+  .remove-all-btn {
+    font-size: 12px;
+  }
+}

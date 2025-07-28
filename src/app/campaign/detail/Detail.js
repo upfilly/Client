@@ -451,7 +451,7 @@ const Detail = (p) => {
                                     {/* Publisher Restrictions */}
                                     <div className='row'>
                                         <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>Publisher Restrictions</h4>
+                                            <h4 className='mt-4 mb-3'>Publisher Restrictions </h4>
                                         </div>
                                     </div>
 

@@ -6037,6 +6037,17 @@ input.dateselect {
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
+  .headsub {
+    padding: 6px 0px;
+  }
+
+  .card-body {
+    padding: 15px !important;
+  }
+
+  .CM-Settings {
+    font-size: 18px;
+  }
 
   input.form-control-file.over_input {
     height: 0px !important;
@@ -6180,7 +6191,31 @@ input.dateselect {
     height: 20px !important;
   }
 
+  .react-datepicker__view-calendar-icon input  {
+  padding: 6px 12px 5px 29px !important;
+  }
+
+  // .react-datepicker__close-icon::after {
+  //   left: 20px !important;
+  //   position: absolute !important;
+  // }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 420px) {
   .custom-tab-content-class {

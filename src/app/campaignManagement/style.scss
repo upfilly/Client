@@ -572,7 +572,7 @@ input.form-control-file.over_input {
 @media (max-width: 576px) {
   .filter-dropdown-card {
     width: 280px;
-    right: -80px;
+    right: -95px;
   }
 }
 
@@ -588,7 +588,7 @@ input.form-control-file.over_input {
 
   .Campaign-Management-dropdpwns {
     display: flex !important;
-    flex-direction: column;
+      flex-wrap: wrap;
     margin-top: 20px;
   }
 

@@ -230,7 +230,7 @@ export default function Dashboard() {
                           ></img>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Accepted Campaigns</p>
+                          <p className="revuh">Accepted Campaigns </p>
 
                           <h3 className="dollars-t">
                             {CampaignRequest?.acceptedRequestCount}

@@ -370,8 +370,8 @@ const CampaignDetail = () => {
                                     {/* De-duplication Settings */}
                                     <div className='row'>
                                         <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>
-                                                De-duplication Settings
+                                            <h4 className='mt-4 mb-3 CM-Settings'>
+                                                De-duplication Settings 
                                                 <button
                                                     onClick={() => toggleSection('deduplication')}
                                                     className="btn btn-link btn-sm ms-2"
@@ -398,7 +398,7 @@ const CampaignDetail = () => {
                                     {/* Publisher Restrictions */}
                                     <div className='row'>
                                         <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>
+                                            <h4 className='mt-4 mb-3 CM-Settings'>
                                                 Publisher Restrictions
                                                 <button
                                                     onClick={() => toggleSection('publisher')}
@@ -426,7 +426,7 @@ const CampaignDetail = () => {
                                     {/* PPC Settings */}
                                     <div className='row'>
                                         <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>
+                                            <h4 className='mt-4 mb-3 CM-Settings'>
                                                 PPC Settings
                                                 <button
                                                     onClick={() => toggleSection('ppc')}
@@ -454,7 +454,7 @@ const CampaignDetail = () => {
                                     {/* Transaction Settings */}
                                     <div className='row'>
                                         <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>
+                                            <h4 className='mt-4 mb-3 CM-Settings'>
                                                 Transaction Settings
                                                 <button
                                                     onClick={() => toggleSection('transaction')}
