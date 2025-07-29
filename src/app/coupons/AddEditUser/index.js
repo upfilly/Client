@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ApiClient from "../../../methods/api/apiClient";
 import loader from "../../../methods/loader";
 import methodModel from "../../../methods/methods";
@@ -43,6 +43,10 @@ const AddEditUser = () => {
     DestinationUrl: "",
     websiteAllowed: "",
   });
+  const [isOpenstart, setIsopenStart] = useState(false);
+  const [isOpenEnd, setIsOpenEnd] = useState(false);
+  const dateRef1 = useRef(null);
+  const dateRef2 = useRef(null);
 
   const getCategory = (p = {}) => {
     let url = "main-category/all";
@@ -118,8 +122,8 @@ const AddEditUser = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-          ? user.website
-          : [];
+        ? user.website
+        : [];
 
     if (allowedDomains.length === 0) {
       return {
@@ -418,7 +422,7 @@ const AddEditUser = () => {
     });
   };
 
-    const getCampaignTypeData = (p = {}) => {
+  const getCampaignTypeData = (p = {}) => {
     let url = "campaign/brand/all";
     ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
       if (res.success) {
@@ -446,9 +450,30 @@ const AddEditUser = () => {
     getBrandData();
     getCategory();
     allGetAffiliate();
-    getCampaignTypeData()
+    getCampaignTypeData();
   }, []);
 
+  // const handleClick1 = () => {
+  //   setIsopen(!isOpen);
+  // };
+
+  const handleClick1 = () => {
+    if (isOpenstart) {
+      dateRef1.current.blur();
+    } else {
+      dateRef1.current.showPicker();
+    }
+    setIsopenStart(!isOpenstart);
+  };
+
+  const handleClick2 = () => {
+    if (isOpenEnd) {
+      dateRef2.current.blur();
+    } else {
+      dateRef2.current.showPicker();
+    }
+    isOpenEnd(!isOpenEnd);
+  };
 
   return (
     <>
@@ -478,6 +503,10 @@ const AddEditUser = () => {
         errors={errors}
         setErrors={setErrors}
         campaignType={campaignType}
+        handleClick1={handleClick1}
+        handleClick2={handleClick2}
+        dateRef1={dateRef1}
+        dateRef2={dateRef2}
       />
     </>
   );
