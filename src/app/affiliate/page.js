@@ -11,7 +11,6 @@ import ReactPaginate from "react-paginate";
 import { useRouter, useSearchParams } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Dropdown, DropdownButton, DropdownItem } from "react-bootstrap";
 import methodModel from "../../methods/methods";
 import environment from "../../environment/index";
 import { Modal, Button, Form } from "react-bootstrap";
@@ -916,10 +915,10 @@ export default function affilate() {
                     filters.affiliate_group_id ||
                     filters.end_date ||
                     filters.start_date) && (
-                    <button className="btn btn-primary" onClick={reset}>
-                      Reset
-                    </button>
-                  )}
+                      <button className="btn btn-primary" onClick={reset}>
+                        Reset
+                      </button>
+                    )}
 
                   {/* Action Dropdown for Multiple Selection */}
                   {(user?.role == "brand" || permission("affiliate_group")) &&
@@ -964,7 +963,8 @@ export default function affilate() {
                             type="checkbox"
                             className="form-check-input check_bx_input"
                             checked={
-                              selectedAffiliteid.length === data?.data?.length
+                              selectedAffiliteid.length > 0 &&
+                              selectedAffiliteid.length === (data?.data?.filter(itm => itm.invite_status === "not_invited").length || 0)
                             }
                             onChange={handleSelectAll}
                           />
@@ -1019,7 +1019,7 @@ export default function affilate() {
                           ></i>
                         )}
                       </th>
-                      <th scope="col" onClick={(e) => sorting("status")}>
+                      <th scope="col" onClick={(e) => sorting("invite_status")}>
                         Invitation Status
                         {filters?.sorder === "asc" ? (
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
@@ -1136,8 +1136,8 @@ export default function affilate() {
                                   {itm.invite_status == "accepted"
                                     ? "Accepted"
                                     : itm.invite_status == "not_invited"
-                                    ? "Not Invited"
-                                    : "Pending"}
+                                      ? "Not Invited"
+                                      : "Pending"}
                                 </span>
                               </span>
                             </td>
@@ -1146,24 +1146,24 @@ export default function affilate() {
                               <div className="action_icons">
                                 {(user?.role == "brand" ||
                                   permission("affiliate_invite")) && (
-                                  <button
-                                    disabled={
-                                      itm.invite_status == "not_invited"
-                                        ? false
-                                        : true
-                                    }
-                                    className="btn btn-primary btn_primary"
-                                    onClick={() => {
-                                      handleShow();
-                                      setselectedAffiliteid([itm?.id]);
-                                    }}
-                                  >
-                                    <i
-                                      className="fa fa-plus fa_icns"
-                                      title="Invite"
-                                    ></i>
-                                  </button>
-                                )}
+                                    <button
+                                      disabled={
+                                        itm.invite_status == "not_invited"
+                                          ? false
+                                          : true
+                                      }
+                                      className="btn btn-primary btn_primary"
+                                      onClick={() => {
+                                        handleShow();
+                                        setselectedAffiliteid([itm?.id]);
+                                      }}
+                                    >
+                                      <i
+                                        className="fa fa-plus fa_icns"
+                                        title="Invite"
+                                      ></i>
+                                    </button>
+                                  )}
                                 <span
                                   className="btn btn-primary btn_primary"
                                   onClick={() => {
@@ -1181,21 +1181,21 @@ export default function affilate() {
                                 </span>
                                 {(user?.role == "brand" ||
                                   permission("affiliate_group")) && (
-                                  <button
-                                    className="btn btn-primary btn_primary"
-                                    onClick={() => {
-                                      handleGroupShow();
-                                      setselectedAffiliteid(
-                                        itm?.id || itm?._id
-                                      );
-                                    }}
-                                  >
-                                    <i
-                                      className="fa-solid fa-people-group fa_icns"
-                                      title="Add Group"
-                                    ></i>
-                                  </button>
-                                )}
+                                    <button
+                                      className="btn btn-primary btn_primary"
+                                      onClick={() => {
+                                        handleGroupShow();
+                                        setselectedAffiliteid(
+                                          itm?.id || itm?._id
+                                        );
+                                      }}
+                                    >
+                                      <i
+                                        className="fa-solid fa-people-group fa_icns"
+                                        title="Add Group"
+                                      ></i>
+                                    </button>
+                                  )}
                               </div>
                             </td>
                           </tr>
@@ -1228,10 +1228,10 @@ export default function affilate() {
                                   {itm.cat_type == "promotional_models"
                                     ? "Promotional Models"
                                     : itm.cat_type == "property_types"
-                                    ? "Property Type"
-                                    : itm.cat_type == "advertiser_categories"
-                                    ? "Advertiser Categories"
-                                    : "" || "--"}
+                                      ? "Property Type"
+                                      : itm.cat_type == "advertiser_categories"
+                                        ? "Advertiser Categories"
+                                        : "" || "--"}
                                 </p>
                               </td>
                               <td>
@@ -1442,9 +1442,8 @@ export default function affilate() {
         )}
 
         <div
-          className={`paginationWrapper ${
-            !loaging && total > 10 ? "" : "d-none"
-          }`}
+          className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
+            }`}
         >
           <span>
             Show{" "}

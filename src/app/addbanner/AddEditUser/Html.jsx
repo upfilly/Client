@@ -284,7 +284,7 @@ const Html = ({
                       <></>
                     )}
                   </div>
-                  <div className="col-md-6 mb-3">
+                  {/* <div className="col-md-6 mb-3">
                     <label>
                       Availability Date<span className="star">*</span>
                     </label>
@@ -310,7 +310,7 @@ const Html = ({
                     ) : (
                       <></>
                     )}
-                  </div>
+                  </div> */}
                   <div className="col-md-6 mb-3">
                     <label>
                       Expiration Date<span className="star">*</span>
