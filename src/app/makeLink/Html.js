@@ -38,7 +38,8 @@ const Html = () => {
     DestinationUrl: "",
     websiteAllowed: "",
   });
-
+  console.log(CampaignData, "CampaignData");
+  // console.log(user, "user");
   const handleInputChange = (selected, value) => {
     setInputValues((prevState) => ({
       ...prevState,
@@ -70,12 +71,16 @@ const Html = () => {
   useEffect(() => {
     let url = "campaign-data";
     if (selectedBrand) {
-      ApiClient.get(`${url}?affiliateId=${selectedBrand}`).then((res) => {
+      ApiClient.get(
+        `${url}?affiliateId=${selectedBrand}&brandId=${user?.id}`
+      ).then((res) => {
+        console.log(res, "response");
+
         if (
           res.message ===
           "Campaigns associated with this affiliate fetched successfully."
         ) {
-          setSelectedCampaign(res.campaigns.campaign_id);
+          setSelectedCampaign(res.data.campaign_id);
         }
       });
     } else {

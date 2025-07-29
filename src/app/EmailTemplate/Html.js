@@ -27,9 +27,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
   const generateEmailTemplate = (content = "", title = "") => {
     return `
     <div style="
-        width: 676px !important;
-        max-width: 676px !important;
-        min-width: 676px !important;
+        width: 100% !important;
         margin: 0 auto !important;
         padding: 20px 0 !important;
         background: transparent !important;
@@ -46,9 +44,8 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
             <!-- Banner Section -->
             <div style="text-align: center !important;">
                 <div style="
-                    background: url('${
-                      environment.api
-                    }/images/banner.png') !important;
+                    background: url('${environment.api
+      }/images/banner.png') !important;
                     background-size: cover !important;
                     background-position: center !important;
                     width: 100% !important;
@@ -58,18 +55,16 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                 <!-- Content Card -->
                 <div style="margin-top: -190px !important;">
                     <div style="
-                        width: 225px !important;
                         height: auto !important;
                         padding: 1.5rem !important;
                         text-align: center !important;
-                        background: #fff !important;
+                        background: #fff !important;S
                         margin: auto !important;
                         border-radius: 4px !important;
                         box-sizing: border-box !important;
                     ">
-                        <img src="${
-                          environment.api
-                        }/images/logo.png" alt="Company Logo" style="width:115px !important; height:40px !important; object-fit:contain !important;">
+                        <img src="${environment.api
+      }/images/logo.png" alt="Company Logo" style="width:115px !important; height:40px !important; object-fit:contain !important;">
                         
                         <h1 style="margin: 10px 0 0 !important; font-size: 18px !important; font-weight: normal !important;">
                             <span style="font-weight:400 !important; color:#373737 !important;">Hi </span> ${`{affiliateFullName}`},
@@ -104,24 +99,20 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
         <!-- Social Media Icons -->
         <div style="margin: 30px 0 20px !important; text-align: center !important;">
             <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
-                <img src="${
-                  environment.api
-                }/Image1.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+                <img src="${environment.api
+      }/Image1.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
             </a>
             <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
-                <img src="${
-                  environment.api
-                }/Image2.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+                <img src="${environment.api
+      }/Image2.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
             </a>
             <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
-                <img src="${
-                  environment.api
-                }/Image3.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+                <img src="${environment.api
+      }/Image3.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
             </a>
             <a href="#" style="text-decoration: none !important; display: inline-block !important; margin: 0 5px !important;">
-                <img src="${
-                  environment.api
-                }/Image4.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
+                <img src="${environment.api
+      }/Image4.png" style="width:40px !important; height:40px !important; object-fit:contain !important;">
             </a>
         </div>
         
@@ -134,12 +125,13 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
   };
 
   useEffect(() => {
-    const initialTemplate = generateEmailTemplate(form?.content);
-    setEmailTemplate(initialTemplate);
-    if (!form?.emailTemplate) {
+    // Only set initial template if no content exists
+    if (!form?.content && !form?.emailTemplate) {
+      const initialTemplate = generateEmailTemplate("");
+      setEmailTemplate(initialTemplate);
       setForm((prev) => ({ ...prev, emailTemplate: initialTemplate }));
     }
-  }, [form?.content, form?.title]);
+  }, []);
 
   const handlePasteHtml = () => {
     if (!htmlToPaste.trim()) return;
@@ -167,7 +159,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     setForm((prev) => ({
       ...prev,
       content: newContent,
-      emailTemplate: generateEmailTemplate(newContent),
+      emailTemplate: newContent,
     }));
     if (errors.content) setErrors((prev) => ({ ...prev, content: "" }));
   };
@@ -245,7 +237,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
         setForm((prev) => ({
           ...prev,
           content: textarea.value,
-          emailTemplate: generateEmailTemplate(textarea.value),
+          emailTemplate: textarea.value,
         }));
 
         textarea.selectionStart = startPos + shortcode.length;
@@ -280,6 +272,31 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     if (dateInputRef.current && !dateInputRef.current.disabled) {
       dateInputRef.current.showPicker();
     }
+  };
+
+  const clearEditor = () => {
+    if (editorRef) {
+      editorRef.setContent('');
+    }
+    setEmailTemplate('');
+    setForm(prev => ({
+      ...prev,
+      emailTemplate: '',
+      content: ''
+    }));
+  };
+
+  const resetToDefaultTemplate = () => {
+    const defaultTemplate = generateEmailTemplate("");
+    if (editorRef) {
+      editorRef.setContent(defaultTemplate);
+    }
+    setEmailTemplate(defaultTemplate);
+    setForm(prev => ({
+      ...prev,
+      emailTemplate: defaultTemplate,
+      content: defaultTemplate
+    }));
   };
 
   return (
@@ -385,9 +402,8 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                     <input
                       ref={dateInputRef}
                       type="date"
-                      className={`form-control ${
-                        errors.acceptedDate ? "is-invalid" : ""
-                      }`}
+                      className={`form-control ${errors.acceptedDate ? "is-invalid" : ""
+                        }`}
                       disabled={!form?.timeInterval}
                       value={moment(form?.acceptedDate).format("YYYY-MM-DD")}
                       onChange={handleDateChange}
@@ -421,36 +437,71 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         ))}
                         <button
                           type="button"
-                          className="btn btn-outline-primary btn-sm"
+                          className="btn btn-outline-secondary btn-sm"
                           onClick={() => setShowPasteModal(true)}
                         >
                           Paste HTML
                         </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger btn-sm"
+                          onClick={clearEditor}
+                        >
+                          Clear Editor
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline-info btn-sm"
+                          onClick={resetToDefaultTemplate}
+                        >
+                          Reset Template
+                        </button>
                       </div>
                     </div>
-
-                    <Editor
-                      apiKey="zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g"
-                      value={emailTemplate}
-                      onEditorChange={(newValue) => {
-                        setEmailTemplate(newValue);
-                        setForm((prev) => ({
-                          ...prev,
-                          emailTemplate: newValue,
-                        }));
-                      }}
-                      onInit={(evt, editor) => setEditorRef(editor)}
-                      init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: ["lists", "link", "image", "table", "code"],
-                        toolbar:
-                          "undo redo | formatselect | bold italic forecolor backcolor image | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat",
-                        content_style:
-                          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-                        file_picker_callback,
-                      }}
-                    />
+                    <div>
+                      <Editor
+                        apiKey="zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g"
+                        className='tuncketcls'
+                        value={emailTemplate}
+                        onEditorChange={(newValue) => {
+                          setEmailTemplate(newValue);
+                          setForm((prev) => ({
+                            ...prev,
+                            emailTemplate: newValue,
+                            content: newValue,
+                          }));
+                        }}
+                        onInit={(evt, editor) => setEditorRef(editor)}
+                        init={{
+                          height: 500,
+                          menubar: false,
+                          plugins: [
+                            "lists",
+                            "link",
+                            "image",
+                            "table",
+                            "code",
+                            "textcolor" // This plugin enables both text and background color pickers
+                          ],
+                          toolbar: "undo redo | formatselect | bold italic | forecolor backcolor | image | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat",
+                          content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                          file_picker_callback,
+                          fixed_toolbar_container: '#toolbar-container',
+                          toolbar_sticky: true,
+                          toolbar_sticky_offset: 64,
+                          color_cols: 5,
+                          // Ensure both color buttons are enabled
+                          textcolor_map: [
+                            "000000", "Black",
+                            "FFFFFF", "White",
+                            // add more colors as needed
+                          ],
+                          // Or use this for more colors:
+                          textcolor_rows: 5,
+                          textcolor_cols: 8,
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

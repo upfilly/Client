@@ -258,7 +258,7 @@ const Detail = (p) => {
                           <ul className="list-unstyled">
                             {data.addedAffiliates.map((affiliate, index) => (
                               <li key={`affiliate-${index}`} className="mb-2">
-                                <div className="d-flex align-items-center gap-2 flex-wrap">
+                                <div className="d-flex align-items-center gap-2 flex-wrap pointer">
                                   <span
                                     onClick={() => rediredctView(affiliate.id)}
                                     className="badge bg-primary rounded-pill"

@@ -294,6 +294,8 @@ const Html = ({
                         setform({ ...form, currencies: e.value });
                       }}
                       options={profileData?.currencies?.map((dat) => {
+                        console.log(dat, "currency");
+
                         return {
                           name: dat,
                           id: dat,
