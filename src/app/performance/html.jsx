@@ -81,7 +81,7 @@ const Html = ({
     if (!AffiliateDataId) {
       filter = { ...filters, ...p, brand_id: user?.id }
     } else {
-      filter = { ...filters, ...p, affiliate_id: AffiliateDataId.map((itm) => itm).join(",").toString() }
+      filter = { ...filters, ...p,brand_id:user?.id||user?._id, affiliate_id: AffiliateDataId.map((itm) => itm).join(",").toString() }
     }
 
     ApiClient.get(url, filter).then(res => {

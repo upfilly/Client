@@ -11,7 +11,6 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   const [selectedCount, setSelectedCount] = useState(0);
 
   useEffect(() => {
-    // Calculate total selected items whenever selectedItems changes
     const count = selectedItems.regions.length + selectedItems.countries.length;
     setSelectedCount(count);
   }, [selectedItems]);
@@ -29,19 +28,61 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
     if (searchTerm) {
       const newFilteredData = {};
       const newExpandedCategories = {};
+      const lowerSearchTerm = searchTerm.toLowerCase();
 
+      // First pass: find exact matches at start of words
       Object.keys(data).forEach(region => {
-        const matchingCountries = data[region].filter(country => 
-          country.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        
-        if (region.toLowerCase().includes(searchTerm.toLowerCase()) || matchingCountries.length > 0) {
+        const regionLower = region.toLowerCase();
+        const startsWithMatch = regionLower.startsWith(lowerSearchTerm);
+
+        const matchingCountries = data[region].filter(country => {
+          const countryLower = country.toLowerCase();
+          return countryLower.startsWith(lowerSearchTerm) ||
+            countryLower.includes(lowerSearchTerm);
+        }).sort((a, b) => {
+          // Sort countries that start with search term first
+          const aStartsWith = a.toLowerCase().startsWith(lowerSearchTerm);
+          const bStartsWith = b.toLowerCase().startsWith(lowerSearchTerm);
+
+          if (aStartsWith && !bStartsWith) return -1;
+          if (!aStartsWith && bStartsWith) return 1;
+          return a.localeCompare(b); // alphabetical if same match type
+        });
+
+        if (startsWithMatch || matchingCountries.length > 0) {
           newFilteredData[region] = matchingCountries.length > 0 ? matchingCountries : data[region];
           newExpandedCategories[region] = true;
         }
       });
 
-      setFilteredData(newFilteredData);
+      // Second pass: find any matches (not just at start) for regions that didn't match yet
+      Object.keys(data).forEach(region => {
+        const regionLower = region.toLowerCase();
+        if (!newFilteredData[region] && regionLower.includes(lowerSearchTerm)) {
+          newFilteredData[region] = data[region].filter(country =>
+            country.toLowerCase().includes(lowerSearchTerm)
+          ).sort((a, b) => a.localeCompare(b));
+          newExpandedCategories[region] = true;
+        }
+      });
+
+      // Sort regions - those that start with search term first
+      const sortedRegions = Object.keys(newFilteredData).sort((a, b) => {
+        const aStartsWith = a.toLowerCase().startsWith(lowerSearchTerm);
+        const bStartsWith = b.toLowerCase().startsWith(lowerSearchTerm);
+
+        if (aStartsWith && !bStartsWith) return -1;
+        if (!aStartsWith && bStartsWith) return 1;
+        return a.localeCompare(b); // alphabetical if same match type
+      });
+
+      // Create a new sorted filtered data object
+      const sortedFilteredData = {};
+      sortedRegions.forEach(region => {
+        sortedFilteredData[region] = newFilteredData[region];
+      });
+
+      setFilteredData(sortedFilteredData);
       setExpandedCategories(newExpandedCategories);
     } else {
       setFilteredData(data);
@@ -68,10 +109,10 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
         else if (region && !newSelectedRegions.includes(region)) {
           newSelectedRegions.push(region);
           // Add all visible countries in this region if not already selected
-          const countriesToAdd = searchTerm 
-            ? filteredData[region] || [] 
+          const countriesToAdd = searchTerm
+            ? filteredData[region] || []
             : data[region];
-          
+
           countriesToAdd.forEach(c => {
             if (!newSelectedCountries.includes(c)) {
               newSelectedCountries.push(c);
@@ -125,14 +166,14 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   const handleAddAllVisible = () => {
     setSelectedItems(prev => {
       const visibleRegions = searchTerm ? Object.keys(filteredData) : Object.keys(data);
-      const visibleCountries = searchTerm 
-        ? Object.values(filteredData).flat() 
+      const visibleCountries = searchTerm
+        ? Object.values(filteredData).flat()
         : Object.values(data).flat();
-      
+
       // Merge with existing selections
       const newRegions = [...new Set([...prev.regions, ...visibleRegions])];
       const newCountries = [...new Set([...prev.countries, ...visibleCountries])];
-      
+
       return { regions: newRegions, countries: newCountries };
     });
   };
@@ -146,22 +187,22 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
     setSelectedItems(prev => {
       const visibleRegions = Object.keys(filteredData);
       const visibleCountries = Object.values(filteredData).flat();
-      
+
       // Remove only visible items
       const newRegions = prev.regions.filter(region => !visibleRegions.includes(region));
       const newCountries = prev.countries.filter(country => !visibleCountries.includes(country));
-      
+
       return { regions: newRegions, countries: newCountries };
     });
   };
 
   const renderCategories = () => {
     const displayData = searchTerm ? filteredData : data;
-    
+
     if (Object.keys(displayData).length === 0) {
       return <div className="no-results">No matching regions or countries found</div>;
     }
-    
+
     return Object.keys(displayData).map((region) => (
       <div key={region} className="category-container">
         <div className="dropdown-item">
@@ -171,7 +212,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
             onChange={(e) => handleSelection(region, null, e.target.checked)}
           />
           <label onClick={() => toggleCategory(region)}>
-            {region} 
+            {region}
             <span className="item-count">
               ({selectedItems.countries.filter(c => data[region].includes(c)).length}/{data[region].length})
             </span>
@@ -203,11 +244,11 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
 
   const getSelectedValuesText = () => {
     if (selectedCount === 0) return "Select Regions";
-    
-    const selectedRegionsText = selectedItems.regions.length > 0 
+
+    const selectedRegionsText = selectedItems.regions.length > 0
       ? `${selectedItems.regions.length} region${selectedItems.regions.length !== 1 ? 's' : ''}`
       : '';
-    
+
     const selectedCountriesText = selectedItems.countries.length > 0
       ? `${selectedItems.countries.length} countr${selectedItems.countries.length !== 1 ? 'ies' : 'y'}`
       : '';
@@ -248,13 +289,13 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
 
           <div className="selection-controls">
             <div className="select-actions">
-              <span 
+              <span
                 className="action-btn add-all"
                 onClick={handleAddAllVisible}
               >
                 Add All Visible
               </span>
-              <span 
+              <span
                 className="action-btn remove-all"
                 onClick={handleRemoveAllVisible}
                 disabled={selectedCount === 0}

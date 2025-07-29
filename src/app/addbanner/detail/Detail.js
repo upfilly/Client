@@ -145,12 +145,12 @@ const Detail = (p) => {
                                                             <p>{data?.activation_date ? datepipeModel.date(data.activation_date) : '-'}</p>
                                                         </div>
                                                     </div>
-                                                    <div className='col-md-4'>
+                                                    {/* <div className='col-md-4'>
                                                         <div className='detail-item'>
                                                             <label>Availability Date</label>
                                                             <p>{data?.availability_date ? datepipeModel.date(data.availability_date) : '-'}</p>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                     <div className='col-md-4'>
                                                         <div className='detail-item'>
                                                             <label>Expiration Date</label>

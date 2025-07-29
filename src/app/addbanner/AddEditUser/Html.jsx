@@ -26,6 +26,12 @@ const Html = ({
   setSelectedItems,
   errors,
   setErrors,
+  handleDateClickActv,
+  closeActv,
+  setCloseActv,
+  handleDateClickExp,
+  closeExp,
+  setCloseExp,
 }) => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -264,7 +270,12 @@ const Html = ({
                       placeholderText="Select Activation Date"
                       selected={form?.activation_date}
                       className="form-control"
-                      onChange={(date) => setform({ ...form, activation_date: date })}
+                      onChange={(date) =>
+                        setform({ ...form, activation_date: date })
+                      }
+                      open={closeActv}
+                      onInputClick={handleDateClickActv}
+                      onClickOutside={() => setCloseActv(false)}
                       timeInputLabel="Time:"
                       dateFormat="MM/dd/yyyy h:mm aa"
                       showTimeInput
@@ -311,7 +322,7 @@ const Html = ({
                       <></>
                     )}
                   </div> */}
-                  <div className="col-md-6 mb-3">
+                  {form?.activation_date && <div className="col-md-6 mb-3">
                     <label>
                       Expiration Date<span className="star">*</span>
                     </label>
@@ -322,6 +333,9 @@ const Html = ({
                       selected={form?.expiration_date}
                       minDate={form?.activation_date}
                       className="form-control"
+                      open={closeExp}
+                      onInputClick={handleDateClickExp}
+                      onClickOutside={() => setCloseExp(false)}
                       onChange={(date) =>
                         setform({ ...form, expiration_date: date })
                       }
@@ -337,7 +351,7 @@ const Html = ({
                     ) : (
                       <></>
                     )}
-                  </div>
+                  </div>}
                   <div className="col-md-6 mb-3 ">
                     <label>Select : </label>
                     <div className="select_check">

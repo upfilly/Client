@@ -6,7 +6,7 @@ import methodModel from "@/methods/methods";
 import Layout from "../../components/global/layout";
 import "react-quill/dist/quill.snow.css";
 import { useParams, useRouter } from "next/navigation";
-import EmailEditorTemplate from "../../email/emaileditor";
+import { Editor } from '@tinymce/tinymce-react';
 
 const Html = () => {
   const { id } = useParams();
@@ -16,7 +16,6 @@ const Html = () => {
     emailName: "",
     format: "Text",
     subject: "",
-    // from: "",
     htmlContent: "",
     textContent: "",
     personalizationTags: [],
@@ -31,57 +30,29 @@ const Html = () => {
   const [htmlCode, setHtmlCode] = useState(false);
   const formValidation = [{ key: "templateName", required: true }];
   const router = useRouter();
-  const childRef = useRef();
-  const emailEditorRef = useRef(null);
-
-  console.log(form, "form?.content || form?.textContent");
+  const tinyMCEditorRef = useRef(null);
 
   const exportHtml = (e) => {
     if (e) e.preventDefault();
 
-    const unlayer = emailEditorRef.current?.editor;
-
-    if (unlayer) {
-      unlayer.exportHtml((data) => {
-        const { design, html } = data;
-        console.log(data, "dadadadad");
-
-        if (html) {
-          setform({
-            ...form,
-            textContent: html,
-            textJSONContent: design || {},
-          });
-          // Call handleSubmit without the event to avoid double submission
-          handleSubmit();
-        }
+    if (tinyMCEditorRef.current) {
+      const content = tinyMCEditorRef.current.getContent();
+      setform({
+        ...form,
+        textContent: content,
+        textJSONContent: {}, // Not needed for TinyMCE
       });
+      handleSubmit();
     }
   };
 
-  // New function to generate preview for EmailEditor
-  const generateEmailEditorPreview = () => {
-    return new Promise((resolve) => {
-      const unlayer = emailEditorRef.current?.editor;
-
-      if (unlayer) {
-        unlayer.exportHtml((data) => {
-          const { html, design } = data;
-          // Update form with latest content and design
-          setform((prevForm) => ({
-            ...prevForm,
-            textContent: html || "",
-            textJSONContent: design || {},
-          }));
-          resolve(html || "");
-        });
-      } else {
-        resolve("");
-      }
-    });
+  const generateTinyMCEPreview = () => {
+    if (tinyMCEditorRef.current) {
+      return tinyMCEditorRef.current.getContent();
+    }
+    return "";
   };
 
-  // Enhanced preview handler
   const handlePreview = async (e) => {
     if (e) e.preventDefault();
 
@@ -91,17 +62,12 @@ const Html = () => {
       let content = "";
 
       if (form?.format === "Text") {
-        // For EmailEditor, we need to export HTML first and save the design
-        if (emailEditorRef.current?.editor) {
-          content = await generateEmailEditorPreview();
-          // Wait a moment for state to update
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        } else {
-          // Fallback to existing textContent if available
-          content = form?.textContent || "";
-        }
+        content = generateTinyMCEPreview();
+        setform(prevForm => ({
+          ...prevForm,
+          textContent: content,
+        }));
       } else {
-        // For HTML textarea
         content = form?.htmlContent || "";
       }
 
@@ -116,7 +82,7 @@ const Html = () => {
   };
 
   const handleSubmit = (e) => {
-    if (e) e.preventDefault(); // Prevent form submission
+    if (e) e.preventDefault();
 
     setSubmitted(true);
 
@@ -130,9 +96,9 @@ const Html = () => {
     let url = "emailtemplate";
     let value = {
       ...form,
-      emailName:form?.templateName,
-      subject:form?.templateName,
-      from:form?.templateName,
+      emailName: form?.templateName,
+      subject: form?.templateName,
+      from: form?.templateName,
       id: id,
     };
 
@@ -159,18 +125,16 @@ const Html = () => {
   const handleSaveFromPreview = async (e) => {
     e.preventDefault();
 
-    // If we're previewing EmailEditor content, make sure we have the latest HTML
-    if (form?.format === "Text" && emailEditorRef.current?.editor) {
+    if (form?.format === "Text" && tinyMCEditorRef.current) {
       setIsGeneratingPreview(true);
       try {
-        const htmlContent = await generateEmailEditorPreview();
+        const htmlContent = generateTinyMCEPreview();
         const updatedForm = {
           ...form,
           textContent: htmlContent,
         };
         setform(updatedForm);
 
-        // Now submit with updated content
         setTimeout(() => {
           handleSubmit();
         }, 100);
@@ -205,9 +169,9 @@ const Html = () => {
     }
   }, []);
 
-  const onSelect = (e) => {};
+  const onSelect = (e) => { };
 
-  const onRemove = (e) => {};
+  const onRemove = (e) => { };
 
   const textAreaRef = useRef(null);
 
@@ -222,16 +186,14 @@ const Html = () => {
         form.content.length
       );
 
-      // Insert the variable at the cursor position
       const updatedText =
         textBeforeCursor + "{" + variable + "}" + textAfterCursor;
       textarea.value = updatedText;
       setform({ ...form, content: updatedText });
 
-      // Ensure the textarea maintains focus after insertion
       textarea.focus();
       textAreaRef.current.selectionEnd = end + variable.length + 2;
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const handleKeyDown = (e) => {
@@ -264,10 +226,7 @@ const Html = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      form?.format == "Text" &&
-      (!form?.textJSONContent || !form?.textContent)
-    ) {
+    if (form?.format == "Text" && tinyMCEditorRef.current) {
       exportHtml(e);
     } else {
       handleSubmit(e);
@@ -322,57 +281,6 @@ const Html = () => {
                           />
                         </div>
                       </div>
-                      {/* <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            From Email<span className="star">*</span>
-                          </label>
-                          <input
-                            type="email"
-                            placeholder="From Email"
-                            className="form-control"
-                            value={form?.emailName}
-                            onChange={(e) =>
-                              setform({ ...form, emailName: e.target.value })
-                            }
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Email Subject<span className="star">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Email Subject"
-                            className="form-control"
-                            value={form?.subject}
-                            onChange={(e) =>
-                              setform({ ...form, subject: e.target.value })
-                            }
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label">
-                            Sender Name<span className="star">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Sender Name"
-                            className="form-control"
-                            value={form?.from}
-                            onChange={(e) =>
-                              setform({ ...form, from: e.target.value })
-                            }
-                            required
-                          />
-                        </div>
-                      </div> */}
                       <div className="col-md-12">
                         <div className="mb-3">
                           <label className="text-sm font-normal text-[#75757A] block !mb-3">
@@ -382,11 +290,10 @@ const Html = () => {
                             <ul className="nav nav-tabs flex mb-2 d-flex justify-content-start gap-2 flex-wrap align-items-center border-bottom-0 pb-0 pb-md-2">
                               <li className="nav-item flex mr-0 cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` ${
-                                    form?.format == "Text"
+                                  className={` ${form?.format == "Text"
                                       ? " btn btn-outline-light"
                                       : " btn btn-primary"
-                                  }`}
+                                    }`}
                                   onClick={() =>
                                     setform({ ...form, format: "HTML" })
                                   }
@@ -396,11 +303,10 @@ const Html = () => {
                               </li>
                               <li className="nav-item cursor-pointer mt-0 set_buttons">
                                 <a
-                                  className={` ${
-                                    form?.format !== "Text"
+                                  className={` ${form?.format !== "Text"
                                       ? " btn btn-outline-light"
                                       : " btn btn-primary"
-                                  }`}
+                                    }`}
                                   onClick={() =>
                                     setform({ ...form, format: "Text" })
                                   }
@@ -428,13 +334,105 @@ const Html = () => {
                               </>
                             ) : (
                               <>
-                                <EmailEditorTemplate
-                                  state={form}
-                                  setstate={setform}
-                                  ref={childRef}
-                                  exportHtml={exportHtml}
-                                  emailEditorRef={emailEditorRef}
-                                />
+                                  <Editor
+                                    apiKey="zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g"
+                                    onInit={(evt, editor) => tinyMCEditorRef.current = editor}
+                                    initialValue={form?.textContent || ''}
+                                    init={{
+                                      height: 500,
+                                      menubar: true,
+                                      plugins: [
+                                        'advlist autolink lists link image charmap print preview anchor',
+                                        'searchreplace visualblocks code fullscreen',
+                                        'insertdatetime media table paste code help wordcount',
+                                        'image',
+                                        'media',
+                                        'textcolor',
+                                        'colorpicker'
+                                      ],
+                                      toolbar: 'undo redo | formatselect | bold italic forecolor backcolor | \
+              alignleft aligncenter alignright alignjustify | \
+              bullist numlist outdent indent | image media | \
+              removeformat | help',
+                                      content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+
+                                      // Direct image upload as base64
+                                      images_upload_handler: (blobInfo, progress) => new Promise((resolve, reject) => {
+                                        const reader = new FileReader();
+                                        reader.onload = () => {
+                                          resolve(reader.result);
+                                        };
+                                        reader.onerror = (error) => {
+                                          reject('Image upload failed: ' + error);
+                                        };
+                                        reader.readAsDataURL(blobInfo.blob());
+                                      }),
+
+                                      // Text and background color options
+                                      textcolor_map: [
+                                        "000000", "Black",
+                                        "993300", "Burnt orange",
+                                        "333300", "Dark olive",
+                                        "003300", "Dark green",
+                                        "003366", "Dark azure",
+                                        "000080", "Navy Blue",
+                                        "333399", "Indigo",
+                                        "333333", "Very dark gray",
+                                        "800000", "Maroon",
+                                        "FF6600", "Orange",
+                                        "808000", "Olive",
+                                        "008000", "Green",
+                                        "008080", "Teal",
+                                        "0000FF", "Blue",
+                                        "666699", "Grayish blue",
+                                        "808080", "Gray",
+                                        "FF0000", "Red",
+                                        "FF9900", "Amber",
+                                        "99CC00", "Yellow green",
+                                        "339966", "Sea green",
+                                        "33CCCC", "Turquoise",
+                                        "3366FF", "Royal blue",
+                                        "800080", "Purple",
+                                        "999999", "Medium gray",
+                                        "FF00FF", "Magenta",
+                                        "FFCC00", "Gold",
+                                        "FFFF00", "Yellow",
+                                        "00FF00", "Lime",
+                                        "00FFFF", "Aqua",
+                                        "00CCFF", "Sky blue",
+                                        "993366", "Red violet",
+                                        "FFFFFF", "White",
+                                        "FF99CC", "Pink",
+                                        "FFCC99", "Peach",
+                                        "FFFF99", "Light yellow",
+                                        "CCFFCC", "Pale green",
+                                        "CCFFFF", "Pale cyan",
+                                        "99CCFF", "Light sky blue",
+                                        "CC99FF", "Plum"
+                                      ],
+                                      color_cols: 8,
+                                      color_map: [
+                                        "000000", "Black",
+                                        "FFFFFF", "White",
+                                        "FF0000", "Red",
+                                        "00FF00", "Green",
+                                        "0000FF", "Blue",
+                                        "FFFF00", "Yellow",
+                                        "00FFFF", "Cyan",
+                                        "FF00FF", "Magenta"
+                                      ],
+
+                                      // Automatic uploads when images are pasted or dropped
+                                      automatic_uploads: true,
+                                      paste_data_images: true
+                                    }}
+                                    onEditorChange={(content) => {
+                                      setform({
+                                        ...form,
+                                        textContent: content
+                                      });
+                                    }}
+                                  />
                               </>
                             )}
                           </div>
@@ -475,30 +473,15 @@ const Html = () => {
                     Email Preview
                   </h4>
                   <div className="badge badge-info">
-                    {form?.format === "Text" ? "Email Editor" : "HTML Code"}{" "}
-                    Preview
+                    {form?.format === "Text" ? "Rich Text" : "HTML Code"} Preview
                   </div>
                 </div>
 
-                {/* Email Header Info */}
-                {/* <div className="preview-header mb-4 p-3 bg-light rounded">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <strong>From:</strong> {form?.from} &lt;{form?.emailName}
-                      &gt;
-                    </div>
-                    <div className="col-md-6">
-                      <strong>Subject:</strong> {form?.subject}
-                    </div>
-                  </div>
-                </div> */}
-
-                {/* Email Content Preview */}
                 <div className="preview-content">
                   {previewContent ||
-                  form?.content ||
-                  form?.textContent ||
-                  form?.htmlContent ? (
+                    form?.content ||
+                    form?.textContent ||
+                    form?.htmlContent ? (
                     <div
                       className="shadow-box border !border-grey p-3 bg-white rounded-large"
                       style={{
@@ -531,32 +514,6 @@ const Html = () => {
                     className="btn btn-secondary mr-3"
                     onClick={() => {
                       setTab("form");
-                      // Small delay to ensure EmailEditor is mounted before trying to reload
-                      setTimeout(() => {
-                        if (
-                          emailEditorRef.current?.editor &&
-                          form?.textJSONContent
-                        ) {
-                          console.log(
-                            "Reloading design when returning from preview"
-                          );
-                          try {
-                            if (typeof form.textJSONContent === "object") {
-                              emailEditorRef.current.editor.loadDesign(
-                                form.textJSONContent
-                              );
-                            } else if (
-                              typeof form.textJSONContent === "string" &&
-                              form.textJSONContent !== "{}"
-                            ) {
-                              const design = JSON.parse(form.textJSONContent);
-                              emailEditorRef.current.editor.loadDesign(design);
-                            }
-                          } catch (error) {
-                            console.error("Error reloading design:", error);
-                          }
-                        }
-                      }, 500);
                     }}
                   >
                     <i className="fa fa-arrow-left mr-2"></i>
@@ -571,7 +528,7 @@ const Html = () => {
                     <i className="fa fa-refresh mr-2"></i>
                     Refresh Preview
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-primary"
                     onClick={handleSaveFromPreview}
@@ -579,13 +536,12 @@ const Html = () => {
                   >
                     <i className="fa fa-save mr-2"></i>
                     Save Template
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </>
           )}
 
-          {/* Modal remains the same */}
           <div>
             <div
               className="modal fade"

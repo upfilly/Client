@@ -117,7 +117,7 @@ const CustomDatePicker = ({
   };
 
   return (
-    <div className="date-picker-container">
+    <div className={comparisonPeriod == "none" ?  "single-date-picker-container"  : "date-picker-container"}>
       <div className="flex-container">
         <div className="flex-container">
           <h3 className="section-title">Base Period</h3>

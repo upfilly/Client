@@ -43,6 +43,8 @@ const AddEditUser = () => {
     DestinationUrl: "",
     websiteAllowed: "",
   });
+  const [closeActv, setCloseActv] = useState(false);
+  const [closeExp, setCloseExp] = useState(false);
   // const [ActivationDate,setActivationDate] = useState('')
   // const [AvailabilityDate,setAvailabilityDate] = useState('')
   // const [ExpirationDate,setExpirationDate] =  useState('')
@@ -85,7 +87,7 @@ const AddEditUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-     if (!validateForm()) {
+    if (!validateForm()) {
       return;
     }
 
@@ -278,7 +280,8 @@ const AddEditUser = () => {
     if (!user || !user?.website) {
       return {
         allowed: false,
-        message: "Please update your website in your profile to use this feature",
+        message:
+          "Please update your website in your profile to use this feature",
       };
     }
 
@@ -286,13 +289,14 @@ const AddEditUser = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-          ? user.website
-          : [];
+        ? user.website
+        : [];
 
     if (allowedDomains.length === 0) {
       return {
         allowed: false,
-        message: "Please update your website in your profile to use this feature",
+        message:
+          "Please update your website in your profile to use this feature",
       };
     }
 
@@ -305,28 +309,32 @@ const AddEditUser = () => {
       }
 
       const urlObj = new URL(urlToParse);
-      const inputHostname = urlObj.hostname.replace('www.', '').toLowerCase();
+      const inputHostname = urlObj.hostname.replace("www.", "").toLowerCase();
 
       const isAllowed = allowedDomains.some((domain) => {
         // Clean the allowed domain
         let domainStr = String(domain).trim().toLowerCase();
 
         // Remove protocol if present
-        if (domainStr.startsWith('http://') || domainStr.startsWith('https://')) {
+        if (
+          domainStr.startsWith("http://") ||
+          domainStr.startsWith("https://")
+        ) {
           try {
             const domainUrl = new URL(domainStr);
             domainStr = domainUrl.hostname;
           } catch (e) {
-            domainStr = domainStr.replace(/^https?:\/\//, '');
+            domainStr = domainStr.replace(/^https?:\/\//, "");
           }
         }
 
         // Remove www. and trailing slashes
-        domainStr = domainStr.replace('www.', '').replace(/\/+$/, '');
+        domainStr = domainStr.replace("www.", "").replace(/\/+$/, "");
 
         // Compare the hostnames
-        return inputHostname === domainStr ||
-          inputHostname.endsWith(`.${domainStr}`);
+        return (
+          inputHostname === domainStr || inputHostname.endsWith(`.${domainStr}`)
+        );
       });
 
       return {
@@ -349,7 +357,8 @@ const AddEditUser = () => {
 
     if (form?.destination_url) {
       if (!isValidUrl(form?.destination_url)) {
-        websiteAllowedError = "Please enter a valid URL (including http:// or https://)";
+        websiteAllowedError =
+          "Please enter a valid URL (including http:// or https://)";
       } else {
         const websiteCheck = isWebsiteAllowed(form?.destination_url);
         if (!websiteCheck.allowed) {
@@ -359,12 +368,21 @@ const AddEditUser = () => {
     }
 
     const newErrors = {
-      DestinationUrl: !form?.destination_url ? "Destination URL is required" : "",
+      DestinationUrl: !form?.destination_url
+        ? "Destination URL is required"
+        : "",
       websiteAllowed: websiteAllowedError,
     };
 
     setErrors(newErrors);
     return !Object.values(newErrors).some((error) => error !== "");
+  };
+
+  const handleDateClickActv = () => {
+    setCloseActv(!closeActv);
+  };
+  const handleDateClickExp = () => {
+    setCloseExp(!closeExp);
   };
 
   return (
@@ -392,8 +410,14 @@ const AddEditUser = () => {
         category={category}
         selectedItems={selectedItems}
         setSelectedItems={setSelectedItems}
-        errors={errors} 
+        errors={errors}
         setErrors={setErrors}
+        handleDateClickActv={handleDateClickActv}
+        closeActv={closeActv}
+        setCloseActv={setCloseActv}
+        handleDateClickExp={handleDateClickExp}
+        closeExp={closeExp}
+        setCloseExp={setCloseExp}
         // setActivationDate={setActivationDate}
         // setAvailabilityDate={setAvailabilityDate}
         // setExpirationDate={setExpirationDate}
