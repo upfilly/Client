@@ -1,74 +1,63 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Layout from "../components/global/layout";
+'use client'
+import React, { useEffect, useState } from 'react';
+import Layout from '../components/global/layout';
 import "./style.scss";
-import crendentialModel from "@/models/credential.model";
-import ApiClient from "@/methods/api/apiClient";
-import ReactPaginate from "react-paginate";
-import { useRouter } from "next/navigation";
+import crendentialModel from '@/models/credential.model';
+import ApiClient from '@/methods/api/apiClient';
+import ReactPaginate from 'react-paginate';
+import { useRouter } from 'next/navigation';
 import "react-datepicker/dist/react-datepicker.css";
-import Swal from "sweetalert2";
-import loader from "@/methods/loader";
-import PaymentModal from "./paymodal";
-import { toast } from "react-toastify";
-import SelectDropdown from "../components/common/SelectDropdown";
-import { CurencyData } from "../../methods/currency";
-import datepipeModel from "@/models/datepipemodel";
+import Swal from 'sweetalert2';
+import loader from '@/methods/loader';
+import PaymentModal from './paymodal'
+import { toast } from 'react-toastify';
+import SelectDropdown from '../components/common/SelectDropdown';
+import { CurencyData } from '../../methods/currency';
+import datepipeModel from '@/models/datepipemodel';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Affiliate() {
-  const history = useRouter();
-  const user = crendentialModel.getUser();
-  const [filters, setFilter] = useState({
-    page: 1,
-    count: 10,
-    search: "",
-    isDeleted: false,
-  });
-  const [data, setData] = useState({});
-  const [total, setTotal] = useState(0);
-  const [loaging, setLoader] = useState(true);
+  const history = useRouter()
+  const user = crendentialModel.getUser()
+  const [filters, setFilter] = useState({ page: 1, count: 10, search: '', isDeleted: false })
+  const [data, setData] = useState({})
+  const [total, setTotal] = useState(0)
+  const [loaging, setLoader] = useState(true)
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [associateId, setAssociateId] = useState("");
-  const [calculatedAmount, setCalculatedAmount] = useState(100);
-  const [upfillyAmount, setUpfillyAmount] = useState(100);
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [calculatedAmount, setCalculatedAmount] = useState(100)
+  const [upfillyAmount, setUpfillyAmount] = useState(100)
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [exchangeRate, setExchangeRate] = useState(null);
-  const [close, setClose] = useState(false);
 
   const handleShow = (price, commission, commission_type, id) => {
-    setAssociateId(id);
-    calculateCommission(commission_type, price, commission);
+    setAssociateId(id)
+    calculateCommission(commission_type, price, commission)
   };
 
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    filter({
-      startDate: start.toISOString().split("T")[0],
-      endDate: end.toISOString().split("T")[0],
-    });
+    filter({ "startDate": start.toISOString().split('T')[0], "endDate": end.toISOString().split('T')[0] })
   };
 
   const getExchangeRate = async (currency) => {
     try {
-      const res = await fetch(
-        `https://v6.exchangerate-api.com/v6/b0247d42906773d9631b53b0/pair/USD/${currency}`
-      );
+      const res = await fetch(`https://v6.exchangerate-api.com/v6/b0247d42906773d9631b53b0/pair/USD/${currency}`);
       const data = await res.json();
 
       if (data.result === "success") {
         setExchangeRate(data.conversion_rate);
       } else {
-        setExchangeRate("");
+        setExchangeRate("")
       }
     } catch (err) {
-      setExchangeRate("");
+      setExchangeRate("")
       console.error(err);
     }
   };
@@ -81,23 +70,23 @@ export default function Affiliate() {
 
   const convertedCurrency = (price) => {
     if (price && exchangeRate) {
-      return (price * exchangeRate).toFixed(2) + " " + selectedCurrency;
+      return (price * exchangeRate).toFixed(2) + " " + selectedCurrency
     } else {
-      return price;
+      return price
     }
-  };
+  }
 
   function calculateCommission(commission_type, price, commission) {
     let CalPrice;
 
     if (commission_type === "percentage") {
-      CalPrice = (price * commission) / 100;
+      CalPrice = price * commission / 100;
     } else {
       CalPrice = price - commission;
     }
 
-    const finalPrice = (CalPrice * user?.plan_id?.commission_override) / 100;
-    setUpfillyAmount(finalPrice);
+    const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
+    setUpfillyAmount(finalPrice)
     setCalculatedAmount(finalPrice + CalPrice);
     setShowModal(true);
   }
@@ -106,59 +95,59 @@ export default function Affiliate() {
     let CalPrice;
 
     if (commission_type === "percentage") {
-      CalPrice = (price * commission) / 100;
+      CalPrice = price * commission / 100;
     } else {
       CalPrice = price - commission;
     }
 
-    const finalPrice = (CalPrice * user?.plan_id?.commission_override) / 100;
+    const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
     if (selectedCurrency) {
-      return convertedCurrency((finalPrice + CalPrice).toFixed(2));
+      return convertedCurrency((finalPrice + CalPrice).toFixed(2))
     } else {
-      return (finalPrice + CalPrice).toFixed(2);
+      return (finalPrice + CalPrice).toFixed(2)
     }
   }
 
   const handleClose = () => setShowModal(false);
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       filter();
     }
   };
 
   const sorting = (key) => {
-    let sorder = "asc";
+    let sorder = 'asc'
     if (filters.key == key) {
-      if (filters?.sorder == "asc") {
-        sorder = "desc";
+      if (filters?.sorder == 'asc') {
+        sorder = 'desc'
       } else {
-        sorder = "asc";
+        sorder = 'asc'
       }
     }
 
     let sortBy = `${key} ${sorder}`;
     let page = filters?.page;
-    filter({ sortBy, key, sorder, page });
-  };
+    filter({ sortBy, key, sorder, page })
+  }
 
   const getData = (p = {}) => {
-    setLoader(true);
+    setLoader(true)
     let filter;
 
     if (user?.role == "brand") {
-      filter = { ...filters, ...p, brand_id: user?.id };
+      filter = { ...filters, ...p, brand_id: user?.id }
     } else {
-      filter = { ...filters, ...p, affiliate_id: user.id };
+      filter = { ...filters, ...p, affiliate_id: user.id }
     }
 
-    ApiClient.get(`affiliatelink/all`, filter).then((res) => {
+    ApiClient.get(`affiliatelink/all`, filter).then(res => {
       if (res.success) {
-        setData(res?.data);
-        setTotal(res?.data?.total_count);
-        setLoader(false);
+        setData(res?.data)
+        setTotal(res?.data?.total_count)
+        setLoader(false)
       }
-    });
+    })
   };
 
   const handleCountChange = (count) => {
@@ -167,36 +156,33 @@ export default function Affiliate() {
   };
 
   useEffect(() => {
-    if (user.role == "brand") {
-      getData({ page: 1 });
-    } else if (user.role != "brand") {
-      getData({ page: 1 });
+    if (user.role == 'brand') {
+      getData({ page: 1 })
+    } else if (user.role != 'brand') {
+      getData({ page: 1 })
     }
-  }, []);
+  }, [])
 
   const pageChange = (e) => {
-    setFilter({ ...filters, page: e.selected });
-    getData({ page: e.selected + 1 });
-  };
+    setFilter({ ...filters, page: e.selected })
+    getData({ page: e.selected + 1 })
+  }
 
   const filter = (p = {}) => {
-    setFilter({ ...filters, ...p });
-    getData({ ...p, page: 1 });
-  };
-
+    setFilter({ ...filters, ...p })
+    getData({ ...p, page: 1 })
+  }
+  
   const ChangeStatus = (e, key) => {
-    setFilter({ ...filters, [key]: e });
-    getData({ [key]: e, page: 1, user_id: user?.id });
-  };
+    setFilter({ ...filters, [key]: e })
+    getData({ [key]: e, page: 1, user_id: user?.id })
+  }
 
   const statusChange = (itm, id) => {
-    if (itm === "accepted") {
-      ApiClient.put("update/commission/status", {
-        commission_status: itm,
-        id: id,
-      }).then((res) => {
+    if (itm === 'accepted') {
+      ApiClient.put('update/commission/status', { commission_status: itm, id: id }).then((res) => {
         if (res.success) {
-          toast.success(res.message);
+          toast.success(res.message)
           getData({ page: 1 });
         }
       });
@@ -207,28 +193,24 @@ export default function Affiliate() {
             <p class="text-left  mt-3 mb-2" style="font-weight:600; font-size:14px; letter-spacing:.64px;">Mention your reason :<p/>
               <textarea type="text" id="denialReason" class="swal2-textarea p-2 w-100 m-0" placeholder="Enter here..."></textarea>
             `,
-        icon: "warning",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Deny",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Deny',
       }).then((result) => {
         if (result.isConfirmed) {
-          const denialReason = document.getElementById("denialReason").value;
+          const denialReason = document.getElementById('denialReason').value;
 
-          if (denialReason.trim() === "") {
-            Swal.fire("Error", "Please enter a reason for deny", "error");
+          if (denialReason.trim() === '') {
+            Swal.fire('Error', 'Please enter a reason for deny', 'error');
             return;
           }
 
           loader(true);
-          ApiClient.put("update/commission/status", {
-            commission_status: itm,
-            id: id,
-            reason: denialReason,
-          }).then((res) => {
+          ApiClient.put('update/commission/status', { commission_status: itm, id: id, reason: denialReason }).then((res) => {
             if (res.success) {
-              toast.success(res.message);
+              toast.success(res.message)
               getData({ page: 1 });
             }
             loader(false);
@@ -241,52 +223,46 @@ export default function Affiliate() {
   const reset = () => {
     let filter = {
       user_id: user?.id,
-      startDate: "",
-      endDate: "",
-      role: "",
-      search: "",
+      "startDate": "",
+      "endDate": "",
+      role: '',
+      search: '',
       page: 1,
       count: 10,
-      commission_paid: "",
-      commission_status: "",
-    };
-    setEndDate(null);
-    setStartDate(null);
-    setIsOpen(false);
-    setFilter({ ...filters, ...filter });
-    getData({ ...filter });
-  };
+      commission_paid: '',
+      commission_status: ''
+    }
+    setEndDate(null)
+    setStartDate(null)
+    setIsOpen(false)
+    setFilter({ ...filters, ...filter })
+    getData({ ...filter })
+  }
 
   const view = (id) => {
-    history.push("/payments/detail/" + id);
-  };
+    history.push("/payments/detail/" + id)
+  }
 
   const changeTransactionStatus = (e) => {
-    setFilter({ ...filters, transaction_type: e, page: 0 });
-    getData({ transaction_type: e, page: 1, user_id: user?.id });
-  };
+    setFilter({ ...filters, transaction_type: e, page: 0 })
+    getData({ transaction_type: e, page: 1, user_id: user?.id })
+  }
 
   const exportToExcel = async () => {
     let filter;
 
     if (user?.role == "brand") {
-      filter = { ...filters, brand_id: user?.id, export_to_xls: "yes" };
+      filter = {...filters, brand_id: user?.id, export_to_xls: "yes" };
     } else {
-      filter = { ...filters, affiliate_id: user?.id, export_to_xls: "yes" };
+      filter = {...filters, affiliate_id: user?.id, export_to_xls: "yes" };
     }
 
-    delete filter?.search;
+    delete filter?.search
 
     try {
       const myHeaders = new Headers();
-      myHeaders.append(
-        "Authorization",
-        `Bearer ${localStorage.getItem("token")}`
-      );
-      myHeaders.append(
-        "Cookie",
-        "sails.sid=s%3AZt0ciPk2dIjb8j5sjaC8Z_PyD36QeF_C.ZfQkttpL0BhEUCkJnb9f74vjK6g%2BtcZrprMYHBL8cGI"
-      );
+      myHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+      myHeaders.append("Cookie", "sails.sid=s%3AZt0ciPk2dIjb8j5sjaC8Z_PyD36QeF_C.ZfQkttpL0BhEUCkJnb9f74vjK6g%2BtcZrprMYHBL8cGI");
 
       const queryParams = new URLSearchParams(filter).toString();
       const url = `https://api.upfilly.com/affiliatelink/all?isDeleted=false&search=&role=&commission_paid=&commission_status=&${queryParams}`;
@@ -294,7 +270,7 @@ export default function Affiliate() {
       const requestOptions = {
         method: "GET",
         headers: myHeaders,
-        redirect: "follow",
+        redirect: "follow"
       };
 
       const response = await fetch(url, requestOptions);
@@ -305,12 +281,13 @@ export default function Affiliate() {
 
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = downloadUrl;
-      a.download = "Transactions.xlsx"; // or whatever filename you expect
+      a.download = 'Transactions.xlsx'; // or whatever filename you expect
       document.body.appendChild(a);
       a.click();
       a.remove();
+
     } catch (error) {
       console.error("Error exporting to Excel:", error);
       // Handle the error appropriately
@@ -318,8 +295,8 @@ export default function Affiliate() {
   };
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
-    if (itm?.urlParams && typeof itm.urlParams === "object") {
-      Object.keys(itm.urlParams).forEach((key) => {
+    if (itm?.urlParams && typeof itm.urlParams === 'object') {
+      Object.keys(itm.urlParams).forEach(key => {
         if (!headers.includes(key)) {
           headers.push(key);
         }
@@ -328,76 +305,47 @@ export default function Affiliate() {
     return headers;
   }, []);
 
-  const handleDateClick = () => {
-    setClose(!close);
-  };
-
   return (
     <>
-      <Layout
-        handleKeyPress={handleKeyPress}
-        setFilter={setFilter}
-        reset={reset}
-        filter={filter}
-        name="Track Data"
-        filters={filters}
-      >
-        <div className="nmain-list  mb-3 main_box">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="card-header">
+      <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Track Data" filters={filters}>
+        <div className='nmain-list  mb-3 main_box'>
+          <div className='container-fluid'>
+            <div className='row'>
+              <div className='card-header'>
                 <div className="main_title_head d-flex gap-2 justify-content-between align-items-center">
-<<<<<<< HEAD
                   <h3 className="mb-2">
                     Commission Transactions 
                   </h3>
 
                   <article className="d-flex gap-2 filterFlex phView">
                     <div className='searchInput m-0'>
-=======
-                  <h3 className="mb-2">Commission Transactions</h3>
-
-                  <article className="d-flex gap-2 filterFlex phView">
-                    <div className="searchInput">
->>>>>>> 4cbf4460a7e332c4f0140d1ffc588129b7b0a4e8
                       <input
                         type="text"
                         value={filters.search}
                         placeholder="Search"
                         className="form-control h-100"
-                        onChange={(e) =>
-                          e.target.value == ""
-                            ? reset()
-                            : setFilter({ ...filters, search: e.target.value })
-                        }
+                        onChange={(e) => e.target.value == "" ? reset() : setFilter({...filters, search: e.target.value })}
                       />
-                      <i
-                        className="fa fa-search search_fa"
-                        onClick={() => {
-                          filter();
-                        }}
-                        aria-hidden="true"
-                      ></i>
+                      <i className="fa fa-search search_fa" onClick={() => {
+                        filter()
+                      }} aria-hidden="true"></i>
                     </div>
 
-                    <SelectDropdown
-                      theme="search"
+                    <SelectDropdown theme='search'
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="Commission Status"
                       intialValue={filters.commission_status}
-                      result={(e) => {
-                        ChangeStatus(e.value, "commission_status");
-                      }}
+                      result={e => { ChangeStatus(e.value, "commission_status") }}
                       options={[
-                        { id: "pending", name: "Pending" },
-                        { id: "accepted", name: "Accepted" },
-                        { id: "rejected", name: "Rejected" },
+                        { id: 'pending', name: 'Pending' },
+                        { id: 'accepted', name: 'Accepted' },
+                        { id: 'rejected', name: 'Rejected' },
                       ]}
                     />
 
                     <SelectDropdown
-                      theme="search"
+                      theme='search'
                       id="currencyDropdown"
                       displayValue="name"
                       placeholder="Select Currency"
@@ -406,20 +354,17 @@ export default function Affiliate() {
                       options={CurencyData}
                     />
 
-                    <div className="width80">
-                      <SelectDropdown
-                        theme="search"
+                    <div className='width80'>
+                      <SelectDropdown theme='search'
                         id="statusDropdown"
                         displayValue="name"
                         placeholder="Paid Status"
                         intialValue={filters.commission_paid}
-                        result={(e) => {
-                          ChangeStatus(e.value, "commission_paid");
-                        }}
+                        result={e => { ChangeStatus(e.value, "commission_paid") }}
                         options={[
-                          { id: "pending", name: "Pending" },
-                          { id: "paid", name: "Paid" },
-                          { id: "unpaid", name: "unpaid" },
+                          { id: 'pending', name: 'Pending' },
+                          { id: 'paid', name: 'Paid' },
+                          { id: 'unpaid', name: 'unpaid' },
                         ]}
                       />
                     </div>
@@ -434,15 +379,12 @@ export default function Affiliate() {
                         showIcon
                         placeholderText=" Date Range"
                         selectsRange
-                        onInputClick={handleDateClick}
-                        open={close}
-                        onClickOutside={() => setClose(false)}
 
-                        // inline
+                      // inline
                       />
                     </div>
 
-                    <button
+                    <button 
                       className="btn btn-primary"
                       onClick={exportToExcel}
                       disabled={loaging || total === 0}
@@ -450,237 +392,87 @@ export default function Affiliate() {
                       <i className="fa fa-download mr-2"></i> Export
                     </button>
 
-                    {startDate ||
-                    endDate ||
-                    filters.search ||
-                    filters.commission_paid ||
-                    filters.commission_status ? (
-                      <>
-                        <a className="btn btn-primary" onClick={(e) => reset()}>
-                          Reset
-                        </a>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                    {startDate || endDate || filters.search || filters.commission_paid || filters.commission_status ? <>
+                      <a className="btn btn-primary" onClick={e => reset()}>
+                        Reset
+                      </a>
+                    </> : <></>}
                   </article>
                 </div>
               </div>
             </div>
-            <div className="row ">
-              <div className="respon_data">
-                <div className="table_section ">
-                  <div className="table-responsive ">
+            <div className='row '>
+              <div className='respon_data'>
+                <div className='table_section '>
+                  <div className='table-responsive '>
                     <table className="table table-striped ">
                       <thead className="thead-clr">
                         <tr>
-                          {uniqueKeys?.map((key) => (
-                            <th key={key} scope="col">
-                              {key}
-                            </th>
+                          {uniqueKeys?.map(key => (
+                            <th key={key} scope="col">{key}</th>
                           ))}
-                          <th
-                            scope="col"
-                            onClick={(e) => sorting("affiliate_name")}
-                          >
-                            Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            onClick={(e) => sorting("brand_name")}
-                          >
-                            Brand{filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th scope="col">Currency</th>
-                          <th scope="col" onClick={(e) => sorting("price")}>
-                            Order price{filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th scope="col">Order Id</th>
-                          <th scope="col" onClick={(e) => sorting("timestamp")}>
-                            Transaction Date
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            onClick={(e) => sorting("commission")}
-                          >
-                            Commission{filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th scope="col">Commission paid</th>
-                          <th
-                            scope="col"
-                            onClick={(e) => sorting("commission_status")}
-                          >
-                            Commission Status
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            onClick={(e) => sorting("commission_paid")}
-                          >
-                            Payment Status
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
+                          <th scope="col" onClick={e => sorting('affiliate_name')}>Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" onClick={e => sorting('brand_name')}>Brand{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" >Currency</th>
+                          <th scope="col" onClick={e => sorting('price')}>Order price{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" >Order Id</th>
+                          <th scope="col" onClick={e => sorting('timestamp')}>Transaction Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" >Commission paid</th>
+                          <th scope="col" onClick={e => sorting('commission_status')}>Commission Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          <th scope="col" onClick={e => sorting('commission_paid')}>Payment Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           <th>Action</th>
                         </tr>
                       </thead>
 
                       <tbody>
-                        {!loaging &&
-                          data?.data?.map((itm, i) => {
-                            return (
-                              <tr className="data_row" key={i}>
-                                {uniqueKeys?.map((key) => {
-                                  const value =
-                                    itm?.urlParams &&
-                                    itm.urlParams[key] !== undefined
-                                      ? itm.urlParams[key]
-                                      : null;
-                                  return (
-                                    <td key={key} className="name-person ml-2">
-                                      {value || "--"}
-                                    </td>
-                                  );
-                                })}
-                                <td className="name-person ml-2">
-                                  {itm?.affiliate_name}
-                                </td>
-                                <td className="name-person ml-2">
-                                  {itm?.brand_name || "--"}
-                                </td>
-                                <td className="name-person ml-2">
-                                  {itm?.currency}
-                                </td>
-                                <td className="name-person ml-2">
-                                  {convertedCurrency(itm?.price)}
-                                </td>
-                                <td className="name-person ml-2">
-                                  {itm?.order_id}
-                                </td>
-                                <td className="name-person ml-2">
-                                  {datepipeModel.date(
-                                    itm?.timestamp || itm?.createdAt
-                                  )}
-                                </td>
-                                <td className="name-person ml-2">
-                                  {itm?.campaign_details?.commission_type ==
-                                  "percentage"
-                                    ? ""
-                                    : "$"}
-                                  {itm?.campaign_details?.commission_type ==
-                                  "percentage"
-                                    ? itm?.campaign_details?.commission
-                                    : convertedCurrency(
-                                        itm?.campaign_details?.commission ||
-                                          itm?.amount_of_commission
-                                      )}
-                                  {itm?.campaign_details?.commission_type ==
-                                  "percentage"
-                                    ? "%"
-                                    : ""}
-                                </td>
-                                {!itm?.amount_of_commission ? (
-                                  <td className="name-person ml-2">
-                                    {selectedCurrency
-                                      ? calculatetotalCommission(
-                                          itm?.campaign_details
-                                            ?.commission_type,
-                                          itm?.price,
-                                          itm?.campaign_details?.commission
-                                        )
-                                      : `$${calculatetotalCommission(
-                                          itm?.campaign_details
-                                            ?.commission_type,
-                                          itm?.price,
-                                          itm?.campaign_details?.commission
-                                        )}`}
-                                  </td>
-                                ) : (
-                                  <td className="name-person ml-2">
-                                    {`$${convertedCurrency(
-                                      itm?.amount_of_commission
-                                    )}`}
-                                  </td>
-                                )}
-                                <td className="name-person ml-2 text-capitalize">
-                                  {itm?.commission_status}
-                                </td>
-                                <td className="name-person ml-2 text-capitalize">
-                                  {itm?.commission_paid}
-                                </td>
-                                <td className="table_dats d-flex align-items-center">
-                                  {itm?.commission_status == "pending" ? (
-                                    <div className="d-flex align-items-center">
-                                      <button
-                                        onClick={() =>
-                                          statusChange(
-                                            "accepted",
-                                            itm?.id || itm?._id
-                                          )
-                                        }
-                                        className="btn btn-primary mr-2 btn_actions"
-                                      >
-                                        <i className="fa fa-check"></i>
-                                      </button>
-                                      <button
-                                        onClick={() =>
-                                          statusChange(
-                                            "rejected",
-                                            itm?.id || itm?._id
-                                          )
-                                        }
-                                        className="btn btn-danger br50 bg-red mr-2 btn_actions"
-                                      >
-                                        <i className="fa fa-times"></i>
-                                      </button>
-                                    </div>
-                                  ) : itm?.commission_status == "rejected" ? (
-                                    <div className="btn btn-primary mr-2">
-                                      Rejected
-                                    </div>
-                                  ) : (
-                                    <>
-                                      {itm?.commission_paid != "paid" ? (
-                                        <div
-                                          className="btn btn-primary mr-2"
-                                          onClick={() =>
-                                            handleShow(
-                                              itm?.price,
-                                              itm?.campaign_details?.commission,
-                                              itm?.campaign_details
-                                                ?.commission_type,
-                                              itm?.id || itm?._id
-                                            )
-                                          }
-                                        >
-                                          Pay Now
-                                        </div>
-                                      ) : (
-                                        "Paid"
-                                      )}
-                                    </>
-                                  )}
-                                </td>
-                              </tr>
-                            );
-                          })}
+                        {!loaging && data?.data?.map((itm, i) => {
+                          return <tr className='data_row' key={i}>
+                            {uniqueKeys?.map(key => {
+                              const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
+                              return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
+                            })}
+                            <td className='name-person ml-2' >{itm?.affiliate_name}</td>
+                            <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
+                            <td className='name-person ml-2' >{itm?.currency}</td>
+                            <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
+                            <td className='name-person ml-2' >{itm?.order_id}</td>
+                            <td className='name-person ml-2' >{datepipeModel.date(itm?.timestamp || itm?.createdAt)}</td>
+                            <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
+                            {!itm?.amount_of_commission ? <td className='name-person ml-2' >
+                              {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
+                            </td> : 
+                            <td className='name-person ml-2' >
+                              {`$${convertedCurrency(itm?.amount_of_commission)}`}
+                            </td>
+                            }
+                            <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
+                            <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
+                            <td className='table_dats d-flex align-items-center'>
+                              {itm?.commission_status == 'pending' ? (
+                                <div className='d-flex align-items-center'>
+                                  <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                    <i className='fa fa-check'></i>
+                                  </button>
+                                  <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                    <i className='fa fa-times'></i>
+                                  </button>
+                                </div>
+                              ) : itm?.commission_status == 'rejected' ? (
+                                <div className="btn btn-primary mr-2">Rejected</div>
+                              ) : (<>
+                                {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={() => handleShow(itm?.price, itm?.campaign_details?.commission, itm?.campaign_details?.commission_type, itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
+                              </>
+                              )}
+                            </td>
+                          </tr>
+                        })}
                       </tbody>
                     </table>
-                    {loaging ? (
-                      <div className="text-center py-4">
-                        <img
-                          src="/assets/img/loader.gif"
-                          className="pageLoader"
-                        />
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                    {!loaging && total == 0 ? (
-                      <div className="mb-3 text-center">No Data Found</div>
-                    ) : (
-                      <></>
-                    )}
+                    {loaging ? <div className="text-center py-4">
+                      <img src="/assets/img/loader.gif" className="pageLoader" />
+                    </div> : <></>}
+                    {!loaging && total == 0 ? <div className="mb-3 text-center">No Data Found</div> : <></>}
                   </div>
                 </div>
               </div>
@@ -688,26 +480,18 @@ export default function Affiliate() {
           </div>
         </div>
 
-        <div
-          className={`paginationWrapper ${
-            !loaging && total > 10 ? "" : "d-none"
-          }`}
-        >
-          <span>
-            Show{" "}
-            <select
-              className="form-control"
-              onChange={(e) => handleCountChange(parseInt(e.target.value))}
-              value={filters.count}
-            >
-              <option value={10}>10</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-              <option value={150}>150</option>
-              <option value={200}>200</option>
-            </select>{" "}
-            from {total} Requests
-          </span>
+        <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
+          <span>Show <select
+            className="form-control"
+            onChange={(e) => handleCountChange(parseInt(e.target.value))}
+            value={filters.count}
+          >
+            <option value={10}>10</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={150}>150</option>
+            <option value={200}>200</option>
+          </select> from {total} Requests</span>
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"
