@@ -3939,7 +3939,7 @@ p.checkbox-option-main {
     max-width: 100px;
   }
 
- 
+
 
 
   .header-right {
@@ -6001,7 +6001,6 @@ input.dateselect {
     display: flex;
     flex-direction: column;
     align-items: start !important;
-
   }
 
   .main_title_head h3 {
@@ -6009,17 +6008,22 @@ input.dateselect {
     font-size: 20px;
   }
 
+
   .custom-dropdown .dropdown-item {
     width: 100%;
   }
 
-  .export-group .export-btn {
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 35% !important;
+  }
 
+  .export-group .export-btn {
     font-size: 16px !important;
   }
 
 
 }
+
 
 @media all and (min-width: 576px) and (max-width: 767px) {
   .set-border-top {
@@ -6027,6 +6031,10 @@ input.dateselect {
     flex-direction: column;
     align-items: start !important;
 
+  }
+
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 35% !important;
   }
 
   .button-container {
@@ -6050,28 +6058,37 @@ input.dateselect {
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
+  .sidebar_main .nav-item .nav-link {
+    padding: 4px !important;
+    font-size: 14px;
+  }
+
+  .transaction-heading {
+    font-size: 15px;
+  }
+
   .export-group .export-btn {
     font-size: 16px !important;
   }
 
-   .set-header-icon {
-      height: 43px !important;
-  } 
+  .set-header-icon {
+    height: 43px !important;
+  }
 
-   .fixed-topbar {
+  .fixed-topbar {
     padding: 0px 8px !important;
   }
 
 
-  .help-icon svg  {
-    width: 17px ;
-  }
-
-  .notifications svg  {
+  .help-icon svg {
     width: 17px;
   }
 
-    .profile-img .dropdown img {
+  .notifications svg {
+    width: 17px;
+  }
+
+  .profile-img .dropdown img {
     width: 20px !important;
     height: 20px !important;
   }
@@ -6101,20 +6118,12 @@ input.dateselect {
     transform: translate3d(37px, 43px, 0px) !important;
   }
 
-  // .affilitate-top-dropdowns {
-  //   display: flex !important;
-  //   flex-direction: column !important;
-  // }
-
-
 
   .select-category {
     width: 220px !important;
   }
 
-  .All-status-dropdown .css-13cymwt-control {
-    width: 200px !important;
-  }
+
 
   .notification-page-heading {
     font-size: 22px !important;
@@ -6178,7 +6187,7 @@ input.dateselect {
   }
 
   h4.filtes_herd {
-  font-size: 16px;
+    font-size: 16px;
   }
 
   .card-body {
@@ -6189,6 +6198,79 @@ input.dateselect {
     padding-left: 10px !important;
   }
 }
+
+@media all and (min-width: 320px) and (max-width: 527px) {
+  .nav-tabs {
+    border-radius: 3px !important;
+    height: 120px !important;
+    background: none !important;
+    border: none !important;
+    margin-top: -2rem;
+  }
+}
+
+
+@media all and (min-width: 421px) and (max-width: 575px) {
+
+  .affilitate-top-dropdowns .All-status-dropdown {
+    width: 50% !important;
+  }
+
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 52% !important;
+  }
+
+
+
+}
+
+
+@media (max-width: 420px) {
+
+
+  .affilitate-top-dropdowns .dropdown {
+    width: 100% !important;
+  }
+
+  .affilitate-top-dropdowns .dropdown .dropdown-toggle {
+    width: 100%;
+  }
+
+  .affilitate-top-dropdowns .All-status-dropdown {
+    width: 100% !important;
+  }
+
+  .affilitate-top-dropdowns .All-status-dropdown .css-b62m3t-container {
+    width: 100%;
+  }
+
+  .select-category {
+    width: 220px !important;
+  }
+
+  .affilitate-top-dropdowns .all-campaign-dropdown {
+    width: 100% !important;
+  }
+
+  .affilitate-top-dropdowns .datepicker-dropdown-wrapper {
+    width: 100%;
+  }
+
+  .affilitate-top-dropdowns .datepicker-dropdown-wrapper input.datepicker-field {
+    width: 100%;
+  }
+
+
+  .custom-tab-content-class {
+    margin-top: 50px !important;
+  }
+}
+
+
+.custom-nav-tabs-class {
+  margin-bottom: 0px !important;
+}
+
 
 
 

@@ -37,7 +37,7 @@ export default function PublisherPolicyForm({formPublisherData, setFormPublisher
 
                     {/* Yes/No Radio Buttons */}
                     <div className="col-lg-4 col-md-6 mb-2 mb-lg-0">
-                      <div className="d-flex gap-3">
+                      <div className="d-flex gap-3         justify-content-center justify-content-sm-start">
                         <div className="form-check">
                           <input
                             className="form-check-input"
@@ -68,6 +68,7 @@ export default function PublisherPolicyForm({formPublisherData, setFormPublisher
                         </div>
                       </div>
                     </div>
+
 
                     {/* Additional Info Textarea */}
                     <div className="col-lg-4 col-md-6">

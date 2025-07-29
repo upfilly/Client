@@ -208,7 +208,7 @@ const Html = ({
     >
       <form onSubmit={handleSubmit}>
         <div className="sidebar-left-content">
-          <div className="pprofile1 card card-shadow p-4">
+          <div className="pprofile1 card card-shadow p-3 p-sm-4  ">
             <div className="">
               <div className="main_title_head profile-card">
                 <h3 className="VieUser">
@@ -525,7 +525,7 @@ const Html = ({
                 {form?.access_type === "private" ? (
                   <></>
                 ) : (
-                  <div className="col-md-12 mb-3">
+                  <div className="col-md-12 mb-3 ">
                     <label>Default Campaign</label>
                     <div className="form-check">
                       <input
