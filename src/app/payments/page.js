@@ -178,7 +178,7 @@ export default function affilate() {
                         }}
                         options={[
                           { id: "buy_subscription", name: "Subscription" },
-                          { id: "bank_account", name: "Commission" },
+                          { id: "pay_commission", name: "Commission" },
                         ]}
                       />
                     ) : (
@@ -191,7 +191,7 @@ export default function affilate() {
                         result={(e) => {
                           changeTransactionStatus(e.value);
                         }}
-                        options={[{ id: "bank_account", name: "Commission" }]}
+                        options={[{ id: "pay_commission", name: "Commission" }]}
                       />
                     )}
                   </div>
