@@ -151,9 +151,9 @@ const Html = ({
                   <th scope="col" className="table_data">
                     Activation Date
                   </th>
-                  <th scope="col" className="table_data">
+                  {/* <th scope="col" className="table_data">
                     Availability Date
-                  </th>
+                  </th> */}
                   <th scope="col" className="table_data">
                     Status
                   </th>
@@ -214,9 +214,9 @@ const Html = ({
                         <td className="table_dats">
                           {datepipeModel.date(itm.activation_date)}
                         </td>
-                        <td className="table_dats">
+                        {/* <td className="table_dats">
                           {datepipeModel.date(itm.availability_date)}
-                        </td>
+                        </td> */}
                         <td className="table_dats">
                           {" "}
                           <div className={`user_hours`}>
