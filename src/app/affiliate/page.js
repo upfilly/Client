@@ -11,6 +11,7 @@ import ReactPaginate from "react-paginate";
 import { useRouter, useSearchParams } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Dropdown, DropdownButton, DropdownItem } from "react-bootstrap";
 import methodModel from "../../methods/methods";
 import environment from "../../environment/index";
 import { Modal, Button, Form } from "react-bootstrap";
@@ -68,7 +69,6 @@ export default function affilate() {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
   const [categoryType, setCategoryType] = useState([]);
   const [camppaignData, setCamppaignData] = useState([]);
-  const [close, setClose] = useState(false);
 
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
@@ -279,10 +279,6 @@ export default function affilate() {
       start_date: start.toISOString().split("T")[0],
       end_date: end.toISOString().split("T")[0],
     });
-  };
-
-  const handleDateClick = () => {
-    setClose(!close);
   };
 
   const getData = (p = {}) => {
@@ -637,9 +633,7 @@ export default function affilate() {
                     <button
                       className="btn btn-outline-secondary dropdown-toggle"
                       type="button"
-                      onClick={() =>
-                        setCategoryDropdownOpen(!categoryDropdownOpen)
-                      }
+                      onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
                     >
                       {getSelectedCategoryNames().length > 0
                         ? `Categories (${getSelectedCategoryNames().length})`
@@ -667,9 +661,7 @@ export default function affilate() {
                               className="form-control"
                               placeholder="Search categories..."
                               value={categorySearchTerm}
-                              onChange={(e) =>
-                                setCategorySearchTerm(e.target.value)
-                              }
+                              onChange={(e) => setCategorySearchTerm(e.target.value)}
                             />
                           </div>
 
@@ -678,35 +670,22 @@ export default function affilate() {
                               // Group categories by cat_type and sort alphabetically
                               Object.entries(
                                 filteredCategories.reduce((acc, category) => {
-                                  const type = category.cat_type || "Other";
+                                  const type = category.cat_type || 'Other';
                                   if (!acc[type]) acc[type] = [];
                                   acc[type].push(category);
                                   return acc;
                                 }, {})
                               )
                                 // Sort the groups (cat_types) alphabetically
-                                .sort(([typeA], [typeB]) =>
-                                  typeA.localeCompare(typeB)
-                                )
+                                .sort(([typeA], [typeB]) => typeA.localeCompare(typeB))
                                 .map(([type, categories]) => (
                                   <li key={type}>
-                                    <h6 className="mt-3 mb-2 text-muted">
-                                      {type == "promotional_models"
-                                        ? "Promotional Models"
-                                        : "Property Types"}
-                                    </h6>
+                                    <h6 className="mt-3 mb-2 text-muted">{type == "promotional_models" ? "Promotional Models" : "Property Types"}</h6>
                                     {/* Sort categories alphabetically within each group */}
                                     {categories
-                                      .sort((a, b) =>
-                                        (a.parent_cat_name || "").localeCompare(
-                                          b.parent_cat_name || ""
-                                        )
-                                      )
+                                      .sort((a, b) => (a.parent_cat_name || "").localeCompare(b.parent_cat_name || ""))
                                       .map((categoryItem) => (
-                                        <li
-                                          key={categoryItem._id}
-                                          className="mb-2"
-                                        >
+                                        <li key={categoryItem._id} className="mb-2">
                                           <div className="form-check d-flex justify-content-between align-items-center">
                                             <div>
                                               <input
@@ -717,9 +696,7 @@ export default function affilate() {
                                                   categoryItem._id
                                                 )}
                                                 onChange={() =>
-                                                  handleCategoryChange(
-                                                    categoryItem
-                                                  )
+                                                  handleCategoryChange(categoryItem)
                                                 }
                                               />
                                               <label
@@ -730,20 +707,16 @@ export default function affilate() {
                                                   "Promotional Models"}
                                               </label>
                                             </div>
-                                            {categoryItem.subCategories
-                                              ?.length > 0 && (
+                                            {categoryItem.subCategories?.length > 0 && (
                                               <i
-                                                className={`fa fa-angle-${
-                                                  expandedCategories.includes(
-                                                    categoryItem._id
-                                                  )
-                                                    ? "down"
-                                                    : "right"
-                                                } cursor-pointer`}
+                                                className={`fa fa-angle-${expandedCategories.includes(
+                                                  categoryItem._id
+                                                )
+                                                  ? "down"
+                                                  : "right"
+                                                  } cursor-pointer`}
                                                 onClick={() =>
-                                                  toggleCategoryExpand(
-                                                    categoryItem._id
-                                                  )
+                                                  toggleCategoryExpand(categoryItem._id)
                                                 }
                                               ></i>
                                             )}
@@ -752,107 +725,93 @@ export default function affilate() {
                                           {expandedCategories.includes(
                                             categoryItem._id
                                           ) && (
-                                            <ul className="list-unstyled ms-4 mt-2">
-                                              {/* Sort subcategories alphabetically */}
-                                              {categoryItem.subCategories
-                                                .filter(
-                                                  (subCat) =>
-                                                    !categorySearchTerm ||
-                                                    subCat.name
-                                                      .toLowerCase()
-                                                      .includes(
-                                                        categorySearchTerm.toLowerCase()
-                                                      ) ||
-                                                    subCat.subchildcategory?.some(
-                                                      (subSubCat) =>
-                                                        subSubCat.name
-                                                          .toLowerCase()
-                                                          .includes(
-                                                            categorySearchTerm.toLowerCase()
-                                                          )
-                                                    )
-                                                )
-                                                .sort((a, b) =>
-                                                  a.name.localeCompare(b.name)
-                                                )
-                                                .map((subCategory) => (
-                                                  <li
-                                                    key={subCategory.id}
-                                                    className="mb-1"
-                                                  >
-                                                    <div className="form-check d-flex justify-content-between align-items-center">
-                                                      <div>
-                                                        <input
-                                                          className="form-check-input"
-                                                          type="checkbox"
-                                                          id={`subcat-${subCategory.id}`}
-                                                          checked={selectedSubCategory?.includes(
-                                                            subCategory.id
-                                                          )}
-                                                          onChange={() =>
-                                                            handleSubCategoryChange(
-                                                              subCategory
+                                              <ul className="list-unstyled ms-4 mt-2">
+                                                {/* Sort subcategories alphabetically */}
+                                                {categoryItem.subCategories
+                                                  .filter(
+                                                    (subCat) =>
+                                                      !categorySearchTerm ||
+                                                      subCat.name
+                                                        .toLowerCase()
+                                                        .includes(
+                                                          categorySearchTerm.toLowerCase()
+                                                        ) ||
+                                                      subCat.subchildcategory?.some(
+                                                        (subSubCat) =>
+                                                          subSubCat.name
+                                                            .toLowerCase()
+                                                            .includes(
+                                                              categorySearchTerm.toLowerCase()
                                                             )
-                                                          }
-                                                        />
-                                                        <label
-                                                          className="form-check-label ms-2"
-                                                          htmlFor={`subcat-${subCategory.id}`}
-                                                        >
-                                                          {subCategory.name}
-                                                        </label>
-                                                      </div>
-                                                      {subCategory
-                                                        .subchildcategory
-                                                        ?.length > 0 && (
-                                                        <i
-                                                          className={`fa fa-angle-${
-                                                            expandedSubCategories.includes(
+                                                      )
+                                                  )
+                                                  .sort((a, b) => a.name.localeCompare(b.name))
+                                                  .map((subCategory) => (
+                                                    <li
+                                                      key={subCategory.id}
+                                                      className="mb-1"
+                                                    >
+                                                      <div className="form-check d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                          <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id={`subcat-${subCategory.id}`}
+                                                            checked={selectedSubCategory?.includes(
                                                               subCategory.id
-                                                            )
-                                                              ? "down"
-                                                              : "right"
-                                                          } cursor-pointer`}
-                                                          onClick={() =>
-                                                            toggleSubCategoryExpand(
-                                                              subCategory.id
-                                                            )
-                                                          }
-                                                        ></i>
-                                                      )}
-                                                    </div>
-
-                                                    {expandedSubCategories.includes(
-                                                      subCategory.id
-                                                    ) &&
-                                                      subCategory
-                                                        .subchildcategory
-                                                        ?.length > 0 && (
-                                                        <ul className="list-unstyled ms-4 mt-1">
-                                                          {/* Sort sub-subcategories alphabetically */}
-                                                          {subCategory.subchildcategory
-                                                            .filter(
-                                                              (subSubCat) =>
-                                                                !categorySearchTerm ||
-                                                                subSubCat.name
-                                                                  .toLowerCase()
-                                                                  .includes(
-                                                                    categorySearchTerm.toLowerCase()
-                                                                  )
-                                                            )
-                                                            .sort((a, b) =>
-                                                              a.name.localeCompare(
-                                                                b.name
+                                                            )}
+                                                            onChange={() =>
+                                                              handleSubCategoryChange(
+                                                                subCategory
                                                               )
-                                                            )
-                                                            .map(
-                                                              (
-                                                                subSubCategory
-                                                              ) => (
+                                                            }
+                                                          />
+                                                          <label
+                                                            className="form-check-label ms-2"
+                                                            htmlFor={`subcat-${subCategory.id}`}
+                                                          >
+                                                            {subCategory.name}
+                                                          </label>
+                                                        </div>
+                                                        {subCategory.subchildcategory
+                                                          ?.length > 0 && (
+                                                            <i
+                                                              className={`fa fa-angle-${expandedSubCategories.includes(
+                                                                subCategory.id
+                                                              )
+                                                                ? "down"
+                                                                : "right"
+                                                                } cursor-pointer`}
+                                                              onClick={() =>
+                                                                toggleSubCategoryExpand(
+                                                                  subCategory.id
+                                                                )
+                                                              }
+                                                            ></i>
+                                                          )}
+                                                      </div>
+
+                                                      {expandedSubCategories.includes(
+                                                        subCategory.id
+                                                      ) &&
+                                                        subCategory.subchildcategory
+                                                          ?.length > 0 && (
+                                                          <ul className="list-unstyled ms-4 mt-1">
+                                                            {/* Sort sub-subcategories alphabetically */}
+                                                            {subCategory.subchildcategory
+                                                              .filter(
+                                                                (subSubCat) =>
+                                                                  !categorySearchTerm ||
+                                                                  subSubCat.name
+                                                                    .toLowerCase()
+                                                                    .includes(
+                                                                      categorySearchTerm.toLowerCase()
+                                                                    )
+                                                              )
+                                                              .sort((a, b) => a.name.localeCompare(b.name))
+                                                              .map((subSubCategory) => (
                                                                 <li
-                                                                  key={
-                                                                    subSubCategory._id
-                                                                  }
+                                                                  key={subSubCategory._id}
                                                                   className="mb-1"
                                                                 >
                                                                   <div className="form-check">
@@ -879,22 +838,19 @@ export default function affilate() {
                                                                     </label>
                                                                   </div>
                                                                 </li>
-                                                              )
-                                                            )}
-                                                        </ul>
-                                                      )}
-                                                  </li>
-                                                ))}
-                                            </ul>
-                                          )}
+                                                              ))}
+                                                          </ul>
+                                                        )}
+                                                    </li>
+                                                  ))}
+                                              </ul>
+                                            )}
                                         </li>
                                       ))}
                                   </li>
                                 ))
                             ) : (
-                              <li className="text-muted">
-                                No categories found
-                              </li>
+                              <li className="text-muted">No categories found</li>
                             )}
                           </ul>
                         </div>
@@ -903,11 +859,7 @@ export default function affilate() {
                   </div>
 
                   {/* Invitation Status Filter */}
-<<<<<<< HEAD
                   <div className="w-25  All-status-dropdown" >
-=======
-                  <div className="w-25 All-status-dropdown">
->>>>>>> 4cbf4460a7e332c4f0140d1ffc588129b7b0a4e8
                     <SelectDropdown
                       theme="search"
                       id="statusDropdown"
@@ -954,9 +906,6 @@ export default function affilate() {
                       showIcon
                       placeholderText="Date Range"
                       selectsRange
-                      onInputClick={handleDateClick}
-                      open={close}
-                      onClickOutside={() => setClose(false)}
                     />
                   </div>
 
@@ -1036,11 +985,7 @@ export default function affilate() {
                             type="checkbox"
                             className="form-check-input check_bx_input"
                             checked={
-                              selectedAffiliteid.length > 0 &&
-                              selectedAffiliteid.length ===
-                                (data?.data?.filter(
-                                  (itm) => itm.invite_status === "not_invited"
-                                ).length || 0)
+                              selectedAffiliteid.length === data?.data?.length
                             }
                             onChange={handleSelectAll}
                           />
@@ -1095,7 +1040,7 @@ export default function affilate() {
                           ></i>
                         )}
                       </th>
-                      <th scope="col" onClick={(e) => sorting("invite_status")}>
+                      <th scope="col" onClick={(e) => sorting("status")}>
                         Invitation Status
                         {filters?.sorder === "asc" ? (
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
