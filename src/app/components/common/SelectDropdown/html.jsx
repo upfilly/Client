@@ -35,6 +35,7 @@ const Html = ({
               })) || []
             }
             isDisabled={disabled}
+            className="cursor-pointer"
             placeholder={placeholder}
             value={categoryVal()}
             isClearable={true}
