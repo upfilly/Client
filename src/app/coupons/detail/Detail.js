@@ -62,7 +62,7 @@ const Detail = (p) => {
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Coupon Code:</p>
+                                                <p className='headmain'>Coupon Code :</p>
                                             </div>
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>

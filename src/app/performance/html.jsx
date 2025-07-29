@@ -129,7 +129,7 @@ const Html = ({
               <div className="accordion-body">
                 <div className="program_bx">
                   <div className="row">
-                    <div className="col-6">
+                    <div className="col-12 col-sm-6">
                       <div className="selectbx1">
                         <MultiSelectDropdown
                           id="statusDropdown"
@@ -141,7 +141,7 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12 col-sm-6">
                       <div className="selectbx1">
                         <SelectDropdown
                           theme='search'
@@ -154,7 +154,7 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12 col-sm-6">
                       <div className="selectbx1">
                         <div className="form-group">
                           <DatePicker

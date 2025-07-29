@@ -317,7 +317,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
               className="btn btn-outline-primary me-2"
               onClick={() => setShowLogsModal(true)}
             >
-              View Email Logs
+              View Email Logs 
             </button>
           </div>
           <div className="card-body">

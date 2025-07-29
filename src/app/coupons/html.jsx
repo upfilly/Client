@@ -235,7 +235,7 @@ const Html = ({
                     className="table_data"
                     onClick={(e) => sorting("couponCode")}
                   >
-                    Coupon Code {filters?.sorder === "asc" ? "↑" : "↓"}
+                    Coupon Code  {filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
                   <th scope="col" className="table_data">
                     Coupon Type
