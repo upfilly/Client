@@ -54,8 +54,6 @@ const EditProfile = () => {
     affiliate_type: '',
     cat_type: '',
     defaultCurrency : ''
-
-    // dob:''
   });
   const [picLoader, setPicLoader] = useState(false)
   const [submitted, setSubmitted] = useState(false)

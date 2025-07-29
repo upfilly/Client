@@ -94,7 +94,7 @@ const AddEditUser = () => {
         !form?.title ||
         !form?.destination_url ||
         !form?.activation_date ||
-        !form?.availability_date ||
+        // !form?.availability_date ||
         !form?.expiration_date ||
         !images ||
         !form?.access_type ||
@@ -109,7 +109,7 @@ const AddEditUser = () => {
         !form?.title ||
         !form?.destination_url ||
         !form?.activation_date ||
-        !form?.availability_date ||
+        // !form?.availability_date ||
         !form?.expiration_date ||
         !images ||
         !form?.access_type
@@ -213,7 +213,7 @@ const AddEditUser = () => {
             affiliate_id: value?.affiliate_id,
             // "category_id": value?.category_id?.id,
             activation_date: new Date(value?.activation_date),
-            availability_date: new Date(value?.availability_date),
+            // availability_date: new Date(value?.availability_date),
             expiration_date: new Date(value?.expiration_date),
             image: value?.image,
             is_animation: value?.is_animation,
