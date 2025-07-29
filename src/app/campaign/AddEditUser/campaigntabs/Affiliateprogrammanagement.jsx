@@ -70,14 +70,14 @@ const AffiliateProgramManagement = ({
   return (
     <div className="container-fluid vh-100 d-flex flex-column p-3">
       <div className="row flex-grow-1">
-        <div className="col-12 d-flex flex-column h-100 ">
+        <div className="col-12 d-flex flex-column h-100 p-0 ">
 
           {/* Tab Navigation */}
-          <ul className="nav nav-tabs flex-shrink-0 pb-3" id="affiliateTab" role="tablist">
+          <ul className="nav nav-tabs custom-nav-tabs-class flex-shrink-0 pb-3" id="affiliateTab" role="tablist">
             {tabsData.map((tab) => (
               <li className="nav-item" role="presentation" key={tab.id}>
                 <button
-                  className={`nav-link shadow-none border-0 ${activeTab === tab.id ? 'active fw-semibold  text-white bg-tab' : 'text-dark bg-transparent'}`}
+                  className={`nav-link shadow-none border-0 ${activeTab === tab.id ? 'active fw-semibold  text-primary bg-tab' : 'text-dark bg-transparent'}`}
                   id={`${tab.id}-tab`}
                   type="button"
                   role="tab"
@@ -105,7 +105,7 @@ const AffiliateProgramManagement = ({
                 role="tabpanel"
                 aria-labelledby={`${tab.id}-tab`}
               >
-                {(activeTab == tab.id) && <div className="p-4 flex-grow-1 overflow-auto tab-height">
+                {(activeTab == tab.id) && <div className="p-2 sm-p-4 flex-grow-1 overflow-auto tab-height">
                   {tab.content}
                 </div>}
               </div>}

@@ -623,7 +623,10 @@ export default function affilate() {
           <div className="row align-items-center mx-0">
             <div className="col-12 col-md-12 col-lg-12">
               <div className="set_modal postion-relative">
-                <div className="d-flex gap-2 align-items-center affilitate-top-dropdowns flex-wrap">
+
+
+                
+                <div className="d-flex gap-2 align-items-center affilitate-top-dropdowns  flex-wrap">
                   {/* Category Filter Dropdown */}
                   <div className="dropdown position-relative">
                     <button
@@ -855,7 +858,7 @@ export default function affilate() {
                   </div>
 
                   {/* Invitation Status Filter */}
-                  <div className="w-25 All-status-dropdown" >
+                  <div className="w-25  All-status-dropdown" >
                     <SelectDropdown
                       theme="search"
                       id="statusDropdown"
@@ -876,7 +879,7 @@ export default function affilate() {
                   </div>
 
                   {/* Campaign Filter */}
-                  <div className="w-25">
+                  <div className="w-25 all-campaign-dropdown">
                     <SelectDropdown
                       theme="search"
                       id="campaignDropdown"
@@ -892,7 +895,7 @@ export default function affilate() {
                   </div>
 
                   {/* Date Range Filter */}
-                  <div className="">
+                  <div className="datepicker-dropdown-wrapper">
                     <DatePicker
                       className="datepicker-field"
                       selected={startDate}
@@ -937,6 +940,24 @@ export default function affilate() {
                       </button>
                     )}
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               </div>
             </div>
           </div>

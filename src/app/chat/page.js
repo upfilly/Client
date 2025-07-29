@@ -738,7 +738,7 @@ export default function Chat() {
                             onClick={() => router.back()}
                             className="fa  fa-angle-left mr-1"
                           ></i>{" "}
-                          All Chats{" "}
+                          All Chats {" "}
                         </h3>
                       </div>
                       <div className="msg_info person-chat hide_icon_Group b-none">

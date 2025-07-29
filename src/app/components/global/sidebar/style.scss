@@ -447,16 +447,11 @@ img.cross-hide {
 }
 
 
-
-
 .fontsize20 {
     font-size: 18px !important;
     position: relative ;
     top: 3px;
 }
-
-
-
 
 .sidebar_main.active a.nav-link.hoverclass span {
     display: none ;
@@ -469,13 +464,6 @@ img.cross-hide {
 .sidebar_main .left_sidebar  .collapse.dropdown-btm.show {
     margin-left: 20px ;
 }
-
-
-
-
-
-
-
 
 
 .nav-item a.hoverclass:hover .text_black path {
@@ -549,4 +537,10 @@ margin: 0px auto ;
   
   .tooltip:hover .tooltiptext {
     visibility: visible;
+  }
+
+  @media all and (min-width: 320px) and (max-width: 575px) {
+    .sidebar-left-content {
+        padding: 15px;
+    }
   }

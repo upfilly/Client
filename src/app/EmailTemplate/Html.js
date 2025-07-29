@@ -303,10 +303,10 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     <Layout name="Send E-mail">
       <div className="sidebar-left-content">
         <div className="card">
-          <div className="card-header">
+          <div className="card-header flex-wrap">
             <h3 className="link_default m-0">
               <i className="fa fa-bullhorn link_icon" aria-hidden="true"></i>{" "}
-              Send E-mail
+              Send E-mail 
             </h3>
             Count:
             {form?.affiliateStatus
@@ -317,7 +317,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
               className="btn btn-outline-primary me-2"
               onClick={() => setShowLogsModal(true)}
             >
-              View Email Logs
+              View Email Logs 
             </button>
           </div>
           <div className="card-body">

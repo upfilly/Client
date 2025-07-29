@@ -73,10 +73,10 @@ const Html = ({
     return (
         <Layout activeSidebar={activeSidebar} handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="E-mail" filters={filters}>
             <div className='sidebar-left-content'>
-                <div className="d-flex justify-content-end align-items-center">
+                <div className="d-flex justify-content-center justify-content-sm-end align-items-center">
 
 
-                    {user?.role != 'affiliate' && <article className="d-flex filterFlex phView">
+                    {user?.role != 'affiliate' && <article className="d-flex filterFlex phView gap-2">
                         {isAllow('addAdmins') ? <>
                             <a className="btn btn-primary " onClick={e => add()}>
                                 Add Email
@@ -140,9 +140,9 @@ const Html = ({
                             </a>
                         </> : <></>}
                     </article>}
-
-
                 </div>
+
+              
 
                 <div className='table_section'>
                     <div className="table-responsive ">

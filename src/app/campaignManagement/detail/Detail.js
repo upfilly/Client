@@ -455,7 +455,7 @@ const CampaignDetail = () => {
                                     <div className='row'>
                                         <div className='col-12'>
                                             <h4 className='mt-4 mb-3'>
-                                                Transaction Settings
+                                                Transaction Settings 
                                                 <button
                                                     onClick={() => toggleSection('transaction')}
                                                     className="btn btn-link btn-sm ms-2"

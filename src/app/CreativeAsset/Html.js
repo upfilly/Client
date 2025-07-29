@@ -180,7 +180,7 @@ const Html = () => {
                     <div className="card">
                         <div className='card-header'>
                             <div className='main_title_head d-flex justify-content-between align-items-center'>
-                                <h3 className="link_default m-0"><i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send Data Feeds
+                                <h3 className="link_default m-0"><i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send Data Feeds 
                                 </h3>
                             </div>
                         </div>
@@ -191,7 +191,7 @@ const Html = () => {
                                     <div className='col-md-12'>
                                         {/* Document Name Field */}
                                         <div className="mb-3">
-                                            <label>Document Name <span className="text-danger">*</span></label>
+                                            <label>Document Name  <span className="text-danger">*</span></label>
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.docName ? 'is-invalid' : ''}`}
@@ -203,7 +203,7 @@ const Html = () => {
                                             {errors.docName && <div className="invalid-feedback">{errors.docName}</div>}
                                         </div>
 
-                                        <div className='mb-3 options'>
+                                        <div className='mb-3 options flex-wrap '>
                                             <label>Choose an option:</label>
                                             <div className="form-check">
                                                 <input

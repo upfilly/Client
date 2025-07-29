@@ -95,7 +95,7 @@ const Html = ({
                     )}
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label>Coupon Code</label>
+                    <label>Coupon Code </label>
                     <input
                       type="text"
                       className="form-control"
@@ -319,14 +319,15 @@ const Html = ({
 
                   <div className="col-md-6 mb-3 main_input">
                     <label>
-                      Start Date<span className="star">*</span>
+                      Start Date <span className="star">*</span>
                     </label>
+
                     <div className="position-relative">
                       <input
                         type="date"
                         ref={dateRef1}
                         onClick={handleClick1}
-                        className="width_full"
+                        className="width_full input-date"
                         value={form.startDate}
                         min={new Date().toISOString().split("T")[0]}
                         onChange={(e) =>
@@ -341,6 +342,7 @@ const Html = ({
                         <></>
                       )}
                     </div>
+
                   </div>
                   <div className="col-md-6 mb-3 main_input">
                     <label>
@@ -412,6 +414,6 @@ const Html = ({
       </Layout>
     </>
   );
-};
+};  
 
 export default Html;
