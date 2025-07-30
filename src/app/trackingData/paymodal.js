@@ -18,7 +18,7 @@ const PaymentModal = ({ showModal, setShowModal, calculatedAmount, handleShow, h
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Payment Details</Modal.Title>
-        </Modal.Header>
+        </Modal.Header> 
         <Modal.Body>
           {/* Display the calculated amount */}
           <p>Your calculated amount to pay is: <strong>${calculatedAmount?.toFixed(2)}</strong></p>
