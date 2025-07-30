@@ -184,7 +184,7 @@ const Profile = () => {
 
   // Check if user meets approval requirements
   const meetsApprovalRequirements = data ? checkApprovalRequirements(data) : false;
-  const missingRequirements:any = data ? getMissingRequirements(data) : [];
+  const missingRequirements: any = data ? getMissingRequirements(data) : [];
 
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -241,7 +241,7 @@ const Profile = () => {
                             <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
                             Edit Profile
                           </Link>}
-                          
+
                           {/* <button className="btn btn-primary profiles" onClick={handleShow}>
                             See Activity Logs
                           </button> */}
@@ -465,7 +465,7 @@ const Profile = () => {
                             {data.activeUser.role == "brand" && <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                               <div className='inputFlexs width400'>
                                 <label>Advertiser ID:</label>
-                                <div className='d-flex align-items-center gap-3'>
+                                <div className='d-flex align-items-center gap-3 flex-wrap'>
                                   <p className="profile_data" id="advertiserId">{data.activeUser._id || data.activeUser.id}</p>
                                   <button
                                     className="btn btn-primary"
@@ -572,7 +572,7 @@ const Profile = () => {
                                         </div> */}
                                         <div className="text-truncate text-wrap">
                                           <span className="text-muted">Link:</span>
-                                          <a href={dat?.url} style={{wordBreak:'break-all'}} className="ml-1 font-weight-bold text-primary " target="_blank" rel="noopener noreferrer">
+                                          <a href={dat?.url} style={{ wordBreak: 'break-all' }} className="ml-1 font-weight-bold text-primary " target="_blank" rel="noopener noreferrer">
                                             {dat?.url}
                                           </a>
                                         </div>
