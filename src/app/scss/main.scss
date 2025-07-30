@@ -158,7 +158,7 @@ li.pagination-item a {
 }
 
 .pprofile1 {
-  padding: 20px;
+  // padding: 20px;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -2613,8 +2613,8 @@ a.nav-link.hoverclass.affilate.collapsed-m:hover span {
 
 .main_title_head h3 {
   margin: 0px;
-  font-size: 16px;
-
+  font-size: 18px;
+  font-weight: 700;
   color: #282626;
 }
 
@@ -3176,7 +3176,7 @@ input.overlap_mobile {
 
 .job-searchbar {
   align-items: center;
-  background: #f2f2f2;
+  // background: #f2f2f2;
   border: 1px solid #e4e5e8;
   border-radius: 8px;
   display: flex;
@@ -3616,11 +3616,12 @@ p.checkbox-option-main {
 //gourav css start
 // add team css
 .add_memeber_bx {
-  padding: 10px;
+  padding: 0px 0px 15px 0px;
+  background-color: rgba(0, 0, 0, .03);
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 5px;
+
 }
 
 .add_memeber_bx .add_title {
@@ -3631,7 +3632,7 @@ p.checkbox-option-main {
 
 .left_arrows {
   color: #c1c1c1;
-  border: 1px solid #c1c1c1;
+  // border: 1px solid #c1c1c1;
   width: 29px;
   cursor: pointer !important;
   height: 29px;
@@ -3904,7 +3905,8 @@ p.checkbox-option-main {
   }
 
   .main_title_head h3 {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 700;
   }
 
   .profileImageLabel .profileImage {
@@ -5892,8 +5894,8 @@ input.form-control {
   .date_select {
     min-height: 40px;
     border-radius: 6px;
-    font-size: 12px;
-    line-height: 2.7;
+    font-size: 14px;
+    line-height: 1.7;
     display: block;
     width: 100%;
   }
@@ -5902,26 +5904,6 @@ input.form-control {
 .custom-dropdown .selectDropdown {
   width: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .custom-description {
@@ -6005,7 +5987,7 @@ input.dateselect {
   }
 
   .main_title_head h3 {
-   font-size: 18px;
+    font-size: 18px;
   }
 
 
@@ -6053,13 +6035,18 @@ input.dateselect {
     font-size: 16px !important;
   }
 
-  .form-check {
-    padding-left: 20px !important;
-  }
+  // .form-check {
+  //   padding-left: 20px !important;
+  // }
 
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
+  .manual-commission-select-options {
+    position: relative;
+    left: -7px;
+  }
+
   .sidebar_main .nav-item .nav-link {
     padding: 4px !important;
     font-size: 14px;
@@ -6211,6 +6198,16 @@ input.dateselect {
     border: none !important;
     margin-top: -2rem;
   }
+
+  .pprofile1 {
+    padding: 0px;
+  }
+
+
+  .pagination>li a {
+    min-width: 14px !important;
+    padding: 7px 7px !important;
+  }
 }
 
 
@@ -6276,10 +6273,6 @@ input.dateselect {
 }
 
 
-
-
-
-
 .dropdown-item:active {
   background-color: unset !important;
 }
@@ -6310,5 +6303,9 @@ input.dateselect {
 
 
 .input-date {
-  width: 100% !important; 
+  width: 100% !important;
+}
+
+.transaction-heading {
+  font-size: 22px;
 }

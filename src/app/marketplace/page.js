@@ -508,7 +508,7 @@ export default function MarketPlace() {
                 </div>
               </div>
 
-              <div className="col-12 col-sm-12 col-md-6 col-lg-12">
+              <div className="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div className="lists_marketplace">
                   <div className="job-searchbar gap-2 flex-wrap">
                   <div className='filter-opt'>
@@ -541,7 +541,7 @@ export default function MarketPlace() {
 
                     <div className="row">
                       {!loaging && data.map((data, index) =>
-                        <div className="col-12 col-sm-12 col-md-12 col-lg-6 mb-4" >
+                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 mb-4" >
                           <div className="showngmkt lists_mkt">
 
                             <div className="grid_lists_mkt ">

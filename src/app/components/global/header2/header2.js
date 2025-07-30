@@ -101,7 +101,7 @@ export default function Header2({ handleKeyPress, setFilter, reset, filter, name
         <>
             <div className='fixed-topbar sidebar-content-detail' >
 
-                <div className='d-flex justify-content-between header-right align-items-center set-header-icon'>
+                <div className='d-flex justify-content-between gap-0 header-right align-items-center set-header-icon'>
                     <div className='d-flex align-items-center header-logo '>
                         <a href={!user ? '/' : '/dashboard'}>
                             <img src="/assets/img/logo.png" className="upfilly_logo" alt="" /></a>

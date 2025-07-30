@@ -49,11 +49,11 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                     background-size: cover !important;
                     background-position: center !important;
                     width: 100% !important;
-                    height: 260px !important;
+                    height: 150px !important;
                 "></div>
                 
                 <!-- Content Card -->
-                <div style="margin-top: -190px !important;">
+                <div style="margin-top: -155px !important;">
                     <div style="
                         height: auto !important;
                         padding: 1.5rem !important;
@@ -62,7 +62,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         margin: auto !important;
                         border-radius: 4px !important;
                         box-sizing: border-box !important;
-                    ">
+                    ">  
                         <img src="${environment.api
       }/images/logo.png" alt="Company Logo" style="width:115px !important; height:40px !important; object-fit:contain !important;">
                         
@@ -81,10 +81,10 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         <!-- Message Content -->
                         <div style="
                             margin: 15px 0 0 !important;
-                            padding: 15px !important;
+                            padding: 0px !important;
                             background: #f9f9f9 !important;
                             border-radius: 4px !important;
-                            text-align: left !important;
+                            text-align: center !important;
                             font-size: 13px !important;
                             line-height: 1.5 !important;
                             color: #333 !important;
@@ -303,7 +303,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
     <Layout name="Send E-mail">
       <div className="sidebar-left-content">
         <div className="card">
-          <div className="card-header flex-wrap">
+          <div className="card-header flex-wrap gap-2">
             <h3 className="link_default m-0">
               <i className="fa fa-bullhorn link_icon" aria-hidden="true"></i>{" "}
               Send E-mail 
@@ -458,7 +458,8 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         </button>
                       </div>
                     </div>
-                    <div>
+
+                    <div className="">
                       <Editor
                         apiKey="zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g"
                         className='tuncketcls'

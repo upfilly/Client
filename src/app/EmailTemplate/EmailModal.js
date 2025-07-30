@@ -110,7 +110,7 @@ const EmailLogsModal = ({ show, handleClose }) => {
                         </div>
 
                         {totalPages > 1 && (
-                            <div className="d-flex justify-content-center mt-3">
+                            <div className="d-flex justify-content-center mt-3 ">
                                 <Pagination>
                                     <Pagination.First 
                                         onClick={() => handlePageChange(1)} 

@@ -296,7 +296,7 @@ export default function AnalyticsDashboard() {
     <Layout name="Reports">
       <div className="dashboard">
         <aside className="sidebar">
-          <h1 className="sidebar-title">Insights </h1>
+          <h1 className="sidebar-title">Insights</h1>
           <nav className="sidebar-nav">
             {/* <button className="sidebar-button">Program Overview</button> */}
             {/* <button className="sidebar-button">Performance</button>
@@ -366,8 +366,6 @@ export default function AnalyticsDashboard() {
                 />
               )}
             </div>
-
-           
 
             <div className="dropdown-item">
               <SelectDropdown

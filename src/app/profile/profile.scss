@@ -1,6 +1,6 @@
 .inputFlexs label {
     margin: 0px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .col-md-12.inputFlexs {
@@ -124,14 +124,15 @@ p.profile_data {
     font-size: 20px;
 }
 
-.pprofile1   .profileimage {
+.pprofile1 .profileimage {
     height: 100%;
 }
-.pprofile1 .basic_info{
+
+.pprofile1 .basic_info {
     background-color: #f7f7f7;
-    padding: 12px;
- border-radius: 12px;
- margin-bottom: 16px;
+    // padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 16px;
 }
 
 // profile csss
@@ -141,12 +142,17 @@ p.profile_data {
     border-radius: 67px;
 }
 
-.users_detialsbx {border: 1px solid #e8e9ed;padding: 12px;border-radius: 9px; margin-bottom: 15px;}
+.users_detialsbx {
+    border: 1px solid #e8e9ed;
+    padding: 12px;
+    border-radius: 9px;
+    margin-bottom: 15px;
+}
 
 .users_detialsbx input.radio_users {
     width: 15px;
     height: 15px;
-}    
+}
 
 .users_names {
     font-size: 13px;
@@ -166,6 +172,7 @@ p.profile_data {
     max-height: 269px;
     padding-right: 5px;
 }
+
 .user-profile_scroller::-webkit-scrollbar {
     width: 2px;
 }
@@ -178,13 +185,14 @@ p.profile_data {
 .user-profile_scroller::-webkit-scrollbar-thumb {
     background: transparent;
 }
-.user-profile_scroller:hover::-webkit-scrollbar-thumb{
+
+.user-profile_scroller:hover::-webkit-scrollbar-thumb {
     background: #7adbf9;
 }
 
 .user-profile_scroller::-webkit-scrollbar-track {
     // background: #f1f1f1;
-    background-color:#e8e9ed;
+    background-color: #e8e9ed;
 }
 
 
@@ -252,6 +260,7 @@ p.profile_data {
     background-color: aliceblue;
     border-radius: 4px;
 }
+
 .sert {
     margin: 20px 0px;
     padding: 0px 16px;
@@ -260,52 +269,57 @@ p.profile_data {
 .sert h5 {
     font-size: 16px;
 }
-.modal_bx{
+
+.modal_bx {
     border: 1px solid #c8c9d1;
     margin-bottom: 13px;
     border-radius: 8px;
     border-top: 0px;
 }
+
 .activity_modals .modal-dialog {
     max-width: 800px !important;
 }
-.height_fix{
+
+.height_fix {
     height: 200px;
 }
+
 img.n-databx {
     width: 100%;
     height: 100%;
     max-width: 200px;
     object-fit: contain;
 }
+
 .bank-details-container {
     border: 1px solid #ddd;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
-  }
-  
-  .bank-details-header {
+}
+
+.bank-details-header {
     font-size: 24px;
     margin-bottom: 15px;
-  }
-  
-  .bank-details-row {
+}
+
+.bank-details-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-  }
-  
-  .bank-details-label {
+}
+
+.bank-details-label {
     font-weight: bold;
-  }
-  
-  .bank-details-value {
+}
+
+.bank-details-value {
     font-style: italic;
-  }
-  
-  .delete-button {
+}
+
+.delete-button {
     background-color: #ff4d4d;
     color: white;
     padding: 10px 15px;
@@ -313,9 +327,8 @@ img.n-databx {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .delete-button:hover {
+}
+
+.delete-button:hover {
     background-color: #ff1a1a;
-  }
-  
+}

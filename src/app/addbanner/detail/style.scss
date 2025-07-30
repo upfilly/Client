@@ -218,14 +218,14 @@ input.form-control-file.over_input {
 
         .btn-back {
             background: #fff;
-            border: 1px solid #ddd;
+            // border: 1px solid #ddd;
             border-radius: 50%;
             width: 36px;
             height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6c757d;
+            color: #000;
 
             &:hover {
                 background: #f1f1f1;

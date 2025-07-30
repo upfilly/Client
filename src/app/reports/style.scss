@@ -289,14 +289,19 @@ table {
 .checkbox-item {
   display: flex;
   align-items: center;
-  margin: 10px; /* Margin for spacing between items */
-  flex: 1 1 calc(33.33% - 20px); /* Three items per row, adjust for margins */
+  margin: 10px;
+  /* Margin for spacing between items */
+  flex: 1 1 calc(33.33% - 20px);
+  /* Three items per row, adjust for margins */
 }
 
 .checkbox-item label {
   cursor: pointer;
   font-size: 16px;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .checkbox-item input[type="checkbox"] {
@@ -310,7 +315,8 @@ table {
 }
 
 .checkboxes input[type="checkbox"]:checked {
-  accent-color: #007bff; /* Change to your preferred color */
+  accent-color: #007bff;
+  /* Change to your preferred color */
 }
 
 .checkboxes input[type="checkbox"]:focus {
@@ -319,24 +325,36 @@ table {
 }
 
 .campaign-header {
-  font-size: 24px; /* Increase font size */
-  font-weight: bold; /* Make text bold */
-  color: #333; /* Dark gray color */
-  text-align: center; /* Center the text */
-  margin: 20px 0; /* Add margin for spacing */
-  padding: 10px; /* Add padding */
-  background-color: #f0f0f0; /* Light background color */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-size: 24px;
+  /* Increase font size */
+  font-weight: bold;
+  /* Make text bold */
+  color: #333;
+  /* Dark gray color */
+  text-align: start;
+  /* Center the text */
+  margin: 20px 0;
+  /* Add margin for spacing */
+  padding: 10px;
+  /* Add padding */
+  background-color: #f0f0f0;
+  /* Light background color */
+  border-radius: 8px;
+  /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
 }
 
 /* style.scss */
 
 /* Container for the checkboxes */
 .checkboxes {
-  display: grid; /* Use CSS Grid to lay out checkboxes */
-  grid-template-columns: repeat(4, 1fr); /* 4 columns */
-  gap: 10px; /* Space between checkboxes */
+  display: grid;
+  /* Use CSS Grid to lay out checkboxes */
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 columns */
+  gap: 10px;
+  /* Space between checkboxes */
 }
 
 /* Style for each checkbox item */
@@ -365,3 +383,42 @@ table {
 
 
 
+
+@media all and (min-width: 1200px) and (max-width: 1400px) {
+     .checkboxes {
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 992px) and (max-width: 1199px) {
+    .checkboxes {
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 991px) {
+  .checkboxes {
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 576px) and (max-width: 767px) {
+  .checkboxes {
+    grid-template-columns: repeat(3, 1fr);
+    // width: 73vw;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width: 575px) {
+  .checkboxes {
+    grid-template-columns: repeat(2, 1fr);
+    width: 73vw;
+  }
+
+  .campaign-header {
+    font-size: 22px;
+  }
+}

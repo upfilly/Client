@@ -302,7 +302,7 @@ input#selectAll {
 }
 
 .action-btn {
-  flex: 1;
+  /* flex: 1; */
   padding: 6px 10px;
   border: 1px solid #ddd;
   border-radius: 4px;

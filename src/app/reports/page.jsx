@@ -23,7 +23,7 @@ export default function CampaignReport() {
   const [CampaignData, setCamapign] = useState([]);
   const [analyticData, setAnalyticData] = useState()
 
-  console.log(campaignId,"campaignIdcampaignIdcampaignId")
+  console.log(campaignId, "campaignIdcampaignIdcampaignId")
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -53,9 +53,9 @@ export default function CampaignReport() {
     let filter;
 
     if (user?.role == "brand") {
-      filter = { ...filters, ...p,brand_id:user?.id || user?._id, campaignId: campaignId.map((itm)=>itm).join(",").toString() }
+      filter = { ...filters, ...p, brand_id: user?.id || user?._id, campaignId: campaignId.map((itm) => itm).join(",").toString() }
     } else {
-      filter = { ...filters, ...p, campaignId: campaignId.map((itm)=>itm).join(",").toString() }
+      filter = { ...filters, ...p, campaignId: campaignId.map((itm) => itm).join(",").toString() }
     }
 
     ApiClient.get(`affiliatelink/report`, filter).then(res => {
@@ -133,7 +133,7 @@ export default function CampaignReport() {
 
   const getAnalyticsData = () => {
     let url = 'analytics-sales'
-    let filters = {brand_id:user?.id || user?._id, campaignId: campaignId.map((itm)=>itm).join(",").toString() }
+    let filters = { brand_id: user?.id || user?._id, campaignId: campaignId.map((itm) => itm).join(",").toString() }
 
     ApiClient.get(url, filters).then(res => {
       if (res) {
@@ -150,18 +150,25 @@ export default function CampaignReport() {
     <>
       <Layout handleKeyPress={handleKeyPress} setFilter={setFilter} reset={reset} filter={filter} name="Track Data" filters={filters}>
 
-        <div className='nmain-list  mb-3 main_box'>
-        <div className="d-flex justify-content-between align-items-center mb-2">
+
+   <div className='sidebar-left-content'>
+  <div className='nmain-list  mb-3 main_box pt-0'>
+          <div className='select-campaing-heaidng'>
             <h3 class="campaign-header">
               Select Campaign
             </h3>
-          <MultiSelectDropdownWithCheckboxes
-            options={CampaignData}
-            initialValue={campaignId}
-            onChange={(selectedValues) => setCampaignId(selectedValues)}
-          />
+          </div>
 
-        </div>
+
+          <div className="select-campaign-wrapper  mb-2">
+
+            <MultiSelectDropdownWithCheckboxes
+              options={CampaignData}
+              initialValue={campaignId}
+              onChange={(selectedValues) => setCampaignId(selectedValues)}
+            />
+
+          </div>
           <div className='container-fluid'>
             <ReportChart areaData={analyticData?.data?.[0]} />
             <div className='row'>
@@ -242,6 +249,8 @@ export default function CampaignReport() {
             activeClassName={"pagination-item-active"}
           />
         </div>
+   </div>
+      
       </Layout>
     </>
   );

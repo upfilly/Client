@@ -26,7 +26,7 @@ export default function Transactions({ formTransactionData, setFormTransactionDa
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h3 className="font-bold text-gray-800 transaction-heading mb-3">Transaction Settings</h3>
+      <h3 className="font-bold transaction-heading mb-3">Transaction Settings</h3>
 
       <div className="space-y-4">
         {formTransactionFields.map(({ label, showInput }) => (

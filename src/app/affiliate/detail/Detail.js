@@ -78,7 +78,7 @@ const Detail = (p) => {
               <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
                 <div className="affilate-detals">
                   <div className="billing_dtls">
-                    <h6>User Information</h6>
+                    <h6>User Information </h6>
                   </div>
 
                   <div className="row align-items-center mb-3 mx-auto">
@@ -328,7 +328,7 @@ const Detail = (p) => {
                       </div>
                       <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                         <div className="name-dtls">
-                          <div className="d-flex flex-wrap gap-2">
+                          <div className="d-flex flex-wrap gap-2 overflow-auto">
                             {data.all_category.map((category) => (
                               <span
                                 key={category.id}

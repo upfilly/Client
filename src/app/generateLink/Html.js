@@ -300,7 +300,7 @@ const Html = () => {
                     className="fa fa-bullhorn link_icon"
                     aria-hidden="true"
                   ></i>{" "}
-                  Default Links 
+                  Default Links  
                 </h3>
               </div>
             </div>

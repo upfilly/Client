@@ -30,7 +30,7 @@ const Html = ({
       >
         <form onSubmit={handleSubmit}>
           <div className="pprofile1 mt-3">
-            <div className="d-flex align-items-center add_memeber_bx">
+            {/* <div className="d-flex align-items-center add_memeber_bx">
               <a to="/users" onClick={(e) => back()}>
                 {" "}
                 <i
@@ -41,11 +41,26 @@ const Html = ({
               </a>
               <h3 className="Profilehedding add_title">
                 {id ? "Edit" : "Add"}{" "}
-                {role ? rolesModel.name(role) : "User"}
+                {role ? rolesModel.name(role) : "User "}
+              </h3>
+            </div> */}
+
+            <div className="add_team_bx ">
+                <div className="d-flex align-items-center add_memeber_bx mb-3">
+              <a to="/users" onClick={(e) => back()}>
+                {" "}
+                <i
+                  className="fa fa-arrow-left left_arrows"
+                  title="Back"
+                  aria-hidden="true"
+                ></i>
+              </a>
+              <h3 className="Profilehedding add_title">
+                {id ? "Edit" : "Add"}{" "}
+                {role ? rolesModel.name(role) : "User "}
               </h3>
             </div>
 
-            <div className="  add_team_bx ">
               <div className="form-row ">
                 <div className="col-md-12 mb-3">
                   <label>Select Role<span className="star">*</span></label>

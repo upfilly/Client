@@ -44,7 +44,7 @@ const NotificationPage = () => {
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
             <div className="container">
-                <h4 className='text-center notification-page-heading mb-3'>Notifications</h4>
+                <h4 className='text-center notification-page-heading mb-3  pt-md-3 '>Notifications</h4>
                 <div className="notificationList">
                     {notifications.length > 0 ? (
                         notifications.map((notification) =>{

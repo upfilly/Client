@@ -27,7 +27,8 @@ const MultiSelectCheckboxes = ({ options, initialValue, onChange }) => {
 
   return (
     <div>
-      <div className="checkboxes">
+      
+      <div className="checkboxes ">
         {optionsToShow.map((option) => (
           <div key={option.id} className="checkbox-item">
             <label>

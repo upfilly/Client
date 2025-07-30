@@ -84,7 +84,7 @@ const Detail = (p) => {
                                 <div className='main_title_head '>
                                     <h3 className=" ">
                                         <a to="/categories" onClick={back} className="back_icon">  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>
-                                        Member Details
+                                        Member Details 
                                     </h3>
 
                                 </div>

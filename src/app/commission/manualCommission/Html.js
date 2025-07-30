@@ -298,14 +298,14 @@ const Html = () => {
                       history.push("/commission/manualCommission/view")
                     }
                   ></i>
-                  Manual Commission 
+                  Manual Commission
                 </h3>
               </div>
             </div>
             <div className="card-body">
               <div className="container">
                 <div className="">
-                  <div className="d-flex gap-5 align-items-center mb-4 ">
+                  <div className="d-flex gap-5 align-items-center mb-4 manual-commission-select-options ">
                     <div className="form-check">
                       <input
                         className="form-check-input"

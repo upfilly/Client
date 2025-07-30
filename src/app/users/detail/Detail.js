@@ -94,7 +94,7 @@ const Detail = (p) => {
                           aria-hidden="true"
                         ></i>
                       </a>
-                      Member Details
+                      Member Details 
                     </h3>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ const Detail = (p) => {
                   {/* {isAllow('deleteAdmins') ?  */}
                   <>
                     <button
-                      className="btn btn-danger"
+                      className="btn btn-danger d-flex align-items-center" 
                       onClick={() => deleteItem(data.id)}
                     >
                       <i
@@ -188,7 +188,7 @@ const Detail = (p) => {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-3">
+                        <div className="col-12">
                           <div className="userdata">
                             <p className="headmain">Description:</p>
                           </div>

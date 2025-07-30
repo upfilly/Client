@@ -67,7 +67,7 @@ export default function Ppc({setFormPpcData,formPpcData,formPpcFields}) {
                       </div>
                     </div>
                   </div>
-                  <h1>djewbdkjwbd</h1>
+                 
 
                   {/* Conditional Textarea */}
                   {showInput && (

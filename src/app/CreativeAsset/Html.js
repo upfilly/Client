@@ -180,7 +180,9 @@ const Html = () => {
                     <div className="card">
                         <div className='card-header'>
                             <div className='main_title_head d-flex justify-content-between align-items-center'>
-                                <h3 className="link_default m-0"><i className="fa fa-bullhorn link_icon" aria-hidden="true"></i> Send Data Feeds 
+                                <h3 className="link_default m-0">
+                                    <i className="fa fa-bullhorn link_icon" aria-hidden="true">
+                                        </i> Send Data Feeds 
                                 </h3>
                             </div>
                         </div>

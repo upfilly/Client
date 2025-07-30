@@ -727,7 +727,7 @@ export default function Chat() {
         <div className="container chat-bg-main">
           <div className="chat-bg">
             <div className="row">
-              <div className="col-lg-4">
+              <div className="col-lg-5">
                 <div className="conversations mb-4">
                   <div className="card p-0">
                     <div className="card-header pl-0 pr-0 p-0" id="headingOne">
@@ -924,7 +924,7 @@ export default function Chat() {
                 </div>
               </div>
               {roomId ? (
-                <div className="col-lg-8">
+                <div className="col-lg-7">
                   <div className="chat-section">
                     <div className="person-chat d-flex bgwhitedata">
                       <div className="person-chat-head d-flex w-100 justify-content-between align-items-center">

@@ -240,33 +240,41 @@ const Html = () => {
           {tab == "form" ? (
             <>
               <form onSubmit={handleFormSubmit}>
-                <div className="pprofile1">
+              
+                <div className="pprofile1 pt-0 p-3 p-md-4">               
+                  <div className="add_team_bx mt-0">
+
+                     <div className="pprofile1">
                   <div className="flex items-center mb-8">
-                    <div className="d-flex align-items-center add_memeber_bx">
+                    <div className="d-flex align-items-baseline add_memeber_bx  mb-3">
                       <a onClick={() => router.back()}>
                         <i
-                          className="fa fa-arrow-left left_arrows"
+                          className="fa fa-arrow-left mr-3 left_arrows"
                           title="Back"
                           aria-hidden="true"
                         ></i>
                       </a>
                       <div className="Profilehedding">
                         <h3 className="add_email">
-                          {form && form?.id ? "Edit" : "Add"} Email
+                          {form && form?.id ? "Edit" : "Add "} Email 
                         </h3>
                         <p className="mb-0 add_detils">
                           Here you can see all about your Email
                         </p>
                       </div>
-                    </div>
-                  </div>
+                    </div>               
+                  </div>               
                 </div>
-                <div className="pprofile1 pt-0">
-                  <div className="add_team_bx mt-0">
+
+
+
+
+
+
                     <div className="row">
                       <div className="col-md-6">
                         <div className="mb-3">
-                          <label className="form-label">
+                          <label className="form-label ">
                             Email Title<span className="star">*</span>
                           </label>
                           <input
@@ -284,7 +292,7 @@ const Html = () => {
                       <div className="col-md-12">
                         <div className="mb-3">
                           <label className="text-sm font-normal text-[#75757A] block !mb-3">
-                            Description<span className="star">*</span>
+                            Description <span className="star">*</span>
                           </label>
                           <div className="">
                             <ul className="nav nav-tabs flex mb-2 d-flex justify-content-start gap-2 flex-wrap align-items-center border-bottom-0 pb-0 pb-md-2">
@@ -508,7 +516,7 @@ const Html = () => {
                   )}
                 </div>
 
-                <div className="flex justify-end gap-2 mt-4 text-right">
+                <div className="d-flex justify-end gap-2 mt-4 text-right flex-wrap gap-3">
                   <button
                     type="button"
                     className="btn btn-secondary mr-3"
