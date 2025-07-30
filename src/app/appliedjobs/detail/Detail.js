@@ -39,7 +39,7 @@ const Detail = (p) => {
                         <div className='main_title_head'>
                             <h3 className="">
                                 <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
-                                Request Detail
+                                Request Detail 
                             </h3>
                         </div>
                     </div>

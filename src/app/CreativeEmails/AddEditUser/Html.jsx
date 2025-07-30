@@ -259,7 +259,7 @@ const Html = () => {
                           {form && form?.id ? "Edit" : "Add "} Email 
                         </h3>
                         <p className="mb-0 add_detils">
-                          Here you can see all about your Email
+                          Here you can see all about your Email 
                         </p>
                       </div>
                     </div>               
@@ -309,6 +309,7 @@ const Html = () => {
                                   Html Code
                                 </a>
                               </li>
+                              
                               <li className="nav-item cursor-pointer mt-0 set_buttons">
                                 <a
                                   className={` ${form?.format !== "Text"

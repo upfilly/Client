@@ -138,7 +138,7 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
-        <div className="d-flex justify-content-end gap-2 flex-md-wrap align-items-center all_flexbx">
+        <div className="d-flex justify-content-end gap-2  coupans-page-button-wrapper flex-md-wrap align-items-center all_flexbx">
           <article className="d-flex coupons-page-top-export-options filterFlex phView">
             {(user?.role == "brand" || permission("coupon_add")) && (
               <a

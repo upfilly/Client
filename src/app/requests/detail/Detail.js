@@ -43,7 +43,7 @@ const Detail = (p) => {
                         <div className='main_title_head'>
                             <h3 className="">
                                 <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
-                                Request Detail
+                                Request Detail 
                             </h3>
                         </div>
                     </div>
@@ -51,12 +51,12 @@ const Detail = (p) => {
                         <div className="campaine_detls_wrapper">
                         
                             <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Title:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.name)}</p>
                                     </div>
@@ -64,24 +64,24 @@ const Detail = (p) => {
                             </div>
 
                             {user?.role == 'brand' &&<> <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Affiliate Name:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.affiliate_id?.fullName)}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Affiliate E-mail:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.affiliate_id?.email)}</p>
                                     </div>
@@ -90,24 +90,24 @@ const Detail = (p) => {
                             </>}
 
                          {user?.role == 'affiliate' && <><div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Brand Name:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.brand_id?.fullName)}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className='row'>
-                            <div className='col-3'>
+                            <div className='col-12 col-sm-3'>
                                 <div className='userdata'>
                                     <p className='headmain'>Brand E-mail:</p>
                                 </div>
                             </div>
-                            <div className='col-9'>
+                            <div className='col-12 col-sm-9'>
                                 <div className='name-dtls'>
                                     <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.brand_id?.email)}</p>
                                 </div>
@@ -117,12 +117,12 @@ const Detail = (p) => {
                             }
 
                             <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Status:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.status)}</p>
                                     </div>
@@ -143,12 +143,12 @@ const Detail = (p) => {
                             </div> */}
 
                             <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Comment:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
                                         <p className='headsub'>{data && data?.comments}</p>
                                     </div>

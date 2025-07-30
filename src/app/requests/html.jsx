@@ -125,7 +125,7 @@ const Html = ({
             </div>
           </div>
           <div className="card-body">
-            <div className="table_section mt-0">
+            <div className="table_section mt-0 ">
               <div className="table-responsive ">
                 <table className="table table-striped  ">
                   <thead className="table_head">
@@ -216,7 +216,7 @@ const Html = ({
                             </td>
 
                             {
-                              <td className="table_dats d-flex ">
+                              <td className="table_dats d-flex gap-2 ">
                                 {((user && user?.role == "affiliate") ||
                                   permission("make_offer_edit")) && (
                                   <>

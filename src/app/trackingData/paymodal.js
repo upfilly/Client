@@ -26,7 +26,7 @@ const PaymentModal = ({ showModal, setShowModal, calculatedAmount, handleShow, h
           {/* Show additional commission details if they exist */}
             <div>
               <h5>Other Commission Values:</h5>
-              <ul>
+              <ul className='p-2'>
                   <li>
                     Upfilly Commission: <strong>{user?.plan_id?.commission_override}% = {upfillyAmount?.toFixed(2)}$</strong>
                   </li>

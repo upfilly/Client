@@ -131,6 +131,7 @@
 
 .email-logs-modal .pagination {
   margin-bottom: 0;
+  // overflow: hidden;
 }
 
 .email-logs-modal .btn-close {
@@ -148,6 +149,16 @@
 }
 
 /* Responsive adjustments */
+
+  @media all and (min-width: 320px) and (max-width: 575px) {
+    .card-header {
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+  
+  
+  }
 @media (max-width: 768px) {
   .email-logs-modal .modal-body {
     padding: 1rem;
@@ -157,5 +168,7 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+  
 }
+
 

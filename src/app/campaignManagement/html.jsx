@@ -309,7 +309,7 @@ const Html = ({
             <div className="lists_marketplace">
               <div className="set-border-top ">
                 <div className="main_title_head d-flex justify-content-flex-start align-items-center">
-                  <h3 className="">Campaign Management </h3>
+                  <h3 className="">Campaign Management  </h3>
                 </div>
 
                 <div className="d-flex Campaign-Management-dropdpwns  align-items-center gap-2">
@@ -329,6 +329,8 @@ const Html = ({
                       { id: "removed", name: "Removed" },
                     ]}
                   />
+
+
                   <SelectDropdown
                     theme="search"
                     id="currencyDropdown"
@@ -338,6 +340,8 @@ const Html = ({
                     result={handleCurrencyChange}
                     options={CurencyData}
                   />
+
+
                   <div className="filter-dropdown-container position-relative">
                     <button
                       className="btn btn-primary d-flex align-items-center filter-toggle-btn"
@@ -681,6 +685,7 @@ const Html = ({
                       </div>
                     )}
                   </div>
+
                   {filters.status && (
                     <button
                       type="button"
@@ -690,10 +695,13 @@ const Html = ({
                       Reset
                     </button>
                   )}
+
+
+
                 </div>
               </div>
               <div className="mt-5">
-                <div className="table_section mt-0">
+                <div className="table_section mt-0 p-0">
                   <div className="table-responsive">
                     <table className="table table-striped">
                       <thead className="table_head">

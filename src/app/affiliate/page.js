@@ -623,10 +623,7 @@ export default function affilate() {
         <div className="nmain-list mb-3">
           <div className="row align-items-center mx-0">
             <div className="col-12 col-md-12 col-lg-12">
-              <div className="set_modal postion-relative">
-
-
-                
+              <div className="set_modal postion-relative">                
                 <div className="d-flex gap-2 align-items-center affilitate-top-dropdowns  flex-wrap">
                   {/* Category Filter Dropdown */}
                   <div className="dropdown position-relative">

@@ -747,7 +747,7 @@ export default function Chat() {
                             className=" btn-primary py-1 btn-sm"
                             onClick={handleShow}
                           >
-                            Create a Group
+                            Create a Group 
                           </button>
                         )}
                       </div>

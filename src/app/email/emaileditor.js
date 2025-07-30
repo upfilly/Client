@@ -31,7 +31,7 @@ console.log(emailEditorRef,"lklkjkkl")
         <div className='text-right mb-3'>
           <button className='btn btn-primary invisible' onClick={exportHtml} type='button'>Export HTML</button>
         </div>
-     <div className='descrption_multi'>
+     <div className='descrption_multi '>
         <EmailEditor
           projectId={239054}
           ref={emailEditorRef}

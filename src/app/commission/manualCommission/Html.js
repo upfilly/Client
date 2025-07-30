@@ -298,7 +298,7 @@ const Html = () => {
                       history.push("/commission/manualCommission/view")
                     }
                   ></i>
-                  Manual Commission
+                  Manual Commission 
                 </h3>
               </div>
             </div>

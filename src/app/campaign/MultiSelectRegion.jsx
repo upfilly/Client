@@ -265,7 +265,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
             e.stopPropagation();
             handleRemoveAll();
           }}>
-            ×
+            
           </span>
         )}
       </span>

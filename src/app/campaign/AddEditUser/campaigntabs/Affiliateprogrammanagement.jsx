@@ -94,7 +94,7 @@ const AffiliateProgramManagement = ({
 
           {/* Tab Content */}
           <div
-            className="tab-content border border-top-0 rounded-bottom shadow-sm flex-grow-1 d-flex flex-column"
+            className="tab-content  custom-tab-content-class   border border-top-0 rounded-bottom  shadow-sm flex-grow-1 d-flex flex-column"
             id="affiliateTabContent"
           >
             {tabsData.map((tab) => (<>

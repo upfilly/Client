@@ -261,10 +261,10 @@ input#selectAll {
   border-radius: 50%;
 }
 
-.clear-selection:hover {
+/* .clear-selection:hover {
   color: #ff4444;
   background-color: #f8f8f8;
-}
+} */
 
 /* Clear search button */
 .search-container {
@@ -382,5 +382,15 @@ input#selectAll {
 @media (max-width: 768px) {
   .dropdown-menu {
     max-height: 200px;
+  }
+}
+
+@media (max-width: 575px)  {
+  #selectAll+label {
+    font-size: 12px;
+  }
+
+  .remove-all-btn {
+    font-size: 12px;
   }
 }
