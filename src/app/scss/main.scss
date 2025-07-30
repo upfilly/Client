@@ -2643,11 +2643,14 @@ p.checkbox-option-main {
 }
 
 .edit-delete {
-  background: #e74c3f;
+  // background: #e74c3f;
+  background-color: white;
 }
 
+
+
 .edit-delete i {
-  color: #fff !important;
+  color: #ee0909 !important;
 }
 
 .mb-150 {
@@ -6283,11 +6286,12 @@ input.dateselect {
 }
 
 .user-action-delete-btn {
-  background-color: red !important;
+  // background-color: red !important;
+  background-color: white !important;
 }
 
 .user-action-delete-btn-icon {
-  color: white !important;
+  color: #ee0909 !important;
 }
 
 .export-group .copy-btn {
