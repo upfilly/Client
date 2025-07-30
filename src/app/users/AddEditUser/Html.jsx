@@ -29,7 +29,7 @@ const Html = ({
         filters={""}
       >
         <form onSubmit={handleSubmit}>
-          <div className="pprofile1 mt-3">
+          <div className="pprofile1  pt-0 p-3 p-md-4">
             {/* <div className="d-flex align-items-center add_memeber_bx">
               <a to="/users" onClick={(e) => back()}>
                 {" "}
