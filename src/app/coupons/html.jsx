@@ -70,7 +70,7 @@ const Html = ({
     const baseUrl = `coupon/getAll`;
     const params = new URLSearchParams({
       media: user?.id,
-      selectedCoupon:selectedRows.map((dat)=>dat).join(","),
+      selectedCoupon: selectedRows.map((dat) => dat).join(","),
       [type]: "yes",
       visibility: "Public",
     }).toString();
@@ -176,7 +176,9 @@ const Html = ({
                 className="btn btn-success export-btn"
                 onClick={exportCSV}
                 data-tooltip-id="csv-tooltip"
-                data-tooltip-content={`${environment.api}${getExportUrl("csv")}`}
+                data-tooltip-content={`${environment.api}${getExportUrl(
+                  "csv"
+                )}`}
               >
                 Export CSV
               </button>
@@ -185,7 +187,7 @@ const Html = ({
                 onClick={() => copyToClipboard("csv")}
                 title="Copy CSV URL"
               >
-                {copied.csv ? "Copied!" : "Copy URL"}
+                {copied.csv ? "Copied!" : "Copy All"}
               </button>
             </div>
             <div className="export-group">
@@ -193,7 +195,9 @@ const Html = ({
                 className="btn btn-warning export-btn"
                 onClick={exportXML}
                 data-tooltip-id="xml-tooltip"
-                data-tooltip-content={`${environment.api}${getExportUrl("xml")}`}
+                data-tooltip-content={`${environment.api}${getExportUrl(
+                  "xml"
+                )}`}
               >
                 Export XML
               </button>
@@ -202,7 +206,7 @@ const Html = ({
                 onClick={() => copyToClipboard("xml")}
                 title="Copy XML URL"
               >
-                {copied.xml ? "Copied!" : "Copy URL"}
+                {copied.xml ? "Copied!" : "Copy All"}
               </button>
             </div>
           </div>

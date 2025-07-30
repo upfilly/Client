@@ -63,14 +63,19 @@ const AddEditUser = () => {
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data;
-        const filteredData = data.filter((item) => item !== null);
-        const manipulateData = filteredData.map((itm) => {
-          return {
-            name: itm?.fullName || itm?.firstName,
-            id: itm?.id || itm?._id,
-          };
-        });
-        setAllAffiliate(manipulateData);
+        const filteredData = data.filter((item) => item.id !== null);
+        console.log(filteredData, "filteredData");
+        const manipulateData = filteredData.map((itm) => ({
+          name: itm?.fullName || itm?.firstName,
+          id: itm?.id || itm?._id,
+        }));
+        const uniqueData = manipulateData.filter(
+          (item, index, self) =>
+            index === self.findIndex((t) => t.id === item.id)
+        );
+
+        console.log(uniqueData, "uniqueData");
+        setAllAffiliate(uniqueData);
       }
     });
   };
@@ -432,7 +437,7 @@ const AddEditUser = () => {
         const filteredData = data.filter(
           (item) => item?.access_type === "public"
         );
-        console.log(filteredData, "filteredData");
+        // console.log(filteredData, "filteredData");
         const newFlterData = filteredData?.map((item) => {
           return {
             id: item?.id || item?._id,

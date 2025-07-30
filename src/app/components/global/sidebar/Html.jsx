@@ -794,6 +794,20 @@ const Html = ({
                     <span className="side_head">User Management</span>
                   </ListItemLink>
                 )}
+                {(user.role == "affiliate" ||
+                  addedUser?.role == "affiliate" ||
+                  user.role == "brand" ||
+                  addedUser?.role == "brand") && (
+                  <ListItemLink
+                    to="/allowNotifications"
+                    title="Allow Notifications"
+                  >
+                    <i className="material-icons  svg_iconbx" title="product">
+                      groups_3
+                    </i>
+                    <span className="side_head">Allow Notifications</span>
+                  </ListItemLink>
+                )}
               </div>
             </>
           }

@@ -18,7 +18,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     partnermanagement: ["campaignManagement", "invitations"],
     marketplace: ["requests", "Offers"],
     communication: ["EmailMessages", "notifications", "chat"],
-    accountSettings: ["addAccount", "users"],
+    accountSettings: ["addAccount", "users", "allowNotifications"],
     commissionspayments: ["payments", "salesTracking"],
     performancereports: ["reports", "performance", "reports"],
     campaignsrequests: ["campaign", "requestCampaigns"],
