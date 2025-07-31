@@ -803,9 +803,9 @@ const Html = ({
                     title="Allow Notifications"
                   >
                     <i className="material-icons  svg_iconbx" title="product">
-                      groups_3
+                      settings
                     </i>
-                    <span className="side_head">Allow Notifications</span>
+                    <span className="side_head">Notifications Settings</span>
                   </ListItemLink>
                 )}
               </div>

@@ -2402,14 +2402,19 @@ ul.sales-listing {
   width: 22px;
   border: 3px solid #efefef;
   height: 22px;
+  cursor: pointer;
 }
 
 .amt-desc .montyh {
   font-weight: 400 !important;
 }
+.form-check-input[type=radio]{
+  cursor: pointer;
+}
 
 .form-check-input:checked[type="radio"] :has(.main-card) {
   border: 1px solid #000;
+  cursor: pointer;
 }
 
 .searchInput i {
@@ -5454,6 +5459,7 @@ input[type="checkbox"].check_bx_input:checked+.checkbox-btn::after {
 
 .form-check-input:focus {
   box-shadow: unset !important;
+  cursor: pointer;
 }
 
 //
@@ -5499,6 +5505,7 @@ input.width_full {
   border-radius: 6px;
   z-index: 13;
   position: relative;
+  cursor: pointer;
 }
 
 .main_input input[type="date"]::-webkit-calendar-picker-indicator {
@@ -5798,6 +5805,7 @@ body {
 
 input.form-control {
   font-size: 14px;
+    cursor: pointer;
 }
 
 .noti_date_chat {
@@ -5865,6 +5873,7 @@ input.form-control {
 .custom-input {
   input {
     height: 40px !important;
+    cursor: pointer;
   }
 }
 
@@ -5968,10 +5977,12 @@ input.form-control {
 .form-check-input:checked[type="radio"] {
   background-color: #78acff !important;
   border-color: #78acff !important;
+  cursor: pointer;
 }
 
 input.dateselect {
   color: black;
+  cursor: pointer;
 }
 
 .no-data {
@@ -6191,4 +6202,41 @@ input.dateselect {
 
 .add_users {
   line-height: 24px !important;
+}
+
+// =========//
+
+.toggle-btn {
+  width: 40px;
+  height: 20px;
+  border-radius: 25px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-btn.checked {
+ background: linear-gradient(40deg, #032e72 -25.12%, #00baff 76.03%);
+}
+
+.toggle-btn.disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.toggle-btn-inner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+  transition: transform 0.3s;
+}
+
+.toggle-btn.checked .toggle-btn-inner {
+  transform: translate(15px, -50%);
 }
