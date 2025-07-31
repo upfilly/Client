@@ -45,7 +45,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back ,id}) => {
                     <form onSubmit={handleSubmit}>
                         <div className="main_title_head profile-card">
 
-                            <h3 className=''> <a to="/users" onClick={e => back()}>  <i className="fa fa-arrow-left  mr-2" title='Back' aria-hidden="true"></i></a>{form && form?.id ? 'Edit' : 'Add'} Affiliate Group</h3>
+                            <h3 className=''> <a to="/users" onClick={e => back()}>  <i className="fa fa-arrow-left  mr-2" title='Back' aria-hidden="true"></i></a>{form && form?.id ? 'Edit' : 'Add'}  Affiliate Group</h3>
                             <hr></hr>
                         </div>
 
@@ -127,7 +127,7 @@ const Html = ({ submitted, form, handleSubmit, setform, back ,id}) => {
                             </div>
                             <div className="text-right edit-btns">
                                 <button type="button" className="btn btn-secondary discard mr-2 back-btn" onClick={e => back()}>Cancel</button>
-                                <button type="submit" className="btn btn-primary">Save</button>
+                                <button type="submit" className="btn btn-primary save-btn">Save</button>
                             </div>
                         </div>
                     </form>

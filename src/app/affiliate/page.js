@@ -648,7 +648,7 @@ export default function affilate() {
                           padding: "10px",
                         }}
                       >
-                        <div className="p-2">
+                        <div className="p-3 p-md-4">
                           <h6 className="mb-3">Select Category of Affiliate</h6>
 
                           {/* Search input for categories */}
@@ -877,7 +877,7 @@ export default function affilate() {
                   </div>
 
                   {/* Campaign Filter */}
-                  <div className="w-25 all-campaign-dropdown">
+                  <div className="w-25 all-campaign-dropdown ">
                     <SelectDropdown
                       theme="search"
                       id="campaignDropdown"

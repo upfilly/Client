@@ -46,23 +46,25 @@ const Html = ({
             </div> */}
 
             <div className="add_team_bx ">
-                <div className="d-flex align-items-center add_memeber_bx mb-3">
-              <a to="/users" onClick={(e) => back()}>
-                {" "}
-                <i
-                  className="fa fa-arrow-left left_arrows"
-                  title="Back"
-                  aria-hidden="true"
-                ></i>
-              </a>
-              <h3 className="Profilehedding add_title">
-                {id ? "Edit" : "Add"}{" "}
-                {role ? rolesModel.name(role) : "User "}
-              </h3>
-            </div>
 
-              <div className="form-row ">
-                <div className="col-md-12 mb-3">
+              <div className="d-flex align-items-center add_memeber_bx mb-3">
+                <a to="/users" onClick={(e) => back()}>
+                  {" "}
+                  <i
+                    className="fa fa-arrow-left left_arrows"
+                    title="Back"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+                <h3 className="Profilehedding add_title">
+                  {id ? "Edit" : "Add"}{" "}
+                  {role ? rolesModel.name(role) : "User"}
+                </h3>
+              </div>
+
+
+              <div className="form-row">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
                   <label>Select Role<span className="star">*</span></label>
                   <div className="select_row custom-dropdown">
                     <SelectDropdown
@@ -82,6 +84,7 @@ const Html = ({
                               ? "super_user"
                               : "super_user",
                           name: "Super User",
+                       
                         },
                         { id: "operator", name: "Operator" },
                         { id: "analyzer", name: "Analyzer" },
@@ -89,15 +92,15 @@ const Html = ({
                       ]}
                     />
                     {submitted && !form?.role ? (
-                    <div className="invalid-feedback d-block">
-                      Role is Required
-                    </div>
-                  ) : (
-                    <></>
-                  )}
+                      <div className="invalid-feedback d-block">
+                        Role is Required
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 custom-input">
                   <label>
                     First Name<span className="star">*</span>
                   </label>
@@ -118,7 +121,7 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 custom-input">
                   <label>
                     Last Name<span className="star">*</span>
                   </label>
@@ -139,7 +142,7 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3 custom-input">
+                <div className="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 custom-input">
                   <label>
                     E-mail<span className="star">*</span>
                   </label>
@@ -240,6 +243,7 @@ const Html = ({
                                     </div>
                                 </div>} */}
               </div>
+
             </div>
 
             {/* <div className="add_team_bx">

@@ -236,12 +236,20 @@
   top: 4px;
 }
 
+.lists_marketplace {
+  padding: 20px;
+}  
+
 @media all and (min-width: 320px) and (max-width: 575px) {
   .mapping-wrapper {
-    padding: 0px;
+    padding: 15px;
   }
   .job-searchbar h4 {
     font-size: 14px;
+  }
+
+  .lists_marketplace {
+   padding: 15px;
   }
 
 }

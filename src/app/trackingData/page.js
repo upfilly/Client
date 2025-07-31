@@ -314,10 +314,10 @@ export default function Affiliate() {
               <div className='card-header'>
                 <div className="main_title_head d-flex gap-2 justify-content-between align-items-center">
                   <h3 className="mb-2">
-                    Commission Transactions 
+                    Commission Transactions
                   </h3>
 
-                  <article className="d-flex gap-2 filterFlex phView">
+                  <article className="d-flex gap-2 filterFlex phView ct-dropdown-wrapper">
                     <div className='searchInput m-0'>
                       <input
                         type="text"
@@ -369,7 +369,7 @@ export default function Affiliate() {
                       />
                     </div>
 
-                    <div class="">
+                    <div class="date-picker-box">
                       <DatePicker
                         className="datepicker-field"
                         selected={startDate}
@@ -448,7 +448,7 @@ export default function Affiliate() {
                             }
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
-                            <td className='table_dats d-flex align-items-center'>
+                            <td className='table_dats d-flex align-items-center '>
                               {itm?.commission_status == 'pending' ? (
                                 <div className='d-flex align-items-center'>
                                   <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">

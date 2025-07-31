@@ -724,7 +724,7 @@ export default function Chat() {
     <>
       {/* <Header settingData={settingData} /> */}
       <Layout title="Chat" description="Chat" name={"Chats"}>
-        <div className="container chat-bg-main">
+        <div className="px-2 chat-bg-main">
           <div className="chat-bg">
             <div className="row">
               <div className="col-lg-5">
@@ -1241,7 +1241,7 @@ export default function Chat() {
                   </div>
                 </div>
               ) : (
-                <div className="col-lg-8">
+                <div className="col-lg-7">
                   <div className="h600 text-center d-flex justify-content-center align-items-center">
                     <i className="fa fa-comments mr-2"></i>
                     No chat Active

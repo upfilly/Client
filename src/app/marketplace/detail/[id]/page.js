@@ -54,7 +54,7 @@ export default function MarketPlaceDetail() {
                 <div className="col-sm-12 col-md-12 mx-auto ">
                     <div className="d-flex gap-2 align-items-center mb-3" onClick={()=>back()}>
                     <i className="fa fa-arrow-left  left_arrows  mr-0" aria-hidden="true"></i>
-                        <span className="offer_detail">Offer Details</span>
+                        <span className="offer_detail">Offer Details </span>
                     </div>
                 
                     <div className="showngmkt lists_mkt">

@@ -204,9 +204,12 @@ input[type=number] {
  }
 
  .export-group-wrapper {
-  display: flex !important;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
  }
+
+
+
 
 
 }

@@ -188,7 +188,7 @@ const Html = ({
                               </button>
                             </div>
                           ) : itm?.status === "rejected" ? (
-                            <div className="btn btn-primary mr-2">Rejected</div>
+                            <div className="btn bg-danger text-white  mr-2">Rejected</div>
                           ) : (
                             <div className="btn btn-primary mr-2">Accepted</div>
                           )}

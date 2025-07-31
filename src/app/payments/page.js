@@ -150,6 +150,8 @@ export default function affilate() {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12">
+                
+                
                 <div className="d-flex flex-wrap gap-2 all_flexbx justify-content-md-end">
                   {/* <div className='searchInput'>
                     <input
@@ -226,7 +228,7 @@ export default function affilate() {
                 </div>
               </div>
             </div>
-            <div className="row ">
+            <div className="row">
               <div className="respon_data">
                 <div className="table_section ">
                   <div className="table-responsive ">
@@ -263,10 +265,12 @@ export default function affilate() {
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
                           <th onClick={(e) => sorting("updatedAt")}>
-                            Last Modified{" "}
+                            Last Modified {" "}
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
-                          <th></th>
+
+                          
+                          {/* <th></th> */}
                         </tr>
                       </thead>
                       <tbody>

@@ -227,7 +227,7 @@ a.col_side.collapsess.collapsed i.material-icons.mr-2 {
 
 
 .sidebar-left-content {
-    padding:20px;
+    padding:20px 10px;
 }
 
 // .table-responsive {
@@ -541,6 +541,6 @@ margin: 0px auto ;
 
   @media all and (min-width: 320px) and (max-width: 575px) {
     .sidebar-left-content {
-        padding: 15px;
+        padding: 15px 10px;
     }
   }

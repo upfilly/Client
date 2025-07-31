@@ -138,7 +138,8 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
-        <div className="d-flex justify-content-end gap-2  coupans-page-button-wrapper flex-md-wrap align-items-center all_flexbx">
+        
+        <div className="d-flex justify-content-end add-coupans-dropdown-wrapper  gap-2 flex-sm-wrap align-items-center all_flexbx">
           <article className="d-flex coupons-page-top-export-options filterFlex phView">
             {(user?.role == "brand" || permission("coupon_add")) && (
               <a
@@ -170,7 +171,11 @@ const Html = ({
               </a>
             )}
           </article>
-          <div className="d-flex gap-2 align-items-center export-group-wrapper">
+
+
+
+          
+          <div className="d-flex gap-2 align-items-center flex-direction-row export-group-wrapper">
             <div className="export-group">
               <button
                 className="btn btn-success export-btn"
@@ -209,6 +214,27 @@ const Html = ({
           <Tooltip id="csv-tooltip" place="bottom" effect="solid" />
           <Tooltip id="xml-tooltip" place="bottom" effect="solid" />
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
         <div className="table_section">
           <div className="table-responsive ">
             <table className="table table-striped table-width">

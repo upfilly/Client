@@ -58,10 +58,10 @@ const Html = ({
     >
       <div className="sidebar-left-content main_box">
         <div className="card">
-          <div className="card-header">
+          <div className="offer-management-top-wrapper">
             <div className="main_title_head gap-3 d-flex justify-content-between align-items-center">
-              <h3 className="">Offers Management</h3>
-              <article className=" filterFlex phView flex-wrap align-items-center d-flex gap-2">
+              <h3 className="">Offers Management </h3>
+              <article className=" filterFlex phView flex-wrap  offer-btn-wrapper  align-items-center d-flex gap-2">
                 <div className="searchInput ml-0">
                   <input
                     type="text"
