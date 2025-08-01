@@ -94,11 +94,11 @@ const Detail = (p) => {
           <div className="card-header">
             <div className="d-flex justify-content-between align-items-center  gap-3 flex-wrap ">
               <div className="main_title_head">
-                <div className="d-flex gap-2 align-items-center ">
+                <div className="d-flex gap-2 align-items-center group-detail-btn-wrapper ">
                   <button
                     onClick={back}
                     type="button"
-                    className="btn btn-primary px-2 py-0 "
+                    className="btn  px-2 py-0 "
                   >
                     <i
                       className="fa fa-arrow-left "
@@ -106,7 +106,7 @@ const Detail = (p) => {
                       aria-hidden="true"
                     ></i>
                   </button>
-                  <h3 className=" ">Group Details</h3>
+                  <h3 className=" ">Group Details </h3>
                 </div>
               </div>
               <div>

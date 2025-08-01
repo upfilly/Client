@@ -671,6 +671,7 @@ li.b-bottom:hover .b-none {
 .btn:first-child:active:focus-visible,
 :not(.btn-check)+.btn:active:focus-visible {
     box-shadow: none !important;
+    border-color: white !important;
 }
 
 .msg_info a.dropdown-item {
@@ -681,7 +682,7 @@ li.b-bottom:hover .b-none {
     color: #000 !important;
     padding: 0px !important;
     background: transparent;
-    border: none !important;
+  
 }
 
 .flex-between {

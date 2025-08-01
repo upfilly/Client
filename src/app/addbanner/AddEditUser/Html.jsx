@@ -102,6 +102,7 @@ const Html = ({
                       <></>
                     )}
                   </div>
+
                   <div className="col-12 col-sm-12 col-md-6">
                     <div className="form-group">
                       <div className="select_drop ">
@@ -237,7 +238,7 @@ const Html = ({
                     <label>
                       Select Category<span className="star">*</span>
                     </label>
-                    <div className="drops category-input">
+                    <div className="drops category-input add-baner-select-category-dropdown">
                       <MultiSelectDropdownData
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}
@@ -261,7 +262,7 @@ const Html = ({
                     />
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label className="form-label">
+                    <label className="form-label ">
                       Activation Date<span className="star">*</span>
                     </label>
                     <ReactDatePicker

@@ -456,8 +456,8 @@ const Html = () => {
                       </div>
 
                       <div className="col-md-6 ">
-                        <div className="mb-3">
-                          <label>Campaign</label>
+                        <div className="mb-3 mc-campaign-dropdown">
+                          <label>Campaign</label> 
                           <SelectDropdown
                             theme="search"
                             id="statusDropdown"

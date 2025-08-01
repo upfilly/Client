@@ -422,7 +422,7 @@ const isSomeVisibleSelected = () => {
       .filter((cat) => searchInHierarchy(cat, searchTerm))
       .map((category) => (
         <div key={category?._id} className="category-container">
-          <div className="dropdown-item">
+          <div className="dropdown-item overflow-auto" >
             <input
               type="checkbox"
               checked={selectedItems && selectedItems?.categories?.includes(category?._id)}

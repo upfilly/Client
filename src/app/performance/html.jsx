@@ -130,7 +130,7 @@ const Html = ({
                 <div className="program_bx">
                   <div className="row">
                     <div className="col-12 col-sm-6">
-                      <div className="selectbx1">
+                      <div className="selectbx1 mc-campaign-dropdown">
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -142,7 +142,7 @@ const Html = ({
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
-                      <div className="selectbx1">
+                      <div className="selectbx1 mc-campaign-dropdown">
                         <SelectDropdown
                           theme='search'
                           id="currencyDropdown"

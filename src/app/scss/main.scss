@@ -2697,6 +2697,13 @@ p.checkbox-option-main {
 }
 
 
+.campaign-request-header-wrapper {
+   padding: 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+
 .offer-management-top-wrapper {
   padding: .75rem 1.25rem !important;
   margin-bottom: 0;
@@ -5244,7 +5251,7 @@ div:where(.swal2-icon).swal2-warning {
 }
 
 .react-datepicker__view-calendar-icon input:focus-visible {
-  border: 0px solid #ccc !important;
+  border: 1px solid #ccc !important;
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -5903,7 +5910,7 @@ input.form-control {
 }
 
 .custom-dropdown {
-  // display: flex;
+  display: flex;
   flex-wrap: wrap;
   width: 100%;
 
@@ -5943,7 +5950,7 @@ input.form-control {
 }
 
 .custom-dropdown .selectDropdown {
-  width: 100%;
+  width: 100% !important;
 }
 
 .custom-description {
@@ -6003,8 +6010,6 @@ input.dateselect {
 }
 
 
-
-
 @media all and (min-width: 992px) and (max-width: 1200px) {
   .date_select {
     min-height: 40px !important;
@@ -6032,7 +6037,7 @@ input.dateselect {
 
 
   .custom-dropdown .dropdown-item {
-    width: 100%;
+    width: 100% !important;
   }
 
 
@@ -6262,9 +6267,7 @@ input.dateselect {
     padding: 10px !important;
   }
 
-  // .form-check {
-  //   padding-left: 10px !important;
-  // }
+
 
   .jobs_child-flex {
     width: 100%;
@@ -6290,6 +6293,23 @@ input.dateselect {
     flex-direction: column;
   } 
 
+  .react-datepicker__view-calendar-icon input {
+        padding: 6px 12px 5px 30px !important;
+        font-size: 13px !important;
+  }
+
+  .react-datepicker__close-icon {
+    padding: 0 3px 0 0 !important;
+  }
+
+    .react-datepicker__view-calendar-icon input::placeholder {
+  font-size: 12px !important;
+}
+
+
+  .react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
+        padding: 0.5rem; 
+  }
 
 
 }
@@ -6374,6 +6394,25 @@ input.dateselect {
   }
 }
 
+.user-managemsnt-select-role .cursor-pointer {
+  width: 100% !important;
+}
+
+.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar  {
+  width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
+}
+
+.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar-thumb {
+    background: #b4d5ff !important;
+  border-radius: 10px !important;
+} 
+
+.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar-thumb:hover  {
+   background: #89c2ff !important;
+}
+
 
 .table_dats .bg-danger:hover {
   color: #fff !important;
@@ -6425,31 +6464,54 @@ input.dateselect {
 }
 
 .select-category::-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background-color: #f1f1f1;
+  width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
 }
 
 .select-category::-webkit-scrollbar-thumb {
-  background: #b4d5ff;
-  border-radius: 10px;
+  background: #b4d5ff !important;
+  border-radius: 10px !important;
 }
 
 .select-category::-webkit-scrollbar-thumb:hover {
-  background: #89c2ff;
+  background: #89c2ff !important;
 }
 
+.group-detail-btn-wrapper .btn:active {
+  border-color: white !important;
+} 
+
 .all-campaign-dropdown ::-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background-color: #f1f1f1;
+  width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
 }
 
 .all-campaign-dropdown ::-webkit-scrollbar-thumb {
-  background: #b4d5ff;
-  border-radius: 10px;
+  background: #b4d5ff !important;
+  border-radius: 10px !important;
 }
 
 .all-campaign-dropdown ::-webkit-scrollbar-thumb:hover {
-  background: #89c2ff;
+  background: #89c2ff !important;
 }
+
+
+.mc-campaign-dropdown ::-webkit-scrollbar {
+  width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
+}
+
+.mc-campaign-dropdown ::-webkit-scrollbar-thumb {
+  background: #89c2ff !important;
+}
+
+.mc-campaign-dropdown::-webkit-scrollbar-thumb:hover {
+   background: #89c2ff !important;
+}
+
+
+
+

@@ -175,7 +175,7 @@ export default function MarketPlace() {
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
       <>
         <section className="mapping-wrapper">
-          <div className="container">
+          <div className="px-2">
             <div className="row">
               {/* <div className="col-12 col-sm-12 col-md-6 col-lg-4 ">
                 <div className="filters_data_list mb-4">

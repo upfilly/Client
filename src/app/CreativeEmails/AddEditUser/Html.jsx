@@ -266,11 +266,6 @@ const Html = () => {
                   </div>               
                 </div>
 
-
-
-
-
-
                     <div className="row">
                       <div className="col-md-6">
                         <div className="mb-3">

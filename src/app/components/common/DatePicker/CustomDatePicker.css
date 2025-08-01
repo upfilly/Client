@@ -7,7 +7,7 @@
   display: flex;
 }
 
-.single-date-picker-container{
+.single-date-picker-container {
 
   background: #fff;
   padding: 20px;
@@ -185,8 +185,16 @@ input[type="radio"] {
   }
 
   .rdrMonth {
-    width: 24.667em !important;
+    width: 22.667em !important;
   }
+
+  .date-picker-inner {
+    width: 240px !important;
+  }
+
+
+
+
 }
 
 @media all and (min-width: 576px) and (max-width: 767px) {
@@ -217,6 +225,21 @@ input[type="radio"] {
     padding: 0px !important;
   }
 
+  /* .single-date-picker-container {
+    display: flex;
+    flex-direction: column !important;
+  } */
+
+
+  /* .single-date-picker-container .date-picker-wrapper {
+    max-width: 200px !important;
+    border: 2px solid red !important;
+  } */
+
+
+
+
+
   .date-picker-inner {
     flex-direction: column;
   }
@@ -233,3 +256,96 @@ input[type="radio"] {
     font-size: 11px;
   }
 }
+
+/* Responsive styles specifically for the date picker component */
+ @media (max-width: 768px) {
+   .single-date-picker-container {
+    flex-direction: column !important;
+   }
+
+
+} 
+
+@media (max-width: 575px) {
+  .single-date-picker-container,
+  .date-picker-container {
+    width: 255px !important;
+    min-width: 255px;
+    overflow: hidden;
+    padding: 8px;
+    /* border: 1px solid gray; */
+  }
+
+  .date-picker-wrapper {
+    width: 235px !important;
+    min-width: 235px;
+  }
+
+  .date-picker-inner {
+    width: 235px !important;
+    min-width: 235px;
+  }
+
+  .DateRange {
+    width: 235px !important;
+    min-width: 235px !important;
+    transform: scale(0.85);
+    transform-origin: left top;
+  }
+
+  .rdrMonth {
+    width: 235px !important;
+    min-width: 235px !important;
+    padding: 0 !important;
+  }
+
+  .rdrCalendarWrapper {
+    width: 235px !important;
+    min-width: 235px !important;
+  }
+
+  .rdrDay {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 10px !important;
+  }
+
+  .rdrWeekDays {
+    padding: 0 8px !important;
+  }
+
+  .rdrMonthName {
+    font-size: 11px !important;
+  }
+
+  .button-container {
+    width: 235px !important;
+    flex-direction: column;
+  }
+
+  .cancel-btn, 
+  .apply-btn {
+    width: 100% !important;
+    padding: 6px !important;
+    font-size: 12px !important;
+  }
+
+  .radio-label {
+    font-size: 11px !important;
+    white-space: normal !important;
+    line-height: 1.2;
+  }
+
+  .section-title {
+    font-size: 12px !important;
+  }
+
+   .single-date-picker-wrapper {
+    justify-content: center !important;
+   }
+
+
+}
+
+
+

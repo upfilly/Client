@@ -29,7 +29,7 @@ const Html = ({
         filters={""}
       >
         <form onSubmit={handleSubmit}>
-          <div className="pprofile1  pt-0 p-3 p-md-4">
+          <div className="pprofile1  pt-0 p-3 p-md-2">
             {/* <div className="d-flex align-items-center add_memeber_bx">
               <a to="/users" onClick={(e) => back()}>
                 {" "}
@@ -66,9 +66,9 @@ const Html = ({
               <div className="form-row">
                 <div className="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
                   <label>Select Role<span className="star">*</span></label>
-                  <div className="select_row custom-dropdown">
+                  <div className="select_row custom-dropdown user-managemsnt-select-role">
                     <SelectDropdown
-                      theme="search"
+                      theme="search"  
                       id="statusDropdown"
                       displayValue="name"
                       placeholder="Select Role"
@@ -100,6 +100,7 @@ const Html = ({
                     )}
                   </div>
                 </div>
+
                 <div className="col-12 col-sm-6 col-md-6 col-lg-3 mb-3 custom-input">
                   <label>
                     First Name<span className="star">*</span>

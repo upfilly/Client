@@ -25,6 +25,7 @@
   width: 100%;
   text-align: left;
 }
+
 .category-input span.dropdown-toggle {
   background: #fff;
   border: 1px solid #ccc;
@@ -58,6 +59,8 @@
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
+  /* background-color: #acacac3d; */
+
   border-radius: 4px;
   font-size: 14px;
   box-sizing: border-box;
@@ -109,7 +112,7 @@ input[type=radio] {
   font-weight: bold;
   display: inline-block;
   margin-left: 37px;
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 input#selectAll {
@@ -129,7 +132,7 @@ input#selectAll {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 6px;
-  
+
 }
 
 .remove-all-btn:hover {
@@ -213,12 +216,14 @@ input#selectAll {
 .search-container {
   position: relative;
   display: inline-block;
-  width: 100%; /* or your preferred width */
+  width: 100%;
+  /* or your preferred width */
 }
 
 .search-input {
   width: 100%;
-  padding: 8px 30px 8px 12px; /* right padding to make space for the × button */
+  padding: 8px 30px 8px 12px;
+  /* right padding to make space for the × button */
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
@@ -245,7 +250,8 @@ input#selectAll {
 /* Clear selection cross in the dropdown toggle */
 .dropdown-toggle {
   position: relative;
-  padding-right: 25px; /* Make space for the × */
+  padding-right: 25px;
+  /* Make space for the × */
 }
 
 .clear-selection {
@@ -385,7 +391,7 @@ input#selectAll {
   }
 }
 
-@media (max-width: 575px)  {
+@media (max-width: 575px) {
   #selectAll+label {
     font-size: 12px;
   }

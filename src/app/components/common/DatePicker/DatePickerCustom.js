@@ -174,6 +174,7 @@ const CustomDatePicker = ({
           )}
         </div>
       </div>
+
       <div className="date-picker-wrapper">
         <div className="d-flex gap-3 date-picker-inner justify-content-center justify-content-lg-end">
           <DateRange
@@ -216,7 +217,7 @@ const CustomDatePicker = ({
             />
           )}
         </div>
-        <div className="button-container">
+        <div className="button-container gap-2 gap-sm-0">
           <button
             className="cancel-btn"
             onClick={() => setHandleDateFilter(false)}
@@ -224,7 +225,7 @@ const CustomDatePicker = ({
             Cancel
           </button>
           <button className="apply-btn" onClick={() => ApplyDateFilter()}>
-            Apply
+            Apply 
           </button>
         </div>
       </div>

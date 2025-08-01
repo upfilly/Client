@@ -296,7 +296,7 @@ export default function AnalyticsDashboard() {
     <Layout name="Reports">
       <div className="dashboard">
         <aside className="sidebar">
-          <h1 className="sidebar-title">Insights</h1>
+          <h3 className="sidebar-title mb-0">Insights</h3>
           <nav className="sidebar-nav">
             {/* <button className="sidebar-button">Program Overview</button> */}
             {/* <button className="sidebar-button">Performance</button>
@@ -304,7 +304,7 @@ export default function AnalyticsDashboard() {
           </nav>
         </aside>
 
-        <main className="main-content">
+        <main className="main-content p-2 md-p-0">
           <div className="custom-dropdown">
             <div className="dropdown-item">
               <span
@@ -331,7 +331,7 @@ export default function AnalyticsDashboard() {
               </span>
             </div>
 
-            <div className="dropdown-item">
+            <div className="dropdown-item mc-campaign-dropdown" >
               <MultiSelectValue
                 id="statusDropdown"
                 displayValue="name"
@@ -367,7 +367,7 @@ export default function AnalyticsDashboard() {
               )}
             </div>
 
-            <div className="dropdown-item">
+            <div className="dropdown-item mc-campaign-dropdown">
               <SelectDropdown
                 theme="search"
                 id="currencyDropdown"
@@ -380,7 +380,7 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="controls mt-2">
+          <div className="controls mt-2 single-date-picker-wrapper">
             {/* {handleDateFilter && (
                             <DateRangePicker
                                 onChange={item => setState({ ...state, ...item })}
