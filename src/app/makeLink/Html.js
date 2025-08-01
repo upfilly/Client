@@ -351,9 +351,9 @@ const Html = () => {
       finalUrl.searchParams.set("affiliate_id", selectedBrand);
     }
 
-    if (SelectedCampaign) {
-      finalUrl.searchParams.set("campaign_id", SelectedCampaign);
-    }
+    // if (SelectedCampaign) {
+    //   finalUrl.searchParams.set("campaign_id", SelectedCampaign);
+    // }
 
     if (DestinationUrl) {
       const destinationUrlWithParams = `${domainName}`;
