@@ -510,7 +510,7 @@ const Html = () => {
                             type="date"
                             ref={dateInputRef}
                             onClick={handleClick}
-                            className={`form-control ${
+                            className={`form-control cursor-pointer ${
                               errors.transaction_date ? "is-invalid" : ""
                             }`}
                             value={formData?.transaction_date}

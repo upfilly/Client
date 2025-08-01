@@ -1658,7 +1658,7 @@ export default function addAffiliateAccount() {
                                   <div className="">
                                     <input
                                       type="date"
-                                      className="form-control"
+                                      className="form-control cursor-pointer"
                                       ref={dateInputRef}
                                       onClick={handleClick}
                                       min={currentDate}

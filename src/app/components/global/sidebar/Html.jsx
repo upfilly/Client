@@ -553,6 +553,17 @@ const Html = ({
               </div>
               </ListItemLink>
             </> : <></>} */}
+                {
+                  <ListItemLink to="/salesTracking" title="Untracked Sales">
+                    <i
+                      className="material-icons  svg_iconbx"
+                      title="untracked sales"
+                    >
+                      real_estate_agent
+                    </i>
+                    <span className="side_head">Untracked Sales</span>
+                  </ListItemLink>
+                }
                 {permission("commission_add") ? (
                   <>
                     <ListItemLink
@@ -794,67 +805,20 @@ const Html = ({
                     <span className="side_head">User Management</span>
                   </ListItemLink>
                 )}
-              </div>
-            </>
-          }
-
-          {
-            <>
-              {urlAllow("commissionspayments") ? (
-                <>
-                  <div className="nav-item">
-                    <CustomTooltip text="Commissions & Payments">
-                      <a
-                        className={` side_titles  nav-link hoverclass affilate ${
-                          tabclass("commissionspayments") ||
-                          tab == "commissionspayments"
-                            ? ""
-                            : "collapsed-m"
-                        }`}
-                        onClick={() => tabChange("commissionspayments")}
-                      >
-                        <i class="material-icons  svg_iconbx">attach_money</i>
-                        <span className="  side_head">
-                          Commissions & Payments
-                        </span>
-                        <i
-                          className="fa fa-angle-down fontsize20"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                    </CustomTooltip>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-
-              <div
-                className={`collapse dropdown-btm ${
-                  tabclass("commissionspayments") ||
-                  tab == "commissionspayments"
-                    ? "show"
-                    : ""
-                }`}
-              >
-                {permission("transactions_get") && (
-                  <ListItemLink to="/payments" title="Payments">
-                    <i class="material-icons  svg_iconbx">payment</i>
-                    <span className="side_head">Payments</span>
+                {(user.role == "affiliate" ||
+                  addedUser?.role == "affiliate" ||
+                  user.role == "brand" ||
+                  addedUser?.role == "brand") && (
+                  <ListItemLink
+                    to="/allowNotifications"
+                    title="Allow Notifications"
+                  >
+                    <i className="material-icons  svg_iconbx" title="product">
+                      settings
+                    </i>
+                    <span className="side_head">Notifications Settings</span>
                   </ListItemLink>
                 )}
-
-                {
-                  <ListItemLink to="/salesTracking" title="Untracked Sales">
-                    <i
-                      className="material-icons  svg_iconbx"
-                      title="untracked sales"
-                    >
-                      real_estate_agent
-                    </i>
-                    <span className="side_head">Untracked Sales</span>
-                  </ListItemLink>
-                }
               </div>
             </>
           }
@@ -921,6 +885,11 @@ const Html = ({
               </div>
             </>
           }
+
+           {urlAllow("commissionspayments") && <ListItemLink to="/payments" title="Payments">
+            <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
+            <span className="side_head">Payments</span>
+          </ListItemLink>}
 
           {/* {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" title="Campaign">
             <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>

@@ -667,7 +667,7 @@ const Publish = () => {
                       <div className="">
                         <input
                           type="date"
-                          className="form-control"
+                          className="form-control cursor-pointer"
                           onClick={handleClick}
                           ref={dateInputRef}
                           // min={currentDate}

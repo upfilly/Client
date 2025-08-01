@@ -173,7 +173,7 @@ export default function affilate() {
                         theme="search"
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="All Transaction"
+                        placeholder="All Transactions"
                         intialValue={filters?.transaction_type}
                         result={(e) => {
                           changeTransactionStatus(e.value);
@@ -188,7 +188,7 @@ export default function affilate() {
                         theme="search"
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="All Transaction"
+                        placeholder="All Transactions"
                         intialValue={filters?.transaction_type}
                         result={(e) => {
                           changeTransactionStatus(e.value);

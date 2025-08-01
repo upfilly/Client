@@ -341,7 +341,7 @@ const Html = () => {
                                   <Editor
                                     apiKey="zua062bxyqw46jy8bhcu8tz9aw6q37sb1pln5kwrnhnr319g"
                                     onInit={(evt, editor) => tinyMCEditorRef.current = editor}
-                                    initialValue={form?.textContent || ''}
+                                    initialValue={''}
                                     init={{
                                       height: 500,
                                       menubar: true,

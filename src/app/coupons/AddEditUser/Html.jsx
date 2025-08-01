@@ -346,7 +346,7 @@ const Html = ({
                   </div>
                   <div className="col-md-6 mb-3 main_input">
                     <label>
-                      Expired Date<span className="star">*</span>
+                      Expiry Date<span className="star">*</span>
                     </label>
                     <div className="position-relative">
                       <input
