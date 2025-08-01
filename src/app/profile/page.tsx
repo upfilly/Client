@@ -222,7 +222,7 @@ const Profile = () => {
                     <div className='card p-3 rounded-3 mb-4 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
                         <div className='main_title_head d-flex align-items-center gap-3'>
-                          <h3 className=''>Basic Information</h3>
+                          <h3 className=''>Basic Information </h3>
                           {(meetsApprovalRequirements) && (
                             <div className="d-flex align-items-center gap-2">
                               <i className="material-icons text-success" style={{ fontSize: '20px' }}>check_circle</i>
@@ -255,7 +255,7 @@ const Profile = () => {
                               <div className=' inputFlexs width400'>
                                 <label>Name:</label>
                                 <div>
-                                  <p className="profile_data">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.fullName)}</p>
+                                  <p className="profile_data profile-page-pl-none">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.fullName)}</p>
                                 </div>
                               </div>
                             </div>
@@ -263,7 +263,7 @@ const Profile = () => {
                               <div className='inputFlexs width400'>
                                 <label>Email:</label>
                                 <div>
-                                  <p className="profile_data">{data && data?.activeUser?.email}</p>
+                                  <p className="profile_data profile-page-pl-none">{data && data?.activeUser?.email}</p>
                                 </div>
                               </div>
                             </div>
@@ -280,7 +280,7 @@ const Profile = () => {
                                 <div className='inputFlexs width400'>
                                   <label>Timezone:</label>
                                   <div>
-                                    <p className="profile_data">{data && data?.activeUser?.timezone}</p>
+                                    <p className="profile_data profile-page-pl-none">{data && data?.activeUser?.timezone}</p>
                                   </div>
                                 </div>
                               </div>}
@@ -303,7 +303,7 @@ const Profile = () => {
                             <div className='inputFlexs width400' >
                               <label>Mobile No</label>
                               <div>
-                                <p className="profile_data">({data && data?.activeUser?.dialCode}) {data && data?.activeUser?.mobileNo}</p>
+                                <p className="profile_data profile-page-pl-none">({data && data?.activeUser?.dialCode}) {data && data?.activeUser?.mobileNo}</p>
                               </div>
                             </div>
                           </div>}
@@ -314,7 +314,7 @@ const Profile = () => {
                             <div className='inputFlexs width400'>
                               <label>Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.all_category?.map((dat: any) => dat?.name).join(",")}</p>
+                                <p className="profile_data profile-page-pl-none">{data && data?.all_category?.map((dat: any) => dat?.name).join(",")}</p>
                               </div>
                             </div>
 
@@ -325,7 +325,7 @@ const Profile = () => {
                             <div className='inputFlexs width400'>
                               <label>Sub Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.all_sub_category?.map((dat: any) => dat?.name).join(",")}</p>
+                                <p className="profile_data profile-page-pl-none">{data && data?.all_sub_category?.map((dat: any) => dat?.name).join(",")}</p>
                               </div>
                             </div>
 
@@ -336,7 +336,7 @@ const Profile = () => {
                             <div className='inputFlexs width400'>
                               <label>Sub Child Category Name:</label>
                               <div>
-                                <p className="profile_data">{data && data?.all_sub_child_category?.map((dat: any) => dat?.name).join(",")}</p>
+                                <p className="profile_data profile-page-pl-none">{data && data?.all_sub_child_category?.map((dat: any) => dat?.name).join(",")}</p>
                               </div>
                             </div>
 
@@ -426,7 +426,7 @@ const Profile = () => {
                                 <label >Social Media</label>
                                 <div className='d-flex wraps'>
                                   {data?.activeUser?.propertyType?.map((item: any, index: any, array: any) =>
-                                    <p className="profile_data">{item?.name} {index !== array.length - 1 && <span>,</span>}</p>
+                                    <p className="profile_data profile-page-pl-none">{item?.name} {index !== array.length - 1 && <span>,</span>}</p>
                                   )
                                   }
 
@@ -451,11 +451,11 @@ const Profile = () => {
 
                             {data?.currencies?.length > 0 && <div className="col-12 col-sm-6 col-md-6 col-lg-6 ">
                               <div className='inputFlexs width400'>
-                                <label >currency:</label>
+                                <label >currency: </label>
                                 <div className='d-flex wraps'>
                                   {data?.activeUser?.currencies?.map((item: any, index: any, array: any) =>
                                     <div key={item} className="profile_data_wrapper">
-                                      <p className="profile_data">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
+                                      <p className="profile_data pl-0">{item} {index !== array.length - 1 && <span>,</span>}</p></div>
                                   )}
 
                                 </div>
@@ -466,7 +466,7 @@ const Profile = () => {
                               <div className='inputFlexs width400'>
                                 <label>Advertiser ID:</label>
                                 <div className='d-flex align-items-center gap-3 flex-wrap'>
-                                  <p className="profile_data" id="advertiserId">{data.activeUser._id || data.activeUser.id}</p>
+                                  <p className="profile_data  profile-page-pl-none" id="advertiserId">{data.activeUser._id || data.activeUser.id}</p>
                                   <button
                                     className="btn btn-primary"
                                     onClick={() => copyToClipboard(data.activeUser._id || data.activeUser.id)}>
@@ -710,7 +710,7 @@ const Profile = () => {
                     <div className='card p-3 rounded-3 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap basic_info ">
                         <div className='main_title_head'>
-                          <h3 className=''>Basic Information </h3>
+                          <h3 className=''>Basic Information</h3>
                         </div>
                         <div className='d-flex gap-3 align-items-center' >
                           {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'brand' || roles == 'affilaite') && <Link href="/profile/edit" className="btn btn-primary profiles">

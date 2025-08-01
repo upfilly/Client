@@ -182,8 +182,8 @@ const Html = () => {
                             <div className='main_title_head d-flex justify-content-between align-items-center'>
                                 <h3 className="link_default m-0">
                                     <i className="fa fa-bullhorn link_icon" aria-hidden="true">
-                                        </i> Send Data Feeds 
-                                </h3>
+                                        </i> Send Data Feeds   
+                                </h3> 
                             </div>
                         </div>
                         <div className='card-body'>
@@ -205,7 +205,7 @@ const Html = () => {
                                             {errors.docName && <div className="invalid-feedback">{errors.docName}</div>}
                                         </div>
                                
-                                        <div className='mb-3 options flex-wrap'>
+                                        <div className='mb-3 options flex-wrap  justify-content-sm-start'>
                                             <label>Choose an option:</label>
                                             <div className="form-check">
                                                 <input
@@ -215,9 +215,9 @@ const Html = () => {
                                                     value="csv"
                                                     checked={selectedOption === 'csv'}
                                                     onChange={handleOptionChange}
-                                                    className="form-check-input"
+                                                    className="form-check-input "
                                                 />
-                                                <label htmlFor="uploadCsv" className="form-check-label">Upload CSV</label>
+                                                <label htmlFor="uploadCsv" className="form-check-label"> Upload CSV</label>
                                             </div>
                                             <div className="form-check">
                                                 <input

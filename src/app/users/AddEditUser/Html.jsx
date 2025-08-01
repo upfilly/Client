@@ -245,6 +245,19 @@ const Html = ({
                                 </div>} */}
               </div>
 
+                    <div className="set-buttons d-flex align-items-center justify-content-end">
+              <button
+                type="button"
+                className="btn btn-secondary  discard back-link mr-2"
+                onClick={(e) => back()}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Save
+              </button>
+            </div>
+
             </div>
 
             {/* <div className="add_team_bx">
@@ -289,18 +302,7 @@ const Html = ({
                         </div>
                     </div> */}
 
-            <div className="set-buttons d-flex align-items-center justify-content-end mt-3">
-              <button
-                type="button"
-                className="btn btn-secondary  discard back-link mr-2"
-                onClick={(e) => back()}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-primary">
-                Save
-              </button>
-            </div>
+      
           </div>
         </form>
       </Layout>

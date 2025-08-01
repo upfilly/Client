@@ -56,6 +56,8 @@ const Html = ({
       >
         <div className="nmain-list main_box ">
           <div className="container-fluid">
+
+         
             <div className="row ">
               <div className="col-lg-12 ">
                 <div className=" all_bxbtns flex-wrap  gap-2 d-flex filterFlex phView align-items-center    justify-content-md-end">
@@ -258,7 +260,7 @@ const Html = ({
                                         user?.role == "brand" ||
                                         permission("user_delete")) && (
                                         <a
-                                          className="edit_icon action-btns  user-action-delete-btn"
+                                          className="edit_icon action-btns  user-action-delete-btn delete-btn"
                                           onClick={() =>
                                             deleteItem(itm.user_id)
                                           }

@@ -13,7 +13,7 @@
 
 .persons-list li {
     list-style: none;
-    padding: 10px;
+    padding: 10px 0px; 
     border-bottom: 1px solid #efefef;
     margin: 10px 0;
     cursor: pointer;
@@ -74,6 +74,9 @@
 .conversations .card-header:first-child {
     border: 0;
     background: transparent;
+    border-bottom: 2px solid #ededed;
+    padding-bottom: 10px !important;
+    margin-bottom: 10px !important;
 
 }
 
@@ -658,12 +661,12 @@ li.b-bottom:hover .b-none {
     top: 0;
 }
 
-.hide_icon_Group {
-    border: none;
-    position: absolute;
-    right: -6px;
-    top: -18px;
-}
+// .hide_icon_Group {
+//     border: none;
+//     position: absolute;
+//     right: -6px;
+//     top: -18px;
+// }
 
 .msg_info .btn-check:checked+.btn:focus-visible,
 .btn.active:focus-visible,
@@ -974,10 +977,7 @@ label.setupload {
 
 h3.about_head {
     font-size: 16px;
-    width: 100%;
-    border-bottom: 1px solid #ededed;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    // width: 100%;
 }
 
 h3.about_head span {
@@ -1450,10 +1450,10 @@ img#custom-img {
         width: 100% !important;
     }
 
-    .hide_icon_Group {
-        padding: 10px 0px;
-        top: -14px;
-    }
+    // .hide_icon_Group {
+    //     padding: 10px 0px;
+    //     top: -14px;
+    // }
 
     .conversations {
         padding: 10px;

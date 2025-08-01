@@ -507,9 +507,9 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                 </div>
               </div>
 
-              <div className="text-end mt-3">
+              <div className="text-end mt-0">
                 <button type="submit" className="btn btn-primary">
-                  Send E-mail
+                  Send E-mail 
                 </button>
               </div>
             </form>

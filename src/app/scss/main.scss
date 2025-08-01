@@ -168,6 +168,14 @@ li.pagination-item a {
   border-radius: 12px;
 }
 
+.add-emial-bg-none {
+  background: transparent !important;
+}
+
+
+
+
+
 p.bg-light.rounded.py-2.fieldcls {
   background-color: #775da62b !important;
 }
@@ -508,6 +516,7 @@ i.fa {
 
 
 
+
 a.edit_icon {
   border: 1px solid #dcdcdc;
   height: 38px;
@@ -539,6 +548,8 @@ span.edit_icon {
   justify-content: center;
   border-radius: 5px;
   margin-left: 3px;
+
+
 }
 
 i.material-icons.edit {
@@ -548,10 +559,12 @@ i.material-icons.edit {
   vertical-align: initial;
 }
 
+
+
 i.material-icons.delete {
   font-size: 15px;
   font-weight: 600;
-  color: #ee0909;
+  color: #fff;
   vertical-align: initial;
 }
 
@@ -1206,9 +1219,9 @@ input.searchbar.mr-2 {
 }
 
 @media only screen and (max-width: 767px) {
-  .text-right {
-    margin-bottom: 15px !important;
-  }
+  // .text-right {
+  //   margin-bottom: 15px !important;
+  // }
 
   .roleTable tr td {
     width: 150px !important;
@@ -2198,6 +2211,14 @@ p.checkbox-option-main span {
       #00baff 76.03%) !important;
 }
 
+// .edit_icon {
+//   background-color: #ee0909 !important;
+// }
+
+.delete-btn {
+  background-color: #ee0909 !important;
+}
+
 .edit_icon.edit-main {
   background: linear-gradient(40deg, #032e72 -25.12%, #00baff 76.03%);
 }
@@ -2426,7 +2447,8 @@ ul.sales-listing {
 .amt-desc .montyh {
   font-weight: 400 !important;
 }
-.form-check-input[type=radio]{
+
+.form-check-input[type=radio] {
   cursor: pointer;
 }
 
@@ -2671,15 +2693,17 @@ p.checkbox-option-main {
   line-height: 6px !important;
 }
 
+
+
+
 .edit-delete {
   // background: #e74c3f;
-  background-color: white;
+  background-color: #ee0909;
 }
 
 
-
 .edit-delete i {
-  color: #ee0909 !important;
+  color: #fff !important;
 }
 
 .mb-150 {
@@ -2703,7 +2727,7 @@ p.checkbox-option-main {
 
 
 .campaign-request-header-wrapper {
-   padding: 1rem;
+  padding: 1rem;
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
@@ -2737,6 +2761,15 @@ p.checkbox-option-main {
   font-size: 14px;
   background-color: #eeeff6ab;
 }
+
+
+.profile-page-pl-none {
+    padding: 6px 0px !important;
+}
+
+
+
+
 
 .billing_dtls h6 {
   font-size: 14px;
@@ -3274,7 +3307,7 @@ h4.filtes_herd {
   padding: 20px;
   border: 1px solid #e9e9e9;
   border-radius: 10px;
-  margin-bottom: 25px;
+  // margin-bottom: 25px;
   cursor: pointer;
   // height: 314px;
   height: 100%;
@@ -4149,8 +4182,8 @@ p.checkbox-option-main {
 }
 
 .left_btx {
-  background-color: #8aacfd;
-  color: #fff !important;
+  // background-color: #8aacfd;
+  color: #000 !important;
   padding: 5px 6px;
   border-radius: 6px;
   font-size: 13px !important;
@@ -5846,7 +5879,7 @@ body {
 
 input.form-control {
   font-size: 14px;
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .noti_date_chat {
@@ -5887,12 +5920,19 @@ input.form-control {
 
 .action-btns {
   width: 32px !important;
-  height: 32px !important;
+  // height: 32px;
   border-radius: 6px !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+}
+
+
+.offer-mg-page-action-btn {
+  line-height: 1.6 !important;
+  // height: 32px;
+  padding: 0.475rem 0.75rem !important;
 }
 
 .btn_actions {
@@ -6302,24 +6342,24 @@ input.dateselect {
 
   .add-coupans-dropdown-wrapper {
     flex-direction: column;
-  } 
+  }
 
   .react-datepicker__view-calendar-icon input {
-        padding: 6px 12px 5px 30px !important;
-        font-size: 13px !important;
+    padding: 6px 12px 5px 30px !important;
+    font-size: 13px !important;
   }
 
   .react-datepicker__close-icon {
     padding: 0 3px 0 0 !important;
   }
 
-    .react-datepicker__view-calendar-icon input::placeholder {
-  font-size: 12px !important;
-}
+  .react-datepicker__view-calendar-icon input::placeholder {
+    font-size: 12px !important;
+  }
 
 
   .react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
-        padding: 0.5rem; 
+    padding: 0.5rem;
   }
 
 
@@ -6409,19 +6449,19 @@ input.dateselect {
   width: 100% !important;
 }
 
-.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar  {
+.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar {
   width: 5px !important;
   height: 8px !important;
   background-color: #f1f1f1 !important;
 }
 
 .add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar-thumb {
-    background: #b4d5ff !important;
+  background: #b4d5ff !important;
   border-radius: 10px !important;
-} 
+}
 
-.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar-thumb:hover  {
-   background: #89c2ff !important;
+.add-baner-select-category-dropdown .dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #89c2ff !important;
 }
 
 
@@ -6440,13 +6480,12 @@ input.dateselect {
   background-color: unset !important;
 }
 
-.user-action-delete-btn {
-  // background-color: red !important;
-  background-color: white !important;
-}
+// .user-action-delete-btn {
+//   background-color: white !important;
+// }
 
 .user-action-delete-btn-icon {
-  color: #ee0909 !important;
+  color: #fff !important;
 }
 
 .export-group .copy-btn {
@@ -6491,7 +6530,7 @@ input.dateselect {
 
 .group-detail-btn-wrapper .btn:active {
   border-color: white !important;
-} 
+}
 
 .all-campaign-dropdown ::-webkit-scrollbar {
   width: 5px !important;
@@ -6520,7 +6559,7 @@ input.dateselect {
 }
 
 .mc-campaign-dropdown::-webkit-scrollbar-thumb:hover {
-   background: #89c2ff !important;
+  background: #89c2ff !important;
 }
 
 // ############ 
@@ -6536,7 +6575,7 @@ input.dateselect {
 }
 
 .toggle-btn.checked {
- background: linear-gradient(40deg, #032e72 -25.12%, #00baff 76.03%);
+  background: linear-gradient(40deg, #032e72 -25.12%, #00baff 76.03%);
 }
 
 .toggle-btn.disabled {
@@ -6559,5 +6598,3 @@ input.dateselect {
 .toggle-btn.checked .toggle-btn-inner {
   transform: translate(15px, -50%);
 }
-
-

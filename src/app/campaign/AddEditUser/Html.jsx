@@ -742,7 +742,7 @@ const Html = ({
 
               
 
-              <div className="text-right edit-btns mt-3">
+              <div className="text-right edit-btns mt-0">
                 {!isTermsAccepted && (
                   <p className="text-danger">
                     *Accept terms and conditions of legal terms 

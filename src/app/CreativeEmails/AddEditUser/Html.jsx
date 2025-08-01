@@ -244,7 +244,7 @@ const Html = () => {
                 <div className="pprofile1 pt-0 p-3 p-md-4">               
                   <div className="add_team_bx mt-0">
 
-                     <div className="pprofile1">
+                     <div className="pprofile1 add-emial-bg-none">
                   <div className="flex items-center mb-8">
                     <div className="d-flex align-items-baseline add_memeber_bx  mb-3">
                       <a onClick={() => router.back()}>

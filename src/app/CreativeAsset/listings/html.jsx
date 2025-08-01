@@ -44,7 +44,7 @@ const Html = ({
 
                                         {/* dropdown */}
                                         <td className='table_dats'>
-                                            <div className="action_icons gap-3 ">
+                                            <div className="action_icons gap-3">
                                                 <div className="hoverdonload ">
                                                     <a
                                                         href={itm.filePath ? `${environment?.api}${itm.filePath}` : itm.url}
@@ -59,8 +59,8 @@ const Html = ({
                                                     </a>
 
                                                 </div>
-                                                <span className='edit_icon' onClick={() => deleteItem(itm.id || itm._id)}>
-                                                    <i className="material-icons delete" title='Delete'> delete</i>
+                                                <span className='edit_icon  delete-btn' onClick={() => deleteItem(itm.id || itm._id)}>
+                                                    <i className="material-icons delete" title='Delete'>delete</i>
                                                 </span>
                                             </div>
                                         </td>

@@ -40,7 +40,7 @@ const Detail = (p) => {
                         <div className='main_title_head'>
                             <h3>
                                 <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
-                                Transaction Detail
+                                Transaction Detail 
                             </h3>
                         </div>
                     </div>
@@ -57,7 +57,7 @@ const Detail = (p) => {
                                                 <p className='headmain'>User:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'>{data && data?.user_id?.fullName}  </p>
+                                                <p className='headsub mb-0 profile-page-pl-none'>{data && data?.user_id?.fullName}  </p>
                                             </div>
                                             </div>
                                            
@@ -72,7 +72,7 @@ const Detail = (p) => {
                                                 <p className='headmain'>Role:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'>{data && data?.user_id?.role} </p>
+                                                <p className='headsub mb-0  profile-page-pl-none' >{data && data?.user_id?.role} </p>
                                             </div>
                                             </div>
                                            
@@ -87,7 +87,7 @@ const Detail = (p) => {
                                                 <p className='headmain'>Email:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'>{data && data?.user_id?.email} </p>
+                                                <p className='headsub mb-0 profile-page-pl-none'>{data && data?.user_id?.email} </p>
                                             </div>
                                             </div>
                                            
@@ -104,7 +104,7 @@ const Detail = (p) => {
                                        
                                       
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'>{data && data?.amount} </p>
+                                                <p className='headsub mb-0  profile-page-pl-none'>{data && data?.amount} </p>
                                             </div>
                                             </div>
                                            
@@ -120,7 +120,7 @@ const Detail = (p) => {
                                                 <p className='headmain'>Transaction Type:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'>{data && data?.transaction_type} </p>
+                                                <p className='headsub mb-0 profile-page-pl-none' >{data && data?.transaction_type} </p>
                                             </div>
                                             </div>
                                             
@@ -132,16 +132,14 @@ const Detail = (p) => {
 
 
                                     {data && data?.transaction_status && 
-                                       
-                                           
-                                      
+                                                 
                                         <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                             <div className='mb-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Transaction Status:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'> {data && data?.transaction_status} </p>
+                                                <p className='headsub mb-0 profile-page-pl-none'> {data && data?.transaction_status} </p>
                                             </div>
                                             </div>
                                             
@@ -176,7 +174,7 @@ const Detail = (p) => {
                                                 <p className='headmain'>Currency:</p>
                                             </div>
                                             <div className='name-dtls'>
-                                                <p className='headsub mb-0'> {data && data?.currency} </p>
+                                                <p className='headsub mb-0 profile-page-pl-none'> {data && data?.currency} </p>
                                             </div>
                                             </div>
                                             

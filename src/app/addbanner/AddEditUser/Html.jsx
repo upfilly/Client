@@ -137,7 +137,7 @@ const Html = ({
                   </div>
                   {form?.access_type == "private" && (
                     <div className="col-12 col-sm-12 col-md-6">
-                      <div className="form-group">
+                      <div className="form-group ">
                         <div className="select_drop ">
                           <label>
                             Select Affiliate<span className="star">*</span>
@@ -355,7 +355,7 @@ const Html = ({
                   </div>}
                   <div className="col-md-6 mb-3 ">
                     <label>Select : </label>
-                    <div className="select_check">
+                    <div className="select_check p-0 pl-1">
                       <div className="form-check">
                         <input
                           type="checkbox"

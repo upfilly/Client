@@ -628,7 +628,8 @@ export default function affilate() {
                   {/* Category Filter Dropdown */}
                   <div className="dropdown position-relative">
                     <button
-                      className="btn btn-outline-secondary dropdown-toggle"
+                      className="btn dropdown-toggle"
+                        style={{border:"1px solid #ccc"}}
                       type="button"
                       onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
                     >

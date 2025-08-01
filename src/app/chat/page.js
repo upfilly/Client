@@ -730,9 +730,9 @@ export default function Chat() {
               <div className="col-lg-5">
                 <div className="conversations mb-4">
                   <div className="card p-0">
-                    <div className="card-header pl-0 pr-0 p-0" id="headingOne">
+                    <div className="card-header pl-0 pr-0 p-0 d-flex justify-content-between align-items-center" id="headingOne">
                       <div className="pointer">
-                        <h3 class="about_head">
+                        <h3 class="about_head mb-0">
                           {" "}
                           <i
                             onClick={() => router.back()}
@@ -741,7 +741,7 @@ export default function Chat() {
                           All Chats {" "}
                         </h3>
                       </div>
-                      <div className="msg_info person-chat hide_icon_Group b-none">
+                      <div className="msg_info  hide_icon_Group b-none">
                         {user?.role == "brand" && (
                           <button
                             className=" btn-primary py-1 btn-sm"
@@ -1038,7 +1038,7 @@ export default function Chat() {
                             );
                             return (
                               <li
-                                className={`b-bottom ${
+                                className={`b-bottom p-0 p-md-2 ${
                                   isTrue ? "text_right" : " text_left"
                                 }`}
                                 key={indx}

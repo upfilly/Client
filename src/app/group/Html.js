@@ -55,6 +55,8 @@ const Html = ({
       >
         <div className="nmain-list ">
           <div className="row mx-0">
+        
+
             <div className="col-lg-12">
               <div className="d-flex gap-2 flex-wrap filterFlex phView align-items-center   justify-content-end">
                 {permission("group_add") && (
@@ -220,7 +222,7 @@ const Html = ({
 
                                   {permission("group_delete") && (
                                     <a
-                                      className="edit_icon"
+                                      className="edit_icon delete-btn"
                                       onClick={() => deleteItem(itm.id)}
                                     >
                                       <i
