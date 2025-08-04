@@ -1,6 +1,6 @@
 "use client";
 
-import react, { useEffect, useState } from "react";
+import react, { useEffect, useState, useCallback } from "react";
 import Layout from "../components/global/layout";
 import "./style.scss";
 import crendentialModel from "@/models/credential.model";
@@ -209,8 +209,9 @@ export default function affilate() {
   ];
 
   const handleCountChange = (count) => {
-    setFilter({ ...filters, count: count, page: 1 });
-    getData({ count: count, page: 1 });
+    const newFilters = { ...filters, count: count, page: 1 };
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
   const handleTagInputChange = (e) => {
@@ -275,35 +276,50 @@ export default function affilate() {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    filter({
-      start_date: start.toISOString().split("T")[0],
-      end_date: end.toISOString().split("T")[0],
-    });
+    
+    // Create new filter object with date changes
+    const newFilters = {
+      ...filters,
+      start_date: start ? start.toISOString().split("T")[0] : "",
+      end_date: end ? end.toISOString().split("T")[0] : "",
+      page: 1 // Reset to first page
+    };
+    
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
-  const getData = (p = {}) => {
+  // Memoized getData function to prevent unnecessary re-renders
+  const getData = useCallback((p = {}) => {
     setLoader(true);
     let filter = { ...filters, ...p };
+    
+    // Clean up null/empty date values
     if (
       filter?.start_date == null ||
       filter?.start_date == "null" ||
       !filter?.start_date
     ) {
       filter = {
-        ...filters,
-        ...p,
+        ...filter,
         start_date: "",
         end_date: "",
       };
     }
+    
+    console.log("API Call with filters:", filter); // Debug log
+    
     ApiClient.get(`getAllAffiliateForBrand`, filter).then((res) => {
       if (res.success) {
         setData(res?.data);
         setTotal(res?.data?.total);
         setLoader(false);
       }
+    }).catch((error) => {
+      console.error("API Error:", error);
+      setLoader(false);
     });
-  };
+  }, [filters]); // Add filters as dependency
 
   const getCategory = (p = {}) => {
     let url = `categoryWithSub?page&count&search&cat_type=promotional_models,property_types&status=active`;
@@ -315,6 +331,7 @@ export default function affilate() {
     });
   };
 
+  // Initial load effect
   useEffect(() => {
     const params = Object.fromEntries(searchParams.entries());
 
@@ -327,7 +344,7 @@ export default function affilate() {
         ? new Date(params.end_date)
         : null;
 
-    setFilter({
+    const initialFilters = {
       ...params,
       page: 1,
       count: 10,
@@ -335,67 +352,68 @@ export default function affilate() {
         ? startDateParam.toISOString().split("T")[0]
         : "",
       end_date: endDateParam ? endDateParam.toISOString().split("T")[0] : "",
-    });
+    };
 
+    setFilter(initialFilters);
     setEndDate(endDateParam);
     setStartDate(startDateParam);
+    getData(initialFilters);
+  }, [searchParams]); // Add searchParams as dependency
 
-    getData({
-      ...params,
-      page: 1,
-      count: 10,
-      start_date: startDateParam
-        ? startDateParam.toISOString().split("T")[0]
-        : "",
-      end_date: endDateParam ? endDateParam.toISOString().split("T")[0] : "",
-    });
-  }, []);
-
+  // Category filter effect - Fixed to prevent infinite loops
   useEffect(() => {
     const hasCategoryType = categoryType?.length > 0;
     const hasSelectedCategory = selectedCategory?.length > 0;
     const hasSelectedSubCategory = selectedSubCategory?.length > 0;
     const hasSelectedSubSubCategory = selectedSubSubCategory?.length > 0;
 
-    setFilter({ ...filters, ...params, count: 10 });
-    getData({
+    // Create new filter object
+    const newFilters = {
       ...filters,
-      ...params,
       page: 1,
       cat_type: hasCategoryType
-        ? categoryType.map((dat) => dat).join(",")
-        : undefined,
+        ? categoryType.join(",")
+        : "",
       category_id: hasSelectedCategory
-        ? selectedCategory.map((dat) => dat).join(",")
-        : undefined,
+        ? selectedCategory.join(",")
+        : "",
       sub_category_id: hasSelectedSubCategory
-        ? selectedSubCategory.map((dat) => dat).join(",")
-        : undefined,
+        ? selectedSubCategory.join(",")
+        : "",
       sub_child_category_id: hasSelectedSubSubCategory
-        ? selectedSubSubCategory.map((dat) => dat).join(",")
-        : undefined,
-    });
-  }, [
-    categoryType,
-    selectedCategory,
-    selectedSubCategory,
-    selectedSubSubCategory,
-  ]);
+        ? selectedSubSubCategory.join(",")
+        : "",
+    };
+
+    // Only update if there's actually a change
+    const hasChanges = 
+      newFilters.cat_type !== filters.cat_type ||
+      newFilters.category_id !== filters.category_id ||
+      newFilters.sub_category_id !== filters.sub_category_id ||
+      newFilters.sub_child_category_id !== filters.sub_child_category_id;
+
+    if (hasChanges) {
+      setFilter(newFilters);
+      getData(newFilters);
+    }
+  }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
 
   useEffect(() => {
     getCategory();
-  }, [categoryType]);
+  }, []);
 
   const pageChange = (e) => {
-    if (e.selected) {
-      setFilter({ ...filters, page: e.selected });
-      getData({ page: e.selected + 1 });
+    if (e.selected !== undefined) {
+      const newFilters = { ...filters, page: e.selected };
+      setFilter(newFilters);
+      getData({ ...newFilters, page: e.selected + 1 });
     }
   };
 
   const filter = (p = {}) => {
-    setFilter({ ...filters, ...p });
-    getData({ ...p, page: 1 });
+    const newFilters = { ...filters, ...p, page: 1 };
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
   const sorting = (key) => {
@@ -409,26 +427,29 @@ export default function affilate() {
     }
 
     let sortBy = `${key} ${sorder}`;
-    filter({ sortBy, key, sorder });
+    const newFilters = { ...filters, sortBy, key, sorder, page: 1 };
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
   const ChangeStatus = (e) => {
-    setFilter({ ...filters, invite_status: e });
-    getData({ invite_status: e, page: 1 });
+    const newFilters = { ...filters, invite_status: e, page: 1 };
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
   const ChangeCampaign = (e) => {
-    setFilter({ ...filters, campaign: e });
-    getData({ campaign: e, page: 1 });
+    const newFilters = { ...filters, campaign: e, page: 1 };
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
   const reset = () => {
-    let filter = {
+    let newFilter = {
       status: "",
       invite_status: "",
-      role: "",
-      search: "",
       role: "affiliate",
+      search: "",
       campaign: "",
       page: 1,
       count: 10,
@@ -440,6 +461,7 @@ export default function affilate() {
       category_id: "",
       cat_type: "",
     };
+    
     setStartDate(null);
     setEndDate(null);
     setCategoryType([]);
@@ -448,8 +470,9 @@ export default function affilate() {
     setSelectedSubSubCategory([]);
     setSelectedOptions([]);
     setIsOpen(false);
-    setFilter({ ...filter });
-    getData({ ...filter, page: 1 });
+    
+    setFilter(newFilter);
+    getData(newFilter);
     history.push("/affiliate");
   };
 
@@ -499,15 +522,23 @@ export default function affilate() {
     getCampaignData();
   }, []);
 
+  // Fixed affiliate group filter effect
   useEffect(() => {
     if (selectedOptions?.length > 0) {
-      filter({ ...filters, affiliate_group_id: selectedGroupId.join(",") });
+      const newFilters = { 
+        ...filters, 
+        affiliate_group_id: selectedGroupId.join(","),
+        page: 1 
+      };
+      setFilter(newFilters);
+      getData(newFilters);
     }
   }, [selectedOptions]);
 
   const clear = () => {
-    setFilter({ ...filters, search: "", page: 0 });
-    getData({ search: "", page: 1 });
+    const newFilters = { ...filters, search: "", page: 1 };
+    setFilter(newFilters);
+    getData(newFilters);
   };
 
   const MultiSelectAffliates = (add, id) => {
@@ -608,7 +639,7 @@ export default function affilate() {
       });
       setExpandedCategories([...new Set(expandedIds)]);
     }
-  }, [categorySearchTerm]);
+  }, [categorySearchTerm, category]);
 
   return (
     <>
