@@ -2561,6 +2561,7 @@ textarea.form-control-chat::placeholder {
 select.form-select {
   border-radius: 6px;
   text-transform: capitalize;
+  cursor: pointer;
   border: 1px solid #ced4da !important;
 }
 
@@ -5267,6 +5268,7 @@ div:where(.swal2-icon).swal2-warning {
 .paginationWrapper span select.form-control {
   border-radius: 7px !important;
   height: 35px !important;
+  cursor: pointer;
 }
 
 // affiliate page css
@@ -5361,6 +5363,7 @@ input[type="checkbox"].check_bx_input {
   border-radius: 4px;
   position: relative;
   top: 4px;
+  cursor: pointer;
 }
 
 input[type="checkbox"].check_bx_input:checked+.checkbox-btn::after {
@@ -5963,6 +5966,10 @@ input.form-control {
   min-width: 38px !important;
   width: 38px !important;
   height: 38px !important;
+}
+
+.css-hlgwow{
+  cursor: pointer;
 }
 
 // akshay css

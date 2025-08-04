@@ -183,6 +183,9 @@ input[type=number] {
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
+input[type="checkbox"]{
+  cursor: pointer;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
