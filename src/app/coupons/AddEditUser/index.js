@@ -11,6 +11,7 @@ const AddEditUser = () => {
   const { role, id } = useParams();
   const history = useRouter();
   const user = crendentialModel.getUser();
+  console.log(user, "user=====");
   const [images, setImages] = useState("");
   const [form, setform] = useState({
     id: "",
@@ -60,7 +61,8 @@ const AddEditUser = () => {
 
   const allGetAffiliate = (p = {}) => {
     let url = "getallaffiliatelisting";
-    ApiClient.get(url).then((res) => {
+    let brandId = user?.id;
+    ApiClient.get(url, { brand_id: brandId }).then((res) => {
       if (res.success) {
         const data = res.data;
         const filteredData = data.filter((item) => item.id !== null);

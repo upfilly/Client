@@ -226,10 +226,14 @@ const Html = ({
                                   ? "contract"
                                   : itm?.status == "pending"
                                   ? "pending_status"
+                                  : itm?.status == "active"
+                                  ? "active"
                                   : "inactive"
                               }
                             >
-                              {itm.status}
+                              {itm.status === "deactive"
+                                ? "Inactive"
+                                : "Active"}
                             </span>
                           </div>
                         </td>

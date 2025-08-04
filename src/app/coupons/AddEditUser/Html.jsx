@@ -52,8 +52,6 @@ const Html = ({
             handleSubmit(e);
           }}
         >
-
-
           <div className="sidebar-left-content">
             <div className=" pprofile1 card card-shadow p-4">
               <div className="">
@@ -298,7 +296,7 @@ const Html = ({
                         <MultiSelectValue
                           id="statusDropdown"
                           displayValue="name"
-                          placeholder="Select Media"
+                          placeholder="Select Affiliate"
                           intialValue={form?.media}
                           result={(e) => {
                             console.log(e, "SelectedValue");
@@ -344,7 +342,6 @@ const Html = ({
                         <></>
                       )}
                     </div>
-
                   </div>
                   <div className="col-md-6 mb-3 main_input">
                     <label>

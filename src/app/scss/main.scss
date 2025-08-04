@@ -2505,7 +2505,22 @@ span.contract {
   align-items: center;
   justify-content: center;
 }
-
+.table_dats .user_hours .active{
+  font-size: 13px;
+    font-style: normal;
+    line-height: normal;
+    padding: 6px 12px;
+    min-height: 30px;
+    font-weight: 400;
+    color: #fff;
+    border-radius: 6px;
+    background: green;
+    width: 100px;
+    display: inline-flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
 .switched {
   font-size: 13px;
   font-style: normal;
