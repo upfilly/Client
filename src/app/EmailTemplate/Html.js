@@ -19,6 +19,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
   const pasteTextareaRef = useRef(null);
 
   const shortcodes = [
+    { label: "campaignName", value: "campaignName" },
     { label: "Affiliate Name", value: "{affiliateFullName}" },
     { label: "Affiliate Link", value: "{affiliateLink}" },
     { label: "Current Date", value: "{currentDate}" },
