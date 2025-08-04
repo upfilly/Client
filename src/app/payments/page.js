@@ -45,7 +45,7 @@ export default function affilate() {
 
   const getData = (p = {}) => {
     setLoader(true);
-    let filter = { ...filters, ...p };
+    let filter = { ...filters ,...params, ...p};
 
     ApiClient.get(`transaction/all`, filter).then((res) => {
       if (res.success) {
@@ -116,6 +116,7 @@ export default function affilate() {
     setIsOpen(false);
     setFilter({ ...filters, ...filter });
     getData({ ...filter });
+    history.push('/payments')
     // dispatch(search_success(''))
   };
 
