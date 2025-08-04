@@ -219,7 +219,7 @@ const Html = ({
                       aria-hidden="true"
                     ></i>
                   </a>
-                  {form && form.id ? "Edit" : "Add"} Campaign 
+                  {form && form.id ? "Edit" : "Add"} Campaign
                 </h3>
                 <hr />
               </div>

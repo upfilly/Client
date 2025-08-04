@@ -140,9 +140,9 @@ const Html = ({
                       <div className="form-group ">
                         <div className="select_drop ">
                           <label>
-                            Select Affiliate<span className="star">*</span>
+                           Select Affiliate<span className="star">*</span>
                           </label>
-                          <div className="select_row">
+                          <div className="select_row mc-campaign-dropdown">
                             <SelectDropdown
                               theme="search"
                               id="statusDropdown"

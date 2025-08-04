@@ -26,7 +26,7 @@ const Html = ({ handleSubmit, back, category, handleToggle }) => {
                 ></i>
               </button>
               <h3 className="Profilehedding add_title ms-2">
-                Email Notification Settings
+                Email Notification Settings 
               </h3>
             </div>
 
@@ -38,7 +38,7 @@ const Html = ({ handleSubmit, back, category, handleToggle }) => {
                       {category?.map((item, index) => (
                         <div
                           key={item.id || index}
-                          className="col-3 mb-2 d-flex gap-3 align-items-center"
+                          className="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-2  gap-3 align-items-center"
                         >
                           <label className="mb-0 d-flex gap-3 align-items-center">
                             <div
