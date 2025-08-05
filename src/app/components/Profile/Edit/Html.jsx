@@ -314,6 +314,22 @@ const Html = ({ user,
 
                       <div className='row'>
                         <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
+                          <label>UserName<span className='star'>*</span></label>
+                          <div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Name"
+                              name='fullName'
+                              value={form.userName}
+                              disabled
+                              // onChange={e => setForm({ ...form, firstName: e.target.value })}
+                            />
+                            {/* {submitted && !form?.firstName ? <div className="invalid-feedback d-block">Name is Required</div> : <></>} */}
+                          </div>
+                        </div>
+
+                        <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
                           <label>First Name<span className='star'>*</span></label>
                           <div>
                             <input

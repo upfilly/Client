@@ -68,7 +68,7 @@ const AddEditUser = () => {
         const filteredData = data.filter((item) => item.id !== null);
         console.log(filteredData, "filteredData");
         const manipulateData = filteredData.map((itm) => ({
-          name: itm?.fullName || itm?.firstName,
+          name: itm?.userName || itm?.firstName,
           id: itm?.id || itm?._id,
         }));
         const uniqueData = manipulateData.filter(
@@ -420,7 +420,7 @@ const AddEditUser = () => {
         const filteredData = data.filter((item) => item !== null);
         const manipulateData = filteredData.map((itm) => {
           return {
-            name: itm?.fullName || itm?.firstName,
+            name: itm?.userName || itm?.firstName,
             id: itm?.id || itm?._id,
           };
         });

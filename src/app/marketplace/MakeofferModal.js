@@ -70,7 +70,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
             const data = res.data
             const filteredData = data.filter(item => item !== null);
             const manipulateData = filteredData.map((itm)=>{return{
-                name:itm?.fullName || itm?.firstName , id : itm?.id || itm?._id
+                name:itm?.userName || itm?.firstName , id : itm?.id || itm?._id
             }})
             setAffiliateData(manipulateData)
         }

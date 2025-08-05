@@ -118,7 +118,13 @@ export default function AnalyticsDashboard() {
       if (res.success) {
         const data = res.data;
         const filteredData = data.filter((item) => item !== null);
-        setBrands(filteredData);
+        const manipulateData = filteredData.map((itm) => {
+          return {
+            name: itm?.userName || itm?.firstName,
+            id: itm?.id || itm?._id,
+          };
+        });
+        setBrands(manipulateData);
       }
     });
   };

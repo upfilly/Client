@@ -252,7 +252,7 @@ const AddEditUser = () => {
         const filteredData = data.filter((item) => item !== null);
         const manipulateData = filteredData.map((itm) => {
           return {
-            name: itm?.fullName || itm?.firstName,
+            name: itm?.userName || itm?.firstName,
             id: itm?.id || itm?._id,
           };
         });
