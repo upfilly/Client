@@ -2786,9 +2786,6 @@ p.checkbox-option-main {
 }
 
 
-
-
-
 .billing_dtls h6 {
   font-size: 14px;
   letter-spacing: 0.5px;
@@ -6388,6 +6385,10 @@ input.dateselect {
     font-size: 12px !important;
   }
 
+  .sidebar-content-detail .page-name {
+    font-size: 11px;
+  }
+
 
   .react-datepicker-wrapper .react-datepicker__input-container .react-datepicker__calendar-icon {
     padding: 0.5rem;
@@ -6589,11 +6590,31 @@ input.dateselect {
   background: #89c2ff !important;
 }
 
-.mc-campaign-dropdown::-webkit-scrollbar-thumb:hover {
+.mc-campaign-dropdown ::-webkit-scrollbar-thumb:hover {
   background: #89c2ff !important;
 }
 
-// ############ 
+
+ .edit-campanign-tab-wrapper {
+  overflow-x: hidden !important;
+ } 
+
+
+ .create-group-popup::-webkit-scrollbar {
+    width: 5px !important;
+    height: 8px !important;
+    background-color: #f1f1f1 !important;
+}
+
+.create-group-popup::-webkit-scrollbar-thumb {
+    background: #89c2ff !important;
+}
+
+.create-group-popup::-webkit-scrollbar-thumb:hover {
+    background: #89c2ff !important;
+}
+
+// ############ //
 
 .toggle-btn {
   width: 40px;

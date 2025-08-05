@@ -13,7 +13,7 @@
 
 .persons-list li {
     list-style: none;
-    padding: 10px 0px; 
+    padding: 10px 0px;
     border-bottom: 1px solid #efefef;
     margin: 10px 0;
     cursor: pointer;
@@ -685,7 +685,7 @@ li.b-bottom:hover .b-none {
     color: #000 !important;
     padding: 0px !important;
     background: transparent;
-  
+
 }
 
 .flex-between {
@@ -1373,6 +1373,24 @@ img#custom-img {
     padding-right: 5px;
 }
 
+.create-group-popup::-webkit-scrollbar {
+    width: 5px !important;
+    height: 8px !important;
+    background-color: #f1f1f1 !important;
+}
+
+.create-group-popup::-webkit-scrollbar-thumb {
+    background: #89c2ff !important;
+}
+
+.create-group-popup::-webkit-scrollbar-thumb:hover {
+    background: #89c2ff !important;
+}
+
+
+
+
+
 .bb1_grey {
     border-bottom: 1px solid #e9ecef;
     padding: 8px 0;
@@ -1479,7 +1497,7 @@ img#custom-img {
         padding: 15px !important;
     }
 
-   textarea.form-control-chat {
+    textarea.form-control-chat {
         padding: 4px !important;
     }
 

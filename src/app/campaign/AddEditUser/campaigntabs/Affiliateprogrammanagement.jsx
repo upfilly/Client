@@ -94,7 +94,7 @@ const AffiliateProgramManagement = ({
 
           {/* Tab Content */}
           <div
-            className="tab-content  custom-tab-content-class   border border-top-0 rounded-bottom  shadow-sm flex-grow-1 d-flex flex-column"
+            className="tab-content mc-campaign-dropdown custom-tab-content-class   border border-top-0 rounded-bottom  shadow-sm flex-grow-1 d-flex flex-column"
             id="affiliateTabContent"
           >
             {tabsData.map((tab) => (<>
@@ -106,7 +106,7 @@ const AffiliateProgramManagement = ({
                 role="tabpanel"
                 aria-labelledby={`${tab.id}-tab`}
               >
-                {(activeTab == tab.id) && <div className="p-2 sm-p-4 flex-grow-1 overflow-auto tab-height">
+                {(activeTab == tab.id) && <div className="p-2 sm-p-4 edit-campanign-tab-wrapper   flex-grow-1  tab-height">
                   {tab.content}
                 </div>}
               </div>}
