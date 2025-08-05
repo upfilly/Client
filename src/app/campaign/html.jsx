@@ -165,23 +165,23 @@ const Html = ({
                   >
                     Event Type{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data">
-                    Access Type
+                  <th scope="col" className="table_data" onClick={(e) => sorting("access_type")}>
+                    Access Type{filters?.sorder === "asc" ? "↑" : "↓"}
+                  </th>
+                  <th scope="col" className="table_data" onClick={(e) => sorting("affiliateCount")}>
+                    Affiliates{filters?.sorder === "asc" ? "↑" : "↓"}
+                  </th>
+                  <th scope="col" className="table_data" onClick={(e) => sorting("commission")}>
+                    Commission{filters?.sorder === "asc" ? "↑" : "↓"}
+                  </th>
+                  <th scope="col" className="table_data" onClick={(e) => sorting("lead_amount")}>
+                    Lead Amount{filters?.sorder === "asc" ? "↑" : "↓"}
+                  </th>
+                  <th scope="col" className="table_data" onClick={(e) => sorting("currencies")}>
+                    Currency{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
                   <th scope="col" className="table_data">
-                    Affiliates
-                  </th>
-                  <th scope="col" className="table_data">
-                    Commission
-                  </th>
-                  <th scope="col" className="table_data">
-                    Lead Amount
-                  </th>
-                  <th scope="col" className="table_data">
-                    Currency
-                  </th>
-                  <th scope="col" className="table_data">
-                    Status
+                    Status{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
                   <th
                     scope="col"
