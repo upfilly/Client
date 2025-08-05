@@ -327,7 +327,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                 <div className="col-12 col-sm-6 col-md-4">
                   <div className="form-group">
                     <label className="form-label">Recipient Type</label>
-                    <div className="form-check mb-3">
+                    <div className="form-check mb-3 pl-4" >
                       <input
                         type="radio"
                         className="form-check-input"
@@ -338,7 +338,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         All Joined ({relatedAffiliate?.totalJoined})
                       </label>
                     </div>
-                    <div className="form-check mb-3">
+                    <div className="form-check mb-3 pl-4">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -364,7 +364,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                     <label className="form-label">
                       Time Interval (Optional)
                     </label>
-                    <div className="form-check mb-3">
+                    <div className="form-check mb-3 pl-4">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -373,7 +373,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                       />
                       <label className="form-check-label">Before</label>
                     </div>
-                    <div className="form-check mb-3">
+                    <div className="form-check mb-3 pl-4">
                       <input
                         type="radio"
                         className="form-check-input"
@@ -382,7 +382,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                       />
                       <label className="form-check-label">After</label>
                     </div>
-                    <div className="form-check mb-3">
+                    <div className="form-check mb-3 pl-4">
                       <input
                         type="radio"
                         className="form-check-input"

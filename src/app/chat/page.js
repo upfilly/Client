@@ -1269,7 +1269,7 @@ export default function Chat() {
                       <label className="">
                         <img
                           src={group.image || methodModel.userImg(group.image)}
-                          className="profileuserimg rounded"
+                          className="profileuserimg rounded-full"
                           alt="Group preview"
                         />
                       </label>
@@ -1342,7 +1342,7 @@ export default function Chat() {
                 />
               </div>
 
-              <div className="mt-3 gorupinner">
+              <div className="mt-3 gorupinner create-group-popup">
                 <div>
                   {filteredAffiliates.length > 0 ? (
                     filteredAffiliates.map((data, index) => (
@@ -1382,7 +1382,7 @@ export default function Chat() {
 
               <div className="buttons_close addmnebers d-flex justify-content-center align-items-center mt-4">
                 <button
-                  className="btn btn-primary widthsame closebg mr-3"
+                  className="btn btn-primary widthsame closebg mr-0"
                   onClick={handleClose}
                 >
                   Close
@@ -1465,7 +1465,7 @@ export default function Chat() {
                   {user?.role == "brand" && (
                     <div className="buttons_close addmnebers d-flex justify-content-center align-items-center mt-4">
                       <button
-                        className="btn btn-primary widthsame closebg mr-3"
+                        className="btn btn-primary widthsame closebg mr-0"
                         onClick={handleAddMemberClose}
                       >
                         Close
@@ -1537,7 +1537,7 @@ export default function Chat() {
                   </div>
                   <div className="d-flex justify-content-center align-items-center mt-4">
                     <button
-                      className="btn btn-primary widthsame closebg mr-3"
+                      className="btn btn-primary widthsame closebg mr-0"
                       onClick={() => setnextPage(false)}
                     >
                       Back
@@ -1637,13 +1637,13 @@ export default function Chat() {
         >
           <Modal.Body>
             <div className="d-flex justify-content-between bb1">
-              <p className="fw600">All Affiliates</p>
+              <p className="fw600">All Affiliates </p>
               <p onClick={() => setShowAffiliatesModal(false)} className="">
                 <i className="fa fa-times"></i>
               </p>
             </div>
 
-            <div className="mt-3">
+            <div className="mt-3 mc-campaign-dropdown">
               <div className="form-group position-relative mb-3">
                 <input
                   type="text"
