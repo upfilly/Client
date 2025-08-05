@@ -84,6 +84,39 @@ export default function BillingForm() {
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
+  const getOfferData = (p = {}) => {
+    setLoader(true)
+    if (!user) {
+      let filter = { ...filters, ...p, category: "Managed Services" }
+      let url = 'subscription-plan/all'
+      ApiClient.get(url, filter).then(res => {
+        if (res) {
+          setOffers(res?.data?.data)
+          setLoader(false)
+        }
+      })
+    }
+  }
+
+  const getData = (p = {}) => {
+    setLoader(true)
+    if (!user) {
+      let filter = { ...filters, ...p, category: "Network" }
+      let url = 'subscription-plan/all'
+      ApiClient.get(url, filter).then(res => {
+        if (res) {
+          setData(res?.data?.data)
+          setLoader(false)
+        }
+      })
+    }
+  }
+
+  useEffect(() => {
+    getOfferData()
+    getData()
+  }, [])
+
   // Username validation function
   const checkUsernameExists = async (username) => {
     try {
