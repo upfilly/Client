@@ -389,13 +389,149 @@ export default function BillingForm() {
   return (
     <>
       <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-        {/* ... (previous JSX remains the same until the form section) */}
+        <div className='main-affiliate mt-3 mb-0 pt-0'>
+          <div className='container'>
+
+            <div>
+              <img src="/assets/img/logo.png" className='mx-auto mb-4 pointer logo' onClick={!user ? () => history.push('/') : () => history.push('/dashboard')} />
+              <h2 className='text-center mb-0 select_plans'> Select a plan</h2>
+            </div>
+
+          </div>
+
+          {showPopup && (
+
+            <div class="modal d-block">
+              <div class="modal-dialog  modal-dialog-centered dateModal" role="document">
+                <div class="modal-content text-center">
+                  {/* <button type="button" class="close verify" routerLink="/auth/login">
+        <span aria-hidden="true">&times;</span> </button> */}
+
+                  <div class="modal-body">
+                    <div>
+                      <img src="../../../assets/img/logo.png" class="greentik" />
+                    </div>
+                    <h5 Class="tital mt-5">Plan Purchased Successfully .</h5>
+                    {/* <div class="paraclass">
+                      We have send you the verification by email.
+                    </div> */}
+
+                    <div>
+                      <button type="button" class="btn btn-primary " onClick={() => handleClick()} >Ok</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+          )}
+        </div>
 
         <section className='common-padding'>
           <div className='container'>
             <div className='row'>
               <div className='col-12 col-md-12 col-lg-12 col-xl-8'>
-                {/* Plan selection card remains the same */}
+                <div className='card p-0 mb-4'>
+                  <div className='card-header '>
+                    <h3 className='mb-0 card-title'>Account <span className='subsmal'>Select a plan</span></h3>
+                  </div>
+                  <div className='card-body'>
+                    <div className='row '>
+                      {FilterData?.map((itm) => {
+                        const calculateDiscountedAmount = (amount, discountDetails) => {
+                          if (!discountDetails || !discountDetails.discount_type) {
+                            return amount;
+                          }
+
+                          if (discountDetails.discount_type === 'flat') {
+                            return amount - discountDetails.amount_value;
+                          }
+
+                          if (discountDetails.discount_type === 'percentage') {
+                            const percentageValue = (amount * discountDetails.amount_value) / 100;
+                            return amount - percentageValue;
+                          }
+
+                          return amount;
+                        }
+
+                        const cardClass =
+                          selectedId === itm?._id
+                            ? "checked_tbn"
+                            : `checked_tbn_after ${errors?.plan ? 'border-red' : ''}`;
+
+                        const discountedAmount = calculateDiscountedAmount(itm.amount, itm.discount_details);
+
+                        return <label htmlFor={`exampleRadios${itm._id}`} className=' col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 mb-4'> <div class={cardClass} >
+                          <div className='sub-opt form-check pl-0' >
+
+
+
+                            <label class="form-check-label " htmlFor={`exampleRadios${itm._id}`}>
+                              {itm?.name}
+                            </label>
+
+                            <input class="form-check-input  custom-radio"
+                              type="radio"
+                              name="exampleRadios"
+                              id={`exampleRadios${itm._id}`}
+                              value={itm.name}
+                              checked={selectedId === itm._id}
+                              onChange={() => handleRadioChange(itm._id)}
+                              required
+                            />
+                          </div>
+                          <div className='opt-main_cate'>
+                            <ul className='opt-category plan-featuress pl-0'>
+                              <div className='additional-info'>
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Basket Value Charge:</strong>
+                                  <p className='mb-0'>{itm.basket_value_charge}%</p>
+                                </div>
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Commission Override:</strong>
+                                  <p className='mb-0'>{itm.commission_override}%</p>
+                                </div>
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Bonus Override:</strong>
+                                  <p className='mb-0'> {itm.bonus_override}%</p>
+                                </div>
+                                <div className='info-item d-flex justify-content-between align-items-center'>
+                                  <strong>Allowed Total Revenue:</strong>
+                                  <p className='mb-0'>{itm.allowed_total_revenue}$</p>
+                                </div>
+                              </div>
+                              <div>
+                                {itm?.features?.map((feature) => (
+                                  <li className='flexs' key={feature.id}>
+                                    {itm.features?.[0]?.feature_name && <img
+                                      className='checkss !mr-0'
+                                      src='/assets/img/check.png'
+                                      alt=''
+                                    ></img>}
+                                    <p className='ipsi mb-0'>{feature.feature_name}</p>
+                                  </li>
+                                ))}
+                              </div>
+                            </ul>
+                            <div className='d-flex  align-items-center amt-desc'>
+                              {itm?.discount_details && <p className="textWrong mr-2">{itm?.amount}</p>}
+                              <div className='d-flex align-items-center'>
+                                <p className='dollarf-sec'>${discountedAmount}</p>
+                                <p className='montyh ms-1'> /{itm.billing_frequency} month</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </label>
+
+                      })}
+                    </div>
+                    {errors.plan && <div className="invalid-feedback d-block">{errors.plan}</div>}
+                  </div>
+                </div>
               </div>
 
               <div className='col-12 col-md-12 col-lg-12 col-xl-4'>
