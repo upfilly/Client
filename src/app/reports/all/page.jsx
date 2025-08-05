@@ -216,6 +216,7 @@ export default function AnalyticsDashboard() {
   }, [selectedAffiliate, selectedBrand, campaignId]);
 
   const ApplyDateFilter = () => {
+    
     // Ensure compDates are valid when switching from "none" to another period
     let effectiveCompDates = compDates;
     if (comparisonPeriod !== "none" && (!compDates[0] || !compDates[1])) {
