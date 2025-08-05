@@ -581,7 +581,7 @@ export default function BillingForm() {
                             <label className='label-set'>First Name</label>
                             <input
                               type="text"
-                              className={`form-control quick-radius ${errors.firstName ? 'is-invalid' : ''}`}
+                              className={`form-control quick-radius ${errors.firstName ? '' : ''}`}
                               placeholder='Enter first name'
                               id="firstName"
                               name="firstName"
@@ -600,7 +600,7 @@ export default function BillingForm() {
                             <label className='label-set'>Last Name </label>
                             <input
                               type="text"
-                              className={`form-control quick-radius ${errors.lastName ? 'is-invalid' : ''}`}
+                              className={`form-control quick-radius ${errors.lastName ? '' : ''}`}
                               placeholder='Enter last name'
                               id="lastName"
                               name="lastName"
@@ -619,7 +619,7 @@ export default function BillingForm() {
                             <label className='label-set'>Email </label>
                             <input
                               type="email"
-                              className={`form-control quick-radius ${errors.email ? 'is-invalid' : ''}`}
+                              className={`form-control quick-radius ${errors.email ? '' : ''}`}
                               placeholder='Enter email'
                               id="email"
                               name="email"
@@ -640,7 +640,7 @@ export default function BillingForm() {
                             <label className='label-set'>Username </label>
                             <input
                               type="text"
-                              className={`form-control quick-radius ${errors.userName ? 'is-invalid' : ''}`}
+                              className={`form-control quick-radius ${errors.userName ? '' : ''}`}
                               placeholder='Enter username'
                               id="userName"
                               name="userName"
@@ -672,7 +672,7 @@ export default function BillingForm() {
                             <div className='input-group position-relative'>
                               <input
                                 type={eyes.password ? 'text' : 'password'}
-                                className={`form-control quick-radius password_space ${errors.password ? 'is-invalid' : ''}`}
+                                className={`form-control quick-radius password_space ${errors.password ? '' : ''}`}
                                 placeholder='Enter password (min 8 characters)'
                                 id="password"
                                 name="password"
@@ -696,7 +696,7 @@ export default function BillingForm() {
                             <div className='input-group position-relative'>
                               <input
                                 type={eyes.confirmPassword ? 'text' : 'password'}
-                                className={`form-control quick-radius password_space ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                                className={`form-control quick-radius password_space ${errors.confirmPassword ? '' : ''}`}
                                 placeholder='Confirm your password'
                                 id="confirmPassword"
                                 name="confirmPassword"
@@ -765,7 +765,7 @@ export default function BillingForm() {
                               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div>
                                   <input
-                                    className={`form-control quick-radius ${errors.address ? 'is-invalid' : ''}`}
+                                    className={`form-control quick-radius ${errors.address ? '' : ''}`}
                                     {...getInputProps({
                                       placeholder: 'Enter an address...',
                                       onFocus: () => setInputFocused(true),
@@ -804,7 +804,7 @@ export default function BillingForm() {
                             type="text"
                             value={selectedLocation.country}
                             onChange={(e) => handleLocationChange('country', e.target.value)}
-                            className={`form-control quick-radius ${errors.country ? 'is-invalid' : ''}`}
+                            className={`form-control quick-radius ${errors.country ? '' : ''}`}
                             onBlur={() => setErrors(prev => ({
                               ...prev,
                               country: validateField('country', selectedLocation.country)
@@ -821,7 +821,7 @@ export default function BillingForm() {
                             type="text"
                             value={selectedLocation.city}
                             onChange={(e) => handleLocationChange('city', e.target.value)}
-                            className={`form-control quick-radius ${errors.city ? 'is-invalid' : ''}`}
+                            className={`form-control quick-radius ${errors.city ? '' : ''}`}
                             onBlur={() => setErrors(prev => ({
                               ...prev,
                               city: validateField('city', selectedLocation.city)
@@ -838,7 +838,7 @@ export default function BillingForm() {
                             type="text"
                             value={selectedLocation.pincode}
                             onChange={(e) => handleLocationChange('pincode', e.target.value)}
-                            className={`form-control quick-radius ${errors.pincode ? 'is-invalid' : ''}`}
+                            className={`form-control quick-radius ${errors.pincode ? '' : ''}`}
                             onBlur={() => setErrors(prev => ({
                               ...prev,
                               pincode: validateField('pincode', selectedLocation.pincode)
@@ -854,7 +854,7 @@ export default function BillingForm() {
                         <div className="form-check">
                           <input
                             type="checkbox"
-                            className={`form-check-input ${errors.terms ? 'is-invalid' : ''}`}
+                            className={`form-check-input ${errors.terms ? '' : ''}`}
                             id="termsCheck"
                             checked={isTermsAccepted}
                             onChange={() => {
