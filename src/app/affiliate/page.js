@@ -20,9 +20,10 @@ import React from "react";
 export default function affilate() {
   const history = useRouter();
   const user = crendentialModel.getUser();
+  const initialRender = useRef(true);
   const initialLoadComplete = useRef(false);
   const isInitializing = useRef(true);
-  
+
   const [filters, setFilter] = useState({
     page: 0,
     count: 10,
@@ -39,17 +40,17 @@ export default function affilate() {
     category_id: "",
     cat_type: "",
   });
-  
+
   const [form, setform] = useState({
     message: "",
     tags: [],
     campaign_id: "",
   });
-  
+
   const [groupForm, setGroupform] = useState({
     affiliate_group: "",
   });
-  
+
   const [data, setData] = useState({});
   const [total, setTotal] = useState(0);
   const [loaging, setLoader] = useState(true);
@@ -275,7 +276,7 @@ export default function affilate() {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    
+
     // Create new filter object with date changes
     const newFilters = {
       ...filters,
@@ -283,22 +284,20 @@ export default function affilate() {
       end_date: end ? end.toISOString().split("T")[0] : "",
       page: 1 // Reset to first page
     };
-    
+
     setFilter(newFilters);
-    
+
     // Only call getData if initial load is complete
     if (initialLoadComplete.current) {
       getData(newFilters);
     }
   };
 
-  // Optimized getData function with better dependency management
   const getData = useCallback((p = {}) => {
-    console.log("getData called with:", p); // Debug log
+    console.log("getData called with:", p);
     setLoader(true);
     let filter = { ...filters, ...p };
-    
-    // Clean up null/empty date values
+
     if (
       filter?.start_date == null ||
       filter?.start_date == "null" ||
@@ -310,9 +309,8 @@ export default function affilate() {
         end_date: "",
       };
     }
-    
-    console.log("API Call with filters:", filter); // Debug log
-    
+
+    console.log("API Call with filters:", filter);
     ApiClient.get(`getAllAffiliateForBrand`, filter).then((res) => {
       if (res.success) {
         setData(res?.data);
@@ -323,7 +321,7 @@ export default function affilate() {
       console.error("API Error:", error);
       setLoader(false);
     });
-  }, []); // Remove filters dependency to prevent unnecessary re-creation
+  }, [])
 
   const getCategory = (p = {}) => {
     let url = `categoryWithSub?page&count&search&cat_type=promotional_models,property_types&status=active`;
@@ -335,19 +333,15 @@ export default function affilate() {
     });
   };
 
-  // MAIN INITIALIZATION EFFECT - This handles the initial load
   useEffect(() => {
     const initializeComponent = async () => {
-      console.log("Initializing component..."); // Debug log
-      
+
       const params = Object.fromEntries(searchParams.entries());
 
-      // Parse category arrays from URL params
       const parsedSelectedCategory = parseStringToArray(params?.category);
       const parsedSelectedSubCategory = parseStringToArray(params?.sub_category);
       const parsedSelectedSubSubCategory = parseStringToArray(params?.sub_child_category);
 
-      // Parse dates
       const startDateParam =
         params.start_date && params.start_date !== "null"
           ? new Date(params.start_date)
@@ -357,14 +351,12 @@ export default function affilate() {
           ? new Date(params.end_date)
           : null;
 
-      // Set all state values
       setSelectedCategory(parsedSelectedCategory);
       setSelectedSubCategory(parsedSelectedSubCategory);
       setSelectedSubSubCategory(parsedSelectedSubSubCategory);
       setEndDate(endDateParam);
       setStartDate(startDateParam);
 
-      // Build initial filters with all params
       const initialFilters = {
         ...filters,
         ...params,
@@ -374,40 +366,33 @@ export default function affilate() {
           ? startDateParam.toISOString().split("T")[0]
           : "",
         end_date: endDateParam ? endDateParam.toISOString().split("T")[0] : "",
-        // Include category filters in initial load
         cat_type: params.cat_type || "",
-        category_id: parsedSelectedCategory.length > 0 
-          ? parsedSelectedCategory.join(",") 
+        category_id: parsedSelectedCategory.length > 0
+          ? parsedSelectedCategory.join(",")
           : "",
-        sub_category_id: parsedSelectedSubCategory.length > 0 
-          ? parsedSelectedSubCategory.join(",") 
+        sub_category_id: parsedSelectedSubCategory.length > 0
+          ? parsedSelectedSubCategory.join(",")
           : "",
-        sub_child_category_id: parsedSelectedSubSubCategory.length > 0 
-          ? parsedSelectedSubSubCategory.join(",") 
+        sub_child_category_id: parsedSelectedSubSubCategory.length > 0
+          ? parsedSelectedSubSubCategory.join(",")
           : "",
       };
 
-      console.log("Initial filters:", initialFilters); // Debug log
-
       setFilter(initialFilters);
-      
-      // Load categories first, then data
+
       await getCategory();
-      
-      // Make the single API call with all filters
+
       getData(initialFilters);
-      
-      // Mark initialization as complete
+
       isInitializing.current = false;
       initialLoadComplete.current = true;
+      initialRender.current = false;
     };
 
     initializeComponent();
-  }, [searchParams]); // Only depend on searchParams
+  }, [searchParams]);
 
-  // CATEGORY FILTER EFFECT - Only trigger after initial load
   useEffect(() => {
-    // Skip if still initializing
     if (isInitializing.current || !initialLoadComplete.current) {
       return;
     }
@@ -417,7 +402,6 @@ export default function affilate() {
     const hasSelectedSubCategory = selectedSubCategory?.length > 0;
     const hasSelectedSubSubCategory = selectedSubSubCategory?.length > 0;
 
-    // Create new filter object
     const newFilters = {
       ...filters,
       page: 1,
@@ -427,8 +411,7 @@ export default function affilate() {
       sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.join(",") : "",
     };
 
-    // Only update if there's actually a change
-    const hasChanges = 
+    const hasChanges =
       newFilters.cat_type !== filters.cat_type ||
       newFilters.category_id !== filters.category_id ||
       newFilters.sub_category_id !== filters.sub_category_id ||
@@ -441,25 +424,22 @@ export default function affilate() {
     }
   }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
 
-  // AFFILIATE GROUP FILTER EFFECT - Only trigger after initial load
   useEffect(() => {
-    // Skip if still initializing or no options selected
     if (isInitializing.current || !initialLoadComplete.current || selectedOptions?.length === 0) {
       return;
     }
 
-    const newFilters = { 
-      ...filters, 
+    const newFilters = {
+      ...filters,
       affiliate_group_id: selectedGroupId.join(","),
-      page: 1 
+      page: 1
     };
-    
+
     console.log("Affiliate group filters changed, updating..."); // Debug log
     setFilter(newFilters);
     getData(newFilters);
   }, [selectedOptions]);
 
-  // Load other data (not dependent on filters)
   useEffect(() => {
     handleAffiliateGroup();
     handleCampaign();
@@ -467,11 +447,14 @@ export default function affilate() {
   }, []);
 
   const pageChange = (e) => {
-    if (e.selected !== undefined) {
-      const newFilters = { ...filters, page: e.selected };
-      setFilter(newFilters);
-      getData({ ...newFilters, page: e.selected + 1 });
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
     }
+    // if (e.selected === 0 || e.selected === undefined) return
+    const newFilters = { ...filters, page: e.selected };
+    setFilter(newFilters);
+    getData({ ...newFilters, page: e.selected + 1 });
   };
 
   const filter = (p = {}) => {
@@ -525,7 +508,7 @@ export default function affilate() {
       category_id: "",
       cat_type: "",
     };
-    
+
     setStartDate(null);
     setEndDate(null);
     setCategoryType([]);
@@ -534,7 +517,7 @@ export default function affilate() {
     setSelectedSubSubCategory([]);
     setSelectedOptions([]);
     setIsOpen(false);
-    
+
     setFilter(newFilter);
     getData(newFilter);
     history.push("/affiliate");
@@ -699,10 +682,10 @@ export default function affilate() {
         <div className="nmain-list mb-3">
           <div className="row align-items-center mx-0">
             <div className="col-12 col-md-12 col-lg-12">
-              <div className="set_modal postion-relative">                
+              <div className="set_modal postion-relative">
                 <div className="d-flex gap-2 align-items-center affilitate-top-dropdowns  flex-wrap">
                   {/* Category Filter Dropdown */}
-                   <>
+                  <>
                     <div className="dropdown position-relative">
                       <button
                         className="btn dropdown-toggle"
@@ -996,10 +979,10 @@ export default function affilate() {
                     filters.affiliate_group_id ||
                     filters.end_date ||
                     filters.start_date) && (
-                    <button className="btn btn-primary" onClick={reset}>
-                      Reset
-                    </button>
-                  )}
+                      <button className="btn btn-primary" onClick={reset}>
+                        Reset
+                      </button>
+                    )}
 
                   {/* Action Dropdown for Multiple Selection */}
                   {(user?.role == "brand" || permission("affiliate_group")) &&
@@ -1234,8 +1217,8 @@ export default function affilate() {
                                   {itm.invite_status == "accepted"
                                     ? "Accepted"
                                     : itm.invite_status == "not_invited"
-                                    ? "Not Invited"
-                                    : "Pending"}
+                                      ? "Not Invited"
+                                      : "Pending"}
                                 </span>
                               </span>
                             </td>
@@ -1244,24 +1227,24 @@ export default function affilate() {
                               <div className="action_icons">
                                 {(user?.role == "brand" ||
                                   permission("affiliate_invite")) && (
-                                  <button
-                                    disabled={
-                                      itm.invite_status == "not_invited"
-                                        ? false
-                                        : true
-                                    }
-                                    className="btn btn-primary btn_primary"
-                                    onClick={() => {
-                                      handleShow();
-                                      setselectedAffiliteid([itm?.id]);
-                                    }}
-                                  >
-                                    <i
-                                      className="fa fa-plus fa_icns"
-                                      title="Invite"
-                                    ></i>
-                                  </button>
-                                )}
+                                    <button
+                                      disabled={
+                                        itm.invite_status == "not_invited"
+                                          ? false
+                                          : true
+                                      }
+                                      className="btn btn-primary btn_primary"
+                                      onClick={() => {
+                                        handleShow();
+                                        setselectedAffiliteid([itm?.id]);
+                                      }}
+                                    >
+                                      <i
+                                        className="fa fa-plus fa_icns"
+                                        title="Invite"
+                                      ></i>
+                                    </button>
+                                  )}
                                 <span
                                   className="btn btn-primary btn_primary"
                                   onClick={() => {
@@ -1279,21 +1262,21 @@ export default function affilate() {
                                 </span>
                                 {(user?.role == "brand" ||
                                   permission("affiliate_group")) && (
-                                  <button
-                                    className="btn btn-primary btn_primary"
-                                    onClick={() => {
-                                      handleGroupShow();
-                                      setselectedAffiliteid(
-                                        itm?.id || itm?._id
-                                      );
-                                    }}
-                                  >
-                                    <i
-                                      className="fa-solid fa-people-group fa_icns"
-                                      title="Add Group"
-                                    ></i>
-                                  </button>
-                                )}
+                                    <button
+                                      className="btn btn-primary btn_primary"
+                                      onClick={() => {
+                                        handleGroupShow();
+                                        setselectedAffiliteid(
+                                          itm?.id || itm?._id
+                                        );
+                                      }}
+                                    >
+                                      <i
+                                        className="fa-solid fa-people-group fa_icns"
+                                        title="Add Group"
+                                      ></i>
+                                    </button>
+                                  )}
                               </div>
                             </td>
                           </tr>
@@ -1326,10 +1309,10 @@ export default function affilate() {
                                   {itm.cat_type == "promotional_models"
                                     ? "Promotional Models"
                                     : itm.cat_type == "property_types"
-                                    ? "Property Type"
-                                    : itm.cat_type == "advertiser_categories"
-                                    ? "Advertiser Categories"
-                                    : "" || "--"}
+                                      ? "Property Type"
+                                      : itm.cat_type == "advertiser_categories"
+                                        ? "Advertiser Categories"
+                                        : "" || "--"}
                                 </p>
                               </td>
                               <td>
@@ -1540,9 +1523,8 @@ export default function affilate() {
         )}
 
         <div
-          className={`paginationWrapper ${
-            !loaging && total > 10 ? "" : "d-none"
-          }`}
+          className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
+            }`}
         >
           <span>
             Show{" "}
@@ -1563,7 +1545,7 @@ export default function affilate() {
             breakLabel="..."
             nextLabel="Next >"
             initialPage={filters?.page}
-            onPageChange={pageChange}
+            onPageChange={(e) =>{if (!initialLoadComplete.current) return; pageChange(e)}}
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}

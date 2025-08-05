@@ -439,14 +439,19 @@ const AddEditUser = () => {
         const filteredData = data.filter(
           (item) => item?.access_type === "public"
         );
-        // console.log(filteredData, "filteredData");
-        const newFlterData = filteredData?.map((item) => {
+
+        const sortedData = [...filteredData].sort((a, b) => {
+          if (a.isDefault === b.isDefault) return 0;
+          return a.isDefault ? -1 : 1;
+        });
+
+        const newFlterData = sortedData?.map((item) => {
           return {
             id: item?.id || item?._id,
-            name: item?.name,
+            name: `${item?.name} ${item?.isDefault ? "(isDefault)" : ""}`,
+            isDefault: item?.isDefault,
           };
         });
-        console.log(newFlterData, "finewFlterDatanewFlterDatalteredData");
         setCampaignType(newFlterData);
       }
     });
