@@ -2764,7 +2764,7 @@ p.checkbox-option-main {
 
 
 .profile-page-pl-none {
-    padding: 6px 0px !important;
+  padding: 6px 0px !important;
 }
 
 
@@ -6414,6 +6414,9 @@ input.dateselect {
 
   .affilitate-top-dropdowns .dropdown .dropdown-toggle {
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .affilitate-top-dropdowns .All-status-dropdown {
@@ -6564,23 +6567,23 @@ input.dateselect {
 }
 
 
- .edit-campanign-tab-wrapper {
+.edit-campanign-tab-wrapper {
   overflow-x: hidden !important;
- } 
+}
 
 
- .create-group-popup::-webkit-scrollbar {
-    width: 5px !important;
-    height: 8px !important;
-    background-color: #f1f1f1 !important;
+.create-group-popup::-webkit-scrollbar {
+  width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
 }
 
 .create-group-popup::-webkit-scrollbar-thumb {
-    background: #89c2ff !important;
+  background: #89c2ff !important;
 }
 
 .create-group-popup::-webkit-scrollbar-thumb:hover {
-    background: #89c2ff !important;
+  background: #89c2ff !important;
 }
 
 // ############ //

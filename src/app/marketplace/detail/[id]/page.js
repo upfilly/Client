@@ -51,7 +51,7 @@ export default function MarketPlaceDetail() {
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
             <div className="mapping-wrapper">
             <div className="container">
-                <div className="col-sm-12 col-md-12 mx-auto ">
+                <div className="col-sm-12 col-md-12 mx-auto p-0">
                     <div className="d-flex gap-2 align-items-center mb-3" onClick={()=>back()}>
                     <i className="fa fa-arrow-left  left_arrows  mr-0" aria-hidden="true"></i>
                         <span className="offer_detail">Offer Details </span>
@@ -62,7 +62,7 @@ export default function MarketPlaceDetail() {
                         <div className="grid_lists_mkt ">
                             <div className="subparttop d-flex align-items-center justify-content-between">
                                 <div className="leftshead">
-                                    <h6>{methodModel.capitalizeFirstLetter(data?.name)}</h6>
+                                    <h6> {methodModel.capitalizeFirstLetter(data?.name)}</h6>
                                     
                                     {/* <p className="types_date">Type:<span className="types_main"> {data?.opportunity_type?.map((itm) => itm).join(',\n') || ''}</span> - Added: {datepipeModel.date(data?.createdAt)}</p> */}
 
