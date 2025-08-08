@@ -12,7 +12,7 @@ import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-export default function Login() {
+export default function Signup() {
   const { role } = useParams()
   const [form, setForm] = useState({
     firstName: "",
@@ -20,7 +20,8 @@ export default function Login() {
     email: "",
     password: "",
     confirmPassword: "",
-    brand_name: ""
+    brand_name: "",
+    userName: ""
   });
   const [errors, setErrors] = useState({
     firstName: "",
@@ -28,19 +29,22 @@ export default function Login() {
     email: "",
     password: "",
     confirmPassword: "",
-    brand_name: ""
+    brand_name: "",
+    userName: ""
   });
   const [submitted, setSubmitted] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const [ip, setIP] = useState("");
   const [settingData, setSettingData] = useState([])
-  const [eyes, setEyes] = useState({ 
-    password: false, 
-    confirmPassword: false, 
-    currentPassword: false 
+  const [eyes, setEyes] = useState({
+    password: false,
+    confirmPassword: false,
+    currentPassword: false
   });
   const [remember, setRemember] = useState(false);
-  
+  const [usernameAvailable, setUsernameAvailable] = useState(null);
+  const [checkingUsername, setCheckingUsername] = useState(false);
+
   const param = useSearchParams()
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
@@ -74,6 +78,29 @@ export default function Login() {
     })
   }, [])
 
+  const checkUsernameExists = async (username) => {
+    try {
+      const response = await ApiClient.post('userName/check', { userName: username });
+      return response.success;
+    } catch (error) {
+      console.error('Error checking username:', error);
+      return true;
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (form.userName && form.userName.length >= 3 && /^[a-zA-Z0-9_]+$/.test(form.userName)) {
+        setCheckingUsername(true);
+        const exists = await checkUsernameExists(form.userName);
+        setUsernameAvailable(exists);
+        setCheckingUsername(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [form.userName]);
+
   const validateForm = () => {
     let isValid = true;
     const newErrors = {
@@ -82,7 +109,8 @@ export default function Login() {
       email: "",
       password: "",
       confirmPassword: "",
-      brand_name: ""
+      brand_name: "",
+      userName: ""
     };
 
     // Validate first name
@@ -94,9 +122,7 @@ export default function Login() {
       isValid = false;
     }
 
-    // Validate based on role
     if (role === "brand") {
-      // Validate brand name
       if (!form.brand_name || form.brand_name.trim() === "") {
         newErrors.brand_name = "Brand name is required";
         isValid = false;
@@ -105,7 +131,6 @@ export default function Login() {
         isValid = false;
       }
     } else {
-      // Validate last name for affiliates
       if (!form.lastName || form.lastName.trim() === "") {
         newErrors.lastName = "Last name is required";
         isValid = false;
@@ -113,6 +138,17 @@ export default function Login() {
         newErrors.lastName = "Last name must be at least 2 characters";
         isValid = false;
       }
+    }
+
+    if (!form.userName) {
+      newErrors.userName = "Username is required";
+      isValid = false;
+    } else if (form.userName.length < 3) {
+      newErrors.userName = "Username must be at least 3 characters";
+      isValid = false;
+    } else if (!/^[a-zA-Z0-9_]+$/.test(form.userName)) {
+      newErrors.userName = "Username can only contain letters, numbers and underscores";
+      isValid = false;
     }
 
     // Validate email
@@ -176,7 +212,6 @@ export default function Login() {
           } else {
             localStorage.removeItem('remember')
           }
-          // toast.success(res.message)
           localStorage.setItem('token', res.data.access_token)
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
@@ -190,12 +225,30 @@ export default function Login() {
     }
   }
 
-  const hendleSubmit = (e) => {
+  const hendleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
 
     if (!validateForm()) {
       return;
+    }
+
+    if (usernameAvailable === false) {
+      toast.error("Please choose a different username");
+      return;
+    }
+
+    if (usernameAvailable === null && form.userName) {
+      setCheckingUsername(true);
+      const exists = await checkUsernameExists(form.userName);
+      setCheckingUsername(false);
+
+      if (exists) {
+        setUsernameAvailable(false);
+        toast.error("Username is already taken");
+        return;
+      }
+      setUsernameAvailable(true);
     }
 
     let data;
@@ -246,7 +299,7 @@ export default function Login() {
         }
       } else {
         loader(false);
-        
+
         // Handle the specific error format
         if (res.error && res.error.message) {
           // Handle common errors like email already exists
@@ -266,8 +319,9 @@ export default function Login() {
           if (res.errors.firstName) apiErrors.firstName = res.errors.firstName;
           if (res.errors.lastName) apiErrors.lastName = res.errors.lastName;
           if (res.errors.brand_name) apiErrors.brand_name = res.errors.brand_name;
-          
-          setErrors({...errors, ...apiErrors});
+          if (res.errors.userName) apiErrors.userName = res.errors.userName;
+
+          setErrors({ ...errors, ...apiErrors });
         } else if (res.message) {
           toast.error(res.message);
         }
@@ -314,7 +368,7 @@ export default function Login() {
                       <div className="mb-3">
                         <input
                           type="text"
-                          className={`form-control mb-0 bginput ${submitted && errors.firstName ? 'is-invalid' : ''}`}
+                          className={`form-control mb-0 bginput ${submitted && errors.firstName ? '' : ''}`}
                           placeholder={role === 'brand' ? 'Full Name' : 'First Name'}
                           value={form.firstName}
                           onChange={(e) => {
@@ -329,19 +383,19 @@ export default function Login() {
                       <div className='mb-3' >
                         <input
                           type="text"
-                          className={`form-control mb-0 bginput ${submitted && (role === 'brand' ? errors.brand_name : errors.lastName) ? 'is-invalid' : ''}`}
+                          className={`form-control mb-0 bginput ${submitted && (role === 'brand' ? errors.brand_name : errors.lastName) ? '' : ''}`}
                           placeholder={role === 'brand' ? 'Brand Name' : 'Last Name'}
                           value={role === 'brand' ? form.brand_name : form.lastName}
                           onChange={(e) => {
-                            role === 'brand' 
-                              ? setForm({ ...form, brand_name: e.target.value }) 
+                            role === 'brand'
+                              ? setForm({ ...form, brand_name: e.target.value })
                               : setForm({ ...form, lastName: e.target.value });
-                            if (submitted) validateForm();  
+                            if (submitted) validateForm();
                           }}
                         />
-                        {submitted && role === 'brand' && errors.brand_name && 
+                        {submitted && role === 'brand' && errors.brand_name &&
                           <p className='text-danger small mt-1'>{errors.brand_name}</p>}
-                        {submitted && role !== 'brand' && errors.lastName && 
+                        {submitted && role !== 'brand' && errors.lastName &&
                           <p className='text-danger small mt-1'>{errors.lastName}</p>}
                       </div>
                     </div>
@@ -349,7 +403,7 @@ export default function Login() {
                   <div className="mb-3">
                     <input
                       type="email"
-                      className={`form-control mb-0 bginput ${submitted && errors.email ? 'is-invalid' : ''}`}
+                      className={`form-control mb-0 bginput ${submitted && errors.email ? '' : ''}`}
                       placeholder='Email address'
                       value={form.email}
                       onChange={(e) => {
@@ -360,16 +414,42 @@ export default function Login() {
                     {submitted && errors.email && <p className='text-danger small mt-1'>{errors.email}</p>}
                   </div>
                   <div className="mb-3">
+                    <input
+                      type="text"
+                      className={`form-control mb-0 bginput ${submitted && errors.userName ? '' : ''}`}
+                      placeholder='Username'
+                      value={form.userName}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\s/g, "");
+                        setForm({ ...form, userName: value });
+                        setUsernameAvailable(null);
+                        if (submitted) validateForm();
+                      }}
+                    />
+                    {submitted && errors.userName && <p className='text-danger small mt-1'>{errors.userName}</p>}
+                    {!errors.userName && form.userName && (
+                      <div className="small mt-1">
+                        {checkingUsername ? (
+                          <span className="text-muted">Checking username...</span>
+                        ) : usernameAvailable === true ? (
+                          <span className="text-success">Username is available!</span>
+                        ) : usernameAvailable === false ? (
+                          <span className="text-danger">Username is already taken</span>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                  <div className="mb-3">
                     <div className="inputWrapper password-invalid">
                       <input
                         type={eyes.password ? 'text' : 'password'}
-                        className={`form-control mb-0 bginput ${submitted && errors.password ? 'is-invalid' : ''}`}
+                        className={`form-control mb-0 bginput ${submitted && errors.password ? '' : ''}`}
                         value={form.password}
                         onChange={handlePasswordChange}
                         placeholder="Password"
                       />
-                      <i 
-                        className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} 
+                      <i
+                        className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'}
                         onClick={() => setEyes({ ...eyes, password: !eyes.password })}
                       ></i>
                     </div>
@@ -379,13 +459,13 @@ export default function Login() {
                     <div className="inputWrapper password-invalid">
                       <input
                         type={eyes.confirmPassword ? 'text' : 'password'}
-                        className={`form-control mb-0 bginput ${submitted && errors.confirmPassword ? 'is-invalid' : ''}`}
+                        className={`form-control mb-0 bginput ${submitted && errors.confirmPassword ? '' : ''}`}
                         value={form.confirmPassword}
                         onChange={handleConfirmPasswordChange}
                         placeholder="Confirm Password"
                       />
-                      <i 
-                        className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} 
+                      <i
+                        className={eyes.confirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'}
                         onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}
                       ></i>
                     </div>

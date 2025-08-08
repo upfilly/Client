@@ -45,7 +45,7 @@ const Users = () => {
                 const data = res?.data?.map((data) => {
                     return ({
                         id: data?.id || data?._id,
-                        name: data?.fullName
+                        name: data?.userName
                     })
                 })
                 setAffiliateData(data)

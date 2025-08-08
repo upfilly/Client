@@ -118,14 +118,20 @@ export default function AnalyticsDashboard() {
       if (res.success) {
         const data = res.data;
         const filteredData = data.filter((item) => item !== null);
-        setBrands(filteredData);
+        const manipulateData = filteredData.map((itm) => {
+          return {
+            name: itm?.userName || itm?.firstName,
+            id: itm?.id || itm?._id,
+          };
+        });
+        setBrands(manipulateData);
       }
     });
   };
 
   const getData = (p = {}) => {
     let url = "campaign/affiliate";
-    ApiClient.get(url, { campaign:campaignId?.map((dat)=>dat).join(",")}).then((res) => {
+    ApiClient.get(url, { campaign: campaignId?.map((dat) => dat).join(",") }).then((res) => {
       if (res.success) {
         const data = res.data;
         const filteredData = data.affiliateFetch?.filter((item) => item !== null);
@@ -135,7 +141,7 @@ export default function AnalyticsDashboard() {
           ))
         );
         setAffiliateData(uniqueData);
-      }else{
+      } else {
         setAffiliateData([]);
       }
     });
@@ -210,6 +216,7 @@ export default function AnalyticsDashboard() {
   }, [selectedAffiliate, selectedBrand, campaignId]);
 
   const ApplyDateFilter = () => {
+    
     // Ensure compDates are valid when switching from "none" to another period
     let effectiveCompDates = compDates;
     if (comparisonPeriod !== "none" && (!compDates[0] || !compDates[1])) {
@@ -304,83 +311,34 @@ export default function AnalyticsDashboard() {
           </nav>
         </aside>
 
-        <main className="main-content p-2 md-p-0">
-          <div className="custom-dropdown">
-            <div className="dropdown-item">
+        <main className="main-content p-2 md-p-0 ">
+
+          <div className="custom-dropdown  position-relative ">
+            <div className="dropdown-item  date-picker-dropdown">
               <span
-                className="form-select position-relative date_select"
+                className="form-select  date_select"
                 onClick={() => setHandleDateFilter(!handleDateFilter)}
                 onBlur={() => setHandleDateFilter(false)}
               >
                 {baseDates?.[0] ||
-                baseDates?.[1] ||
-                compDates?.[0] ||
-                compDates?.[1]
+                  baseDates?.[1] ||
+                  compDates?.[0] ||
+                  compDates?.[1]
                   ? comparisonPeriod == "none"
                     ? `${moment(baseDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
+                      "MMMM DD, YYYY"
+                    )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
                     : `${moment(baseDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(baseDates?.[1]).format(
-                        "MMMM DD, YYYY"
-                      )} ⇆ ${moment(compDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
+                      "MMMM DD, YYYY"
+                    )} - ${moment(baseDates?.[1]).format(
+                      "MMMM DD, YYYY"
+                    )} ⇆ ${moment(compDates?.[0]).format(
+                      "MMMM DD, YYYY"
+                    )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
                   : "Select Date Range"}
               </span>
-            </div>
 
-            <div className="dropdown-item mc-campaign-dropdown" >
-              <MultiSelectValue
-                id="statusDropdown"
-                displayValue="name"
-                placeholder="Select Campaign"
-                isClearable={true}
-                singleSelect={false}
-                intialValue={campaignId}
-                result={(e) => setCampaignId(e.value)}
-                options={CampaignData}
-              />
-            </div>
-
-            <div className="dropdown-item">
-              {user.role !== "brand" ? (
-                <MultiSelectValue
-                  id="statusDropdown"
-                  displayValue="fullName"
-                  placeholder="Select Brand"
-                  intialValue={selectedBrand}
-                  result={(e) => setSelectedBrand(e.value)}
-                  options={brands}
-                />
-              ) : (
-                <MultiSelectValue
-                  id="statusDropdown"
-                  displayValue="fullName"
-                  placeholder="Select Affiliate"
-                  isClearable={true}
-                  intialValue={selectedAffiliate}
-                  result={(e) => setSelectedAffiliate(e.value)}
-                  options={affiliateData}
-                />
-              )}
-            </div>
-
-            <div className="dropdown-item mc-campaign-dropdown">
-              <SelectDropdown
-                theme="search"
-                id="currencyDropdown"
-                displayValue="name"
-                placeholder="Select Currency"
-                intialValue={selectedCurrency}
-                result={handleCurrencyChange}
-                options={CurencyData}
-              />
-            </div>
-          </div>
-
-          <div className="controls mt-2 single-date-picker-wrapper">
+               <div className="controls mt-0 single-date-picker-wrapper">
             {/* {handleDateFilter && (
                             <DateRangePicker
                                 onChange={item => setState({ ...state, ...item })}
@@ -414,7 +372,62 @@ export default function AnalyticsDashboard() {
                 setComparisonPeriod={setComparisonPeriod}
               />
             )}
+                </div>
+            </div>
+
+
+            <div className="dropdown-item mc-campaign-dropdown">
+              <SelectDropdown
+                theme="search"
+                id="currencyDropdown"
+                displayValue="name"
+                placeholder="Select Currency"
+                intialValue={selectedCurrency}
+                result={handleCurrencyChange}
+                options={CurencyData}
+              />
+            </div>
+
+
+            <div className="dropdown-item mc-campaign-dropdown " >
+              <MultiSelectValue
+                id="statusDropdown"
+                displayValue="name"
+                placeholder="Select Campaign"
+                isClearable={true}
+                singleSelect={false}
+                intialValue={campaignId}
+                result={(e) => setCampaignId(e.value)}
+                options={CampaignData}
+              />
+            </div>
+
+            <div className="dropdown-item mc-campaign-dropdown">
+              {user.role !== "brand" ? (
+                <MultiSelectValue
+                  id="statusDropdown"
+                  displayValue="fullName"
+                  placeholder="Select Brand"
+                  intialValue={selectedBrand}
+                  result={(e) => setSelectedBrand(e.value)}
+                  options={brands}
+                />
+              ) : (
+                <MultiSelectValue
+                  id="statusDropdown"
+                  displayValue="fullName"
+                  placeholder="Select Affiliate"
+                  isClearable={true}
+                  intialValue={selectedAffiliate}
+                  result={(e) => setSelectedAffiliate(e.value)}
+                  options={affiliateData}
+                />
+              )}
+            </div>
+
+
           </div>
+ 
 
           <div className="reset-filters-container">
             {isFilterApplied() && (

@@ -416,7 +416,12 @@ const AddEditUser = () => {
     let url = "getallaffiliatelisting";
     ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
       if (res.success) {
-        const data = res.data;
+        const data = res?.data?.map((data) => {
+          return ({
+            id: data?.id || data?._id,
+            name: data?.userName
+          })
+        })
         const filteredData = data.filter((item) => item !== null);
         setAffiliateData(filteredData);
       }

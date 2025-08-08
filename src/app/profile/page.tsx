@@ -253,6 +253,14 @@ const Profile = () => {
                           <div className="row">
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                               <div className=' inputFlexs width400'>
+                                <label>Username:</label>
+                                <div>
+                                  <p className="profile_data profile-page-pl-none">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.userName)}</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                              <div className=' inputFlexs width400'>
                                 <label>Name:</label>
                                 <div>
                                   <p className="profile_data profile-page-pl-none">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.fullName)}</p>
@@ -727,6 +735,14 @@ const Profile = () => {
 
                         <div className="col-12 col-sm-12 col-md-12">
                           <div className="row">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                              <div className=' inputFlexs width400'>
+                                <label>Username:</label>
+                                <div>
+                                  <p className="profile_data profile-page-pl-none">{data && methodModel.capitalizeFirstLetter(data?.userName)}</p>
+                                </div>
+                              </div>
+                            </div>
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                               <div className=' inputFlexs width400'>
                                 <label>Name:</label>

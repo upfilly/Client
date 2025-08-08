@@ -605,7 +605,7 @@ export default function Home() {
                     <h4 className="affiliatebx">
                       Performance
                       <br />
-                      Insights
+                      Insights 
                     </h4>
                     <p className="text-white para_affiliate">
                       Data-driven analytics to optimize your <br></br>{" "}

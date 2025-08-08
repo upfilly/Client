@@ -1,5 +1,5 @@
 export const userType = {
-    id: '', role: "", fullName: '', firstName: '', lastName: '', gender: '', email: '', mobileNo: '', address: '', image: '',
+    id: '', role: "",userName:'', fullName: '', firstName: '', lastName: '', gender: '', email: '', mobileNo: '', address: '', image: '',
     instagram_username: "",
     timezone:"",
     websites:[],

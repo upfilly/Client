@@ -11,6 +11,7 @@ const AddEditUser = () => {
   const { role, id } = useParams();
   const history = useRouter();
   const user = crendentialModel.getUser();
+  console.log(user, "user=====");
   const [images, setImages] = useState("");
   const [form, setform] = useState({
     id: "",
@@ -60,13 +61,14 @@ const AddEditUser = () => {
 
   const allGetAffiliate = (p = {}) => {
     let url = "getallaffiliatelisting";
-    ApiClient.get(url).then((res) => {
+    let brandId = user?.id;
+    ApiClient.get(url, { brand_id: brandId }).then((res) => {
       if (res.success) {
         const data = res.data;
         const filteredData = data.filter((item) => item.id !== null);
         console.log(filteredData, "filteredData");
         const manipulateData = filteredData.map((itm) => ({
-          name: itm?.fullName || itm?.firstName,
+          name: itm?.userName || itm?.firstName,
           id: itm?.id || itm?._id,
         }));
         const uniqueData = manipulateData.filter(
@@ -418,7 +420,7 @@ const AddEditUser = () => {
         const filteredData = data.filter((item) => item !== null);
         const manipulateData = filteredData.map((itm) => {
           return {
-            name: itm?.fullName || itm?.firstName,
+            name: itm?.userName || itm?.firstName,
             id: itm?.id || itm?._id,
           };
         });
@@ -437,14 +439,19 @@ const AddEditUser = () => {
         const filteredData = data.filter(
           (item) => item?.access_type === "public"
         );
-        // console.log(filteredData, "filteredData");
-        const newFlterData = filteredData?.map((item) => {
+
+        const sortedData = [...filteredData].sort((a, b) => {
+          if (a.isDefault === b.isDefault) return 0;
+          return a.isDefault ? -1 : 1;
+        });
+
+        const newFlterData = sortedData?.map((item) => {
           return {
             id: item?.id || item?._id,
-            name: item?.name,
+            name: `${item?.name} ${item?.isDefault ? "(isDefault)" : ""}`,
+            isDefault: item?.isDefault,
           };
         });
-        console.log(newFlterData, "finewFlterDatanewFlterDatalteredData");
         setCampaignType(newFlterData);
       }
     });

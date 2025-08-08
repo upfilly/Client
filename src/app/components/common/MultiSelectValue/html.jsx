@@ -76,7 +76,7 @@ const Html = ({
       return;
     }
 
-    if (actionMeta.option?.isResetlabel) {
+    if (actionMeta.option?.isReset) {
       handleChange([], "reset");
       return;
     }

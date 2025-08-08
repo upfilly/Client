@@ -2514,6 +2514,23 @@ span.contract {
   justify-content: center;
 }
 
+.table_dats .user_hours .active {
+  font-size: 13px;
+  font-style: normal;
+  line-height: normal;
+  padding: 6px 12px;
+  min-height: 30px;
+  font-weight: 400;
+  color: #fff;
+  border-radius: 6px;
+  background: green;
+  width: 100px;
+  display: inline-flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
 .switched {
   font-size: 13px;
   font-style: normal;
@@ -2554,6 +2571,7 @@ textarea.form-control-chat::placeholder {
 select.form-select {
   border-radius: 6px;
   text-transform: capitalize;
+  cursor: pointer;
   border: 1px solid #ced4da !important;
 }
 
@@ -5257,6 +5275,7 @@ div:where(.swal2-icon).swal2-warning {
 .paginationWrapper span select.form-control {
   border-radius: 7px !important;
   height: 35px !important;
+  cursor: pointer;
 }
 
 // affiliate page css
@@ -5351,6 +5370,7 @@ input[type="checkbox"].check_bx_input {
   border-radius: 4px;
   position: relative;
   top: 4px;
+  cursor: pointer;
 }
 
 input[type="checkbox"].check_bx_input:checked+.checkbox-btn::after {
@@ -5955,6 +5975,10 @@ input.form-control {
   height: 38px !important;
 }
 
+.css-hlgwow {
+  cursor: pointer;
+}
+
 // akshay css
 .custom-input {
   input {
@@ -5962,6 +5986,7 @@ input.form-control {
     cursor: pointer;
   }
 }
+
 
 .custom-dropdown {
   display: flex;
@@ -6068,9 +6093,9 @@ input.dateselect {
 
 @media all and (min-width: 992px) and (max-width: 1200px) {
   .date_select {
-    min-height: 40px !important;
-    line-height: 2.7 !important;
-    font-size: 10px !important;
+    // min-height: 40px !important;
+    // line-height: 2.7 !important;
+    font-size: 14px !important;
     width: 100% !important;
   }
 
@@ -6166,6 +6191,12 @@ input.dateselect {
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
+
+  .date_select {
+    font-size: 14px !important;
+  }
+
+
   .ct-dropdown-wrapper .searchInput {
     width: 100%;
   }
