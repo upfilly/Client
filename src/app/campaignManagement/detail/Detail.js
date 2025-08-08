@@ -102,7 +102,7 @@ const CampaignDetail = () => {
                                 <a href="#" onClick={back}>
                                     <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i>
                                 </a>
-                                Campaign Detail
+                                Campaign Detail 
                             </h3>
                         </div>
                     </div>
@@ -454,7 +454,7 @@ const CampaignDetail = () => {
                                     {/* Transaction Settings */}
                                     <div className='row'>
                                         <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>
+                                            <h4 className='mt-4 mb-3 CM-Settings'>
                                                 Transaction Settings 
                                                 <button
                                                     onClick={() => toggleSection('transaction')}
@@ -484,7 +484,7 @@ const CampaignDetail = () => {
                                         <>
                                             <div className='row'>
                                                 <div className='col-12'>
-                                                    <h4 className='mt-4 mb-3'>
+                                                    <h4 className='mt-4 mb-3 CM-Settings'>
                                                         Legal Terms
                                                         <button
                                                             onClick={() => toggleSection('legal')}

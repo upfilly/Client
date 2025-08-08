@@ -42,7 +42,7 @@ const Html = ({
                     <div className='card-header'>
                         <div className="main_title_head d-flex justify-content-between align-items-center">
                             <h3 className="">
-                                Invitations
+                                Invitations  
                             </h3>
 
                             <article className="d-flex filterFlex phView">
@@ -143,7 +143,7 @@ const Html = ({
                                                             <button onClick={() => {
                                                                 statusChange("accepted", itm?.id || itm?._id)
                                                                 // Tracklogin(itm?.campaign_unique_id)
-                                                            }} className="btn btn-primary action-btns circle_icons mb-0 mr-2" title="Accepted">
+                                                            }} className="btn btn-primary action-btns circle_icons mb-0 mr-2"  title="Accepted">
                                                                 <i className='fa fa-check'></i>
                                                             </button>
                                                             <button onClick={() => statusChange("rejected", itm?.id || itm?._id)}

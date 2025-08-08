@@ -364,7 +364,7 @@ const Html = () => {
 
                 {/* Custom Parameters Checkbox */}
                 <div className="col-12 col-md-12 mb-3">
-                  <div className="form-check">
+                  <div className="form-check pl-4">
                     <input
                       className="form-check-input"
                       type="checkbox"
@@ -376,7 +376,7 @@ const Html = () => {
                       className="form-check-label"
                       htmlFor="showCustomParameters"
                     >
-                      Show Custom Parameters
+                      Show Custom Parameters 
                     </label>
                   </div>
                 </div>

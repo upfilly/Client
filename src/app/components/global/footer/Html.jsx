@@ -11,7 +11,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
       <div className="footer">
       <div className="container">
       <div className="row">
-          <div className="col-md-12 text-center mt-5 mb-5">
+          <div className="col-md-12 text-center  mt-0 mb-5 mt-md-5  mb-md-5">
             <h2 className="footer_heading" >Start Your Growth Today</h2>
             <p className="footer_para"  >Here are more ways to discover how we can help you.</p>
             <Link className="btn btn-primary mr-3" href='/contactUs'>Contact Us</Link>
@@ -23,7 +23,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
 
         <div className="row">
          
-          <div className=" col-12 col-sm-12  col-md-4">
+          <div className="col-12 col-sm-12  col-md-4">
             <ul className="footer_list">
               <li className="mb-3"><b>Get In Touch</b></li>
               <li><a><svg className="mr-2" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 43 43" fill="none">

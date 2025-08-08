@@ -41,7 +41,7 @@ const Detail = (p) => {
                         <div className='main_title_head'>
                             <h3 className="">
                                 <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2 " title='Back' aria-hidden="true"></i></a>
-                                Invitation Detail
+                                Invitation Detail 
                             </h3>
                         </div>
                     </div>
@@ -49,51 +49,51 @@ const Detail = (p) => {
                         <div className="campaine_detls_wrapper">
                         
                             <div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Sended By:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-9'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && data?.addedBy?.fullName}</p>
+                                        <p className='headsub px-0'>{data && data?.addedBy?.fullName}</p>
                                     </div>
                                 </div>
                             </div>
 
                          <><div className='row'>
-                                <div className='col-3'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='userdata'>
                                         <p className='headmain'>Sender E-mail:</p>
                                     </div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-12 col-sm-3'>
                                     <div className='name-dtls'>
-                                        <p className='headsub'>{data && data?.addedBy?.email}</p>
+                                        <p className='headsub px-0'>{data && data?.addedBy?.email}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className='row'>
-                            <div className='col-3'>
+                            <div className='col-12 col-sm-3'>
                                 <div className='userdata'>
                                     <p className='headmain'>Campaign:</p>
                                 </div>
                             </div>
-                            <div className='col-9'>
+                            <div className='col-12 col-sm-9'>
                                 <div className='name-dtls'>
-                                    <p className='headsub'>{data?.campaign_id?.name}</p>
+                                    <p className='headsub px-0'>{data?.campaign_id?.name}</p>
                                 </div>
                             </div>
                         </div>
                         <div className='row'>
-                            <div className='col-3'>
+                            <div className='col-12 col-sm-3'>
                                 <div className='userdata'>
                                     <p className='headmain'>Message:</p>
                                 </div>
                             </div>
-                            <div className='col-9'>
+                            <div className='col-12 col-sm-9'>
                                 <div className='name-dtls'>
-                                    <p className='headsub'>{data?.message}</p>
+                                    <p className='headsub px-0'>{data?.message}</p>
                                 </div>
                             </div>
                         </div>

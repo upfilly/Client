@@ -184,7 +184,7 @@ const Detail = (p) => {
                                         {/* Embed Code Section */}
                                         <div className='col-12'>
                                             <div className='detail-section'>
-                                                <h5 className='section-title'>Embed Code</h5>
+                                                <h5 className='section-title ' >Embed Code</h5>
                                                 <div className='embed-code-container'>
                                                     <pre className="embed-code">
                                                         {`/* START ADVERTISER: WebHosting */\n`}

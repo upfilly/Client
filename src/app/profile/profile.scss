@@ -115,7 +115,7 @@ p.profile_data {
 
 
 .profile-page-pl-none {
-        padding: 6px 0px !important;
+    padding: 6px 0px !important;
 }
 
 
@@ -171,41 +171,20 @@ p.profile_data {
     font-weight: 400;
 }
 
-.user-profile_scroller {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    max-height: 269px;
-    padding-right: 5px;
-}
-
-.user-profile_scroller::-webkit-scrollbar {
-    width: 2px;
-}
-
-.user-profile_scroller::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
-}
-
-.user-profile_scroller::-webkit-scrollbar-thumb {
-    background: transparent;
-}
-
-.user-profile_scroller:hover::-webkit-scrollbar-thumb {
-    background: #7adbf9;
-}
-
-.user-profile_scroller::-webkit-scrollbar-track {
-    // background: #f1f1f1;
-    background-color: #e8e9ed;
-}
 
 
-.box_div {
-    border: 1px solid #dfdfdf;
-    padding: 12px;
-    border-radius: 12px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // [type="radio"]:checked,
@@ -336,4 +315,45 @@ img.n-databx {
 
 .delete-button:hover {
     background-color: #ff1a1a;
+}
+
+
+
+
+
+// =========== //
+
+
+.user-profile_scroller {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 269px;
+    padding-right: 5px;
+
+}
+
+
+
+.user-profile_scroller::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px !important;
+}
+
+.user-profile_scroller::-webkit-scrollbar-thumb {
+    background: transparent !important;
+}
+
+.user-profile_scroller:hover::-webkit-scrollbar-thumb {
+    background: #7adbf9 !important;
+}
+
+.user-profile_scroller::-webkit-scrollbar-track {
+    background-color: #e8e9ed !important;
+}
+
+
+.box_div {
+    border: 1px solid #dfdfdf;
+    padding: 12px;
+    border-radius: 12px;
 }

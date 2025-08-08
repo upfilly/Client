@@ -437,7 +437,7 @@ const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
         </div>
 
         <div
-          className="card-body"
+          className="card-body user-profile-edit-page"
           style={{ maxHeight: "600px", overflowY: "auto" }}
         >
           {/* Platform Categories */}

@@ -26,10 +26,10 @@ input.form-control.overlap_mobile {
     margin-top: 1px;
 }
 
-.closebtn{
+.closebtn {
     border-radius: 50px;
     background: rgb(218, 15, 15);
-    color: #fff; 
+    color: #fff;
     width: 35px;
     height: 35px;
     flex-shrink: 0;
@@ -132,6 +132,11 @@ input.form-control.overlap_mobile {
         margin-top: 15px;
     }
 
+
+    .padding60 {
+        padding: 40px 0px !important;
+    }
+
     label.btn.btn-primary.edit.ml-3 {
         margin-left: 0px !important;
         margin-right: 15px !important;
@@ -156,6 +161,11 @@ input.form-control.overlap_mobile {
         margin-top: 15px;
     }
 
+
+    .padding60 {
+        padding: 40px 0px !important;
+    }
+
     label.btn.btn-primary.edit.ml-3 {
         margin-left: 0px !important;
     }
@@ -177,6 +187,10 @@ input.form-control.overlap_mobile {
 @media only screen and (min-width:320px)and (max-width:383px) {
     .profile_btn {
         margin-top: 15px;
+    }
+
+    .padding60 {
+        padding: 40px 0px !important;
     }
 
     label.btn.btn-primary.edit.ml-3 {
@@ -351,6 +365,7 @@ input.form-control-file.over_input {
 .padding60 {
     padding: 60px 0px;
 }
+
 .descript_editpro .ql-toolbar.ql-snow {
     border-radius: 6px 6px 0px 0px;
     border: 1px solid #dfdfdf;
@@ -360,6 +375,7 @@ input.form-control-file.over_input {
     border-radius: 0px 0px 6px 6px;
     border: 1px solid #dfdfdf;
 }
+
 .profileuserimg {
     width: 130px;
     height: 130px;
@@ -466,10 +482,12 @@ label.btn.bgdanger.btn-primary.text-white.delete {
     font-size: 25px;
     margin-bottom: 32px;
 }
+
 .platforms_input {
     padding: 10px 12px 14px;
 }
- .cloosebtn {
+
+.cloosebtn {
 
     width: 20px;
     height: 20px;
@@ -480,7 +498,7 @@ label.btn.bgdanger.btn-primary.text-white.delete {
     font-size: 11px !important;
     border-radius: 13px;
 }
+
 .pt_bx button {
- 
     font-size: 14px !important;
 }

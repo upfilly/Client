@@ -543,8 +543,8 @@ const isSomeVisibleSelected = () => {
       </div>
 
       {isOpen && (
-        <div className={`dropdown-menu ${isOpen ? "show" : ""}`}>
-          <div className="search-container">
+        <div className={`dropdown-menu add-offer-select-category  ${isOpen ? "show" : ""}`}>
+          <div className="search-container      " >
             <input
               type="text"
               placeholder="Search Categories..."

@@ -26,40 +26,47 @@ const Html = ({ handleSubmit, back, category, handleToggle }) => {
                 ></i>
               </button>
               <h3 className="Profilehedding add_title ms-2">
-                Email Notification Settings 
+                Email Notification Settings
               </h3>
             </div>
 
-            <div className="add_team_bx">
-              <div className="form-row">
-                <div className="col-md-12 mb-3">
-                  {
-                    <div className="row">
-                      {category?.map((item, index) => (
-                        <div
-                          key={item.id || index}
-                          className="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-2  gap-3 align-items-center"
-                        >
-                          <label className="mb-0 d-flex gap-3 align-items-center">
-                            <div
-                              onClick={() => handleToggle(index)}
-                              className={`toggle-btn ${
-                                item.isChecked ? "checked" : ""
-                              }`}
-                              role="button"
-                              aria-pressed={item.isChecked || false}
-                            >
-                              <div className="toggle-btn-inner"></div>
-                            </div>
-                            {item?.name}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  }
+
+
+
+            <div className="sidebar-left-content">
+              <div className="add_team_bx mt-0">
+                <div className="form-row">
+                  <div className="col-md-12 mb-3">
+                    {
+                      <div className="row">
+                        {category?.map((item, index) => (
+                          <div
+                            key={item.id || index}
+                            className="col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-2  gap-3 align-items-center"
+                          >
+                            <label className="mb-0 d-flex gap-3 align-items-center">
+                              <div
+                                onClick={() => handleToggle(index)}
+                                className={`toggle-btn ${item.isChecked ? "checked" : ""
+                                  }`}
+                                role="button"
+                                aria-pressed={item.isChecked || false}
+                              >
+                                <div className="toggle-btn-inner"></div>
+                              </div>
+                              {item?.name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    }
+                  </div>
                 </div>
               </div>
+
             </div>
+
+
           </div>
         </form>
       </Layout>

@@ -1595,7 +1595,7 @@ export default function addAffiliateAccount() {
                                   </p>
                                 </div>
 
-                                <div className="d-flex justify-content-between mt-3 align-items-center">
+                                <div className="d-flex justify-content-between mt-3 align-items-center gap-3">
                                   <div className="">
                                     <div className="">
                                       {/* <label>Signature</label> */}
@@ -1677,8 +1677,11 @@ export default function addAffiliateAccount() {
                                     )}
                                   </div>
                                 </div>
-                                <div className="col-md-12 ">
-                                  <div className="mb-4 mt-5 text-right ">
+
+
+
+                                <div className="col-md-12 pl-0 ">
+                                  <div className="mb-4 mt-4 mt-md-5 text-start text-sm-end ">
                                     {/* <button className='back-btns' onClick={() => back()}>Back</button> */}
                                     <button
                                       className="btn btn-primary login ml-md-3 "

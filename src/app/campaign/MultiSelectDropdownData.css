@@ -400,3 +400,22 @@ input#selectAll {
     font-size: 12px;
   }
 }
+
+
+.add-offer-select-category.show::-webkit-scrollbar  {
+ width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
+}
+
+.add-offer-select-category.show::-webkit-scrollbar-thumb {
+    background: #89c2ff !important;
+    border-radius: 5px;
+}
+
+
+.add-offer-select-category.show::-webkit-scrollbar-thumb:hover {
+    background: #89c2ff !important;
+} 
+
+
