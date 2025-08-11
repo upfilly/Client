@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { X, Plus, ChevronDown, ChevronUp } from "lucide-react";
 
+
 const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
   const [newPlatform, setNewPlatform] = useState("");
   const [expandedCategories, setExpandedCategories] = useState({
@@ -418,7 +419,7 @@ const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
 
   return (
     <div className="col-12 col-sm-12 col-md-12 col-lg-4">
-      <div className="card">
+      <div className="card property-type-wrapper">
         <div className="card-header bg-primary text-white">
           <div className="main_title_head">
             <h3 className="text-white mb-1">Property Types</h3>
@@ -437,8 +438,8 @@ const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
         </div>
 
         <div
-          className="card-body user-profile-edit-page"
-          style={{ maxHeight: "600px", overflowY: "auto" }}
+          className="card-body property-type-card-wrapper "
+          
         >
           {/* Platform Categories */}
           {Object.entries(platformCategories).map(
