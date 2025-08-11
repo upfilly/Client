@@ -26,7 +26,7 @@ const Detail = (p) => {
 
     const back = () => {
         const searchParams = window.location.search;                
-        window.location.href = '/addbanner' + searchParams;
+        window.location.href = '/banners' + searchParams;
     }
 
     useEffect(() => {

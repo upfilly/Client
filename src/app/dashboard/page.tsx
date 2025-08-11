@@ -648,7 +648,7 @@ export default function Dashboard() {
                       <li>Newsletter</li>
                     </ul>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('addbanner')} className="">
+                  <Button variant="" onClick={() => navigateToSection('banners')} className="">
                     Click here
                   </Button>
                 </div>

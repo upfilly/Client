@@ -1,44 +1,49 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import ApiClient from '@/methods/api/apiClient';
+import ApiClient from '../../methods/api/apiClient';
 import './style.scss';
+import loader from '../../methods/loader';
 import Html from './html';
 import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
-import { useParams,useRouter } from 'next/navigation';
+import { useParams,useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2'
-import loader from '@/methods/loader';
+import methodModel from '@/methods/methods';
 
 
-const Manualcommission = () => {
+const banneres = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
-    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:'',addedBy:user?.id || user?._id})
+    const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:''})
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
-    const [affiliateData,setAffiliateData] =  useState([])
     const [loaging, setLoader] = useState(true)
     const history=useRouter()
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
     
     useEffect(() => {
         if (user) {
-            // setFilter({ ...filters ,page: 1 ,role})
-            getAffiliateData()
-            getData({role, page: 1 })
+            setFilter({ ...filters ,page: 1 ,...params})
+            getData({role, page: 1 ,...params})
         }
     }, [role])
 
 
     const getData = (p = {}) => {
         setLoader(true)
-        let filter= { ...filters, ...p}
-
-        let url='get-commissions'
+        let filter = { ...filters, ...p }
+        if (user?.role == "brand") {
+            filter = { ...filters, ...p, addedBy: user?.id }
+        }else{
+            filter = { ...filters, ...p, affiliate_id: user?.id }
+        }
+        let url = 'banners'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
-                setTotal(res?.data?.total_count)
+                setTotal(res.data?.total_count)
             }
             setLoader(false)
         })
@@ -98,23 +103,6 @@ const Manualcommission = () => {
         }
       };
 
-    const getAffiliateData = (p = {}) => {
-        let filter = { brand_id: user?.id }
-        let url = 'getallaffiliatelisting'
-        ApiClient.get(url, filter).then(res => {
-            if (res.success) {
-                const data = res.data
-                const filteredData = data.filter(item => item !== null);
-                const manipulateData = filteredData.map((itm) => {
-                    return {
-                        name: itm?.userName || itm?.firstName, id: itm?.id || itm?._id
-                    }
-                })
-                setAffiliateData(manipulateData)
-            }
-        })
-    }
-
     const deleteItem = (id) => {
 
         Swal.fire({
@@ -149,43 +137,51 @@ const Manualcommission = () => {
         getData({ ...p , page:1})
     }
 
-    const ChangeAffiliateStatus = (e) => {
-        setFilter({ ...filters, affiliate: e, page: 1 })
-        getData({ affiliate: e, page: 1 })
+    const ChangeRole = (e) => {
+        setFilter({ ...filters, role: e, page: 1 })
+        getData({ role: e, page: 1 })
     }
-
     const ChangeStatus = (e) => {
-        setFilter({ ...filters, commission_type: e, page: 1 })
-        getData({ commission_type: e, page: 1 })
+        setFilter({ ...filters, status: e, page: 1 })
+        getData({ status: e, page: 1 })
     }
 
     const view=(id)=>{
-        history.push("/commission/manualCommission/"+id)
+        const filterParams = {
+            ...filters,
+            page:1,
+          };
+        
+          const queryString = new URLSearchParams(filterParams).toString();
+        
+          history.push(`/banners/detail/${id}?${queryString}`);
+        // history.push("/banners/detail/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/commission/manualCommission/${id}`
-        // if(role) url=`/banners/${role}/edit/${id}`
+        let url=`/banners/edit/${id}`
+        if(role) url=`/banners/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/commission/manualCommission`
-        // if(role) url=`/banners/${role}/add`
+        let url=`/banners/add`
+        if(role) url=`/banners/${role}/add`
         history.push(url)
     }
 
 
-    const reset = () => {
-        let filter = {
-            affiliate: '',
-            commission_type: '',
-            search: '',
-            page: 1,
-            count: 10
+    const reset=()=>{
+        let filter={
+            status: '',
+            role:'',
+            search:'',
+             page: 1,
+             count:10
         }
-        setFilter({ ...filters, ...filter })
+        setFilter({ ...filters,...filter })
         getData({ ...filter })
+        history.push("/banners")
         // dispatch(search_success(''))
     }
 
@@ -216,7 +212,7 @@ const Manualcommission = () => {
         view={view}
         edit={edit}
         role={role}
-        ChangeAffiliateStatus={ChangeAffiliateStatus}
+        ChangeRole={ChangeRole}
         ChangeStatus={ChangeStatus}
         pageChange={pageChange}
         deleteItem={deleteItem}
@@ -228,10 +224,9 @@ const Manualcommission = () => {
         setFilter={setFilter}
         user={user}
         statusChange={statusChange}
-        affiliateData={affiliateData}
         getData={getData}
     />
     </>;
 };
 
-export default Manualcommission;
+export default banneres;

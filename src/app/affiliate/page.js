@@ -1116,215 +1116,221 @@ export default function affilate() {
                   </thead>
                   <tbody>
                     {!loaging &&
-                      data?.data?.map((itm) => (
-                        <React.Fragment key={itm.id}>
-                          <tr className="table_row">
-                            <td>
-                              <label className="d-flex align-items-center gap-2">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input check_bx_input"
-                                  checked={
-                                    selectedAffiliteid?.includes(itm.id)
-                                      ? true
-                                      : false
-                                  }
-                                  disabled={
-                                    itm.invite_status == "not_invited"
-                                      ? false
-                                      : true
-                                  }
-                                  onChange={(e) =>
-                                    MultiSelectAffliates(
-                                      e.target.checked,
-                                      itm.id
-                                    )
-                                  }
-                                />
-                                <span
-                                  className={
-                                    itm.invite_status == "not_invited"
-                                      ? "checkbox-btn"
-                                      : "disable_check"
-                                  }
-                                ></span>
-                              </label>
-                            </td>
-                            <td className="profile_height">
-                              <div
-                                className="d-flex align-items-center"
-                                onClick={(e) => view(itm.id)}
-                              >
-                                {itm?.image ? (
-                                  <img
-                                    className="person-img"
-                                    src={`${environment?.api}/${itm?.image}`}
-                                    alt=""
-                                  ></img>
+                      data?.data?.map((itm) => {
+                        console.log(itm, "lkllklklk")
+                        return (
+                          <React.Fragment key={itm.id}>
+                            <tr className="table_row">
+                              <td>
+                                <label className="d-flex align-items-center gap-2">
+                                  <input
+                                    type="checkbox"
+                                    className="form-check-input check_bx_input"
+                                    checked={
+                                      selectedAffiliteid?.includes(itm.id)
+                                        ? true
+                                        : false
+                                    }
+                                    disabled={
+                                      itm.invite_status == "not_invited"
+                                        ? false
+                                        : true
+                                    }
+                                    onChange={(e) =>
+                                      MultiSelectAffliates(
+                                        e.target.checked,
+                                        itm.id
+                                      )
+                                    }
+                                  />
+                                  <span
+                                    className={
+                                      itm.invite_status == "not_invited"
+                                        ? "checkbox-btn"
+                                        : "disable_check"
+                                    }
+                                  ></span>
+                                </label>
+                              </td>
+                              <td className="profile_height">
+                                <div
+                                  className="d-flex align-items-center"
+                                  onClick={(e) => view(itm.id)}
+                                >
+                                  {itm?.image ? (
+                                    <img
+                                      className="person-img"
+                                      src={`${environment?.api}/${itm?.image}`}
+                                      alt=""
+                                    ></img>
+                                  ) : (
+                                    <img
+                                      className="person-img"
+                                      src="/assets/img/likjh.jpeg"
+                                      alt=""
+                                    ></img>
+                                  )}
+                                  <p className="name-person ml-2">
+                                    {methodModel?.capitalizeFirstLetter(
+                                      itm?.fullName
+                                    )}
+                                  </p>
+                                </div>
+
+                                {!expandedRowId.includes(itm.id) ? (
+                                  <span
+                                    className="show_morebx"
+                                    onClick={() => handleRowClick(itm.id)}
+                                  >
+                                    Show More
+                                  </span>
                                 ) : (
-                                  <img
-                                    className="person-img"
-                                    src="/assets/img/likjh.jpeg"
-                                    alt=""
-                                  ></img>
+                                  <span
+                                    className="show_morebx"
+                                    onClick={() => handleRowClick(itm.id)}
+                                  >
+                                    Show Less
+                                  </span>
                                 )}
-                                <p className="name-person ml-2">
-                                  {methodModel?.capitalizeFirstLetter(
-                                    itm?.fullName
-                                  )}
-                                </p>
-                              </div>
-
-                              {!expandedRowId.includes(itm.id) ? (
-                                <span
-                                  className="show_morebx"
-                                  onClick={() => handleRowClick(itm.id)}
-                                >
-                                  Show More
-                                </span>
-                              ) : (
-                                <span
-                                  className="show_morebx"
-                                  onClick={() => handleRowClick(itm.id)}
-                                >
-                                  Show Less
-                                </span>
-                              )}
-                            </td>
-                            <td>
-                              <p className="name-person ml-2" href="">
-                                {itm?.email}
-                              </p>
-                            </td>
-                            <td>
-                              <p className="name-person ml-2" href="">
-                                {itm?.affiliate_group_name || "--"}
-                              </p>
-                            </td>
-                            <td>
-                              <p className="name-person ml-2" href="">
-                                {itm?.campaign_details?.name || "--"}
-                              </p>
-                            </td>
-                            <td>
-                              <p className="td-set">
-                                {datepipeModel.date(itm?.createdAt)}
-                              </p>
-                            </td>
-                            <td className="table_dats">
-                              <span className={`active_btn${itm?.status}`}>
-                                <span className={itm.status}>
-                                  {itm.invite_status == "accepted"
-                                    ? "Accepted"
-                                    : itm.invite_status == "not_invited"
-                                      ? "Not Invited"
-                                      : "Pending"}
-                                </span>
-                              </span>
-                            </td>
-
-                            <td>
-                              <div className="action_icons">
-                                {(user?.role == "brand" ||
-                                  permission("affiliate_invite")) && (
-                                    <button
-                                      disabled={
-                                        itm.invite_status == "not_invited"
-                                          ? false
-                                          : true
-                                      }
-                                      className="btn btn-primary btn_primary"
-                                      onClick={() => {
-                                        handleShow();
-                                        setselectedAffiliteid([itm?.id]);
-                                      }}
-                                    >
-                                      <i
-                                        className="fa fa-plus fa_icns"
-                                        title="Invite"
-                                      ></i>
-                                    </button>
-                                  )}
-                                <span
-                                  className="btn btn-primary btn_primary"
-                                  onClick={() => {
-                                    history.push(`/chat`);
-                                    localStorage.setItem(
-                                      "chatId",
-                                      itm?._id || itm?.id
-                                    );
-                                  }}
-                                >
-                                  <i
-                                    className="fa fa-comment-o fa_icns"
-                                    title="Chat"
-                                  ></i>
-                                </span>
-                                {(user?.role == "brand" ||
-                                  permission("affiliate_group")) && (
-                                    <button
-                                      className="btn btn-primary btn_primary"
-                                      onClick={() => {
-                                        handleGroupShow();
-                                        setselectedAffiliteid(
-                                          itm?.id || itm?._id
-                                        );
-                                      }}
-                                    >
-                                      <i
-                                        className="fa-solid fa-people-group fa_icns"
-                                        title="Add Group"
-                                      ></i>
-                                    </button>
-                                  )}
-                              </div>
-                            </td>
-                          </tr>
-
-                          {expandedRowId.includes(itm.id) && (
-                            <tr className="table_row show_mores">
+                              </td>
                               <td>
-                                <label className="form-label">
-                                  Affiliate Type:
-                                </label>
-                                <p className="affi_tabbls">
-                                  {itm.affiliate_type || "--"}
+                                <p className="name-person ml-2" href="">
+                                  {itm?.email}
                                 </p>
                               </td>
                               <td>
-                                <label className="form-label">
-                                  Social Media Platforms:
-                                </label>
-                                <p className="affi_tabbls">
-                                  {itm.social_media_platforms?.length > 0
-                                    ? itm.social_media_platforms.join(",")
-                                    : "--"}
+                                <p className="name-person ml-2" href="">
+                                  {itm?.affiliate_group_name || "--"}
                                 </p>
                               </td>
                               <td>
-                                <label className="form-label">
-                                  Category Type:
-                                </label>
-                                <p className="affi_tabbls">
-                                  {itm.cat_type == "promotional_models"
+                                <p className="name-person ml-2" href="">
+                                  {itm?.campaign_details?.name || "--"}
+                                </p>
+                              </td>
+                              <td>
+                                <p className="td-set">
+                                  {datepipeModel.date(itm?.createdAt)}
+                                </p>
+                              </td>
+                              <td className="table_dats">
+                                <span className={`active_btn${itm?.status}`}>
+                                  <span className={itm.status}>
+                                    {itm.invite_status == "accepted"
+                                      ? "Accepted"
+                                      : itm.invite_status == "not_invited"
+                                        ? "Not Invited"
+                                        : "Pending"}
+                                  </span>
+                                </span>
+                              </td>
+
+                              <td>
+                                <div className="action_icons">
+                                  {(user?.role == "brand" ||
+                                    permission("affiliate_invite")) && (
+                                      <button
+                                        disabled={
+                                          itm.invite_status == "not_invited"
+                                            ? false
+                                            : true
+                                        }
+                                        className="btn btn-primary btn_primary"
+                                        onClick={() => {
+                                          handleShow();
+                                          setselectedAffiliteid([itm?.id]);
+                                        }}
+                                      >
+                                        <i
+                                          className="fa fa-plus fa_icns"
+                                          title="Invite"
+                                        ></i>
+                                      </button>
+                                    )}
+                                  <span
+                                    className="btn btn-primary btn_primary"
+                                    onClick={() => {
+                                      history.push(`/chat`);
+                                      localStorage.setItem(
+                                        "chatId",
+                                        itm?._id || itm?.id
+                                      );
+                                    }}
+                                  >
+                                    <i
+                                      className="fa fa-comment-o fa_icns"
+                                      title="Chat"
+                                    ></i>
+                                  </span>
+                                  {(user?.role == "brand" ||
+                                    permission("affiliate_group")) && (
+                                      <button
+                                        className="btn btn-primary btn_primary"
+                                        onClick={() => {
+                                          handleGroupShow();
+                                          setselectedAffiliteid(
+                                            itm?.id || itm?._id
+                                          );
+                                        }}
+                                      >
+                                        <i
+                                          className="fa-solid fa-people-group fa_icns"
+                                          title="Add Group"
+                                        ></i>
+                                      </button>
+                                    )}
+                                </div>
+                              </td>
+                            </tr>
+
+                            {expandedRowId.includes(itm.id) && (
+                              <tr className="table_row show_mores">
+                                <td>
+                                  <label className="form-label">
+                                    Affiliate Type:
+                                  </label>
+                                  <p className="affi_tabbls">
+                                    {itm.affiliate_type || "--"}
+                                  </p>
+                                </td>
+                                <td>
+                                  <label className="form-label">
+                                    Social Media Platforms:
+                                  </label>
+                                  <p className="affi_tabbls">
+                                    {itm.propertyType?.length > 0
+                                      ? itm.propertyType.map((dat) => dat?.name).join(",")
+                                      : "--"}
+                                  </p>
+                                </td>
+                                <td>
+                                  <label className="form-label">
+                                    Category :
+                                  </label>
+                                  <p className="affi_tabbls text-break">
+                                    {/* {itm.cat_type == "promotional_models"
                                     ? "Promotional Models"
                                     : itm.cat_type == "property_types"
                                       ? "Property Type"
                                       : itm.cat_type == "advertiser_categories"
                                         ? "Advertiser Categories"
-                                        : "" || "--"}
-                                </p>
-                              </td>
-                              <td>
-                                <label className="form-label">Country:</label>
-                                <p className="affi_tabbls">
-                                  {itm.country || "--"}
-                                </p>
-                              </td>
-                            </tr>
-                          )}
-                        </React.Fragment>
-                      ))}
+                                        : "" || "--"} */}
+                                    {
+                                      itm?.categoryDetails?.slice(0, 1)?.map((dat) => dat?.name)?.join(",")
+                                    }
+                                  </p>
+                                </td>
+                                <td>
+                                  <label className="form-label">Timezone:</label>
+                                  <p className="affi_tabbls">
+                                    {itm.timezone || "--"}
+                                  </p>
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
+                        )
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -1545,7 +1551,7 @@ export default function affilate() {
             breakLabel="..."
             nextLabel="Next >"
             initialPage={filters?.page}
-            onPageChange={(e) =>{if (!initialLoadComplete.current) return; pageChange(e)}}
+            onPageChange={(e) => { if (!initialLoadComplete.current) return; pageChange(e) }}
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}

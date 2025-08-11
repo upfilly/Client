@@ -159,8 +159,8 @@ const AddEditUser = () => {
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res.message);
-        let url = "/addbanner";
-        if (role) url = "/addbanner/" + role;
+        let url = "/banners";
+        if (role) url = "/banners/" + role;
         history.push(url);
       }
       loader(false);

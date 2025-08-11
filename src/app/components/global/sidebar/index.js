@@ -37,7 +37,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
       "CreativeAsset",
       "DataFeeds",
       "CreativeEmails",
-      "addbanner",
+      "banners",
       "coupons",
       "generateLink",
     ],

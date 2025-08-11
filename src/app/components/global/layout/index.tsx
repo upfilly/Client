@@ -64,7 +64,7 @@ export default function Layout({
     pathname.includes("/appliedjobs") ||
     pathname.includes("/applymerchants") ||
     pathname.includes("/invitedUsers") ||
-    pathname.includes("/addbanner") ||
+    pathname.includes("/banners") ||
     pathname.includes("/invitations") ||
     pathname.includes("/inviteUsers") ||
     pathname.includes("/users") ||

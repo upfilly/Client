@@ -35,7 +35,7 @@ export default function Header2({
     "/product",
     "/campaignManagement",
     "/CreativeEmails",
-    "/addbanner",
+    "/banners",
     "/coupons",
     "/invitations",
     "/allowNotifications",

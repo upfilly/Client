@@ -634,7 +634,7 @@ const Html = ({
                   addedUser?.role == "affiliate" ||
                   user.role == "brand" ||
                   addedUser?.role == "brand") && (
-                  <ListItemLink to="/addbanner" title="Banners">
+                  <ListItemLink to="/banners" title="Banners">
                     <i className="material-icons  svg_iconbx" title="Banners">
                       collections
                     </i>

@@ -39,7 +39,7 @@ const banneres = () => {
         }else{
             filter = { ...filters, ...p, affiliate_id: user?.id }
         }
-        let url = 'banners'
+        let url = 'link/generate/listing'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
@@ -116,7 +116,7 @@ const banneres = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             // loader(true)
-            ApiClient.delete('banner', {id: id }).then(res => {
+            ApiClient.delete('link/generate/delete', {id: id }).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()
@@ -154,19 +154,19 @@ const banneres = () => {
         
           const queryString = new URLSearchParams(filterParams).toString();
         
-          history.push(`/addbanner/detail/${id}?${queryString}`);
-        // history.push("/addbanner/detail/"+id)
+          history.push(`/banners/detail/${id}?${queryString}`);
+        // history.push("/banners/detail/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/addbanner/edit/${id}`
-        if(role) url=`/addbanner/${role}/edit/${id}`
+        let url=`/banners/edit/${id}`
+        if(role) url=`/banners/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/addbanner/add`
-        if(role) url=`/addbanner/${role}/add`
+        let url=`/banners/add`
+        if(role) url=`/banners/${role}/add`
         history.push(url)
     }
 
@@ -181,7 +181,7 @@ const banneres = () => {
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
-        history.push("/addbanner")
+        history.push("/banners")
         // dispatch(search_success(''))
     }
 
