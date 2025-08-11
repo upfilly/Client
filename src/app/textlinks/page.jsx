@@ -116,7 +116,7 @@ const banneres = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             // loader(true)
-            ApiClient.delete('banner', {id: id }).then(res => {
+            ApiClient.delete('link/generate/delete', {id: id }).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()

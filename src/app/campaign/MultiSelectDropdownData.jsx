@@ -447,7 +447,7 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
         const category = data?.find((cat) => cat._id === categoryId);
         return category ? category?.parent_cat_name : "";
       })
-      .filter((name) => name) // Filter out any empty values
+      .filter((name) => name)
       .join(", ");
   };
 

@@ -50,7 +50,7 @@ const Html = ({
 
   const renderCategories = (categories) => {
     if (!categories || categories.length === 0) return "--";
-    return categories.map(cat => cat.name).join(", ");
+    return categories.slice(0,2).map(cat => cat.name).join(", ");
   };
 
   return (
@@ -237,7 +237,7 @@ const Html = ({
                                     )}
 
                                     {isAllow("deleteAdmins") &&
-                                      permission("textlink_delete") ? (
+                                      permission("banner_delete") ? (
                                       <>
                                         <a
                                           className="edit_icon edit-delete"
