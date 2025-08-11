@@ -1152,9 +1152,9 @@ export default function affilate() {
                                   ></span>
                                 </label>
                               </td>
-                              <td className="profile_height">
+                              <td className="profile_height affiliate-page-pf-wrapper">
                                 <div
-                                  className="d-flex align-items-center"
+                                  className="d-flex align-items-center name-img-wrapper"
                                   onClick={(e) => view(itm.id)}
                                 >
                                   {itm?.image ? (

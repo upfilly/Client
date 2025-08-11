@@ -6662,18 +6662,29 @@ input.dateselect {
   transform: translate(15px, -50%);
 }
 
-.user-profile-edit-page::-webkit-scrollbar {
+
+
+
+
+
+
+.property-type-card-wrapper {
+  max-height: 600px !important;
+  overflow-y: auto !important;
+}
+
+.property-type-card-wrapper::-webkit-scrollbar{
   width: 5px !important;
   height: 8px !important;
   background-color: #f1f1f1 !important;
 }
 
-.user-profile-edit-page::-webkit-scrollbar-thumb {
+.property-type-card-wrapper::-webkit-scrollbar-thumb{
   background: #89c2ff !important;
   border-radius: 20px;
 }
 
-.user-profile-edit-page::-webkit-scrollbar-thumb:hover {
+.property-type-card-wrapper::-webkit-scrollbar-thumb:hover{
   background: #89c2ff !important;
 }
 

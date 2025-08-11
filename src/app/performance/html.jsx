@@ -118,7 +118,7 @@ const Html = ({
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                Program - Daily 
+                Program - Daily
               </button>
             </h2>
             <div
