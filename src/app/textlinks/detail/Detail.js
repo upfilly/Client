@@ -13,6 +13,7 @@ const Detail = (p) => {
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
+    const [copySuccess, setCopySuccess] = useState('')
 
     const getDetail = (did) => {
         loader(true)
@@ -28,6 +29,34 @@ const Detail = (p) => {
         const searchParams = window.location.search;
         window.location.href = '/textlinks' + searchParams;
     }
+
+    // Copy affiliate link to clipboard
+    const copyToClipboard = async () => {
+        const { domain, ext } = extractDomainAndExt(data?.destinationUrl);
+        const affiliateLink = `https://api.upfilly.com/link/affiliate_id=${user?.role == "affiliate" ? user?.id : "ID" || 'ID'}&url=${domain}&ext=${ext}`;
+        
+        try {
+            await navigator.clipboard.writeText(affiliateLink);
+            setCopySuccess('Link copied to clipboard!');
+            setTimeout(() => setCopySuccess(''), 2000);
+        } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = affiliateLink;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                setCopySuccess('Link copied to clipboard!');
+                setTimeout(() => setCopySuccess(''), 2000);
+            } catch (err) {
+                setCopySuccess('Failed to copy link');
+                setTimeout(() => setCopySuccess(''), 2000);
+            }
+            document.body.removeChild(textArea);
+        }
+    };
 
     useEffect(() => {
         getDetail(id)
@@ -70,6 +99,7 @@ const Detail = (p) => {
     };
 
     const { domain, ext } = extractDomainAndExt(data?.destinationUrl);
+    const affiliateLink = `https://api.upfilly.com/link/affiliate_id=${user?.role == "affiliate" ? user?.id : "ID" || 'ID'}&url=${domain}&ext=${ext}`;
 
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
@@ -232,14 +262,62 @@ const Detail = (p) => {
                                             </div>
                                         )}
 
+                                        {/* Affiliate Link Section */}
+                                        {user?.role == "affiliate" && <div className='col-12'>
+                                            <div className='detail-section'>
+                                                <h5 className='section-title'>Affiliate Link</h5>
+                                                <div className='row'>
+                                                    <div className='col-md-12'>
+                                                        <div className='detail-item'>
+                                                            <label>Direct Link</label>
+                                                            <div className='d-flex align-items-center gap-2'>
+                                                                <input 
+                                                                    type="text" 
+                                                                    className="form-control" 
+                                                                    value={affiliateLink} 
+                                                                    readOnly 
+                                                                />
+                                                                <button 
+                                                                    className="btn btn-outline-primary" 
+                                                                    onClick={copyToClipboard}
+                                                                    title="Copy link to clipboard"
+                                                                >
+                                                                    <i className="fas fa-copy"></i>
+                                                                </button>
+                                                            </div>
+                                                            {copySuccess && (
+                                                                <small className="text-success mt-1 d-block">{copySuccess}</small>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>}
+
                                         {/* Embed Code Section */}
                                         <div className='col-12'>
                                             <div className='detail-section'>
                                                 <h5 className='section-title'>Embed Code</h5>
                                                 <div className='embed-code-container'>
+                                                    <div className='d-flex justify-content-between align-items-center mb-2'>
+                                                        <span className='text-muted'>HTML Code</span>
+                                                        <button 
+                                                            className="btn btn-sm btn-outline-secondary"
+                                                            onClick={() => {
+                                                                const embedCode = `/* START ADVERTISER: ${data?.linkName || 'Link'} */\n<a href="${affiliateLink}" target="_blank">\n  ${data?.linkName || 'Link Text'}\n</a>\n/* END ADVERTISER: ${data?.linkName || 'Link'} */`;
+                                                                navigator.clipboard.writeText(embedCode).then(() => {
+                                                                    setCopySuccess('Embed code copied!');
+                                                                    setTimeout(() => setCopySuccess(''), 2000);
+                                                                });
+                                                            }}
+                                                        >
+                                                            <i className="fas fa-copy me-1"></i>
+                                                            Copy Code
+                                                        </button>
+                                                    </div>
                                                     <pre className="embed-code">
                                                         {`/* START ADVERTISER: ${data?.linkName || 'Link'} */\n`}
-                                                        {`<a href="https://api.upfilly.com/link/affiliate_id=${user?.role == "affiliate" ? user?.id : "ID" || 'ID'}&url=${domain}&ext=${ext}" target="_blank">\n`}
+                                                        {`<a href="${affiliateLink}" target="_blank">\n`}
                                                         {`  ${data?.linkName || 'Link Text'}\n`}
                                                         {`</a>\n`}
                                                         {`/* END ADVERTISER: ${data?.linkName || 'Link'} */`}
