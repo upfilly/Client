@@ -38,6 +38,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
       "DataFeeds",
       "CreativeEmails",
       "banners",
+      "textlinks",
       "coupons",
       "generateLink",
     ],

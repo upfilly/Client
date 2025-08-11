@@ -118,9 +118,9 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
 
   const handleSelection = (categoryId, subcategoryId, subSubCategoryId, checked) => {
     setSelectedItems((prevState) => {
-      let newCategories = [...prevState?.categories];
-      let newSubCategories = [...prevState?.subCategories];
-      let newSubSubCategories = [...prevState?.subSubCategories];
+      let newCategories = prevState?.categories ? [...prevState.categories] : [];
+      let newSubCategories = prevState?.subCategories ? [...prevState.subCategories] : [];
+      let newSubSubCategories = prevState?.subSubCategories ? [...prevState.subSubCategories] : [];
 
       if (categoryId && !subcategoryId && !subSubCategoryId) {
         // Category selection logic - only select/deselect the category itself
@@ -291,63 +291,63 @@ const MultiSelectDropdown = ({ data, selectedItems, setSelectedItems }) => {
   };
 
   const isAllVisibleSelected = () => {
-  if (!data.length) return false;
-  
-  const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
-  if (!visibleCategories.length) return false;
-  
-  // Check categories
-  const allCategoriesSelected = visibleCategories.every(category => 
-    selectedItems?.categories?.includes(category._id)
-  );
-  if (!allCategoriesSelected) return false;
-  
-  // Check subcategories
-  const allSubCategoriesSelected = visibleCategories.every(category => 
-    category.subCategories
-      .filter(sub => shouldShowSubCategory(sub, searchTerm))
-      .every(sub => selectedItems?.subCategories?.includes(sub.id))
-  );
-  if (!allSubCategoriesSelected) return false;
-  
-  // Check sub-subcategories
-  const allSubSubCategoriesSelected = visibleCategories.every(category => 
-    category.subCategories.every(sub => 
-      getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
-        .every(subSub => selectedItems?.subSubCategories?.includes(subSub._id))
-  ))
-  
-  return allSubSubCategoriesSelected;
-};
+    if (!data.length) return false;
 
-const isSomeVisibleSelected = () => {
-  if (!data.length) return false;
-  
-  const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
-  if (!visibleCategories.length) return false;
-  
-  // Check if any category is selected
-  const anyCategorySelected = visibleCategories.some(category => 
-    selectedItems?.categories?.includes(category._id)
-  );
-  
-  // Check if any subcategory is selected
-  const anySubCategorySelected = visibleCategories.some(category => 
-    category.subCategories
-      .filter(sub => shouldShowSubCategory(sub, searchTerm))
-      .some(sub => selectedItems?.subCategories?.includes(sub.id))
-  );
-  
-  // Check if any sub-subcategory is selected
-  const anySubSubCategorySelected = visibleCategories.some(category => 
-    category.subCategories.some(sub => 
-      getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
-        .some(subSub => selectedItems?.subSubCategories?.includes(subSub._id))
-    )
-  );
-  
-  return anyCategorySelected || anySubCategorySelected || anySubSubCategorySelected;
-};
+    const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
+    if (!visibleCategories.length) return false;
+
+    // Check categories
+    const allCategoriesSelected = visibleCategories.every(category =>
+      selectedItems?.categories?.includes(category._id)
+    );
+    if (!allCategoriesSelected) return false;
+
+    // Check subcategories
+    const allSubCategoriesSelected = visibleCategories.every(category =>
+      category.subCategories
+        .filter(sub => shouldShowSubCategory(sub, searchTerm))
+        .every(sub => selectedItems?.subCategories?.includes(sub.id))
+    );
+    if (!allSubCategoriesSelected) return false;
+
+    // Check sub-subcategories
+    const allSubSubCategoriesSelected = visibleCategories.every(category =>
+      category.subCategories.every(sub =>
+        getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
+          .every(subSub => selectedItems?.subSubCategories?.includes(subSub._id))
+      ))
+
+    return allSubSubCategoriesSelected;
+  };
+
+  const isSomeVisibleSelected = () => {
+    if (!data.length) return false;
+
+    const visibleCategories = data.filter(cat => searchInHierarchy(cat, searchTerm));
+    if (!visibleCategories.length) return false;
+
+    // Check if any category is selected
+    const anyCategorySelected = visibleCategories.some(category =>
+      selectedItems?.categories?.includes(category._id)
+    );
+
+    // Check if any subcategory is selected
+    const anySubCategorySelected = visibleCategories.some(category =>
+      category.subCategories
+        .filter(sub => shouldShowSubCategory(sub, searchTerm))
+        .some(sub => selectedItems?.subCategories?.includes(sub.id))
+    );
+
+    // Check if any sub-subcategory is selected
+    const anySubSubCategorySelected = visibleCategories.some(category =>
+      category.subCategories.some(sub =>
+        getFilteredSubSubCategories(sub.subchildcategory, searchTerm)
+          .some(subSub => selectedItems?.subSubCategories?.includes(subSub._id))
+      )
+    );
+
+    return anyCategorySelected || anySubCategorySelected || anySubSubCategorySelected;
+  };
 
   const handleRemoveAll = () => {
     setSelectedItems({ categories: [], subCategories: [], subSubCategories: [] });
@@ -422,7 +422,7 @@ const isSomeVisibleSelected = () => {
       .filter((cat) => searchInHierarchy(cat, searchTerm))
       .map((category) => (
         <div key={category?._id} className="category-container">
-          <div className="dropdown-item overflow-auto" >
+          <div className={`${category?.subCategories?.length ? 'dropdown-item' : 'no-subcategory-item'} overflow-auto`}>
             <input
               type="checkbox"
               checked={selectedItems && selectedItems?.categories?.includes(category?._id)}
@@ -480,7 +480,7 @@ const isSomeVisibleSelected = () => {
   };
 
   useEffect(() => {
-     setDisplaySelections(selectedItems)
+    setDisplaySelections(selectedItems)
     if (searchTerm) {
       // Expand all categories that match the search or have matching children
       const newExpandedCategories = {};
@@ -518,7 +518,7 @@ const isSomeVisibleSelected = () => {
 
       setExpandedCategories(newExpandedCategories);
       setExpandedSubCategories(newExpandedSubCategories);
-     
+
     } else {
       setExpandedCategories({});
       setExpandedSubCategories({});

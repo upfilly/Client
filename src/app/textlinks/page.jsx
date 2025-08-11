@@ -35,11 +35,11 @@ const banneres = () => {
         setLoader(true)
         let filter = { ...filters, ...p }
         if (user?.role == "brand") {
-            filter = { ...filters, ...p, addedBy: user?.id }
+            filter = { ...filters, ...p}
         }else{
-            filter = { ...filters, ...p, affiliate_id: user?.id }
+            filter = { ...filters, ...p }
         }
-        let url = 'banners'
+        let url = 'link/generate/listing'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
@@ -154,19 +154,19 @@ const banneres = () => {
         
           const queryString = new URLSearchParams(filterParams).toString();
         
-          history.push(`/banners/detail/${id}?${queryString}`);
-        // history.push("/banners/detail/"+id)
+          history.push(`/textlinks/detail/${id}?${queryString}`);
+        // history.push("/textlinks/detail/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/banners/edit/${id}`
-        if(role) url=`/banners/${role}/edit/${id}`
+        let url=`/textlinks/edit/${id}`
+        if(role) url=`/textlinks/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/banners/add`
-        if(role) url=`/banners/${role}/add`
+        let url=`/textlinks/add`
+        if(role) url=`/textlinks/${role}/add`
         history.push(url)
     }
 
@@ -181,7 +181,7 @@ const banneres = () => {
         }
         setFilter({ ...filters,...filter })
         getData({ ...filter })
-        history.push("/banners")
+        history.push("/textlinks")
         // dispatch(search_success(''))
     }
 

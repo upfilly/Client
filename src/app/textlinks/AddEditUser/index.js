@@ -49,6 +49,8 @@ const AddEditUser = () => {
   // const [AvailabilityDate,setAvailabilityDate] = useState('')
   // const [ExpirationDate,setExpirationDate] =  useState('')
 
+  console.log(selectedItems,"selectedItemsselectedItems")
+
   const getCategory = (p = {}) => {
     let url = "main-category/all";
     ApiClient.get(url).then((res) => {
@@ -91,79 +93,57 @@ const AddEditUser = () => {
       return;
     }
 
-    if (form?.access_type == "private") {
-      if (
-        !form?.title ||
-        !form?.destination_url ||
-        !form?.activation_date ||
-        // !form?.availability_date ||
-        !form?.expiration_date ||
-        !images ||
-        !form?.access_type ||
-        !form?.access_type ||
-        !form?.affiliate_id
-      ) {
-        setSubmitted(true);
-        return;
-      }
-    } else {
-      if (
-        !form?.title ||
-        !form?.destination_url ||
-        !form?.activation_date ||
-        // !form?.availability_date ||
-        !form?.expiration_date ||
-        !images ||
-        !form?.access_type
-      ) {
-        setSubmitted(true);
-        return;
-      }
+    const jsonData = form.id ? {
+      id:id,
+      linkName: form.title || "",
+      destinationUrl: form.destination_url || "",
+      description: form.description || "",
+      startDate: form.activation_date ? form.activation_date : "",
+      endDate: form.expiration_date ? form.expiration_date : "",
+      seo: !!form.seo_attributes,
+      deepLink: !!form.is_deep_linking,
+      category: selectedItems.categories ? selectedItems.categories : []
+    }
+    :
+    {
+      linkName: form.title || "",
+      destinationUrl: form.destination_url || "",
+      description: form.description || "",
+      startDate: form.activation_date ? form.activation_date : "",
+      endDate: form.expiration_date ? form.expiration_date : "",
+      seo: !!form.seo_attributes,
+      deepLink: !!form.is_deep_linking,
+      category: selectedItems.categories ? selectedItems.categories : []
     }
 
-    let method = "post";
-    let url = "banner";
-
-    let value = {
-      ...form,
-      image: images,
-      category_id: selectedItems?.categories,
-      subCategory: selectedItems?.subCategories,
-      subChildCategory: selectedItems?.subSubCategories,
-    };
-
-    if (form?.access_type === "private") {
-      value[
-        "destination_url"
-      ] = `${form?.destination_url}?fp_sid=${form?.affiliate_id}`;
+    if (
+      !jsonData.linkName ||
+      !jsonData.destinationUrl ||
+      !jsonData.startDate ||
+      !jsonData.endDate ||
+      jsonData.category.length === 0
+    ) {
+      setSubmitted(true);
+      return;
     }
 
-    if (!value?.seo_attributes) {
-      delete value?.seo_attributes;
-    }
+    let method = form.id ? "put" : "post";
+    let url = form.id ? "link/generate/update" : "link/generate/add";
 
-    if (!value?.image) {
-      delete value?.image;
-    }
+    if (!jsonData.description) delete jsonData.description;
 
-    delete value.status;
-    if (value.id) {
-      method = "put";
-      url = "banner";
-    } else {
-      delete value.id;
-    }
-
-    delete value.confirmPassword;
     loader(true);
-    ApiClient.allApi(url, value, method).then((res) => {
+
+    ApiClient.allApi(url, jsonData, method).then((res) => {
       if (res.success) {
         toast.success(res.message);
-        let url = "/banners";
-        if (role) url = "/banners/" + role;
-        history.push(url);
+        history.push("/textlinks");
       }
       loader(false);
+    }).catch(error => {
+      loader(false);
+      toast.error("Error submitting form");
+      console.error("Submission error:", error);
     });
   };
 
@@ -201,29 +181,29 @@ const AddEditUser = () => {
 
     if (id) {
       loader(true);
-      ApiClient.get("banner", { id }).then((res) => {
+      ApiClient.get("link/generate/detail", { id }).then((res) => {
         if (res.success) {
           let value = res.data;
           setDetail(value);
           setform({
             id: value?.id || value?._id,
-            title: value?.title,
-            destination_url: `${value?.destination_url}`,
+            title: value?.linkName,
+            destination_url: `${value?.destinationUrl}`,
             description: value?.description,
-            seo_attributes: value?.seo_attributes,
+            seo_attributes: value?.seo,
             access_type: value?.access_type,
             affiliate_id: value?.affiliate_id,
             // "category_id": value?.category_id?.id,
-            activation_date: new Date(value?.activation_date),
+            activation_date: new Date(value?.startDate),
             // availability_date: new Date(value?.availability_date),
-            expiration_date: new Date(value?.expiration_date),
+            expiration_date: new Date(value?.endDate),
             image: value?.image,
             is_animation: value?.is_animation,
             is_deep_linking: value?.is_deep_linking,
             mobile_creative: value?.mobile_creative,
           });
           setSelectedItems({
-            categories: value?.category_id,
+            categories: value?.category?.map((dat)=>dat?.id),
             subCategories: value?.subCategory,
             subSubCategories: value?.subChildCategory,
           });

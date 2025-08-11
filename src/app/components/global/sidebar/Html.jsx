@@ -646,6 +646,20 @@ const Html = ({
                   </ListItemLink>
                 )}
 
+                <ListItemLink to="/textlinks" title="Text Links">
+                  <i
+                    className="material-icons  svg_iconbx"
+                    title="Text Links"
+                  >
+                    timeline
+                  </i>
+                  <span className="side_head">
+                    {user.role == "brand" || addedUser?.role == "brand"
+                      ? "Add Text Link"
+                      : "Text Links"}
+                  </span>
+                </ListItemLink>
+
                 <ListItemLink to="/coupons" title="Coupons">
                   <i
                     className="material-icons  svg_iconbx"

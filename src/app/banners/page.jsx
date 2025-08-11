@@ -39,7 +39,7 @@ const banneres = () => {
         }else{
             filter = { ...filters, ...p, affiliate_id: user?.id }
         }
-        let url = 'link/generate/listing'
+        let url = 'banners'
         ApiClient.get(url, filter).then(res => {
             if (res.success) {
                 setData(res?.data?.data)
@@ -116,7 +116,7 @@ const banneres = () => {
           }).then((result) => {
             if (result.isConfirmed) {
             // loader(true)
-            ApiClient.delete('link/generate/delete', {id: id }).then(res => {
+            ApiClient.delete('banner', {id: id }).then(res => {
                 if (res.success) {
                     toast.success(res.message)
                     clear()

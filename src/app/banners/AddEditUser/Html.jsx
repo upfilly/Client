@@ -38,7 +38,7 @@ const Html = ({
   const user = crendentialModel.getUser();
 
   const getCategory = () => {
-    let url = `categoryWithSub?page&count&search&cat_type=advertiser_categories&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=creative_assets&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data.data

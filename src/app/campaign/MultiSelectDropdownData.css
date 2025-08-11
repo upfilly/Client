@@ -418,4 +418,16 @@ input#selectAll {
     background: #89c2ff !important;
 } 
 
+.no-subcategory-item {
+  padding: 0px 12px;
+  margin: 4px;
+  cursor: default;
+}
+
+.no-subcategory-item label {
+  cursor: default;
+  margin: 8px;
+  pointer-events: none;
+}
+
 

@@ -13,10 +13,10 @@ const Detail = (p) => {
     const user = crendentialModel.getUser()
     const { id } = useParams()
     const [data, setData] = useState()
-    
+
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`banner`, { id: did }).then(res => {
+        ApiClient.get(`link/generate/detail`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
@@ -25,8 +25,8 @@ const Detail = (p) => {
     };
 
     const back = () => {
-        const searchParams = window.location.search;                
-        window.location.href = '/banners' + searchParams;
+        const searchParams = window.location.search;
+        window.location.href = '/textlinks' + searchParams;
     }
 
     useEffect(() => {
@@ -36,15 +36,15 @@ const Detail = (p) => {
     // Helper function to render categories with chips
     const renderCategories = (categories, maxItems = 3) => {
         if (!categories || !categories.length) return <span className="text-muted">-</span>;
-        
+
         const visibleItems = categories.slice(0, maxItems);
         const remainingCount = categories.length - maxItems;
-        
+
         return (
             <div className="category-chips">
-                {visibleItems.map(cat => (
-                    <span key={cat.id} className="category-chip">
-                        {methodModel.capitalizeFirstLetter(cat.name)}
+                {visibleItems.map((cat, index) => (
+                    <span key={index} className="category-chip">
+                        {typeof cat === 'object' ? methodModel.capitalizeFirstLetter(cat.name) : cat}
                     </span>
                 ))}
                 {remainingCount > 0 && (
@@ -56,6 +56,21 @@ const Detail = (p) => {
         );
     }
 
+    const extractDomainAndExt = (url) => {
+        if (!url) return { domain: 'example', ext: 'com' };
+
+        const cleanUrl = url.replace(/(https?:\/\/)?(www\.)?/, '');
+
+        const parts = cleanUrl.split('.');
+
+        const ext = parts.length > 2 ? parts.slice(-2).join('.') : parts.slice(-1)[0];
+        const domain = parts.length > 2 ? parts.slice(0, -2)[0] : parts[0];
+
+        return { domain, ext };
+    };
+
+    const { domain, ext } = extractDomainAndExt(data?.destinationUrl);
+
     return (
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
             <div className='sidebar-left-content'>
@@ -65,7 +80,7 @@ const Detail = (p) => {
                             <button onClick={back} className="btn btn-back me-3">
                                 <i className="fas fa-arrow-left" title='Back'></i>
                             </button>
-                            <h3 className="mb-0">Banner Details</h3>
+                            <h3 className="mb-0">Text Link Details</h3>
                         </div>
                     </div>
 
@@ -81,20 +96,26 @@ const Detail = (p) => {
                                                 <div className='row'>
                                                     <div className='col-md-6'>
                                                         <div className='detail-item'>
-                                                            <label>Title</label>
-                                                            <p>{data?.title ? methodModel.capitalizeFirstLetter(data.title) : '-'}</p>
+                                                            <label>Link Name</label>
+                                                            <p>{data?.linkName ? methodModel.capitalizeFirstLetter(data.linkName) : '-'}</p>
                                                         </div>
                                                     </div>
                                                     <div className='col-md-6'>
                                                         <div className='detail-item'>
-                                                            <label>SEO Attributes</label>
-                                                            <p>{data?.seo_attributes ? methodModel.capitalizeFirstLetter(data.seo_attributes) : '-'}</p>
+                                                            <label>SEO Enabled</label>
+                                                            <p>{data?.seo ? 'Yes' : 'No'}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-md-6'>
+                                                        <div className='detail-item'>
+                                                            <label>Deep Link</label>
+                                                            <p>{data?.deepLink ? 'Yes' : 'No'}</p>
                                                         </div>
                                                     </div>
                                                     <div className='col-md-6'>
                                                         <div className='detail-item'>
                                                             <label>Destination URL</label>
-                                                            <p className="text-truncate">{data?.destination_url || '-'}</p>
+                                                            <p className="text-truncate">{data?.destinationUrl || '-'}</p>
                                                         </div>
                                                     </div>
                                                     <div className='col-md-12'>
@@ -112,22 +133,10 @@ const Detail = (p) => {
                                             <div className='detail-section'>
                                                 <h5 className='section-title'>Categories</h5>
                                                 <div className='row'>
-                                                    <div className='col-md-4'>
+                                                    <div className='col-md-12'>
                                                         <div className='detail-item'>
-                                                            <label>Main Category</label>
-                                                            {data?.categoryData ? renderCategories(data.categoryData) : '-'}
-                                                        </div>
-                                                    </div>
-                                                    <div className='col-md-4'>
-                                                        <div className='detail-item'>
-                                                            <label>Sub Categories</label>
-                                                            {data?.subCategoryData ? renderCategories(data.subCategoryData, 5) : '-'}
-                                                        </div>
-                                                    </div>
-                                                    <div className='col-md-4'>
-                                                        <div className='detail-item'>
-                                                            <label>Sub Child Categories</label>
-                                                            {data?.childSubCategoryData ? renderCategories(data.childSubCategoryData, 5) : '-'}
+                                                            <label>Categories</label>
+                                                            {data?.category ? renderCategories(data.category) : '-'}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -139,59 +148,101 @@ const Detail = (p) => {
                                             <div className='detail-section'>
                                                 <h5 className='section-title'>Dates</h5>
                                                 <div className='row'>
-                                                    <div className='col-md-4'>
+                                                    <div className='col-md-6'>
                                                         <div className='detail-item'>
-                                                            <label>Activation Date</label>
-                                                            <p>{data?.activation_date ? datepipeModel.date(data.activation_date) : '-'}</p>
+                                                            <label>Start Date</label>
+                                                            <p>{data?.startDate ? datepipeModel.date(data.startDate) : '-'}</p>
                                                         </div>
                                                     </div>
-                                                    {/* <div className='col-md-4'>
+                                                    <div className='col-md-6'>
                                                         <div className='detail-item'>
-                                                            <label>Availability Date</label>
-                                                            <p>{data?.availability_date ? datepipeModel.date(data.availability_date) : '-'}</p>
+                                                            <label>End Date</label>
+                                                            <p>{data?.endDate ? datepipeModel.date(data.endDate) : '-'}</p>
                                                         </div>
-                                                    </div> */}
-                                                    <div className='col-md-4'>
+                                                    </div>
+                                                    <div className='col-md-6'>
                                                         <div className='detail-item'>
-                                                            <label>Expiration Date</label>
-                                                            <p>{data?.expiration_date ? datepipeModel.date(data.expiration_date) : '-'}</p>
+                                                            <label>Created At</label>
+                                                            <p>{data?.createdAt ? datepipeModel.date(data.createdAt) : '-'}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-md-6'>
+                                                        <div className='detail-item'>
+                                                            <label>Updated At</label>
+                                                            <p>{data?.updatedAt ? datepipeModel.date(data.updatedAt) : '-'}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Image Section */}
+                                        {/* Status Section */}
                                         <div className='col-12'>
                                             <div className='detail-section'>
-                                                <h5 className='section-title'>Banner Image</h5>
-                                                <div className='banner-image-container'>
-                                                    {data?.image ? (
-                                                        <img 
-                                                            src={methodModel.noImg(data.image)} 
-                                                            alt="Banner" 
-                                                            className="banner-image img-fluid"
-                                                        />
-                                                    ) : (
-                                                        <div className="no-image-placeholder">
-                                                            No Image Available
+                                                <h5 className='section-title'>Status</h5>
+                                                <div className='row'>
+                                                    <div className='col-md-6'>
+                                                        <div className='detail-item'>
+                                                            <label>Status</label>
+                                                            <p>{data?.status ? methodModel.capitalizeFirstLetter(data.status) : '-'}</p>
                                                         </div>
-                                                    )}
+                                                    </div>
+                                                    <div className='col-md-6'>
+                                                        <div className='detail-item'>
+                                                            <label>Deleted</label>
+                                                            <p>{data?.isDeleted ? 'Yes' : 'No'}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {/* Added By Section */}
+                                        {data?.addedBy && (
+                                            <div className='col-12'>
+                                                <div className='detail-section'>
+                                                    <h5 className='section-title'>Added By</h5>
+                                                    <div className='row'>
+                                                        <div className='col-md-6'>
+                                                            <div className='detail-item'>
+                                                                <label>Name</label>
+                                                                <p>{data.addedBy.fullName || '-'}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col-md-6'>
+                                                            <div className='detail-item'>
+                                                                <label>Email</label>
+                                                                <p>{data.addedBy.email || '-'}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col-md-6'>
+                                                            <div className='detail-item'>
+                                                                <label>Role</label>
+                                                                <p>{data.addedBy.role ? methodModel.capitalizeFirstLetter(data.addedBy.role) : '-'}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col-md-6'>
+                                                            <div className='detail-item'>
+                                                                <label>Website</label>
+                                                                <p>{data.addedBy.website || '-'}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Embed Code Section */}
                                         <div className='col-12'>
                                             <div className='detail-section'>
-                                                <h5 className='section-title ' >Embed Code</h5>
+                                                <h5 className='section-title'>Embed Code</h5>
                                                 <div className='embed-code-container'>
                                                     <pre className="embed-code">
-                                                        {`/* START ADVERTISER: WebHosting */\n`}
-                                                        {`<a href="${data?.destination_url || '#'}">\n`}
-                                                        {`  <img src="${data?.image ? methodModel.noImg(data.image) : '#'}" />\n`}
+                                                        {`/* START ADVERTISER: ${data?.linkName || 'Link'} */\n`}
+                                                        {`<a href="https://api.upfilly.com/link/affiliate_id=${user?.role == "affiliate" ? user?.id : "ID" || 'ID'}&url=${domain}&ext=${ext}" target="_blank">\n`}
+                                                        {`  ${data?.linkName || 'Link Text'}\n`}
                                                         {`</a>\n`}
-                                                        {`/* END ADVERTISER: WebHosting */`}
+                                                        {`/* END ADVERTISER: ${data?.linkName || 'Link'} */`}
                                                     </pre>
                                                 </div>
                                             </div>

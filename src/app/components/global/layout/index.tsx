@@ -85,7 +85,7 @@ export default function Layout({
     pathname.includes("/commission") ||
     pathname.includes("/payments") ||
     pathname.includes("/chat") ||
-    pathname.includes("/allowNotifications");
+    pathname.includes("/allowNotifications") || pathname.includes("textlinks");
 
   const isAuthenticate =
     pathname.includes("/reports") ||
