@@ -192,7 +192,7 @@ const Html = ({
                 onClick={() => copyToClipboard("csv")}
                 title="Copy CSV URL"
               >
-                {copied.csv ? "Copied!" : "Copy All"}
+                {copied.csv ? "Copied!" : selectedRows?.length ?  "Copy Selected"  : "Copy All"}
               </button>
             </div>
             <div className="export-group">
@@ -211,7 +211,7 @@ const Html = ({
                 onClick={() => copyToClipboard("xml")}
                 title="Copy XML URL"
               >
-                {copied.xml ? "Copied!" : "Copy All"}
+                {copied.xml ? "Copied!" : selectedRows?.length ?  "Copy Selected"  : "Copy All"}
               </button>
             </div>
           </div>
