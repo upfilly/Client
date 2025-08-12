@@ -435,3 +435,57 @@ table {
     margin-right: 6px;
   }
 }
+
+
+
+
+  ::-webkit-scrollbar {
+    width: 5px !important;
+    height: 8px !important;
+    background-color: #f1f1f1 !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #89c2ff !important;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #89c2ff !important;
+  }
+
+
+   .mc-campaign-dropdown ::-webkit-scrollbar {
+    width: 5px !important;
+    height: 8px !important;
+    background-color: #f1f1f1 !important;
+  }
+
+  .mc-campaign-dropdown ::-webkit-scrollbar-thumb {
+    background: #89c2ff !important;
+    border-radius: 20px;
+  }
+
+ .mc-campaign-dropdown ::-webkit-scrollbar-thumb:hover {
+    background: #89c2ff !important;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

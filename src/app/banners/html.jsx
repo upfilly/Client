@@ -61,6 +61,7 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
+       
         <div className="d-flex justify-content-md-end gap-2 flex-wrap align-items-center all_flexbx">
           <SelectDropdown
             theme="search"
@@ -88,7 +89,8 @@ const Html = ({
                   className="btn btn-primary mb-0 set_reset"
                   onClick={(e) => add()}
                 >
-                  Add Banner
+                     <i className="fa fa-plus mr-1"> </i> 
+                  Add Banner 
                 </a>
               </>
             )}

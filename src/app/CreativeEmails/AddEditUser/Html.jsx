@@ -249,7 +249,7 @@ const Html = () => {
                     <div className="d-flex align-items-baseline add_memeber_bx  mb-3">
                       <a onClick={() => router.back()}>
                         <i
-                          className="fa fa-arrow-left mr-3 left_arrows"
+                          className="fa fa-arrow-left mr-1 left_arrows"
                           title="Back"
                           aria-hidden="true"
                         ></i>

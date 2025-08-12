@@ -307,7 +307,7 @@ const Html = ({
         <div className="row">
           <div className="col-12 col-sm-12 col-md-12 col-lg-12">
             <div className="lists_marketplace">
-              <div className="set-border-top ">
+              <div className="set-border-top  gap-sm-3">
                 <div className="main_title_head d-flex justify-content-flex-start align-items-center">
                   <h3 className="">Campaign Management  </h3>
                 </div>

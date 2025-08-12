@@ -86,7 +86,10 @@ const Html = ({
                     <article className="d-flex filterFlex phView">
                         <>
                             {permission('commission_add')&&<a className="btn btn-primary mb-0 set_reset" onClick={e => add()}>
-                                Add Commission
+
+                                  <i className="fa fa-plus mr-1"> </i>
+
+                                Add Commission 
                             </a>}
                         </>
 

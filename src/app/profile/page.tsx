@@ -189,9 +189,11 @@ const Profile = () => {
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
       <div className="pprofile1  edit-profile-page">
-        <div className='container ' >
+        <div className='mx-5'>
           <div className='row'>
             <div className="col-12 col-sm-12 col-md-12  col-lg-12 px-0">
+
+
               <div className="form-row ">
                 <div className="col-12 col-sm-12 col-md-12  col-lg-4 ">
 
@@ -218,7 +220,7 @@ const Profile = () => {
 
                 </div>
                 {data?.activeUser?.id == Id ?
-                  <div className='col-12 col-sm-12 col-md-12  col-lg-8  '>
+                  <div className='col-12 col-sm-12 col-md-12  col-lg-8 '>
                     <div className='card p-3 rounded-3 mb-4 ' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
                         <div className='main_title_head d-flex align-items-center gap-3'>
@@ -824,6 +826,8 @@ const Profile = () => {
                 />}
 
               </div>
+
+
             </div>
 
           </div>

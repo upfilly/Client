@@ -13,19 +13,19 @@ const Html = ({ handleSubmit, back, category, handleToggle }) => {
       >
         <form onSubmit={handleSubmit}>
           <div className="pprofile1 mt-3">
-            <div className="d-flex align-items-center add_memeber_bx">
+            <div className="d-flex align-items-center gap-0 add_memeber_bx">
               <button
                 type="button"
                 onClick={(e) => back()}
                 className="btn btn-link text-decoration-none   p-0"
               >
                 <i
-                  className="fa fa-arrow-left left_arrows"
+                  className="fa fa-arrow-left left_arrows mr-0"
                   title="Back"
                   aria-hidden="true"
                 ></i>
               </button>
-              <h3 className="Profilehedding add_title ms-2">
+              <h3 className="Profilehedding add_title ms-1">
                 Email Notification Settings
               </h3>
             </div>

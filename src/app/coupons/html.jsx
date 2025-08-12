@@ -146,6 +146,8 @@ const Html = ({
                 className="btn btn-primary h-100 mb-0 set_reset"
                 onClick={(e) => add()}
               >
+
+                 <i className="fa fa-plus mr-1"> </i> 
                 Add Coupon
               </a>
             )}
