@@ -305,7 +305,7 @@ const Html = () => {
             <div className="card-body">
               <div className="container">
                 <div className="">
-                  <div className="d-flex gap-5 align-items-center mb-4 manual-commission-select-options ">
+                  <div className="d-flex gap-5 align-items-center mb-4 manual-commission-select-options  ">
                     <div className="form-check">
                       <input
                         className="form-check-input"
@@ -320,7 +320,8 @@ const Html = () => {
                         Single
                       </label>
                     </div>
-                    <div className="form-check">
+
+                    <div className="form-check pl-0">
                       <input
                         className="form-check-input"
                         type="radio"

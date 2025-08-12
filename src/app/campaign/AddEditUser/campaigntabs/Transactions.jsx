@@ -41,7 +41,7 @@ export default function Transactions({ formTransactionData, setFormTransactionDa
                 {/* Yes/No Radio Buttons */}
                 <div className="col-md-3">
                   <div className="d-flex gap-3">
-                    <div className="form-check">
+                    <div className="form-check  pl-4">
                       <input
                         type="radio"
                         id={`${label}-yes`}

@@ -41,7 +41,7 @@ export default function Deduplication({formData, setFormData,formFields}) {
                     {/* Yes/No Radio Buttons */}
                     <div className="col-lg-6 col-md-12">
                       <div className="d-flex gap-3">
-                        <div className="form-check">
+                        <div className="form-check  pl-4">
                           <input
                             className="form-check-input"
                             type="radio"

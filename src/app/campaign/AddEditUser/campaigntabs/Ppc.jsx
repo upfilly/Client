@@ -37,7 +37,7 @@ export default function Ppc({setFormPpcData,formPpcData,formPpcFields}) {
                   {/* Yes/No Radio Buttons */}
                   <div className="col-lg-3 col-md-6 mb-2 mb-lg-0">
                     <div className="d-flex gap-3">
-                      <div className="form-check">
+                      <div className="form-check  pl-4">
                         <input
                           className="form-check-input"
                           type="radio"
