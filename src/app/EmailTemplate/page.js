@@ -82,7 +82,7 @@ const GenerateLink = () => {
       filters = { after: moment(form?.acceptedDate).format("YYYY-MM-DD") };
     }
     ApiClient.get(url, filters).then((res) => {
-      if (res?.sucess) {
+      if (res?.success) {
         console.log(res, "sgdjhsdj");
         const data = res;
         const filteredData = data;
