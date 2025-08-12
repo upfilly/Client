@@ -6,6 +6,8 @@ import methodModel from "../../methods/methods";
 import datepipeModel from "@/models/datepipemodel";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from "next/navigation";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Html = ({
   view,
@@ -25,6 +27,10 @@ const Html = ({
   setFilter,
   filter,
   getData,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate
 }) => {
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -32,6 +38,32 @@ const Html = ({
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       filter();
+    }
+  };
+
+  function formatLocalDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+
+    const newFilters = {
+      ...filters,
+      startDate: start ? formatLocalDate(start) : "",
+      endDate: end ? formatLocalDate(end) : "",
+      page: 1
+    };
+
+    setFilter(newFilters);
+
+    if (start && end) {
+      getData(newFilters);
     }
   };
 
@@ -50,7 +82,7 @@ const Html = ({
 
   const renderCategories = (categories) => {
     if (!categories || categories.length === 0) return "--";
-    return categories.slice(0,2).map(cat => cat.name).join(", ");
+    return categories.slice(0, 2).map(cat => cat.name).join(", ");
   };
 
   return (
@@ -81,6 +113,19 @@ const Html = ({
             ]}
           />
 
+          <div className="datepicker-dropdown-wrapper">
+            <DatePicker
+              className="datepicker-field"
+              selected={startDate}
+              onChange={onChange}
+              startDate={startDate}
+              endDate={endDate}
+              showIcon
+              placeholderText="Date Range"
+              selectsRange
+            />
+          </div>
+
           <article className="d-flex filterFlex phView">
             {(user?.role == "brand" || permission("textlink_add")) && (
               <>
@@ -93,7 +138,7 @@ const Html = ({
               </>
             )}
 
-            {filters.status ? (
+            {(filters.status || startDate) ? (
               <>
                 <a className="btn btn-primary" onClick={(e) => reset()}>
                   Reset

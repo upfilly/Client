@@ -19,16 +19,24 @@ const banneres = () => {
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [loaging, setLoader] = useState(true)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const history=useRouter()
     const searchParams = useSearchParams();
     const params = Object.fromEntries(searchParams.entries());
     
     useEffect(() => {
         if (user) {
-            setFilter({ ...filters ,page: 1 ,...params})
-            getData({role, page: 1 ,...params})
+            setFilter({ ...filters, page: 1, ...params })
+            setStartDate(params.startDate && params.startDate !== "null"
+                ? new Date(params.startDate)
+                : null);
+            setEndDate(params.endDate && params.endDate !== "null"
+                ? new Date(params.endDate)
+                : null);
+            getData({ role, page: 1, ...params })
         }
-    }, [role])
+    }, [])
 
 
     const getData = (p = {}) => {
@@ -172,13 +180,17 @@ const banneres = () => {
 
 
     const reset=()=>{
-        let filter={
+        let filter = {
             status: '',
-            role:'',
-            search:'',
-             page: 1,
-             count:10
+            role: '',
+            search: '',
+            startDate:null,
+            endDate:null,
+            page: 1,
+            count: 10
         }
+        setStartDate(null);
+        setEndDate(null);
         setFilter({ ...filters,...filter })
         getData({ ...filter })
         history.push("/textlinks")
@@ -225,6 +237,10 @@ const banneres = () => {
         user={user}
         statusChange={statusChange}
         getData={getData}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
     />
     </>;
 };
