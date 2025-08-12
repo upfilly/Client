@@ -28,55 +28,62 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
     if (searchTerm) {
       const newFilteredData = {};
       const newExpandedCategories = {};
-      const lowerSearchTerm = searchTerm.toLowerCase();
+      const lowerSearchTerm = searchTerm.toLowerCase().trim();
 
-      // First pass: find exact matches at start of words
       Object.keys(data).forEach(region => {
         const regionLower = region.toLowerCase();
-        const startsWithMatch = regionLower.startsWith(lowerSearchTerm);
+        const regionMatches = regionLower.includes(lowerSearchTerm);
 
+        // Filter countries that match the search term
         const matchingCountries = data[region].filter(country => {
           const countryLower = country.toLowerCase();
-          return countryLower.startsWith(lowerSearchTerm) ||
-            countryLower.includes(lowerSearchTerm);
-        }).sort((a, b) => {
-          // Sort countries that start with search term first
-          const aStartsWith = a.toLowerCase().startsWith(lowerSearchTerm);
-          const bStartsWith = b.toLowerCase().startsWith(lowerSearchTerm);
-
-          if (aStartsWith && !bStartsWith) return -1;
-          if (!aStartsWith && bStartsWith) return 1;
-          return a.localeCompare(b); // alphabetical if same match type
+          return countryLower.includes(lowerSearchTerm);
         });
 
-        if (startsWithMatch || matchingCountries.length > 0) {
-          newFilteredData[region] = matchingCountries.length > 0 ? matchingCountries : data[region];
+        // Sort matching countries - exact matches and starts-with matches first
+        matchingCountries.sort((a, b) => {
+          const aLower = a.toLowerCase();
+          const bLower = b.toLowerCase();
+
+          const aExact = aLower === lowerSearchTerm;
+          const bExact = bLower === lowerSearchTerm;
+          const aStartsWith = aLower.startsWith(lowerSearchTerm);
+          const bStartsWith = bLower.startsWith(lowerSearchTerm);
+
+          if (aExact && !bExact) return -1;
+          if (!aExact && bExact) return 1;
+          if (aStartsWith && !bStartsWith) return -1;
+          if (!aStartsWith && bStartsWith) return 1;
+
+          return a.localeCompare(b);
+        });
+
+        // Include region if it matches or has matching countries
+        if (regionMatches || matchingCountries.length > 0) {
+          newFilteredData[region] = matchingCountries;
           newExpandedCategories[region] = true;
         }
       });
 
-      // Second pass: find any matches (not just at start) for regions that didn't match yet
-      Object.keys(data).forEach(region => {
-        const regionLower = region.toLowerCase();
-        if (!newFilteredData[region] && regionLower.includes(lowerSearchTerm)) {
-          newFilteredData[region] = data[region].filter(country =>
-            country.toLowerCase().includes(lowerSearchTerm)
-          ).sort((a, b) => a.localeCompare(b));
-          newExpandedCategories[region] = true;
-        }
-      });
-
-      // Sort regions - those that start with search term first
+      // Sort regions - exact matches, then starts-with matches, then others
       const sortedRegions = Object.keys(newFilteredData).sort((a, b) => {
-        const aStartsWith = a.toLowerCase().startsWith(lowerSearchTerm);
-        const bStartsWith = b.toLowerCase().startsWith(lowerSearchTerm);
+        const aLower = a.toLowerCase();
+        const bLower = b.toLowerCase();
 
+        const aExact = aLower === lowerSearchTerm;
+        const bExact = bLower === lowerSearchTerm;
+        const aStartsWith = aLower.startsWith(lowerSearchTerm);
+        const bStartsWith = bLower.startsWith(lowerSearchTerm);
+
+        if (aExact && !bExact) return -1;
+        if (!aExact && bExact) return 1;
         if (aStartsWith && !bStartsWith) return -1;
         if (!aStartsWith && bStartsWith) return 1;
-        return a.localeCompare(b); // alphabetical if same match type
+
+        return a.localeCompare(b);
       });
 
-      // Create a new sorted filtered data object
+      // Create sorted filtered data object
       const sortedFilteredData = {};
       sortedRegions.forEach(region => {
         sortedFilteredData[region] = newFilteredData[region];
@@ -147,7 +154,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   };
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value.toLowerCase());
+    setSearchTerm(e.target.value);
   };
 
   const handleClearSearch = () => {
@@ -203,31 +210,37 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
       return <div className="no-results">No matching regions or countries found</div>;
     }
 
-    return Object.keys(displayData).map((region) => (
-      <div key={region} className="category-container">
-        <div className="dropdown-item">
-          <input
-            type="checkbox"
-            checked={selectedItems.regions.includes(region)}
-            onChange={(e) => handleSelection(region, null, e.target.checked)}
-          />
-          <label onClick={() => toggleCategory(region)}>
-            {region}
-            <span className="item-count">
-              ({selectedItems.countries.filter(c => data[region].includes(c)).length}/{data[region].length})
-            </span>
-          </label>
-        </div>
+    return Object.keys(displayData).map((region) => {
+      const regionCountries = displayData[region];
+      const hasVisibleCountries = regionCountries.length > 0;
 
-        {(expandedCategories[region] || searchTerm) && renderSubcategories(region, displayData[region])}
-      </div>
-    ));
+      return (
+        <div key={region} className="category-container">
+          <div className="dropdown-item">
+            <input
+              type="checkbox"
+              checked={selectedItems.regions.includes(region)}
+              onChange={(e) => handleSelection(region, null, e.target.checked)}
+            />
+            <label onClick={() => toggleCategory(region)}>
+              {region}
+              <span className="item-count">
+                ({selectedItems.countries.filter(c => data[region].includes(c)).length}/{data[region].length})
+              </span>
+            </label>
+          </div>
+
+          {((expandedCategories[region] || searchTerm) && hasVisibleCountries) &&
+            renderSubcategories(region, regionCountries)}
+        </div>
+      );
+    });
   };
 
   const renderSubcategories = (region, countries) => (
     <div className="subcategory-dropdown">
       {countries.map((country, index) => (
-        <div key={index} className="subcategory-container" style={{ marginLeft: "15px" }}>
+        <div key={`${region}-${country}-${index}`} className="subcategory-container" style={{ marginLeft: "15px" }}>
           <div className="ml-5">
             <input
               className="form-check-input"
@@ -265,7 +278,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
             e.stopPropagation();
             handleRemoveAll();
           }}>
-            
+
           </span>
         )}
       </span>
@@ -303,28 +316,6 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
                 Remove All Visible
               </span>
             </div>
-            {/* <div className="select-checkbox">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="selectAll"
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    handleAddAllVisible();
-                  } else {
-                    handleRemoveAllVisible();
-                  }
-                }}
-                checked={
-                  searchTerm
-                    ? selectedItems.regions.length === Object.keys(filteredData).length &&
-                      selectedItems.countries.length === Object.values(filteredData).flat().length
-                    : selectedItems.regions.length === Object.keys(data).length &&
-                      selectedItems.countries.length === Object.values(data).flat().length
-                }
-              />
-              <label htmlFor="selectAll">Select All Visible</label>
-            </div> */}
           </div>
 
           <div className="dropdown-content">
