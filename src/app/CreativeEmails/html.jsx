@@ -24,7 +24,7 @@ const Html = ({
     total,
     setFilter,
     filter,
-    user,startDate, setStartDate,endDate, setEndDate
+    user, startDate, setStartDate, endDate, setEndDate
 }) => {
     const history = useRouter()
     const [activeSidebar, setActiveSidebar] = useState(false)
@@ -38,8 +38,8 @@ const Html = ({
         let filter = {
             status: '',
             role: '',
-            startDate:'',
-            endDate:'',
+            startDate: '',
+            endDate: '',
             search: '',
             page: 1,
             count: 10
@@ -79,6 +79,8 @@ const Html = ({
                     {user?.role != 'affiliate' && <article className="d-flex filterFlex phView gap-2">
                         {isAllow('addAdmins') ? <>
                             <a className="btn btn-primary " onClick={e => add()}>
+
+                                <i className="fa fa-plus mr-1"> </i>
                                 Add Email
                             </a>
                         </> : <></>}
@@ -142,7 +144,7 @@ const Html = ({
                     </article>}
                 </div>
 
-              
+
 
                 <div className='table_section'>
                     <div className="table-responsive ">
@@ -180,7 +182,7 @@ const Html = ({
                                                     </h4>
                                                 </div>
                                             </div></td>*/}
-                                        <td className='table_dats'>{user?.role == "affiliate" ? itm?.brand_details?.fullName : itm?.subject}</td> 
+                                        <td className='table_dats'>{user?.role == "affiliate" ? itm?.brand_details?.fullName : itm?.subject}</td>
 
                                         {/* <td className="table_dats">
                                 {" "}

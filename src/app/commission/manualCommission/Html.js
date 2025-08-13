@@ -292,7 +292,7 @@ const Html = () => {
               <div className="main_title_head d-flex justify-content-between align-items-center">
                 <h3 className="link_default m-0">
                   <i
-                    className="fa-solid fa-arrow-left mr-3 link_icon"
+                    className="fa-solid fa-arrow-left mr-2 link_icon"
                     aria-hidden="true"
                     onClick={() =>
                       history.push("/commission/manualCommission/view")
@@ -303,7 +303,7 @@ const Html = () => {
               </div>
             </div>
             <div className="card-body">
-              <div className="container">
+              <div className="mx-2">
                 <div className="">
                   <div className="d-flex gap-5 align-items-center mb-4 manual-commission-select-options  ">
                     <div className="form-check">

@@ -64,7 +64,8 @@ const Html = ({
                     className="btn btn-primary ms-2 px-3"
                     onClick={(e) => add()}
                   >
-                    <i className="fa fa-plus mr-1"></i> Add
+                    <i className="fa fa-plus mr-1"> </i> 
+                    Add
                   </a>
                 )}
                 <SelectDropdown

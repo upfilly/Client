@@ -133,6 +133,7 @@ const Html = ({
                   className="btn btn-primary mb-0 set_reset"
                   onClick={(e) => add()}
                 >
+                   <i className="fa fa-plus mr-1"> </i> 
                   Add Text Links
                 </a>
               </>
