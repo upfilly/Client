@@ -1253,11 +1253,8 @@ textarea.form-control-chat {
     padding: 4px 10px;
     height: 33px !important;
     min-height: 33px;
-    /* Initial height */
     max-height: 250px !important;
-    /* Max height before scrolling */
     overflow-y: auto;
-    /* Enable vertical scroll after max height */
 }
 
 .terms-textarea textarea {
@@ -1297,7 +1294,7 @@ img#custom-img {
 }
 
 .shadowboxmodal .modal-content {
-    border-radius: 30px;
+    border-radius: 33px;
     border: 0px;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     padding: 0px !important;
@@ -1342,10 +1339,10 @@ img#custom-img {
     font-weight: 500;
 }
 
-
-// .new-group-members {
-//     border: 2px solid gray;
-// }
+.new-group-members {
+    border-bottom: 1px solid #e9ecef;
+    padding: 8px 15px;
+}
 
 .new-close-btn {
     border-radius: 50px !important;
@@ -1375,12 +1372,12 @@ img#custom-img {
     position: relative !important;
 }
 
-
 .new-edit-btn .new-edit-btn-icon {
     position: absolute;
-    right: 183px !important;
-    top: 65px !important;
-    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(100%, -12%);
+     z-index: 1;
     cursor: pointer;
 }
 
@@ -1388,21 +1385,9 @@ img#custom-img {
     cursor: pointer !important;
 }
 
-
-
-
-// @media screen and (max-width: 768px) {
-//     .new-edit-btn .new-edit-btn-icon {
-//         right: 15px; 
-//         top: 10px;   
-//     }
-// }
-
-
-@media screen and (max-width: 480px) {
-    .new-edit-btn .new-edit-btn-icon {
-        right: 84px !important;
-        top: 70px !important;
+.new-group-pop-up-input {
+    .form-control {
+        background-color: #F5F5F5;
     }
 }
 
@@ -1481,6 +1466,11 @@ img#custom-img {
     padding-right: 5px;
 }
 
+
+.create-group-popup {
+    direction: rtl;
+}
+
 .create-group-popup::-webkit-scrollbar {
     width: 5px !important;
     height: 8px !important;
@@ -1488,12 +1478,178 @@ img#custom-img {
 }
 
 .create-group-popup::-webkit-scrollbar-thumb {
-    background: #89c2ff !important;
+    background: #00BAFF !important;
+    height: 70px !important;
+    border-radius: 0 20px 20px 0 !important;
 }
 
 .create-group-popup::-webkit-scrollbar-thumb:hover {
     background: #89c2ff !important;
 }
+
+
+
+
+.new-group-members .creategroupimput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 22px;
+    border: 1px solid #DBDBDB;
+    border-radius: 3px;
+    background-color: #fff;
+    position: relative;
+}
+
+.new-group-members .creategroupimput:checked {
+    background-color: #00BAFF;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 width=%2224%22 height=%2224%22%3E%3Cpath d=%22M10 15l-3-3 1.41-1.41L10 12.17l5.59-5.59L17 7l-7 7z%22 fill=%22white%22/%3E%3C/svg%3E');
+    /* Checkmark icon */
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+// .new-group-members .inputinput {
+//   -webkit-appearance: none;  
+//   appearance: none;
+//   width: 20px;
+//   height: 20px;
+//   border: 2px solid #ccc;
+//   border-radius: 4px;
+//   background-color: #fff; 
+//   position: relative;  
+// }
+
+// .new-group-members .inputinput:checked {
+//   background-color: pink;  
+// }
+
+// .new-group-members .inputinput:checked::before {
+//   content: '✔';  
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   font-size: 12px;
+//   color: white;  
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1510,6 +1666,7 @@ img#custom-img {
     width: 100%;
     cursor: pointer;
     font-size: 15px;
+    justify-content: end;
 }
 
 .gorupinner img {
@@ -1529,6 +1686,8 @@ img#custom-img {
     justify-content: center !important;
     align-items: center !important;
     height: 40px !important;
+    line-height: 0px !important;
+    font-size: 17px;
 }
 
 
@@ -1678,4 +1837,24 @@ img#custom-img {
     font-size: 14px;
     margin-top: -10px;
     margin-bottom: 10px;
+}
+
+@media all and (min-width: 320px) and (max-width: 575px) {
+
+    .new-available-members p {
+        font-size: 15px;
+    }
+
+    .new-available-members .button {
+        width: 140px !important;
+    }
+
+    .new-modal-header .popup-heading {
+        font-size: 16px;
+    }
+
+    .shadowboxmodal .new-pop-up-cros-btn {
+        right: 33px;
+        top: 18px;
+    }
 }

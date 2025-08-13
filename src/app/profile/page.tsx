@@ -194,14 +194,15 @@ const Profile = () => {
             <div className="col-12 col-sm-12 col-md-12  col-lg-12 px-0">
 
 
-              <div className="form-row ">
-                <div className="col-12 col-sm-12 col-md-12  col-lg-4 ">
+
+              <div className="form-row justify-content-end ">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-4 ">
 
                   <div className="box_div mb-3">
                     <div className="user-profile_scroller ">
                       {assosiateUserData.map((itm: any) => {
 
-                        return <div>
+                        return <div className=''>
                           <label className="custom-radio m-0 mb-3 d-flex gap-2 align-items-center users_detialsbx" onClick={() => { handleSwitchUser(itm?.user_id); setRoles(itm?.role); setSwitchUser(itm) }}>
                             <div>
                               <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == Id ? true : false} />
@@ -219,9 +220,10 @@ const Profile = () => {
                   </div>
 
                 </div>
-                {data?.activeUser?.id == Id ?
+
+                {data?.activeUser?.id == Id ? <>
                   <div className='col-12 col-sm-12 col-md-12  col-lg-8 '>
-                    <div className='card p-3 rounded-3 mb-4 ' >
+                    <div className='card p-3 rounded-3 mb-0 inner-card-one' >
                       <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
                         <div className='main_title_head d-flex align-items-center gap-3'>
                           <h3 className=''>Basic Information </h3>
@@ -656,65 +658,74 @@ const Profile = () => {
 
                       </div>
                     </div>
-                    {user?.role == "affiliate" && <div className='card p-3 rounded-3 mb-4 ' >
-                      <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
-                        <div className='main_title_head'>
-                          <h3 className=''>Accounts</h3>
-                        </div>
-                        <div className='d-flex gap-3 align-items-center' >
-                          {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && !bankData?.bank_name && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
-                            <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
-                            Add Account
-                          </button>}
-                        </div>
-                      </div>
-
-                      {bankData?.bank_name && <div className="bank-details-container">
-                        <h2 className="bank-details-header">Bank Details</h2>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Bank Name:</span>
-                          <span className="bank-details-value">{bankData.bank_name}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Account Holder:</span>
-                          <span className="bank-details-value">{bankData.accountHolderName || 'N/A'}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Account Status:</span>
-                          <span className="bank-details-value">{bankData.accountStatus}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Account Number:</span>
-                          <span className="bank-details-value">XXXX-XXXX-{bankData.bankAccountNumber}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Routing Number:</span>
-                          <span className="bank-details-value">{bankData.routingNumber}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Country:</span>
-                          <span className="bank-details-value">{bankData.country}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Currency:</span>
-                          <span className="bank-details-value">{bankData.currency}</span>
-                        </div>
-                        <div className="bank-details-row">
-                          <span className="bank-details-label">Transfer Status:</span>
-                          <span className="bank-details-value">{bankData.transfer === 'inactive' ? 'Inactive' : 'Active'}</span>
-                        </div>
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDelete(bankData.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>}
-
-                      {!bankData?.bank_name && <div className="py-3 text-center">No Account Found
-                      </div>}
-                    </div>}
                   </div>
+
+                  
+                    <div className='col-sm-12 col-md-12 col-lg-8 col-xl-8'>
+                      {user?.role == "affiliate" &&
+                        <div className='card p-3 rounded-3 mb-4 inner-card-two  mt-3' >
+                          <div className="d-flex justify-content-between align-items-center flex-wrap  gap-3 basic_info ">
+                            <div className='main_title_head'>
+                              <h3 className=''>Accounts</h3>
+                            </div>
+                            <div className='d-flex gap-3 align-items-center' >
+                              {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && !bankData?.bank_name && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
+                                <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
+                                Add Account
+                              </button>}
+                            </div>
+                          </div>
+
+                          {bankData?.bank_name && <div className="bank-details-container">
+                            <h2 className="bank-details-header">Bank Details</h2>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Bank Name:</span>
+                              <span className="bank-details-value">{bankData.bank_name}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Account Holder:</span>
+                              <span className="bank-details-value">{bankData.accountHolderName || 'N/A'}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Account Status:</span>
+                              <span className="bank-details-value">{bankData.accountStatus}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Account Number:</span>
+                              <span className="bank-details-value">XXXX-XXXX-{bankData.bankAccountNumber}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Routing Number:</span>
+                              <span className="bank-details-value">{bankData.routingNumber}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Country:</span>
+                              <span className="bank-details-value">{bankData.country}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Currency:</span>
+                              <span className="bank-details-value">{bankData.currency}</span>
+                            </div>
+                            <div className="bank-details-row">
+                              <span className="bank-details-label">Transfer Status:</span>
+                              <span className="bank-details-value">{bankData.transfer === 'inactive' ? 'Inactive' : 'Active'}</span>
+                            </div>
+                            <button
+                              className="delete-button"
+                              onClick={() => handleDelete(bankData.id)}
+                            >
+                              Delete
+                            </button>
+                          </div>}
+
+                          {!bankData?.bank_name && <div className="py-3 text-center">No Account Found
+                          </div>}
+                        </div>}
+                    </div>
+                 
+
+
+                </>
                   :
                   <div className='col-12 col-sm-12 col-md-7  col-lg-8  '>
                     <div className='card p-3 rounded-3 ' >
@@ -825,7 +836,17 @@ const Profile = () => {
                   onEditProfile={() => history.push('/profile/edit')}
                 />}
 
-              </div>
+               </div>
+
+
+
+
+
+
+
+
+
+              
 
 
             </div>

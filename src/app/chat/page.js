@@ -1467,9 +1467,6 @@ export default function Chat() {
                   </div>
                 </div>
 
-
-
-
               ) : (
                 <div className="col-lg-7">
                   <div className="h600 text-center d-flex justify-content-center align-items-center">
@@ -1506,39 +1503,17 @@ export default function Chat() {
                 <div className="profile-edit-sec">
                   <div className="user-profile-edit">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <div className="text-center mb-3 upload-img-wrapper">
-                      <label className="">
+                      <label className="new-profile-img ">
                         <img
                           src={group.image || methodModel.userImg(group.image)}
-                          className="profileuserimg  new-profile-img  rounded-full"
+                          className="profileuserimg   rounded-full"
                           alt="Group preview"
                         />
                       </label>
 
-                      <div className="samebtn_width ">
+
+                      <div className="samebtn_width">
                         {picLoader ? (
                           <div className="text-success text-center top_loading">
                             Uploading...{" "}
@@ -1579,7 +1554,7 @@ export default function Chat() {
                               {/* {group.imag e ? "Change" : "Upload"} Image */}
                             </label>
 
-                   </div>
+                          </div>
                         )}
                         <div>
                           {group.image && (
@@ -1588,8 +1563,8 @@ export default function Chat() {
                               onClick={() => setGroup({ ...group, image: "" })}
                             >
 
-                                <p className="mb-0 remove-img">remove img</p>
-                            </label> 
+                              <p className="mb-0 remove-img">remove img</p>
+                            </label>
                           )}
                         </div>
                       </div>
@@ -1627,30 +1602,12 @@ export default function Chat() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   </div>
                 </div>
               </div>
 
               <div className="px-4">
-                <div className="groupnameadd">
+                <div className="groupnameadd new-group-pop-up-input">
                   <label for="name" className="group-label">Group Name</label>
                   <input
                     placeholder="Enter your Group Name"
@@ -1669,7 +1626,7 @@ export default function Chat() {
                 </div>
 
                 {/* Search input for affiliates */}
-                <div className="mt-3">
+                <div className="mt-3  new-group-pop-up-input">
                   <label for="name" className="group-label">Add Members</label>
                   <input
                     type="text"
@@ -1680,39 +1637,29 @@ export default function Chat() {
                   />
                 </div>
 
+                <div className="mb-2 new-available-members d-flex align-items-center gap-3 justify-content-center justify-content-sm-start " >
+
+                  <p>Available Members</p>
+                  <button className="button" type="btn">1 Selected</button>
+
+
+                </div>
+
                 <div className="mt-3 gorupinner create-group-popup">
+
                   <div>
-
-                    <div className="mb-2 new-available-members d-flex align-items-center gap-3" >
-                      <p>Available Members</p>
-
-                      <button className="button" type="btn">1 Selected</button>
-                    </div>
                     {filteredAffiliates.length > 0 ? (
                       filteredAffiliates.map((data, index) => (
 
                         <div
                           key={data.id}
-                          className="w-100 mb-3 d-flex pointer bb1_grey pb-2 align-items-center new-group-members"
+                          className="w-100 mb-3 d-flex pointer pb-2 align-items-center new-group-members"
                         >
-                          <label htmlFor={`affiliate-${data.id}`}>
-
-                            <img
-                              className="mr-2"
-                              width="40"
-                              src={data.image || "../../../assets/img/person.jpg"}
-                              alt={data.fullName}
-                            />
-
-
-
-                            {data.fullName}
-                          </label>
 
 
                           <input
                             id={`affiliate-${data.id}`}
-                            className="mr-3"
+                            className="mr-0 creategroupimput"
                             type="checkbox"
                             name="users"
                             value={data.id}
@@ -1721,6 +1668,22 @@ export default function Chat() {
                             )}
                             onChange={handleInputChange}
                           />
+
+
+
+
+
+
+                          <label htmlFor={`affiliate-${data.id}`}>
+                            {data.fullName}
+                            <img
+                              className="mr-2"
+                              width="40"
+                              src={data.image || "../../../assets/img/person.jpg"}
+                              alt={data.fullName}
+                            />
+
+                          </label>
                         </div>
 
                       ))

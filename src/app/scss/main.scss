@@ -2794,7 +2794,7 @@ p.checkbox-option-main {
 
 
 .profile-page-pl-none {
-  padding: 6px 0px !important;
+  padding: 6px 10px !important;
 }
 
 
@@ -4167,9 +4167,7 @@ p.checkbox-option-main {
 }
 
 @media (max-width: 992px) {
-  .user-profile_scroller {
-    max-height: 171px !important;
-  }
+
 
   .none_bx {
     display: block !important;
@@ -6139,7 +6137,6 @@ input.dateselect {
     width: 35% !important;
   }
 
-
 }
 
 
@@ -6192,6 +6189,10 @@ input.dateselect {
   .jobs_child-flex .position-relative {
     width: 100%;
   }
+
+  // .select-category {
+  //   width: 100% !important;
+  // }
 }
 
 @media all and (min-width: 320px) and (max-width: 575px) {
@@ -6284,7 +6285,7 @@ input.dateselect {
 
 
   .select-category {
-    width: 220px !important;
+    width: 100%;
   }
 
   .notification-page-heading {
@@ -6471,7 +6472,7 @@ input.dateselect {
   }
 
   .select-category {
-    width: 220px !important;
+    width: 100% !important;
   }
 
   .affilitate-top-dropdowns .all-campaign-dropdown {
@@ -6670,7 +6671,7 @@ input.dateselect {
 .property-type-card-wrapper {
   max-height: 600px !important;
   overflow-y: auto !important;
-  
+
 }
 
 
@@ -6691,17 +6692,24 @@ input.dateselect {
   }
 }
 
-  ::-webkit-scrollbar {
-    width: 5px !important;
-    height: 8px !important;
-    background-color: #f1f1f1 !important;
-  }
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #89c2ff !important;
-    border-radius: 20px;
-  }
+::-webkit-scrollbar-thumb {
+  background: #89c2ff !important;
+  border-radius: 20px;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #89c2ff !important;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #89c2ff !important;
+}
+
+
+
+
+
+
+

@@ -400,7 +400,7 @@ const Html = () => {
                     className="fa fa-bullhorn link_icon"
                     aria-hidden="true"
                   ></i>{" "}
-                  Default Links 
+                  Default Links  
                 </h3>
               </div>
             </div>
@@ -411,6 +411,7 @@ const Html = () => {
                     <label className="mb-2">
                       Select Affiliate<span className="star">*</span>
                     </label>
+
                     <select
                       className={`form-select mb-2 ${
                         errors.selectedBrand && "is-invalid"
@@ -426,6 +427,7 @@ const Html = () => {
                         </option>
                       ))}
                     </select>
+                    
                     {errors.selectedBrand && (
                       <div className="invalid-feedback d-block">
                         {errors.selectedBrand}
