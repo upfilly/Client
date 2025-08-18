@@ -13,7 +13,7 @@
 
 .persons-list li {
     list-style: none;
-    padding: 10px 0px;
+    padding: 10px 8px;
     border-bottom: 1px solid #efefef;
     margin: 10px 0;
     cursor: pointer;
@@ -77,9 +77,7 @@
 
 }
 
-.conversations .card {
-    border: 0;
-}
+
 
 .person-list-inner .btn-secondary:not(:disabled):not(.disabled).active,
 .person-list-inner .btn-secondary:not(:disabled):not(.disabled):active,
@@ -97,7 +95,11 @@
 
 .chat-section {
     border: 1px solid #E2E2E2;
+   
+    // background-color: violet;
     border-radius: 10px;
+    height: 100%;
+    // max-height: 100vh;
 }
 
 .chat-body-detail li {
@@ -156,10 +158,10 @@
 .chat-body-detail {
     padding: 30px;
     margin: 0;
-    max-height: 350px;
+    // max-height: 350px;
     overflow-y: auto;
-    height: 100%;
-    min-height: 350px;
+    // height: 100%;
+    min-height: 100vh;
 }
 
 .no-data-chat {
@@ -216,7 +218,11 @@
 // }
 
 .chat-bg {
-    margin: 30px 0 0 0;
+    // margin: 30px 0 0 0;
+    padding: 30px 0px 30px 0px;
+    min-height: 100vh;
+    // background-color: green;
+ 
 }
 
 .fs12 {
@@ -422,10 +428,12 @@ button.p-0.dropdown-toggle.btn:hover {
 }
 
 .persons-list {
-    max-height: 299px;
+    // max-height: 299px;
+    max-height: 100vh;
     overflow-y: auto;
     height: 100%;
     padding: 0;
+
 }
 
 .persons-list::-webkit-scrollbar {
@@ -701,6 +709,13 @@ li.b-bottom:hover .b-none {
     padding: 15px;
     margin: 0;
     border-radius: 10px;
+    min-height: 100vh;
+    // background-color: lightgray;
+}
+
+.conversations .card {
+    border: 0;
+    // background-color: red;
 }
 
 // html,

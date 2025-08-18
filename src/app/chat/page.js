@@ -723,13 +723,13 @@ export default function Chat() {
       <Layout title="Chat" description="Chat" name={"Chats"}>
         <div className="px-2 chat-bg-main">
           <div className="chat-bg">
-            <div className="row">
+            <div className="row h-100">
               <div className="col-lg-5">
 
 
                 {/* original all chata */}
-                <div className="conversations mb-4 d-none d-lg-block">
-                  <div className="card p-0">
+                <div className="conversations mb-4 d-none d-lg-block  h-100">
+                  <div className="card p-2 h-100">
                     <div className="card-header pl-0 pr-0 p-0 d-flex justify-content-between align-items-center" id="headingOne">
                       <div className="pointer">
                         <h3 class="about_head mb-0">
@@ -738,7 +738,7 @@ export default function Chat() {
                             onClick={() => router.back()}
                             className="fa  fa-angle-left mr-1"
                           ></i>{" "}
-                          All Chats {" "}
+                          All Chats  {" "}
                         </h3>
                       </div>
                       <div className="msg_info  hide_icon_Group b-none">
@@ -753,7 +753,7 @@ export default function Chat() {
                       </div>
                     </div>
 
-                    <div className="card-body p-0">
+                    <div className="card-body h-100 p-0 ">
                       <div className="search_chat">
                         {/* <form method="get"> */}
                         <div
@@ -931,14 +931,14 @@ export default function Chat() {
 
 
 
-                <div className="offcanvas offcanvas-start d-lg-none " data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div className="offcanvas offcanvas-start d-lg-none" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                   <div className="offcanvas-header d-flex justify-content-end">
 
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                   <div class="offcanvas-body">
 
-                    <div className="conversations mb-4 d-block  d-lg-none ">
+                    <div className="conversations mb-4 d-block  d-lg-none">
                       <div className="card p-3">
 
                         <div className="card-body p-0">
