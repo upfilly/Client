@@ -647,10 +647,7 @@ const Html = ({
                 )}
 
                 <ListItemLink to="/textlinks" title="Text Links">
-                  <i
-                    className="material-icons  svg_iconbx"
-                    title="Text Links"
-                  >
+                  <i className="material-icons  svg_iconbx" title="Text Links">
                     timeline
                   </i>
                   <span className="side_head">
@@ -884,26 +881,36 @@ const Html = ({
 
                 {user &&
                   (user?.role == "brand" || addedUser?.role == "brand") && (
-                    <ListItemLink to="/performance" title="Performance">
+                    <ListItemLink
+                      to="/performance"
+                      title="Affiliate Performance"
+                    >
                       <i class="material-icons  svg_iconbx">insights</i>
-                      <span className="side_head">Performance Chart</span>
+                      <span className="side_head">Affiliate Performance</span>
                     </ListItemLink>
                   )}
 
                 {(user?.role == "brand" || addedUser?.role == "brand") && (
-                  <ListItemLink to="/reports" title="Campaign Report">
+                  <ListItemLink to="/reports" title="Campaign Overview">
                     <i class="material-icons  svg_iconbx">stacked_line_chart</i>
-                    <span className="side_head">Campaign Reports</span>
+                    <span className="side_head">Campaign Overview</span>
                   </ListItemLink>
                 )}
               </div>
             </>
           }
 
-           {urlAllow("commissionspayments") && <ListItemLink to="/payments" title="Payments">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
-            <span className="side_head">Payments</span>
-          </ListItemLink>}
+          {urlAllow("commissionspayments") && (
+            <ListItemLink to="/payments" title="Payments">
+              <i
+                className="material-icons  svg_iconbx"
+                title="campaignManagement"
+              >
+                recent_actors
+              </i>
+              <span className="side_head">Payments</span>
+            </ListItemLink>
+          )}
 
           {/* {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" title="Campaign">
             <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
