@@ -21,7 +21,7 @@ ChartJS.register(
   PointElement
 );
 
-const LineChart = ({ data,convertedCurrency,exchangeRate}) => {
+const LineChart = ({ data, convertedCurrency, exchangeRate }) => {
   const monthNumberToName = (month) => {
     const months = [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -46,6 +46,8 @@ const LineChart = ({ data,convertedCurrency,exchangeRate}) => {
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -53,8 +55,7 @@ const LineChart = ({ data,convertedCurrency,exchangeRate}) => {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
-            return !exchangeRate ? `$${tooltipItem.parsed.y.toFixed(2)}` :`${convertedCurrency(tooltipItem.parsed.y.toFixed(2))}`;
-            // return `$${tooltipItem.parsed.y.toFixed(2)}`;
+            return !exchangeRate ? `$${tooltipItem.parsed.y.toFixed(2)}` : `${convertedCurrency(tooltipItem.parsed.y.toFixed(2))}`;
           },
         },
       },
@@ -67,14 +68,18 @@ const LineChart = ({ data,convertedCurrency,exchangeRate}) => {
         beginAtZero: true,
         ticks: {
           callback: function (value) {
-            return !exchangeRate ? `$${value}` :`${convertedCurrency(value)}`;
+            return !exchangeRate ? `$${value}` : `${convertedCurrency(value)}`;
           },
         },
       },
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return (
+    <div style={{ height: '413px' }}>
+      <Line data={chartData} options={options} />
+    </div>
+  );
 };
 
 export default LineChart;

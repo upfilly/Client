@@ -81,7 +81,7 @@ const Html = ({
     if (!AffiliateDataId) {
       filter = { ...filters, ...p, brand_id: user?.id }
     } else {
-      filter = { ...filters, ...p,brand_id:user?.id||user?._id, affiliate_id: AffiliateDataId.map((itm) => itm).join(",").toString() }
+      filter = { ...filters, ...p, brand_id: user?.id || user?._id, affiliate_id: AffiliateDataId.map((itm) => itm).join(",").toString() }
     }
 
     ApiClient.get(url, filter).then(res => {
@@ -129,8 +129,8 @@ const Html = ({
               <div className="accordion-body">
                 <div className="program_bx">
                   <div className="row">
-                    <div className="col-12 col-sm-6">
-                      <div className="selectbx1 mc-campaign-dropdown">
+                    <div className="col-12 col-sm-4">
+                      <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -141,8 +141,8 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6">
-                      <div className="selectbx1 mc-campaign-dropdown">
+                    <div className="col-12 col-sm-4">
+                      <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <SelectDropdown
                           theme='search'
                           id="currencyDropdown"
@@ -154,9 +154,9 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6">
-                      <div className="selectbx1">
-                        <div className="form-group">
+                    <div className="col-12 col-sm-4">
+                      <div className="selectbx1 mb-0">
+                        <div className="form-group mb-0">
                           <DatePicker
                             showIcon
                             className="date-picker form-control"
@@ -183,9 +183,19 @@ const Html = ({
             </div>
           </div>
         </div>
-        <div className=" graph_charts ">
-          <LineChart data={analyticData?.data?.[0]} convertedCurrency={convertedCurrency} exchangeRate={exchangeRate}/>
+
+        <div className="graph_charts">
+          <div className='graph-chart-line-chart'>
+            <LineChart
+              data={analyticData?.data?.[0]}
+              convertedCurrency={convertedCurrency}
+              exchangeRate={exchangeRate}
+            />
+          </div>
         </div>
+
+
+
       </div>
     </Layout>
   );

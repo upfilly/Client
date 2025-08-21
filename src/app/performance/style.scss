@@ -164,14 +164,34 @@ input[type=number] {
   
   }
 
-  .graph_charts {     
-    width: 100%;
-    border: 1px solid #dfe2e6;
-    overflow: hidden;
-    border-radius: 7px;
-    margin-top: 21px;
-    background-color: #f9f9f9;
+.graph_charts {     
+  width: 100%;
+  border: 1px solid #dfe2e6;
+  overflow: hidden;
+  border-radius: 7px;
+  margin-top: 21px;
+  background-color: #f9f9f9;
+
 }
+
+.graph-chart-line-chart {
+  width: 100%;   
+  position: relative; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .accordion-item {
     border: 1px solid #ddd; /* Light border around the accordion */
