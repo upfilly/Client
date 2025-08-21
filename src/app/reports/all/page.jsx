@@ -50,7 +50,7 @@ export default function AnalyticsDashboard() {
   const [CampaignData, setCamapign] = useState([]);
   const [campaignId, setCampaignId] = useState([]);
 
-  console.log(baseDates, "basedate");
+  console.log(affiliateData, "affiliateData");
 
   const dateRange = {
     selection1: {
@@ -131,14 +131,17 @@ export default function AnalyticsDashboard() {
 
   const getData = (p = {}) => {
     let url = "campaign/affiliate";
-    ApiClient.get(url, { campaign: campaignId?.map((dat) => dat).join(",") }).then((res) => {
+    ApiClient.get(url, {
+      campaign: campaignId?.map((dat) => dat).join(","),
+    }).then((res) => {
       if (res.success) {
         const data = res.data;
-        const filteredData = data.affiliateFetch?.filter((item) => item !== null);
-        const uniqueData = filteredData?.filter((item, index, self) =>
-          index === self.findIndex((t) => (
-            t.id === item.id
-          ))
+        const filteredData = data.affiliateFetch?.filter(
+          (item) => item !== null
+        );
+        const uniqueData = filteredData?.filter(
+          (item, index, self) =>
+            index === self.findIndex((t) => t.id === item.id)
         );
         setAffiliateData(uniqueData);
       } else {
@@ -216,7 +219,6 @@ export default function AnalyticsDashboard() {
   }, [selectedAffiliate, selectedBrand, campaignId]);
 
   const ApplyDateFilter = () => {
-    
     // Ensure compDates are valid when switching from "none" to another period
     let effectiveCompDates = compDates;
     if (comparisonPeriod !== "none" && (!compDates[0] || !compDates[1])) {
@@ -312,7 +314,6 @@ export default function AnalyticsDashboard() {
         </aside>
 
         <main className="main-content p-2 md-p-0 ">
-
           <div className="custom-dropdown  position-relative ">
             <div className="dropdown-item  date-picker-dropdown">
               <span
@@ -321,25 +322,25 @@ export default function AnalyticsDashboard() {
                 onBlur={() => setHandleDateFilter(false)}
               >
                 {baseDates?.[0] ||
-                  baseDates?.[1] ||
-                  compDates?.[0] ||
-                  compDates?.[1]
+                baseDates?.[1] ||
+                compDates?.[0] ||
+                compDates?.[1]
                   ? comparisonPeriod == "none"
                     ? `${moment(baseDates?.[0]).format(
-                      "MMMM DD, YYYY"
-                    )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
+                        "MMMM DD, YYYY"
+                      )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
                     : `${moment(baseDates?.[0]).format(
-                      "MMMM DD, YYYY"
-                    )} - ${moment(baseDates?.[1]).format(
-                      "MMMM DD, YYYY"
-                    )} ⇆ ${moment(compDates?.[0]).format(
-                      "MMMM DD, YYYY"
-                    )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
+                        "MMMM DD, YYYY"
+                      )} - ${moment(baseDates?.[1]).format(
+                        "MMMM DD, YYYY"
+                      )} ⇆ ${moment(compDates?.[0]).format(
+                        "MMMM DD, YYYY"
+                      )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
                   : "Select Date Range"}
               </span>
 
-               <div className="controls mt-0 single-date-picker-wrapper">
-            {/* {handleDateFilter && (
+              <div className="controls mt-0 single-date-picker-wrapper">
+                {/* {handleDateFilter && (
                             <DateRangePicker
                                 onChange={item => setState({ ...state, ...item })}
                                 showSelectionPreview={true}
@@ -360,21 +361,20 @@ export default function AnalyticsDashboard() {
                                 }}
                             />
                         )} */}
-            {handleDateFilter && (
-              <CustomDatePicker
-                baseDates={baseDates}
-                setBaseDates={setBaseDates}
-                compDates={compDates}
-                setCompDates={setCompDates}
-                setHandleDateFilter={setHandleDateFilter}
-                ApplyDateFilter={ApplyDateFilter}
-                comparisonPeriod={comparisonPeriod}
-                setComparisonPeriod={setComparisonPeriod}
-              />
-            )}
-                </div>
+                {handleDateFilter && (
+                  <CustomDatePicker
+                    baseDates={baseDates}
+                    setBaseDates={setBaseDates}
+                    compDates={compDates}
+                    setCompDates={setCompDates}
+                    setHandleDateFilter={setHandleDateFilter}
+                    ApplyDateFilter={ApplyDateFilter}
+                    comparisonPeriod={comparisonPeriod}
+                    setComparisonPeriod={setComparisonPeriod}
+                  />
+                )}
+              </div>
             </div>
-
 
             <div className="dropdown-item mc-campaign-dropdown">
               <SelectDropdown
@@ -388,8 +388,7 @@ export default function AnalyticsDashboard() {
               />
             </div>
 
-
-            <div className="dropdown-item mc-campaign-dropdown " >
+            <div className="dropdown-item mc-campaign-dropdown ">
               <MultiSelectValue
                 id="statusDropdown"
                 displayValue="name"
@@ -415,7 +414,7 @@ export default function AnalyticsDashboard() {
               ) : (
                 <MultiSelectValue
                   id="statusDropdown"
-                  displayValue="fullName"
+                  displayValue="userName"
                   placeholder="Select Affiliate"
                   isClearable={true}
                   intialValue={selectedAffiliate}
@@ -424,10 +423,7 @@ export default function AnalyticsDashboard() {
                 />
               )}
             </div>
-
-
           </div>
- 
 
           <div className="reset-filters-container">
             {isFilterApplied() && (

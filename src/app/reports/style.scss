@@ -469,8 +469,18 @@ table {
  .mc-campaign-dropdown ::-webkit-scrollbar-thumb:hover {
     background: #89c2ff !important;
   }
-
-
+  .date-suggestions-dropdown{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+.suggestion-item{
+  display: flex;
+  gap: 2px;
+}
+.react-datepicker__month-container{
+  width: 300px;
+}
 
 
 

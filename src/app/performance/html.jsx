@@ -161,12 +161,6 @@ const Html = ({
         startDate = yesterday;
         endDate = yesterday;
         break;
-      case "Last Week":
-        startDate = new Date(today);
-        startDate.setDate(today.getDate() - today.getDay() - 7);
-        endDate = new Date(today);
-        endDate.setDate(today.getDate() - today.getDay() - 1);
-        break;
       case "Last Month":
         startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
         endDate = new Date(today.getFullYear(), today.getMonth(), 0);
@@ -290,7 +284,6 @@ const Html = ({
                                   {[
                                     "Today",
                                     "Yesterday",
-                                    "Last Week",
                                     "Last Month",
                                     "Last Year",
                                     "Current Month",
@@ -307,7 +300,7 @@ const Html = ({
                                       onClick={() => {
                                         if (period === "Custom") {
                                           setSelectedPeriod("Custom");
-                                          setShowDateSuggestions(false);
+                                          setShowDateSuggestions(true);
                                         } else {
                                           setDatePeriod(period);
                                         }
