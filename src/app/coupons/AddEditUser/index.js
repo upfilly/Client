@@ -26,6 +26,7 @@ const AddEditUser = () => {
     url: user?.website,
     couponCommission: "",
     status: "Enabled",
+    expireCheck: false,
   });
   console.log(user?.website, "user?.websiteuser?.website");
   const [campaignType, setCampaignType] = useState([]);
@@ -209,28 +210,27 @@ const AddEditUser = () => {
     if (!validateForm()) {
       return;
     }
-    // Validate all required fields
     const requiredFields = {
       title: "Title",
-      visibility: "Type", // Added type/visibility as required field
+      visibility: "Type",
       couponType: "Commission Type",
       startDate: "Start Date",
-      expirationDate: "Expiration Date",
       url: "Site URL",
     };
 
-    // Additional validation for Custom commission type
+    if (form.expireCheck) {
+      requiredFields.expirationDate = "Expiration Date";
+    }
+
     if (form?.couponType === "Custom") {
       requiredFields.commissionType = "Custom Commission Type";
       requiredFields.couponAmount = "Commission Value";
     }
 
-    // Validation for Private coupons
     if (form?.visibility === "Exclusive to specific affiliate") {
       requiredFields.media = "Affiliates";
     }
 
-    // Check for empty required fields
     const missingFields = Object.keys(requiredFields).filter(
       (field) =>
         !form[field] || (Array.isArray(form[field]) && form[field].length === 0)
@@ -244,13 +244,14 @@ const AddEditUser = () => {
       return;
     }
 
-    // Validate date range
-    if (new Date(form.expirationDate) < new Date(form.startDate)) {
+    if (
+      form.expireCheck &&
+      new Date(form.expirationDate) < new Date(form.startDate)
+    ) {
       toast.error("Expiration date must be after start date");
       return;
     }
 
-    // Validate commission value for percentage
     if (
       form?.commissionType === "Percentage Commission" &&
       form?.couponAmount > 100
@@ -259,7 +260,6 @@ const AddEditUser = () => {
       return;
     }
 
-    // Validate URL format
     try {
       new URL(form.url);
     } catch (e) {
@@ -267,7 +267,6 @@ const AddEditUser = () => {
       return;
     }
 
-    // Rest of your submission logic remains the same...
     let method = "post";
     let url = "coupon/add";
 
@@ -275,12 +274,14 @@ const AddEditUser = () => {
       ...form,
     };
 
-    // Convert media to string if it exists
+    if (!form.expireCheck) {
+      delete value.expirationDate;
+    }
+
     if (value?.media) {
       value = { ...value, media: value?.media?.value.toString() };
     }
 
-    // If visibility is Public, remove media
     if (form?.visibility === "Public") {
       delete value.media;
     }
@@ -290,7 +291,6 @@ const AddEditUser = () => {
       delete value.couponAmount;
     }
 
-    // Set status to 'Pending' if startDate is in the future
     const now = new Date();
     const startDate = new Date(form?.startDate);
     if (startDate > now) {
@@ -300,6 +300,7 @@ const AddEditUser = () => {
     if (value.id) {
       method = "put";
       url = "coupon/edit";
+      delete value?.expireCheck;
     } else {
       delete value.id;
     }
@@ -359,6 +360,15 @@ const AddEditUser = () => {
     }
   };
 
+  const handleExpiryCheckChange = (checked) => {
+    console.log(checked, "checked");
+    setform({
+      ...form,
+      expireCheck: checked,
+      expirationDate: checked ? form.expirationDate : "",
+    });
+  };
+
   useEffect(() => {
     setSubmitted(false);
 
@@ -384,33 +394,14 @@ const AddEditUser = () => {
             description: value?.description,
             title: value?.title,
             status: value?.status,
+            expireCheck: value?.expireCheck || false,
           });
           setImages(value?.image);
-          // let payload = { ...defaultvalue };
-          // let oarr = Object.keys(defaultvalue);
-
-          // oarr.forEach((itm) => {
-          //     if (itm === 'affiliate_id' && value[itm] && value[itm].id) {
-          //         payload[itm] = value[itm].id.toString();
-          //     } else {
-          //         payload[itm] = value[itm] || "";
-          //     }
-          // });
         }
         loader(false);
       });
     }
   }, [id]);
-
-  // const getData = () => {
-  //     let url = 'users/list'
-  //     ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
-  //         if (res.success) {
-  //             const data1 = res.data.data.filter(item => item.status === "active");
-  //             setAffiliateData(data1)
-  //         }
-  //     })
-  // }
 
   const getData = (p = {}) => {
     let url = "getallaffiliatelisting";
@@ -465,10 +456,6 @@ const AddEditUser = () => {
     getCampaignTypeData();
   }, []);
 
-  // const handleClick1 = () => {
-  //   setIsopen(!isOpen);
-  // };
-
   const handleClick1 = () => {
     if (isOpenstart) {
       dateRef1.current.blur();
@@ -519,6 +506,8 @@ const AddEditUser = () => {
         handleClick2={handleClick2}
         dateRef1={dateRef1}
         dateRef2={dateRef2}
+        handleExpiryCheckChange={handleExpiryCheckChange}
+        hasExpiryDate={form.expireCheck}
       />
     </>
   );

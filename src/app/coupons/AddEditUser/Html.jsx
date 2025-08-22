@@ -21,17 +21,20 @@ const Html = ({
   handleClick1,
   dateRef2,
   handleClick2,
+  handleExpiryCheckChange,
+  hasExpiryDate,
 }) => {
-  console.log(campaignType, "campaignType");
+  console.log(form, "form");
 
   const user = crendentialModel.getUser();
+  const isEditPage = form && form.id; 
 
-  const handleRemove = (valueToRemove) => {
-    const updatedValues = form?.applicable?.filter(
-      (value) => value !== valueToRemove
-    );
-    setform({ ...form, applicable: updatedValues });
-  };
+  // const handleRemove = (valueToRemove) => {
+  //   const updatedValues = form?.applicable?.filter(
+  //     (value) => value !== valueToRemove
+  //   );
+  //   setform({ ...form, applicable: updatedValues });
+  // };
 
   const filtered = category?.filter((item) =>
     form?.applicable?.includes(item?.id)
@@ -70,7 +73,7 @@ const Html = ({
                         aria-hidden="true"
                       ></i>
                     </a>
-                    {form && form.id ? "Edit" : "Add"} Coupon
+                    {isEditPage ? "Edit" : "Add"} Coupon
                   </h3>
                   <hr></hr>
                 </div>
@@ -343,30 +346,65 @@ const Html = ({
                       )}
                     </div>
                   </div>
-                  <div className="col-md-6 mb-3 main_input">
-                    <label>
-                      Expiry Date<span className="star">*</span>
-                    </label>
-                    <div className="position-relative">
-                      <input
-                        type="date"
-                        ref={dateRef2}
-                        onClick={handleClick2}
-                        className="width_full"
-                        min={form.startDate}
-                        value={form.expirationDate}
-                        onChange={(e) =>
-                          setform({ ...form, expirationDate: e.target.value })
-                        }
-                      />
-                    </div>
-                    {submitted && !form?.expirationDate ? (
-                      <div className="invalid-feedback d-block">
-                        Expiration Date is Required
+
+                  {/* Expiry Date Section */}
+                  <div className="col-md-6 mb-3">
+                    {/* Show checkbox only on Add page, not on Edit page */}
+                    {!isEditPage && (
+                      <div className="form-check mb-2">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id="hasExpiryDate"
+                          checked={hasExpiryDate}
+                          onChange={(e) =>
+                            handleExpiryCheckChange(e.target.checked)
+                          }
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="hasExpiryDate"
+                        >
+                          Set Expiry Date
+                        </label>
                       </div>
-                    ) : (
-                      <></>
                     )}
+
+                    {/* Show expiry date field if:
+                        1. On Edit page AND expireCheck is true
+                        2. On Add page AND checkbox is checked */}
+                    {(isEditPage && form.expireCheck) ||
+                    (!isEditPage && hasExpiryDate) ? (
+                      <div className="main_input">
+                        <label>
+                          Expiry Date
+                          {!isEditPage && <span className="star">*</span>}
+                        </label>
+                        <div className="position-relative">
+                          <input
+                            type="date"
+                            ref={dateRef2}
+                            onClick={handleClick2}
+                            className="width_full"
+                            min={form.startDate}
+                            value={form.expirationDate}
+                            onChange={(e) =>
+                              setform({
+                                ...form,
+                                expirationDate: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        {submitted && !form?.expirationDate ? (
+                          <div className="invalid-feedback d-block">
+                            Expiration Date is Required
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="col-md-6 mb-3">
