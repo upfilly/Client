@@ -5127,27 +5127,27 @@ input.mr-2.radio {
 
 // scrollbar
 
-.left_sidebar .top_scrollbx::-webkit-scrollbar {
-  width: 1px;
-}
+// .left_sidebar .top_scrollbx::-webkit-scrollbar {
+//   width: 1px;
+// }
 
-.left_sidebar .top_scrollbx::-webkit-scrollbar {
-  width: 1px;
-  height: 1px;
-}
+// .left_sidebar .top_scrollbx::-webkit-scrollbar {
+//   width: 1px;
+//   height: 1px;
+// }
 
-.left_sidebar .top_scrollbx::-webkit-scrollbar-thumb {
-  background: transparent;
-}
+// .left_sidebar .top_scrollbx::-webkit-scrollbar-thumb {
+//   background: transparent;
+// }
 
-.left_sidebar .top_scrollbx:hover::-webkit-scrollbar-thumb {
-  background: #78acff;
-}
+// .left_sidebar .top_scrollbx:hover::-webkit-scrollbar-thumb {
+//   background: #78acff;
+// }
 
-.left_sidebar .top_scrollbx::-webkit-scrollbar-track {
-  // background: #f1f1f1;
-  background-color: #ffffff;
-}
+// .left_sidebar .top_scrollbx::-webkit-scrollbar-track {
+
+//   background-color: #ffffff;
+// }
 
 //marketplace css
 .downarrow .icon_down_dir {
@@ -6027,6 +6027,9 @@ input.form-control {
     line-height: 1.7;
     display: block;
     width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -6707,9 +6710,17 @@ input.dateselect {
   background: #89c2ff !important;
 }
 
+.sidebar_main .left_sidebar .top_scrollbx ::-webkit-scrollbar {
+width: 5px !important;
+  height: 8px !important;
+  background-color: #f1f1f1 !important;
+}
 
+.sidebar_main .left_sidebar .top_scrollbx ::-webkit-scrollbar-thumb {
+ background: #89c2ff !important;
+  border-radius: 20px;
+}
 
-
-
-
-
+.sidebar_main .left_sidebar .top_scrollbx ::-webkit-scrollbar-thumb:hover {
+   background: #89c2ff !important;
+} 

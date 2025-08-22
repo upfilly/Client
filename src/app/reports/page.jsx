@@ -266,10 +266,12 @@ export default function CampaignReport() {
         filters={filters}
         hasActiveFilters={hasActiveFilters}
       >
-        <div className="sidebar-left-content">
-          <div className="nmain-list  mb-3 main_box pt-0">
-            <div className="select-campaing-heaidng">
-              <h3 className="campaign-header">Select Campaign</h3>
+        <div className='sidebar-left-content'>
+          <div className='nmain-list  mb-3 main_box pt-0'>
+            <div className='select-campaing-heaidng'>
+              <h3 class="campaign-header">
+                Select Campaign
+              </h3>
             </div>
 
             <div className="">

@@ -236,8 +236,8 @@ const Html = ({
               <div className="accordion-body">
                 <div className="program_bx">
                   <div className="row">
-                    <div className="col-12 col-sm-6">
-                      <div className="selectbx1 mc-campaign-dropdown">
+                    <div className="col-12 col-sm-4">
+                      <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <MultiSelectDropdown
                           id="statusDropdown"
                           displayValue="name"
@@ -250,8 +250,8 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6">
-                      <div className="selectbx1 mc-campaign-dropdown">
+                    <div className="col-12 col-sm-4">
+                      <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <SelectDropdown
                           theme="search"
                           id="currencyDropdown"
@@ -339,6 +339,26 @@ const Html = ({
                               </div>
                             </div>
                           )}
+                    <div className="col-12 col-sm-4">
+                      <div className="selectbx1 mb-0">
+                        <div className="form-group mb-0">
+                          <DatePicker
+                            showIcon
+                            className="date-picker form-control"
+                            monthsShown={1}
+                            shouldCloseOnSelect={true}
+                            selectsRange={true}
+                            placeholderText="Select Date Range"
+                            startDate={start}
+                            endDate={end}
+                            onChange={(update) => {
+                              setDateRange([update[0], update[1]]);
+                            }}
+                            isClearable
+                            maxDate={new Date()}
+                            // withPortal
+                            dateFormat={"dd/MM/yyyy"}
+                          />
                         </div>
                       </div>
                     </div>
@@ -359,14 +379,17 @@ const Html = ({
             </div>
           </div>
         </div>
-        <div className=" graph_charts ">
-          <LineChart
-            data={analyticData?.data?.[0]}
-            convertedCurrency={convertedCurrency}
-            exchangeRate={exchangeRate}
-          />
+
+        <div className="graph_charts">
+          <div className='graph-chart-line-chart'>
+            <LineChart
+              data={analyticData?.data?.[0]}
+              convertedCurrency={convertedCurrency}
+              exchangeRate={exchangeRate}
+            />
+          </div>
         </div>
-      </div>
+        </div></div></div></div>
     </Layout>
   );
 };
