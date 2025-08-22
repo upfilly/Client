@@ -105,6 +105,11 @@ const Html = ({
                         setform({ ...form, couponCode: value });
                       }}
                     />
+                    {submitted && !form?.couponCode && (
+                      <p className="invalid-feedback d-block">
+                        Coupon code is required
+                      </p>
+                    )}
                   </div>
                   <div className="col-md-12 mb-3">
                     <label>Description (optional)</label>
