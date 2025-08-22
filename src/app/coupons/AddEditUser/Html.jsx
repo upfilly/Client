@@ -114,7 +114,7 @@ const Html = ({
                     />
                   </div>
                   <div className="col-md-12 mb-3">
-                    <label>Description</label>
+                    <label>Description (optional)</label>
                     <textarea
                       className="form-control"
                       value={form.description}
