@@ -247,7 +247,7 @@ const Html = ({
               <div className="accordion-body">
                 <div className="program_bx ">
                   <div className="row">
-                    <div className="col-12 col-sm-6 col-md-4 mb-2">
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-2">
                       <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <MultiSelectDropdown
                           id="statusDropdown"
@@ -261,7 +261,7 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6 col-md-4 mb-2">
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-2">
                       <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <SelectDropdown
                           theme="search"
@@ -274,7 +274,7 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6 col-md-4">
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-2">
                       <div className="date-range-container">
                         <div className="form-group">
                           <div
