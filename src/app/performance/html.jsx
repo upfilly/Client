@@ -234,9 +234,9 @@ const Html = ({
               data-bs-parent="#accordionExample"
             >
               <div className="accordion-body">
-                <div className="program_bx">
+                <div className="program_bx ">
                   <div className="row">
-                    <div className="col-12 col-sm-4">
+                    <div className="col-12 col-sm-6 col-md-4 mb-2">
                       <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <MultiSelectDropdown
                           id="statusDropdown"
@@ -250,7 +250,7 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-4">
+                    <div className="col-12 col-sm-6 col-md-4 mb-2">
                       <div className="selectbx1 mc-campaign-dropdown mb-0">
                         <SelectDropdown
                           theme="search"
@@ -263,7 +263,7 @@ const Html = ({
                         />
                       </div>
                     </div>
-                    <div className="col-12 col-sm-6">
+                    <div className="col-12 col-sm-6 col-md-4">
                       <div className="date-range-container">
                         <div className="form-group">
                           <div
@@ -339,7 +339,7 @@ const Html = ({
                               </div>
                             </div>
                           )}
-                    <div className="col-12 col-sm-4">
+                    {/* <div className="col-12 col-sm-4">
                       <div className="selectbx1 mb-0">
                         <div className="form-group mb-0">
                           <DatePicker
@@ -361,7 +361,7 @@ const Html = ({
                           />
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-12 col-sm-6">
                       {showResetButton && (
                         <button
@@ -380,7 +380,11 @@ const Html = ({
           </div>
         </div>
 
-        <div className="graph_charts">
+  
+
+
+        </div>
+              <div className="graph_charts">
           <div className='graph-chart-line-chart'>
             <LineChart
               data={analyticData?.data?.[0]}
@@ -389,7 +393,9 @@ const Html = ({
             />
           </div>
         </div>
-        </div></div></div></div>
+        
+        
+        </div></div></div>
     </Layout>
   );
 };
