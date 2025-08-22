@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { ExpandOutlined, CompressOutlined } from '@ant-design/icons';
-import ReactECharts from 'echarts-for-react';
-import './AnalyticsDashboard.scss';
+import React, { useState } from "react";
+import { ExpandOutlined, CompressOutlined } from "@ant-design/icons";
+import ReactECharts from "echarts-for-react";
+import "./AnalyticsDashboard.scss";
 
 const CustomCard = ({ title, children, isExpanded, onExpand }) => (
   <div className={`custom-card ${isExpanded ? "expanded" : ""}`}>
@@ -11,14 +11,21 @@ const CustomCard = ({ title, children, isExpanded, onExpand }) => (
         {isExpanded ? <CompressOutlined /> : <ExpandOutlined />}
       </span>
     </div>
-    <div className="card-content p-0">
-      {children}
-    </div>
+    <div className="card-content p-0">{children}</div>
   </div>
 );
 
-const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurrency, exchangeRate, comparisonPeriod }) => {
-  const { selection1, selection2 } = state;
+const AnalyticsChartData = ({
+  data,
+  data2,
+  clicks,
+  clicks2,
+  state,
+  convertedCurrency,
+  exchangeRate,
+  comparisonPeriod,
+}) => {
+  const { selection1, selection2, selection3 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
 
   const toggleExpand = (cardTitle) => {
@@ -26,7 +33,9 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
   };
 
   const formatDates = (data) => {
-    return data.map(item => `${item._id.year}-${item._id.month}-${item._id.day}`);
+    return data.map(
+      (item) => `${item._id.year}-${item._id.month}-${item._id.day}`
+    );
   };
 
   const getAllDatesInRange = (startDate, endDate) => {
@@ -36,7 +45,11 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
     let currentDate = new Date(startDate);
     const end = new Date(endDate);
     while (currentDate <= end) {
-      dates.push(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`);
+      dates.push(
+        `${currentDate.getFullYear()}-${
+          currentDate.getMonth() + 1
+        }-${currentDate.getDate()}`
+      );
       currentDate.setDate(currentDate.getDate() + 1);
     }
     return dates;
@@ -53,7 +66,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
       return acc;
     }, {});
 
-    return allDates.map(date => dataMap[date] || 0);
+    return allDates.map((date) => dataMap[date] || 0);
   };
 
   const calculateTotal = (data) => {
@@ -62,7 +75,7 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
 
   const calculatePercentageDifference = (value1, value2) => {
     if (value1 === 0 || !value1) {
-      return value2 > 0 ? '∞%' : '0%';
+      return value2 > 0 ? "∞%" : "0%";
     }
     const diff = value2 - value1;
     const percentageDiff = (diff / value1) * 100;
@@ -79,16 +92,24 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
   };
 
   // Get all dates in the selected range
-  const allDates1 = getAllDatesInRange(selection1?.startDate, selection1?.endDate);
-  const allDates2 = getAllDatesInRange(selection2?.startDate, selection2?.endDate);
+  const allDates1 = getAllDatesInRange(
+    selection1?.startDate,
+    selection1?.endDate
+  );
+  const allDates2 = getAllDatesInRange(
+    selection2?.startDate,
+    selection2?.endDate
+  );
 
   // Extract data
   const revenueData1 = data?.[0]?.revenue || [];
   const actionData1 = data?.[0]?.actions || [];
+  const conversionData1 = data?.[0]?.conversions || [];
   const clickData1 = clicks?.[0]?.clicks || [];
 
   const revenueData2 = data2?.[0]?.revenue || [];
   const actionData2 = data2?.[0]?.actions || [];
+  const conversionData2 = data2?.[0]?.conversions || [];
   const clickData2 = clicks2?.[0]?.clicks || [];
 
   // Get chart data for all selected dates
@@ -98,69 +119,147 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
   const actionCounts1 = getChartData(actionData1, allDates1);
   const actionCounts2 = getChartData(actionData2, allDates2);
 
+  const conversionRate1 = getChartData(conversionData1, allDates1);
+  const conversionRate2 = getChartData(conversionData2, allDates2);
+
   const clickCounts1 = getChartData(clickData1, allDates1);
   const clickCounts2 = getChartData(clickData2, allDates2);
+
+  // Calculate conversion rates (conversions/clicks)
+  const calculateConversionRates = (conversions, clicks) => {
+    return conversions.map((conversion, index) => {
+      const clickCount = clicks[index] || 0;
+      if (clickCount === 0) return 0;
+      return (conversion / clickCount) * 100; // Return as percentage
+    });
+  };
+
+  const conversionRates1 = calculateConversionRates(
+    conversionRate1,
+    clickCounts1
+  );
+  const conversionRates2 = calculateConversionRates(
+    conversionRate2,
+    clickCounts2
+  );
 
   // Calculate overall totals and percentage differences
   const totalRevenue1 = calculateTotal(revenuePrices1);
   const totalRevenue2 = calculateTotal(revenuePrices2);
-  const revenuePercentage = calculatePercentageDifference(totalRevenue1, totalRevenue2);
+  const revenuePercentage = calculatePercentageDifference(
+    totalRevenue1,
+    totalRevenue2
+  );
 
   const totalActions1 = calculateTotal(actionCounts1);
   const totalActions2 = calculateTotal(actionCounts2);
-  const actionPercentage = calculatePercentageDifference(totalActions1, totalActions2);
+  const actionPercentage = calculatePercentageDifference(
+    totalActions1,
+    totalActions2
+  );
+
+  const avgConversionRate1 =
+    calculateTotal(conversionRates1) / (conversionRates1.length || 1);
+  const avgConversionRate2 =
+    calculateTotal(conversionRates2) / (conversionRates2.length || 1);
+  const conversionPercentage = calculatePercentageDifference(
+    avgConversionRate1,
+    avgConversionRate2
+  );
 
   const totalClicks1 = calculateTotal(clickCounts1);
   const totalClicks2 = calculateTotal(clickCounts2);
-  const clickPercentage = calculatePercentageDifference(totalClicks1, totalClicks2);
+  const clickPercentage = calculatePercentageDifference(
+    totalClicks1,
+    totalClicks2
+  );
 
   // Update legend labels with overall percentages
   const legendRevenue1 = formatLegendLabel(selection1, revenuePercentage);
-  const legendRevenue2 = comparisonPeriod !== 'none' ? formatLegendLabel(selection2, revenuePercentage) : "";
-
+  const legendRevenue2 =
+    comparisonPeriod !== "none"
+      ? formatLegendLabel(selection2, revenuePercentage)
+      : "";
+  const legendRevenue3 =
+    comparisonPeriod !== "none"
+      ? formatLegendLabel(selection3, revenuePercentage)
+      : "";
   const legendActions1 = formatLegendLabel(selection1, actionPercentage);
-  const legendActions2 = comparisonPeriod !== 'none' ? formatLegendLabel(selection2, actionPercentage) : "";
+  const legendActions2 =
+    comparisonPeriod !== "none"
+      ? formatLegendLabel(selection2, actionPercentage)
+      : "";
+
+  const legendConversion1 = formatLegendLabel(selection1, conversionPercentage);
+  const legendConversion2 =
+    comparisonPeriod !== "none"
+      ? formatLegendLabel(selection2, conversionPercentage)
+      : "";
 
   const legendClicks1 = formatLegendLabel(selection1, clickPercentage);
-  const legendClicks2 = comparisonPeriod !== 'none' ? formatLegendLabel(selection2, clickPercentage) : "";
+  const legendClicks2 =
+    comparisonPeriod !== "none"
+      ? formatLegendLabel(selection2, clickPercentage)
+      : "";
 
-  const createChartOption = (title, legend1, legend2, data1, data2, isRevenue = false) => {
-    const legendData = [legend1, legend2].filter(label => label);
+  const createChartOption = (
+    title,
+    legend1,
+    legend2,
+    data1,
+    data2,
+    isRevenue = false,
+    isPercentage = false
+  ) => {
+    const legendData = [legend1, legend2].filter((label) => label);
     const series = [
       legend1 && {
         name: legend1,
         data: data1,
-        type: 'line',
+        type: "line",
         smooth: true,
         areaStyle: {},
         lineStyle: { width: 2 },
-        itemStyle: { color: '#1E90FF' }
+        itemStyle: { color: "#1E90FF" },
       },
       legend2 && {
         name: legend2,
         data: data2,
-        type: 'line',
+        type: "line",
         smooth: true,
         areaStyle: {},
         lineStyle: { width: 2 },
-        itemStyle: { color: '#4682B4' }
-      }
+        itemStyle: { color: "#4682B4" },
+      },
     ].filter(Boolean);
 
     return {
-      title: { text: comparisonPeriod === 'none' ? title : `${title} Comparison` },
+      title: {
+        text: comparisonPeriod === "none" ? title : `${title} Comparison`,
+      },
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         formatter: function (params) {
-          let tooltipContent = '';
-          params.forEach(item => {
+          let tooltipContent = "";
+          params.forEach((item) => {
             const date = allDates1[item.dataIndex];
             const value1 = item.data;
             const value2 = params[1]?.data;
-            const percentageDifference = calculatePercentageDifference(value1, value2);
-            tooltipContent += `<div>${date}: ${isRevenue ?
-              (!exchangeRate ? `$${value1}` : `${convertedCurrency(value1)}`) :
-              value1} (${percentageDifference})</div>`;
+            const percentageDifference = calculatePercentageDifference(
+              value1,
+              value2
+            );
+
+            let formattedValue = value1;
+            if (isRevenue) {
+              formattedValue = !exchangeRate
+                ? `$${value1.toFixed(2)}`
+                : `${convertedCurrency(value1)}`;
+            } else if (isPercentage) {
+              formattedValue = `${value1.toFixed(2)}%`;
+            }
+
+            tooltipContent += `<div>${date}: ${formattedValue} (${percentageDifference})</div>`;
           });
           return tooltipContent;
         },
@@ -168,23 +267,26 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
       legend: {
         data: legendData,
         bottom: 0,
-        left: 'center'
+        left: "center",
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         data: allDates1,
-        boundaryGap: false
+        boundaryGap: false,
       },
       yAxis: {
-        type: 'value',
-        axisLabel: { show: false }
+        type: "value",
+        axisLabel: {
+          show: true,
+          formatter: isPercentage ? "{value}%" : undefined,
+        },
       },
-      series
+      series,
     };
   };
 
   const revenueChartOption = createChartOption(
-    'Revenue Over Time',
+    "Revenue Over Time",
     legendRevenue1,
     legendRevenue2,
     revenuePrices1,
@@ -193,15 +295,23 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
   );
 
   const actionsChartOption = createChartOption(
-    'Actions',
+    "Actions",
     legendActions1,
     legendActions2,
     actionCounts1,
     actionCounts2
   );
 
+  const conversionChartOption = createChartOption(
+    "Conversion Rate",
+    legendConversion1,
+    legendConversion2,
+    conversionRates1,
+    conversionRates2
+  );
+
   const clicksChartOption = createChartOption(
-    'Clicks',
+    "Clicks",
     legendClicks1,
     legendClicks2,
     clickCounts1,
@@ -211,39 +321,67 @@ const AnalyticsChartData = ({ data, data2, clicks, clicks2, state, convertedCurr
   return (
     <div className="analytics-container">
       <div className="row">
-        <div className={expandedCard === "Revenue Over Time" ? "col-12 mt-3" : "col-lg-6 mt-3"}>
+        <div
+          className={
+            expandedCard === "Revenue Over Time"
+              ? "col-12 mt-3"
+              : "col-lg-6 mt-3"
+          }
+        >
           <CustomCard
             title="Revenue Over Time"
             isExpanded={expandedCard === "Revenue Over Time"}
             onExpand={() => toggleExpand("Revenue Over Time")}
           >
-            <div className='w-100'>
+            <div className="w-100">
               <ReactECharts option={revenueChartOption} className="chart" />
             </div>
           </CustomCard>
         </div>
 
-        <div className={expandedCard === "Actions" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+        <div
+          className={
+            expandedCard === "Actions" ? "col-12 mt-3" : "col-md-6 mt-3"
+          }
+        >
           <CustomCard
             title="Actions"
             isExpanded={expandedCard === "Actions"}
             onExpand={() => toggleExpand("Actions")}
           >
-            <div className='w-100'>
-
+            <div className="w-100">
               <ReactECharts option={actionsChartOption} className="chart" />
             </div>
           </CustomCard>
         </div>
 
-        <div className={expandedCard === "Clicks" ? "col-12 mt-3" : "col-md-6 mt-3"}>
+        <div
+          className={
+            expandedCard === "Conversion Rate" ? "col-12 mt-3" : "col-md-6 mt-3"
+          }
+        >
+          <CustomCard
+            title="Conversion Rate"
+            isExpanded={expandedCard === "Conversion Rate"}
+            onExpand={() => toggleExpand("Conversion Rate")}
+          >
+            <div className="w-100">
+              <ReactECharts option={conversionChartOption} className="chart" />
+            </div>
+          </CustomCard>
+        </div>
+
+        <div
+          className={
+            expandedCard === "Clicks" ? "col-12 mt-3" : "col-md-6 mt-3"
+          }
+        >
           <CustomCard
             title="Clicks"
             isExpanded={expandedCard === "Clicks"}
             onExpand={() => toggleExpand("Clicks")}
           >
-            <div className='w-100'>
-
+            <div className="w-100">
               <ReactECharts option={clicksChartOption} className="chart" />
             </div>
           </CustomCard>
