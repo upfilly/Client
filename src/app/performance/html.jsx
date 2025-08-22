@@ -42,8 +42,11 @@ const Html = ({
     }
   };
 
-  const isoStart = start instanceof Date ? start.toISOString() : start;
-  const isoEnd = end instanceof Date ? end.toISOString() : end;
+  // Format dates properly for API
+  const formatDateForAPI = (date) => {
+    if (!date) return "";
+    return date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+  };
 
   // Check if any filters are active
   useEffect(() => {
@@ -113,16 +116,20 @@ const Html = ({
   const getAnalyticsData = (p = {}) => {
     let url = "analytics-sales";
 
+    // Format dates for API
+    const startDateFormatted = formatDateForAPI(start);
+    const endDateFormatted = formatDateForAPI(end);
+
     let filter = {
       ...filters,
       affiliate_id: AffiliateDataId.map((itm) => itm)
         .join(",")
         .toString(),
-      startDate: isoStart,
-      endDate: isoEnd,
+      startDate: startDateFormatted,
+      endDate: endDateFormatted,
     };
 
-    if (!AffiliateDataId) {
+    if (!AffiliateDataId.length) {
       filter = { ...filters, ...p, brand_id: user?.id };
     } else {
       filter = {
@@ -132,8 +139,12 @@ const Html = ({
         affiliate_id: AffiliateDataId.map((itm) => itm)
           .join(",")
           .toString(),
+        startDate: startDateFormatted,
+        endDate: endDateFormatted,
       };
     }
+
+    console.log("API Filter:", filter); // Debug log to check the filter
 
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
@@ -339,29 +350,9 @@ const Html = ({
                               </div>
                             </div>
                           )}
-                    {/* <div className="col-12 col-sm-4">
-                      <div className="selectbx1 mb-0">
-                        <div className="form-group mb-0">
-                          <DatePicker
-                            showIcon
-                            className="date-picker form-control"
-                            monthsShown={1}
-                            shouldCloseOnSelect={true}
-                            selectsRange={true}
-                            placeholderText="Select Date Range"
-                            startDate={start}
-                            endDate={end}
-                            onChange={(update) => {
-                              setDateRange([update[0], update[1]]);
-                            }}
-                            isClearable
-                            maxDate={new Date()}
-                            // withPortal
-                            dateFormat={"dd/MM/yyyy"}
-                          />
                         </div>
                       </div>
-                    </div> */}
+                    </div>
                     <div className="col-12 col-sm-6">
                       {showResetButton && (
                         <button
@@ -380,12 +371,8 @@ const Html = ({
           </div>
         </div>
 
-  
-
-
-        </div>
-              <div className="graph_charts">
-          <div className='graph-chart-line-chart'>
+        <div className="graph_charts">
+          <div className="graph-chart-line-chart">
             <LineChart
               data={analyticData?.data?.[0]}
               convertedCurrency={convertedCurrency}
@@ -393,9 +380,7 @@ const Html = ({
             />
           </div>
         </div>
-        
-        
-        </div></div></div>
+      </div>
     </Layout>
   );
 };
