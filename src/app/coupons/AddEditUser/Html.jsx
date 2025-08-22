@@ -29,13 +29,6 @@ const Html = ({
   const user = crendentialModel.getUser();
   const isEditPage = form && form.id;
 
-  // const handleRemove = (valueToRemove) => {
-  //   const updatedValues = form?.applicable?.filter(
-  //     (value) => value !== valueToRemove
-  //   );
-  //   setform({ ...form, applicable: updatedValues });
-  // };
-
   const filtered = category?.filter((item) =>
     form?.applicable?.includes(item?.id)
   );
