@@ -27,7 +27,7 @@ const Html = ({
   console.log(form, "form");
 
   const user = crendentialModel.getUser();
-  const isEditPage = form && form.id; 
+  const isEditPage = form && form.id;
 
   // const handleRemove = (valueToRemove) => {
   //   const updatedValues = form?.applicable?.filter(
@@ -98,7 +98,9 @@ const Html = ({
                     )}
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label>Coupon Code </label>
+                    <label>
+                      Coupon Code<span className="star">*</span>{" "}
+                    </label>
                     <input
                       type="text"
                       className="form-control"
