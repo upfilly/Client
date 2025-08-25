@@ -46,8 +46,7 @@ const AnalyticsChartData = ({
     const end = new Date(endDate);
     while (currentDate <= end) {
       dates.push(
-        `${currentDate.getFullYear()}-${
-          currentDate.getMonth() + 1
+        `${currentDate.getFullYear()}-${currentDate.getMonth() + 1
         }-${currentDate.getDate()}`
       );
       currentDate.setDate(currentDate.getDate() + 1);
@@ -74,11 +73,22 @@ const AnalyticsChartData = ({
   };
 
   const calculatePercentageDifference = (value1, value2) => {
-    if (value1 === 0 || !value1) {
-      return value2 > 0 ? "∞%" : "0%";
+    // Handle undefined/null values
+    const val1 = Number(value1) || 0;
+    const val2 = Number(value2) || 0;
+
+    if (val1 === 0) {
+      return val2 > 0 ? "∞%" : "0%";
     }
-    const diff = value2 - value1;
-    const percentageDiff = (diff / value1) * 100;
+
+    const diff = val2 - val1;
+    const percentageDiff = (diff / val1) * 100;
+
+    // Handle NaN and Infinity cases
+    if (isNaN(percentageDiff) || !isFinite(percentageDiff)) {
+      return "0%";
+    }
+
     return `${percentageDiff.toFixed(2)}%`;
   };
 
@@ -101,7 +111,7 @@ const AnalyticsChartData = ({
     selection2?.endDate
   );
 
-  // Extract data
+  // Extract data with fallbacks
   const revenueData1 = data?.[0]?.revenue || [];
   const actionData1 = data?.[0]?.actions || [];
   const conversionData1 = data?.[0]?.conversions || [];
@@ -125,12 +135,13 @@ const AnalyticsChartData = ({
   const clickCounts1 = getChartData(clickData1, allDates1);
   const clickCounts2 = getChartData(clickData2, allDates2);
 
-  // Calculate conversion rates (conversions/clicks)
+  // Calculate conversion rates (conversions/clicks) with safe division
   const calculateConversionRates = (conversions, clicks) => {
     return conversions.map((conversion, index) => {
-      const clickCount = clicks[index] || 0;
+      const conversionNum = Number(conversion) || 0;
+      const clickCount = Number(clicks[index]) || 0;
       if (clickCount === 0) return 0;
-      return (conversion / clickCount) * 100; // Return as percentage
+      return (conversionNum / clickCount) * 100; // Return as percentage
     });
   };
 
@@ -143,7 +154,7 @@ const AnalyticsChartData = ({
     clickCounts2
   );
 
-  // Calculate overall totals and percentage differences
+  // Calculate overall totals and percentage differences with safe values
   const totalRevenue1 = calculateTotal(revenuePrices1);
   const totalRevenue2 = calculateTotal(revenuePrices2);
   const revenuePercentage = calculatePercentageDifference(
@@ -158,10 +169,12 @@ const AnalyticsChartData = ({
     totalActions2
   );
 
-  const avgConversionRate1 =
-    calculateTotal(conversionRates1) / (conversionRates1.length || 1);
-  const avgConversionRate2 =
-    calculateTotal(conversionRates2) / (conversionRates2.length || 1);
+  const avgConversionRate1 = conversionRates1.length > 0
+    ? calculateTotal(conversionRates1) / conversionRates1.length
+    : 0;
+  const avgConversionRate2 = conversionRates2.length > 0
+    ? calculateTotal(conversionRates2) / conversionRates2.length
+    : 0;
   const conversionPercentage = calculatePercentageDifference(
     avgConversionRate1,
     avgConversionRate2
@@ -179,10 +192,6 @@ const AnalyticsChartData = ({
   const legendRevenue2 =
     comparisonPeriod !== "none"
       ? formatLegendLabel(selection2, revenuePercentage)
-      : "";
-  const legendRevenue3 =
-    comparisonPeriod !== "none"
-      ? formatLegendLabel(selection3, revenuePercentage)
       : "";
   const legendActions1 = formatLegendLabel(selection1, actionPercentage);
   const legendActions2 =
@@ -241,10 +250,13 @@ const AnalyticsChartData = ({
         trigger: "axis",
         formatter: function (params) {
           let tooltipContent = "";
-          params.forEach((item) => {
+          params.forEach((item, index) => {
             const date = allDates1[item.dataIndex];
-            const value1 = item.data;
-            const value2 = params[1]?.data;
+            const value1 = Number(item.data) || 0;
+
+            // Get the corresponding value from the second series if it exists
+            const value2 = params[1] ? (Number(params[1].data) || 0) : 0;
+
             const percentageDifference = calculatePercentageDifference(
               value1,
               value2
@@ -259,7 +271,7 @@ const AnalyticsChartData = ({
               formattedValue = `${value1.toFixed(2)}%`;
             }
 
-            tooltipContent += `<div>${date}: ${formattedValue} (${percentageDifference})</div>`;
+            tooltipContent += `<div>${item.seriesName}: ${formattedValue} (${percentageDifference})</div>`;
           });
           return tooltipContent;
         },
@@ -307,7 +319,9 @@ const AnalyticsChartData = ({
     legendConversion1,
     legendConversion2,
     conversionRates1,
-    conversionRates2
+    conversionRates2,
+    false,
+    true
   );
 
   const clicksChartOption = createChartOption(
