@@ -77,9 +77,9 @@ export default function CampaignReport() {
     const dateFilter =
       start && end
         ? {
-            startDate: start.toISOString(),
-            endDate: end.toISOString(),
-          }
+          startDate: start.toISOString(),
+          endDate: end.toISOString(),
+        }
         : {};
 
     if (user?.role == "brand") {
@@ -181,9 +181,9 @@ export default function CampaignReport() {
     const dateFilter =
       start && end
         ? {
-            startDate: start.toISOString(),
-            endDate: end.toISOString(),
-          }
+          startDate: start.toISOString(),
+          endDate: end.toISOString(),
+        }
         : {};
 
     let filters = {
@@ -268,112 +268,142 @@ export default function CampaignReport() {
       >
         <div className='sidebar-left-content'>
           <div className='nmain-list  mb-3 main_box pt-0'>
-            <div className='select-campaing-heaidng'>
-              <h3 class="campaign-header">
-                Select Campaign
-              </h3>
-            </div>
 
-            <div className="">
-              <div className="col-12 col-md-6 mb-2">
-                <div className="date-range-container">
-                  <div className="form-group">
-                    <label className="form-label">Date Range</label>
-                    <div
-                      className="date-picker-trigger form-control"
-                      onClick={() =>
-                        setShowDateSuggestions(!showDateSuggestions)
-                      }
-                      style={{ cursor: "pointer" }}
-                    >
-                      {start && end
-                        ? `${formatDate(start)} - ${formatDate(end)}`
-                        : "Select Date Range"}
+
+            <div className="accordion" id="campaignAccordion">
+              <div className="accordion-item">
+                <h2 className="accordion-header" id="headingCampaign">
+                  <button
+                    className="accordion-button custom-accordion-btn"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseCampaign"
+                    aria-expanded="true"
+                    aria-controls="collapseCampaign"
+                  >
+                    Select Campaign
+                  </button>
+                </h2>
+
+                <div
+                  id="collapseCampaign"
+                  className="accordion-collapse collapse show"
+                  aria-labelledby="headingCampaign"
+                  data-bs-parent="#campaignAccordion"
+                >
+                  <div className="accordion-body">
+
+                    {/* Date Range Selector */}
+                    <div className="col-12 col-md-6 mb-2">
+                      <div className="date-range-container">
+                        <div className="form-group">
+                          <label className="form-label">Date Range</label>
+                          <div
+                            className="date-picker-trigger form-control"
+                            onClick={() => setShowDateSuggestions(!showDateSuggestions)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {start && end
+                              ? `${formatDate(start)} - ${formatDate(end)}`
+                              : "Select Date Range"}
+                          </div>
+
+                          {showDateSuggestions && (
+                            <div className="date-suggestions-dropdown">
+                              <div className="suggestion-list-container">
+                                <div className="suggestion-list">
+                                  {[
+                                    "Today",
+                                    "Yesterday",
+                                    "Last 7 Days",
+                                    "Current Month",
+                                    "Last Month",
+                                    "Last Year",
+                                    "Custom",
+                                  ].map((period) => (
+                                    <div
+                                      key={period}
+                                      className={`suggestion-item ${selectedPeriod === period ? "selected" : ""
+                                        }`}
+                                      onClick={() => {
+                                        if (period === "Custom") {
+                                          setSelectedPeriod("Custom");
+                                        } else {
+                                          setDatePeriod(period);
+                                        }
+                                      }}
+                                    >
+                                      <input
+                                        type="radio"
+                                        name="datePeriod"
+                                        value={period}
+                                        checked={selectedPeriod === period}
+                                        onChange={() => { }}
+                                        className="radio-input"
+                                      />
+                                      <span className="radio-custom"></span>
+                                      <span className="label">{period}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="calendar-section">
+                                <div className="calendar-container">
+                                  <DatePicker
+                                    selected={start}
+                                    onChange={(update) => {
+                                      setDateRange(update);
+                                      setSelectedPeriod("Custom");
+                                    }}
+                                    startDate={start}
+                                    endDate={end}
+                                    selectsRange
+                                    inline
+                                    monthsShown={1}
+                                    maxDate={new Date()}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
-                    {showDateSuggestions && (
-                      <div className="date-suggestions-dropdown">
-                        <div className="suggestion-list-container">
-                          <div className="suggestion-list">
-                            {[
-                              "Today",
-                              "Yesterday",
-                              "Last 7 Days",
-                              "Current Month",
-                              "Last Month",
-                              "Last Year",
-                              "Custom",
-                            ].map((period) => (
-                              <div
-                                key={period}
-                                className={`suggestion-item ${
-                                  selectedPeriod === period ? "selected" : ""
-                                }`}
-                                onClick={() => {
-                                  if (period === "Custom") {
-                                    setSelectedPeriod("Custom");
-                                  } else {
-                                    setDatePeriod(period);
-                                  }
-                                }}
-                              >
-                                <input
-                                  type="radio"
-                                  name="datePeriod"
-                                  value={period}
-                                  checked={selectedPeriod === period}
-                                  onChange={() => {}}
-                                  className="radio-input"
-                                />
-                                <span className="radio-custom"></span>
-                                <span className="label">{period}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="calendar-section">
-                          <div className="calendar-container">
-                            <DatePicker
-                              selected={start}
-                              onChange={(update) => {
-                                setDateRange(update);
-                                setSelectedPeriod("Custom");
-                              }}
-                              startDate={start}
-                              endDate={end}
-                              selectsRange
-                              inline
-                              monthsShown={1}
-                              maxDate={new Date()}
-                            />
-                          </div>
-                        </div>
+                    {/* Campaign Dropdown */}
+                    <div className="col-12">
+                      <div className="select-campaign-wrapper">
+                        <label className="form-label">Campaigns</label>
+                        <MultiSelectDropdownWithCheckboxes
+                          key={resetDropdown}
+                          options={CampaignData}
+                          initialValue={campaignId}
+                          onChange={(selectedValues) => setCampaignId(selectedValues)}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Reset Button */}
+                    {hasActiveFilters && (
+                      <div className="col-12 mt-3 mb-3">
+                        <button className="btn btn-primary" onClick={resetAllFilters}>
+                          Reset Filters
+                        </button>
                       </div>
                     )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-12">
-              <div className="select-campaign-wrapper">
-                <label className="form-label">Campaigns</label>
-                <MultiSelectDropdownWithCheckboxes
-                  key={resetDropdown} // Add key to force re-render
-                  options={CampaignData}
-                  initialValue={campaignId}
-                  onChange={(selectedValues) => setCampaignId(selectedValues)}
-                />
-              </div>
-            </div>
 
-            {hasActiveFilters && (
-              <div className="col-12 mt-3 mb-3">
-                <button className="btn btn-primary" onClick={resetAllFilters}>
-                  Reset Filters
-                </button>
-              </div>
-            )}
 
+
+
+
+
+
+            {/* chart start */}
             <div className="container-fluid">
               <div className="row mb-4">
                 <div className="col-12">
@@ -417,7 +447,7 @@ export default function CampaignReport() {
                                   {uniqueKeys?.map((key) => {
                                     const value =
                                       itm?.urlParams &&
-                                      itm.urlParams[key] !== undefined
+                                        itm.urlParams[key] !== undefined
                                         ? itm.urlParams[key]
                                         : null;
                                     return (
@@ -476,10 +506,12 @@ export default function CampaignReport() {
             </div>
           </div>
 
+
+
+
           <div
-            className={`paginationWrapper ${
-              !loading && total > 10 ? "" : "d-none"
-            }`}
+            className={`paginationWrapper ${!loading && total > 10 ? "" : "d-none"
+              }`}
           >
             <span>
               Showing {data?.data?.length || 0} of {total} reports
