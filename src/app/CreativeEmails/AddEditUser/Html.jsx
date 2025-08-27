@@ -7,8 +7,11 @@ import Layout from "../../components/global/layout";
 import "react-quill/dist/quill.snow.css";
 import { useParams, useRouter } from "next/navigation";
 import { Editor } from "@tinymce/tinymce-react";
+import SelectDropdown from "@/app/components/common/SelectDropdown";
+import crendentialModel from "@/models/credential.model";
 
 const Html = () => {
+  const user = crendentialModel.getUser();
   const { id } = useParams();
   const [form, setform] = useState({
     templateName: "",
@@ -28,10 +31,11 @@ const Html = () => {
   const specialChars = useRef([]);
   const [variables, setVariables] = useState("");
   const [htmlCode, setHtmlCode] = useState(false);
-  const formValidation = [{ key: "templateName", required: true }];
+  const formValidation = [{ key: "templateName",key: "campaign_id", required: true }];
   const router = useRouter();
   const tinyMCEditorRef = useRef(null);
   const [editorRef, setEditorRef] = useState(null);
+  const [camppaignData, setCamppaignData] = useState([]);
 
   const shortcodes = [{ label: "Affiliate Link", value: "{affiliateLink}" }];
 
@@ -48,6 +52,7 @@ const Html = () => {
       handleSubmit();
     }
   };
+
   const insertShortcode = (shortcode) => {
     if (editorRef) {
       editorRef.insertContent(shortcode);
@@ -75,6 +80,24 @@ const Html = () => {
       }
     }
   };
+
+  const getCampaignData = (p = {}) => {
+    let url = "campaign/brand/all";
+    ApiClient.get(url, { brand_id: user?.id }).then((res) => {
+      if (res.success) {
+        const campaign = res.data.data.map((dat) => {
+          return {
+            name: dat?.name,
+            id: dat?.id || dat?._id,
+            isDefault: dat?.isDefault,
+          };
+        });
+        campaign.sort((a, b) => b.isDefault - a.isDefault);
+        setCamppaignData(campaign);
+      }
+    });
+  };
+
   const generateTinyMCEPreview = () => {
     if (tinyMCEditorRef.current) {
       return tinyMCEditorRef.current.getContent();
@@ -179,6 +202,7 @@ const Html = () => {
   };
 
   useEffect(() => {
+    getCampaignData()
     if (id) {
       loader(true);
       ApiClient.get("emailtemplate", { id: id }).then((res) => {
@@ -310,6 +334,29 @@ const Html = () => {
                             required
                           />
                         </div>
+                      </div>
+                      <div className="col-md-6">
+                        <label>
+                          Campaign<span className="star">*</span>
+                        </label>
+                        <div className="select_row">
+                          <SelectDropdown
+                            theme="search"
+                            id="statusDropdown"
+                            displayValue="name"
+                            placeholder="Select Campaign"
+                            intialValue={form?.campaign_id}
+                            result={(e) => {
+                              setform({ ...form, campaign_id: e.value });
+                            }}
+                            options={camppaignData}
+                          />
+                        </div>
+                        {submitted && !form?.campaign_id && (
+                          <div className="invalid-feedback d-block">
+                            Campaign is required
+                          </div>
+                        )}
                       </div>
                       <div className="col-md-12">
                         <div className="mb-3">

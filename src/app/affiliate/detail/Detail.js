@@ -373,7 +373,7 @@ const Detail = (p) => {
                     <div className="row align-items-center mb-3 mx-auto">
                       <div className="col-12 col-sm-12 col-md-3 col-lg-2">
                         <div className="userdata">
-                          <p className="headmains">Sub Child Categories:</p>
+                          <p className="headmains">Sub Sub Categories:</p>
                         </div>
                       </div>
                       <div className="col-12 col-sm-12 col-md-9 col-lg-10">
@@ -395,12 +395,12 @@ const Detail = (p) => {
                     <div className="row align-items-center mb-3 mx-auto">
                       <div className="col-12 col-sm-12 col-md-3 col-lg-2">
                         <div className="userdata">
-                          <p className="headmains">Sub Child Categories:</p>
+                          <p className="headmains">Sub Sub Categories:</p>
                         </div>
                       </div>
                       <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                         <div className="name-dtls">
-                          <p className="text-muted">No sub child categories available</p>
+                          <p className="text-muted">No sub Sub categories available</p>
                         </div>
                       </div>
                     </div>

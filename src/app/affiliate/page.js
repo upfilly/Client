@@ -1002,8 +1002,8 @@ export default function affilate() {
                         intialValue={dateFormat}
                         result={(e) => setDateFormat(e.value)}
                         options={[
-                          { id: "US", name: "MM/DD/YYYY" },
-                          { id: "EU", name: "DD/MM/YYYY" },
+                          { id: "US", name: "US Date Format" },
+                          { id: "EU", name: "EU Date Format" },
                         ]}
                       />
                     </div>

@@ -274,7 +274,7 @@ const Html = ({
                                 </a>
                               )}
 
-                            {isAllow("deleteAdmins") &&
+                            {!itm.isArchive &&
                               permission("campaign_delete") && (
                                 <a
                                   className="edit_icon edit-delete"
