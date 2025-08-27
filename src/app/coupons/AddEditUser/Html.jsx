@@ -370,9 +370,6 @@ const Html = ({
                       </div>
                     )}
 
-                    {/* Show expiry date field if:
-                        1. On Edit page AND expireCheck is true
-                        2. On Add page AND checkbox is checked */}
                     {(isEditPage && form.expireCheck) ||
                     (!isEditPage && hasExpiryDate) ? (
                       <div className="main_input">

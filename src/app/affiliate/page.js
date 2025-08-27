@@ -75,9 +75,49 @@ export default function affilate() {
   const [selectedSubSubCategory, setSelectedSubSubCategory] = useState([]);
   const [categoryType, setCategoryType] = useState([]);
   const [camppaignData, setCamppaignData] = useState([]);
+  const [dateFormat, setDateFormat] = useState("US"); // Add date format state
 
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
+
+  // Date format functions
+  const formatDate = (date, formatType = dateFormat) => {
+    if (!date) return "";
+
+    if (formatType === "EU") {
+      // European format: DD/MM/YYYY
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    } else {
+      // US format: MM/DD/YYYY
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${month}/${day}/${year}`;
+    }
+  };
+
+  const parseDate = (dateString, formatType = dateFormat) => {
+    if (!dateString) return null;
+
+    if (formatType === "EU") {
+      // European format: DD/MM/YYYY
+      const parts = dateString.split('/');
+      if (parts.length === 3) {
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+      }
+    } else {
+      // US format: MM/DD/YYYY
+      const parts = dateString.split('/');
+      if (parts.length === 3) {
+        return new Date(parts[2], parts[0] - 1, parts[1]);
+      }
+    }
+
+    return new Date(dateString); // Fallback
+  };
 
   const handleClose = () => {
     setShow(false), setselectedAffiliteid([]);
@@ -85,8 +125,6 @@ export default function affilate() {
   const handleShow = () => setShow(true);
   const handleGroupClose = () => setGroupShow(false);
   const handleGroupShow = () => setGroupShow(true);
-
-  console.log(filters, "paramsparamsparams");
 
   const view = (id) => {
     const filterParams = {
@@ -953,6 +991,23 @@ export default function affilate() {
                       />
                     </div>
 
+                    {/* Date Format Toggle */}
+                    <div className="date-format-toggle">
+                      <SelectDropdown
+                        theme="search"
+                        id="dateFormatDropdown"
+                        displayValue="name"
+                        placeholder="Date Format"
+                        className="mt-2"
+                        intialValue={dateFormat}
+                        result={(e) => setDateFormat(e.value)}
+                        options={[
+                          { id: "US", name: "MM/DD/YYYY" },
+                          { id: "EU", name: "DD/MM/YYYY" },
+                        ]}
+                      />
+                    </div>
+
                     {/* Date Range Filter */}
                     <div className="datepicker-dropdown-wrapper">
                       <DatePicker
@@ -964,6 +1019,22 @@ export default function affilate() {
                         showIcon
                         placeholderText="Date Range"
                         selectsRange
+                        dateFormat={dateFormat === "EU" ? "dd/MM/yyyy" : "MM/dd/yyyy"}
+                        maxDate={new Date()} // Disable future dates
+                        isClearable
+                        customInput={
+                          <input
+                            className="form-control"
+                            value={
+                              startDate && endDate
+                                ? `${formatDate(startDate)} - ${formatDate(endDate)}`
+                                : startDate
+                                  ? formatDate(startDate)
+                                  : ""
+                            }
+                            readOnly
+                          />
+                        }
                       />
                     </div>
                   </>
@@ -987,50 +1058,23 @@ export default function affilate() {
                   {/* Action Dropdown for Multiple Selection */}
                   {(user?.role == "brand" || permission("affiliate_group")) &&
                     selectedAffiliteid?.length > 1 && (
-                      // <DropdownButton
-                      //   variant="primary"
-                      //   id="dropdown-basic-button"
-                      //   title="Action"
-                      // >
-                      //   <Dropdown.Item as="button" onClick={handleShow}>
-                      //     Send multiple invites to affiliates
-                      //   </Dropdown.Item>
-                      // </DropdownButton>
                       <button className="btn btn-primary" onClick={handleShow}>
                         Send Invites
                       </button>
                     )}
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                {/* Close dropdown when clicking outside */}
+                {categoryDropdownOpen && (
+                  <div
+                    className="position-fixed w-100 h-100"
+                    style={{ top: 0, left: 0, zIndex: 1040 }}
+                    onClick={() => setCategoryDropdownOpen(false)}
+                  />
+                )}
               </div>
             </div>
           </div>
-
-          {/* Close dropdown when clicking outside */}
-          {categoryDropdownOpen && (
-            <div
-              className="position-fixed w-100 h-100"
-              style={{ top: 0, left: 0, zIndex: 1040 }}
-              onClick={() => setCategoryDropdownOpen(false)}
-            />
-          )}
 
           {/* Rest of your component remains the same - table, modals, pagination, etc. */}
           <div className="row mx-0 mt-3">

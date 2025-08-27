@@ -417,6 +417,7 @@ const AddEditUser = () => {
     ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
       if (res.success) {
         const data = res?.data?.map((data) => {
+          console.log(data,"jhjhjhj")
           return ({
             id: data?.id || data?._id,
             name: data?.userName

@@ -122,7 +122,7 @@ const AddEditUser = () => {
     }
 
     let method = "post";
-    let url = "link/generate/add";
+    let url = "banner";
 
     let value = {
       ...form,
@@ -149,7 +149,7 @@ const AddEditUser = () => {
     delete value.status;
     if (value.id) {
       method = "put";
-      url = "link/generate/update";
+      url = "banner";
     } else {
       delete value.id;
     }

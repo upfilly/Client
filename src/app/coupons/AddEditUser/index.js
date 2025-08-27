@@ -11,7 +11,6 @@ const AddEditUser = () => {
   const { role, id } = useParams();
   const history = useRouter();
   const user = crendentialModel.getUser();
-  console.log(user, "user=====");
   const [images, setImages] = useState("");
   const [form, setform] = useState({
     id: "",
@@ -26,7 +25,7 @@ const AddEditUser = () => {
     url: user?.website,
     couponCommission: "",
     status: "Enabled",
-    expireCheck: false,
+    expireCheck: true,
   });
   console.log(user?.website, "user?.websiteuser?.website");
   const [campaignType, setCampaignType] = useState([]);

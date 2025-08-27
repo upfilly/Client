@@ -35,11 +35,35 @@ const Html = () => {
   const [errors, setErrors] = useState({
     selectedBrand: "",
     SelectedCampaign: "",
-    DestinationUrl: "",
     websiteAllowed: "",
   });
-  console.log(CampaignData, "CampaignData");
-  // console.log(user, "user");
+
+  // Get user's website domain
+  const getUserWebsiteDomain = () => {
+    if (!user || !user.website) return "";
+
+    let website = user.website;
+    if (Array.isArray(website) && website.length > 0) {
+      website = website[0];
+    }
+
+    // Extract domain from URL
+    try {
+      let domain = website;
+      if (!website.startsWith("http")) {
+        domain = "https://" + website;
+      }
+
+      const urlObj = new URL(domain);
+      return `${urlObj.protocol}//${urlObj.hostname}`;
+    } catch (e) {
+      console.error("Error parsing website URL:", e);
+      return website;
+    }
+  };
+
+  const userWebsite = getUserWebsiteDomain();
+
   const handleInputChange = (selected, value) => {
     setInputValues((prevState) => ({
       ...prevState,
@@ -74,8 +98,6 @@ const Html = () => {
       ApiClient.get(
         `${url}?affiliateId=${selectedBrand}&brandId=${user?.id}`
       ).then((res) => {
-        console.log(res, "response");
-
         if (
           res.message ===
           "Campaigns associated with this affiliate fetched successfully."
@@ -139,87 +161,6 @@ const Html = () => {
         setCampaignData(data);
       }
     });
-  };
-
-  function isValidUrl(url) {
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  const isWebsiteAllowed = (url) => {
-    if (!user || !user?.website) {
-      return {
-        allowed: false,
-        message:
-          "Please update your website in your profile to use this feature",
-      };
-    }
-
-    const allowedDomains =
-      typeof user.website === "string"
-        ? [user.website]
-        : Array.isArray(user.website)
-        ? user.website
-        : [];
-
-    if (allowedDomains.length === 0) {
-      return {
-        allowed: false,
-        message:
-          "Please update your website in your profile to use this feature",
-      };
-    }
-
-    const cleanedUrl = url.toString().trim();
-
-    try {
-      let urlToParse = cleanedUrl;
-      if (!/^https?:\/\//i.test(cleanedUrl)) {
-        urlToParse = "https://" + cleanedUrl;
-      }
-
-      const urlObj = new URL(urlToParse);
-      const hostname = urlObj.hostname.replace("www.", "").toLowerCase();
-
-      const isAllowed = allowedDomains.some((domain) => {
-        let domainStr = String(domain).trim().toLowerCase();
-
-        if (
-          domainStr.startsWith("http://") ||
-          domainStr.startsWith("https://")
-        ) {
-          try {
-            const domainUrl = new URL(domainStr);
-            domainStr = domainUrl.hostname;
-          } catch (e) {
-            domainStr = domainStr.replace(/^https?:\/\//, "");
-          }
-        }
-
-        // Remove www. and trailing slashes
-        domainStr = domainStr.replace("www.", "").replace(/\/+$/, "");
-
-        // Compare the base domains
-        return hostname === domainStr || hostname.endsWith(`.${domainStr}`);
-      });
-
-      return {
-        allowed: isAllowed,
-        message: isAllowed
-          ? ""
-          : `URL must be from allowed domains: ${allowedDomains.join(", ")}`,
-      };
-    } catch (e) {
-      console.error("Error parsing URL:", e);
-      return {
-        allowed: false,
-        message: `Invalid URL format: ${cleanedUrl}`,
-      };
-    }
   };
 
   const copyText = () => {
@@ -293,25 +234,9 @@ const Html = () => {
   }, []);
 
   const validateForm = () => {
-    let websiteAllowedError = "";
-
-    if (DestinationUrl) {
-      if (!isValidUrl(DestinationUrl)) {
-        websiteAllowedError =
-          "Please enter a valid URL (including http:// or https://)";
-      } else {
-        const websiteCheck = isWebsiteAllowed(DestinationUrl);
-        if (!websiteCheck.allowed) {
-          websiteAllowedError = websiteCheck.message;
-        }
-      }
-    }
-
     const newErrors = {
       selectedBrand: !selectedBrand ? "Please select an affiliate" : "",
       SelectedCampaign: !SelectedCampaign ? "Please select a campaign" : "",
-      DestinationUrl: !DestinationUrl ? "Destination URL is required" : "",
-      websiteAllowed: websiteAllowedError,
     };
 
     setErrors(newErrors);
@@ -327,7 +252,13 @@ const Html = () => {
 
     const base_url = "https://api.upfilly.com/link/";
 
-    const rawUrl = DestinationUrl.replace(/^https?:\/\//i, "");
+    // Construct the full URL using the user's website and the entered path (if any)
+    let fullDestinationUrl = userWebsite;
+    if (DestinationUrl) {
+      fullDestinationUrl += (DestinationUrl.startsWith("/") ? DestinationUrl : "/" + DestinationUrl);
+    }
+
+    const rawUrl = fullDestinationUrl.replace(/^https?:\/\//i, "");
 
     const domainParts = rawUrl.split(".");
     let subdomain = "";
@@ -351,11 +282,7 @@ const Html = () => {
       finalUrl.searchParams.set("affiliate_id", selectedBrand);
     }
 
-    // if (SelectedCampaign) {
-    //   finalUrl.searchParams.set("campaign_id", SelectedCampaign);
-    // }
-
-    if (DestinationUrl) {
+    if (fullDestinationUrl) {
       const destinationUrlWithParams = `${domainName}`;
       finalUrl.searchParams.set("hUrl", subdomain);
       finalUrl.searchParams.set("url", destinationUrlWithParams);
@@ -400,7 +327,7 @@ const Html = () => {
                     className="fa fa-bullhorn link_icon"
                     aria-hidden="true"
                   ></i>{" "}
-                  Default Links  
+                  Default Links
                 </h3>
               </div>
             </div>
@@ -413,9 +340,8 @@ const Html = () => {
                     </label>
 
                     <select
-                      className={`form-select mb-2 ${
-                        errors.selectedBrand && "is-invalid"
-                      }`}
+                      className={`form-select mb-2 ${errors.selectedBrand && "is-invalid"
+                        }`}
                       id="brandSelect"
                       value={selectedBrand}
                       onChange={handleBrandChange}
@@ -427,7 +353,7 @@ const Html = () => {
                         </option>
                       ))}
                     </select>
-                    
+
                     {errors.selectedBrand && (
                       <div className="invalid-feedback d-block">
                         {errors.selectedBrand}
@@ -441,9 +367,8 @@ const Html = () => {
                       Select Campaign<span className="star">*</span>
                     </label>
                     <select
-                      className={`form-select mb-2 ${
-                        errors.SelectedCampaign && "is-invalid"
-                      }`}
+                      className={`form-select mb-2 ${errors.SelectedCampaign && "is-invalid"
+                        }`}
                       id="brandSelect"
                       value={SelectedCampaign}
                       onChange={handleCampaignChange}
@@ -468,38 +393,28 @@ const Html = () => {
                 </div>
                 <div className="col-md-6 mb-3">
                   <label>
-                    Destination Url<span className="star">*</span>
+                    Destination Path (Optional)
                   </label>
                   <div className="input-group border_description">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">{userWebsite}/</span>
+                    </div>
                     <input
                       type="text"
-                      className={`form-control ${
-                        (errors.DestinationUrl || errors.websiteAllowed) &&
-                        "is-invalid"
-                      }`}
+                      className="form-control"
                       value={DestinationUrl}
                       onChange={(e) => {
-                        const url = e.target.value;
-                        setDestinationUrl(url);
-                        setErrors((prev) => ({
-                          ...prev,
-                          DestinationUrl: "",
-                          websiteAllowed: "",
-                        }));
+                        const path = e.target.value;
+                        // Remove any leading slashes to avoid double slashes
+                        const cleanPath = path.replace(/^\//, '');
+                        setDestinationUrl(cleanPath);
                       }}
-                      placeholder="https://example.com"
+                      placeholder="path/to/page (optional)"
                     />
                   </div>
-                  {errors.DestinationUrl && (
-                    <div className="invalid-feedback d-block">
-                      {errors.DestinationUrl}
-                    </div>
-                  )}
-                  {errors.websiteAllowed && (
-                    <div className="invalid-feedback d-block">
-                      {errors.websiteAllowed}
-                    </div>
-                  )}
+                  <small className="form-text text-muted">
+                    Full URL: {userWebsite}{DestinationUrl ? `/${DestinationUrl}` : ''}
+                  </small>
                 </div>
 
                 <div className="col-12 col-md-12 mb-3">

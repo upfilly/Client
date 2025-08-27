@@ -161,7 +161,7 @@ const Html = ({
         isClearable={isClearable}
         filterOption={(option, searchText) => {
           if (option.data.isActionItem) return true;
-          return option.label.toLowerCase().includes(searchText.toLowerCase());
+          return option?.label?.toLowerCase()?.includes(searchText.toLowerCase());
         }}
       />
     </div>

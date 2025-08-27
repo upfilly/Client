@@ -327,7 +327,7 @@ const Html = ({
                     <div className="select_row">
                       <MultiSelectValue
                         id="statusDropdown"
-                        displayValue="fullName"
+                        displayValue="name"
                         placeholder="Select Affiliate"
                         intialValue={form?.affiliate_id}
                         result={(e) => {
