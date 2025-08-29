@@ -158,7 +158,37 @@ const Html = ({
                     )}
                   </div>
 
-                  {form?.visibility === "Public" ? (
+                  {form?.visibility == "Exclusive to specific affiliate" && (
+                    <div className="col-md-6 mb-3">
+                      <label>
+                        Affiliates<span className="star">*</span>
+                      </label>
+                      <div className="select_row media_row">
+                        <MultiSelectValue
+                          id="statusDropdown"
+                          displayValue="name"
+                          placeholder="Select Affiliate"
+                          intialValue={form?.media}
+                          result={(e) => {
+                            console.log(e, "SelectedValue");
+
+                            setform({ ...form, media: e.value });
+                          }}
+                          isSingle={false}
+                          options={relatedAffiliate}
+                        />
+                      </div>
+                      {submitted && !form?.media ? (
+                        <div className="invalid-feedback d-block">
+                          Affiliate is Required
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  )}
+
+                  {/* {form?.visibility === "Public" ? ( */}
                     <div className="col-md-6 mb-3">
                       <label>
                         Commission Type<span className="star">*</span>
@@ -195,10 +225,11 @@ const Html = ({
                         )}
                       </div>
                     </div>
-                  ) : null}
+                  {/* ) : null} */}
 
                   {form?.couponType === "Campaign" &&
-                    form?.visibility === "Public" && (
+                    // form?.visibility === "Public" && 
+                    (
                       <div className="col-md-6 mb-3 event-select affiliate">
                         <label>
                           Select Campaign<span className="star">*</span>
@@ -225,7 +256,8 @@ const Html = ({
                     )}
 
                   {form?.couponType === "Custom" &&
-                    form?.visibility === "Public" && (
+                    // form?.visibility === "Public" && 
+                    (
                       <>
                         <div className="col-md-6 mb-3">
                           <label>
@@ -295,35 +327,7 @@ const Html = ({
                       </>
                     )}
 
-                  {form?.visibility == "Exclusive to specific affiliate" && (
-                    <div className="col-md-6 mb-3">
-                      <label>
-                        Affiliates<span className="star">*</span>
-                      </label>
-                      <div className="select_row media_row">
-                        <MultiSelectValue
-                          id="statusDropdown"
-                          displayValue="name"
-                          placeholder="Select Affiliate"
-                          intialValue={form?.media}
-                          result={(e) => {
-                            console.log(e, "SelectedValue");
-
-                            setform({ ...form, media: e.value });
-                          }}
-                          isSingle={false}
-                          options={relatedAffiliate}
-                        />
-                      </div>
-                      {submitted && !form?.media ? (
-                        <div className="invalid-feedback d-block">
-                          Affiliate is Required
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  )}
+                  
 
                   <div className="col-md-6 mb-3 main_input">
                     <label>
@@ -360,11 +364,11 @@ const Html = ({
                           type="checkbox"
                           className="form-check-input"
                           id="noExpiryDate"
-                          checked={form.noExpiryDate || false}
+                          checked={form.expireCheck || false}
                           onChange={(e) => {
                             setform({
                               ...form,
-                              noExpiryDate: e.target.checked,
+                              expireCheck: e.target.checked,
                               // Clear expiration date when "No Expiry Date" is checked
                               expirationDate: e.target.checked ? "" : form.expirationDate
                             });
@@ -375,7 +379,7 @@ const Html = ({
                         </label>
                       </div>
 
-                      {!form.noExpiryDate && (
+                      {/* {!form.noExpiryDate && ( */}
                         <>
                           <label>
                             Expiry Date<span className="star">*</span>
@@ -385,6 +389,7 @@ const Html = ({
                               type="date"
                               ref={dateRef2}
                               onClick={handleClick2}
+                              disabled={form?.expireCheck}
                               className="width_full"
                               min={form.startDate}
                               value={form.expirationDate}
@@ -402,7 +407,7 @@ const Html = ({
                             </div>
                           )}
                         </>
-                      )}
+                      {/* )} */}
                     </div>
                   </div>
 

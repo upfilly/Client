@@ -25,7 +25,7 @@ const AddEditUser = () => {
     url: user?.website,
     couponCommission: "",
     status: "Enabled",
-    expireCheck: true,
+    expireCheck: false,
   });
   console.log(user?.website, "user?.websiteuser?.website");
   const [campaignType, setCampaignType] = useState([]);
@@ -278,7 +278,7 @@ const AddEditUser = () => {
     }
 
     if (value?.media) {
-      value = { ...value, media: value?.media?.value.toString() };
+      value = { ...value, media: value?.media };
     }
 
     if (form?.visibility === "Public") {
