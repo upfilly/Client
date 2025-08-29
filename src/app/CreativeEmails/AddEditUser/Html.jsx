@@ -214,6 +214,7 @@ const Html = () => {
           });
           setform({
             ...payload,
+            campaign_id:campaign_id?.id || campaign_id?._id,
             id: id,
           });
         }

@@ -1,0 +1,41 @@
+.radio-group {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  
+  .form-check {
+    margin-bottom: 8px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .form-check-input {
+      margin-top: 0.2rem;
+    }
+    
+    .form-check-label {
+      font-weight: normal;
+      margin-left: 8px;
+    }
+  }
+}
+
+.star {
+  color: #ff4d4f;
+}
+
+.invalid-feedback.d-block {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.main_input .form-check {
+  margin-bottom: 15px;
+}
+
+.main_input .form-check-label {
+  font-weight: 500;
+}

@@ -51,6 +51,8 @@ const Html = ({
   const [expandedRegions, setExpandedRegions] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    console.log(data,"bbnbnbn")
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -823,11 +825,11 @@ const Html = ({
                                     {itm?.campaign_type || "--"}
                                   </td>
                                 }
-                                {itm?.campaign_detail?.event_type && (
+                                {/* {itm?.campaign_detail?.event_type && ( */}
                                   <td className="table_dats">
                                     {itm?.campaign_detail?.event_type.join(",")}
                                   </td>
-                                )}
+                                {/* )} */}
                                 <td className="table_dats">
                                   {" "}
                                   {itm?.campaign_detail?.commission_type ==

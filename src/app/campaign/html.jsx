@@ -190,9 +190,9 @@ const Html = ({
                   >
                     Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data">
+                  {activeTab != "active" && <th scope="col" className="table_data">
                     Action
-                  </th>
+                  </th>}
                 </tr>
               </thead>
               <tbody>

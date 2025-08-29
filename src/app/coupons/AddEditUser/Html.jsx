@@ -1,8 +1,9 @@
-import MultiSelectValue from "@/app/components/common/MultiSelectValue";
-import SelectDropdown from "@/app/components/common/SelectDropdown";
+import React, { useState } from "react";
 import Layout from "@/app/components/global/layout";
 import crendentialModel from "@/models/credential.model";
-import "../style.scss";
+import MultiSelectValue from "@/app/components/common/MultiSelectValue";
+import SelectDropdown from "@/app/components/common/SelectDropdown";
+import "./style.scss";
 
 const Html = ({
   category,
@@ -52,12 +53,7 @@ const Html = ({
             <div className=" pprofile1 card card-shadow p-4">
               <div className="">
                 <div className="main_title_head profile-card">
-                  <h3
-                    className="VieUse dateRef1={dateRef1}
-        handleClick1={handleClick1}
-        dateRef2={dateRef2}
-        handleClick2={handleClick2}r"
-                  >
+                  <h3 className="Viewer">
                     <a to="/campaign" onClick={(e) => back()}>
                       {" "}
                       <i
@@ -123,29 +119,37 @@ const Html = ({
                       rows={3}
                     />
                   </div>
+
+                  {/* Radio Button for Coupon Tracking */}
                   <div className="col-md-6 mb-3">
-                    <label>Type</label>
-                    <div className="select_row">
-                      <SelectDropdown
-                        theme="search"
-                        id="statusDropdown"
-                        displayValue="name"
-                        placeholder="Select Type"
-                        intialValue={form?.visibility}
-                        result={(e) => {
-                          setform({ ...form, visibility: e.value });
-                        }}
-                        options={[
-                          {
-                            id: "Public",
-                            name: "Public",
-                          },
-                          {
-                            id: "Exclusive to specific affiliate",
-                            name: "Private",
-                          },
-                        ]}
-                      />
+                    <label>Enable Coupon Tracking</label>
+                    <div className="radio-group">
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="couponTracking"
+                          id="trackingYes"
+                          checked={form?.visibility === "Exclusive to specific affiliate"}
+                          onChange={() => setform({ ...form, visibility: "Exclusive to specific affiliate" })}
+                        />
+                        <label className="form-check-label" htmlFor="trackingYes">
+                          Yes (Private)
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="couponTracking"
+                          id="trackingNo"
+                          checked={form?.visibility === "Public"}
+                          onChange={() => setform({ ...form, visibility: "Public" })}
+                        />
+                        <label className="form-check-label" htmlFor="trackingNo">
+                          No (Public)
+                        </label>
+                      </div>
                     </div>
                     {submitted && !form?.visibility && (
                       <p className="invalid-feedback d-block">
@@ -153,6 +157,7 @@ const Html = ({
                       </p>
                     )}
                   </div>
+
                   {form?.visibility === "Public" ? (
                     <div className="col-md-6 mb-3">
                       <label>
@@ -347,61 +352,58 @@ const Html = ({
                     </div>
                   </div>
 
-                  {/* Expiry Date Section */}
+                  {/* Updated Expiry Date Section - Always visible unless "No Expiry Date" is checked */}
                   <div className="col-md-6 mb-3">
-                    {/* Show checkbox only on Add page, not on Edit page */}
-                    {!isEditPage && (
+                    <div className="main_input">
                       <div className="form-check mb-2">
                         <input
                           type="checkbox"
                           className="form-check-input"
-                          id="hasExpiryDate"
-                          checked={hasExpiryDate}
-                          onChange={(e) =>
-                            handleExpiryCheckChange(e.target.checked)
-                          }
+                          id="noExpiryDate"
+                          checked={form.noExpiryDate || false}
+                          onChange={(e) => {
+                            setform({
+                              ...form,
+                              noExpiryDate: e.target.checked,
+                              // Clear expiration date when "No Expiry Date" is checked
+                              expirationDate: e.target.checked ? "" : form.expirationDate
+                            });
+                          }}
                         />
-                        <label
-                          className="form-check-label"
-                          htmlFor="hasExpiryDate"
-                        >
-                          Set Expiry Date
+                        <label className="form-check-label" htmlFor="noExpiryDate">
+                          No Expiry Date
                         </label>
                       </div>
-                    )}
 
-                    {(isEditPage && form.expireCheck) ||
-                    (!isEditPage && hasExpiryDate) ? (
-                      <div className="main_input">
-                        <label>
-                          Expiry Date
-                          {!isEditPage && <span className="star">*</span>}
-                        </label>
-                        <div className="position-relative">
-                          <input
-                            type="date"
-                            ref={dateRef2}
-                            onClick={handleClick2}
-                            className="width_full"
-                            min={form.startDate}
-                            value={form.expirationDate}
-                            onChange={(e) =>
-                              setform({
-                                ...form,
-                                expirationDate: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        {submitted && !form?.expirationDate ? (
-                          <div className="invalid-feedback d-block">
-                            Expiration Date is Required
+                      {!form.noExpiryDate && (
+                        <>
+                          <label>
+                            Expiry Date<span className="star">*</span>
+                          </label>
+                          <div className="position-relative">
+                            <input
+                              type="date"
+                              ref={dateRef2}
+                              onClick={handleClick2}
+                              className="width_full"
+                              min={form.startDate}
+                              value={form.expirationDate}
+                              onChange={(e) =>
+                                setform({
+                                  ...form,
+                                  expirationDate: e.target.value,
+                                })
+                              }
+                            />
                           </div>
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    ) : null}
+                          {submitted && !form.expirationDate && (
+                            <div className="invalid-feedback d-block">
+                              Expiration Date is Required
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   <div className="col-md-6 mb-3">
