@@ -217,7 +217,7 @@ const AddEditUser = () => {
       url: "Site URL",
     };
 
-    if (form.expireCheck) {
+    if (!form.expireCheck) {
       requiredFields.expirationDate = "Expiration Date";
     }
 
@@ -273,7 +273,7 @@ const AddEditUser = () => {
       ...form,
     };
 
-    if (!form.expireCheck) {
+    if (form.expireCheck) {
       delete value.expirationDate;
     }
 
@@ -306,7 +306,7 @@ const AddEditUser = () => {
 
     delete value?.couponCommissionValue;
     delete value?.couponCommissionType;
-
+    delete value?.noExpiryDate
     loader(true);
     ApiClient.allApi(url, value, method)
       .then((res) => {
