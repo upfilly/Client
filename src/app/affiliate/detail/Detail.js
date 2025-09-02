@@ -137,13 +137,12 @@ const Detail = (p) => {
                           {data?.request_status == "accepted"
                             ? "Accepted"
                             : data?.request_status == "not_invited"
-                              ? "Not Invited"
-                              : "Pending"}
+                            ? "Not Invited"
+                            : "Pending"}
                         </p>
                       </div>
                     </div>
                   </div>
-
 
                   <div className="row align-items-center mb-3 mx-auto">
                     <div className="col-12 col-sm-12 col-md-3 col-lg-2">
@@ -169,7 +168,9 @@ const Detail = (p) => {
                     <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                       <div className="name-dtls">
                         <p className="headsubs">
-                          {methodModel.capitalizeFirstLetter(data?.company_name)}
+                          {methodModel.capitalizeFirstLetter(
+                            data?.company_name
+                          )}
                         </p>
                       </div>
                     </div>
@@ -184,7 +185,9 @@ const Detail = (p) => {
                     <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                       <div className="name-dtls">
                         <p className="headsubs">
-                          {methodModel.capitalizeFirstLetter(data?.affiliate_type)}
+                          {methodModel.capitalizeFirstLetter(
+                            data?.affiliate_type
+                          )}
                         </p>
                       </div>
                     </div>
@@ -199,7 +202,11 @@ const Detail = (p) => {
                     <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                       <div className="name-dtls">
                         <p className="headsubs">
-                          <a href={data?.website} target="_blank" rel="noopener noreferrer">
+                          <a
+                            href={data?.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             {data?.website}
                           </a>
                         </p>
@@ -216,7 +223,9 @@ const Detail = (p) => {
                     <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                       <div className="name-dtls">
                         <p className="headsubs">
-                          {methodModel.capitalizeFirstLetter(data?.affiliate_group_name)}
+                          {methodModel.capitalizeFirstLetter(
+                            data?.affiliate_group_name
+                          )}
                         </p>
                       </div>
                     </div>
@@ -232,7 +241,9 @@ const Detail = (p) => {
                       <div className="name-dtls">
                         <div
                           className="headsubs"
-                          dangerouslySetInnerHTML={{ __html: data?.description }}
+                          dangerouslySetInnerHTML={{
+                            __html: data?.description,
+                          }}
                         />
                       </div>
                     </div>
@@ -334,7 +345,9 @@ const Detail = (p) => {
                                 key={category.id}
                                 className="badge bg-primary"
                               >
-                                {methodModel.capitalizeFirstLetter(category.name)}
+                                {methodModel.capitalizeFirstLetter(
+                                  category.name
+                                )}
                               </span>
                             ))}
                           </div>
@@ -359,7 +372,9 @@ const Detail = (p) => {
                                 key={subCategory.id}
                                 className="badge bg-secondary"
                               >
-                                {methodModel.capitalizeFirstLetter(subCategory.name)}
+                                {methodModel.capitalizeFirstLetter(
+                                  subCategory.name
+                                )}
                               </span>
                             ))}
                           </div>
@@ -379,14 +394,18 @@ const Detail = (p) => {
                       <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                         <div className="name-dtls">
                           <div className="d-flex flex-wrap gap-2">
-                            {data.all_sub_child_category.map((childCategory) => (
-                              <span
-                                key={childCategory.id}
-                                className="badge bg-info text-dark"
-                              >
-                                {methodModel.capitalizeFirstLetter(childCategory.name)}
-                              </span>
-                            ))}
+                            {data.all_sub_child_category.map(
+                              (childCategory) => (
+                                <span
+                                  key={childCategory.id}
+                                  className="badge bg-info text-dark"
+                                >
+                                  {methodModel.capitalizeFirstLetter(
+                                    childCategory.name
+                                  )}
+                                </span>
+                              )
+                            )}
                           </div>
                         </div>
                       </div>
@@ -400,7 +419,9 @@ const Detail = (p) => {
                       </div>
                       <div className="col-12 col-sm-12 col-md-9 col-lg-10">
                         <div className="name-dtls">
-                          <p className="text-muted">No Sub categories available</p>
+                          <p className="text-muted">
+                            No Sub categories available
+                          </p>
                         </div>
                       </div>
                     </div>

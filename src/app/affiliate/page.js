@@ -76,7 +76,8 @@ export default function affilate() {
   const [categoryType, setCategoryType] = useState([]);
   const [camppaignData, setCamppaignData] = useState([]);
   const [dateFormat, setDateFormat] = useState("US"); // Add date format state
-
+  console.log(startDate, "startDate");
+  console.log(endDate, "endDate");
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
 
@@ -86,14 +87,14 @@ export default function affilate() {
 
     if (formatType === "EU") {
       // European format: DD/MM/YYYY
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
     } else {
       // US format: MM/DD/YYYY
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
       const year = date.getFullYear();
       return `${month}/${day}/${year}`;
     }
@@ -104,13 +105,13 @@ export default function affilate() {
 
     if (formatType === "EU") {
       // European format: DD/MM/YYYY
-      const parts = dateString.split('/');
+      const parts = dateString.split("/");
       if (parts.length === 3) {
         return new Date(parts[2], parts[1] - 1, parts[0]);
       }
     } else {
       // US format: MM/DD/YYYY
-      const parts = dateString.split('/');
+      const parts = dateString.split("/");
       if (parts.length === 3) {
         return new Date(parts[2], parts[0] - 1, parts[1]);
       }
@@ -311,6 +312,7 @@ export default function affilate() {
   });
 
   const onChange = (dates) => {
+    console.log(dates, "dates");
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
@@ -318,10 +320,11 @@ export default function affilate() {
     // Create new filter object with date changes
     const newFilters = {
       ...filters,
-      start_date: start ? start.toISOString().split("T")[0] : "",
-      end_date: end ? end.toISOString().split("T")[0] : "",
-      page: 1 // Reset to first page
+      start_date: start ? start.toLocaleDateString("en-CA") : "",
+      end_date: end ? end.toLocaleDateString("en-CA") : "",
+      page: 1, // Reset to first page
     };
+    console.log(newFilters, "newFilters");
 
     setFilter(newFilters);
 
@@ -349,17 +352,19 @@ export default function affilate() {
     }
 
     console.log("API Call with filters:", filter);
-    ApiClient.get(`getAllAffiliateForBrand`, filter).then((res) => {
-      if (res.success) {
-        setData(res?.data);
-        setTotal(res?.data?.total);
+    ApiClient.get(`getAllAffiliateForBrand`, filter)
+      .then((res) => {
+        if (res.success) {
+          setData(res?.data);
+          setTotal(res?.data?.total);
+          setLoader(false);
+        }
+      })
+      .catch((error) => {
+        console.error("API Error:", error);
         setLoader(false);
-      }
-    }).catch((error) => {
-      console.error("API Error:", error);
-      setLoader(false);
-    });
-  }, [])
+      });
+  }, []);
 
   const getCategory = (p = {}) => {
     let url = `categoryWithSub?page&count&search&cat_type=promotional_models,property_types&status=active`;
@@ -373,12 +378,15 @@ export default function affilate() {
 
   useEffect(() => {
     const initializeComponent = async () => {
-
       const params = Object.fromEntries(searchParams.entries());
 
       const parsedSelectedCategory = parseStringToArray(params?.category);
-      const parsedSelectedSubCategory = parseStringToArray(params?.sub_category);
-      const parsedSelectedSubSubCategory = parseStringToArray(params?.sub_child_category);
+      const parsedSelectedSubCategory = parseStringToArray(
+        params?.sub_category
+      );
+      const parsedSelectedSubSubCategory = parseStringToArray(
+        params?.sub_child_category
+      );
 
       const startDateParam =
         params.start_date && params.start_date !== "null"
@@ -405,15 +413,18 @@ export default function affilate() {
           : "",
         end_date: endDateParam ? endDateParam.toISOString().split("T")[0] : "",
         cat_type: params.cat_type || "",
-        category_id: parsedSelectedCategory.length > 0
-          ? parsedSelectedCategory.join(",")
-          : "",
-        sub_category_id: parsedSelectedSubCategory.length > 0
-          ? parsedSelectedSubCategory.join(",")
-          : "",
-        sub_child_category_id: parsedSelectedSubSubCategory.length > 0
-          ? parsedSelectedSubSubCategory.join(",")
-          : "",
+        category_id:
+          parsedSelectedCategory.length > 0
+            ? parsedSelectedCategory.join(",")
+            : "",
+        sub_category_id:
+          parsedSelectedSubCategory.length > 0
+            ? parsedSelectedSubCategory.join(",")
+            : "",
+        sub_child_category_id:
+          parsedSelectedSubSubCategory.length > 0
+            ? parsedSelectedSubSubCategory.join(",")
+            : "",
       };
 
       setFilter(initialFilters);
@@ -445,8 +456,12 @@ export default function affilate() {
       page: 1,
       cat_type: hasCategoryType ? categoryType.join(",") : "",
       category_id: hasSelectedCategory ? selectedCategory.join(",") : "",
-      sub_category_id: hasSelectedSubCategory ? selectedSubCategory.join(",") : "",
-      sub_child_category_id: hasSelectedSubSubCategory ? selectedSubSubCategory.join(",") : "",
+      sub_category_id: hasSelectedSubCategory
+        ? selectedSubCategory.join(",")
+        : "",
+      sub_child_category_id: hasSelectedSubSubCategory
+        ? selectedSubSubCategory.join(",")
+        : "",
     };
 
     const hasChanges =
@@ -460,17 +475,26 @@ export default function affilate() {
       setFilter(newFilters);
       getData(newFilters);
     }
-  }, [categoryType, selectedCategory, selectedSubCategory, selectedSubSubCategory]);
+  }, [
+    categoryType,
+    selectedCategory,
+    selectedSubCategory,
+    selectedSubSubCategory,
+  ]);
 
   useEffect(() => {
-    if (isInitializing.current || !initialLoadComplete.current || selectedOptions?.length === 0) {
+    if (
+      isInitializing.current ||
+      !initialLoadComplete.current ||
+      selectedOptions?.length === 0
+    ) {
       return;
     }
 
     const newFilters = {
       ...filters,
       affiliate_group_id: selectedGroupId.join(","),
-      page: 1
+      page: 1,
     };
 
     console.log("Affiliate group filters changed, updating..."); // Debug log
@@ -618,7 +642,7 @@ export default function affilate() {
     }
   };
 
-  console.log(data?.data,"ghghgg")
+  console.log(data?.data, "ghghgg");
 
   const handleAddCampaign = () => {
     history.push("/campaign/add");
@@ -731,7 +755,9 @@ export default function affilate() {
                         className="btn dropdown-toggle"
                         style={{ border: "1px solid #ccc" }}
                         type="button"
-                        onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
+                        onClick={() =>
+                          setCategoryDropdownOpen(!categoryDropdownOpen)
+                        }
                       >
                         {getSelectedCategoryNames().length > 0
                           ? `Categories (${getSelectedCategoryNames().length})`
@@ -750,7 +776,9 @@ export default function affilate() {
                           }}
                         >
                           <div className="p-3 p-md-4">
-                            <h6 className="mb-3">Select Category of Affiliate</h6>
+                            <h6 className="mb-3">
+                              Select Category of Affiliate
+                            </h6>
 
                             {/* Search input for categories */}
                             <div className="mb-3">
@@ -759,7 +787,9 @@ export default function affilate() {
                                 className="form-control"
                                 placeholder="Search categories..."
                                 value={categorySearchTerm}
-                                onChange={(e) => setCategorySearchTerm(e.target.value)}
+                                onChange={(e) =>
+                                  setCategorySearchTerm(e.target.value)
+                                }
                               />
                             </div>
 
@@ -768,22 +798,37 @@ export default function affilate() {
                                 // Group categories by cat_type and sort alphabetically
                                 Object.entries(
                                   filteredCategories.reduce((acc, category) => {
-                                    const type = category.cat_type || 'Other';
+                                    const type = category.cat_type || "Other";
                                     if (!acc[type]) acc[type] = [];
                                     acc[type].push(category);
                                     return acc;
                                   }, {})
                                 )
                                   // Sort the groups (cat_types) alphabetically
-                                  .sort(([typeA], [typeB]) => typeA.localeCompare(typeB))
+                                  .sort(([typeA], [typeB]) =>
+                                    typeA.localeCompare(typeB)
+                                  )
                                   .map(([type, categories]) => (
                                     <li key={type}>
-                                      <h6 className="mt-3 mb-2 text-muted">{type == "promotional_models" ? "Promotional Models" : "Property Types"}</h6>
+                                      <h6 className="mt-3 mb-2 text-muted">
+                                        {type == "promotional_models"
+                                          ? "Promotional Models"
+                                          : "Property Types"}
+                                      </h6>
                                       {/* Sort categories alphabetically within each group */}
                                       {categories
-                                        .sort((a, b) => (a.parent_cat_name || "").localeCompare(b.parent_cat_name || ""))
+                                        .sort((a, b) =>
+                                          (
+                                            a.parent_cat_name || ""
+                                          ).localeCompare(
+                                            b.parent_cat_name || ""
+                                          )
+                                        )
                                         .map((categoryItem) => (
-                                          <li key={categoryItem._id} className="mb-2">
+                                          <li
+                                            key={categoryItem._id}
+                                            className="mb-2"
+                                          >
                                             <div className="form-check d-flex justify-content-between align-items-center">
                                               <div>
                                                 <input
@@ -794,7 +839,9 @@ export default function affilate() {
                                                     categoryItem._id
                                                   )}
                                                   onChange={() =>
-                                                    handleCategoryChange(categoryItem)
+                                                    handleCategoryChange(
+                                                      categoryItem
+                                                    )
                                                   }
                                                 />
                                                 <label
@@ -805,16 +852,20 @@ export default function affilate() {
                                                     "Promotional Models"}
                                                 </label>
                                               </div>
-                                              {categoryItem.subCategories?.length > 0 && (
+                                              {categoryItem.subCategories
+                                                ?.length > 0 && (
                                                 <i
-                                                  className={`fa fa-angle-${expandedCategories.includes(
-                                                    categoryItem._id
-                                                  )
-                                                    ? "down"
-                                                    : "right"
-                                                    } cursor-pointer`}
+                                                  className={`fa fa-angle-${
+                                                    expandedCategories.includes(
+                                                      categoryItem._id
+                                                    )
+                                                      ? "down"
+                                                      : "right"
+                                                  } cursor-pointer`}
                                                   onClick={() =>
-                                                    toggleCategoryExpand(categoryItem._id)
+                                                    toggleCategoryExpand(
+                                                      categoryItem._id
+                                                    )
                                                   }
                                                 ></i>
                                               )}
@@ -823,93 +874,107 @@ export default function affilate() {
                                             {expandedCategories.includes(
                                               categoryItem._id
                                             ) && (
-                                                <ul className="list-unstyled ms-4 mt-2">
-                                                  {/* Sort subcategories alphabetically */}
-                                                  {categoryItem.subCategories
-                                                    .filter(
-                                                      (subCat) =>
-                                                        !categorySearchTerm ||
-                                                        subCat.name
-                                                          .toLowerCase()
-                                                          .includes(
-                                                            categorySearchTerm.toLowerCase()
-                                                          ) ||
-                                                        subCat.subchildcategory?.some(
-                                                          (subSubCat) =>
-                                                            subSubCat.name
-                                                              .toLowerCase()
-                                                              .includes(
-                                                                categorySearchTerm.toLowerCase()
-                                                              )
-                                                        )
-                                                    )
-                                                    .sort((a, b) => a.name.localeCompare(b.name))
-                                                    .map((subCategory) => (
-                                                      <li
-                                                        key={subCategory.id}
-                                                        className="mb-1"
-                                                      >
-                                                        <div className="form-check d-flex justify-content-between align-items-center">
-                                                          <div>
-                                                            <input
-                                                              className="form-check-input"
-                                                              type="checkbox"
-                                                              id={`subcat-${subCategory.id}`}
-                                                              checked={selectedSubCategory?.includes(
-                                                                subCategory.id
-                                                              )}
-                                                              onChange={() =>
-                                                                handleSubCategoryChange(
-                                                                  subCategory
-                                                                )
-                                                              }
-                                                            />
-                                                            <label
-                                                              className="form-check-label ms-2"
-                                                              htmlFor={`subcat-${subCategory.id}`}
-                                                            >
-                                                              {subCategory.name}
-                                                            </label>
-                                                          </div>
-                                                          {subCategory.subchildcategory
-                                                            ?.length > 0 && (
-                                                              <i
-                                                                className={`fa fa-angle-${expandedSubCategories.includes(
-                                                                  subCategory.id
-                                                                )
-                                                                  ? "down"
-                                                                  : "right"
-                                                                  } cursor-pointer`}
-                                                                onClick={() =>
-                                                                  toggleSubCategoryExpand(
-                                                                    subCategory.id
-                                                                  )
-                                                                }
-                                                              ></i>
+                                              <ul className="list-unstyled ms-4 mt-2">
+                                                {/* Sort subcategories alphabetically */}
+                                                {categoryItem.subCategories
+                                                  .filter(
+                                                    (subCat) =>
+                                                      !categorySearchTerm ||
+                                                      subCat.name
+                                                        .toLowerCase()
+                                                        .includes(
+                                                          categorySearchTerm.toLowerCase()
+                                                        ) ||
+                                                      subCat.subchildcategory?.some(
+                                                        (subSubCat) =>
+                                                          subSubCat.name
+                                                            .toLowerCase()
+                                                            .includes(
+                                                              categorySearchTerm.toLowerCase()
+                                                            )
+                                                      )
+                                                  )
+                                                  .sort((a, b) =>
+                                                    a.name.localeCompare(b.name)
+                                                  )
+                                                  .map((subCategory) => (
+                                                    <li
+                                                      key={subCategory.id}
+                                                      className="mb-1"
+                                                    >
+                                                      <div className="form-check d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                          <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id={`subcat-${subCategory.id}`}
+                                                            checked={selectedSubCategory?.includes(
+                                                              subCategory.id
                                                             )}
+                                                            onChange={() =>
+                                                              handleSubCategoryChange(
+                                                                subCategory
+                                                              )
+                                                            }
+                                                          />
+                                                          <label
+                                                            className="form-check-label ms-2"
+                                                            htmlFor={`subcat-${subCategory.id}`}
+                                                          >
+                                                            {subCategory.name}
+                                                          </label>
                                                         </div>
+                                                        {subCategory
+                                                          .subchildcategory
+                                                          ?.length > 0 && (
+                                                          <i
+                                                            className={`fa fa-angle-${
+                                                              expandedSubCategories.includes(
+                                                                subCategory.id
+                                                              )
+                                                                ? "down"
+                                                                : "right"
+                                                            } cursor-pointer`}
+                                                            onClick={() =>
+                                                              toggleSubCategoryExpand(
+                                                                subCategory.id
+                                                              )
+                                                            }
+                                                          ></i>
+                                                        )}
+                                                      </div>
 
-                                                        {expandedSubCategories.includes(
-                                                          subCategory.id
-                                                        ) &&
-                                                          subCategory.subchildcategory
-                                                            ?.length > 0 && (
-                                                            <ul className="list-unstyled ms-4 mt-1">
-                                                              {/* Sort sub-subcategories alphabetically */}
-                                                              {subCategory.subchildcategory
-                                                                .filter(
-                                                                  (subSubCat) =>
-                                                                    !categorySearchTerm ||
-                                                                    subSubCat.name
-                                                                      .toLowerCase()
-                                                                      .includes(
-                                                                        categorySearchTerm.toLowerCase()
-                                                                      )
+                                                      {expandedSubCategories.includes(
+                                                        subCategory.id
+                                                      ) &&
+                                                        subCategory
+                                                          .subchildcategory
+                                                          ?.length > 0 && (
+                                                          <ul className="list-unstyled ms-4 mt-1">
+                                                            {/* Sort sub-subcategories alphabetically */}
+                                                            {subCategory.subchildcategory
+                                                              .filter(
+                                                                (subSubCat) =>
+                                                                  !categorySearchTerm ||
+                                                                  subSubCat.name
+                                                                    .toLowerCase()
+                                                                    .includes(
+                                                                      categorySearchTerm.toLowerCase()
+                                                                    )
+                                                              )
+                                                              .sort((a, b) =>
+                                                                a.name.localeCompare(
+                                                                  b.name
                                                                 )
-                                                                .sort((a, b) => a.name.localeCompare(b.name))
-                                                                .map((subSubCategory) => (
+                                                              )
+                                                              .map(
+                                                                (
+                                                                  subSubCategory
+                                                                ) => (
                                                                   <li
-                                                                    key={subSubCategory._id}
+                                                                    key={
+                                                                      subSubCategory._id
+                                                                    }
                                                                     className="mb-1"
                                                                   >
                                                                     <div className="form-check">
@@ -936,19 +1001,22 @@ export default function affilate() {
                                                                       </label>
                                                                     </div>
                                                                   </li>
-                                                                ))}
-                                                            </ul>
-                                                          )}
-                                                      </li>
-                                                    ))}
-                                                </ul>
-                                              )}
+                                                                )
+                                                              )}
+                                                          </ul>
+                                                        )}
+                                                    </li>
+                                                  ))}
+                                              </ul>
+                                            )}
                                           </li>
                                         ))}
                                     </li>
                                   ))
                               ) : (
-                                <li className="text-muted">No categories found</li>
+                                <li className="text-muted">
+                                  No categories found
+                                </li>
                               )}
                             </ul>
                           </div>
@@ -957,7 +1025,7 @@ export default function affilate() {
                     </div>
 
                     {/* Invitation Status Filter */}
-                    <div className="w-25  All-status-dropdown" >
+                    <div className="w-25  All-status-dropdown">
                       <SelectDropdown
                         theme="search"
                         id="statusDropdown"
@@ -1021,7 +1089,9 @@ export default function affilate() {
                         showIcon
                         placeholderText="Date Range"
                         selectsRange
-                        dateFormat={dateFormat === "EU" ? "dd/MM/yyyy" : "MM/dd/yyyy"}
+                        dateFormat={
+                          dateFormat === "EU" ? "dd/MM/yyyy" : "MM/dd/yyyy"
+                        }
                         maxDate={new Date()} // Disable future dates
                         isClearable
                         customInput={
@@ -1029,10 +1099,12 @@ export default function affilate() {
                             className="form-control"
                             value={
                               startDate && endDate
-                                ? `${formatDate(startDate)} - ${formatDate(endDate)}`
+                                ? `${formatDate(startDate)} - ${formatDate(
+                                    endDate
+                                  )}`
                                 : startDate
-                                  ? formatDate(startDate)
-                                  : ""
+                                ? formatDate(startDate)
+                                : ""
                             }
                             readOnly
                           />
@@ -1040,7 +1112,6 @@ export default function affilate() {
                       />
                     </div>
                   </>
-
 
                   {/* Reset Button */}
                   {(selectedSubSubCategory?.length ||
@@ -1052,10 +1123,10 @@ export default function affilate() {
                     filters.affiliate_group_id ||
                     filters.end_date ||
                     filters.start_date) && (
-                      <button className="btn btn-primary" onClick={reset}>
-                        Reset
-                      </button>
-                    )}
+                    <button className="btn btn-primary" onClick={reset}>
+                      Reset
+                    </button>
+                  )}
 
                   {/* Action Dropdown for Multiple Selection */}
                   {(user?.role == "brand" || permission("affiliate_group")) &&
@@ -1163,7 +1234,7 @@ export default function affilate() {
                   <tbody>
                     {!loaging &&
                       data?.data?.map((itm) => {
-                        console.log(itm, "lkllklklk")
+                        console.log(itm, "lkllklklk");
                         return (
                           <React.Fragment key={itm.id}>
                             <tr className="table_row">
@@ -1173,14 +1244,14 @@ export default function affilate() {
                                     type="checkbox"
                                     className="form-check-input check_bx_input"
                                     checked={
-                                      selectedAffiliteid?.includes(itm.affiliate_details?.id)
+                                      selectedAffiliteid?.includes(
+                                        itm.affiliate_details?.id
+                                      )
                                         ? true
                                         : false
                                     }
                                     disabled={
-                                      itm.status == "pending"
-                                        ? false
-                                        : true
+                                      itm.status == "pending" ? false : true
                                     }
                                     onChange={(e) =>
                                       MultiSelectAffliates(
@@ -1201,7 +1272,12 @@ export default function affilate() {
                               <td className="profile_height affiliate-page-pf-wrapper">
                                 <div
                                   className="d-flex align-items-center name-img-wrapper"
-                                  onClick={(e) => view(itm.affiliate_details?.id)}
+                                  onClick={(e) =>
+                                    view(
+                                      itm.affiliate_details?._id ||
+                                        itm.affiliate_details?.id
+                                    )
+                                  }
                                 >
                                   {itm?.image ? (
                                     <img
@@ -1226,14 +1302,18 @@ export default function affilate() {
                                 {!expandedRowId.includes(itm.id) ? (
                                   <span
                                     className="show_morebx"
-                                    onClick={() => handleRowClick(itm.affiliate_details?.id)}
+                                    onClick={() =>
+                                      handleRowClick(itm.affiliate_details?.id)
+                                    }
                                   >
                                     Show More
                                   </span>
                                 ) : (
                                   <span
                                     className="show_morebx"
-                                    onClick={() => handleRowClick(itm.affiliate_details?.id)}
+                                    onClick={() =>
+                                      handleRowClick(itm.affiliate_details?.id)
+                                    }
                                   >
                                     Show Less
                                   </span>
@@ -1246,7 +1326,8 @@ export default function affilate() {
                               </td>
                               <td>
                                 <p className="name-person ml-2" href="">
-                                  {itm?.affiliate_details?.affiliate_group_name || "--"}
+                                  {itm?.affiliate_details
+                                    ?.affiliate_group_name || "--"}
                                 </p>
                               </td>
                               <td>
@@ -1265,8 +1346,8 @@ export default function affilate() {
                                     {itm.status == "accepted"
                                       ? "Accepted"
                                       : itm.status == "not_invited"
-                                        ? "Not Invited"
-                                        : "Pending"}
+                                      ? "Not Invited"
+                                      : "Pending"}
                                   </span>
                                 </span>
                               </td>
@@ -1275,24 +1356,24 @@ export default function affilate() {
                                 <div className="action_icons">
                                   {(user?.role == "brand" ||
                                     permission("affiliate_invite")) && (
-                                      <button
-                                        disabled={
-                                          itm.status == "pending"
-                                            ? false
-                                            : true
-                                        }
-                                        className="btn btn-primary btn_primary"
-                                        onClick={() => {
-                                          handleShow();
-                                          setselectedAffiliteid([itm?.affiliate_details?.id]);
-                                        }}
-                                      >
-                                        <i
-                                          className="fa fa-plus fa_icns"
-                                          title="Invite"
-                                        ></i>
-                                      </button>
-                                    )}
+                                    <button
+                                      disabled={
+                                        itm.status == "pending" ? false : true
+                                      }
+                                      className="btn btn-primary btn_primary"
+                                      onClick={() => {
+                                        handleShow();
+                                        setselectedAffiliteid([
+                                          itm?.affiliate_details?.id,
+                                        ]);
+                                      }}
+                                    >
+                                      <i
+                                        className="fa fa-plus fa_icns"
+                                        title="Invite"
+                                      ></i>
+                                    </button>
+                                  )}
                                   <span
                                     className="btn btn-primary btn_primary"
                                     onClick={() => {
@@ -1310,33 +1391,37 @@ export default function affilate() {
                                   </span>
                                   {(user?.role == "brand" ||
                                     permission("affiliate_group")) && (
-                                      <button
-                                        className="btn btn-primary btn_primary"
-                                        onClick={() => {
-                                          handleGroupShow();
-                                          setselectedAffiliteid(
-                                            itm?.affiliate_details?.id || itm?.affiliate_details?._id
-                                          );
-                                        }}
-                                      >
-                                        <i
-                                          className="fa-solid fa-people-group fa_icns"
-                                          title="Add Group"
-                                        ></i>
-                                      </button>
-                                    )}
+                                    <button
+                                      className="btn btn-primary btn_primary"
+                                      onClick={() => {
+                                        handleGroupShow();
+                                        setselectedAffiliteid(
+                                          itm?.affiliate_details?.id ||
+                                            itm?.affiliate_details?._id
+                                        );
+                                      }}
+                                    >
+                                      <i
+                                        className="fa-solid fa-people-group fa_icns"
+                                        title="Add Group"
+                                      ></i>
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>
 
-                            {expandedRowId.includes(itm.affiliate_details?.id) && (
+                            {expandedRowId.includes(
+                              itm.affiliate_details?.id
+                            ) && (
                               <tr className="table_row show_mores">
                                 <td>
                                   <label className="form-label">
                                     Affiliate Type:
                                   </label>
                                   <p className="affi_tabbls">
-                                    {itm.affiliate_details?.affiliate_type || "--"}
+                                    {itm.affiliate_details?.affiliate_type ||
+                                      "--"}
                                   </p>
                                 </td>
                                 <td>
@@ -1344,8 +1429,11 @@ export default function affilate() {
                                     Social Media Platforms:
                                   </label>
                                   <p className="affi_tabbls">
-                                    {itm.affiliate_details?.propertyType?.length > 0
-                                      ? itm.affiliate_details?.propertyType.map((dat) => dat?.name).join(",")
+                                    {itm.affiliate_details?.propertyType
+                                      ?.length > 0
+                                      ? itm.affiliate_details?.propertyType
+                                          .map((dat) => dat?.name)
+                                          .join(",")
                                       : "--"}
                                   </p>
                                 </td>
@@ -1361,13 +1449,16 @@ export default function affilate() {
                                       : itm.cat_type == "advertiser_categories"
                                         ? "Advertiser Categories"
                                         : "" || "--"} */}
-                                    {
-                                      itm?.categoryDetails?.slice(0, 1)?.map((dat) => dat?.name)?.join(",")
-                                    }
+                                    {itm?.categoryDetails
+                                      ?.slice(0, 1)
+                                      ?.map((dat) => dat?.name)
+                                      ?.join(",")}
                                   </p>
                                 </td>
                                 <td>
-                                  <label className="form-label">Timezone:</label>
+                                  <label className="form-label">
+                                    Timezone:
+                                  </label>
                                   <p className="affi_tabbls">
                                     {itm.timezone || "--"}
                                   </p>
@@ -1375,7 +1466,7 @@ export default function affilate() {
                               </tr>
                             )}
                           </React.Fragment>
-                        )
+                        );
                       })}
                   </tbody>
                 </table>
@@ -1575,8 +1666,9 @@ export default function affilate() {
         )}
 
         <div
-          className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
-            }`}
+          className={`paginationWrapper ${
+            !loaging && total > 10 ? "" : "d-none"
+          }`}
         >
           <span>
             Show{" "}
@@ -1597,7 +1689,10 @@ export default function affilate() {
             breakLabel="..."
             nextLabel="Next >"
             initialPage={filters?.page}
-            onPageChange={(e) => { if (!initialLoadComplete.current) return; pageChange(e) }}
+            onPageChange={(e) => {
+              if (!initialLoadComplete.current) return;
+              pageChange(e);
+            }}
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
             pageCount={Math.ceil(total / filters?.count)}
