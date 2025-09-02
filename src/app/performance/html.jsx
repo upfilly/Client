@@ -180,6 +180,10 @@ const Html = ({
         startDate = new Date(today.getFullYear() - 1, 0, 1);
         endDate = new Date(today.getFullYear() - 1, 11, 31);
         break;
+      case "This Year":
+        startDate = new Date(today.getFullYear(), 0, 1);
+        endDate = new Date(today.getFullYear(), 11, 31);
+        break;
       case "Current Month":
         startDate = new Date(today.getFullYear(), today.getMonth(), 1);
         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -297,6 +301,7 @@ const Html = ({
                                     "Yesterday",
                                     "Last Month",
                                     "Last Year",
+                                    "This Year",
                                     "Current Month",
                                     "Last 7 Days",
                                     "Custom",

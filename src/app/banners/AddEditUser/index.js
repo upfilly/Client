@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ApiClient from "../../../methods/api/apiClient";
 import loader from "../../../methods/loader";
 import methodModel from "../../../methods/methods";
@@ -23,6 +23,7 @@ const AddEditUser = () => {
     is_animation: false,
     is_deep_linking: false,
     mobile_creative: false,
+    expireCheck: false,
   });
   const [affiliateData, setAffiliateData] = useState();
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
@@ -45,6 +46,7 @@ const AddEditUser = () => {
   });
   const [closeActv, setCloseActv] = useState(false);
   const [closeExp, setCloseExp] = useState(false);
+  const dateRef2 = useRef(null);
   // const [ActivationDate,setActivationDate] = useState('')
   // const [AvailabilityDate,setAvailabilityDate] = useState('')
   // const [ExpirationDate,setExpirationDate] =  useState('')
@@ -97,7 +99,7 @@ const AddEditUser = () => {
         !form?.destination_url ||
         !form?.activation_date ||
         // !form?.availability_date ||
-        !form?.expiration_date ||
+        // !form?.expiration_date ||
         !images ||
         !form?.access_type ||
         !form?.access_type ||
@@ -112,7 +114,7 @@ const AddEditUser = () => {
         !form?.destination_url ||
         !form?.activation_date ||
         // !form?.availability_date ||
-        !form?.expiration_date ||
+        // !form?.expiration_date ||
         !images ||
         !form?.access_type
       ) {
@@ -204,6 +206,7 @@ const AddEditUser = () => {
       ApiClient.get("banner", { id }).then((res) => {
         if (res.success) {
           let value = res.data;
+          console.log(value, "value");
           setDetail(value);
           setform({
             id: value?.id || value?._id,
@@ -216,11 +219,14 @@ const AddEditUser = () => {
             // "category_id": value?.category_id?.id,
             activation_date: new Date(value?.activation_date),
             // availability_date: new Date(value?.availability_date),
-            expiration_date: new Date(value?.expiration_date),
+            expiration_date: value?.expiration_date
+              ? new Date(value?.activation_date)
+              : null,
             image: value?.image,
             is_animation: value?.is_animation,
             is_deep_linking: value?.is_deep_linking,
             mobile_creative: value?.mobile_creative,
+            expireCheck: value?.expireCheck,
           });
           setSelectedItems({
             categories: value?.category_id,
@@ -385,6 +391,15 @@ const AddEditUser = () => {
     setCloseExp(!closeExp);
   };
 
+  const handleClick2 = () => {
+    if (closeExp) {
+      dateRef2.current.blur();
+    } else {
+      dateRef2.current.showPicker();
+    }
+    closeExp(!closeExp);
+  };
+
   return (
     <>
       <Html
@@ -418,6 +433,8 @@ const AddEditUser = () => {
         handleDateClickExp={handleDateClickExp}
         closeExp={closeExp}
         setCloseExp={setCloseExp}
+        handleClick2={handleClick2}
+        dateRef2={dateRef2}
         // setActivationDate={setActivationDate}
         // setAvailabilityDate={setAvailabilityDate}
         // setExpirationDate={setExpirationDate}

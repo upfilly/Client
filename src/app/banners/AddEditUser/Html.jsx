@@ -32,7 +32,10 @@ const Html = ({
   handleDateClickExp,
   closeExp,
   setCloseExp,
+  handleClick2,
+  dateRef2,
 }) => {
+  console.log(form, "form");
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const user = crendentialModel.getUser();
@@ -140,7 +143,7 @@ const Html = ({
                       <div className="form-group ">
                         <div className="select_drop ">
                           <label>
-                           Select Affiliate<span className="star">*</span>
+                            Select Affiliate<span className="star">*</span>
                           </label>
                           <div className="select_row mc-campaign-dropdown">
                             <SelectDropdown
@@ -323,36 +326,63 @@ const Html = ({
                       <></>
                     )}
                   </div> */}
-                  {form?.activation_date && <div className="col-md-6 mb-3">
-                    <label>
-                      Expiration Date<span className="star">*</span>
-                    </label>
-                    <ReactDatePicker
-                      showIcon
-                      isClearable
-                      placeholderText="Select Expiration Date"
-                      selected={form?.expiration_date}
-                      minDate={form?.activation_date}
-                      className="form-control"
-                      open={closeExp}
-                      onInputClick={handleDateClickExp}
-                      onClickOutside={() => setCloseExp(false)}
-                      onChange={(date) =>
-                        setform({ ...form, expiration_date: date })
-                      }
-                      timeInputLabel="Time:"
-                      dateFormat="MM/dd/yyyy h:mm aa"
-                      showTimeInput
-                    />
-
-                    {submitted && !form?.expiration_date ? (
-                      <div className="invalid-feedback d-block">
-                        Expiration Date is Required
+                  <div className="col-md-6 mb-3">
+                    <div className="main_input">
+                      <div className="form-check mb-2">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id="noExpiryDate"
+                          checked={form.expireCheck || false}
+                          onChange={(e) => {
+                            setform({
+                              ...form,
+                              expireCheck: e.target.checked,
+                              // Clear expiration date when "No Expiry Date" is checked
+                              expiration_date: e.target.checked
+                                ? ""
+                                : form.expiration_date,
+                            });
+                          }}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="noExpiryDate"
+                        >
+                          Expiry Date
+                        </label>
                       </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>}
+
+                      {/* {!form.noExpiryDate && ( */}
+                      <>
+                        {/* <label>
+                          Expiry Date
+                        </label> */}
+                        <div className="position-relative">
+                          <ReactDatePicker
+                            showIcon
+                            isClearable
+                            placeholderText="Select Expiration Date"
+                            selected={form?.expiration_date}
+                            minDate={form?.activation_date}
+                            className="form-control"
+                            open={closeExp}
+                            disabled={form?.expireCheck === false}
+                            onInputClick={handleDateClickExp}
+                            onClickOutside={() => setCloseExp(false)}
+                            onChange={(date) =>
+                              setform({ ...form, expiration_date: date })
+                            }
+                            timeInputLabel="Time:"
+                            dateFormat="MM/dd/yyyy h:mm aa"
+                            showTimeInput
+                          />
+                        </div>
+                       
+                      </>
+                      {/* )} */}
+                    </div>
+                  </div>
                   <div className="col-md-6 mb-3 ">
                     <label>Select : </label>
                     <div className="select_check p-0 pl-1">

@@ -46,7 +46,8 @@ const AnalyticsChartData = ({
     const end = new Date(endDate);
     while (currentDate <= end) {
       dates.push(
-        `${currentDate.getFullYear()}-${currentDate.getMonth() + 1
+        `${currentDate.getFullYear()}-${
+          currentDate.getMonth() + 1
         }-${currentDate.getDate()}`
       );
       currentDate.setDate(currentDate.getDate() + 1);
@@ -169,12 +170,14 @@ const AnalyticsChartData = ({
     totalActions2
   );
 
-  const avgConversionRate1 = conversionRates1.length > 0
-    ? calculateTotal(conversionRates1) / conversionRates1.length
-    : 0;
-  const avgConversionRate2 = conversionRates2.length > 0
-    ? calculateTotal(conversionRates2) / conversionRates2.length
-    : 0;
+  const avgConversionRate1 =
+    conversionRates1.length > 0
+      ? calculateTotal(conversionRates1) / conversionRates1.length
+      : 0;
+  const avgConversionRate2 =
+    conversionRates2.length > 0
+      ? calculateTotal(conversionRates2) / conversionRates2.length
+      : 0;
   const conversionPercentage = calculatePercentageDifference(
     avgConversionRate1,
     avgConversionRate2
@@ -254,12 +257,10 @@ const AnalyticsChartData = ({
             const date = allDates1[item.dataIndex];
             const value1 = Number(item.data) || 0;
 
-            // Get the corresponding value from the second series if it exists
-            const value2 = params[1] ? (Number(params[1].data) || 0) : 0;
+         
 
             const percentageDifference = calculatePercentageDifference(
-              value1,
-              value2
+              value1
             );
 
             let formattedValue = value1;
@@ -332,74 +333,96 @@ const AnalyticsChartData = ({
     clickCounts2
   );
 
+  const chartComponents = [
+    {
+      title: "Revenue Over Time",
+      component: (
+        <CustomCard
+          key="revenue"
+          title="Revenue Over Time"
+          isExpanded={expandedCard === "Revenue Over Time"}
+          onExpand={() => toggleExpand("Revenue Over Time")}
+        >
+          <div className="w-100">
+            <ReactECharts option={revenueChartOption} className="chart" />
+          </div>
+        </CustomCard>
+      ),
+      isExpanded: expandedCard === "Revenue Over Time",
+    },
+    {
+      title: "Actions",
+      component: (
+        <CustomCard
+          key="actions"
+          title="Actions"
+          isExpanded={expandedCard === "Actions"}
+          onExpand={() => toggleExpand("Actions")}
+        >
+          <div className="w-100">
+            <ReactECharts option={actionsChartOption} className="chart" />
+          </div>
+        </CustomCard>
+      ),
+      isExpanded: expandedCard === "Actions",
+    },
+    {
+      title: "Conversion Rate",
+      component: (
+        <CustomCard
+          key="conversion"
+          title="Conversion Rate"
+          isExpanded={expandedCard === "Conversion Rate"}
+          onExpand={() => toggleExpand("Conversion Rate")}
+        >
+          <div className="w-100">
+            <ReactECharts option={conversionChartOption} className="chart" />
+          </div>
+        </CustomCard>
+      ),
+      isExpanded: expandedCard === "Conversion Rate",
+    },
+    {
+      title: "Clicks",
+      component: (
+        <CustomCard
+          key="clicks"
+          title="Clicks"
+          isExpanded={expandedCard === "Clicks"}
+          onExpand={() => toggleExpand("Clicks")}
+        >
+          <div className="w-100">
+            <ReactECharts option={clicksChartOption} className="chart" />
+          </div>
+        </CustomCard>
+      ),
+      isExpanded: expandedCard === "Clicks",
+    },
+  ];
+
+  const sortedCharts = [...chartComponents].sort((a, b) => {
+    if (a.isExpanded && !b.isExpanded) return -1;
+    if (!a.isExpanded && b.isExpanded) return 1;
+    return 0;
+  });
+
   return (
     <div className="analytics-container">
       <div className="row">
-        <div
-          className={
-            expandedCard === "Revenue Over Time"
-              ? "col-12 mt-3"
-              : "col-lg-6 mt-3"
-          }
-        >
-          <CustomCard
-            title="Revenue Over Time"
-            isExpanded={expandedCard === "Revenue Over Time"}
-            onExpand={() => toggleExpand("Revenue Over Time")}
+        {sortedCharts.map((chart, index) => (
+          <div
+            key={chart.title}
+            className={
+              chart.isExpanded
+                ? "col-12 mt-3"
+                : index === 0 && expandedCard
+                ? "col-lg-6 mt-3"
+                : "col-md-6 mt-3"
+            }
           >
-            <div className="w-100">
-              <ReactECharts option={revenueChartOption} className="chart" />
-            </div>
-          </CustomCard>
-        </div>
-
-        <div
-          className={
-            expandedCard === "Actions" ? "col-12 mt-3" : "col-md-6 mt-3"
-          }
-        >
-          <CustomCard
-            title="Actions"
-            isExpanded={expandedCard === "Actions"}
-            onExpand={() => toggleExpand("Actions")}
-          >
-            <div className="w-100">
-              <ReactECharts option={actionsChartOption} className="chart" />
-            </div>
-          </CustomCard>
-        </div>
-
-        <div
-          className={
-            expandedCard === "Conversion Rate" ? "col-12 mt-3" : "col-md-6 mt-3"
-          }
-        >
-          <CustomCard
-            title="Conversion Rate"
-            isExpanded={expandedCard === "Conversion Rate"}
-            onExpand={() => toggleExpand("Conversion Rate")}
-          >
-            <div className="w-100">
-              <ReactECharts option={conversionChartOption} className="chart" />
-            </div>
-          </CustomCard>
-        </div>
-
-        <div
-          className={
-            expandedCard === "Clicks" ? "col-12 mt-3" : "col-md-6 mt-3"
-          }
-        >
-          <CustomCard
-            title="Clicks"
-            isExpanded={expandedCard === "Clicks"}
-            onExpand={() => toggleExpand("Clicks")}
-          >
-            <div className="w-100">
-              <ReactECharts option={clicksChartOption} className="chart" />
-            </div>
-          </CustomCard>
-        </div>
+            {chart.component}
+          </div>
+        ))}
       </div>
     </div>
   );

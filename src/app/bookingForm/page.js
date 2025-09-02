@@ -408,7 +408,7 @@ export default function BillingForm() {
           window.location.href = res?.data?.url;
         }
       } else {
-        toast.error(res?.error?.message || "An error occurred");
+        // toast.error(res?.error?.message || "An error occurred");
         loader(false);
       }
     }).catch(error => {
