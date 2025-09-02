@@ -298,6 +298,11 @@ const Html = ({
                     ) : (
                       <></>
                     )}
+                    {errors.dateComparison && (
+                      <div className="text-danger small">
+                        {errors.dateComparison}
+                      </div>
+                    )}
                   </div>
                   {/* <div className="col-md-6 mb-3">
                     <label>
@@ -380,6 +385,11 @@ const Html = ({
                           {errors.expirationDate && (
                             <div className="text-danger small">
                               {errors.expirationDate}
+                            </div>
+                          )}
+                          {errors.dateComparison && (
+                            <div className="text-danger small">
+                              {errors.dateComparison}
                             </div>
                           )}
                         </div>

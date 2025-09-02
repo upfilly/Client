@@ -44,6 +44,7 @@ const AddEditUser = () => {
     DestinationUrl: "",
     websiteAllowed: "",
     expirationDate: "",
+    dateComparison: "", // Added for date comparison error
   });
   const [closeActv, setCloseActv] = useState(false);
   const [closeExp, setCloseExp] = useState(false);
@@ -352,10 +353,22 @@ const AddEditUser = () => {
   const validateForm = () => {
     let websiteAllowedError = "";
     let expirationDateError = "";
+    let dateComparisonError = "";
 
     if (form?.expireCheck && !form?.expiration_date) {
-      expirationDateError =
-        "Expiration date is required when expiration is enabled";
+      expirationDateError = "Expiration date is required";
+    }
+
+    // Check if both dates exist and are the same
+    if (form?.activation_date && form?.expiration_date) {
+      const activationDate = new Date(form.activation_date);
+      const expirationDate = new Date(form.expiration_date);
+
+      // Compare dates without time component
+      if (activationDate.toDateString() === expirationDate.toDateString()) {
+        dateComparisonError =
+          "Activation date and expiration date cannot be the same";
+      }
     }
 
     if (form?.destination_url) {
@@ -376,6 +389,7 @@ const AddEditUser = () => {
         : "",
       websiteAllowed: websiteAllowedError,
       expirationDate: expirationDateError,
+      dateComparison: dateComparisonError,
     };
 
     setErrors(newErrors);
