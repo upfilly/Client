@@ -310,7 +310,7 @@ const Html = ({
                   )}
 
                   {/* Add this conditional note */}
-                  {(!profileData?.currencies ||
+                  {(!profileData?.currencies || profileData?.currencies?.length == 0 ||
                     profileData?.currencies == undefined) && (
                     <div className="text-danger  small mt-2">
                       Note: You don't have any currencies. Please update your
