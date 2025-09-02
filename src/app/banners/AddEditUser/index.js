@@ -43,6 +43,7 @@ const AddEditUser = () => {
     SelectedCampaign: "",
     DestinationUrl: "",
     websiteAllowed: "",
+    expirationDate: "",
   });
   const [closeActv, setCloseActv] = useState(false);
   const [closeExp, setCloseExp] = useState(false);
@@ -184,17 +185,7 @@ const AddEditUser = () => {
   const emailCheck = (email) => {
     let isValid = methodModel.emailvalidation(email);
     if (isValid) {
-      // setEmailLoader(true)
-      // ApiClient.get('api/check/email',{email:email}).then(res=>{
-      //     if(!res.success){
-      //         if(detail?.email!=email){
-      //             setEmailErr(res.error.message)
-      //         }
-      //     }else{
-      //         setEmailErr('')
-      //     }
-      //     setEmailLoader(false)
-      // })
+      // Email validation logic
     }
   };
 
@@ -360,6 +351,12 @@ const AddEditUser = () => {
 
   const validateForm = () => {
     let websiteAllowedError = "";
+    let expirationDateError = "";
+
+    if (form?.expireCheck && !form?.expiration_date) {
+      expirationDateError =
+        "Expiration date is required when expiration is enabled";
+    }
 
     if (form?.destination_url) {
       if (!isValidUrl(form?.destination_url)) {
@@ -378,6 +375,7 @@ const AddEditUser = () => {
         ? "Destination URL is required"
         : "",
       websiteAllowed: websiteAllowedError,
+      expirationDate: expirationDateError,
     };
 
     setErrors(newErrors);

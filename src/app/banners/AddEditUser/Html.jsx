@@ -270,7 +270,7 @@ const Html = ({
                     </label>
                     <ReactDatePicker
                       showIcon
-                      isClearable
+                      isClearable={form?.activation_date ? true : false}
                       placeholderText="Select Activation Date"
                       selected={form?.activation_date}
                       className="form-control"
@@ -361,7 +361,7 @@ const Html = ({
                         <div className="position-relative">
                           <ReactDatePicker
                             showIcon
-                            isClearable
+                            isClearable={form?.expiration_date ? true : false}
                             placeholderText="Select Expiration Date"
                             selected={form?.expiration_date}
                             minDate={form?.activation_date}
@@ -377,8 +377,12 @@ const Html = ({
                             dateFormat="MM/dd/yyyy h:mm aa"
                             showTimeInput
                           />
+                          {errors.expirationDate && (
+                            <div className="text-danger small">
+                              {errors.expirationDate}
+                            </div>
+                          )}
                         </div>
-                       
                       </>
                       {/* )} */}
                     </div>

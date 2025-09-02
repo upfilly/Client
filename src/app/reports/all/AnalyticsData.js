@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ExpandOutlined, CompressOutlined } from "@ant-design/icons";
 import ReactECharts from "echarts-for-react";
 import "./AnalyticsDashboard.scss";
 
-const CustomCard = ({ title, children, isExpanded, onExpand }) => (
-  <div className={`custom-card ${isExpanded ? "expanded" : ""}`}>
+const CustomCard = ({ title, children, isExpanded, onExpand, cardRef }) => (
+  <div className={`custom-card ${isExpanded ? "expanded" : ""}`} ref={cardRef}>
     <div className="card-header" onClick={onExpand}>
       <h2 className="custom-card-title">{title}</h2>
       <span className="expand-icon">
@@ -27,6 +27,45 @@ const AnalyticsChartData = ({
 }) => {
   const { selection1, selection2, selection3 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
+  const revenueCardRef = useRef(null);
+  const actionsCardRef = useRef(null);
+  const conversionCardRef = useRef(null);
+  const clicksCardRef = useRef(null);
+
+  useEffect(() => {
+    if (expandedCard) {
+      setTimeout(() => {
+        switch (expandedCard) {
+          case "Revenue Over Time":
+            revenueCardRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            break;
+          case "Action":
+            actionsCardRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            break;
+          case "Conversion Rate":
+            conversionCardRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            break;
+          case "Clicks":
+            clicksCardRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            break;
+          default:
+            break;
+        }
+      }, 10);
+    }
+  }, [expandedCard]);
 
   const toggleExpand = (cardTitle) => {
     setExpandedCard(expandedCard === cardTitle ? null : cardTitle);
@@ -257,11 +296,7 @@ const AnalyticsChartData = ({
             const date = allDates1[item.dataIndex];
             const value1 = Number(item.data) || 0;
 
-         
-
-            const percentageDifference = calculatePercentageDifference(
-              value1
-            );
+            const percentageDifference = calculatePercentageDifference(value1);
 
             let formattedValue = value1;
             if (isRevenue) {
@@ -342,6 +377,7 @@ const AnalyticsChartData = ({
           title="Revenue Over Time"
           isExpanded={expandedCard === "Revenue Over Time"}
           onExpand={() => toggleExpand("Revenue Over Time")}
+          cardRef={revenueCardRef}
         >
           <div className="w-100">
             <ReactECharts option={revenueChartOption} className="chart" />
@@ -358,6 +394,7 @@ const AnalyticsChartData = ({
           title="Actions"
           isExpanded={expandedCard === "Actions"}
           onExpand={() => toggleExpand("Actions")}
+          cardRef={actionsCardRef}
         >
           <div className="w-100">
             <ReactECharts option={actionsChartOption} className="chart" />
@@ -374,6 +411,7 @@ const AnalyticsChartData = ({
           title="Conversion Rate"
           isExpanded={expandedCard === "Conversion Rate"}
           onExpand={() => toggleExpand("Conversion Rate")}
+          cardRef={conversionCardRef}
         >
           <div className="w-100">
             <ReactECharts option={conversionChartOption} className="chart" />
@@ -390,6 +428,7 @@ const AnalyticsChartData = ({
           title="Clicks"
           isExpanded={expandedCard === "Clicks"}
           onExpand={() => toggleExpand("Clicks")}
+          cardRef={clicksCardRef}
         >
           <div className="w-100">
             <ReactECharts option={clicksChartOption} className="chart" />
