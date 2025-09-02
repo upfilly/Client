@@ -164,9 +164,13 @@ input[type="radio"] {
     flex-direction: column;
   }
 
-  .date-picker-inner {
+  .date-picker-wrapper .date-picker-inner {
     flex-wrap: nowrap !important;
-  }
+    flex-direction: column;
+  
+  } 
+
+
 
   .rdrMonth {
     width: 20.667em;
@@ -261,15 +265,16 @@ input[type="radio"] {
 }
 
 /* Responsive styles specifically for the date picker component */
- @media (max-width: 768px) {
-   .single-date-picker-container {
+@media (max-width: 768px) {
+  .single-date-picker-container {
     flex-direction: column !important;
-   }
+  }
 
 
-} 
+}
 
 @media (max-width: 575px) {
+
   .single-date-picker-container,
   .date-picker-container {
     width: 255px !important;
@@ -326,7 +331,7 @@ input[type="radio"] {
     flex-direction: column;
   }
 
-  .cancel-btn, 
+  .cancel-btn,
   .apply-btn {
     width: 100% !important;
     padding: 6px !important;
@@ -343,12 +348,9 @@ input[type="radio"] {
     font-size: 12px !important;
   }
 
-   .single-date-picker-wrapper {
+  .single-date-picker-wrapper {
     justify-content: center !important;
-   }
+  }
 
 
 }
-
-
-
