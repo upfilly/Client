@@ -294,7 +294,7 @@ export default function CampaignReport() {
                   <div className="accordion-body">
 
                     {/* Date Range Selector */}
-                    <div className="col-12 col-md-6 mb-2">
+                    <div className="col-12 col-md-6 mb-2 p-0">
                       <div className="date-range-container">
                         <div className="form-group">
                           <label className="form-label">Date Range</label>
@@ -372,7 +372,7 @@ export default function CampaignReport() {
                     </div>
 
                     {/* Campaign Dropdown */}
-                    <div className="col-12">
+                    <div className="col-12 p-0">
                       <div className="select-campaign-wrapper">
                         <label className="form-label">Campaigns</label>
                         <MultiSelectDropdownWithCheckboxes

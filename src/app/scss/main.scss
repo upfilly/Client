@@ -6332,8 +6332,8 @@ input.dateselect {
     overflow-y: scroll !important;
     height: 300px;
     top: 20px;
-    width: 200px !important;
-    left: -10px;
+    width: 100% !important;
+    // left: -10px;
   }
 
 
@@ -6724,3 +6724,24 @@ width: 5px !important;
 .sidebar_main .left_sidebar .top_scrollbx::-webkit-scrollbar-thumb:hover {
    background: #89c2ff !important;
 } 
+
+  ::-webkit-scrollbar {
+    width: 5px !important;
+    height: 8px !important;
+    background-color: #f1f1f1 !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #89c2ff !important;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #89c2ff !important;
+  }
+
+
+
+
+
+
