@@ -59,7 +59,7 @@ const Detail = (p) => {
     }).then((result) => {
       if (result.isConfirmed) {
         loader(true);
-        ApiClient.delete(`delete?model=users&id=${id}`).then((res) => {
+        ApiClient.delete(`deleteinviteuser?id=${id}`).then((res) => {
           if (res.success) {
             toast.success(res.message);
             // clear()
