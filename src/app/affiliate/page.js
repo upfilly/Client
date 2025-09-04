@@ -351,7 +351,6 @@ export default function affilate() {
       };
     }
 
-    console.log("API Call with filters:", filter);
     ApiClient.get(`getAllAffiliateForBrand`, filter)
       .then((res) => {
         if (res.success) {
@@ -1037,7 +1036,7 @@ export default function affilate() {
                           ChangeStatus(e.value);
                         }}
                         options={[
-                          { id: "not_invited", name: "Not Invited" },
+                          // { id: "not_invited", name: "Not Invited" },
                           { id: "accepted", name: "Accepted" },
                           { id: "pending", name: "Pending" },
                           { id: "rejected", name: "Rejected" },

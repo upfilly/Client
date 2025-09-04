@@ -213,7 +213,7 @@ const Html = ({
                               }
                               onClick={() => statusChange(itm)}
                             >
-                              {methodModel.capitalizeFirstLetter(itm.status)}
+                              {methodModel.capitalizeFirstLetter(itm?.status == "active"?"Active":"Inactive")}
                             </span>
                           </div>
                         </td>
