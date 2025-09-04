@@ -50,7 +50,7 @@ const banneres = () => {
         ...filters,
         ...p,
         // addedBy: filters.addedBy,
-        affiliate_id: user?.id,
+        affiliate_banner_id: user?.id,
       };
     }
     let url = "banners";
