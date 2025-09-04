@@ -137,6 +137,14 @@ input.form-control-file.over_input {
     color: #fff;
 }
 
+/* In your CSS file */
+input.form-control.disabled-datepicker {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
 .table.table-width td {
     vertical-align: middle;
 }.nav-tabs .nav-item.show .nav-link,

@@ -90,7 +90,7 @@ const Html = ({
                       <th
                         scope="col"
                         className="table_data"
-                        onClick={(e) => sorting("name")}
+                        onClick={(e) => sorting("campaign_name")}
                       >
                         Name {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
@@ -135,7 +135,7 @@ const Html = ({
                             <div className="user_name">
                               <h4 className="user">
                                 {methodModel.capitalizeFirstLetter(
-                                  itm?.campaign_details?.name
+                                  itm?.campaign_name
                                 )}
                               </h4>
                             </div>

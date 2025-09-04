@@ -207,7 +207,7 @@ const Html = ({
       filters={undefined}
     >
       <form onSubmit={handleSubmit}>
-        <div className="sidebar-left-content">
+        <div className="sidebar-left-content" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
           <div className="pprofile1 card card-shadow p-3 p-sm-4">
             <div className="">
               <div className="main_title_head profile-card">

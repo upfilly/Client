@@ -369,14 +369,12 @@ const Html = ({
                             placeholderText="Select Expiration Date"
                             selected={form?.expiration_date}
                             minDate={form?.activation_date}
-                            className="form-control"
-                            // open={closeExp}
+                            className={`form-control ${form?.expireCheck === true ? 'disabled-datepicker' : ''}`}
+                            open={closeExp}
                             disabled={form?.expireCheck === true}
                             onInputClick={handleDateClickExp}
                             onClickOutside={() => setCloseExp(false)}
-                            onChange={(date) =>
-                              setform({ ...form, expiration_date: date })
-                            }
+                            onChange={(date) => setform({ ...form, expiration_date: date })}
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm aa"
                             showTimeInput

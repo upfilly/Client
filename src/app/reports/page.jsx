@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/global/layout";
 import "./style.scss";
 import crendentialModel from "@/models/credential.model";
@@ -33,7 +33,25 @@ export default function CampaignReport() {
   const [dateRange, setDateRange] = useState([null, null]);
   const [start, end] = dateRange;
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
-  const [resetDropdown, setResetDropdown] = useState(0); // Add a reset trigger
+  const [resetDropdown, setResetDropdown] = useState(0);
+  const datePickerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target) &&
+        showDateSuggestions
+      ) {
+        setShowDateSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDateSuggestions]);
 
   useEffect(() => {
     const isDateFilterActive = start !== null && end !== null;
@@ -266,7 +284,7 @@ export default function CampaignReport() {
         filters={filters}
         hasActiveFilters={hasActiveFilters}
       >
-        <div className='sidebar-left-content'>
+        <div className='sidebar-left-content' onClick={() => { if (showDateSuggestions) { setShowDateSuggestions(false) } }}>
           <div className='nmain-list  mb-3 main_box pt-0'>
 
 
@@ -294,7 +312,7 @@ export default function CampaignReport() {
                   <div className="accordion-body">
 
                     {/* Date Range Selector */}
-                    <div className="col-12 col-md-6 mb-2 p-0">
+                    <div className="col-12 col-md-6 mb-2 p-0" ref={datePickerRef}>
                       <div className="date-range-container">
                         <div className="form-group">
                           <label className="form-label">Date Range</label>

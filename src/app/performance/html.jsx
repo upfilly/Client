@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Layout from "@/app/components/global/layout";
 import "./style.scss";
 import { useRouter } from "next/navigation";
@@ -35,6 +35,24 @@ const Html = ({
   const [showDateSuggestions, setShowDateSuggestions] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState("Today");
   const [showResetButton, setShowResetButton] = useState(false);
+  const datePickerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target) &&
+        showDateSuggestions
+      ) {
+        setShowDateSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDateSuggestions]);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -279,7 +297,7 @@ const Html = ({
                       </div>
                     </div>
                     <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-2">
-                      <div className="date-range-container">
+                      <div className="date-range-container" ref={datePickerRef}>
                         <div className="form-group">
                           <div
                             className="date-picker-trigger form-control"
@@ -308,12 +326,12 @@ const Html = ({
                                   ].map((period) => (
                                     <div
                                       key={period}
-                                      className={`suggestion-item ${
-                                        selectedPeriod === period
+                                      className={`suggestion-item ${selectedPeriod === period
                                           ? "selected"
                                           : ""
-                                      }`}
-                                      onClick={() => {
+                                        }`}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
                                         if (period === "Custom") {
                                           setSelectedPeriod("Custom");
                                           setShowDateSuggestions(true);
@@ -327,7 +345,7 @@ const Html = ({
                                         name="datePeriod"
                                         value={period}
                                         checked={selectedPeriod === period}
-                                        onChange={() => {}}
+                                        onChange={() => { }}
                                         className="radio-input"
                                       />
                                       <span className="radio-custom"></span>
@@ -343,6 +361,9 @@ const Html = ({
                                     onChange={(update) => {
                                       setDateRange([update[0], update[1]]);
                                       setSelectedPeriod("Custom");
+                                    }}
+                                    onClickOutside={() => {
+                                      // Don't close the date picker when clicking on the calendar
                                     }}
                                     startDate={start}
                                     endDate={end}

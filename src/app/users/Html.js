@@ -133,7 +133,7 @@ const Html = ({
                       <thead className="table_head">
                         <tr className="heading_row">
                           <th
-                            onClick={(e) => sorting("fullName")}
+                            onClick={(e) => sorting("firstName")}
                             scope="col"
                             className="table_data"
                           >
