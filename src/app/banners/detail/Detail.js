@@ -16,7 +16,7 @@ const Detail = (p) => {
     
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`link/generate/detail`, { id: did }).then(res => {
+        ApiClient.get(`banner`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
