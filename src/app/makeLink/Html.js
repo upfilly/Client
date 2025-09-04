@@ -64,6 +64,13 @@ const Html = () => {
 
   const userWebsite = getUserWebsiteDomain();
 
+  // Set the user website as the default destination URL
+  useEffect(() => {
+    if (userWebsite) {
+      setDestinationUrl(userWebsite);
+    }
+  }, [userWebsite]);
+
   const handleInputChange = (selected, value) => {
     setInputValues((prevState) => ({
       ...prevState,
@@ -239,6 +246,28 @@ const Html = () => {
       SelectedCampaign: !SelectedCampaign ? "Please select a campaign" : "",
     };
 
+    // Validate URL domain
+    if (DestinationUrl) {
+      try {
+        const inputUrl = new URL(
+          DestinationUrl.startsWith("http")
+            ? DestinationUrl
+            : `https://${DestinationUrl}`
+        );
+        const userUrl = new URL(userWebsite);
+
+        if (inputUrl.hostname !== userUrl.hostname) {
+          newErrors.websiteAllowed = "URL must belong to your website domain";
+        } else {
+          newErrors.websiteAllowed = "";
+        }
+      } catch (e) {
+        newErrors.websiteAllowed = "Please enter a valid URL";
+      }
+    } else {
+      newErrors.websiteAllowed = "Please enter a destination URL";
+    }
+
     setErrors(newErrors);
     return !Object.values(newErrors).some((error) => error !== "");
   };
@@ -252,10 +281,10 @@ const Html = () => {
 
     const base_url = "https://api.upfilly.com/link/";
 
-    // Construct the full URL using the user's website and the entered path (if any)
-    let fullDestinationUrl = userWebsite;
-    if (DestinationUrl) {
-      fullDestinationUrl += (DestinationUrl.startsWith("/") ? DestinationUrl : "/" + DestinationUrl);
+    // Use the destination URL entered by the user
+    let fullDestinationUrl = DestinationUrl;
+    if (fullDestinationUrl && !fullDestinationUrl.startsWith("http")) {
+      fullDestinationUrl = "https://" + fullDestinationUrl;
     }
 
     const rawUrl = fullDestinationUrl.replace(/^https?:\/\//i, "");
@@ -340,8 +369,9 @@ const Html = () => {
                     </label>
 
                     <select
-                      className={`form-select mb-2 ${errors.selectedBrand && "is-invalid"
-                        }`}
+                      className={`form-select mb-2 ${
+                        errors.selectedBrand && "is-invalid"
+                      }`}
                       id="brandSelect"
                       value={selectedBrand}
                       onChange={handleBrandChange}
@@ -367,8 +397,9 @@ const Html = () => {
                       Select Campaign<span className="star">*</span>
                     </label>
                     <select
-                      className={`form-select mb-2 ${errors.SelectedCampaign && "is-invalid"
-                        }`}
+                      className={`form-select mb-2 ${
+                        errors.SelectedCampaign && "is-invalid"
+                      }`}
                       id="brandSelect"
                       value={SelectedCampaign}
                       onChange={handleCampaignChange}
@@ -391,34 +422,31 @@ const Html = () => {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6 mb-3">
+                <div className="col-md-12 mb-3">
                   <label>
-                    Destination Path (Optional)
+                    Destination URL<span className="star">*</span>
                   </label>
-                  <div className="input-group border_description">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">{userWebsite}/</span>
+                  <input
+                    type="text"
+                    className={`form-control ${
+                      errors.websiteAllowed && "is-invalid"
+                    }`}
+                    value={DestinationUrl}
+                    onChange={(e) => setDestinationUrl(e.target.value)}
+                    placeholder="Enter your website URL"
+                  />
+                  {errors.websiteAllowed && (
+                    <div className="invalid-feedback d-block">
+                      {errors.websiteAllowed}
                     </div>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={DestinationUrl}
-                      onChange={(e) => {
-                        const path = e.target.value;
-                        // Remove any leading slashes to avoid double slashes
-                        const cleanPath = path.replace(/^\//, '');
-                        setDestinationUrl(cleanPath);
-                      }}
-                      placeholder="path/to/page (optional)"
-                    />
-                  </div>
+                  )}
                   <small className="form-text text-muted">
-                    Full URL: {userWebsite}{DestinationUrl ? `/${DestinationUrl}` : ''}
+                    Default: {userWebsite}
                   </small>
                 </div>
 
                 <div className="col-12 col-md-12 mb-3">
-                  <div className="form-check pl-4" >
+                  <div className="form-check pl-4">
                     <input
                       className="form-check-input"
                       type="checkbox"

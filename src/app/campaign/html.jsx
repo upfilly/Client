@@ -29,6 +29,7 @@ const Html = ({
   activeTab,
   setActiveTab,
   getData,
+  archiveStatus,
 }) => {
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -54,6 +55,7 @@ const Html = ({
 
   // Filter data based on active tab
   const filteredData = data;
+  console.log(filteredData, "filteredData");
 
   useEffect(() => {
     activeTab === "active"
@@ -109,7 +111,7 @@ const Html = ({
                 theme="search"
                 id="statusDropdown"
                 displayValue="name"
-                placeholder="Status " 
+                placeholder="Status "
                 intialValue={filters.status}
                 result={(e) => {
                   ChangeStatus(e.value);
@@ -130,7 +132,6 @@ const Html = ({
                   Reset
                 </button>
               )}
-
             </div>
 
             {permission("campaign_add") && activeTab === "active" && (
@@ -165,19 +166,39 @@ const Html = ({
                   >
                     Event Type{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data" onClick={(e) => sorting("access_type")}>
+                  <th
+                    scope="col"
+                    className="table_data"
+                    onClick={(e) => sorting("access_type")}
+                  >
                     Access Type{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data" onClick={(e) => sorting("affiliateCount")}>
+                  <th
+                    scope="col"
+                    className="table_data"
+                    onClick={(e) => sorting("affiliateCount")}
+                  >
                     Affiliates{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data" onClick={(e) => sorting("commission")}>
+                  <th
+                    scope="col"
+                    className="table_data"
+                    onClick={(e) => sorting("commission")}
+                  >
                     Commission{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data" onClick={(e) => sorting("lead_amount")}>
+                  <th
+                    scope="col"
+                    className="table_data"
+                    onClick={(e) => sorting("lead_amount")}
+                  >
                     Lead Amount{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  <th scope="col" className="table_data" onClick={(e) => sorting("currencies")}>
+                  <th
+                    scope="col"
+                    className="table_data"
+                    onClick={(e) => sorting("currencies")}
+                  >
                     Currency{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
                   <th scope="col" className="table_data">
@@ -190,15 +211,18 @@ const Html = ({
                   >
                     Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
                   </th>
-                  {activeTab != "archived" && <th scope="col" className="table_data">
-                    Action
-                  </th>}
+                  {activeTab != "archived" && (
+                    <th scope="col" className="table_data">
+                      Action
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody>
                 {!loaging &&
                   filteredData &&
                   filteredData.map((itm, i) => {
+                    console.log(itm, "itm");
                     return (
                       <tr className="data_row" key={i}>
                         <td

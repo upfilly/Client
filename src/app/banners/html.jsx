@@ -25,11 +25,15 @@ const Html = ({
   setFilter,
   filter,
   getData,
+  campaign,
+  brandData,
+  changeBrand,
 }) => {
+  console.log(campaign, "campaign");
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
 
-  // console.log(data,"dhsjghgfj")
+  console.log(data, "data");
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -61,8 +65,25 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
-       
         <div className="d-flex justify-content-md-end gap-2 flex-wrap align-items-center all_flexbx">
+          {user?.role == "affiliate" && (
+            <SelectDropdown
+              theme="search"
+              id="brandDropdown"
+              style={"cursor: pointer"}
+              displayValue="name"
+              placeholder="Select Brand"
+              intialValue={filters.addedBy}
+              result={(e) => {
+                changeBrand(e.value);
+              }}
+              options={brandData.map((item) => ({
+                id: item?.id,
+                name: item?.userName,
+              }))}
+            />
+          )}
+
           <SelectDropdown
             theme="search"
             id="statusDropdown"
@@ -89,8 +110,8 @@ const Html = ({
                   className="btn btn-primary mb-0 set_reset"
                   onClick={(e) => add()}
                 >
-                     <i className="fa fa-plus mr-1"> </i> 
-                  Add Banner 
+                  <i className="fa fa-plus mr-1"> </i>
+                  Add Banner
                 </a>
               </>
             )}
@@ -117,7 +138,7 @@ const Html = ({
                                     options={rolesModel.list}
                                 />: <></>} */}
 
-            {filters.status ? (
+            {filters.status || filters?.addedBy ? (
               <>
                 <a className="btn btn-primary" onClick={(e) => reset()}>
                   Reset

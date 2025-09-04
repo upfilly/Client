@@ -343,7 +343,6 @@ const Html = ({
                             setform({
                               ...form,
                               expireCheck: e.target.checked,
-                              // Clear expiration date when "No Expiry Date" is checked
                               expiration_date: e.target.checked
                                 ? ""
                                 : form.expiration_date,
@@ -354,7 +353,7 @@ const Html = ({
                           className="form-check-label"
                           htmlFor="noExpiryDate"
                         >
-                          Expiry Date
+                          No Expiry Date
                         </label>
                       </div>
 
@@ -371,8 +370,8 @@ const Html = ({
                             selected={form?.expiration_date}
                             minDate={form?.activation_date}
                             className="form-control"
-                            open={closeExp}
-                            disabled={form?.expireCheck === false}
+                            // open={closeExp}
+                            disabled={form?.expireCheck === true}
                             onInputClick={handleDateClickExp}
                             onClickOutside={() => setCloseExp(false)}
                             onChange={(date) =>
@@ -400,7 +399,7 @@ const Html = ({
                   <div className="col-md-6 mb-3 ">
                     <label>Select : </label>
                     <div className="select_check p-0 pl-1">
-                      <div className="form-check">
+                      {/* <div className="form-check">
                         <input
                           type="checkbox"
                           className="form-check-input mr-4"
@@ -415,7 +414,7 @@ const Html = ({
                         <label className="form-check-label">
                           Is Deep Linking
                         </label>
-                      </div>
+                      </div> */}
 
                       <div className="form-check">
                         <input

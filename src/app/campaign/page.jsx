@@ -49,7 +49,13 @@ const Users = () => {
     let url = "campaign/brand/all";
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
-        setData(res.data.data);
+        const updatedData = res.data.data.map((item) => {
+          if (item.isArchive) {
+            return { ...item, status: "deactive" };
+          }
+          return item;
+        });
+        setData(updatedData);
         setTotal(res.data.total_count);
       }
       setLoader(false);
@@ -78,6 +84,7 @@ const Users = () => {
           id: id,
           name: itm?.name,
           isArchive: itm?.isArchive ? false : true,
+          status: "deactive",
         }).then((res) => {
           if (res.success) {
             toast.success(res.message);
@@ -110,7 +117,11 @@ const Users = () => {
   };
 
   const statusChange = (itm) => {
-    // let modal='users'
+    if (itm.isArchive) {
+      toast.info("Cannot change status of an archived campaign");
+      return;
+    }
+
     let status = "active";
     if (itm.status == "active") status = "deactive";
 
@@ -154,6 +165,12 @@ const Users = () => {
   };
 
   const edit = (id) => {
+    const item = data.find((item) => item.id === id || item._id === id);
+    if (item && item.isArchive) {
+      toast.info("Cannot edit an archived campaign");
+      return;
+    }
+
     let url = `/campaign/edit/${id}`;
     if (role) url = `/campaign/${role}/edit/${id}`;
     history.push(url);
