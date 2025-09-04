@@ -262,9 +262,15 @@ table {
 /* Change the shape of the scrollbar in Firefox */
 /* Note: Firefox uses a different pseudo-element for styling scrollbars */
 * {
-  scrollbar-width: thin;
+
+}
+
+::-webkit-scrollbar-thumb  {
   background-color: #f1f1f1 !important;
 }
+
+
+
 
 /* Change the shape of the scrollbar thumb in Firefox */
 *::-webkit-scrollbar-thumb {

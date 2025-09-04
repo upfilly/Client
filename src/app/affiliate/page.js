@@ -30,8 +30,8 @@ export default function affilate() {
     role: "affiliate",
     search: "",
     isDeleted: false,
-    status: "",
-    invite_status: "",
+    association_status: "",
+    association_status: "",
     end_date: "",
     start_date: "",
     affiliate_group_id: "",
@@ -150,7 +150,7 @@ export default function affilate() {
 
   const resetUrl = () => {
     let filter = {
-      status: "",
+      association_status: "",
       role: "",
       search: "",
       page: 1,
@@ -367,7 +367,7 @@ export default function affilate() {
   }, []);
 
   const getCategory = (p = {}) => {
-    let url = `categoryWithSub?page&count&search&cat_type=promotional_models,property_types&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=promotional_models,property_types&association_status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data.data;
@@ -542,7 +542,7 @@ export default function affilate() {
   };
 
   const ChangeStatus = (e) => {
-    const newFilters = { ...filters, invite_status: e, page: 1 };
+    const newFilters = { ...filters, association_status: e, page: 1 };
     setFilter(newFilters);
     getData(newFilters);
   };
@@ -555,8 +555,8 @@ export default function affilate() {
 
   const reset = () => {
     let newFilter = {
-      status: "",
-      invite_status: "",
+      association_status: "",
+      association_status: "",
       role: "affiliate",
       search: "",
       campaign: "",
@@ -587,7 +587,7 @@ export default function affilate() {
 
   const handleAffiliateGroup = () => {
     ApiClient.get("affiliate-groups", {
-      status: "active",
+      association_status: "active",
       addedBy: user?.id,
       group_type: "affiliate",
     }).then((res) => {
@@ -652,7 +652,7 @@ export default function affilate() {
     if (e.target.checked) {
       // Select all not-invited affiliates
       const allNotInvitedIds = data?.data
-        .filter((itm) => itm.invite_status === "not_invited")
+        .filter((itm) => itm.association_status === "not_invited")
         .map((itm) => itm.id);
       setselectedAffiliteid(allNotInvitedIds);
     } else {
@@ -1025,14 +1025,14 @@ export default function affilate() {
                     </div>
 
                     {/* Invitation Status Filter */}
-                    <div className="w-25  All-status-dropdown">
+                    <div className="w-25  All-association_status-dropdown">
                       <SelectDropdown
                         theme="search"
                         id="statusDropdown"
                         displayValue="name"
                         placeholder="Status"
                         className="mt-2"
-                        intialValue={filters.invite_status}
+                        intialValue={filters.association_status}
                         result={(e) => {
                           ChangeStatus(e.value);
                         }}
@@ -1117,9 +1117,9 @@ export default function affilate() {
                   {(selectedSubSubCategory?.length ||
                     selectedCategory?.length ||
                     selectedSubCategory?.length ||
-                    filters.invite_status ||
+                    filters.association_status ||
                     filters.campaign ||
-                    filters.status ||
+                    filters.association_status ||
                     filters.affiliate_group_id ||
                     filters.end_date ||
                     filters.start_date) && (
@@ -1217,7 +1217,7 @@ export default function affilate() {
                           ></i>
                         )}
                       </th>
-                      <th scope="col" onClick={(e) => sorting("status")}>
+                      <th scope="col" onClick={(e) => sorting("association_status")}>
                         Invitation Status
                         {filters?.sorder === "asc" ? (
                           <i className="fa fa-caret-up" aria-hidden="true"></i>
@@ -1245,13 +1245,13 @@ export default function affilate() {
                                     className="form-check-input check_bx_input"
                                     checked={
                                       selectedAffiliteid?.includes(
-                                        itm.affiliate_details?.id
+                                        itm.id
                                       )
                                         ? true
                                         : false
                                     }
                                     disabled={
-                                      itm.status == "pending" ? false : true
+                                      itm.association_status == "pending" ? false : true
                                     }
                                     onChange={(e) =>
                                       MultiSelectAffliates(
@@ -1262,7 +1262,7 @@ export default function affilate() {
                                   />
                                   <span
                                     className={
-                                      itm.invite_status == "not_invited"
+                                      itm.association_status == "not_invited"
                                         ? "checkbox-btn"
                                         : "disable_check"
                                     }
@@ -1274,15 +1274,15 @@ export default function affilate() {
                                   className="d-flex align-items-center name-img-wrapper"
                                   onClick={(e) =>
                                     view(
-                                      itm.affiliate_details?._id ||
-                                        itm.affiliate_details?.id
+                                      itm._id ||
+                                        itm.id
                                     )
                                   }
                                 >
                                   {itm?.image ? (
                                     <img
                                       className="person-img"
-                                      src={`${environment?.api}/${itm?.affiliate_details?.image}`}
+                                      src={`${environment?.api}/${itm?.image}`}
                                       alt=""
                                     ></img>
                                   ) : (
@@ -1294,7 +1294,7 @@ export default function affilate() {
                                   )}
                                   <p className="name-person ml-2">
                                     {methodModel?.capitalizeFirstLetter(
-                                      itm?.affiliate_details?.fullName
+                                      itm?.fullName
                                     )}
                                   </p>
                                 </div>
@@ -1303,7 +1303,7 @@ export default function affilate() {
                                   <span
                                     className="show_morebx"
                                     onClick={() =>
-                                      handleRowClick(itm.affiliate_details?.id)
+                                      handleRowClick(itm.id)
                                     }
                                   >
                                     Show More
@@ -1312,7 +1312,7 @@ export default function affilate() {
                                   <span
                                     className="show_morebx"
                                     onClick={() =>
-                                      handleRowClick(itm.affiliate_details?.id)
+                                      handleRowClick(itm.id)
                                     }
                                   >
                                     Show Less
@@ -1321,7 +1321,7 @@ export default function affilate() {
                               </td>
                               <td>
                                 <p className="name-person ml-2" href="">
-                                  {itm?.affiliate_details?.email}
+                                  {itm?.email}
                                 </p>
                               </td>
                               <td>
@@ -1332,7 +1332,7 @@ export default function affilate() {
                               </td>
                               <td>
                                 <p className="name-person ml-2" href="">
-                                  {itm?.campaign_id_details?.name || "--"}
+                                  {itm?.campaign_details?.name || "--"}
                                 </p>
                               </td>
                               <td>
@@ -1341,11 +1341,11 @@ export default function affilate() {
                                 </p>
                               </td>
                               <td className="table_dats">
-                                <span className={`active_btn${itm?.status}`}>
-                                  <span className={itm.status}>
-                                    {itm.status == "accepted"
+                                <span className={`active_btn${itm?.association_status}`}>
+                                  <span className={itm.association_status}>
+                                    {itm.association_status == "accepted"
                                       ? "Accepted"
-                                      : itm.status == "not_invited"
+                                      : itm.association_status == "not_invited"
                                       ? "Not Invited"
                                       : "Pending"}
                                   </span>
@@ -1358,13 +1358,13 @@ export default function affilate() {
                                     permission("affiliate_invite")) && (
                                     <button
                                       disabled={
-                                        itm.status == "pending" ? false : true
+                                        itm.association_status == "pending" ? false : true
                                       }
                                       className="btn btn-primary btn_primary"
                                       onClick={() => {
                                         handleShow();
                                         setselectedAffiliteid([
-                                          itm?.affiliate_details?.id,
+                                          itm?.id,
                                         ]);
                                       }}
                                     >
@@ -1396,8 +1396,8 @@ export default function affilate() {
                                       onClick={() => {
                                         handleGroupShow();
                                         setselectedAffiliteid(
-                                          itm?.affiliate_details?.id ||
-                                            itm?.affiliate_details?._id
+                                          itm?.id ||
+                                            itm?._id
                                         );
                                       }}
                                     >
@@ -1412,7 +1412,7 @@ export default function affilate() {
                             </tr>
 
                             {expandedRowId.includes(
-                              itm.affiliate_details?.id
+                              itm.id
                             ) && (
                               <tr className="table_row show_mores">
                                 <td>
@@ -1420,7 +1420,7 @@ export default function affilate() {
                                     Affiliate Type:
                                   </label>
                                   <p className="affi_tabbls">
-                                    {itm.affiliate_details?.affiliate_type ||
+                                    {itm.affiliate_type ||
                                       "--"}
                                   </p>
                                 </td>
@@ -1429,9 +1429,9 @@ export default function affilate() {
                                     Social Media Platforms:
                                   </label>
                                   <p className="affi_tabbls">
-                                    {itm.affiliate_details?.propertyType
+                                    {itm.propertyType
                                       ?.length > 0
-                                      ? itm.affiliate_details?.propertyType
+                                      ? itm.propertyType
                                           .map((dat) => dat?.name)
                                           .join(",")
                                       : "--"}
