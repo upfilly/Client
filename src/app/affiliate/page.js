@@ -1036,7 +1036,7 @@ export default function affilate() {
                           ChangeStatus(e.value);
                         }}
                         options={[
-                          // { id: "not_invited", name: "Not Invited" },
+                          { id: "not_invite", name: "Not Invited" },
                           { id: "accepted", name: "Accepted" },
                           { id: "pending", name: "Pending" },
                           { id: "rejected", name: "Rejected" },
@@ -1261,7 +1261,7 @@ export default function affilate() {
                                   />
                                   <span
                                     className={
-                                      itm.association_status == "not_invited"
+                                      itm.association_status == "not_invite"
                                         ? "checkbox-btn"
                                         : "disable_check"
                                     }
@@ -1344,7 +1344,7 @@ export default function affilate() {
                                   <span className={itm.association_status}>
                                     {itm.association_status == "accepted"
                                       ? "Accepted"
-                                      : itm.association_status == "not_invited"
+                                      : itm.association_status == "not_invite"
                                       ? "Not Invited"
                                       : "Pending"}
                                   </span>
