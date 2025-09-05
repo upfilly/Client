@@ -236,7 +236,7 @@ const Html = ({
 
                   <div
                     className="col-md-12 mb-3 category-dropdown"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsOpen(!isOpen)}
                   >
                     <label>
                       Select Category<span className="star">*</span>
