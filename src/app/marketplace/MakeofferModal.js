@@ -6,39 +6,72 @@ import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import loader from '@/methods/loader';
 
-const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affiliateName }) => {
+const OfferFormModal = ({ getProductData, modalIsOpen, setModalIsOpen, id, affiliateName }) => {
   const user = crendentialModel.getUser()
   const [form, setform] = useState({
     "name": "",
-    // "sent_to": "",
-    // "sent_from": "",
-    // "description": "",
     "comments": "",
-    // "product_id": id,
-    // "affiliate_id": ""
   })
   const [affiliateData, setAffiliateData] = useState();
+  const [campaignData, setCampaignData] = useState();
   const [submitted, setSubmitted] = useState(false)
+  const [hasDefaultCampaign, setHasDefaultCampaign] = useState(false)
+
+  useEffect(() => {
+    if (user) {
+      getCampaignData({ isArchive: false });
+    }
+  }, []);
+
+  const getCampaignData = (p = {}) => {
+    let filter = {
+      isDeleted: false,
+      status: "",
+      brand_id: user?.id, ...p
+    };
+    let url = "campaign/brand/all";
+    ApiClient.get(url, filter).then((res) => {
+      if (res.success) {
+        // Check if there's a default campaign
+        const defaultCampaign = res.data.data.find(item => item.isDefault);
+
+        if (defaultCampaign) {
+          setHasDefaultCampaign(true);
+          setCampaignData(defaultCampaign);
+        } else {
+          setHasDefaultCampaign(false);
+          setCampaignData(null);
+        }
+      }
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if ( !form?.comments) {
+
+    // Check if default campaign exists
+    if (!hasDefaultCampaign) {
+      toast.error("You need to create a default campaign before making an offer");
+      return;
+    }
+
+    if (!form?.comments) {
       setSubmitted(true)
       return;
     }
+
     loader(true)
     let method = 'post'
     let url = 'make-offer'
 
     let value = {
       ...form,
-      name:user?.fullName,
-      brand_id:user?.id || user?._id,
-      product_id: id
+      name: user?.fullName,
+      brand_id: user?.id || user?._id,
+      product_id: id,
+      campaign_id: campaignData?.id // Include campaign ID in the offer
     }
 
-    // loader(true)
     ApiClient.allApi(url, value, method).then(res => {
       if (res.success) {
         toast.success(res.message)
@@ -53,29 +86,21 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
     })
   };
 
-  // const getData = () => {
-  //   let url = 'users/list'
-  //   ApiClient.get(url, { role: "affiliate", createBybrand_id: user?.id, }).then(res => {
-  //     if (res.success) {
-  //       const data1 = res.data.data.filter(item => item.status === "active");
-  //       setAffiliateData(data1)
-  //     }
-  //   })
-  // }
-
   const getData = (p = {}) => {
     let url = 'getallaffiliatelisting'
     ApiClient.get(url).then(res => {
-        if (res.success) {
-            const data = res.data
-            const filteredData = data.filter(item => item !== null);
-            const manipulateData = filteredData.map((itm)=>{return{
-                name:itm?.userName || itm?.firstName , id : itm?.id || itm?._id
-            }})
-            setAffiliateData(manipulateData)
-        }
+      if (res.success) {
+        const data = res.data
+        const filteredData = data.filter(item => item !== null);
+        const manipulateData = filteredData.map((itm) => {
+          return {
+            name: itm?.userName || itm?.firstName, id: itm?.id || itm?._id
+          }
+        })
+        setAffiliateData(manipulateData)
+      }
     })
-}
+  }
 
   useEffect(() => {
     getData()
@@ -83,14 +108,17 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
 
   return (
     <div>
-      {/* <Button variant="primary" onClick={() => setModalIsOpen(true)}>
-       Make Offer
-      </Button> */}
       <Modal show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
         <Modal.Header closeButton className='align-items-center'>
           <Modal.Title>Send Offer</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {!hasDefaultCampaign && (
+            <div className="alert alert-danger">
+              You need to create a default campaign before you can make an offer.
+            </div>
+          )}
+
           <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicEmail">
               <Form.Label className='mb-0'>Sender Name</Form.Label>
@@ -100,6 +128,7 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
                 value={form?.name || user?.fullName}
                 onChange={(e) => setform({ ...form, name: e.target.value })}
                 required
+                disabled={!hasDefaultCampaign}
               />
               {submitted && !form?.name ? <div className="invalid-feedback d-block">Name is Required</div> : <></>}
             </Form.Group>
@@ -115,44 +144,8 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
               />
             </Form.Group>
 
-            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicName">
-              <Form.Label>Send To</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={form?.sent_to}
-                onChange={(e) => setform({...form,sent_to:e.target.value})}
-                required
-              />
-            </Form.Group> */}
-
-            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2' controlId="formBasicName">
-              <Form.Label>Send From</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={form?.sent_from}
-                onChange={(e) => setform({...form,sent_from:e.target.value})}
-                required
-              />
-            </Form.Group> */}
-
-            {/* <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2 selectlabel'  controlId="formBasicText">
-              <Form.Label>Select affiliate</Form.Label>
-            <SelectDropdown                                                     theme='search'
-              id="statusDropdown"
-              className="w-100"
-              displayValue="fullName"
-              placeholder="Select Affiliate"
-              intialValue={form?.affiliate_id}
-              result={e => {
-                setform({ ...form, affiliate_id: e.value })
-              }}
-              options={affiliateData}
-            /></Form.Group> */}
-
             <Form.Group className='mb-3 d-flex justify-content-between width_label flex-wrap gap-2 selectlabel' controlId="formBasicText">
-              <Form.Label className='mb-0'>comments</Form.Label>
+              <Form.Label className='mb-0'>Comments</Form.Label>
               <Form.Control
                 as="textarea"
                 className='rounded-4'
@@ -162,12 +155,17 @@ const OfferFormModal = ({getProductData, modalIsOpen, setModalIsOpen, id, affili
                 value={form?.comments}
                 onChange={(e) => setform({ ...form, comments: e.target.value })}
                 required
+                disabled={!hasDefaultCampaign}
               />
               {submitted && !form?.comments ? <div className="invalid-feedback d-block">Comments is Required</div> : <></>}
             </Form.Group>
 
             <div className='d-flex align-items-center justify-content-end'>
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={!hasDefaultCampaign}
+              >
                 Submit
               </Button>
             </div>
