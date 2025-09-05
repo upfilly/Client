@@ -547,7 +547,7 @@ export default function affilate() {
   };
 
   const ChangeCampaign = (e) => {
-    const newFilters = { ...filters, campaign: e, page: 1 };
+    const newFilters = { ...filters, campaign_id: e, page: 1 };
     setFilter(newFilters);
     getData(newFilters);
   };
@@ -1052,7 +1052,7 @@ export default function affilate() {
                         displayValue="name"
                         placeholder="All Campaign"
                         className="mt-2"
-                        intialValue={filters.campaign}
+                        intialValue={filters.campaign_id}
                         result={(e) => {
                           ChangeCampaign(e.value);
                         }}
@@ -1117,7 +1117,7 @@ export default function affilate() {
                     selectedCategory?.length ||
                     selectedSubCategory?.length ||
                     filters.association_status ||
-                    filters.campaign ||
+                    filters.campaign_id ||
                     filters.association_status ||
                     filters.affiliate_group_id ||
                     filters.end_date ||
