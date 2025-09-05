@@ -46,8 +46,6 @@ const Html = ({
   formPublisherFields,
   campaignType,
 }) => {
-  console.log(form?.campaign_type, "form?.campaign_type");
-
   const [loadDocerr, setDocLoader] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -207,10 +205,10 @@ const Html = ({
       filters={undefined}
     >
       <form onSubmit={handleSubmit}>
-        <div className="sidebar-left-content" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+        <div className="sidebar-left-content" >
           <div className="pprofile1 card card-shadow p-3 p-sm-4">
             <div className="">
-              <div className="main_title_head profile-card">
+              <div className="main_title_head profile-card" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                 <h3 className="VieUser">
                   <a to="/campaign" onClick={(e) => back()}>
                     <i
@@ -225,7 +223,7 @@ const Html = ({
               </div>
 
               <div className="form-row">
-                <div className="col-md-6 mb-3 custom-input">
+                <div className="col-md-6 mb-3 custom-input" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>
                     Name<span className="star">*</span>
                   </label>
@@ -242,7 +240,7 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-6 mb-3 custom-type">
+                <div className="col-md-6 mb-3 custom-type" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>
                     Type<span className="star">*</span>
                   </label>
@@ -279,7 +277,7 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-6 mb-3 custom-type">
+                <div className="col-md-6 mb-3 custom-type" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>
                     Currency<span className="star">*</span>
                   </label>
@@ -320,7 +318,7 @@ const Html = ({
                 </div>
 
                 {form?.access_type === "private" && (
-                  <div className="col-md-6 mb-3 event-select affiliate">
+                  <div className="col-md-6 mb-3 event-select affiliate" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                     <label>
                       Affiliate<span className="star">*</span>
                     </label>
@@ -347,7 +345,7 @@ const Html = ({
                   </div>
                 )}
 
-                <div className="col-md-6 mb-3">
+                <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>
                     Event Type:<span className="star">*</span>
                   </label>
@@ -374,7 +372,8 @@ const Html = ({
                       </div>
                     )}
                 </div>
-                <div className="col-md-6 mb-3">
+
+                <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>
                     Affiliate Approval:<span className="star">*</span>
                   </label>
@@ -413,7 +412,7 @@ const Html = ({
                 </div>
 
                 {form?.event_type?.includes("purchase") && (
-                  <div className="col-md-6 mb-3 custom-type">
+                  <div className="col-md-6 mb-3 custom-type" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                     <label>
                       Purchase Amount/Percentage Type
                       <span className="star">*</span>
@@ -445,7 +444,7 @@ const Html = ({
 
                 {form?.commission_type === "percentage" &&
                   form?.event_type?.includes("purchase") && (
-                    <div className="col-md-6 mb-3">
+                    <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                       <label>
                         Commission(%)<span className="star">*</span>
                       </label>
@@ -469,7 +468,7 @@ const Html = ({
 
                 {form?.commission_type === "amount" &&
                   form?.event_type?.includes("purchase") && (
-                    <div className="col-md-6 mb-3">
+                    <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                       <label>
                         Commission Amount<span className="star">*</span>
                       </label>
@@ -496,7 +495,7 @@ const Html = ({
                   )}
 
                 {form?.event_type?.includes("lead") && (
-                  <div className="col-md-6 mb-3 custom-input">
+                  <div className="col-md-6 mb-3 custom-input" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                     <label>
                       Lead Amount<span className="star">*</span>
                     </label>
@@ -525,7 +524,7 @@ const Html = ({
                 {form?.access_type === "private" ? (
                   <></>
                 ) : (
-                  <div className="col-md-12 mb-3 ">
+                  <div className="col-md-12 mb-3 " onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                     <label>Default Campaign</label>
                     <div className="form-check">
                       <input
@@ -589,7 +588,7 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-12 mb-3 custom-description">
+                <div className="col-md-12 mb-3 custom-description" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>
                     Description<span className="star">*</span>
                   </label>
@@ -641,7 +640,7 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <label>Document(Max. Limit 10)</label>
                   <div className="form-group drag_drop">
                     <div className="upload_file">
@@ -717,7 +716,7 @@ const Html = ({
                 </div>
 
                 {/* Affiliate Program Management Component */}
-                <div className="col-md-12 mb-3">
+                <div className="col-md-12 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                   <Affiliateprogrammanagement
                     onAcceptTerms={handleAcceptTerms}
                     formData={formData}
@@ -742,7 +741,7 @@ const Html = ({
 
               
 
-              <div className="text-right edit-btns mt-0">
+              <div className="text-right edit-btns mt-0" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
                 {!isTermsAccepted && (
                   <p className="text-danger">
                     *Accept terms and conditions of legal terms 

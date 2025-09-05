@@ -24,6 +24,7 @@ const AnalyticsChartData = ({
   convertedCurrency,
   exchangeRate,
   comparisonPeriod,
+  handleDateFilter, setHandleDateFilter
 }) => {
   const { selection1, selection2, selection3 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
@@ -446,7 +447,7 @@ const AnalyticsChartData = ({
   });
 
   return (
-    <div className="analytics-container">
+    <div className="analytics-container" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
       <div className="row">
         {sortedCharts.map((chart, index) => (
           <div

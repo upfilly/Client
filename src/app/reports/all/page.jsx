@@ -305,7 +305,7 @@ export default function AnalyticsDashboard() {
   return (
     <Layout name="Reports">
       <div className="dashboard">
-        <aside className="sidebar">
+        <aside className="sidebar" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
           <h3 className="sidebar-title mb-0">Insights</h3>
           <nav className="sidebar-nav">
             {/* <button className="sidebar-button">Program Overview</button> */}
@@ -426,7 +426,7 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="reset-filters-container">
+          <div className="reset-filters-container" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
             {isFilterApplied() && (
               <button className="btn-primary " onClick={resetFilters}>
                 Reset Filters
@@ -443,6 +443,8 @@ export default function AnalyticsDashboard() {
             convertedCurrency={convertedCurrency}
             exchangeRate={exchangeRate}
             comparisonPeriod={comparisonPeriod}
+            setHandleDateFilter={setHandleDateFilter}
+            handleDateFilter={handleDateFilter}
           />
         </main>
       </div>
