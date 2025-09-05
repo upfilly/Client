@@ -239,6 +239,7 @@ const Users = () => {
         statusChange={statusChange}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        setTotal={setTotal}
       />
     </>
   );

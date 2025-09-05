@@ -29,7 +29,7 @@ const Html = ({
   activeTab,
   setActiveTab,
   getData,
-  archiveStatus,
+  setTotal,
 }) => {
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -81,7 +81,7 @@ const Html = ({
           <div className="tabs-container d-flex align-items-center">
             <button
               className={`tab-button ${activeTab === "active" ? "active" : ""}`}
-              onClick={() => setActiveTab("active")}
+              onClick={() =>{ setActiveTab("active"); setTotal(0)}}
             >
               Campaigns
               {activeTab === "active" && (
@@ -92,7 +92,7 @@ const Html = ({
               className={`tab-button ${
                 activeTab === "archived" ? "active" : ""
               }`}
-              onClick={() => setActiveTab("archived")}
+              onClick={() =>{ setActiveTab("archived");setTotal(0)}}
             >
               Archived Campaigns
               {activeTab === "archived" && (

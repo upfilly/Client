@@ -24,6 +24,7 @@ const OfferFormModal = ({ getProductData, modalIsOpen, setModalIsOpen, id, affil
   }, []);
 
   const getCampaignData = (p = {}) => {
+    loader(true)
     let filter = {
       isDeleted: false,
       status: "",
@@ -43,6 +44,7 @@ const OfferFormModal = ({ getProductData, modalIsOpen, setModalIsOpen, id, affil
           setCampaignData(null);
         }
       }
+      loader(false)
     });
   };
 
