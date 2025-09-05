@@ -333,7 +333,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
         </div>
       )}
 
-      {savedSelections && (
+      {/* {savedSelections && (
         <div className="saved-selections">
           {savedSelections.regions.length > 0 && (
             <div>
@@ -346,7 +346,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
             </div>
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
