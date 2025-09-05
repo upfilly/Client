@@ -463,7 +463,7 @@ const Html = ({ user,
                         </div>
 
                         <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
-                          <div className='form-group'>
+                          <div className='form-group w-100'>
                             <div className="select_drop ">
                               <label>Currency</label>
                               <div className="select_row">

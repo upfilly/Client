@@ -651,8 +651,8 @@ export default function affilate() {
     if (e.target.checked) {
       // Select all not-invited affiliates
       const allNotInvitedIds = data?.data
-        .filter((itm) => itm.association_status === "not_invited")
-        .map((itm) => itm.id);
+        .filter((itm) => (itm.association_status === "not_invite" || itm.association_status === "pending"))
+        .map((itm) => itm._id);
       setselectedAffiliteid(allNotInvitedIds);
     } else {
       // Deselect all
@@ -1161,7 +1161,9 @@ export default function affilate() {
                             type="checkbox"
                             className="form-check-input check_bx_input"
                             checked={
-                              selectedAffiliteid.length === data?.data?.length
+                              selectedAffiliteid.length === data?.data
+                                ?.filter((itm) => (itm.association_status == "not_invite" || itm.association_status == "pending"))
+                                .map((itm) => itm._id)?.length
                             }
                             onChange={handleSelectAll}
                           />
@@ -1244,24 +1246,24 @@ export default function affilate() {
                                     className="form-check-input check_bx_input"
                                     checked={
                                       selectedAffiliteid?.includes(
-                                        itm.id
+                                        itm.id || itm._id
                                       )
                                         ? true
                                         : false
                                     }
                                     disabled={
-                                      itm.association_status == "pending" ? false : true
+                                      (itm.association_status == "pending" || itm.association_status == "not_invite") ? false : true
                                     }
                                     onChange={(e) =>
                                       MultiSelectAffliates(
                                         e.target.checked,
-                                        itm.id
+                                        itm.id || itm._id
                                       )
                                     }
                                   />
                                   <span
                                     className={
-                                      itm.association_status == "not_invite"
+                                      (itm.association_status == "not_invite" ||itm.association_status == "pending")
                                         ? "checkbox-btn"
                                         : "disable_check"
                                     }
