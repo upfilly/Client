@@ -286,9 +286,9 @@ const AnalyticsChartData = ({
     ].filter(Boolean);
 
     return {
-      title: {
-        text: comparisonPeriod === "none" ? title : `${title} Comparison`,
-      },
+      // title: {
+      //   text: comparisonPeriod === "none" ? title : `${title} Comparison`,
+      // },
       tooltip: {
         trigger: "axis",
         formatter: function (params) {

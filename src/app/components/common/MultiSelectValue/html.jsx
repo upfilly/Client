@@ -16,9 +16,11 @@ const Html = ({
   showReset = true,
   disabled,
 }) => {
+
   const enhancedOptions = useMemo(() => {
-    if (singleSelect)
+    if (!singleSelect) {
       return options.map((o) => ({ ...o, label: o[displayValue], value: o }));
+    }
 
     const actionOptions = [];
 
@@ -40,18 +42,11 @@ const Html = ({
       });
     }
 
-    const regularOptions = options
-      .filter(
-        (option) =>
-          !selectedValues.some(
-            (selected) => JSON.stringify(selected) === JSON.stringify(option)
-          )
-      )
-      .map((option) => ({
-        ...option,
-        label: option[displayValue],
-        value: option,
-      }));
+    const regularOptions = options.map((option) => ({
+      ...option,
+      label: option[displayValue],
+      value: option,
+    }));
 
     return [...actionOptions, ...regularOptions];
   }, [

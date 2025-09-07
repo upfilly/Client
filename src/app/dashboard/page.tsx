@@ -268,7 +268,7 @@ export default function Dashboard() {
                           <p className="revuh">Joined Affiliates</p>
 
                           <h3 className="dollars-t">
-                            {campaignData?.totalJoined}
+                            {campaignData?.totalJoined + campaignData?.totalActive}
                           </h3>
                         </div>
                       </div>

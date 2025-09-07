@@ -312,7 +312,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
             Count:
             {form?.affiliateStatus
               ? relatedAffiliate?.totalActive
-              : relatedAffiliate?.totalJoined}
+              : relatedAffiliate?.totalJoined + relatedAffiliate?.totalActive}
             <button
               type="button"
               className="btn btn-outline-primary me-2"
@@ -335,7 +335,7 @@ const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
                         onChange={() => handleRecipientChange("allJoined")}
                       />
                       <label className="form-check-label">
-                        All Joined ({relatedAffiliate?.totalJoined})
+                        All Joined ({relatedAffiliate?.totalJoined + relatedAffiliate?.totalActive})
                       </label>
                     </div>
                     <div className="form-check mb-3 pl-4">

@@ -2332,6 +2332,11 @@ p.checkbox-option-main span {
   font-weight: 600;
   letter-spacing: 0.94px;
   font-size: 16px;
+  cursor: pointer;
+}
+
+.form-check-input,.form-check-label {
+  cursor: pointer;
 }
 
 ul.opt-category img.checkss {
@@ -5906,7 +5911,7 @@ body {
 
 input.form-control {
   font-size: 14px;
-  cursor: pointer;
+  // cursor: pointer;
 }
 
 .noti_date_chat {
