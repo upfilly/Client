@@ -102,8 +102,8 @@ const Users = () => {
   };
 
   const filter = (p = {}) => {
-    setFilter({ ...filters, ...p });
-    getData({ ...p, page: 1 });
+    setFilter({ ...filters, ...p ,isArchive: activeTab != "active" ? true : false});
+    getData({ ...p, page: 1 ,isArchive: activeTab != "active" ? true : false});
   };
 
   const ChangeRole = (e) => {
