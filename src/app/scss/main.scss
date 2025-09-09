@@ -5266,7 +5266,7 @@ div:where(.swal2-icon).swal2-warning {
 }
 
 .user_name {
-  width: 144px;
+  width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -6537,6 +6537,10 @@ input.dateselect {
 
 .user-action-delete-btn-icon {
   color: #fff !important;
+}
+
+.uselower{
+  text-transform: lowercase !important;
 }
 
 .export-group .copy-btn {
