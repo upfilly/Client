@@ -278,7 +278,7 @@ const AddEditUser = () => {
     }
 
     if (value?.media) {
-      value = { ...value, media: value?.media };
+      value = { ...value, media: [value?.media] };
     }
 
     if (form?.visibility === "Public") {
@@ -470,7 +470,7 @@ const AddEditUser = () => {
     } else {
       dateRef2.current.showPicker();
     }
-    isOpenEnd(!isOpenEnd);
+    setIsOpenEnd(!isOpenEnd);
   };
 
   return (

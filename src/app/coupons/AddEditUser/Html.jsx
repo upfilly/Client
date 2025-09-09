@@ -174,7 +174,7 @@ const Html = ({
 
                             setform({ ...form, media: e.value });
                           }}
-                          isSingle={false}
+                          isSingle={true}
                           options={relatedAffiliate}
                         />
                       </div>
