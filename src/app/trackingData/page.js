@@ -33,6 +33,29 @@ export default function Affiliate() {
   const [upfillyAmount, setUpfillyAmount] = useState(100)
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [exchangeRate, setExchangeRate] = useState(null);
+  const [showColumnSelector, setShowColumnSelector] = useState(false);
+
+  // Define all available columns
+  const allColumns = [
+    { key: 'urlParams', label: 'URL Parameters', sortable: false, default: true },
+    { key: 'affiliate', label: 'Affiliate', sortable: true, default: true },
+    { key: 'brand', label: 'Brand', sortable: true, default: true },
+    { key: 'currency', label: 'Currency', sortable: false, default: true },
+    { key: 'orderPrice', label: 'Order price', sortable: true, default: true },
+    { key: 'orderId', label: 'Order Id', sortable: false, default: true },
+    { key: 'transactionDate', label: 'Transaction Date', sortable: true, default: true },
+    { key: 'commission', label: 'Commission', sortable: true, default: true },
+    { key: 'commissionPaid', label: 'Commission paid', sortable: false, default: true },
+    { key: 'commissionStatus', label: 'Commission Status', sortable: true, default: true },
+    { key: 'paymentStatus', label: 'Payment Status', sortable: true, default: true },
+    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
+  ];
+
+  // Initialize visible columns state
+  const [visibleColumns, setVisibleColumns] = useState(() => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    return defaultColumns;
+  });
 
   const handleShow = (price, commission, commission_type, id) => {
     setAssociateId(id)
@@ -41,6 +64,7 @@ export default function Affiliate() {
 
   const onChange = (dates) => {
     const [start, end] = dates;
+    setShowColumnSelector(false)
     setStartDate(start);
     setEndDate(end);
     filter({ "startDate": start.toISOString().split('T')[0], "endDate": end.toISOString().split('T')[0] })
@@ -63,6 +87,7 @@ export default function Affiliate() {
   };
 
   const handleCurrencyChange = (e) => {
+    setShowColumnSelector(false)
     const currency = e.value;
     setSelectedCurrency(currency);
     getExchangeRate(currency);
@@ -130,6 +155,84 @@ export default function Affiliate() {
     let page = filters?.page;
     filter({ sortBy, key, sorder, page })
   }
+
+  // Toggle column visibility
+  const toggleColumn = (columnKey) => {
+    const column = allColumns.find(col => col.key === columnKey);
+    if (column?.alwaysShow) return; // Don't allow hiding always-show columns
+
+    setVisibleColumns(prev => {
+      if (prev.includes(columnKey)) {
+        return prev.filter(key => key !== columnKey);
+      } else {
+        return [...prev, columnKey];
+      }
+    });
+  };
+
+  // Check if a column is visible
+  const isColumnVisible = (columnKey) => {
+    return visibleColumns.includes(columnKey);
+  };
+
+  // Reset to default columns
+  const resetColumns = () => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    setVisibleColumns(defaultColumns);
+  };
+
+  // Show all columns
+  const showAllColumns = () => {
+    setVisibleColumns(allColumns.map(col => col.key));
+  };
+
+  // Render column selector dropdown
+  const renderColumnSelector = () => (
+    <div className="column-selector-wrapper">
+      <div className="column-selector-dropdown">
+        <div className="column-selector-header">
+          <h6>Manage Columns</h6>
+          <div className="column-selector-actions">
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={resetColumns}
+            >
+              Default
+            </button>
+            <button
+              className="btn btn-sm btn-outline-secondary me-2"
+              onClick={showAllColumns}
+            >
+              Show All
+            </button>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => setShowColumnSelector(false)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div className="column-selector-body">
+          {allColumns.map(column => (
+            <div key={column.key} className="column-selector-item">
+              <label className="column-checkbox">
+                <input
+                  type="checkbox"
+                  checked={isColumnVisible(column.key)}
+                  onChange={() => toggleColumn(column.key)}
+                  disabled={column.alwaysShow}
+                />
+                <span className="checkmark"></span>
+                {column.label}
+                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   const getData = (p = {}) => {
     setLoader(true)
@@ -324,7 +427,7 @@ export default function Affiliate() {
                         value={filters.search}
                         placeholder="Search"
                         className="form-control h-100"
-                        onChange={(e) => e.target.value == "" ? reset() : setFilter({...filters, search: e.target.value })}
+                        onChange={(e) =>{setShowColumnSelector(false); e.target.value == "" ? reset() : setFilter({...filters, search: e.target.value })}}
                       />
                       <i className="fa fa-search search_fa" onClick={() => {
                         filter()
@@ -336,7 +439,7 @@ export default function Affiliate() {
                       displayValue="name"
                       placeholder="Commission Status"
                       intialValue={filters.commission_status}
-                      result={e => { ChangeStatus(e.value, "commission_status") }}
+                      result={e => { ChangeStatus(e.value, "commission_status");setShowColumnSelector(false) }}
                       options={[
                         { id: 'pending', name: 'Pending' },
                         { id: 'accepted', name: 'Accepted' },
@@ -360,7 +463,7 @@ export default function Affiliate() {
                         displayValue="name"
                         placeholder="Paid Status"
                         intialValue={filters.commission_paid}
-                        result={e => { ChangeStatus(e.value, "commission_paid") }}
+                        result={e => { ChangeStatus(e.value, "commission_paid");setShowColumnSelector(false) }}
                         options={[
                           { id: 'pending', name: 'Pending' },
                           { id: 'paid', name: 'Paid' },
@@ -379,9 +482,20 @@ export default function Affiliate() {
                         showIcon
                         placeholderText=" Date Range"
                         selectsRange
-
-                      // inline
                       />
+                    </div>
+
+                    {/* Column Selector Button */}
+                    <div className="column-selector-container">
+                      <button
+                        className="btn btn-outline-secondary mb-0 me-2"
+                        onClick={() => setShowColumnSelector(!showColumnSelector)}
+                        title="Manage Columns"
+                      >
+                        <i className="fa fa-columns mr-1"></i>
+                        Columns
+                      </button>
+                      {showColumnSelector && renderColumnSelector()}
                     </div>
 
                     <button 
@@ -408,63 +522,106 @@ export default function Affiliate() {
                     <table className="table table-striped ">
                       <thead className="thead-clr">
                         <tr>
-                          {uniqueKeys?.map(key => (
+                          {isColumnVisible('urlParams') && uniqueKeys?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
-                          <th scope="col" onClick={e => sorting('affiliate_name')}>Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th scope="col" onClick={e => sorting('brand_name')}>Brand{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th scope="col" >Currency</th>
-                          <th scope="col" onClick={e => sorting('price')}>Order price{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th scope="col" >Order Id</th>
-                          <th scope="col" onClick={e => sorting('timestamp')}>Transaction Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th scope="col" >Commission paid</th>
-                          <th scope="col" onClick={e => sorting('commission_status')}>Commission Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th scope="col" onClick={e => sorting('commission_paid')}>Payment Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          <th>Action</th>
+                          {isColumnVisible('affiliate') && (
+                            <th scope="col" onClick={e => sorting('affiliate_name')}>Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('brand') && (
+                            <th scope="col" onClick={e => sorting('brand_name')}>Brand{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('currency') && (
+                            <th scope="col" >Currency</th>
+                          )}
+                          {isColumnVisible('orderPrice') && (
+                            <th scope="col" onClick={e => sorting('price')}>Order price{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('orderId') && (
+                            <th scope="col" >Order Id</th>
+                          )}
+                          {isColumnVisible('transactionDate') && (
+                            <th scope="col" onClick={e => sorting('timestamp')}>Transaction Date{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('commission') && (
+                            <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('commissionPaid') && (
+                            <th scope="col" >Commission paid</th>
+                          )}
+                          {isColumnVisible('commissionStatus') && (
+                            <th scope="col" onClick={e => sorting('commission_status')}>Commission Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('paymentStatus') && (
+                            <th scope="col" onClick={e => sorting('commission_paid')}>Payment Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
+                          )}
+                          {isColumnVisible('actions') && (
+                            <th>Action</th>
+                          )}
                         </tr>
                       </thead>
 
                       <tbody>
                         {!loaging && data?.data?.map((itm, i) => {
                           return <tr className='data_row' key={i}>
-                            {uniqueKeys?.map(key => {
+                            {isColumnVisible('urlParams') && uniqueKeys?.map(key => {
                               const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
                               return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                             })}
-                            <td className='name-person ml-2' >{itm?.affiliate_name}</td>
-                            <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
-                            <td className='name-person ml-2' >{itm?.currency}</td>
-                            <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
-                            <td className='name-person ml-2' >{itm?.order_id}</td>
-                            <td className='name-person ml-2' >{datepipeModel.date(itm?.timestamp || itm?.createdAt)}</td>
-                            <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
-                            {!itm?.amount_of_commission ? <td className='name-person ml-2' >
-                              {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
-                            </td> : 
-                            <td className='name-person ml-2' >
-                              {`$${convertedCurrency(itm?.amount_of_commission)}`}
-                            </td>
-                            }
-                            <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
-                            <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
-                            <td className='table_dats d-flex align-items-center '>
-                              {itm?.commission_status == 'pending' ? (
-                                <div className='d-flex align-items-center'>
-                                  <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
-                                    <i className='fa fa-check'></i>
-                                  </button>
-                                  <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
-                                    <i className='fa fa-times'></i>
-                                  </button>
-                                </div>
-                              ) : itm?.commission_status == 'rejected' ? (
-                                <div className="btn btn-primary mr-2">Rejected</div>
-                              ) : (<>
-                                {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={() => handleShow(itm?.price, itm?.campaign_details?.commission, itm?.campaign_details?.commission_type, itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
-                              </>
-                              )}
-                            </td>
+                            {isColumnVisible('affiliate') && (
+                              <td className='name-person ml-2' >{itm?.affiliate_name}</td>
+                            )}
+                            {isColumnVisible('brand') && (
+                              <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
+                            )}
+                            {isColumnVisible('currency') && (
+                              <td className='name-person ml-2' >{itm?.currency}</td>
+                            )}
+                            {isColumnVisible('orderPrice') && (
+                              <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
+                            )}
+                            {isColumnVisible('orderId') && (
+                              <td className='name-person ml-2' >{itm?.order_id}</td>
+                            )}
+                            {isColumnVisible('transactionDate') && (
+                              <td className='name-person ml-2' >{datepipeModel.date(itm?.timestamp || itm?.createdAt)}</td>
+                            )}
+                            {isColumnVisible('commission') && (
+                              <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
+                            )}
+                            {isColumnVisible('commissionPaid') && (
+                              !itm?.amount_of_commission ? <td className='name-person ml-2' >
+                                {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
+                              </td> : 
+                              <td className='name-person ml-2' >
+                                {`$${convertedCurrency(itm?.amount_of_commission)}`}
+                              </td>
+                            )}
+                            {isColumnVisible('commissionStatus') && (
+                              <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
+                            )}
+                            {isColumnVisible('paymentStatus') && (
+                              <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
+                            )}
+                            {isColumnVisible('actions') && (
+                              <td className='table_dats d-flex align-items-center '>
+                                {itm?.commission_status == 'pending' ? (
+                                  <div className='d-flex align-items-center'>
+                                    <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                      <i className='fa fa-check'></i>
+                                    </button>
+                                    <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                      <i className='fa fa-times'></i>
+                                    </button>
+                                  </div>
+                                ) : itm?.commission_status == 'rejected' ? (
+                                  <div className="btn btn-primary mr-2">Rejected</div>
+                                ) : (<>
+                                  {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={() => handleShow(itm?.price, itm?.campaign_details?.commission, itm?.campaign_details?.commission_type, itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
+                                </>
+                                )}
+                              </td>
+                            )}
                           </tr>
                         })}
                       </tbody>

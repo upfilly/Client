@@ -31,6 +31,28 @@ const Html = ({
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
   const [copied, setCopied] = useState({ csv: false, xml: false });
+  const [showColumnSelector, setShowColumnSelector] = useState(false);
+
+  // Define all available columns
+  const allColumns = [
+    { key: 'selection', label: 'Selection', sortable: false, default: true, alwaysShow: true },
+    { key: 'title', label: 'Title', sortable: true, default: true },
+    { key: 'couponCode', label: 'Coupon Code', sortable: true, default: true },
+    { key: 'couponType', label: 'Coupon Type', sortable: false, default: true },
+    { key: 'brandName', label: 'Brand Name', sortable: false, default: true },
+    { key: 'visibility', label: 'Visibility', sortable: false, default: true },
+    { key: 'startDate', label: 'Start Date', sortable: false, default: true },
+    { key: 'expirationDate', label: 'Expiration Date', sortable: false, default: true },
+    { key: 'status', label: 'Status', sortable: false, default: true },
+    { key: 'createdDate', label: 'Created Date', sortable: true, default: true },
+    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: user?.role == "brand" }
+  ];
+
+  // Initialize visible columns state
+  const [visibleColumns, setVisibleColumns] = useState(() => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    return defaultColumns;
+  });
 
   // Checkbox state
   const [selectedRows, setSelectedRows] = useState([]);
@@ -51,6 +73,84 @@ const Html = ({
       prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
     );
   };
+
+  // Toggle column visibility
+  const toggleColumn = (columnKey) => {
+    const column = allColumns.find(col => col.key === columnKey);
+    if (column?.alwaysShow) return; // Don't allow hiding always-show columns
+
+    setVisibleColumns(prev => {
+      if (prev.includes(columnKey)) {
+        return prev.filter(key => key !== columnKey);
+      } else {
+        return [...prev, columnKey];
+      }
+    });
+  };
+
+  // Check if a column is visible
+  const isColumnVisible = (columnKey) => {
+    return visibleColumns.includes(columnKey);
+  };
+
+  // Reset to default columns
+  const resetColumns = () => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    setVisibleColumns(defaultColumns);
+  };
+
+  // Show all columns
+  const showAllColumns = () => {
+    setVisibleColumns(allColumns.map(col => col.key));
+  };
+
+  // Render column selector dropdown
+  const renderColumnSelector = () => (
+    <div className="column-selector-wrapper">
+      <div className="column-selector-dropdown">
+        <div className="column-selector-header">
+          <h6>Manage Columns</h6>
+          <div className="column-selector-actions">
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={resetColumns}
+            >
+              Default
+            </button>
+            <button
+              className="btn btn-sm btn-outline-secondary me-2"
+              onClick={showAllColumns}
+            >
+              Show All
+            </button>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => setShowColumnSelector(false)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div className="column-selector-body">
+          {allColumns.map(column => (
+            <div key={column.key} className="column-selector-item">
+              <label className="column-checkbox">
+                <input
+                  type="checkbox"
+                  checked={isColumnVisible(column.key)}
+                  onChange={() => toggleColumn(column.key)}
+                  disabled={column.alwaysShow}
+                />
+                <span className="checkmark"></span>
+                {column.label}
+                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -160,6 +260,7 @@ const Html = ({
               intialValue={filters?.status}
               result={(e) => {
                 ChangeStatus(e.value);
+                setShowColumnSelector(false)
               }}
               options={[
                 { id: "Enabled", name: "Enabled" },
@@ -167,6 +268,20 @@ const Html = ({
                 { id: "Pending", name: "Pending" },
               ]}
             />
+            
+            {/* Column Selector Button */}
+            <div className="column-selector-container">
+              <button
+                className="btn btn-outline-secondary mb-0 me-2"
+                onClick={() => {setShowColumnSelector(!showColumnSelector)}}
+                title="Manage Columns"
+              >
+                <i className="fa fa-columns mr-1"></i>
+                Columns
+              </button>
+              {showColumnSelector && renderColumnSelector()}
+            </div>
+
             {filters.status && (
               <a className="btn btn-primary h-100" onClick={(e) => reset()}>
                 Reset
@@ -174,9 +289,6 @@ const Html = ({
             )}
           </article>
 
-
-
-          
           <div className="d-flex gap-2 align-items-center flex-direction-row export-group-wrapper">
             <div className="export-group">
               <button
@@ -221,80 +333,80 @@ const Html = ({
           <Tooltip id="xml-tooltip" place="bottom" effect="solid" />
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
         <div className="table_section">
           <div className="table-responsive ">
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
-                  <th>
-                    <input
-                      type="checkbox"
-                      checked={isAllSelected}
-                      onChange={handleSelectAll}
-                      title="Select All"
-                    />
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("title")}
-                  >
-                    Title
-                    {filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("couponCode")}
-                  >
-                    Coupon Code  {filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th scope="col" className="table_data">
-                    Coupon Type
-                  </th>
-                  <th scope="col" className="table_data">
-                    Brand Name
-                  </th>
-                  <th scope="col" className="table_data">
-                    Visibility
-                  </th>
-                  <th scope="col" className="table_data">
-                    Start Date
-                  </th>
-                  <th scope="col" className="table_data">
-                    Expiration Date
-                  </th>
-                  <th scope="col" className="table_data">
-                    Status
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("createdAt")}
-                  >
-                    Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  {user?.role == "brand" && (
+                  {isColumnVisible('selection') && (
+                    <th>
+                      <input
+                        type="checkbox"
+                        checked={isAllSelected}
+                        onChange={handleSelectAll}
+                        title="Select All"
+                      />
+                    </th>
+                  )}
+                  {isColumnVisible('title') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("title")}
+                    >
+                      Title
+                      {filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('couponCode') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("couponCode")}
+                    >
+                      Coupon Code  {filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('couponType') && (
+                    <th scope="col" className="table_data">
+                      Coupon Type
+                    </th>
+                  )}
+                  {isColumnVisible('brandName') && (
+                    <th scope="col" className="table_data">
+                      Brand Name
+                    </th>
+                  )}
+                  {isColumnVisible('visibility') && (
+                    <th scope="col" className="table_data">
+                      Visibility
+                    </th>
+                  )}
+                  {isColumnVisible('startDate') && (
+                    <th scope="col" className="table_data">
+                      Start Date
+                    </th>
+                  )}
+                  {isColumnVisible('expirationDate') && (
+                    <th scope="col" className="table_data">
+                      Expiration Date
+                    </th>
+                  )}
+                  {isColumnVisible('status') && (
+                    <th scope="col" className="table_data">
+                      Status
+                    </th>
+                  )}
+                  {isColumnVisible('createdDate') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("createdAt")}
+                    >
+                      Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('actions') && user?.role == "brand" && (
                     <th scope="col" className="table_data">
                       Action
                     </th>
@@ -309,105 +421,124 @@ const Html = ({
                     const rowId = itm.id || itm._id;
                     return (
                       <tr className="data_row" key={i}>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={selectedRows.includes(rowId)}
-                            onChange={() => handleRowSelect(rowId)}
-                            title="Select Row"
-                          />
-                        </td>
-                        <td className="table_dats" onClick={(e) => view(rowId)}>
-                          <div className="user_detail">
+                        {isColumnVisible('selection') && (
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={selectedRows.includes(rowId)}
+                              onChange={() => handleRowSelect(rowId)}
+                              title="Select Row"
+                            />
+                          </td>
+                        )}
+                        {isColumnVisible('title') && (
+                          <td className="table_dats" onClick={(e) => view(rowId)}>
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {itm.title
+                                    ? methodModel.capitalizeFirstLetter(itm.title)
+                                    : "--"}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('couponCode') && (
+                          <td className="table_dats">
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {itm.couponCode
+                                    ? methodModel.capitalizeFirstLetter(
+                                        itm.couponCode
+                                      )
+                                    : "--"}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('couponType') && (
+                          <td className="table_dats">
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {methodModel.capitalizeFirstLetter(
+                                    itm?.couponType
+                                  )}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('brandName') && (
+                          <td className="table_dats">
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {methodModel.capitalizeFirstLetter(
+                                    itm?.addedByDetails?.fullName
+                                  )}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('visibility') && (
+                          <td className="table_dats">
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {methodModel.capitalizeFirstLetter(
+                                    itm?.visibility
+                                  )}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('startDate') && (
+                          <td className="table_dats">
                             <div className="user_name">
                               <h4 className="user">
-                                {itm.title
-                                  ? methodModel.capitalizeFirstLetter(itm.title)
-                                  : "--"}
+                                {datepipeModel.date(itm.startDate)}
                               </h4>
                             </div>
-                          </div>
-                        </td>
-                        {/* ...rest of your columns... */}
-                        <td className="table_dats">
-                          <div className="user_detail">
+                          </td>
+                        )}
+                        {isColumnVisible('expirationDate') && (
+                          <td className="table_dats">
                             <div className="user_name">
                               <h4 className="user">
-                                {itm.couponCode
-                                  ? methodModel.capitalizeFirstLetter(
-                                      itm.couponCode
-                                    )
-                                  : "--"}
+                                {datepipeModel.date(itm.expirationDate)}
                               </h4>
                             </div>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {methodModel.capitalizeFirstLetter(
-                                  itm?.couponType
-                                )}
-                              </h4>
+                          </td>
+                        )}
+                        {isColumnVisible('status') && (
+                          <td className="table_dats">
+                            <div className={`user_hours`}>
+                              <span
+                                className={
+                                  displayStatus == "Enabled"
+                                    ? "contract"
+                                    : displayStatus == "Expired"
+                                    ? "inactive"
+                                    : "pending_status"
+                                }
+                              >
+                                {displayStatus}
+                              </span>
                             </div>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {methodModel.capitalizeFirstLetter(
-                                  itm?.addedByDetails?.fullName
-                                )}
-                              </h4>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {methodModel.capitalizeFirstLetter(
-                                  itm?.visibility
-                                )}
-                              </h4>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className="user_name">
-                            <h4 className="user">
-                              {datepipeModel.date(itm.startDate)}
-                            </h4>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className="user_name">
-                            <h4 className="user">
-                              {datepipeModel.date(itm.expirationDate)}
-                            </h4>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className={`user_hours`}>
-                            <span
-                              className={
-                                displayStatus == "Enabled"
-                                  ? "contract"
-                                  : displayStatus == "Expired"
-                                  ? "inactive"
-                                  : "pending_status"
-                              }
-                            >
-                              {displayStatus}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          {datepipeModel.date(itm.createdAt)}
-                        </td>
-                        {user?.role == "brand" && (
+                          </td>
+                        )}
+                        {isColumnVisible('createdDate') && (
+                          <td className="table_dats">
+                            {datepipeModel.date(itm.createdAt)}
+                          </td>
+                        )}
+                        {isColumnVisible('actions') && user?.role == "brand" && (
                           <td className="table_dats">
                             <div className="action_icons gap-3 ">
                               {(user?.role == "brand" ||

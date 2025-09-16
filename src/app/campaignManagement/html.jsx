@@ -50,10 +50,32 @@ const Html = ({
   const [expandedSubCategories, setExpandedSubCategories] = useState([]);
   const [expandedRegions, setExpandedRegions] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showColumnSelector, setShowColumnSelector] = useState(false);
 
-    console.log(data,"bbnbnbn")
+  // Define all available columns
+  const allColumns = [
+    { key: 'campaignName', label: 'Campaign Name', sortable: true, default: true },
+    { key: 'brandName', label: 'Brand Name', sortable: true, default: true },
+    { key: 'affiliateApproval', label: 'Affiliate Approval', sortable: true, default: true },
+    { key: 'eventType', label: 'Event Type', sortable: true, default: true },
+    { key: 'commission', label: 'Commission', sortable: true, default: true },
+    { key: 'leadAmount', label: 'Lead Amount', sortable: true, default: true },
+    { key: 'campaignStatus', label: 'Campaign Status', sortable: true, default: true },
+    { key: 'requestStatus', label: 'Request Status', sortable: true, default: true },
+    { key: 'createdDate', label: 'Created Date', sortable: true, default: true },
+    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
+  ];
+
+  // Initialize visible columns state
+  const [visibleColumns, setVisibleColumns] = useState(() => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    return defaultColumns;
+  });
+
+  console.log(data, "bbnbnbn")
 
   const toggleDropdown = () => {
+    setShowColumnSelector(false)
     setIsDropdownOpen(!isDropdownOpen);
   };
 
@@ -93,6 +115,84 @@ const Html = ({
     );
   };
 
+  // Toggle column visibility
+  const toggleColumn = (columnKey) => {
+    const column = allColumns.find(col => col.key === columnKey);
+    if (column?.alwaysShow) return; // Don't allow hiding always-show columns
+
+    setVisibleColumns(prev => {
+      if (prev.includes(columnKey)) {
+        return prev.filter(key => key !== columnKey);
+      } else {
+        return [...prev, columnKey];
+      }
+    });
+  };
+
+  // Check if a column is visible
+  const isColumnVisible = (columnKey) => {
+    return visibleColumns.includes(columnKey);
+  };
+
+  // Reset to default columns
+  const resetColumns = () => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    setVisibleColumns(defaultColumns);
+  };
+
+  // Show all columns
+  const showAllColumns = () => {
+    setVisibleColumns(allColumns.map(col => col.key));
+  };
+
+  // Render column selector dropdown
+  const renderColumnSelector = () => (
+    <div className="column-selector-wrapper">
+      <div className="column-selector-dropdown">
+        <div className="column-selector-header">
+          <h6>Manage Columns</h6>
+          <div className="column-selector-actions">
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={resetColumns}
+            >
+              Default
+            </button>
+            <button
+              className="btn btn-sm btn-outline-secondary me-2"
+              onClick={showAllColumns}
+            >
+              Show All
+            </button>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => setShowColumnSelector(false)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div className="column-selector-body">
+          {allColumns.map(column => (
+            <div key={column.key} className="column-selector-item">
+              <label className="column-checkbox">
+                <input
+                  type="checkbox"
+                  checked={isColumnVisible(column.key)}
+                  onChange={() => toggleColumn(column.key)}
+                  disabled={column.alwaysShow}
+                />
+                <span className="checkmark"></span>
+                {column.label}
+                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   const getExchangeRate = async (currency) => {
     try {
       const res = await fetch(
@@ -127,6 +227,7 @@ const Html = ({
 
   const handleCurrencyChange = (e) => {
     const currency = e.value;
+    setShowColumnSelector(false)
     setSelectedCurrency(currency);
     getExchangeRate(currency);
   };
@@ -323,6 +424,7 @@ const Html = ({
                     intialValue={filters.status}
                     result={(e) => {
                       ChangeStatus(e.value);
+                      setShowColumnSelector(false)
                     }}
                     options={[
                       { id: "pending", name: "Pending" },
@@ -427,21 +529,20 @@ const Html = ({
                                           </div>
                                           {category.subCategories?.length >
                                             0 && (
-                                            <button
-                                              className="btn-expand-toggle"
-                                              onClick={() =>
-                                                toggleCategory(category._id)
-                                              }
-                                            >
-                                              <i
-                                                className={`fa fa-angle-${
-                                                  isCategoryExpanded
-                                                    ? "down"
-                                                    : "right"
-                                                }`}
-                                              />
-                                            </button>
-                                          )}
+                                              <button
+                                                className="btn-expand-toggle"
+                                                onClick={() =>
+                                                  toggleCategory(category._id)
+                                                }
+                                              >
+                                                <i
+                                                  className={`fa fa-angle-${isCategoryExpanded
+                                                      ? "down"
+                                                      : "right"
+                                                    }`}
+                                                />
+                                              </button>
+                                            )}
                                         </div>
                                         {isCategoryExpanded && (
                                           <ul className="sub-filter-list">
@@ -486,23 +587,22 @@ const Html = ({
                                                       {subCategory
                                                         .subchildcategory
                                                         ?.length > 0 && (
-                                                        <button
-                                                          className="btn-expand-toggle"
-                                                          onClick={() =>
-                                                            toggleSubCategory(
-                                                              subCategory.id
-                                                            )
-                                                          }
-                                                        >
-                                                          <i
-                                                            className={`fa fa-angle-${
-                                                              isSubExpanded
-                                                                ? "down"
-                                                                : "right"
-                                                            }`}
-                                                          />
-                                                        </button>
-                                                      )}
+                                                          <button
+                                                            className="btn-expand-toggle"
+                                                            onClick={() =>
+                                                              toggleSubCategory(
+                                                                subCategory.id
+                                                              )
+                                                            }
+                                                          >
+                                                            <i
+                                                              className={`fa fa-angle-${isSubExpanded
+                                                                  ? "down"
+                                                                  : "right"
+                                                                }`}
+                                                            />
+                                                          </button>
+                                                        )}
                                                     </div>
                                                     {isSubExpanded &&
                                                       subCategory
@@ -601,9 +701,10 @@ const Html = ({
                                               checked={selectedRegion?.includes(
                                                 region
                                               )}
-                                              onChange={() =>
+                                              onChange={() =>{
                                                 handleRegionChange(region)
-                                              }
+                                                setShowColumnSelector(false)
+                                              }}
                                             />
                                             <label
                                               className="form-check-label filter-label region-label"
@@ -614,16 +715,16 @@ const Html = ({
                                           </div>
                                           <button
                                             className="btn-expand-toggle"
-                                            onClick={() =>
+                                            onClick={() =>{
                                               toggleRegionExpand(region)
-                                            }
+                                              setShowColumnSelector(false)
+                                            }}
                                           >
                                             <i
-                                              className={`fa fa-angle-${
-                                                isRegionExpanded
+                                              className={`fa fa-angle-${isRegionExpanded
                                                   ? "down"
                                                   : "right"
-                                              }`}
+                                                }`}
                                             />
                                           </button>
                                         </div>
@@ -648,10 +749,10 @@ const Html = ({
                                                       checked={selectedCountries?.includes(
                                                         country
                                                       )}
-                                                      onChange={() =>
+                                                      onChange={() =>{
                                                         handleCountryChange(
                                                           country
-                                                        )
+                                                        );setShowColumnSelector(false)}
                                                       }
                                                     />
                                                     <label
@@ -679,6 +780,7 @@ const Html = ({
                             onClick={() => {
                               filter();
                               toggleDropdown();
+                              setShowColumnSelector(false)
                             }}
                           >
                             Apply Filters
@@ -686,6 +788,19 @@ const Html = ({
                         </div>
                       </div>
                     )}
+                  </div>
+
+                  {/* Column Selector Button */}
+                  <div className="column-selector-container">
+                    <button
+                      className="btn btn-outline-secondary mb-0 me-2"
+                      onClick={() => setShowColumnSelector(!showColumnSelector)}
+                      title="Manage Columns"
+                    >
+                      <i className="fa fa-columns mr-1"></i>
+                      Columns
+                    </button>
+                    {showColumnSelector && renderColumnSelector()}
                   </div>
 
                   {filters.status && (
@@ -708,253 +823,268 @@ const Html = ({
                     <table className="table table-striped">
                       <thead className="table_head">
                         <tr className="heading_row">
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("campaign_name")}
-                          >
-                            Campaign Name{" "}
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("brand_name")}
-                          >
-                            Brand Name {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("campaign_type")}
-                          >
-                            Affiliate Approval
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("event_type")}
-                          >
-                            Event Type
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("campaign_commission")}
-                          >
-                            Commission
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("lead_amount")}
-                          >
-                            Lead Amount
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("status")}
-                          >
-                            Campaign Status
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("isActive")}
-                          >
-                            Request Status
-                            {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-
-                          <th
-                            scope="col"
-                            className="table_data"
-                            onClick={(e) => sorting("createdAt")}
-                          >
-                            Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
-                          </th>
-                          {/* <th scope="col" className='table_data' onClick={e => sorting('updatedAt')}>
-                                                Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
-                                            </th> */}
-                          <th scope="col" className="table_data">
-                            Actions
-                          </th>
+                          {isColumnVisible('campaignName') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("campaign_name")}
+                            >
+                              Campaign Name{" "}
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('brandName') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("brand_name")}
+                            >
+                              Brand Name {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('affiliateApproval') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("campaign_type")}
+                            >
+                              Affiliate Approval
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('eventType') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("event_type")}
+                            >
+                              Event Type
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('commission') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("campaign_commission")}
+                            >
+                              Commission
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('leadAmount') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("lead_amount")}
+                            >
+                              Lead Amount
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('campaignStatus') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("status")}
+                            >
+                              Campaign Status
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('requestStatus') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("isActive")}
+                            >
+                              Request Status
+                              {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('createdDate') && (
+                            <th
+                              scope="col"
+                              className="table_data"
+                              onClick={(e) => sorting("createdAt")}
+                            >
+                              Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
+                            </th>
+                          )}
+                          {isColumnVisible('actions') && (
+                            <th scope="col" className="table_data">
+                              Actions
+                            </th>
+                          )}
                         </tr>
                       </thead>
                       <tbody>
                         {!loaging && activeTab == "new" ? (
                           data.map((itm, i) => {
-                            // if (!itm?.campaign_detail?.commission) {
-                            //     return
-                            // }
-
                             return (
                               <tr className="data_row" key={i}>
-                                <td
-                                  className="table_dats"
-                                  onClick={(e) =>
-                                    view(
-                                      itm.campaign_detail?.id ||
+                                {isColumnVisible('campaignName') && (
+                                  <td
+                                    className="table_dats"
+                                    onClick={(e) =>
+                                      view(
+                                        itm.campaign_detail?.id ||
                                         itm?.campaign_detail?._id
-                                    )
-                                  }
-                                >
-                                  <div className="user_detail">
-                                    <div className="user_name">
-                                      <h4 className="user">
-                                        {methodModel.capitalizeFirstLetter(
-                                          itm?.campaign_detail?.name
-                                        )}
-                                      </h4>
+                                      )
+                                    }
+                                  >
+                                    <div className="user_detail">
+                                      <div className="user_name">
+                                        <h4 className="user">
+                                          {methodModel.capitalizeFirstLetter(
+                                            itm?.campaign_detail?.name
+                                          )}
+                                        </h4>
+                                      </div>
                                     </div>
-                                  </div>
-                                </td>
-                                {itm?.brand_detail?.fullName && (
+                                  </td>
+                                )}
+                                {isColumnVisible('brandName') && itm?.brand_detail?.fullName && (
                                   <td className="table_dats">
                                     {itm?.brand_detail?.fullName}
                                   </td>
                                 )}
-                                {
+                                {isColumnVisible('affiliateApproval') && (
                                   <td className="table_dats">
                                     {itm?.campaign_type || "--"}
                                   </td>
-                                }
-                                {/* {itm?.campaign_detail?.event_type && ( */}
+                                )}
+                                {isColumnVisible('eventType') && (
                                   <td className="table_dats">
                                     {itm?.campaign_detail?.event_type.join(",")}
                                   </td>
-                                {/* )} */}
-                                <td className="table_dats">
-                                  {" "}
-                                  {itm?.campaign_detail?.commission_type ==
-                                  "percentage"
-                                    ? `${itm?.campaign_detail?.commission}%`
-                                    : selectedCurrency
-                                    ? `${convertedCurrency(
-                                        itm?.campaign_detail?.commission
-                                      )}`
-                                    : `$${convertedCurrency(
-                                        itm?.campaign_detail?.commission
-                                      )}`}
-                                </td>
-                                <td className="table_dats">
-                                  {" "}
-                                  {selectedCurrency && exchangeRate
-                                    ? ` ${convertedCurrency(itm?.lead_amount)}`
-                                    : `$ ${convertedCurrency(
+                                )}
+                                {isColumnVisible('commission') && (
+                                  <td className="table_dats">
+                                    {" "}
+                                    {itm?.campaign_detail?.commission_type ==
+                                      "percentage"
+                                      ? `${itm?.campaign_detail?.commission}%`
+                                      : selectedCurrency
+                                        ? `${convertedCurrency(
+                                          itm?.campaign_detail?.commission
+                                        )}`
+                                        : `$${convertedCurrency(
+                                          itm?.campaign_detail?.commission
+                                        )}`}
+                                  </td>
+                                )}
+                                {isColumnVisible('leadAmount') && (
+                                  <td className="table_dats">
+                                    {" "}
+                                    {selectedCurrency && exchangeRate
+                                      ? ` ${convertedCurrency(itm?.lead_amount)}`
+                                      : `$ ${convertedCurrency(
                                         itm?.lead_amount
                                       )}`}
-                                </td>
-                                <td className="table_dats">
-                                  {" "}
-                                  <span className={`active_btn${itm?.status}`}>
-                                    <span
-                                      className={
-                                        itm?.status == "deactive"
-                                          ? "inactive"
-                                          : "contract"
-                                      }
-                                    >
-                                      {itm?.status == "deactive"
-                                        ? "Inactive"
-                                        : "Active"}
+                                  </td>
+                                )}
+                                {isColumnVisible('campaignStatus') && (
+                                  <td className="table_dats">
+                                    {" "}
+                                    <span className={`active_btn${itm?.status}`}>
+                                      <span
+                                        className={
+                                          itm?.status == "deactive"
+                                            ? "inactive"
+                                            : "contract"
+                                        }
+                                      >
+                                        {itm?.status == "deactive"
+                                          ? "Inactive"
+                                          : "Active"}
+                                      </span>
                                     </span>
-                                  </span>
-                                </td>
-                                <td className="table_dats">
-                                  {" "}
-                                  <span
-                                    className={`active_btn${itm?.isActive}`}
-                                  >
+                                  </td>
+                                )}
+                                {isColumnVisible('requestStatus') && (
+                                  <td className="table_dats">
+                                    {" "}
                                     <span
-                                      className={
-                                        !itm?.isActive
-                                          ? itm?.status == "accepted" &&
-                                            !itm?.isActive
-                                            ? itm?.status == "removed"
-                                              ? "inactive"
-                                              : "pending_status"
-                                            : "inactive"
-                                          : "contract"
-                                      }
+                                      className={`active_btn${itm?.isActive}`}
                                     >
-                                      {!itm?.isActive
-                                        ? itm?.status == "removed"
-                                          ? "Removed"
-                                          : itm?.status == "rejected"
-                                          ? "Rejected"
-                                          : itm?.status == "accepted" &&
-                                            !itm?.isActive
-                                          ? "Switched"
-                                          : "Pending"
-                                        : "Joined"}
+                                      <span
+                                        className={
+                                          !itm?.isActive
+                                            ? itm?.status == "accepted" &&
+                                              !itm?.isActive
+                                              ? itm?.status == "removed"
+                                                ? "inactive"
+                                                : "pending_status"
+                                              : "inactive"
+                                            : "contract"
+                                        }
+                                      >
+                                        {!itm?.isActive
+                                          ? itm?.status == "removed"
+                                            ? "Removed"
+                                            : itm?.status == "rejected"
+                                              ? "Rejected"
+                                              : itm?.status == "accepted" &&
+                                                !itm?.isActive
+                                                ? "Switched"
+                                                : "Pending"
+                                          : "Joined"}
+                                      </span>
                                     </span>
-                                  </span>
-                                </td>
-                                <td className="table_dats">
-                                  {datepipeModel.date(
-                                    itm.campaign_detail?.createdAt
-                                  )}
-                                </td>
-                                {/* <td className='table_dats'>{datepipeModel.date(itm?.campaign_detail?.updatedAt)}</td> */}
-                                <td className="table_dats d-flex gap-1 align-items-center">
-                                  {itm?.status == "pending" ? (
-                                    <div className="d-flex gap-1 align-items-center">
-                                      <button
-                                        onClick={
-                                          itm?.campaign_type == "manual" &&
-                                          itm?.campaign_type != "private"
-                                            ? () =>
+                                  </td>
+                                )}
+                                {isColumnVisible('createdDate') && (
+                                  <td className="table_dats">
+                                    {datepipeModel.date(
+                                      itm.campaign_detail?.createdAt
+                                    )}
+                                  </td>
+                                )}
+                                {isColumnVisible('actions') && (
+                                  <td className="table_dats d-flex gap-1 align-items-center">
+                                    {itm?.status == "pending" ? (
+                                      <div className="d-flex gap-1 align-items-center">
+                                        <button
+                                          onClick={
+                                            itm?.campaign_type == "manual" &&
+                                              itm?.campaign_type != "private"
+                                              ? () =>
                                                 sendRequest(
                                                   itm?._id,
                                                   itm?.brand_id,
                                                   itm?.campaign_id
                                                 )
-                                            : () =>
+                                              : () =>
                                                 statusChange(
                                                   "accepted",
                                                   itm?.id || itm?._id
                                                 )
-                                        }
-                                        className="btn btn-primary mr-2 btn_actions"
-                                      >
-                                        <i className="fa fa-check"></i>
-                                      </button>
-                                      {/* <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
-                                                                            <i className='fa fa-times'></i>
-                                                                        </button> */}
-                                    </div>
-                                  ) : itm?.status == "rejected" ? (
-                                    <div className="btn btn-danger mr-2">
-                                      Removed
-                                    </div>
-                                  ) : itm?.status == "rejected" ? (
-                                    <div className="btn btn-primary mr-2">
-                                      Rejected
-                                    </div>
-                                  ) : itm?.status == "requested" ? (
-                                    <div className="btn btn-primary mr-2">
-                                      Request Sent
-                                    </div>
-                                  ) : (
-                                    <div className="btn btn-primary mr-2">
-                                      Accepted
-                                    </div>
-                                  )}
-                                  {/* <button className='btn btn-primary btn_actions'
-                                                                    onClick={() => {
-                                                                        history.push(`/chat`);
-                                                                        localStorage.setItem("chatId", itm?.brand_id);
-                                                                    }}>
-                                                                    <i className='fa fa-comment-o'></i>
-                                                                </button> */}
-                                </td>
+                                          }
+                                          className="btn btn-primary mr-2 btn_actions"
+                                        >
+                                          <i className="fa fa-check"></i>
+                                        </button>
+                                      </div>
+                                    ) : itm?.status == "rejected" ? (
+                                      <div className="btn btn-danger mr-2">
+                                        Removed
+                                      </div>
+                                    ) : itm?.status == "rejected" ? (
+                                      <div className="btn btn-primary mr-2">
+                                        Rejected
+                                      </div>
+                                    ) : itm?.status == "requested" ? (
+                                      <div className="btn btn-primary mr-2">
+                                        Request Sent
+                                      </div>
+                                    ) : (
+                                      <div className="btn btn-primary mr-2">
+                                        Accepted
+                                      </div>
+                                    )}
+                                  </td>
+                                )}
                               </tr>
                             );
                           })
@@ -963,48 +1093,51 @@ const Html = ({
                             {!loaging &&
                               filteredData.map((itm, i) => (
                                 <tr className="data_row" key={i}>
-                                  <td
-                                    className="table_dats"
-                                    onClick={(e) => view(itm?.id || itm?._id)}
-                                  >
-                                    <div className="user_detail">
-                                      <div className="user_name">
-                                        <h4 className="user">
-                                          {methodModel.capitalizeFirstLetter(
-                                            itm?.name
-                                          )}
-                                        </h4>
+                                  {isColumnVisible('campaignName') && (
+                                    <td
+                                      className="table_dats"
+                                      onClick={(e) => view(itm?.id || itm?._id)}
+                                    >
+                                      <div className="user_detail">
+                                        <div className="user_name">
+                                          <h4 className="user">
+                                            {methodModel.capitalizeFirstLetter(
+                                              itm?.name
+                                            )}
+                                          </h4>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </td>
-                                  {itm?.event_type && (
+                                    </td>
+                                  )}
+                                  {isColumnVisible('eventType') && itm?.event_type && (
                                     <td className="table_dats">
                                       {itm?.event_type.join(",")}
                                     </td>
                                   )}
-                                  <td className="table_dats">{itm?.amount}</td>
-                                  <td className="table_dats">
-                                    {datepipeModel.date(itm?.createdAt)}
-                                  </td>
-                                  <td className="table_dats">
-                                    {datepipeModel.date(itm?.updatedAt)}
-                                  </td>
-                                  <td className="table_dats d-flex align-items-center">
-                                    <button
-                                      className="btn btn-primary btn_actions"
-                                      title="Send request"
-                                      onClick={() => {
-                                        SendPreviousRequest(
-                                          itm?.id || itm?._id,
-                                          itm?.brand_id
-                                        );
-                                        // history.push(`/chat`);
-                                        // localStorage.setItem("chatId", itm?.brand_id);
-                                      }}
-                                    >
-                                      <i class="fa-solid fa-code-pull-request"></i>
-                                    </button>
-                                  </td>
+                                  {isColumnVisible('commission') && (
+                                    <td className="table_dats">{itm?.amount}</td>
+                                  )}
+                                  {isColumnVisible('createdDate') && (
+                                    <td className="table_dats">
+                                      {datepipeModel.date(itm?.createdAt)}
+                                    </td>
+                                  )}
+                                  {isColumnVisible('actions') && (
+                                    <td className="table_dats d-flex align-items-center">
+                                      <button
+                                        className="btn btn-primary btn_actions"
+                                        title="Send request"
+                                        onClick={() => {
+                                          SendPreviousRequest(
+                                            itm?.id || itm?._id,
+                                            itm?.brand_id
+                                          );
+                                        }}
+                                      >
+                                        <i class="fa-solid fa-code-pull-request"></i>
+                                      </button>
+                                    </td>
+                                  )}
                                 </tr>
                               ))}
                           </>
@@ -1020,46 +1153,9 @@ const Html = ({
                   </div>
                 </div>
 
-                {/* {activeTab == 'previous' && <div className={`paginationWrapper ${!loaging && previoustotal > previousfilters?.count ? '' : 'd-none'}`}>
-                            <span>Show {previousdata?.length} from {previoustotal} campaigns</span>
-                            <ReactPaginate
-                                breakLabel="..."
-                                nextLabel="Next >"
-                                initialPage={previousfilters?.page}
-                                onPageChange={pagePreviousChange}
-                                pageRangeDisplayed={2}
-                                marginPagesDisplayed={1}
-                                pageCount={Math.ceil(previoustotal / previousfilters?.count)}
-                                previousLabel="< Previous"
-                                renderOnZeroPageCount={null}
-                                pageClassName={"pagination-item"}
-                                activeClassName={"pagination-item-active"}
-                            />
-                        </div>}
-
-                        {activeTab != 'previous' && <div className={`paginationWrapper ${!loaging && total > 10 ? '' : 'd-none'}`}>
-                            <span>Show {filteredData?.length} from {total} campaigns</span>
-                            <ReactPaginate
-                                breakLabel="..."
-                                nextLabel="Next >"
-                                initialPage={filters?.page}
-                                onPageChange={pageChange}
-                                pageRangeDisplayed={2}
-                                marginPagesDisplayed={1}
-                                pageCount={Math.ceil(total / filters?.count)}
-                                previousLabel="< Previous"
-                                renderOnZeroPageCount={null}
-                                pageClassName={"pagination-item"}
-                                activeClassName={"pagination-item-active"}
-                            />
-                        </div>} */}
-
-                {/* {!loaging && total == 0 ? <div className="py-3 text-center">No Affiliate</div> : <></>} */}
-
                 <div
-                  className={`paginationWrapper ${
-                    !loaging && total > 10 ? "" : "d-none"
-                  }`}
+                  className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
+                    }`}
                 >
                   <span>
                     Show{" "}
@@ -1086,7 +1182,6 @@ const Html = ({
                     pageRangeDisplayed={2}
                     marginPagesDisplayed={1}
                     pageCount={Math.ceil(total / filters?.count)}
-                    // pageCount={2}
                     previousLabel="< Previous"
                     renderOnZeroPageCount={null}
                     pageClassName={"pagination-item"}
@@ -1198,11 +1293,10 @@ const Html = ({
 
                                         {category.subCategories?.length > 0 && (
                                           <i
-                                            className={`fa fa-angle-${
-                                              isCategoryExpanded
+                                            className={`fa fa-angle-${isCategoryExpanded
                                                 ? "down"
                                                 : "right"
-                                            } toggle-arrow`}
+                                              } toggle-arrow`}
                                             onClick={() =>
                                               toggleCategory(category._id)
                                             }
@@ -1250,22 +1344,21 @@ const Html = ({
                                                     {subCategory
                                                       .subchildcategory
                                                       ?.length > 0 && (
-                                                      <i
-                                                        className={`fa fa-angle-${
-                                                          isSubExpanded
-                                                            ? "down"
-                                                            : "right"
-                                                        } toggle-arrow`}
-                                                        onClick={() =>
-                                                          toggleSubCategory(
-                                                            subCategory.id
-                                                          )
-                                                        }
-                                                        style={{
-                                                          cursor: "pointer",
-                                                        }}
-                                                      ></i>
-                                                    )}
+                                                        <i
+                                                          className={`fa fa-angle-${isSubExpanded
+                                                              ? "down"
+                                                              : "right"
+                                                            } toggle-arrow`}
+                                                          onClick={() =>
+                                                            toggleSubCategory(
+                                                              subCategory.id
+                                                            )
+                                                          }
+                                                          style={{
+                                                            cursor: "pointer",
+                                                          }}
+                                                        ></i>
+                                                      )}
                                                   </div>
 
                                                   {isSubExpanded &&
@@ -1379,11 +1472,10 @@ const Html = ({
                                             </label>
                                           </div>
                                           <i
-                                            className={`fa fa-angle-${
-                                              expandedRegions.includes(region)
+                                            className={`fa fa-angle-${expandedRegions.includes(region)
                                                 ? "down"
                                                 : "right"
-                                            } cursor-pointer`}
+                                              } cursor-pointer`}
                                             onClick={() =>
                                               toggleRegionExpand(region)
                                             }
