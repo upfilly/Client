@@ -1,10 +1,11 @@
-tr.deactive{
+tr.deactive {
     background-color: #ffd9dd;
 }
 
-.list_name{
-  min-width: 90px;  
+.list_name {
+    min-width: 90px;
 }
+
 .imagethumbWrapper img {
     width: 80px !important;
     border-radius: 3px;
@@ -31,9 +32,11 @@ tr.deactive{
     border-radius: 50%;
     background-color: #e1e1e1;
 }
+
 .imagethumbWrapper.cover img.thumbnail {
     object-fit: contain;
 }
+
 input.form-control-file.over_input {
     position: absolute;
     opacity: 0;
@@ -42,9 +45,11 @@ input.form-control-file.over_input {
     left: 0;
     height: 100%;
 }
+
 .upload_file {
     position: relative;
 }
+
 .activedeactiveicon {
     font-size: 18px;
     line-height: normal;
@@ -80,30 +85,34 @@ input.form-control-file.over_input {
 .modal-dialog-md {
     max-width: 900px !important;
 }
+
 .videowrapper .fa-times {
     right: 8px;
     top: -7px;
-  }
+}
 
 .img-wrappper .imagethumbWrapper .fa-times {
     right: 8px;
     top: -7px;
 }
-.searchInput{
+
+.searchInput {
     margin-left: 10px;
     position: relative;
-  }
-  .search_fa {
+}
+
+.search_fa {
     position: absolute;
     top: 12px;
     right: 15px;
     color: #aaaab6;
-  }
-  .searchInput input {
-    padding-right: 35px;
-  }
+}
 
-  i.material-icons.diabled {
+.searchInput input {
+    padding-right: 35px;
+}
+
+i.material-icons.diabled {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -123,8 +132,10 @@ input.form-control-file.over_input {
 
 .table_data {
     cursor: pointer;
-  }
-.action-btn .material-icons.edit ,.action-btn .material-icons.delete {
+}
+
+.action-btn .material-icons.edit,
+.action-btn .material-icons.delete {
     font-size: 15px;
     font-weight: 600;
     color: #fff;
@@ -133,31 +144,134 @@ input.form-control-file.over_input {
 .edit_icon.action-btn {
     background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
 }
-.action-btn.delete{
+
+.action-btn.delete {
     color: #fff;
+}
+
+
+.column-selector-container {
+    position: relative;
+}
+
+.column-selector-wrapper {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.column-selector-dropdown {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 250px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.column-selector-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.column-selector-header h6 {
+    margin: 0;
+    font-weight: 600;
+    color: #333;
+}
+
+.column-selector-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.column-selector-actions button {
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.column-selector-body {
+    padding: 8px;
+}
+
+.column-selector-item {
+    margin-bottom: 8px;
+}
+
+.column-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.column-checkbox:hover {
+    background-color: #f8f9fa;
+}
+
+.column-checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.1);
+}
+
+.column-checkbox input[type="checkbox"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.column-checkbox small {
+    margin-left: auto;
+    font-size: 11px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .column-selector-wrapper {
+        right: -50px;
+    }
+
+    .column-selector-dropdown {
+        min-width: 200px;
+    }
 }
 
 /* In your CSS file */
 input.form-control.disabled-datepicker {
-  background-color: #f8f9fa;
-  color: #6c757d;
-  cursor: not-allowed;
-  opacity: 0.65;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.65;
 }
 
 .table.table-width td {
     vertical-align: middle;
-}.nav-tabs .nav-item.show .nav-link,
+}
+
+.nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     color: #495057;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #cbaaaa;
 }
+
 input[type=number] {
     -moz-appearance: textfield;
-  }
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }  
+}

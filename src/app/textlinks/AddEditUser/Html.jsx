@@ -138,7 +138,7 @@ const Html = ({
 
                   <div
                     className="col-md-12 mb-3 category-dropdown"
-                    onClick={() => setIsOpen(false)}
+                    // onClick={() => setIsOpen(false)}
                   >
                     <label>
                       Select Category<span className="star">*</span>
@@ -232,7 +232,7 @@ const Html = ({
                   </div>}
                   <div className="col-md-6 mb-3 ">
                     <label>Select : </label>
-                    <div className="select_check p-0 pl-1">
+                    {/* <div className="select_check p-0 pl-1">
                       <div className="form-check">
                         <input
                           type="checkbox"
@@ -249,7 +249,7 @@ const Html = ({
                           Is Deep Linking
                         </label>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="select_check p-0 pl-1">
                       <div className="form-check">

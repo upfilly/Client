@@ -172,7 +172,7 @@ export default function MarketPlace() {
   }, [])
 
   return (
-    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Marketplace"} filters={undefined}>
       <>
         <section className="mapping-wrapper">
           <div className="px-2">

@@ -487,17 +487,131 @@ input.datepicker-field {
 
 
 
-  .select-category ::-webkit-scrollbar {
-    width: 5px !important;
-    height: 8px !important;
-    background-color: #f1f1f1 !important;
+/* Column Selector Container */
+.column-selector-container {
+  position: relative;
+}
+
+/* Dropdown Wrapper */
+.column-selector-wrapper {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+/* Dropdown Panel */
+.column-selector-dropdown {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  max-width: 90vw; /* Prevents overflow on smaller screens */
+  max-height: 400px;
+  overflow-y: auto;
+
+  /* Smooth dropdown appearance */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Custom Scrollbar */
+.column-selector-dropdown::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f1f1f1;
+}
+
+.column-selector-dropdown::-webkit-scrollbar-thumb {
+  background: #89c2ff;
+  border-radius: 20px;
+}
+
+.column-selector-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #57aaff;
+}
+
+/* Header Section */
+.column-selector-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.column-selector-header h6 {
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Action Buttons */
+.column-selector-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.column-selector-actions button {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+/* Dropdown Body */
+.column-selector-body {
+  padding: 8px;
+}
+
+/* Column Option Item */
+.column-selector-item {
+  margin-bottom: 8px;
+}
+
+/* Checkbox Styling */
+.column-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.column-checkbox:hover {
+  background-color: #f8f9fa;
+}
+
+.column-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.1);
+  flex-shrink: 0;
+}
+
+.column-checkbox input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Required column label */
+.column-checkbox small {
+  margin-left: auto;
+  font-size: 11px;
+  color: #6c757d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .column-selector-wrapper {
+    right: -50px; /* Adjust as needed for alignment */
   }
 
-  .select-category ::-webkit-scrollbar-thumb {
-    background: #89c2ff !important;
-    border-radius: 20px;
+  .column-selector-dropdown {
+    min-width: 200px;
   }
-
-  .select-category ::-webkit-scrollbar-thumb:hover {
-    background: #89c2ff !important;
-  }
+}

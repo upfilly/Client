@@ -171,6 +171,30 @@ p.profile_data {
     font-weight: 400;
 }
 
+.profile-tabs {
+  .nav-link {
+    color: #6c757d;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    
+    &.active {
+      color: #007bff;
+      background-color: transparent;
+      border-color: #007bff;
+    }
+    
+    &:hover {
+      border-color: #007bff;
+    }
+  }
+  
+  .tab-content {
+    padding: 0;
+  }
+}
+
 
 
 

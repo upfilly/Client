@@ -212,7 +212,7 @@ const AddEditUser = () => {
             activation_date: new Date(value?.activation_date),
             // availability_date: new Date(value?.availability_date),
             expiration_date: value?.expiration_date
-              ? new Date(value?.activation_date)
+              ? new Date(value?.expiration_date)
               : null,
             image: value?.image,
             is_animation: value?.is_animation,
@@ -355,16 +355,14 @@ const AddEditUser = () => {
     let expirationDateError = "";
     let dateComparisonError = "";
 
-    if (form?.expireCheck === false && !form?.expiration_date) {
+    if (form?.expireCheck == false && !form?.expiration_date) {
       expirationDateError = "Expiration date is required";
     }
 
-    // Check if both dates exist and are the same
     if (form?.activation_date && form?.expiration_date) {
       const activationDate = new Date(form.activation_date);
       const expirationDate = new Date(form.expiration_date);
 
-      // Compare dates without time component
       if (activationDate.toDateString() === expirationDate.toDateString()) {
         dateComparisonError =
           "Activation date and expiration date cannot be the same";
@@ -447,9 +445,6 @@ const AddEditUser = () => {
         setCloseExp={setCloseExp}
         handleClick2={handleClick2}
         dateRef2={dateRef2}
-        // setActivationDate={setActivationDate}
-        // setAvailabilityDate={setAvailabilityDate}
-        // setExpirationDate={setExpirationDate}
       />
     </>
   );

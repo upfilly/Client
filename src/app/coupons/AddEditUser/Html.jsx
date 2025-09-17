@@ -174,7 +174,7 @@ const Html = ({
 
                             setform({ ...form, media: e.value });
                           }}
-                          isSingle={false}
+                          isSingle={true}
                           options={relatedAffiliate}
                         />
                       </div>
@@ -401,7 +401,7 @@ const Html = ({
                               }
                             />
                           </div>
-                          {submitted && !form.expirationDate && (
+                          {submitted && !form.expirationDate && form.expireCheck && (
                             <div className="invalid-feedback d-block">
                               Expiration Date is Required
                             </div>

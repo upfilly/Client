@@ -29,10 +29,31 @@ const Html = ({
   activeTab,
   setActiveTab,
   getData,
-  archiveStatus,
+  setTotal,
 }) => {
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
+  const [showColumnSelector, setShowColumnSelector] = useState(false);
+
+  // Define all available columns
+  const allColumns = [
+    { key: 'name', label: 'Name', sortable: true, default: true },
+    { key: 'eventType', label: 'Event Type', sortable: true, default: true },
+    { key: 'accessType', label: 'Access Type', sortable: true, default: true },
+    { key: 'affiliates', label: 'Affiliates', sortable: true, default: true },
+    { key: 'commission', label: 'Commission', sortable: true, default: true },
+    { key: 'leadAmount', label: 'Lead Amount', sortable: true, default: true },
+    { key: 'currency', label: 'Currency', sortable: true, default: true },
+    { key: 'status', label: 'Status', sortable: false, default: true },
+    { key: 'createdDate', label: 'Created Date', sortable: true, default: true },
+    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
+  ];
+
+  // Initialize visible columns state
+  const [visibleColumns, setVisibleColumns] = useState(() => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    return defaultColumns;
+  });
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -52,6 +73,84 @@ const Html = ({
     setFilter({ ...filters, count: count, page: 1 });
     getData({ count: count, page: 1 });
   };
+
+  // Toggle column visibility
+  const toggleColumn = (columnKey) => {
+    const column = allColumns.find(col => col.key === columnKey);
+    if (column?.alwaysShow) return; // Don't allow hiding always-show columns
+
+    setVisibleColumns(prev => {
+      if (prev.includes(columnKey)) {
+        return prev.filter(key => key !== columnKey);
+      } else {
+        return [...prev, columnKey];
+      }
+    });
+  };
+
+  // Check if a column is visible
+  const isColumnVisible = (columnKey) => {
+    return visibleColumns.includes(columnKey);
+  };
+
+  // Reset to default columns
+  const resetColumns = () => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    setVisibleColumns(defaultColumns);
+  };
+
+  // Show all columns
+  const showAllColumns = () => {
+    setVisibleColumns(allColumns.map(col => col.key));
+  };
+
+  // Render column selector dropdown
+  const renderColumnSelector = () => (
+    <div className="column-selector-wrapper">
+      <div className="column-selector-dropdown">
+        <div className="column-selector-header">
+          <h6>Manage Columns</h6>
+          <div className="column-selector-actions">
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={resetColumns}
+            >
+              Default
+            </button>
+            <button
+              className="btn btn-sm btn-outline-secondary me-2"
+              onClick={showAllColumns}
+            >
+              Show All
+            </button>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => setShowColumnSelector(false)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div className="column-selector-body">
+          {allColumns.map(column => (
+            <div key={column.key} className="column-selector-item">
+              <label className="column-checkbox">
+                <input
+                  type="checkbox"
+                  checked={isColumnVisible(column.key)}
+                  onChange={() => toggleColumn(column.key)}
+                  disabled={column.alwaysShow}
+                />
+                <span className="checkmark"></span>
+                {column.label}
+                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   // Filter data based on active tab
   const filteredData = data;
@@ -81,7 +180,7 @@ const Html = ({
           <div className="tabs-container d-flex align-items-center">
             <button
               className={`tab-button ${activeTab === "active" ? "active" : ""}`}
-              onClick={() => setActiveTab("active")}
+              onClick={() => { setActiveTab("active"); setTotal(0) }}
             >
               Campaigns
               {activeTab === "active" && (
@@ -89,15 +188,13 @@ const Html = ({
               )}
             </button>
             <button
-              className={`tab-button ${
-                activeTab === "archived" ? "active" : ""
-              }`}
-              onClick={() => setActiveTab("archived")}
+              className={`tab-button ${activeTab === "archived" ? "active" : ""
+                }`}
+              onClick={() => { setActiveTab("archived"); setTotal(0) }}
             >
               Archived Campaigns
               {activeTab === "archived" && (
                 <span className="badge bg-secondary ms-2">
-                  {/* {data?.filter(item => item.isArchive).length} */}
                   {total}
                 </span>
               )}
@@ -115,13 +212,27 @@ const Html = ({
                 intialValue={filters.status}
                 result={(e) => {
                   ChangeStatus(e.value);
+                  setShowColumnSelector(false);
                 }}
                 options={[
                   { id: "active", name: "Active" },
                   { id: "deactive", name: "Inactive" },
                 ]}
-                // className="status-filter-dropdown"
               />
+
+              {/* Column Selector Button */}
+              <div className="column-selector-container">
+                <button
+                  className="btn btn-outline-secondary mb-0 me-2"
+                  onClick={() => setShowColumnSelector(!showColumnSelector)}
+                  title="Manage Columns"
+                >
+                  <i className="fa fa-columns mr-1"></i>
+                  Columns
+                </button>
+                {showColumnSelector && renderColumnSelector()}
+              </div>
+
               {filters.status && (
                 <button
                   type="button"
@@ -152,66 +263,84 @@ const Html = ({
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("name")}
-                  >
-                    Name{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("event_type")}
-                  >
-                    Event Type{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("access_type")}
-                  >
-                    Access Type{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("affiliateCount")}
-                  >
-                    Affiliates{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("commission")}
-                  >
-                    Commission{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("lead_amount")}
-                  >
-                    Lead Amount{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("currencies")}
-                  >
-                    Currency{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th scope="col" className="table_data">
-                    Status{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  <th
-                    scope="col"
-                    className="table_data"
-                    onClick={(e) => sorting("createdAt")}
-                  >
-                    Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
-                  </th>
-                  {activeTab != "archived" && (
+                  {isColumnVisible('name') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("name")}
+                    >
+                      Name{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('eventType') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("event_type")}
+                    >
+                      Event Type{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('accessType') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("access_type")}
+                    >
+                      Access Type{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('affiliates') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("affiliateCount")}
+                    >
+                      Affiliates{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('commission') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("commission")}
+                    >
+                      Commission{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('leadAmount') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("lead_amount")}
+                    >
+                      Lead Amount{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('currency') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("currencies")}
+                    >
+                      Currency{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('status') && (
+                    <th scope="col" className="table_data">
+                      Status{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('createdDate') && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("createdAt")}
+                    >
+                      Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )}
+                  {isColumnVisible('actions') && activeTab != "archived" && (
                     <th scope="col" className="table_data">
                       Action
                     </th>
@@ -225,111 +354,121 @@ const Html = ({
                     console.log(itm, "itm");
                     return (
                       <tr className="data_row" key={i}>
-                        <td
-                          className="table_dats"
-                          onClick={(e) => view(itm.id || itm._id)}
-                        >
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {methodModel.capitalizeFirstLetter(itm.name)}
-                              </h4>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="table_dats">
-                          <div className="user_detail">
-                            <div className="user_name">
-                              <h4 className="user">
-                                {itm?.event_type.map((itm) => itm).join(",")}
-                              </h4>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="table_dats">{itm?.access_type}</td>
-                        <td className="table_dats">{itm?.affiliateCount}</td>
-                        <td className="table_dats">
-                          {itm?.commission || "--"}{" "}
-                          {itm?.commission_type == "percentage" ? "%" : "$"}
-                        </td>
-                        <td className="table_dats">{`$ ${
-                          itm?.lead_amount || "--"
-                        }`}</td>
-                        <td className="table_dats">
-                          {itm?.currencies || "--"}
-                        </td>
-                        <td className="table_dats">
-                          <span
-                            className={`active_btn${itm?.status}`}
-                            onClick={() => statusChange(itm)}
+                        {isColumnVisible('name') && (
+                          <td
+                            className="table_dats"
+                            onClick={(e) => view(itm.id || itm._id)}
                           >
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {methodModel.capitalizeFirstLetter(itm.name)}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('eventType') && (
+                          <td className="table_dats">
+                            <div className="user_detail">
+                              <div className="user_name">
+                                <h4 className="user">
+                                  {itm?.event_type.map((itm) => itm).join(",")}
+                                </h4>
+                              </div>
+                            </div>
+                          </td>
+                        )}
+                        {isColumnVisible('accessType') && (
+                          <td className="table_dats">{itm?.access_type}</td>
+                        )}
+                        {isColumnVisible('affiliates') && (
+                          <td className="table_dats">{itm?.affiliateCount}</td>
+                        )}
+                        {isColumnVisible('commission') && (
+                          <td className="table_dats">
+                            {itm?.commission || "--"}{" "}
+                            {itm?.commission_type == "percentage" ? "%" : "$"}
+                          </td>
+                        )}
+                        {isColumnVisible('leadAmount') && (
+                          <td className="table_dats">{`$ ${itm?.lead_amount || "--"
+                            }`}</td>
+                        )}
+                        {isColumnVisible('currency') && (
+                          <td className="table_dats">
+                            {itm?.currencies || "--"}
+                          </td>
+                        )}
+                        {isColumnVisible('status') && (
+                          <td className="table_dats">
                             <span
-                              className={
-                                itm?.status == "deactive"
-                                  ? "inactive"
-                                  : "contract"
-                              }
+                              className={`active_btn${itm?.status}`}
+                              onClick={() => statusChange(itm)}
                             >
-                              {itm?.status == "deactive"
-                                ? "Inactive"
-                                : "Active"}
+                              <span
+                                className={
+                                  itm?.status == "deactive"
+                                    ? "inactive"
+                                    : "contract"
+                                }
+                              >
+                                {itm?.status == "deactive"
+                                  ? "Inactive"
+                                  : "Active"}
+                              </span>
                             </span>
-                          </span>
-                        </td>
-                        <td className="table_dats">
-                          {datepipeModel.date(itm.createdAt)}
-                        </td>
-                        <td className="table_dats">
-                          <div className="action_icons">
-                            {isAllow("editAdmins") &&
-                              permission("campaign_edit") &&
-                              !itm.isArchive && (
-                                <a
-                                  className="edit_icon action-btn"
-                                  title="Edit"
-                                  onClick={(e) => edit(itm.id || itm._id)}
-                                >
-                                  <i
-                                    className="material-icons edit"
+                          </td>
+                        )}
+                        {isColumnVisible('createdDate') && (
+                          <td className="table_dats">
+                            {datepipeModel.date(itm.createdAt)}
+                          </td>
+                        )}
+                        {isColumnVisible('actions') && (
+                          <td className="table_dats">
+                            <div className="action_icons">
+                              {isAllow("editAdmins") &&
+                                permission("campaign_edit") &&
+                                !itm.isArchive && (
+                                  <a
+                                    className="edit_icon action-btn"
                                     title="Edit"
+                                    onClick={(e) => edit(itm.id || itm._id)}
                                   >
-                                    edit
-                                  </i>
-                                </a>
-                              )}
+                                    <i
+                                      className="material-icons edit"
+                                      title="Edit"
+                                    >
+                                      edit
+                                    </i>
+                                  </a>
+                                )}
 
-                            {!itm.isArchive &&
-                              permission("campaign_delete") && (
-                                <a
-                                  className="edit_icon edit-delete"
-                                  onClick={() =>
-                                    deleteItem(itm.id || itm._id, itm)
-                                  }
-                                >
-                                  <i
-                                    className={`material-icons ${
-                                      itm?.status == "accepted"
-                                        ? "delete"
-                                        : "diabled"
-                                    }`}
-                                    title={
-                                      itm.isArchive ? "Restore" : "Archive"
+                              {!itm.isArchive &&
+                                permission("campaign_delete") && (
+                                  <a
+                                    className="edit_icon edit-delete"
+                                    onClick={() =>
+                                      deleteItem(itm.id || itm._id, itm)
                                     }
                                   >
-                                    {itm.isArchive ? "unarchive" : "archive"}
-                                  </i>
-                                </a>
-                              )}
-
-                            {/* {permission('campaign_edit') && (
-                                                    <a className='edit_icon action-btn' onClick={() => {
-                                                        history.push(`/chat`)
-                                                    }}>
-                                                        <i className='fa fa-comment-o text-white'></i>
-                                                    </a>
-                                                )} */}
-                          </div>
-                        </td>
+                                    <i
+                                      className={`material-icons ${itm?.status == "accepted"
+                                          ? "delete"
+                                          : "diabled"
+                                        }`}
+                                      title={
+                                        itm.isArchive ? "Restore" : "Archive"
+                                      }
+                                    >
+                                      {itm.isArchive ? "unarchive" : "archive"}
+                                    </i>
+                                  </a>
+                                )}
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     );
                   })}
@@ -347,9 +486,8 @@ const Html = ({
         </div>
 
         <div
-          className={`paginationWrapper ${
-            !loaging && total > 10 ? "" : "d-none"
-          }`}
+          className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
+            }`}
         >
           <span>
             Show{" "}

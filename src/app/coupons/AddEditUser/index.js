@@ -274,11 +274,17 @@ const AddEditUser = () => {
     };
 
     if (form.expireCheck) {
+      value = { ...value, expireCheck:true };
       delete value.expirationDate;
     }
 
+    if (!form.expireCheck) {
+      value = { ...value, expireCheck:false };
+      // delete value.expirationDate;
+    }
+
     if (value?.media) {
-      value = { ...value, media: value?.media };
+      value = { ...value, media: [value?.media] };
     }
 
     if (form?.visibility === "Public") {
@@ -292,9 +298,9 @@ const AddEditUser = () => {
 
     const now = new Date();
     const startDate = new Date(form?.startDate);
-    if (startDate > now) {
-      value.status = "Pending";
-    }
+    // if (startDate > now) {
+    //   value.status = "Pending";
+    // }
 
     if (value.id) {
       method = "put";
@@ -307,6 +313,7 @@ const AddEditUser = () => {
     delete value?.couponCommissionValue;
     delete value?.couponCommissionType;
     delete value?.noExpiryDate
+    console.log(value,"lkllklklk")
     loader(true);
     ApiClient.allApi(url, value, method)
       .then((res) => {
@@ -392,9 +399,10 @@ const AddEditUser = () => {
             // "couponCommission": value?.couponCommission,
             description: value?.description,
             title: value?.title,
-            status: value?.status,
+            status: "Enabled",
             expireCheck: value?.expireCheck || false,
           });
+          setDestinationUrl(value?.url)
           setImages(value?.image);
         }
         loader(false);
@@ -470,7 +478,7 @@ const AddEditUser = () => {
     } else {
       dateRef2.current.showPicker();
     }
-    isOpenEnd(!isOpenEnd);
+    setIsOpenEnd(!isOpenEnd);
   };
 
   return (

@@ -153,10 +153,10 @@ const Html = ({
                                         <td className='table_dats'
                                          onClick={e => view(itm.id || itm?._id)}
                                          >
-                                            <div className='user_detail'>
+                                            <div className='user_detail '>
                                                 <div className='user_name'>
-                                                    <h4 className='user'>
-                                                        {methodModel.capitalizeFirstLetter(itm?.addedBy_details?.email)}
+                                                    <h4 className='user uselower'>
+                                                        {itm?.addedBy_details?.email?.toLowerCase()}
                                                     </h4>
                                                 </div>
                                             </div></td>

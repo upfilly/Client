@@ -26,6 +26,24 @@ const Html = ({
 }) => {
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
+  const [showColumnSelector, setShowColumnSelector] = useState(false);
+
+  // Define all available columns
+  const allColumns = [
+    { key: 'affiliateBrand', label: user?.role == "affiliate" ? "Brand Name" : "Affiliate Name", sortable: false, default: true },
+    { key: 'title', label: 'Title', sortable: false, default: true },
+    { key: 'comment', label: 'Comment', sortable: false, default: true },
+    { key: 'status', label: 'Status', sortable: false, default: true },
+    { key: 'createdDate', label: 'Created Date', sortable: true, default: true },
+    { key: 'modifiedDate', label: 'Last Modified', sortable: true, default: true },
+    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
+  ];
+
+  // Initialize visible columns state
+  const [visibleColumns, setVisibleColumns] = useState(() => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    return defaultColumns;
+  });
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -45,6 +63,84 @@ const Html = ({
     setFilter({ ...filters, count: count, page: 1 });
     getData({ count: count, page: 1 });
   };
+
+  // Toggle column visibility
+  const toggleColumn = (columnKey) => {
+    const column = allColumns.find(col => col.key === columnKey);
+    if (column?.alwaysShow) return; // Don't allow hiding always-show columns
+
+    setVisibleColumns(prev => {
+      if (prev.includes(columnKey)) {
+        return prev.filter(key => key !== columnKey);
+      } else {
+        return [...prev, columnKey];
+      }
+    });
+  };
+
+  // Check if a column is visible
+  const isColumnVisible = (columnKey) => {
+    return visibleColumns.includes(columnKey);
+  };
+
+  // Reset to default columns
+  const resetColumns = () => {
+    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    setVisibleColumns(defaultColumns);
+  };
+
+  // Show all columns
+  const showAllColumns = () => {
+    setVisibleColumns(allColumns.map(col => col.key));
+  };
+
+  // Render column selector dropdown
+  const renderColumnSelector = () => (
+    <div className="column-selector-wrapper">
+      <div className="column-selector-dropdown">
+        <div className="column-selector-header">
+          <h6>Manage Columns</h6>
+          <div className="column-selector-actions">
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={resetColumns}
+            >
+              Default
+            </button>
+            <button
+              className="btn btn-sm btn-outline-secondary me-2"
+              onClick={showAllColumns}
+            >
+              Show All
+            </button>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => setShowColumnSelector(false)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+        <div className="column-selector-body">
+          {allColumns.map(column => (
+            <div key={column.key} className="column-selector-item">
+              <label className="column-checkbox">
+                <input
+                  type="checkbox"
+                  checked={isColumnVisible(column.key)}
+                  onChange={() => toggleColumn(column.key)}
+                  disabled={column.alwaysShow}
+                />
+                <span className="checkmark"></span>
+                {column.label}
+                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <Layout
@@ -68,10 +164,11 @@ const Html = ({
                     value={filters.search}
                     placeholder="Search"
                     className="form-control"
-                    onChange={(e) =>
+                    onChange={(e) =>{
+                      setShowColumnSelector(false)
                       e.target.value == ""
                         ? reset()
-                        : setFilter({ search: e.target.value })
+                        : setFilter({ search: e.target.value });}
                     }
                     onKeyPress={handleKeyPress}
                   />
@@ -92,6 +189,7 @@ const Html = ({
                   intialValue={filters.status}
                   result={(e) => {
                     ChangeStatus(e.value);
+                    setShowColumnSelector(false)
                   }}
                   options={[
                     { id: "pending", name: "Pending" },
@@ -100,14 +198,18 @@ const Html = ({
                   ]}
                 />
 
-                {/* {!role ? <SelectDropdown                                                     theme='search'
-                                    id="statusDropdown"
-                                    displayValue="name"
-                                    placeholder="All User"
-                                    intialValue={filters.role}
-                                    result={e => { ChangeRole(e.value) }}
-                                    options={rolesModel.list}
-                                />: <></>} */}
+                {/* Column Selector Button */}
+                <div className="column-selector-container">
+                  <button
+                    className="btn btn-outline-secondary mb-0 me-2"
+                    onClick={() => setShowColumnSelector(!showColumnSelector)}
+                    title="Manage Columns"
+                  >
+                    <i className="fa fa-columns mr-1"></i>
+                    Columns
+                  </button>
+                  {showColumnSelector && renderColumnSelector()}
+                </div>
 
                 {filters.search || filters?.status ? (
                   <>
@@ -130,39 +232,49 @@ const Html = ({
                 <table className="table table-striped  ">
                   <thead className="table_head">
                     <tr className="heading_row">
-                      <th scope="col" class="table_data">
-                        {user?.role == "affiliate"
-                          ? "Brand Name"
-                          : "Affiliate Name"}
-                      </th>
-                      <th scope="col" className="table_data">
-                        Title
-                      </th>
-                      <th scope="col" className="table_data">
-                        Comment
-                      </th>
-                      {user && user?.role == "brand" && (
+                      {isColumnVisible('affiliateBrand') && (
+                        <th scope="col" class="table_data">
+                          {user?.role == "affiliate" ? "Brand Name" : "Affiliate Name"}
+                        </th>
+                      )}
+                      {isColumnVisible('title') && (
+                        <th scope="col" className="table_data">
+                          Title
+                        </th>
+                      )}
+                      {isColumnVisible('comment') && (
+                        <th scope="col" className="table_data">
+                          Comment
+                        </th>
+                      )}
+                      {isColumnVisible('status') && user && user?.role == "brand" && (
                         <th scope="col" className="table_data">
                           Status
                         </th>
                       )}
-                      <th
-                        scope="col"
-                        className="table_data"
-                        onClick={(e) => sorting("createdAt")}
-                      >
-                        Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
-                      </th>
-                      <th
-                        scope="col"
-                        className="table_data"
-                        onClick={(e) => sorting("updatedAt")}
-                      >
-                        Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}
-                      </th>
-                      <th scope="col" className="table_data">
-                        Actions
-                      </th>
+                      {isColumnVisible('createdDate') && (
+                        <th
+                          scope="col"
+                          className="table_data"
+                          onClick={(e) => sorting("createdAt")}
+                        >
+                          Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
+                        </th>
+                      )}
+                      {isColumnVisible('modifiedDate') && (
+                        <th
+                          scope="col"
+                          className="table_data"
+                          onClick={(e) => sorting("updatedAt")}
+                        >
+                          Last Modified{filters?.sorder === "asc" ? "↑" : "↓"}
+                        </th>
+                      )}
+                      {isColumnVisible('actions') && (
+                        <th scope="col" className="table_data">
+                          Actions
+                        </th>
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -171,33 +283,39 @@ const Html = ({
                       data.map((itm, i) => {
                         return (
                           <tr className="data_row" key={i}>
-                            <td
-                              className="table_dats"
-                              onClick={(e) => view(itm.id)}
-                            >
-                              <div className="user_detail">
-                                <div className="user_name">
-                                  {user?.role == "affiliate" ? (
-                                    <h4 className="user">
-                                      {methodModel.capitalizeFirstLetter(
-                                        itm.brand_name
-                                      )}
-                                    </h4>
-                                  ) : (
-                                    <h4 className="user">
-                                      {methodModel.capitalizeFirstLetter(
-                                        itm.affiliate_name
-                                      )}
-                                    </h4>
-                                  )}
+                            {isColumnVisible('affiliateBrand') && (
+                              <td
+                                className="table_dats"
+                                onClick={(e) => view(itm.id)}
+                              >
+                                <div className="user_detail">
+                                  <div className="user_name">
+                                    {user?.role == "affiliate" ? (
+                                      <h4 className="user">
+                                        {methodModel.capitalizeFirstLetter(
+                                          itm.brand_name
+                                        )}
+                                      </h4>
+                                    ) : (
+                                      <h4 className="user">
+                                        {methodModel.capitalizeFirstLetter(
+                                          itm.affiliate_name
+                                        )}
+                                      </h4>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                            <td className="table_dats">{itm?.product_name}</td>
-                            <td className="table_dats">
-                              {itm?.comments.slice(0, 40)}
-                            </td>
-                            {user && user?.role == "brand" && (
+                              </td>
+                            )}
+                            {isColumnVisible('title') && (
+                              <td className="table_dats">{itm?.product_name}</td>
+                            )}
+                            {isColumnVisible('comment') && (
+                              <td className="table_dats">
+                                {itm?.comments.slice(0, 40)}
+                              </td>
+                            )}
+                            {isColumnVisible('status') && user && user?.role == "brand" && (
                               <td
                                 className={
                                   itm?.status == "deactive"
@@ -208,49 +326,53 @@ const Html = ({
                                 {itm?.status}
                               </td>
                             )}
-                            <td className="table_dats">
-                              {datepipeModel.date(itm.createdAt)}
-                            </td>
-                            <td className="table_dats">
-                              {datepipeModel.date(itm.updatedAt)}
-                            </td>
+                            {isColumnVisible('createdDate') && (
+                              <td className="table_dats">
+                                {datepipeModel.date(itm.createdAt)}
+                              </td>
+                            )}
+                            {isColumnVisible('modifiedDate') && (
+                              <td className="table_dats">
+                                {datepipeModel.date(itm.updatedAt)}
+                              </td>
+                            )}
 
-                            {
+                            {isColumnVisible('actions') && (
                               <td className="table_dats d-flex gap-2 ">
                                 {((user && user?.role == "affiliate") ||
                                   permission("make_offer_edit")) && (
-                                  <>
-                                    {itm?.status == "pending" ? (
-                                      <div>
-                                        <button
-                                          onClick={() => {
-                                            statusChange("accepted", itm?.id);
-                                            Tracklogin(itm?.campaign_unique_id);
-                                          }}
-                                          className="btn btn-primary action-btns mr-2"
-                                        >
-                                          <i className="fa fa-check"></i>
-                                        </button>
-                                        <button
-                                          onClick={() =>
-                                            statusChange("rejected", itm?.id)
-                                          }
-                                          className="btn btn-danger br50 action-btns bg-red mr-2"
-                                        >
-                                          <i className="fa fa-times"></i>
-                                        </button>
-                                      </div>
-                                    ) : itm?.status == "rejected" ? (
-                                      <div className="btn btn-primary ">
-                                        Rejected
-                                      </div>
-                                    ) : (
-                                      <div className="btn btn-primary">
-                                        Accepted
-                                      </div>
-                                    )}
-                                  </>
-                                )}
+                                    <>
+                                      {itm?.status == "pending" ? (
+                                        <div>
+                                          <button
+                                            onClick={() => {
+                                              statusChange("accepted", itm?.id);
+                                              Tracklogin(itm?.campaign_unique_id);
+                                            }}
+                                            className="btn btn-primary action-btns mr-2"
+                                          >
+                                            <i className="fa fa-check"></i>
+                                          </button>
+                                          <button
+                                            onClick={() =>
+                                              statusChange("rejected", itm?.id)
+                                            }
+                                            className="btn btn-danger br50 action-btns bg-red mr-2"
+                                          >
+                                            <i className="fa fa-times"></i>
+                                          </button>
+                                        </div>
+                                      ) : itm?.status == "rejected" ? (
+                                        <div className="btn btn-primary ">
+                                          Rejected
+                                        </div>
+                                      ) : (
+                                        <div className="btn btn-primary">
+                                          Accepted
+                                        </div>
+                                      )}
+                                    </>
+                                  )}
                                 <>
                                   <span
                                     className="btn btn-primary action-btns  offer-mg-page-action-btn"
@@ -265,13 +387,8 @@ const Html = ({
                                     <i className="fa fa-comment-o"></i>
                                   </span>
                                 </>
-
-                                {/* {itm?.status == 'accepted' &&
-                <button onClick={() => sendProposal(itm?.brand_id)} className="btn btn-primary ms-2">
-                    Send Proposal
-                </button>} */}
                               </td>
-                            }
+                            )}
                           </tr>
                         );
                       })}
@@ -286,9 +403,8 @@ const Html = ({
             </div>
 
             <div
-              className={`paginationWrapper ${
-                !loaging && total > 10 ? "" : "d-none"
-              }`}
+              className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
+                }`}
             >
               <span>
                 Show{" "}
