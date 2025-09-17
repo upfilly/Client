@@ -24,6 +24,7 @@ export default function affilate() {
   const initialLoadComplete = useRef(false);
   const isInitializing = useRef(true);
   const [showColumnSelector, setShowColumnSelector] = useState(false);
+  const columnSelectorRef = useRef(null);
 
   const allColumns = [
     {
@@ -559,6 +560,24 @@ export default function affilate() {
     getCampaignData();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showColumnSelector &&
+        columnSelectorRef.current &&
+        !columnSelectorRef.current.contains(event.target) &&
+        !event.target.closest('.column-selector-container button')
+      ) {
+        setShowColumnSelector(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showColumnSelector]);
+
   const pageChange = (e) => {
     if (initialRender.current) {
       initialRender.current = false;
@@ -812,7 +831,7 @@ export default function affilate() {
   };
 
   const renderColumnSelector = () => (
-    <div className="column-selector-wrapper">
+    <div className="column-selector-wrapper" ref={columnSelectorRef}>
       <div className="column-selector-dropdown">
         <div className="column-selector-header">
           <h6>Manage Columns</h6>
@@ -880,7 +899,7 @@ export default function affilate() {
                         className="btn dropdown-toggle"
                         style={{ border: "1px solid #ccc" }}
                         type="button"
-                        onClick={() =>{
+                        onClick={() => {
                           setCategoryDropdownOpen(!categoryDropdownOpen);
                           setShowColumnSelector(false)
                         }}
@@ -984,8 +1003,8 @@ export default function affilate() {
                                                     className={`fa fa-angle-${expandedCategories.includes(
                                                       categoryItem._id
                                                     )
-                                                        ? "down"
-                                                        : "right"
+                                                      ? "down"
+                                                      : "right"
                                                       } cursor-pointer`}
                                                     onClick={() =>
                                                       toggleCategoryExpand(
@@ -1056,8 +1075,8 @@ export default function affilate() {
                                                                 className={`fa fa-angle-${expandedSubCategories.includes(
                                                                   subCategory.id
                                                                 )
-                                                                    ? "down"
-                                                                    : "right"
+                                                                  ? "down"
+                                                                  : "right"
                                                                   } cursor-pointer`}
                                                                 onClick={() =>
                                                                   toggleSubCategoryExpand(
@@ -1196,7 +1215,7 @@ export default function affilate() {
                         placeholder="Date Format"
                         className="mt-2"
                         intialValue={dateFormat}
-                        result={(e) =>{ setDateFormat(e.value);setShowColumnSelector(false)}}
+                        result={(e) => { setDateFormat(e.value); setShowColumnSelector(false) }}
                         options={[
                           { id: "US", name: "US Date Format" },
                           { id: "EU", name: "EU Date Format" },

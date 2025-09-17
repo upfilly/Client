@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Layout from '../components/global/layout';
 import "./style.scss";
 import crendentialModel from '@/models/credential.model';
@@ -34,6 +34,25 @@ export default function Affiliate() {
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [exchangeRate, setExchangeRate] = useState(null);
   const [showColumnSelector, setShowColumnSelector] = useState(false);
+  const columnSelectorRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showColumnSelector &&
+        columnSelectorRef.current &&
+        !columnSelectorRef.current.contains(event.target) &&
+        !event.target.closest('.column-selector-container button')
+      ) {
+        setShowColumnSelector(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showColumnSelector]);
 
   // Define all available columns
   const allColumns = [
@@ -188,7 +207,7 @@ export default function Affiliate() {
 
   // Render column selector dropdown
   const renderColumnSelector = () => (
-    <div className="column-selector-wrapper">
+    <div className="column-selector-wrapper" ref={columnSelectorRef}>
       <div className="column-selector-dropdown">
         <div className="column-selector-header">
           <h6>Manage Columns</h6>

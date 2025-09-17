@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "@/app/components/global/layout";
 import ReactPaginate from "react-paginate";
 import methodModel from "@/methods/methods";
@@ -27,6 +27,25 @@ const Html = ({
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
   const [showColumnSelector, setShowColumnSelector] = useState(false);
+  const columnSelectorRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showColumnSelector &&
+        columnSelectorRef.current &&
+        !columnSelectorRef.current.contains(event.target) &&
+        !event.target.closest('.column-selector-container button')
+      ) {
+        setShowColumnSelector(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showColumnSelector]);
 
   // Define all available columns
   const allColumns = [
@@ -96,7 +115,7 @@ const Html = ({
 
   // Render column selector dropdown
   const renderColumnSelector = () => (
-    <div className="column-selector-wrapper">
+    <div className="column-selector-wrapper" ref={columnSelectorRef}>
       <div className="column-selector-dropdown">
         <div className="column-selector-header">
           <h6>Manage Columns</h6>
