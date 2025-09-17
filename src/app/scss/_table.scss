@@ -234,61 +234,93 @@ i.fa.fa-phone {
 
 //   table css
 .table_section {
-  // height: 100%;
   background: #fff;
   padding: 12px !important;
   border-radius: 12px;
   margin-top: 22px;
   box-shadow: 0px 0px 2px #cccccc40 !important;
 }
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table-width {
+  width: 100%;
+  border-collapse: collapse; /* removes default gaps */
+  table-layout: auto; /* columns auto-size */
+}
+
+th.table_data, 
+td.table_dats, 
+td.table_datsanch {
+  padding: 6px 8px !important; /* tighter cell spacing */
+  text-align: left;
+  vertical-align: middle;
+}
+
 th.table_data {
-    border-top: none !important;
-    border-bottom: none !important;
-    font-size: 14px;
-    font-weight: 500;
-    color: #84818A;
-   
+  border-top: none !important;
+  border-bottom: 1px solid #E8E8E8 !important;
+  font-size: 14px;
+  font-weight: 500;
+  color: #84818A;
+  white-space: nowrap;
 }
-i.fa.fa-ellipsis-h {
-    font-size: 15px;
-    color: #84818A;
-}
+
 td.table_dats {
-    font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
-    text-transform: capitalize;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  text-transform: capitalize;
+  border-bottom: 1px solid #E8E8E8;
 }
-td.table_datsanch{
-    font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
-    // text-transform: capitalize;
+
+td.table_datsanch {
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
 }
+
+.user_detail {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* small gap if multiple elements inside */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.user_detail .user_name {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.user_detail .user {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 14px;
+  font-weight: 400;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  display: block; 
+}
+
+
 tr.data_row {
-    height: 40px;
-    border-bottom: 1px solid #E8E8E8;
-    &.subCategory{
-      .user_detail{
-        margin-left: 10px;
-        &::before{
-          content: "-";
-          display: inline-block;
-          margin-right: 5px;
-        }
-      }
-    }
-    &.subSubCategory{
-      .user_detail{
-        margin-left: 20px;
-        &::before{
-          content: "--";
-          display: inline-block;
-          margin-right: 5px;
-        }
-      }
-    }
+  height: 36px; /* slightly shorter row */
 }
+
+tr.data_row.subCategory .user_detail {
+  margin-left: 8px;
+}
+
+tr.data_row.subSubCategory .user_detail {
+  margin-left: 16px;
+}
+
+
 img.arrow {
     height: 16px;
     width: 16px;

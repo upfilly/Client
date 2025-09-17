@@ -1733,7 +1733,7 @@ a.discard {
 
 button.btn.btn-primary.edit.ml-3 {
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: 600; 
   font-size: 14px;
 }
 
@@ -5021,11 +5021,11 @@ p.checkbox-option-main {
 }
 
 .btn.btn-outline-primary {
-  border-radius: 50px;
   color: #000;
   border: 1px solid #000 !important;
   font-size: 14px;
   background: transparent;
+  border-radius: 4px !important;
 }
 
 .btn.btn-outline-primary:hover {
@@ -5272,12 +5272,13 @@ div:where(.swal2-icon).swal2-warning {
 }
 
 .user_name {
-  width: 200px;
+  width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  // border: 2px solid gray;
 }
 
 .paginationWrapper span select.form-control {
@@ -6700,6 +6701,7 @@ input.dateselect {
   margin-top: 5px;
 }
 
+
 .column-selector-dropdown {
   background: white;
   border: 1px solid #ddd;
@@ -6717,7 +6719,7 @@ input.dateselect {
 
   h6 {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
   }
 }
