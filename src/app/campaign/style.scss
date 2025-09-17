@@ -340,3 +340,10 @@ i.material-icons.edit {
   background-color: #e0e0e0;
   transform: translateY(-50%) scale(0.95);
 }
+
+
+@media all and (min-width: 320px) and (max-width: 575px) {
+  .column-selector-wrapper {
+    right: -15px !important;
+  }
+}

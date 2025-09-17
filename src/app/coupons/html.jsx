@@ -40,36 +40,60 @@ const Html = ({
         showColumnSelector &&
         columnSelectorRef.current &&
         !columnSelectorRef.current.contains(event.target) &&
-        !event.target.closest('.column-selector-container button')
+        !event.target.closest(".column-selector-container button")
       ) {
         setShowColumnSelector(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showColumnSelector]);
 
   // Define all available columns
   const allColumns = [
-    { key: 'selection', label: 'Selection', sortable: false, default: true, alwaysShow: true },
-    { key: 'title', label: 'Title', sortable: true, default: true },
-    { key: 'couponCode', label: 'Coupon Code', sortable: true, default: true },
-    { key: 'couponType', label: 'Coupon Type', sortable: false, default: true },
-    { key: 'brandName', label: 'Brand Name', sortable: false, default: true },
-    { key: 'visibility', label: 'Visibility', sortable: false, default: true },
-    { key: 'startDate', label: 'Start Date', sortable: false, default: true },
-    { key: 'expirationDate', label: 'Expiration Date', sortable: false, default: true },
-    { key: 'status', label: 'Status', sortable: false, default: true },
-    { key: 'createdDate', label: 'Created Date', sortable: true, default: true },
-    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: user?.role == "brand" }
+    {
+      key: "selection",
+      label: "Selection",
+      sortable: false,
+      default: true,
+      alwaysShow: true,
+    },
+    { key: "title", label: "Title", sortable: true, default: true },
+    { key: "couponCode", label: "Coupon Code", sortable: true, default: true },
+    { key: "couponType", label: "Coupon Type", sortable: false, default: true },
+    { key: "brandName", label: "Brand Name", sortable: false, default: true },
+    { key: "visibility", label: "Visibility", sortable: false, default: true },
+    { key: "startDate", label: "Start Date", sortable: false, default: true },
+    {
+      key: "expirationDate",
+      label: "Expiration Date",
+      sortable: false,
+      default: true,
+    },
+    { key: "status", label: "Status", sortable: false, default: true },
+    {
+      key: "createdDate",
+      label: "Created Date",
+      sortable: true,
+      default: true,
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+      default: true,
+      alwaysShow: user?.role == "brand",
+    },
   ];
 
   // Initialize visible columns state
   const [visibleColumns, setVisibleColumns] = useState(() => {
-    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    const defaultColumns = allColumns
+      .filter((col) => col.default)
+      .map((col) => col.key);
     return defaultColumns;
   });
 
@@ -95,12 +119,12 @@ const Html = ({
 
   // Toggle column visibility
   const toggleColumn = (columnKey) => {
-    const column = allColumns.find(col => col.key === columnKey);
+    const column = allColumns.find((col) => col.key === columnKey);
     if (column?.alwaysShow) return; // Don't allow hiding always-show columns
 
-    setVisibleColumns(prev => {
+    setVisibleColumns((prev) => {
       if (prev.includes(columnKey)) {
-        return prev.filter(key => key !== columnKey);
+        return prev.filter((key) => key !== columnKey);
       } else {
         return [...prev, columnKey];
       }
@@ -114,13 +138,15 @@ const Html = ({
 
   // Reset to default columns
   const resetColumns = () => {
-    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    const defaultColumns = allColumns
+      .filter((col) => col.default)
+      .map((col) => col.key);
     setVisibleColumns(defaultColumns);
   };
 
   // Show all columns
   const showAllColumns = () => {
-    setVisibleColumns(allColumns.map(col => col.key));
+    setVisibleColumns(allColumns.map((col) => col.key));
   };
 
   // Render column selector dropdown
@@ -128,7 +154,9 @@ const Html = ({
     <div className="column-selector-wrapper" ref={columnSelectorRef}>
       <div className="column-selector-dropdown">
         <div className="column-selector-header">
-          <h6>Manage Columns</h6>
+          <h6>
+            Manage <br /> Columns
+          </h6>
           <div className="column-selector-actions">
             <button
               className="btn btn-sm btn-outline-primary me-2"
@@ -151,7 +179,7 @@ const Html = ({
           </div>
         </div>
         <div className="column-selector-body">
-          {allColumns.map(column => (
+          {allColumns.map((column) => (
             <div key={column.key} className="column-selector-item">
               <label className="column-checkbox">
                 <input
@@ -162,7 +190,9 @@ const Html = ({
                 />
                 <span className="checkmark"></span>
                 {column.label}
-                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+                {column.alwaysShow && (
+                  <small className="text-muted"> (Required)</small>
+                )}
               </label>
             </div>
           ))}
@@ -257,42 +287,15 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
-        
         <div className="d-flex justify-content-end add-coupans-dropdown-wrapper  gap-2 flex-sm-wrap align-items-center all_flexbx">
           <article className="d-flex coupons-page-top-export-options filterFlex phView">
-            {(user?.role == "brand" || permission("coupon_add")) && (
-              <a
-                className="btn btn-primary h-100 mb-0 set_reset"
-                onClick={(e) => add()}
-              >
-
-                 <i className="fa fa-plus mr-1"> </i> 
-                Add Coupon
-              </a>
-            )}
-            <SelectDropdown
-              theme="search"
-              id="statusDropdown"
-              className="mr-2 all-status-dropdown-btn"
-              displayValue="name"
-              placeholder="Status"
-              intialValue={filters?.status}
-              result={(e) => {
-                ChangeStatus(e.value);
-                setShowColumnSelector(false)
-              }}
-              options={[
-                { id: "Enabled", name: "Enabled" },
-                { id: "Expired", name: "Expired" },
-                { id: "Pending", name: "Pending" },
-              ]}
-            />
-            
             {/* Column Selector Button */}
             <div className="column-selector-container">
               <button
-                className="btn btn-outline-secondary mb-0 me-2"
-                onClick={() => {setShowColumnSelector(!showColumnSelector)}}
+                className="btn btn-outline-secondary mb-0 me-0"
+                onClick={() => {
+                  setShowColumnSelector(!showColumnSelector);
+                }}
                 title="Manage Columns"
               >
                 <i className="fa fa-columns mr-1"></i>
@@ -301,11 +304,41 @@ const Html = ({
               {showColumnSelector && renderColumnSelector()}
             </div>
 
-            {filters.status && (
-              <a className="btn btn-primary h-100" onClick={(e) => reset()}>
-                Reset
-              </a>
-            )}
+            <div className="d-flex gap-1">
+              {(user?.role == "brand" || permission("coupon_add")) && (
+                <a
+                  className="btn btn-primary h-100 mb-0 set_reset"
+                  onClick={(e) => add()}
+                >
+                  <i className="fa fa-plus mr-1"> </i>
+                  Add Coupon
+                </a>
+              )}
+
+              <SelectDropdown
+                theme="search"
+                id="statusDropdown"
+                className="mr-2 all-status-dropdown-btn"
+                displayValue="name"
+                placeholder="Status"
+                intialValue={filters?.status}
+                result={(e) => {
+                  ChangeStatus(e.value);
+                  setShowColumnSelector(false);
+                }}
+                options={[
+                  { id: "Enabled", name: "Enabled" },
+                  { id: "Expired", name: "Expired" },
+                  { id: "Pending", name: "Pending" },
+                ]}
+              />
+
+              {filters.status && (
+                <a className="btn btn-primary h-100" onClick={(e) => reset()}>
+                  Reset
+                </a>
+              )}
+            </div>
           </article>
 
           <div className="d-flex gap-2 align-items-center flex-direction-row export-group-wrapper">
@@ -325,7 +358,11 @@ const Html = ({
                 onClick={() => copyToClipboard("csv")}
                 title="Copy CSV URL"
               >
-                {copied.csv ? "Copied!" : selectedRows?.length ?  "Copy Selected"  : "Copy All"}
+                {copied.csv
+                  ? "Copied!"
+                  : selectedRows?.length
+                  ? "Copy Selected"
+                  : "Copy All"}
               </button>
             </div>
             <div className="export-group">
@@ -344,10 +381,15 @@ const Html = ({
                 onClick={() => copyToClipboard("xml")}
                 title="Copy XML URL"
               >
-                {copied.xml ? "Copied!" : selectedRows?.length ?  "Copy Selected"  : "Copy All"}
+                {copied.xml
+                  ? "Copied!"
+                  : selectedRows?.length
+                  ? "Copy Selected"
+                  : "Copy All"}
               </button>
             </div>
           </div>
+
           <Tooltip id="csv-tooltip" place="bottom" effect="solid" />
           <Tooltip id="xml-tooltip" place="bottom" effect="solid" />
         </div>
@@ -357,7 +399,7 @@ const Html = ({
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
-                  {isColumnVisible('selection') && (
+                  {isColumnVisible("selection") && (
                     <th>
                       <input
                         type="checkbox"
@@ -367,7 +409,7 @@ const Html = ({
                       />
                     </th>
                   )}
-                  {isColumnVisible('title') && (
+                  {isColumnVisible("title") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -377,46 +419,46 @@ const Html = ({
                       {filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('couponCode') && (
+                  {isColumnVisible("couponCode") && (
                     <th
                       scope="col"
                       className="table_data"
                       onClick={(e) => sorting("couponCode")}
                     >
-                      Coupon Code  {filters?.sorder === "asc" ? "↑" : "↓"}
+                      Coupon Code {filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('couponType') && (
+                  {isColumnVisible("couponType") && (
                     <th scope="col" className="table_data">
                       Coupon Type
                     </th>
                   )}
-                  {isColumnVisible('brandName') && (
+                  {isColumnVisible("brandName") && (
                     <th scope="col" className="table_data">
                       Brand Name
                     </th>
                   )}
-                  {isColumnVisible('visibility') && (
+                  {isColumnVisible("visibility") && (
                     <th scope="col" className="table_data">
                       Visibility
                     </th>
                   )}
-                  {isColumnVisible('startDate') && (
+                  {isColumnVisible("startDate") && (
                     <th scope="col" className="table_data">
                       Start Date
                     </th>
                   )}
-                  {isColumnVisible('expirationDate') && (
+                  {isColumnVisible("expirationDate") && (
                     <th scope="col" className="table_data">
                       Expiration Date
                     </th>
                   )}
-                  {isColumnVisible('status') && (
+                  {isColumnVisible("status") && (
                     <th scope="col" className="table_data">
                       Status
                     </th>
                   )}
-                  {isColumnVisible('createdDate') && (
+                  {isColumnVisible("createdDate") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -425,7 +467,7 @@ const Html = ({
                       Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('actions') && user?.role == "brand" && (
+                  {isColumnVisible("actions") && user?.role == "brand" && (
                     <th scope="col" className="table_data">
                       Action
                     </th>
@@ -440,7 +482,7 @@ const Html = ({
                     const rowId = itm.id || itm._id;
                     return (
                       <tr className="data_row" key={i}>
-                        {isColumnVisible('selection') && (
+                        {isColumnVisible("selection") && (
                           <td>
                             <input
                               type="checkbox"
@@ -450,20 +492,25 @@ const Html = ({
                             />
                           </td>
                         )}
-                        {isColumnVisible('title') && (
-                          <td className="table_dats" onClick={(e) => view(rowId)}>
+                        {isColumnVisible("title") && (
+                          <td
+                            className="table_dats"
+                            onClick={(e) => view(rowId)}
+                          >
                             <div className="user_detail">
                               <div className="user_name">
                                 <h4 className="user">
                                   {itm.title
-                                    ? methodModel.capitalizeFirstLetter(itm.title)
+                                    ? methodModel.capitalizeFirstLetter(
+                                        itm.title
+                                      )
                                     : "--"}
                                 </h4>
                               </div>
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('couponCode') && (
+                        {isColumnVisible("couponCode") && (
                           <td className="table_dats">
                             <div className="user_detail">
                               <div className="user_name">
@@ -478,7 +525,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('couponType') && (
+                        {isColumnVisible("couponType") && (
                           <td className="table_dats">
                             <div className="user_detail">
                               <div className="user_name">
@@ -491,7 +538,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('brandName') && (
+                        {isColumnVisible("brandName") && (
                           <td className="table_dats">
                             <div className="user_detail">
                               <div className="user_name">
@@ -504,7 +551,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('visibility') && (
+                        {isColumnVisible("visibility") && (
                           <td className="table_dats">
                             <div className="user_detail">
                               <div className="user_name">
@@ -517,7 +564,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('startDate') && (
+                        {isColumnVisible("startDate") && (
                           <td className="table_dats">
                             <div className="user_name">
                               <h4 className="user">
@@ -526,7 +573,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('expirationDate') && (
+                        {isColumnVisible("expirationDate") && (
                           <td className="table_dats">
                             <div className="user_name">
                               <h4 className="user">
@@ -535,7 +582,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('status') && (
+                        {isColumnVisible("status") && (
                           <td className="table_dats">
                             <div className={`user_hours`}>
                               <span
@@ -552,54 +599,55 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('createdDate') && (
+                        {isColumnVisible("createdDate") && (
                           <td className="table_dats">
                             {datepipeModel.date(itm.createdAt)}
                           </td>
                         )}
-                        {isColumnVisible('actions') && user?.role == "brand" && (
-                          <td className="table_dats">
-                            <div className="action_icons gap-3 ">
-                              {(user?.role == "brand" ||
-                                permission("coupon_edit")) && (
-                                <>
-                                  <a
-                                    className="edit_icon action-btn"
-                                    title="Edit"
-                                    onClick={(e) => edit(rowId)}
-                                  >
-                                    <i
-                                      className="material-icons edit"
+                        {isColumnVisible("actions") &&
+                          user?.role == "brand" && (
+                            <td className="table_dats">
+                              <div className="action_icons gap-3 ">
+                                {(user?.role == "brand" ||
+                                  permission("coupon_edit")) && (
+                                  <>
+                                    <a
+                                      className="edit_icon action-btn"
                                       title="Edit"
+                                      onClick={(e) => edit(rowId)}
                                     >
-                                      edit
-                                    </i>
-                                  </a>
-                                  <a
-                                    className="edit_icon edit-delete"
-                                    onClick={
-                                      displayStatus == "accepted"
-                                        ? ""
-                                        : () => deleteItem(rowId)
-                                    }
-                                  >
-                                    <i
-                                      className={`material-icons ${
+                                      <i
+                                        className="material-icons edit"
+                                        title="Edit"
+                                      >
+                                        edit
+                                      </i>
+                                    </a>
+                                    <a
+                                      className="edit_icon edit-delete"
+                                      onClick={
                                         displayStatus == "accepted"
-                                          ? "delete"
-                                          : "diabled"
-                                      }`}
-                                      title="Delete"
+                                          ? ""
+                                          : () => deleteItem(rowId)
+                                      }
                                     >
-                                      {" "}
-                                      delete
-                                    </i>
-                                  </a>
-                                </>
-                              )}
-                            </div>
-                          </td>
-                        )}
+                                      <i
+                                        className={`material-icons ${
+                                          displayStatus == "accepted"
+                                            ? "delete"
+                                            : "diabled"
+                                        }`}
+                                        title="Delete"
+                                      >
+                                        {" "}
+                                        delete
+                                      </i>
+                                    </a>
+                                  </>
+                                )}
+                              </div>
+                            </td>
+                          )}
                       </tr>
                     );
                   })}

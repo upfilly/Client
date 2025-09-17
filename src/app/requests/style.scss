@@ -222,6 +222,7 @@ input.form-control-file.over_input {
     margin: 0;
     font-size: 14px;
     font-weight: 600;
+    margin-right: 12px !important;
   }
 }
 
@@ -237,7 +238,7 @@ input.form-control-file.over_input {
 
 .column-selector-body {
   padding: 10px 15px;
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -262,5 +263,18 @@ input.form-control-file.over_input {
   &.disabled {
     color: #999;
     cursor: not-allowed;
+  }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 575px) {
+  .column-selector-wrapper {
+    right: -106px;
+  }
+}
+
+@media all and (min-width: 576px) and (max-width: 652px) {
+  .column-selector-wrapper {
+    right: -106px;
   }
 }

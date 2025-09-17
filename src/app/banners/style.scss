@@ -186,6 +186,8 @@ i.material-icons.diabled {
     margin: 0;
     font-weight: 600;
     color: #333;
+    margin-right: 12px !important;
+
 }
 
 .column-selector-actions {
@@ -237,15 +239,43 @@ i.material-icons.diabled {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    .column-selector-wrapper {
-        right: -50px;
-    }
-
-    .column-selector-dropdown {
-        min-width: 200px;
-    }
+@media all and (min-width: 320px) and (max-width: 462px) {
+  .column-selector-wrapper {
+    right: -119px;
+  }
+  .column-selector-dropdown {
+    width: 200px !important;
+  }
 }
+
+@media all and (min-width: 463px) and (max-width: 588px) {
+  .column-selector-wrapper {
+    right: -5px;
+  }
+  .column-selector-dropdown {
+    min-width: 200px !important;
+  }
+}
+
+@media all and (min-width: 589px) and (max-width: 712px) {
+ .column-selector-wrapper {
+    right: -192px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* In your CSS file */
 input.form-control.disabled-datepicker {

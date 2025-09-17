@@ -210,7 +210,7 @@ export default function Affiliate() {
     <div className="column-selector-wrapper" ref={columnSelectorRef}>
       <div className="column-selector-dropdown">
         <div className="column-selector-header">
-          <h6>Manage Columns</h6>
+          <h6>Manage <br/> Columns</h6>
           <div className="column-selector-actions">
             <button
               className="btn btn-sm btn-outline-primary me-2"
