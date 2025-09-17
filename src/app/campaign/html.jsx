@@ -277,6 +277,9 @@ const Html = ({
           </div>
         </div>
 
+
+
+
         <div className="table_section">
           <div className="table-responsive ">
             <table className="table table-striped table-width">
@@ -378,7 +381,7 @@ const Html = ({
                             className="table_dats"
                             onClick={(e) => view(itm.id || itm._id)}
                           >
-                            <div className="user_detail">
+                            < div className="user_detail">
                               <div className="user_name">
                                 <h4 className="user">
                                   {methodModel.capitalizeFirstLetter(itm.name)}
@@ -503,6 +506,8 @@ const Html = ({
             )}
           </div>
         </div>
+
+        
 
         <div
           className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
