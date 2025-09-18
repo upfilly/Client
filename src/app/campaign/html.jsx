@@ -56,21 +56,40 @@ const Html = ({
 
   // Define all available columns
   const allColumns = [
-    { key: 'name', label: 'Name', sortable: true, default: true },
-    { key: 'eventType', label: 'Event Type', sortable: true, default: true },
-    { key: 'accessType', label: 'Access Type', sortable: true, default: true },
-    { key: 'affiliates', label: 'Affiliates', sortable: true, default: true },
-    { key: 'commission', label: 'Commission', sortable: true, default: true },
-    { key: 'leadAmount', label: 'Lead Amount', sortable: true, default: true },
-    { key: 'currency', label: 'Currency', sortable: true, default: true },
-    { key: 'status', label: 'Status', sortable: false, default: true },
-    { key: 'createdDate', label: 'Created Date', sortable: true, default: true },
-    { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
+    { key: "name", label: "Name", sortable: true, default: true },
+    { key: "eventType", label: "Event Type", sortable: true, default: true },
+    { key: "accessType", label: "Access Type", sortable: true, default: true },
+    { key: "affiliates", label: "Affiliates", sortable: true, default: true },
+    { key: "commission", label: "Commission", sortable: true, default: true },
+    { key: "leadAmount", label: "Lead Amount", sortable: true, default: true },
+    { key: "currency", label: "Currency", sortable: true, default: true },
+    { key: "status", label: "Status", sortable: false, default: true },
+    {
+      key: "createdDate",
+      label: "Created Date",
+      sortable: true,
+      default: true,
+    },
+    {
+      key: "updatedDate",
+      label: "Archive Date",
+      sortable: true,
+      default: true,
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+      default: true,
+      alwaysShow: true,
+    },
   ];
 
   // Initialize visible columns state
   const [visibleColumns, setVisibleColumns] = useState(() => {
-    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    const defaultColumns = allColumns
+      .filter((col) => col.default)
+      .map((col) => col.key);
     return defaultColumns;
   });
 
@@ -95,12 +114,12 @@ const Html = ({
 
   // Toggle column visibility
   const toggleColumn = (columnKey) => {
-    const column = allColumns.find(col => col.key === columnKey);
+    const column = allColumns.find((col) => col.key === columnKey);
     if (column?.alwaysShow) return; // Don't allow hiding always-show columns
 
-    setVisibleColumns(prev => {
+    setVisibleColumns((prev) => {
       if (prev.includes(columnKey)) {
-        return prev.filter(key => key !== columnKey);
+        return prev.filter((key) => key !== columnKey);
       } else {
         return [...prev, columnKey];
       }
@@ -114,13 +133,15 @@ const Html = ({
 
   // Reset to default columns
   const resetColumns = () => {
-    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    const defaultColumns = allColumns
+      .filter((col) => col.default)
+      .map((col) => col.key);
     setVisibleColumns(defaultColumns);
   };
 
   // Show all columns
   const showAllColumns = () => {
-    setVisibleColumns(allColumns.map(col => col.key));
+    setVisibleColumns(allColumns.map((col) => col.key));
   };
 
   // Render column selector dropdown
@@ -151,7 +172,7 @@ const Html = ({
           </div>
         </div>
         <div className="column-selector-body">
-          {allColumns.map(column => (
+          {allColumns.map((column) => (
             <div key={column.key} className="column-selector-item">
               <label className="column-checkbox">
                 <input
@@ -162,7 +183,9 @@ const Html = ({
                 />
                 <span className="checkmark"></span>
                 {column.label}
-                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+                {column.alwaysShow && (
+                  <small className="text-muted"> (Required)</small>
+                )}
               </label>
             </div>
           ))}
@@ -199,7 +222,10 @@ const Html = ({
           <div className="tabs-container d-flex align-items-center">
             <button
               className={`tab-button ${activeTab === "active" ? "active" : ""}`}
-              onClick={() => { setActiveTab("active"); setTotal(0) }}
+              onClick={() => {
+                setActiveTab("active");
+                setTotal(0);
+              }}
             >
               Campaigns
               {activeTab === "active" && (
@@ -207,15 +233,17 @@ const Html = ({
               )}
             </button>
             <button
-              className={`tab-button ${activeTab === "archived" ? "active" : ""
-                }`}
-              onClick={() => { setActiveTab("archived"); setTotal(0) }}
+              className={`tab-button ${
+                activeTab === "archived" ? "active" : ""
+              }`}
+              onClick={() => {
+                setActiveTab("archived");
+                setTotal(0);
+              }}
             >
               Archived Campaigns
               {activeTab === "archived" && (
-                <span className="badge bg-secondary ms-2">
-                  {total}
-                </span>
+                <span className="badge bg-secondary ms-2">{total}</span>
               )}
             </button>
           </div>
@@ -285,7 +313,7 @@ const Html = ({
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
-                  {isColumnVisible('name') && (
+                  {isColumnVisible("name") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -294,7 +322,7 @@ const Html = ({
                       Name{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('eventType') && (
+                  {isColumnVisible("eventType") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -303,7 +331,7 @@ const Html = ({
                       Event Type{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('accessType') && (
+                  {isColumnVisible("accessType") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -312,7 +340,7 @@ const Html = ({
                       Access Type{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('affiliates') && (
+                  {isColumnVisible("affiliates") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -321,7 +349,7 @@ const Html = ({
                       Affiliates{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('commission') && (
+                  {isColumnVisible("commission") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -330,7 +358,7 @@ const Html = ({
                       Commission{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('leadAmount') && (
+                  {isColumnVisible("leadAmount") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -339,7 +367,7 @@ const Html = ({
                       Lead Amount{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('currency') && (
+                  {isColumnVisible("currency") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -348,12 +376,12 @@ const Html = ({
                       Currency{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('status') && (
+                  {isColumnVisible("status") && (
                     <th scope="col" className="table_data">
                       Status{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('createdDate') && (
+                  {isColumnVisible("createdDate") && (
                     <th
                       scope="col"
                       className="table_data"
@@ -362,7 +390,17 @@ const Html = ({
                       Created Date{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
-                  {isColumnVisible('actions') && activeTab != "archived" && (
+                  {isColumnVisible("updatedDate") &&
+                    activeTab == "archived" && (
+                      <th
+                        scope="col"
+                        className="table_data"
+                        onClick={(e) => sorting("updatedAt")}
+                      >
+                        Archive Date{filters?.sorder === "asc" ? "↑" : "↓"}
+                      </th>
+                    )}
+                  {isColumnVisible("actions") && activeTab != "archived" && (
                     <th scope="col" className="table_data">
                       Action
                     </th>
@@ -376,7 +414,7 @@ const Html = ({
                     console.log(itm, "itm");
                     return (
                       <tr className="data_row" key={i}>
-                        {isColumnVisible('name') && (
+                        {isColumnVisible("name") && (
                           <td
                             className="table_dats"
                             onClick={(e) => view(itm.id || itm._id)}
@@ -390,7 +428,7 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('eventType') && (
+                        {isColumnVisible("eventType") && (
                           <td className="table_dats">
                             <div className="user_detail">
                               <div className="user_name">
@@ -401,28 +439,29 @@ const Html = ({
                             </div>
                           </td>
                         )}
-                        {isColumnVisible('accessType') && (
+                        {isColumnVisible("accessType") && (
                           <td className="table_dats">{itm?.access_type}</td>
                         )}
-                        {isColumnVisible('affiliates') && (
+                        {isColumnVisible("affiliates") && (
                           <td className="table_dats">{itm?.affiliateCount}</td>
                         )}
-                        {isColumnVisible('commission') && (
+                        {isColumnVisible("commission") && (
                           <td className="table_dats">
                             {itm?.commission || "--"}{" "}
                             {itm?.commission_type == "percentage" ? "%" : "$"}
                           </td>
                         )}
-                        {isColumnVisible('leadAmount') && (
-                          <td className="table_dats">{`$ ${itm?.lead_amount || "--"
-                            }`}</td>
+                        {isColumnVisible("leadAmount") && (
+                          <td className="table_dats">{`$ ${
+                            itm?.lead_amount || "--"
+                          }`}</td>
                         )}
-                        {isColumnVisible('currency') && (
+                        {isColumnVisible("currency") && (
                           <td className="table_dats">
                             {itm?.currencies || "--"}
                           </td>
                         )}
-                        {isColumnVisible('status') && (
+                        {isColumnVisible("status") && (
                           <td className="table_dats">
                             <span
                               className={`active_btn${itm?.status}`}
@@ -442,12 +481,17 @@ const Html = ({
                             </span>
                           </td>
                         )}
-                        {isColumnVisible('createdDate') && (
+                        {isColumnVisible("createdDate") && (
                           <td className="table_dats">
                             {datepipeModel.date(itm.createdAt)}
                           </td>
                         )}
-                        {isColumnVisible('actions') && (
+                        {isColumnVisible("updatedDate") && (
+                          <td className="table_dats">
+                            {datepipeModel.date(itm.updatedAt)}
+                          </td>
+                        )}
+                        {isColumnVisible("actions") && (
                           <td className="table_dats">
                             <div className="action_icons">
                               {isAllow("editAdmins") &&
@@ -476,10 +520,11 @@ const Html = ({
                                     }
                                   >
                                     <i
-                                      className={`material-icons ${itm?.status == "accepted"
+                                      className={`material-icons ${
+                                        itm?.status == "accepted"
                                           ? "delete"
                                           : "diabled"
-                                        }`}
+                                      }`}
                                       title={
                                         itm.isArchive ? "Restore" : "Archive"
                                       }
@@ -510,8 +555,9 @@ const Html = ({
         
 
         <div
-          className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
-            }`}
+          className={`paginationWrapper ${
+            !loaging && total > 10 ? "" : "d-none"
+          }`}
         >
           <span>
             Show{" "}

@@ -27,7 +27,7 @@ const AddEditUser = () => {
     status: "Enabled",
     expireCheck: false,
   });
-  console.log(user?.website, "user?.websiteuser?.website");
+  console.log(form?.media, "FormMedia");
   const [campaignType, setCampaignType] = useState([]);
   const [affiliateData, setAffiliateData] = useState();
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
@@ -66,7 +66,6 @@ const AddEditUser = () => {
       if (res.success) {
         const data = res.data;
         const filteredData = data.filter((item) => item.id !== null);
-        console.log(filteredData, "filteredData");
         const manipulateData = filteredData.map((itm) => ({
           name: itm?.userName || itm?.firstName,
           id: itm?.id || itm?._id,
@@ -75,8 +74,6 @@ const AddEditUser = () => {
           (item, index, self) =>
             index === self.findIndex((t) => t.id === item.id)
         );
-
-        console.log(uniqueData, "uniqueData");
         setAllAffiliate(uniqueData);
       }
     });
@@ -148,20 +145,14 @@ const AddEditUser = () => {
         urlToParse = "https://" + cleanedUrl;
       }
 
-      // const urlObj = new URL(urlToParse);
-      // const hostname = urlObj.hostname.replace('www.', '').toLowerCase();
-
       const isAllowed = allowedDomains.some((domain) => {
         const domainStr = String(domain).replace("www.", "").toLowerCase();
-        console.log(domainStr, urlToParse, "11121212");
         return (
           urlToParse === domainStr ||
           (urlToParse.endsWith(`.${domainStr}`) &&
             urlToParse.split(".").length - 1 === domainStr.split(".").length)
         );
       });
-
-      console.log(isAllowed, "isAllowedisAllowed");
 
       return {
         allowed: isAllowed,
@@ -228,6 +219,7 @@ const AddEditUser = () => {
 
     if (form?.visibility === "Exclusive to specific affiliate") {
       requiredFields.media = "Affiliates";
+      requiredFields.campaign_id = "Campaign";
     }
 
     const missingFields = Object.keys(requiredFields).filter(
@@ -274,13 +266,12 @@ const AddEditUser = () => {
     };
 
     if (form.expireCheck) {
-      value = { ...value, expireCheck:true };
+      value = { ...value, expireCheck: true };
       delete value.expirationDate;
     }
 
     if (!form.expireCheck) {
-      value = { ...value, expireCheck:false };
-      // delete value.expirationDate;
+      value = { ...value, expireCheck: false };
     }
 
     if (value?.media) {
@@ -298,9 +289,6 @@ const AddEditUser = () => {
 
     const now = new Date();
     const startDate = new Date(form?.startDate);
-    // if (startDate > now) {
-    //   value.status = "Pending";
-    // }
 
     if (value.id) {
       method = "put";
@@ -312,8 +300,8 @@ const AddEditUser = () => {
 
     delete value?.couponCommissionValue;
     delete value?.couponCommissionType;
-    delete value?.noExpiryDate
-    console.log(value,"lkllklklk")
+    delete value?.noExpiryDate;
+
     loader(true);
     ApiClient.allApi(url, value, method)
       .then((res) => {
@@ -352,22 +340,11 @@ const AddEditUser = () => {
   const emailCheck = (email) => {
     let isValid = methodModel.emailvalidation(email);
     if (isValid) {
-      // setEmailLoader(true)
-      // ApiClient.get('api/check/email',{email:email}).then(res=>{
-      //     if(!res.success){
-      //         if(detail?.email!=email){
-      //             setEmailErr(res.error.message)
-      //         }
-      //     }else{
-      //         setEmailErr('')
-      //     }
-      //     setEmailLoader(false)
-      // })
+      // Email validation logic
     }
   };
 
   const handleExpiryCheckChange = (checked) => {
-    console.log(checked, "checked");
     setform({
       ...form,
       expireCheck: checked,
@@ -383,10 +360,17 @@ const AddEditUser = () => {
       ApiClient.get("coupon/get", { id }).then((res) => {
         if (res.success) {
           let value = res.data;
+          console.log(value, "value");
           setDetail(value);
+
+          const mediaValue =
+            Array.isArray(value?.media) && value.media.length > 0
+              ? value.media[0]
+              : value?.media || "";
+
           setform({
             id: value?.id,
-            media: value?.media,
+            media: mediaValue,
             couponCode: value?.couponCode,
             couponType: value?.couponType,
             startDate: value?.startDate,
@@ -396,13 +380,15 @@ const AddEditUser = () => {
             applicable: value?.applicable,
             visibility: value?.visibility,
             url: value?.url,
-            // "couponCommission": value?.couponCommission,
             description: value?.description,
             title: value?.title,
             status: "Enabled",
             expireCheck: value?.expireCheck || false,
+            campaign_id: Array.isArray(value?.campaign_id)
+              ? value.campaign_id
+              : [value?.campaign_id].filter(Boolean),
           });
-          setDestinationUrl(value?.url)
+          setDestinationUrl(value?.url);
           setImages(value?.image);
         }
         loader(false);
@@ -427,40 +413,155 @@ const AddEditUser = () => {
     });
   };
 
-  const getCampaignTypeData = (p = {}) => {
-    let url = "campaign/brand/all";
-    ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
-      if (res.success) {
-        const data = res.data?.data;
-        console.log(data, " campaignTypeData");
+  const getCampaignTypeData = async (p = {}) => {
+    if (
+      form?.visibility === "Exclusive to specific affiliate" &&
+      !form?.media
+    ) {
+      setCampaignType([]);
+      return [];
+    }
 
-        const filteredData = data.filter(
-          (item) => item?.access_type === "public"
-        );
+    let url = "";
+    let params = {};
+
+    if (form?.visibility === "Public") {
+      url = "campaign/brand/all";
+      params = { brand_id: user?.id || user?._id };
+    } else if (
+      form?.visibility === "Exclusive to specific affiliate" &&
+      form?.media
+    ) {
+      url = "campaign-data";
+      params = {
+        affiliateId: form?.media,
+        brandId: user?.id || user?._id,
+      };
+    } else {
+      setCampaignType([]);
+      return [];
+    }
+
+    try {
+      const res = await ApiClient.get(url, params);
+      console.log(res.data, "CampaignResponse");
+
+      if (res.success === true) {
+        const data = res.data?.data || res.data || [];
+        let processedData = data;
+
+        console.log(processedData, "ProcessedData");
+
+        if (form?.visibility === "Exclusive to specific affiliate") {
+          Array.isArray(processedData) || (processedData = [processedData]);
+          if (data.length > 0 && data?.campaign_id) {
+            processedData = data;
+          } else if (data.length > 0 && data?.campaign) {
+            processedData = data.map((item) => item.campaign || item);
+          } else if (data.length > 0 && data?.id) {
+            processedData = data;
+          }
+        }
+
+        let filteredData = processedData;
+        console.log(filteredData, "FilteredData");
+
+        if (form?.visibility === "Public") {
+          filteredData = processedData.filter(
+            (item) => item?.access_type === "public"
+          );
+        }
 
         const sortedData = [...filteredData].sort((a, b) => {
           if (a.isDefault === b.isDefault) return 0;
           return a.isDefault ? -1 : 1;
         });
+        console.log(sortedData, "SortedData");
+        let formattedData = [];
 
-        const newFlterData = sortedData?.map((item) => {
-          return {
+        if (form?.visibility === "Public") {
+          formattedData = sortedData.map((item) => ({
             id: item?.id || item?._id,
-            name: `${item?.name} ${item?.isDefault ? "(isDefault)" : ""}`,
+            name: `${item?.name}${item?.isDefault ? " (Default)" : ""}`,
             isDefault: item?.isDefault,
-          };
-        });
-        setCampaignType(newFlterData);
+          }));
+        } else if (form?.visibility === "Exclusive to specific affiliate") {
+          if (
+            res.data?.campaign_name &&
+            Array.isArray(res.data.campaign_name)
+          ) {
+            formattedData = res.data.campaign_name.map((item) => ({
+              id: item?.campaign_id,
+              name: item?.campaign_name,
+              isDefault: item?.campaign_details?.isDefault || false,
+            }));
+          } else {
+            formattedData = sortedData.map((item) => {
+              console.log(item, "ItemData");
+              return {
+                id: item?.campaign_id || item?.id || item?._id,
+                name: item?.campaign_name,
+                isDefault: item?.campaign_details?.isDefault || false,
+              };
+            });
+          }
+        }
+
+        setCampaignType(formattedData);
+        return formattedData;
       }
-    });
+    } catch (error) {
+      console.error("Error fetching campaign data:", error);
+      setCampaignType([]);
+      return [];
+    }
   };
+
+  const handleAffiliateChange = async (selectedAffiliate) => {
+    setform((prevForm) => ({
+      ...prevForm,
+      media: selectedAffiliate,
+      campaign_id: [],
+    }));
+
+    if (
+      form?.visibility === "Exclusive to specific affiliate" &&
+      selectedAffiliate
+    ) {
+      const campaigns = await getCampaignTypeData(
+        "Exclusive to specific affiliate",
+        selectedAffiliate
+      );
+      console.log(campaigns, "campaigns");
+
+      if (campaigns && campaigns.length > 0) {
+        const defaultCampaign =
+          campaigns.find((campaign) => campaign.isDefault) || campaigns[0];
+        if (defaultCampaign) {
+          setform((prevForm) => ({
+            ...prevForm,
+            campaign_id: defaultCampaign.id,
+          }));
+        }
+      } else {
+        console.log("No campaigns available for selected affiliate");
+        setform((prevForm) => ({
+          ...prevForm,
+          campaign_id: [],
+        }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    getCampaignTypeData();
+  }, [form?.visibility, form?.media]);
 
   useEffect(() => {
     getData();
     getBrandData();
     getCategory();
     allGetAffiliate();
-    getCampaignTypeData();
   }, []);
 
   const handleClick1 = () => {
@@ -515,6 +616,7 @@ const AddEditUser = () => {
         dateRef2={dateRef2}
         handleExpiryCheckChange={handleExpiryCheckChange}
         hasExpiryDate={form.expireCheck}
+        handleAffiliateChange={handleAffiliateChange}
       />
     </>
   );
