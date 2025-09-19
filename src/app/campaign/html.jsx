@@ -36,21 +36,22 @@ const Html = ({
   const [showColumnSelector, setShowColumnSelector] = useState(false);
   const columnSelectorRef = useRef(null);
 
+  console.log(activeTab, "activeTab");
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         showColumnSelector &&
         columnSelectorRef.current &&
         !columnSelectorRef.current.contains(event.target) &&
-        !event.target.closest('.column-selector-container button')
+        !event.target.closest(".column-selector-container button")
       ) {
         setShowColumnSelector(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showColumnSelector]);
 
@@ -305,9 +306,6 @@ const Html = ({
           </div>
         </div>
 
-
-
-
         <div className="table_section">
           <div className="table-responsive ">
             <table className="table table-striped table-width">
@@ -419,7 +417,7 @@ const Html = ({
                             className="table_dats"
                             onClick={(e) => view(itm.id || itm._id)}
                           >
-                            < div className="user_detail">
+                            <div className="user_detail">
                               <div className="user_name">
                                 <h4 className="user">
                                   {methodModel.capitalizeFirstLetter(itm.name)}
@@ -486,11 +484,12 @@ const Html = ({
                             {datepipeModel.date(itm.createdAt)}
                           </td>
                         )}
-                        {isColumnVisible("updatedDate") && (
-                          <td className="table_dats">
-                            {datepipeModel.date(itm.updatedAt)}
-                          </td>
-                        )}
+                        {isColumnVisible("updatedDate") &&
+                          activeTab === "archived" && (
+                            <td className="table_dats">
+                              {datepipeModel.date(itm.updatedAt)}
+                            </td>
+                          )}
                         {isColumnVisible("actions") && (
                           <td className="table_dats">
                             <div className="action_icons">
@@ -551,8 +550,6 @@ const Html = ({
             )}
           </div>
         </div>
-
-        
 
         <div
           className={`paginationWrapper ${
