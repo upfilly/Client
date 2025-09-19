@@ -24,7 +24,9 @@ const Html = ({
   handleClick2,
   handleExpiryCheckChange,
   hasExpiryDate,
+  handleAffiliateChange,
 }) => {
+  console.log(campaignType, "campaignType");
   console.log(form, "form");
 
   const user = crendentialModel.getUser();
@@ -130,10 +132,21 @@ const Html = ({
                           type="radio"
                           name="couponTracking"
                           id="trackingYes"
-                          checked={form?.visibility === "Exclusive to specific affiliate"}
-                          onChange={() => setform({ ...form, visibility: "Exclusive to specific affiliate" })}
+                          checked={
+                            form?.visibility ===
+                            "Exclusive to specific affiliate"
+                          }
+                          onChange={() =>
+                            setform({
+                              ...form,
+                              visibility: "Exclusive to specific affiliate",
+                            })
+                          }
                         />
-                        <label className="form-check-label" htmlFor="trackingYes">
+                        <label
+                          className="form-check-label"
+                          htmlFor="trackingYes"
+                        >
                           Yes (Private)
                         </label>
                       </div>
@@ -144,9 +157,14 @@ const Html = ({
                           name="couponTracking"
                           id="trackingNo"
                           checked={form?.visibility === "Public"}
-                          onChange={() => setform({ ...form, visibility: "Public" })}
+                          onChange={() =>
+                            setform({ ...form, visibility: "Public" })
+                          }
                         />
-                        <label className="form-check-label" htmlFor="trackingNo">
+                        <label
+                          className="form-check-label"
+                          htmlFor="trackingNo"
+                        >
                           No (Public)
                         </label>
                       </div>
@@ -170,9 +188,7 @@ const Html = ({
                           placeholder="Select Affiliate"
                           intialValue={form?.media}
                           result={(e) => {
-                            console.log(e, "SelectedValue");
-
-                            setform({ ...form, media: e.value });
+                            handleAffiliateChange(e.value);
                           }}
                           isSingle={true}
                           options={relatedAffiliate}
@@ -189,145 +205,159 @@ const Html = ({
                   )}
 
                   {/* {form?.visibility === "Public" ? ( */}
-                    <div className="col-md-6 mb-3">
-                      <label>
-                        Commission Type<span className="star">*</span>
-                      </label>
-                      <div className="select_row">
+                  <div className="col-md-6 mb-3">
+                    <label>
+                      Commission Type<span className="star">*</span>
+                    </label>
+                    <div className="select_row">
+                      <SelectDropdown
+                        theme="search"
+                        id="commissionTypeDropdown"
+                        displayValue="name"
+                        placeholder="Select Commission Type"
+                        intialValue={form?.couponType}
+                        result={(e) => {
+                          console.log(e, "====");
+                          setform({
+                            ...form,
+                            couponType: e.value,
+                          });
+                        }}
+                        options={[
+                          {
+                            name: "Campaign",
+                            id: "Campaign",
+                          },
+                          {
+                            name: "Custom",
+                            id: "Custom",
+                          },
+                        ]}
+                      />
+                      {!form?.couponType && submitted && (
+                        <p className="invalid-feedback d-block">
+                          Commission Type is required
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {form?.couponType === "Campaign" && (
+                    <div className="col-12 col-md-6">
+                      <div className="mb-3">
+                        <label className="mb-2">
+                          Select Campaign<span className="star">*</span>
+                        </label>
+                        <>
+                          <select
+                            className={`form-select mb-2 ${
+                              errors.SelectedCampaign && "is-invalid"
+                            }`}
+                            id="campaignSelect"
+                            value={form?.campaign_id?.[0] || ""}
+                            onChange={(e) =>
+                              setform({
+                                ...form,
+                                campaign_id: e.target.value && [e.target.value],
+                              })
+                            }
+                          >
+                            <option value="">Select Campaign</option>
+                            {campaignType.map((item) => (
+                              <option key={item.id} value={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+
+                          {campaignType.length === 0 &&
+                            form?.visibility ===
+                              "Exclusive to specific affiliate" &&
+                            form?.media && (
+                              <div className="text-danger small mt-1">
+                                No campaigns available for this affiliate
+                              </div>
+                            )}
+                        </>
+
+                        {errors.SelectedCampaign && (
+                          <div className="invalid-feedback d-block">
+                            {errors.SelectedCampaign}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {form?.couponType === "Custom" && (
+                    <>
+                      <div className="col-md-6 mb-3">
+                        <label>
+                          Custom Commission Type
+                          <span className="star">*</span>
+                        </label>
                         <SelectDropdown
                           theme="search"
-                          id="commissionTypeDropdown"
+                          id="couponCommissionTypeDropdown"
                           displayValue="name"
                           placeholder="Select Commission Type"
-                          intialValue={form?.couponType}
+                          intialValue={form?.commissionType}
                           result={(e) => {
-                            console.log(e, "====");
                             setform({
                               ...form,
-                              couponType: e.value,
+                              commissionType: e.value,
                             });
                           }}
                           options={[
                             {
-                              name: "Campaign",
-                              id: "Campaign",
+                              name: "Fixed amount",
+                              id: "Fixed amount",
                             },
                             {
-                              name: "Custom",
-                              id: "Custom",
+                              name: "Percentage",
+                              id: "Percentage Commission",
                             },
                           ]}
                         />
-                        {!form?.couponType && submitted && (
-                          <p className="invalid-feedback d-block">
-                            Commission Type is required
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  {/* ) : null} */}
-
-                  {form?.couponType === "Campaign" &&
-                    // form?.visibility === "Public" && 
-                    (
-                      <div className="col-md-6 mb-3 event-select affiliate">
-                        <label>
-                          Select Campaign<span className="star">*</span>
-                        </label>
-                        <div className="select_row">
-                          <MultiSelectValue
-                            id="statusDropdown"
-                            displayValue="name"
-                            placeholder="Select Campaign"
-                            intialValue={form?.campaign_id}
-                            isClearable={true}
-                            result={(e) => {
-                              setform({ ...form, campaign_id: e.value });
-                            }}
-                            options={campaignType}
-                          />
-                        </div>
-                        {submitted && !form?.campaign_id && (
+                        {submitted && !form?.commissionType && (
                           <div className="invalid-feedback d-block">
-                            {errors?.campaign_id}
+                            Commission Type is Required
                           </div>
                         )}
                       </div>
-                    )}
-
-                  {form?.couponType === "Custom" &&
-                    // form?.visibility === "Public" && 
-                    (
-                      <>
-                        <div className="col-md-6 mb-3">
-                          <label>
-                            Custom Commission Type
-                            <span className="star">*</span>
-                          </label>
-                          <SelectDropdown
-                            theme="search"
-                            id="couponCommissionTypeDropdown"
-                            displayValue="name"
-                            placeholder="Select Commission Type"
-                            intialValue={form?.commissionType}
-                            result={(e) => {
-                              setform({
-                                ...form,
-                                commissionType: e.value,
-                              });
-                            }}
-                            options={[
-                              {
-                                name: "Fixed amount",
-                                id: "Fixed amount",
-                              },
-                              {
-                                name: "Percentage",
-                                id: "Percentage Commission",
-                              },
-                            ]}
-                          />
-                          {submitted && !form?.commissionType && (
+                      <div className="col-md-6 mb-3">
+                        <label>
+                          Commission Value<span className="star">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          placeholder={
+                            form?.commissionType === "Percentage"
+                              ? "Enter percentage"
+                              : "Enter amount"
+                          }
+                          value={form.couponAmount || ""}
+                          onChange={(e) =>
+                            setform({ ...form, couponAmount: e.target.value })
+                          }
+                        />
+                        {submitted && !form?.couponAmount && (
+                          <div className="invalid-feedback d-block">
+                            {form?.commissionType === "Percentage"
+                              ? "Percentage is required"
+                              : "Amount is required"}
+                          </div>
+                        )}
+                        {form?.commissionType === "Percentage" &&
+                          form?.couponCommissionValue > 100 && (
                             <div className="invalid-feedback d-block">
-                              Commission Type is Required
+                              Percentage cannot exceed 100%
                             </div>
                           )}
-                        </div>
-                        <div className="col-md-6 mb-3">
-                          <label>
-                            Commission Value<span className="star">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            placeholder={
-                              form?.commissionType === "Percentage"
-                                ? "Enter percentage"
-                                : "Enter amount"
-                            }
-                            value={form.couponAmount || ""}
-                            onChange={(e) =>
-                              setform({ ...form, couponAmount: e.target.value })
-                            }
-                          />
-                          {submitted && !form?.couponAmount && (
-                            <div className="invalid-feedback d-block">
-                              {form?.commissionType === "Percentage"
-                                ? "Percentage is required"
-                                : "Amount is required"}
-                            </div>
-                          )}
-                          {form?.commissionType === "Percentage" &&
-                            form?.couponCommissionValue > 100 && (
-                              <div className="invalid-feedback d-block">
-                                Percentage cannot exceed 100%
-                              </div>
-                            )}
-                        </div>
-                      </>
-                    )}
-
-                  
+                      </div>
+                    </>
+                  )}
 
                   <div className="col-md-6 mb-3 main_input">
                     <label>
@@ -370,43 +400,50 @@ const Html = ({
                               ...form,
                               expireCheck: e.target.checked,
                               // Clear expiration date when "No Expiry Date" is checked
-                              expirationDate: e.target.checked ? "" : form.expirationDate
+                              expirationDate: e.target.checked
+                                ? ""
+                                : form.expirationDate,
                             });
                           }}
                         />
-                        <label className="form-check-label" htmlFor="noExpiryDate">
+                        <label
+                          className="form-check-label"
+                          htmlFor="noExpiryDate"
+                        >
                           No Expiry Date
                         </label>
                       </div>
 
                       {/* {!form.noExpiryDate && ( */}
-                        <>
-                          <label>
-                            Expiry Date<span className="star">*</span>
-                          </label>
-                          <div className="position-relative">
-                            <input
-                              type="date"
-                              ref={dateRef2}
-                              onClick={handleClick2}
-                              disabled={form?.expireCheck}
-                              className="width_full"
-                              min={form.startDate}
-                              value={form.expirationDate}
-                              onChange={(e) =>
-                                setform({
-                                  ...form,
-                                  expirationDate: e.target.value,
-                                })
-                              }
-                            />
-                          </div>
-                          {submitted && !form.expirationDate && form.expireCheck && (
+                      <>
+                        <label>
+                          Expiry Date<span className="star">*</span>
+                        </label>
+                        <div className="position-relative">
+                          <input
+                            type="date"
+                            ref={dateRef2}
+                            onClick={handleClick2}
+                            disabled={form?.expireCheck}
+                            className="width_full"
+                            min={form.startDate}
+                            value={form.expirationDate}
+                            onChange={(e) =>
+                              setform({
+                                ...form,
+                                expirationDate: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        {submitted &&
+                          !form.expirationDate &&
+                          form.expireCheck && (
                             <div className="invalid-feedback d-block">
                               Expiration Date is Required
                             </div>
                           )}
-                        </>
+                      </>
                       {/* )} */}
                     </div>
                   </div>

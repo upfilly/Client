@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/global/layout";
 import ApiClient from "@/methods/api/apiClient";
 import loader from "@/methods/loader";
@@ -7,7 +7,6 @@ import crendentialModel from "@/models/credential.model";
 import { toast } from "react-toastify";
 import MultiSelectValue from "../components/common/MultiSelectValue";
 import axios from "axios";
-import methodModel from "../../methods/methods";
 
 const Html = () => {
   const user = crendentialModel.getUser();
@@ -32,13 +31,16 @@ const Html = () => {
   const [DestinationUrl, setDestinationUrl] = useState("");
   const [shrtlnk, setshrtlnk] = useState("");
 
-  const permission = (p) => {
-    if (user && user?.permission_detail && p) {
-      return user?.permission_detail[p];
-    } else {
-      return false;
+  console.log(DestinationUrl, "DestinationUrl");
+  console.log(user, "user.website");
+
+  useEffect(() => {
+    if (user?.website) {
+      setDestinationUrl((prev) => (prev ? prev : user.website));
     }
-  };
+  }, [user]);
+
+  const permission = (p) => user?.permission_detail?.[p] || false;
 
   const handleInputChange = (selected, value) => {
     setInputValues((prevState) => ({
@@ -64,18 +66,14 @@ const Html = () => {
     setSelectedValues(selectedOptions);
   };
 
-  const getData = (p = {}) => {
-    let url = "associated/brands";
-    ApiClient.get(url).then((res) => {
+  const getData = () => {
+    ApiClient.get("associated/brands").then((res) => {
       if (res.success) {
-        const data = res.data;
-        const filteredData = data.filter((item) => item !== null);
-        const manipulateData = filteredData.map((itm) => {
-          return {
-            name: itm?.userName || itm?.firstName,
-            id: itm?.id || itm?._id,
-          };
-        });
+        const filteredData = res.data.filter((item) => item !== null);
+        const manipulateData = filteredData.map((itm) => ({
+          name: itm?.userName || itm?.firstName,
+          id: itm?.id || itm?._id,
+        }));
         setBrandData(manipulateData);
       }
     });
@@ -99,65 +97,36 @@ const Html = () => {
     generateShortLink(url);
   }, [url]);
 
-  function isValidUrl(url) {
+  const isValidUrl = (url) => {
     if (!url) return false;
-
-    if (!/^https?:\/\//i.test(url)) {
-      return false;
-    }
-
+    if (!/^https?:\/\//i.test(url)) return false;
     try {
       const urlObj = new URL(url);
-
-      if (!["http:", "https:"].includes(urlObj.protocol)) {
-        return false;
-      }
-
-      if (
-        !urlObj.hostname ||
-        !/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname)
-      ) {
-        return false;
-      }
-
-      if (urlObj.port && !/^\d+$/.test(urlObj.port)) {
-        return false;
-      }
-
-      return true;
-    } catch (e) {
+      return (
+        ["http:", "https:"].includes(urlObj.protocol) &&
+        urlObj.hostname &&
+        /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(urlObj.hostname) &&
+        (!urlObj.port || /^\d+$/.test(urlObj.port))
+      );
+    } catch {
       return false;
     }
-  }
+  };
 
   const copyText = () => {
     const textToCopy = document.getElementById("textToCopy").innerText;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => {
-          setCopied(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        // console.error('Failed to copy: ', err);
-      });
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1000);
+    });
   };
 
   const copyShortText = () => {
     const textToCopy = document.getElementById("textShortToCopy").innerText;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => {
-          setCopied(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        // console.error('Failed to copy: ', err);
-      });
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1000);
+    });
   };
 
   const handleAddNew = () => {
@@ -176,41 +145,35 @@ const Html = () => {
     ApiClient.get("get-affilaite-link").then((res) => {
       if (res?.success) {
         setUrl(res?.data?.link);
+        // Only set if user hasn't already typed something
+        setDestinationUrl((prev) => (prev ? prev : res?.data?.link));
       }
       loader(false);
     });
   }, []);
 
   const generateShortLink = async (urlData) => {
-    if (urlData || url) {
-      const data = await axios.post(
-        "https://api.t.ly/api/v1/link/shorten",
-        { long_url: urlData || url },
-        {
-          headers: {
-            Authorization:
-              "Bearer IOjsD8bJKmNq8I9ESfMT3t0z6nAYrvx3KAc7RsfQLentCBeZ90RCO13cdlND",
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setshrtlnk(data?.data?.short_url);
-    }
+    if (!urlData && !url) return;
+    const data = await axios.post(
+      "https://api.t.ly/api/v1/link/shorten",
+      { long_url: urlData || url },
+      {
+        headers: {
+          Authorization:
+            "Bearer IOjsD8bJKmNq8I9ESfMT3t0z6nAYrvx3KAc7RsfQLentCBeZ90RCO13cdlND",
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    setshrtlnk(data?.data?.short_url);
   };
 
   const handleSubmit = () => {
     setSubmited(true);
-    if (!DestinationUrl || !selectedBrand) {
-      return;
-    }
-    const base_url = "https://api.upfilly.com/link/";
-    // const hasProtocol = /^https?:\/\//i.test(DestinationUrl);
-    // const formattedDestinationUrl = hasProtocol ? DestinationUrl : `https://${DestinationUrl}`;
-    // const formattedDestinationUrl = DestinationUrl
-    //     .replace(/^https?:\/\//i, '')
-    //     .replace(/\.com$/i, '');
+    if (!DestinationUrl || !selectedBrand) return;
 
+    const base_url = "https://api.upfilly.com/link/";
     const rawUrl = DestinationUrl.replace(/^https?:\/\//i, "");
 
     const domainParts = rawUrl.split(".");
@@ -223,41 +186,15 @@ const Html = () => {
       domainName = domainParts[1];
       domainExtension = domainParts.slice(2).join(".");
     } else if (domainParts.length === 2) {
-      domainName = domainParts[0]; // "example"
-      domainExtension = domainParts[1]; // "com"
+      domainName = domainParts[0];
+      domainExtension = domainParts[1];
     }
-
-    const baseParams = new URLSearchParams({
-      affiliate_id: user?.id,
-      merchant_id: selectedBrand,
-    });
-
-    const urlParams = new URLSearchParams({
-      fp_sid: user?.id,
-      brand: selectedBrand,
-      affiliate: user?.id,
-    }).toString();
 
     let finalUrl = base_url;
-
-    if (user?.id) {
-      finalUrl += `affiliate_id=${user?.id}`;
-    }
-
-    if (selectedBrand) {
-      finalUrl += `&merchant_id=${selectedBrand}`;
-    }
-
-    if (DestinationUrl) {
-      // const finalDestinationUrl = formattedDestinationUrl + (urlParams ? `?${urlParams}` : '');
-      const finalDestinationUrl = domainName;
-      // finalUrl += `&url=${encodeURIComponent(finalDestinationUrl)}`;
-      finalUrl += `&hUrl=${subdomain}&url=${finalDestinationUrl}&ext=${domainExtension}`;
-    }
-
-    if (!finalUrl.includes("?")) {
-      finalUrl += "?";
-    }
+    if (user?.id) finalUrl += `affiliate_id=${user.id}`;
+    if (selectedBrand) finalUrl += `&merchant_id=${selectedBrand}`;
+    if (DestinationUrl)
+      finalUrl += `&hUrl=${subdomain}&url=${domainName}&ext=${domainExtension}`;
 
     ApiClient.post("get-link", {
       base_url: finalUrl,
@@ -269,28 +206,18 @@ const Html = () => {
         setSubmited(false);
         setUrl(res?.data);
         generateShortLink(res?.data);
-        if (!SelectDropdown) {
-          setSelectDropdown(!SelectDropdown);
-        }
+        if (!SelectDropdown) setSelectDropdown(!SelectDropdown);
       }
     });
   };
 
-  // Handler for checkbox change
   const handleCustomParametersToggle = (e) => {
     setShowCustomParameters(e.target.checked);
   };
 
   return (
     <>
-      <Layout
-        handleKeyPress={""}
-        setFilter={""}
-        reset={""}
-        filter={""}
-        name="Generate Link"
-        filters={""}
-      >
+      <Layout name="Generate Link">
         <div className="sidebar-left-content">
           <div className="card">
             <div className="card-header">
@@ -300,7 +227,7 @@ const Html = () => {
                     className="fa fa-bullhorn link_icon"
                     aria-hidden="true"
                   ></i>{" "}
-                  Default Links 
+                  Default Links
                 </h3>
               </div>
             </div>
@@ -311,7 +238,6 @@ const Html = () => {
                     <label>Select a Merchant</label>
                     <select
                       className="form-select mb-2"
-                      id="brandSelect"
                       value={selectedBrand}
                       onChange={handleBrandChange}
                     >
@@ -329,7 +255,8 @@ const Html = () => {
                     )}
                   </div>
                 </div>
-                <div className="col-md-12 mb-3 custom-input" id= "random">
+
+                <div className="col-md-12 mb-3 custom-input" id="random">
                   <label>
                     Destination Url<span className="star">*</span>
                   </label>
@@ -338,16 +265,12 @@ const Html = () => {
                       type="text"
                       className="form-control"
                       value={DestinationUrl}
-                      onChange={(e) => {
-                        const url = e.target.value;
-                        setDestinationUrl(url);
-                      }}
+                      onChange={(e) => setDestinationUrl(e.target.value)}
                       style={
                         !isValidUrl(DestinationUrl) && DestinationUrl
                           ? { borderColor: "red" }
                           : {}
                       }
-                      // onChange={(e) => setDestinationUrl(e.target.value)}
                     />
                   </div>
                   {!DestinationUrl && isSubmited && (
@@ -362,77 +285,62 @@ const Html = () => {
                   )}
                 </div>
 
-                {/* Custom Parameters Checkbox */}
                 <div className="col-12 col-md-12 mb-3">
                   <div className="form-check pl-4">
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      id="showCustomParameters"
                       checked={showCustomParameters}
                       onChange={handleCustomParametersToggle}
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="showCustomParameters"
-                    >
-                      Show Custom Parameters 
+                    <label className="form-check-label">
+                      Show Custom Parameters
                     </label>
                   </div>
                 </div>
 
-                {/* Custom Parameters Section - Only show when checkbox is checked */}
                 {showCustomParameters && (
                   <div className="col-12 col-md-12">
                     <div className="select_parabx mb-3">
                       <div className="mb-3">
                         <label>Select Custom Parameters</label>
-                        <div className="position-relative set_downbx ">
-                          <MultiSelectValue
-                            id="statusDropdown"
-                            displayValue="label"
-                            intialValue={selectedValues}
-                            result={(e) => handleMultiSelectChange(e.value)}
-                            setInputValues={setInputValues}
-                            updateDictionary={updateDictionary}
-                            inputValues={inputValues}
-                            options={checkboxValues}
-                          />
-                        </div>
+                        <MultiSelectValue
+                          id="statusDropdown"
+                          displayValue="label"
+                          intialValue={selectedValues}
+                          result={(e) => handleMultiSelectChange(e.value)}
+                          setInputValues={setInputValues}
+                          updateDictionary={updateDictionary}
+                          inputValues={inputValues}
+                          options={checkboxValues}
+                        />
                       </div>
-
                       <div className="addkey mt-3 d-flex justify-content-end">
                         <button
-                          className="btn btn-primary "
+                          className="btn btn-primary"
                           onClick={() => setShowNewKeyForm(true)}
                         >
                           <i className="fa fa-plus mr-1"></i>Add Key
                         </button>
                       </div>
+
                       <div className="row">
-                        <div className="col-12 col-md-12 ">
-                          <div className="row">
-                            {selectedValues.map((selected, index) => (
-                              <div className="col-12 col-md-4 " key={index}>
-                                <div className="mb-3">
-                                  <p className="mb-0 labeltext">{selected}:</p>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder={`Input value for ${selected}`}
-                                    value={inputValues[selected] || ""}
-                                    onChange={(e) =>
-                                      handleInputChange(
-                                        selected,
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                              </div>
-                            ))}
+                        {selectedValues.map((selected, index) => (
+                          <div className="col-12 col-md-4" key={index}>
+                            <div className="mb-3">
+                              <p className="mb-0 labeltext">{selected}:</p>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder={`Input value for ${selected}`}
+                                value={inputValues[selected] || ""}
+                                onChange={(e) =>
+                                  handleInputChange(selected, e.target.value)
+                                }
+                              />
+                            </div>
                           </div>
-                        </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -455,7 +363,6 @@ const Html = () => {
                   {permission("generate_link_get") && (
                     <div className="mb-3">
                       <h6 className="link_default m-0"> Your Link :</h6>
-
                       <div className="input-group my-2">
                         <div
                           className="input-group-prepend pointer"
@@ -463,61 +370,47 @@ const Html = () => {
                           onClick={copyText}
                         >
                           <div className="input-group-text">
-                            <i
-                              className="fa fa-clipboard copy_icon"
-                              aria-hidden="true"
-                            ></i>
+                            <i className="fa fa-clipboard copy_icon"></i>
                           </div>
                         </div>
-                        {!selectedBrand && (
-                          <p
-                            id="textToCopy"
-                            className="form-control gen_links heauto br0 mb-0"
-                          >
-                            {url ||
-                              `https://api.upfilly.com/link/affiliate_id=${user?.id}`}
-                          </p>
-                        )}
-                        {selectedBrand && (
-                          <p
-                            id="textToCopy"
-                            className="form-control gen_links heauto br0 mb-0"
-                          >
-                            {url ||
-                              `https://api.upfilly.com/link/affiliate_id=${user?.id}&merchant_id=${selectedBrand}`}
-                          </p>
-                        )}
+                        <p
+                          id="textToCopy"
+                          className="form-control gen_links heauto br0 mb-0"
+                        >
+                          {url ||
+                            `https://api.upfilly.com/link/affiliate_id=${
+                              user?.id
+                            }${
+                              selectedBrand
+                                ? `&merchant_id=${selectedBrand}`
+                                : ""
+                            }`}
+                        </p>
                       </div>
                     </div>
                   )}
                   {copied && <div className="">Copied!</div>}
 
-                  {permission("generate_link_get") && (
+                  {permission("generate_link_get") && shrtlnk && (
                     <div className="mb-3">
                       <h6 className="link_default m-0"> Your Short Link : </h6>
-
-                      {shrtlnk && (
-                        <div className="input-group my-2">
-                          <div
-                            className="input-group-prepend pointer"
-                            title="Copy text"
-                            onClick={copyShortText}
-                          >
-                            <div className="input-group-text">
-                              <i
-                                className="fa fa-clipboard copy_icon"
-                                aria-hidden="true"
-                              ></i>
-                            </div>
+                      <div className="input-group my-2">
+                        <div
+                          className="input-group-prepend pointer"
+                          title="Copy text"
+                          onClick={copyShortText}
+                        >
+                          <div className="input-group-text">
+                            <i className="fa fa-clipboard copy_icon"></i>
                           </div>
-                          <p
-                            id="textShortToCopy"
-                            className="form-control gen_links br0 mb-0 heauto"
-                          >
-                            {shrtlnk}
-                          </p>
                         </div>
-                      )}
+                        <p
+                          id="textShortToCopy"
+                          className="form-control gen_links br0 mb-0 heauto"
+                        >
+                          {shrtlnk}
+                        </p>
+                      </div>
                     </div>
                   )}
                 </>
@@ -526,12 +419,10 @@ const Html = () => {
           </div>
         </div>
       </Layout>
+
       {showNewKeyForm && (
         <div className="modal d-block">
-          <div
-            className="modal-dialog modal-dialog-centered dateModal"
-            role="document"
-          >
+          <div className="modal-dialog modal-dialog-centered dateModal">
             <div className="modal-content p-0">
               <div className="modal-body">
                 <div className="d-flex justify-content-between">
