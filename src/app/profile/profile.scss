@@ -152,6 +152,7 @@ p.profile_data {
     padding: 12px;
     border-radius: 9px;
     margin-bottom: 15px;
+    overflow: auto;
 }
 
 .users_detialsbx input.radio_users {
@@ -344,19 +345,26 @@ img.n-databx {
 
 //  box height adjustments profile page
 
-.user-profile_scroller {
-    height: 915px;
-    overflow: auto;
-}
 
 .inner-card-one {
-    height: 915px !important;
+    // height: 915px !important;
     overflow-y: auto !important;
     overflow: hidden;
+
+
+    // border: 2px solid red !important;
    
 }
 
 //  box height adjustments profile page end
+.user-profile_scroller {
+ border: 1px solid #00000020    ;
+ height: 410px;
+ border-radius: 5px;
+ overflow-y: scroll !important;
+ padding: 10px;
+
+}
 
 
 .box_div .user-profile_scroller::-webkit-scrollbar {
@@ -382,6 +390,6 @@ img.n-databx {
 
 @media all and (max-width: 991px) {
     .user-profile_scroller {
-        max-height: 171px !important;
+        max-height: 170px !important;
     }
 }
