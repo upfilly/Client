@@ -290,7 +290,7 @@ export default function BillingForm() {
 
     // Validate form fields
     newErrors.firstName = validateField("firstName", formData.firstName);
-    newErrors.lastName = validateField("lastName", formData.lastName);
+    // newErrors.lastName = validateField("lastName", formData.lastName);
     newErrors.email = validateField("email", formData.email);
     newErrors.password = validateField("password", formData.password);
     newErrors.confirmPassword = validateField(
@@ -423,7 +423,7 @@ export default function BillingForm() {
       request_status: "accepted",
       email: formData.email,
       firstName: formData.firstName,
-      lastName: formData.lastName,
+      lastName: formData.lastName || "",
       userName: formData.userName,
       password: formData.password,
       address: selectedLocation.address,
@@ -766,11 +766,11 @@ export default function BillingForm() {
                                   }))
                                 }
                               />
-                              {errors.lastName && (
+                              {/* {errors.lastName && (
                                 <div className="invalid-feedback d-block">
                                   {errors.lastName}
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div className="col-12 col-md-6 col-lg-12">

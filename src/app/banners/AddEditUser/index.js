@@ -355,7 +355,7 @@ const AddEditUser = () => {
     let expirationDateError = "";
     let dateComparisonError = "";
 
-    if (form?.expireCheck == true && !form?.expiration_date) {
+    if (form?.expireCheck == false && !form?.expiration_date) {
       expirationDateError = "Expiration date is required";
     }
 

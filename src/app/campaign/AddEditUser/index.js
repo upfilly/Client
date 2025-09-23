@@ -384,7 +384,7 @@ const AddEditUser = () => {
             isDefault: value?.isDefault,
             commission: value?.commission,
             commission_type: value?.commission_type,
-            campaign_type: [value?.campaign_type],
+            campaign_type: value?.campaign_type || "manual",
             currencies: value?.currencies,
             lead_amount: value?.lead_amount,
             access_type: value?.access_type,
@@ -417,12 +417,12 @@ const AddEditUser = () => {
     ApiClient.get(url, { brand_id: user?.id || user?._id }).then((res) => {
       if (res.success) {
         const data = res?.data?.map((data) => {
-          console.log(data,"jhjhjhj")
-          return ({
+          console.log(data, "jhjhjhj");
+          return {
             id: data?.id || data?._id,
-            name: data?.userName
-          })
-        })
+            name: data?.userName,
+          };
+        });
         const filteredData = data.filter((item) => item !== null);
         setAffiliateData(filteredData);
       }

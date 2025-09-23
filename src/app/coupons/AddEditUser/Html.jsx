@@ -207,7 +207,7 @@ const Html = ({
                   {/* {form?.visibility === "Public" ? ( */}
                   <div className="col-md-6 mb-3">
                     <label>
-                      Commission Type<span className="star">*</span>
+                      Coupon Type<span className="star">*</span>
                     </label>
                     <div className="select_row">
                       <SelectDropdown
@@ -242,7 +242,7 @@ const Html = ({
                     </div>
                   </div>
 
-                  {form?.couponType === "Campaign" && (
+                  {(
                     <div className="col-12 col-md-6">
                       <div className="mb-3">
                         <label className="mb-2">
@@ -293,7 +293,7 @@ const Html = ({
                     <>
                       <div className="col-md-6 mb-3">
                         <label>
-                          Custom Commission Type
+                          Commission Type
                           <span className="star">*</span>
                         </label>
                         <SelectDropdown
@@ -437,8 +437,8 @@ const Html = ({
                           />
                         </div>
                         {submitted &&
-                          !form.expirationDate &&
-                          form.expireCheck && (
+                          form.expireCheck == "true" &&
+                          !form.expirationDate && (
                             <div className="invalid-feedback d-block">
                               Expiration Date is Required
                             </div>

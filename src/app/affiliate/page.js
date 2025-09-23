@@ -28,52 +28,54 @@ export default function affilate() {
 
   const allColumns = [
     {
-      key: 'fullName',
-      label: 'Affiliate',
+      key: "fullName",
+      label: "Affiliate",
       sortable: true,
-      default: true
+      default: true,
     },
     {
-      key: 'email',
-      label: 'Email',
+      key: "email",
+      label: "Email",
       sortable: true,
-      default: true
+      default: true,
     },
     {
-      key: 'affiliate_group_name',
-      label: 'Affiliate Group',
+      key: "affiliate_group_name",
+      label: "Affiliate Group",
       sortable: true,
-      default: false
+      default: false,
     },
     {
-      key: 'campaign',
-      label: 'Campaign',
-      sortable: false,
-      default: true
-    },
-    {
-      key: 'createdAt',
-      label: 'Join Date',
-      sortable: true,
-      default: true
-    },
-    {
-      key: 'association_status',
-      label: 'Invitation Status',
-      sortable: true,
-      default: true
-    },
-    {
-      key: 'action',
-      label: 'Action',
+      key: "campaign",
+      label: "Campaign",
       sortable: false,
       default: true,
-      alwaysShow: true
-    }
+    },
+    {
+      key: "createdAt",
+      label: "Join Date",
+      sortable: true,
+      default: true,
+    },
+    {
+      key: "association_status",
+      label: "Invitation Status",
+      sortable: true,
+      default: true,
+    },
+    {
+      key: "action",
+      label: "Action",
+      sortable: false,
+      default: true,
+      alwaysShow: true,
+    },
   ];
 
   const [visibleColumns, setVisibleColumns] = useState(() => {
-    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    const defaultColumns = allColumns
+      .filter((col) => col.default)
+      .map((col) => col.key);
     return defaultColumns;
   });
 
@@ -129,7 +131,7 @@ export default function affilate() {
   const [categoryType, setCategoryType] = useState([]);
   const [camppaignData, setCamppaignData] = useState([]);
   const [dateFormat, setDateFormat] = useState("US"); // Add date format state
-  console.log(startDate, "startDate");
+  console.log(data, "data");
   console.log(endDate, "endDate");
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
@@ -344,65 +346,64 @@ export default function affilate() {
     }
   };
 
+  const handleSubSubCategoryChange = (subSubCategory, parentSubCategory) => {
+    const isSelected = selectedSubSubCategory.includes(subSubCategory._id);
 
- const handleSubSubCategoryChange = (subSubCategory, parentSubCategory) => {
-   const isSelected = selectedSubSubCategory.includes(subSubCategory._id);
+    if (isSelected) {
+      setSelectedSubSubCategory((prev) =>
+        prev.filter((id) => id !== subSubCategory._id)
+      );
 
-   if (isSelected) {
-     setSelectedSubSubCategory((prev) =>
-       prev.filter((id) => id !== subSubCategory._id)
-     );
+      const hasOtherSelectedSubSubcategories =
+        parentSubCategory.subchildcategory?.some(
+          (ssc) =>
+            ssc._id !== subSubCategory._id &&
+            selectedSubSubCategory.includes(ssc._id)
+        );
 
-     const hasOtherSelectedSubSubcategories =
-       parentSubCategory.subchildcategory?.some(
-         (ssc) =>
-           ssc._id !== subSubCategory._id &&
-           selectedSubSubCategory.includes(ssc._id)
-       );
+      if (!hasOtherSelectedSubSubcategories) {
+        setSelectedSubCategory((prev) =>
+          prev.filter((id) => id !== parentSubCategory.id)
+        );
 
-     if (!hasOtherSelectedSubSubcategories) {
-       setSelectedSubCategory((prev) =>
-         prev.filter((id) => id !== parentSubCategory.id)
-       );
+        const grandparentCategory = category.find((cat) =>
+          cat.subCategories?.some((sub) => sub.id === parentSubCategory.id)
+        );
 
-       const grandparentCategory = category.find((cat) =>
-         cat.subCategories?.some((sub) => sub.id === parentSubCategory.id)
-       );
+        if (grandparentCategory) {
+          const hasOtherSelectedSubcategories =
+            grandparentCategory.subCategories?.some(
+              (sub) =>
+                sub.id !== parentSubCategory.id &&
+                selectedSubCategory.includes(sub.id)
+            );
 
-       if (grandparentCategory) {
-         const hasOtherSelectedSubcategories =
-           grandparentCategory.subCategories?.some(
-             (sub) =>
-               sub.id !== parentSubCategory.id &&
-               selectedSubCategory.includes(sub.id)
-           );
+          if (!hasOtherSelectedSubcategories) {
+            setSelectedCategory((prev) =>
+              prev.filter((id) => id !== grandparentCategory._id)
+            );
+          }
+        }
+      }
+    } else {
+      setSelectedSubSubCategory((prev) => [...prev, subSubCategory._id]);
 
-         if (!hasOtherSelectedSubcategories) {
-           setSelectedCategory((prev) =>
-             prev.filter((id) => id !== grandparentCategory._id)
-           );
-         }
-       }
-     }
-   } else {
-     setSelectedSubSubCategory((prev) => [...prev, subSubCategory._id]);
+      if (!selectedSubCategory.includes(parentSubCategory.id)) {
+        setSelectedSubCategory((prev) => [...prev, parentSubCategory.id]);
 
-     if (!selectedSubCategory.includes(parentSubCategory.id)) {
-       setSelectedSubCategory((prev) => [...prev, parentSubCategory.id]);
+        const grandparentCategory = category.find((cat) =>
+          cat.subCategories?.some((sub) => sub.id === parentSubCategory.id)
+        );
 
-       const grandparentCategory = category.find((cat) =>
-         cat.subCategories?.some((sub) => sub.id === parentSubCategory.id)
-       );
-
-       if (
-         grandparentCategory &&
-         !selectedCategory.includes(grandparentCategory._id)
-       ) {
-         setSelectedCategory((prev) => [...prev, grandparentCategory._id]);
-       }
-     }
-   }
- };
+        if (
+          grandparentCategory &&
+          !selectedCategory.includes(grandparentCategory._id)
+        ) {
+          setSelectedCategory((prev) => [...prev, grandparentCategory._id]);
+        }
+      }
+    }
+  };
 
   const handleRowClick = (id) => {
     const isExpanded = expandedRowId.includes(id);
@@ -480,7 +481,7 @@ export default function affilate() {
           tags: [],
           campaign_id: "",
         });
-        toast.success("Invitation Send Successfully..");
+        toast.success("Invitation Sent Successfully.");
         handleClose();
       }
     });
@@ -491,7 +492,7 @@ export default function affilate() {
   });
 
   const onChange = (dates) => {
-    setShowColumnSelector(false)
+    setShowColumnSelector(false);
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
@@ -692,15 +693,15 @@ export default function affilate() {
         showColumnSelector &&
         columnSelectorRef.current &&
         !columnSelectorRef.current.contains(event.target) &&
-        !event.target.closest('.column-selector-container button')
+        !event.target.closest(".column-selector-container button")
       ) {
         setShowColumnSelector(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showColumnSelector]);
 
@@ -739,7 +740,7 @@ export default function affilate() {
 
   const ChangeStatus = (e) => {
     const newFilters = { ...filters, association_status: e, page: 1 };
-    setShowColumnSelector(false)
+    setShowColumnSelector(false);
     setFilter(newFilters);
     getData(newFilters);
   };
@@ -794,12 +795,17 @@ export default function affilate() {
     });
   };
 
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const handleCampaign = () => {
     ApiClient.get("campaign/brand/all", { brand_id: user?.id }).then((res) => {
       if (res.success == true) {
         const data = res?.data?.data?.map((data) => ({
           id: data?.id || data?._id,
-          name: data?.name,
+          name: capitalizeFirstLetter(data?.name),
           isDefault: data?.isDefault,
         }));
         data.sort((a, b) => b.isDefault - a.isDefault);
@@ -849,7 +855,11 @@ export default function affilate() {
     if (e.target.checked) {
       // Select all not-invited affiliates
       const allNotInvitedIds = data?.data
-        .filter((itm) => (itm.association_status === "not_invite" || itm.association_status === "pending"))
+        .filter(
+          (itm) =>
+            itm.association_status === "not_invite" ||
+            itm.association_status === "pending"
+        )
         .map((itm) => itm._id);
       setselectedAffiliteid(allNotInvitedIds);
     } else {
@@ -931,12 +941,12 @@ export default function affilate() {
   }, [categorySearchTerm, category]);
 
   const toggleColumn = (columnKey) => {
-    const column = allColumns.find(col => col.key === columnKey);
+    const column = allColumns.find((col) => col.key === columnKey);
     if (column?.alwaysShow) return; // Don't allow hiding always-show columns
 
-    setVisibleColumns(prev => {
+    setVisibleColumns((prev) => {
       if (prev.includes(columnKey)) {
-        return prev.filter(key => key !== columnKey);
+        return prev.filter((key) => key !== columnKey);
       } else {
         return [...prev, columnKey];
       }
@@ -948,12 +958,14 @@ export default function affilate() {
   };
 
   const resetColumns = () => {
-    const defaultColumns = allColumns.filter(col => col.default).map(col => col.key);
+    const defaultColumns = allColumns
+      .filter((col) => col.default)
+      .map((col) => col.key);
     setVisibleColumns(defaultColumns);
   };
 
   const showAllColumns = () => {
-    setVisibleColumns(allColumns.map(col => col.key));
+    setVisibleColumns(allColumns.map((col) => col.key));
   };
 
   const renderColumnSelector = () => (
@@ -983,7 +995,7 @@ export default function affilate() {
           </div>
         </div>
         <div className="column-selector-body">
-          {allColumns.map(column => (
+          {allColumns.map((column) => (
             <div key={column.key} className="column-selector-item">
               <label className="column-checkbox">
                 <input
@@ -994,7 +1006,9 @@ export default function affilate() {
                 />
                 <span className="checkmark"></span>
                 {column.label}
-                {column.alwaysShow && <small className="text-muted"> (Required)</small>}
+                {column.alwaysShow && (
+                  <small className="text-muted"> (Required)</small>
+                )}
               </label>
             </div>
           ))}
@@ -1559,7 +1573,7 @@ export default function affilate() {
                   <tbody>
                     {!loaging &&
                       data?.data?.map((itm) => {
-                        console.log(itm, "lkllklklk");
+                        console.log(itm, "item");
                         return (
                           <React.Fragment key={itm.id}>
                             <tr className="table_row">
@@ -1692,9 +1706,10 @@ export default function affilate() {
                                     permission("affiliate_invite")) && (
                                     <button
                                       disabled={
-                                        itm.association_status == "pending"
-                                          ? false
-                                          : true
+                                        itm?.association_status == "pending" ||
+                                        itm?.association_status == "accepted"
+                                          ? true
+                                          : false
                                       }
                                       className="btn btn-primary btn_primary"
                                       onClick={() => {
@@ -1845,7 +1860,12 @@ export default function affilate() {
                     displayValue="name"
                     placeholder="Select Campaign"
                     intialValue={form?.campaign_id}
-                    result={(e) => setform({ ...form, campaign_id: e.value })}
+                    result={(e) =>
+                      setform({
+                        ...form,
+                        campaign_id: e.value,
+                      })
+                    }
                     options={Campaigns}
                   />
                   {submitted && !form?.campaign_id && (

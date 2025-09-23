@@ -31,7 +31,9 @@ const Html = () => {
   const specialChars = useRef([]);
   const [variables, setVariables] = useState("");
   const [htmlCode, setHtmlCode] = useState(false);
-  const formValidation = [{ key: "templateName",key: "campaign_id", required: true }];
+  const formValidation = [
+    { key: "templateName", key: "campaign_id", required: true },
+  ];
   const router = useRouter();
   const tinyMCEditorRef = useRef(null);
   const [editorRef, setEditorRef] = useState(null);
@@ -81,13 +83,18 @@ const Html = () => {
     }
   };
 
+  const capitalFirstLetter = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const getCampaignData = (p = {}) => {
     let url = "campaign/brand/all";
     ApiClient.get(url, { brand_id: user?.id }).then((res) => {
       if (res.success) {
         const campaign = res.data.data.map((dat) => {
           return {
-            name: dat?.name,
+            name: capitalFirstLetter(dat?.name),
             id: dat?.id || dat?._id,
             isDefault: dat?.isDefault,
           };
@@ -202,7 +209,7 @@ const Html = () => {
   };
 
   useEffect(() => {
-    getCampaignData()
+    getCampaignData();
     if (id) {
       loader(true);
       ApiClient.get("emailtemplate", { id: id }).then((res) => {
@@ -214,7 +221,7 @@ const Html = () => {
           });
           setform({
             ...payload,
-            campaign_id:campaign_id?.id || campaign_id?._id,
+            campaign_id: campaign_id?.id || campaign_id?._id,
             id: id,
           });
         }

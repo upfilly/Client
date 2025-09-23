@@ -55,14 +55,29 @@ const Html = ({
 
   const EventType = [
     { id: "lead", name: "Lead" },
-    // { id: 'visitor', name: 'Visitor' },
     { id: "purchase", name: "Purchase" },
-    // { id: 'line-item', name: 'Line-item' }
   ];
 
-  console.log(profileData?.currencies, "profileData");
-
   const [isTypeDisabled, setIsTypeDisabled] = useState(false);
+
+  // Patch categories and regions when editing
+  useEffect(() => {
+    if (categories.length > 0 && form?.categories?.length > 0) {
+      const selectedCats = form.categories.map((cat) => ({
+        id: cat.id,
+        name: cat.name,
+      }));
+      setSelectedItems({ categories: selectedCats });
+    }
+
+    if (form?.regions?.length > 0) {
+      const selectedRegs = form.regions.map((reg) => ({
+        id: reg.id,
+        name: reg.name,
+      }));
+      setSelectedRegionItems({ regions: selectedRegs });
+    }
+  }, [categories, form?.categories, form?.regions]);
 
   const handleDefaultCampaignChange = (e) => {
     const checked = e.target.checked;
@@ -70,15 +85,6 @@ const Html = ({
 
     if (checked) {
       setform((prev) => ({ ...prev, access_type: "public" }));
-      setIsTypeDisabled(true);
-      Swal.fire({
-        icon: "info",
-        title: "Default Campaign Selected",
-        text: "This campaign is now set as default. Type is set to Public.",
-        confirmButtonText: "OK",
-      });
-    } else if (checked) {
-      setform((prev) => ({ ...prev, access_type: "private" }));
       setIsTypeDisabled(true);
       Swal.fire({
         icon: "info",
@@ -94,18 +100,15 @@ const Html = ({
   const uploadDocument = async (e) => {
     const files = e.target.files;
     const uploadedFileNames = [];
-
     setDocLoder(true);
 
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
       const originalName = file.name;
       const isImage = file.type.startsWith("image/");
-
       const url = isImage
         ? "upload/image?modelName=campaign"
         : "upload/document";
-      const formDataKey = isImage ? "images" : "file";
 
       try {
         const res = await ApiClient.postFormData(url, { file: file });
@@ -127,7 +130,6 @@ const Html = ({
               });
             }
           }
-
           uploadedFileNames.push(originalName);
         }
       } catch (error) {
@@ -138,21 +140,13 @@ const Html = ({
     setDocLoder(false);
   };
 
-  const remove = (index, key) => {
-    const filterImg =
-      form?.images.length > 0 &&
-      form.images.filter((data, indx) => {
-        return index !== indx;
-      });
+  const remove = (index) => {
+    const filterImg = form?.images?.filter((_, indx) => index !== indx);
     setform({ ...form, images: filterImg });
   };
 
-  const removeDocument = (index, key) => {
-    const filterVid =
-      form?.documents?.length > 0 &&
-      form.documents.filter((data, indx) => {
-        return index !== indx;
-      });
+  const removeDocument = (index) => {
+    const filterVid = form?.documents?.filter((_, indx) => index !== indx);
     setform({ ...form, documents: filterVid });
   };
 
@@ -170,7 +164,6 @@ const Html = ({
 
   const handleNumericInput = (e, fieldName) => {
     const value = e.target.value;
-
     if (/^\d*\.?\d*$/.test(value)) {
       setform({ ...form, [fieldName]: value });
     }
@@ -188,7 +181,6 @@ const Html = ({
 
   const handleAcceptTerms = (isAccepted) => {
     setIsTermsAccepted(isAccepted);
-    console.log("Terms accepted:", isAccepted);
   };
 
   useEffect(() => {
@@ -196,19 +188,18 @@ const Html = ({
   }, []);
 
   return (
-    <Layout
-      handleKeyPress={undefined}
-      setFilter={undefined}
-      reset={undefined}
-      filter={undefined}
-      name={"Campaign"}
-      filters={undefined}
-    >
+    <Layout name={"Campaign"}>
       <form onSubmit={handleSubmit}>
-        <div className="sidebar-left-content" >
+        <div className="sidebar-left-content">
           <div className="pprofile1 card card-shadow p-3 p-sm-4">
             <div className="">
-              <div className="main_title_head profile-card" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+              <div
+                className="main_title_head profile-card"
+                onClick={() => {
+                  setIsOpen(false);
+                  setRegionIsOpen(false);
+                }}
+              >
                 <h3 className="VieUser">
                   <a to="/campaign" onClick={(e) => back()}>
                     <i
@@ -223,7 +214,14 @@ const Html = ({
               </div>
 
               <div className="form-row">
-                <div className="col-md-6 mb-3 custom-input" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Campaign Name */}
+                <div
+                  className="col-md-6 mb-3 custom-input"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>
                     Name<span className="star">*</span>
                   </label>
@@ -240,14 +238,20 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-6 mb-3 custom-type" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Campaign Type */}
+                <div
+                  className="col-md-6 mb-3 custom-type"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>
                     Type<span className="star">*</span>
                   </label>
                   <div className="select_row">
                     <SelectDropdown
                       theme="search"
-                      id="statusDropdown"
                       displayValue="name"
                       placeholder="Select Type"
                       intialValue={form?.access_type}
@@ -255,13 +259,10 @@ const Html = ({
                       result={(e) => {
                         const newAccessType = e.value;
                         const isPrivate = newAccessType === "private";
-
                         setform((prev) => ({
                           ...prev,
                           access_type: newAccessType,
-                          ...(isPrivate && {
-                            campaign_type: "automatic",
-                          }),
+                          ...(isPrivate && { campaign_type: "automatic" }),
                         }));
                       }}
                       options={[
@@ -277,28 +278,30 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-6 mb-3 custom-type" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Currency */}
+                <div
+                  className="col-md-6 mb-3 custom-type"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>
                     Currency<span className="star">*</span>
                   </label>
                   <div className="select_row">
                     <SelectDropdown
                       theme="search"
-                      id="statusDropdown"
                       displayValue="name"
                       placeholder="Select Currency"
                       intialValue={form?.currencies}
-                      result={(e) => {
-                        setform({ ...form, currencies: e.value });
-                      }}
-                      options={profileData?.currencies?.map((dat) => {
-                        console.log(dat, "currency");
-
-                        return {
+                      result={(e) => setform({ ...form, currencies: e.value })}
+                      options={
+                        profileData?.currencies?.map((dat) => ({
                           name: dat,
                           id: dat,
-                        };
-                      })}
+                        })) || []
+                      }
                     />
                   </div>
                   {submitted && !form?.currencies && (
@@ -306,31 +309,35 @@ const Html = ({
                       {errors?.currencies}
                     </div>
                   )}
-
-                  {/* Add this conditional note */}
-                  {(!profileData?.currencies || profileData?.currencies?.length == 0 ||
-                    profileData?.currencies == undefined) && (
-                    <div className="text-danger  small mt-2">
+                  {(!profileData?.currencies ||
+                    profileData?.currencies?.length === 0) && (
+                    <div className="text-danger small mt-2">
                       Note: You don't have any currencies. Please update your
                       profile first.
                     </div>
                   )}
                 </div>
 
+                {/* Affiliate (Private Campaign) */}
                 {form?.access_type === "private" && (
-                  <div className="col-md-6 mb-3 event-select affiliate" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                  <div
+                    className="col-md-6 mb-3 event-select affiliate"
+                    onClick={() => {
+                      setIsOpen(false);
+                      setRegionIsOpen(false);
+                    }}
+                  >
                     <label>
                       Affiliate<span className="star">*</span>
                     </label>
                     <div className="select_row">
                       <MultiSelectValue
-                        id="statusDropdown"
                         displayValue="name"
                         placeholder="Select Affiliate"
                         intialValue={form?.affiliate_id}
-                        result={(e) => {
-                          setform({ ...form, affiliate_id: e.value });
-                        }}
+                        result={(e) =>
+                          setform({ ...form, affiliate_id: e.value })
+                        }
                         disabled={
                           form?.status === "rejected" || !id ? false : true
                         }
@@ -345,24 +352,28 @@ const Html = ({
                   </div>
                 )}
 
-                <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Event Type */}
+                <div
+                  className="col-md-6 mb-3"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>
                     Event Type:<span className="star">*</span>
                   </label>
                   <div className="select_row event-select">
                     <MultiSelectValue
-                      intialValue={form.event_type} // Array of IDs like ["1", "2"] or single ID
-                      options={EventType} // Array of {id, name} objects
-                      result={(res) => {
-                        // For multi-select:
-                        setform({ ...form, event_type: res.value });
-                        // For single select:
-                        // setform({ ...form, event_type: res.value });
-                      }}
+                      intialValue={form.event_type}
+                      options={EventType}
+                      result={(res) =>
+                        setform({ ...form, event_type: res.value })
+                      }
                       displayValue="name"
                       placeholder="Select Event Type"
                       disabled={!!id}
-                      isSingle={false} // Set to true for single-select mode
+                      isSingle={false}
                     />
                   </div>
                   {submitted &&
@@ -373,31 +384,27 @@ const Html = ({
                     )}
                 </div>
 
-                <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Affiliate Approval */}
+                <div
+                  className="col-md-6 mb-3"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>
                     Affiliate Approval:<span className="star">*</span>
                   </label>
                   <div className="select_row event-select affiliate">
                     <MultiSelectValue
-                      id="statusDropdown"
                       isSingle={true}
                       displayValue="label"
                       placeholder="Select Approval"
-                      intialValue={
-                        form?.campaign_type
-                          ? Array.isArray(form.campaign_type)
-                            ? form.campaign_type[0]
-                            : form.campaign_type
-                          : undefined
+                      intialValue={form?.campaign_type}
+                      disabled={form?.access_type === "private" || !!id}
+                      result={(e) =>
+                        setform((prev) => ({ ...prev, campaign_type: e.value }))
                       }
-                      disabled={form?.access_type == "private" || !!id}
-                      result={(e) => {
-                        console.log("Selection result:", e);
-                        setform((prevState) => ({
-                          ...prevState,
-                          campaign_type: e.value,
-                        }));
-                      }}
                       options={[
                         { id: "manual", label: "Manual" },
                         { id: "automatic", label: "Automatic" },
@@ -411,138 +418,7 @@ const Html = ({
                   )}
                 </div>
 
-                {form?.event_type?.includes("purchase") && (
-                  <div className="col-md-6 mb-3 custom-type" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
-                    <label>
-                      Purchase Amount/Percentage Type
-                      <span className="star">*</span>
-                    </label>
-                    <div className="select_row">
-                      <SelectDropdown
-                        theme="search"
-                        id="amount_typeDropdown"
-                        displayValue="name"
-                        placeholder="Select Amount or Percentage"
-                        intialValue={form?.commission_type}
-                        disabled={!id ? false : true}
-                        result={(e) => {
-                          setform({ ...form, commission_type: e.value });
-                        }}
-                        options={[
-                          { id: "percentage", name: "Percentage" },
-                          { id: "amount", name: "Amount" },
-                        ]}
-                      />
-                    </div>
-                    {submitted && !form?.commission_type && (
-                      <div className="invalid-feedback d-block">
-                        {errors?.commission_type}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {form?.commission_type === "percentage" &&
-                  form?.event_type?.includes("purchase") && (
-                    <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
-                      <label>
-                        Commission(%)<span className="star">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={form?.commission || ""}
-                        disabled={!id ? false : true}
-                        onChange={(e) =>
-                          handleNumericCommissionInput(e, "commission")
-                        }
-                        placeholder="Enter Commission"
-                      />
-                      {submitted && !form?.commission && (
-                        <div className="invalid-feedback d-block">
-                          {errors?.commission}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                {form?.commission_type === "amount" &&
-                  form?.event_type?.includes("purchase") && (
-                    <div className="col-md-6 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
-                      <label>
-                        Commission Amount<span className="star">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={form?.commission || ""}
-                        disabled={!id ? false : true}
-                        onChange={(e) => handleNumericInput(e, "commission")}
-                        placeholder="Enter Commission Amount"
-                      />
-                      {submitted && !form?.commission && (
-                        <div className="invalid-feedback d-block">
-                          {errors?.commission}
-                        </div>
-                      )}
-                      {id && (
-                        <div className="invalid-feedback d-block">
-                          Note: Commission can't be changed on a published
-                          campaign.
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                {form?.event_type?.includes("lead") && (
-                  <div className="col-md-6 mb-3 custom-input" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
-                    <label>
-                      Lead Amount<span className="star">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={form?.lead_amount || ""}
-                      disabled={!id ? false : true}
-                      onChange={(e) => handleNumericInput(e, "lead_amount")}
-                      placeholder="Enter Lead Amount"
-                    />
-                    {submitted && !form?.lead_amount && (
-                      <div className="invalid-feedback d-block">
-                        {errors?.lead_amount}
-                      </div>
-                    )}
-                    {id && (
-                      <div className="invalid-feedback d-block">
-                        Note: Lead Amount can't be changed on a published
-                        campaign.
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {form?.access_type === "private" ? (
-                  <></>
-                ) : (
-                  <div className="col-md-12 mb-3 " onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
-                    <label>Default Campaign</label>
-                    <div className="form-check">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={form?.isDefault || false}
-                        onChange={handleDefaultCampaignChange}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="defaultCampaign"
-                      >
-                        Set this as the default campaign 
-                      </label>
-                    </div>
-                  </div>
-                )}
-
+                {/* Categories */}
                 <div
                   className="col-md-12 mb-3 category-dropdown"
                   onClick={() => setRegionIsOpen(false)}
@@ -566,6 +442,7 @@ const Html = ({
                   )}
                 </div>
 
+                {/* Regions */}
                 <div
                   className="col-md-12 mb-3 category-dropdown"
                   onClick={() => setIsOpen(false)}
@@ -588,13 +465,20 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-12 mb-3 custom-description" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Description */}
+                <div
+                  className="col-md-12 mb-3 custom-description"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>
                     Description<span className="star">*</span>
                   </label>
                   <DynamicReactQuill
                     theme="snow"
-                    value={form?.description ? form?.description : ""}
+                    value={form?.description || ""}
                     onChange={(newValue) =>
                       setform((prev) => ({ ...prev, description: newValue }))
                     }
@@ -609,29 +493,11 @@ const Html = ({
                           { list: "bullet" },
                           { indent: "-1" },
                           { indent: "+1" },
-                          campaignType,
                         ],
                         ["link", "image", "video"],
                         ["clean"],
                       ],
                     }}
-                    formats={[
-                      "header",
-                      "font",
-                      "size",
-                      "bold",
-                      "italic",
-                      "underline",
-                      "strike",
-                      "blockquote",
-                      "list",
-                      "bullet",
-                      "indent",
-                      "link",
-                      "image",
-                      "video",
-                    ]}
-                    bounds={".app"}
                   />
                   {submitted && !form?.description && (
                     <div className="invalid-feedback d-block">
@@ -640,7 +506,14 @@ const Html = ({
                   )}
                 </div>
 
-                <div className="col-md-6" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Documents Upload */}
+                <div
+                  className="col-md-6"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <label>Document(Max. Limit 10)</label>
                   <div className="form-group drag_drop">
                     <div className="upload_file">
@@ -670,53 +543,52 @@ const Html = ({
                         </div>
                       )}
                       <div className="imagesRow mt-4 img-wrappper">
-                        {form?.documents &&
-                          form?.documents.map((itm, i) => {
-                            return (
-                              <div className="imagethumbWrapper cover" key={i}>
-                                <img
-                                  src="/assets/img/document.png"
-                                  className=""
-                                  onClick={() =>
-                                    window.open(methodModel.noImg(itm?.url))
-                                  }
-                                  alt="Document"
-                                />
-                                <i
-                                  className="fa fa-times kliil"
-                                  title="Remove"
-                                  onClick={(e) => removeDocument(i)}
-                                ></i>
-                                <div>{itm?.name}</div>
-                              </div>
-                            );
-                          })}
+                        {form?.documents?.map((itm, i) => (
+                          <div className="imagethumbWrapper cover" key={i}>
+                            <img
+                              src="/assets/img/document.png"
+                              onClick={() =>
+                                window.open(methodModel.noImg(itm?.url))
+                              }
+                              alt="Document"
+                            />
+                            <i
+                              className="fa fa-times kliil"
+                              title="Remove"
+                              onClick={() => removeDocument(i)}
+                            ></i>
+                            <div>{itm?.name}</div>
+                          </div>
+                        ))}
                       </div>
                       <div className="imagesRow mt-4">
-                        {form?.images &&
-                          form?.images.map((itm, i) => {
-                            return (
-                              <div className="imagethumbWrapper" key={i}>
-                                <img
-                                  src={methodModel.noImg(itm?.url)}
-                                  className="thumbnail"
-                                  alt="Upload"
-                                />
-                                <i
-                                  className="fa fa-times kliil"
-                                  title="Remove"
-                                  onClick={(e) => remove(i)}
-                                ></i>
-                              </div>
-                            );
-                          })}
+                        {form?.images?.map((itm, i) => (
+                          <div className="imagethumbWrapper" key={i}>
+                            <img
+                              src={methodModel.noImg(itm?.url)}
+                              className="thumbnail"
+                              alt="Upload"
+                            />
+                            <i
+                              className="fa fa-times kliil"
+                              title="Remove"
+                              onClick={() => remove(i)}
+                            ></i>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Affiliate Program Management Component */}
-                <div className="col-md-12 mb-3" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+                {/* Affiliate Program Management */}
+                <div
+                  className="col-md-12 mb-3"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegionIsOpen(false);
+                  }}
+                >
                   <Affiliateprogrammanagement
                     onAcceptTerms={handleAcceptTerms}
                     formData={formData}
@@ -739,12 +611,16 @@ const Html = ({
                 </div>
               </div>
 
-              
-
-              <div className="text-right edit-btns mt-0" onClick={()=>{if(isOpen){setIsOpen(false)}; if(isRegionOpen){setRegionIsOpen(false)}}}>
+              <div
+                className="text-right edit-btns mt-0"
+                onClick={() => {
+                  setIsOpen(false);
+                  setRegionIsOpen(false);
+                }}
+              >
                 {!isTermsAccepted && (
                   <p className="text-danger">
-                    *Accept terms and conditions of legal terms 
+                    *Accept terms and conditions of legal terms
                   </p>
                 )}
                 <button

@@ -69,6 +69,8 @@ export default function Chat() {
   const [originalArray, setOriginalArray] = useState([]);
   const [filteredArrayAdd, setFilteredArrayAdd] = useState([]);
 
+  console.log(filteredAffiliates, "filteredAffiliates");
+
   useEffect(() => {
     setOriginalArray(allAffiliates);
   }, [allAffiliates]);
@@ -98,8 +100,8 @@ export default function Chat() {
           matchScore: affiliate.fullName.toLowerCase().startsWith(term)
             ? 2
             : affiliate.fullName.toLowerCase().includes(term)
-              ? 1
-              : 0,
+            ? 1
+            : 0,
         }))
         .filter((affiliate) => affiliate.matchScore > 0)
         .sort((a, b) => b.matchScore - a.matchScore);
@@ -156,7 +158,8 @@ export default function Chat() {
 
   const getAllAffiliates = () => {
     ApiClient.get(
-      `users/list?role=${user?.role == "brand" ? "affiliate" : "brand"
+      `users/list?role=${
+        user?.role == "brand" ? "affiliate" : "brand"
       }&isDeleted=false`
     ).then((res) => {
       if (res.success) {
@@ -354,8 +357,9 @@ export default function Chat() {
   }, [chat, id]);
 
   const getChatList = (p = {}) => {
-    let url = `${SocketURL}chat/user/recent-chats/all?user_id=${user?.id
-      }&login_user_id=${user?.id}&search=${!p?.search ? "" : p?.search}`;
+    let url = `${SocketURL}chat/user/recent-chats/all?user_id=${
+      user?.id
+    }&login_user_id=${user?.id}&search=${!p?.search ? "" : p?.search}`;
     axios.get(url, filters).then((res) => {
       if (res.data.success) {
         setChatList(res?.data?.data?.data);
@@ -478,8 +482,8 @@ export default function Chat() {
       todayform == dateform
         ? "Today"
         : Yesterdayform == dateform
-          ? "Yesterday"
-          : dateform;
+        ? "Yesterday"
+        : dateform;
 
     return date;
   };
@@ -610,7 +614,8 @@ export default function Chat() {
   const userMessage = (roomuid, u_id) => {
     axios
       .get(
-        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${u_id || id
+        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${
+          u_id || id
         }&login_user_id=${user?.id}`
       )
       .then((res) => {
@@ -725,12 +730,13 @@ export default function Chat() {
           <div className="chat-bg">
             <div className="row h-100">
               <div className="col-lg-5">
-
-
                 {/* original all chata */}
                 <div className="conversations mb-4 d-none d-lg-block  h-100">
                   <div className="card p-2 h-100">
-                    <div className="card-header pl-0 pr-0 p-0 d-flex justify-content-between align-items-center" id="headingOne">
+                    <div
+                      className="card-header pl-0 pr-0 p-0 d-flex justify-content-between align-items-center"
+                      id="headingOne"
+                    >
                       <div className="pointer">
                         <h3 class="about_head mb-0">
                           {" "}
@@ -738,7 +744,7 @@ export default function Chat() {
                             onClick={() => router.back()}
                             className="fa  fa-angle-left mr-1"
                           ></i>{" "}
-                          All Chats  {" "}
+                          All Chats{" "}
                         </h3>
                       </div>
                       <div className="msg_info  hide_icon_Group b-none">
@@ -795,7 +801,7 @@ export default function Chat() {
                               const isActive =
                                 itm?.room_id == roomId ||
                                 itm?.room_members?.[0]?.user_id ===
-                                activeAffiliateId;
+                                  activeAffiliateId;
 
                               return (
                                 <li
@@ -810,28 +816,28 @@ export default function Chat() {
                                     isImage
                                       ? ""
                                       : () => {
-                                        setActiveData(itm);
-                                        localStorage.setItem(
-                                          "roomId",
-                                          itm?.room_id
-                                        );
-                                        // handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
-                                        userMessage(
-                                          itm?.room_id,
-                                          itm?.room_members[0]?.user_id
-                                        );
-                                        setRoomId(itm?.room_id);
-                                        joinRoom(itm?.room_id);
-                                        getGroupListMember(itm?.room_id);
-                                      }
+                                          setActiveData(itm);
+                                          localStorage.setItem(
+                                            "roomId",
+                                            itm?.room_id
+                                          );
+                                          // handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
+                                          userMessage(
+                                            itm?.room_id,
+                                            itm?.room_members[0]?.user_id
+                                          );
+                                          setRoomId(itm?.room_id);
+                                          joinRoom(itm?.room_id);
+                                          getGroupListMember(itm?.room_id);
+                                        }
                                   }
                                 >
                                   <div className="d-flex gap-3  align-items-center">
                                     <div className="profile-img">
                                       {!itm?.isGroupChat ? (
                                         itm &&
-                                          itm?.room_members &&
-                                          itm?.room_members[0]?.user_image ? (
+                                        itm?.room_members &&
+                                        itm?.room_members[0]?.user_image ? (
                                           <img
                                             src={`${environment.api}${itm?.room_members[0]?.user_image}`}
                                             height={50}
@@ -861,8 +867,8 @@ export default function Chat() {
                                         itm &&
                                         itm?.room_members &&
                                         itm?.room_members[0]?.isOnline ==
-                                        "true") ||
-                                        itm?.room_members[0]?.user_id ==
+                                          "true") ||
+                                      itm?.room_members[0]?.user_id ==
                                         onlineUserId ? (
                                         <i
                                           className="fa fa-circle circle_icon"
@@ -877,8 +883,8 @@ export default function Chat() {
                                         <h4>
                                           {methodModel?.capitalizeFirstLetter(
                                             itm &&
-                                            itm?.room_members &&
-                                            itm?.room_members[0]?.user_name
+                                              itm?.room_members &&
+                                              itm?.room_members[0]?.user_name
                                           )}
                                         </h4>
                                       ) : (
@@ -893,9 +899,9 @@ export default function Chat() {
                                           {itm?.last_message?.content.includes(
                                             "images/users"
                                           ) ||
-                                            itm?.last_message?.content.includes(
-                                              "documents/"
-                                            )
+                                          itm?.last_message?.content.includes(
+                                            "documents/"
+                                          )
                                             ? "images"
                                             : itm?.last_message?.content}
                                         </span>
@@ -925,22 +931,27 @@ export default function Chat() {
 
                 {/* original all chata */}
 
-
-
                 {/* offcanvas code  */}
 
-
-
-                <div className="offcanvas offcanvas-start d-lg-none" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div
+                  className="offcanvas offcanvas-start d-lg-none"
+                  data-bs-scroll="true"
+                  data-bs-backdrop="false"
+                  tabindex="-1"
+                  id="offcanvasScrolling"
+                  aria-labelledby="offcanvasScrollingLabel"
+                >
                   <div className="offcanvas-header d-flex justify-content-end">
-
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                    ></button>
                   </div>
                   <div class="offcanvas-body">
-
                     <div className="conversations mb-4 d-block  d-lg-none">
                       <div className="card p-3">
-
                         <div className="card-body p-0">
                           <div className="search_chat">
                             {/* <form method="get"> */}
@@ -958,7 +969,9 @@ export default function Chat() {
                                   className="from-control search_design"
                                   id="searchright"
                                   value={searchText}
-                                  onChange={(e) => setSearchText(e.target.value)}
+                                  onChange={(e) =>
+                                    setSearchText(e.target.value)
+                                  }
                                 />
                                 <span className="mglass">
                                   <img src="../../../assets/img/search.svg" />
@@ -970,7 +983,9 @@ export default function Chat() {
                                 onClick={() => setShowAffiliatesModal(true)}
                                 style={{ whiteSpace: "nowrap" }} // Prevents button text from wrapping
                               >
-                                <i className="material-icons svg_iconbx">forum</i>
+                                <i className="material-icons svg_iconbx">
+                                  forum
+                                </i>
                               </button>
                             </div>
                             {/* </form> */}
@@ -983,7 +998,7 @@ export default function Chat() {
                                   const isActive =
                                     itm?.room_id == roomId ||
                                     itm?.room_members?.[0]?.user_id ===
-                                    activeAffiliateId;
+                                      activeAffiliateId;
 
                                   return (
                                     <li
@@ -998,28 +1013,28 @@ export default function Chat() {
                                         isImage
                                           ? ""
                                           : () => {
-                                            setActiveData(itm);
-                                            localStorage.setItem(
-                                              "roomId",
-                                              itm?.room_id
-                                            );
-                                            // handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
-                                            userMessage(
-                                              itm?.room_id,
-                                              itm?.room_members[0]?.user_id
-                                            );
-                                            setRoomId(itm?.room_id);
-                                            joinRoom(itm?.room_id);
-                                            getGroupListMember(itm?.room_id);
-                                          }
+                                              setActiveData(itm);
+                                              localStorage.setItem(
+                                                "roomId",
+                                                itm?.room_id
+                                              );
+                                              // handleUserId(itm?.user_id || itm?.room_members[0]?.user_id);
+                                              userMessage(
+                                                itm?.room_id,
+                                                itm?.room_members[0]?.user_id
+                                              );
+                                              setRoomId(itm?.room_id);
+                                              joinRoom(itm?.room_id);
+                                              getGroupListMember(itm?.room_id);
+                                            }
                                       }
                                     >
                                       <div className="d-flex gap-3  align-items-center">
                                         <div className="profile-img">
                                           {!itm?.isGroupChat ? (
                                             itm &&
-                                              itm?.room_members &&
-                                              itm?.room_members[0]?.user_image ? (
+                                            itm?.room_members &&
+                                            itm?.room_members[0]?.user_image ? (
                                               <img
                                                 src={`${environment.api}${itm?.room_members[0]?.user_image}`}
                                                 height={50}
@@ -1049,8 +1064,8 @@ export default function Chat() {
                                             itm &&
                                             itm?.room_members &&
                                             itm?.room_members[0]?.isOnline ==
-                                            "true") ||
-                                            itm?.room_members[0]?.user_id ==
+                                              "true") ||
+                                          itm?.room_members[0]?.user_id ==
                                             onlineUserId ? (
                                             <i
                                               className="fa fa-circle circle_icon"
@@ -1065,8 +1080,9 @@ export default function Chat() {
                                             <h4>
                                               {methodModel?.capitalizeFirstLetter(
                                                 itm &&
-                                                itm?.room_members &&
-                                                itm?.room_members[0]?.user_name
+                                                  itm?.room_members &&
+                                                  itm?.room_members[0]
+                                                    ?.user_name
                                               )}
                                             </h4>
                                           ) : (
@@ -1081,9 +1097,9 @@ export default function Chat() {
                                               {itm?.last_message?.content.includes(
                                                 "images/users"
                                               ) ||
-                                                itm?.last_message?.content.includes(
-                                                  "documents/"
-                                                )
+                                              itm?.last_message?.content.includes(
+                                                "documents/"
+                                              )
                                                 ? "images"
                                                 : itm?.last_message?.content}
                                             </span>
@@ -1113,21 +1129,24 @@ export default function Chat() {
                   </div>
                 </div>
 
-
-
                 {/* off canvas code  */}
-
               </div>
               {roomId ? (
                 <div className="col-lg-7">
-
                   <div className="create-group-wrapper d-flex justify-content-between align-items-start d-lg-none ">
+                    <img
+                      src="/assets/img/togglebtn.svg"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasScrolling"
+                      aria-controls="offcanvasScrolling"
+                      alt=""
+                      className="img-fluid d-lg-none"
+                    />
 
-
-                    <img src="/assets/img/togglebtn.svg" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" alt="" className="img-fluid d-lg-none" />
-
-
-                    <div className="card-header pl-0 pr-0 p-0 d-flex gap-2 mobile-screen  flex-column align-items-center border-bottom border-0" id="headingOne">
+                    <div
+                      className="card-header pl-0 pr-0 p-0 d-flex gap-2 mobile-screen  flex-column align-items-center border-bottom border-0"
+                      id="headingOne"
+                    >
                       <div className="pointer">
                         <h3 class="about_head mb-0">
                           {" "}
@@ -1135,7 +1154,7 @@ export default function Chat() {
                             onClick={() => router.back()}
                             className="fa  fa-angle-left mr-1"
                           ></i>{" "}
-                          All Chats mobile {" "}
+                          All Chats mobile{" "}
                         </h3>
                       </div>
                       <div className="msg_info  hide_icon_Group b-none">
@@ -1151,10 +1170,8 @@ export default function Chat() {
                     </div>
                   </div>
                   <div className="chat-section">
-
                     <div className="person-chat d-flex bgwhitedata">
                       <div className="person-chat-head d-flex w-100 justify-content-between align-items-baseline">
-
                         {activeUser ? (
                           <div className="d-flex ">
                             <div className="open-chat-img">
@@ -1167,8 +1184,8 @@ export default function Chat() {
                                       ? `${environment.api}${activeUser[0]?.user_image}`
                                       : "../../../assets/img/person.jpg"
                                     : activeData?.image
-                                      ? `${environment.api}${activeData?.image}`
-                                      : "../../../assets/img/person.jpg"
+                                    ? `${environment.api}${activeData?.image}`
+                                    : "../../../assets/img/person.jpg"
                                 }
                                 height={45}
                                 width={55}
@@ -1179,16 +1196,16 @@ export default function Chat() {
                                 {" "}
                                 {activeData?.room_name
                                   ? methodModel?.capitalizeFirstLetter(
-                                    activeData?.room_name
-                                  )
+                                      activeData?.room_name
+                                    )
                                   : methodModel?.capitalizeFirstLetter(
-                                    activeUser?.[0]?.user_name
-                                  )}
+                                      activeUser?.[0]?.user_name
+                                    )}
                               </h5>
                               {!activeData?.room_name ? (
                                 <span>
                                   {activeUser?.[0]?.isOnline == "true" ||
-                                    activeUser?.[0]?.user_id == onlineUserId
+                                  activeUser?.[0]?.user_id == onlineUserId
                                     ? "online"
                                     : "offline"}
                                 </span>
@@ -1265,8 +1282,9 @@ export default function Chat() {
                             );
                             return (
                               <li
-                                className={`b-bottom p-0 p-md-2 ${isTrue ? "text_right" : " text_left"
-                                  }`}
+                                className={`b-bottom p-0 p-md-2 ${
+                                  isTrue ? "text_right" : " text_left"
+                                }`}
                                 key={indx}
                               >
                                 <div
@@ -1424,7 +1442,7 @@ export default function Chat() {
                           }}
                           disabled={
                             chat?.length > 0 &&
-                              chat[0]?.rooms_details?.blocked_admin
+                            chat[0]?.rooms_details?.blocked_admin
                               ? true
                               : false
                           }
@@ -1456,7 +1474,7 @@ export default function Chat() {
                         onClick={(e) => handelSubmit(e)}
                         disabled={
                           chat?.length > 0 &&
-                            chat[0]?.rooms_details?.blocked_admin
+                          chat[0]?.rooms_details?.blocked_admin
                             ? true
                             : false
                         }
@@ -1466,7 +1484,6 @@ export default function Chat() {
                     </div>
                   </div>
                 </div>
-
               ) : (
                 <div className="col-lg-7">
                   <div className="h600 text-center d-flex justify-content-center align-items-center">
@@ -1484,25 +1501,36 @@ export default function Chat() {
             <div className="d-flex justify-content-center align-items-center bb1 new-modal-header">
               <p className="fw600 popup-heading">Create New Group</p>
               <p onClick={handleClose} className="new-pop-up-cros-btn">
-
                 <div className="new-pop-up-cros-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 62 62" fill="none">
-                    <rect width="62" height="62" rx="31" fill="white" fill-opacity="0.16" />
-                    <path d="M42.1674 38.3819C43.2775 39.5475 43.2775 41.4603 42.1674 42.6259C41.0573 43.7914 39.264 43.7914 38.1254 42.6259L31.0949 35.2139L23.8746 42.6259C22.7645 43.7914 20.9427 43.7914 19.8326 42.6259C18.7225 41.4603 18.7225 39.5475 19.8326 38.3819L27.0815 31L19.8326 23.618C18.7225 22.4525 18.7225 20.5398 19.8326 19.3742C20.9427 18.2086 22.736 18.2086 23.8746 19.3742L31.0949 26.7859L38.1254 19.3742C39.2641 18.2086 41.0573 18.2086 42.1674 19.3742C43.2775 20.5398 43.2775 22.4526 42.1674 23.618L35.1082 31L42.1674 38.3819Z" fill="white" fill-opacity="0.7" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    viewBox="0 0 62 62"
+                    fill="none"
+                  >
+                    <rect
+                      width="62"
+                      height="62"
+                      rx="31"
+                      fill="white"
+                      fill-opacity="0.16"
+                    />
+                    <path
+                      d="M42.1674 38.3819C43.2775 39.5475 43.2775 41.4603 42.1674 42.6259C41.0573 43.7914 39.264 43.7914 38.1254 42.6259L31.0949 35.2139L23.8746 42.6259C22.7645 43.7914 20.9427 43.7914 19.8326 42.6259C18.7225 41.4603 18.7225 39.5475 19.8326 38.3819L27.0815 31L19.8326 23.618C18.7225 22.4525 18.7225 20.5398 19.8326 19.3742C20.9427 18.2086 22.736 18.2086 23.8746 19.3742L31.0949 26.7859L38.1254 19.3742C39.2641 18.2086 41.0573 18.2086 42.1674 19.3742C43.2775 20.5398 43.2775 22.4526 42.1674 23.618L35.1082 31L42.1674 38.3819Z"
+                      fill="white"
+                      fill-opacity="0.7"
+                    />
                   </svg>
                 </div>
                 {/* <i className="fa fa-times"></i> */}
-
-
               </p>
             </div>
-
 
             <div className="mt-4 mb-2">
               <div className="col-12 col-sm-12 col-md-12">
                 <div className="profile-edit-sec">
                   <div className="user-profile-edit">
-
                     <div className="text-center mb-3 upload-img-wrapper">
                       <label className="new-profile-img ">
                         <img
@@ -1512,7 +1540,6 @@ export default function Chat() {
                         />
                       </label>
 
-
                       <div className="samebtn_width">
                         {picLoader ? (
                           <div className="text-success text-center top_loading">
@@ -1521,7 +1548,6 @@ export default function Chat() {
                           </div>
                         ) : (
                           <div>
-
                             <label className="new-edit-btn">
                               <input
                                 id="bannerImage"
@@ -1532,15 +1558,34 @@ export default function Chat() {
                               />
 
                               <div className="new-edit-btn-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 52 52" fill="none">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="25"
+                                  height="25"
+                                  viewBox="0 0 52 52"
+                                  fill="none"
+                                >
                                   <g clip-path="url(#clip0_2177_177)">
-                                    <path d="M26 52C40.3594 52 52 40.3594 52 26C52 11.6406 40.3594 0 26 0C11.6406 0 0 11.6406 0 26C0 40.3594 11.6406 52 26 52Z" fill="#00BAFF" />
-                                    <path d="M35.0547 24.1252L35.0405 24.111L27.8742 16.9397C27.8742 16.9397 19.1398 25.6741 14.9311 29.9702C14.407 30.5044 14.0099 31.2478 13.7743 31.9669C13.0837 34.0784 12.5119 36.2325 11.8761 38.3653C11.7055 38.9371 11.74 39.4409 12.1879 39.8674C12.6104 40.2737 13.0857 40.2879 13.6341 40.1234C15.6654 39.514 17.7098 38.9341 19.7502 38.3501C20.7995 38.046 21.7506 37.472 22.5087 36.6855C26.5184 32.6514 35.0547 24.1252 35.0547 24.1252Z" fill="white" />
-                                    <path d="M39.2378 15.2151L36.7871 12.7644C36.1586 12.1364 35.3066 11.7837 34.4182 11.7837C33.5298 11.7837 32.6777 12.1364 32.0492 12.7644L29.2715 15.5391L36.4611 22.7307L39.2388 19.953C39.8666 19.3244 40.2192 18.4722 40.219 17.5838C40.2188 16.6954 39.8659 15.8434 39.2378 15.2151Z" fill="white" />
+                                    <path
+                                      d="M26 52C40.3594 52 52 40.3594 52 26C52 11.6406 40.3594 0 26 0C11.6406 0 0 11.6406 0 26C0 40.3594 11.6406 52 26 52Z"
+                                      fill="#00BAFF"
+                                    />
+                                    <path
+                                      d="M35.0547 24.1252L35.0405 24.111L27.8742 16.9397C27.8742 16.9397 19.1398 25.6741 14.9311 29.9702C14.407 30.5044 14.0099 31.2478 13.7743 31.9669C13.0837 34.0784 12.5119 36.2325 11.8761 38.3653C11.7055 38.9371 11.74 39.4409 12.1879 39.8674C12.6104 40.2737 13.0857 40.2879 13.6341 40.1234C15.6654 39.514 17.7098 38.9341 19.7502 38.3501C20.7995 38.046 21.7506 37.472 22.5087 36.6855C26.5184 32.6514 35.0547 24.1252 35.0547 24.1252Z"
+                                      fill="white"
+                                    />
+                                    <path
+                                      d="M39.2378 15.2151L36.7871 12.7644C36.1586 12.1364 35.3066 11.7837 34.4182 11.7837C33.5298 11.7837 32.6777 12.1364 32.0492 12.7644L29.2715 15.5391L36.4611 22.7307L39.2388 19.953C39.8666 19.3244 40.2192 18.4722 40.219 17.5838C40.2188 16.6954 39.8659 15.8434 39.2378 15.2151Z"
+                                      fill="white"
+                                    />
                                   </g>
                                   <defs>
                                     <clipPath id="clip0_2177_177">
-                                      <rect width="52" height="52" fill="white" />
+                                      <rect
+                                        width="52"
+                                        height="52"
+                                        fill="white"
+                                      />
                                     </clipPath>
                                   </defs>
                                 </svg>
@@ -1553,7 +1598,6 @@ export default function Chat() {
 
                               {/* {group.imag e ? "Change" : "Upload"} Image */}
                             </label>
-
                           </div>
                         )}
                         <div>
@@ -1562,53 +1606,21 @@ export default function Chat() {
                               className=""
                               onClick={() => setGroup({ ...group, image: "" })}
                             >
-
                               <p className="mb-0 remove-img">remove img</p>
                             </label>
                           )}
                         </div>
                       </div>
-
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   </div>
                 </div>
               </div>
 
               <div className="px-4">
                 <div className="groupnameadd new-group-pop-up-input">
-                  <label for="name" className="group-label">Group Name</label>
+                  <label for="name" className="group-label">
+                    Group Name
+                  </label>
                   <input
                     placeholder="Enter your Group Name"
                     type="text"
@@ -1627,7 +1639,9 @@ export default function Chat() {
 
                 {/* Search input for affiliates */}
                 <div className="mt-3  new-group-pop-up-input">
-                  <label for="name" className="group-label">Add Members</label>
+                  <label for="name" className="group-label">
+                    Add Members
+                  </label>
                   <input
                     type="text"
                     className="form-control mb-3"
@@ -1637,26 +1651,21 @@ export default function Chat() {
                   />
                 </div>
 
-                <div className="mb-2 new-available-members d-flex align-items-center gap-3 justify-content-center justify-content-sm-start " >
-
+                <div className="mb-2 new-available-members d-flex align-items-center gap-3 justify-content-center justify-content-sm-start ">
                   <p>Available Members</p>
-                  <button className="button" type="btn">1 Selected</button>
-
-
+                  <button className="button" type="btn">
+                    1 Selected
+                  </button>
                 </div>
 
                 <div className="mt-3 gorupinner create-group-popup">
-
                   <div>
                     {filteredAffiliates.length > 0 ? (
                       filteredAffiliates.map((data, index) => (
-
                         <div
                           key={data.id}
                           className="w-100 mb-3 d-flex pointer pb-2 align-items-center new-group-members"
                         >
-
-
                           <input
                             id={`affiliate-${data.id}`}
                             className="mr-0 creategroupimput"
@@ -1669,23 +1678,20 @@ export default function Chat() {
                             onChange={handleInputChange}
                           />
 
-
-
-
-
-
                           <label htmlFor={`affiliate-${data.id}`}>
                             {data.fullName}
                             <img
                               className="mr-2"
                               width="40"
-                              src={data.image || "../../../assets/img/person.jpg"}
+                              src={
+                                data.image
+                                  ? `${environment.api}${data.image}`
+                                  : "../../../assets/img/person.jpg"
+                              }
                               alt={data.fullName}
                             />
-
                           </label>
                         </div>
-
                       ))
                     ) : (
                       <div className="text-center py-3">

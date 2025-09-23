@@ -203,7 +203,7 @@ const AddEditUser = () => {
     const requiredFields = {
       title: "Title",
       visibility: "Type",
-      couponType: "Commission Type",
+      couponType: "Coupon Type",
       startDate: "Start Date",
       url: "Site URL",
     };
@@ -213,7 +213,7 @@ const AddEditUser = () => {
     }
 
     if (form?.couponType === "Custom") {
-      requiredFields.commissionType = "Custom Commission Type";
+      requiredFields.commissionType = "Commission Type";
       requiredFields.couponAmount = "Commission Value";
     }
 
