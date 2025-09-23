@@ -325,7 +325,7 @@ const Profile = () => {
                               <input type="radio" className='profile_radio' name="radio-option" checked={itm?.user_id == Id} />
                               <span className="radio-btn"></span>
                             </div>
-                            <img src={methodModel.userImg(data && data?.image)} className="profileUsers" />
+                            <img src={methodModel.userImg(data && data?.image)} className="profileUsers object-fit-cover" />
                             <div>
                               <p className='users_names'> {itm?.firstName} {itm?.lastName}</p>
                               <p className='users_emails'>{itm?.email}</p>
