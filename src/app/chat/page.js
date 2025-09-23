@@ -1960,7 +1960,7 @@ export default function Chat() {
         >
           <Modal.Body>
             <div className="d-flex justify-content-between align-items-center all-affiliates-popup">
-              <p className="fw600">All Affiliates </p>
+              <p className="fw600">All Affiliates  </p>
               <p onClick={() => setShowAffiliatesModal(false)} className="">
                 <i className="fa fa-times"></i>
               </p>
@@ -2009,7 +2009,7 @@ export default function Chat() {
                           }
                           width="40"
                           height="40"
-                          className="rounded-circle mr-3"
+                          className="rounded-circle mr-3 object-fit-cover" 
                         />
                         <div>
                           <h6 className="mb-0">{affiliate.fullName}</h6>
