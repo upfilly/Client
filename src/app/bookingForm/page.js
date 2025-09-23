@@ -379,7 +379,7 @@ export default function BillingForm() {
     console.log("Buy button clicked - Starting validation");
 
     if (!validateForm()) {
-      toast.error("Please fix all form errors before submitting");
+      toast.error("Please fill in all the required fields.");
       return;
     }
 

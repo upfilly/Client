@@ -136,6 +136,8 @@ const AddEditUser = () => {
       subChildCategory: selectedItems?.subSubCategories,
     };
 
+    console.log(value, "value");
+
     if (form?.access_type === "private") {
       value[
         "destination_url"
@@ -154,6 +156,11 @@ const AddEditUser = () => {
     if (value.id) {
       method = "put";
       url = "banner";
+      if (form?.expireCheck === true) {
+        delete value.expiration_date;
+      } else if (!value.expiration_date) {
+        value.expiration_date = form.expiration_date;
+      }
     } else {
       delete value.id;
     }
