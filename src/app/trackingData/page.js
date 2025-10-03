@@ -210,7 +210,7 @@ export default function Affiliate() {
     <div className="column-selector-wrapper" ref={columnSelectorRef}>
       <div className="column-selector-dropdown">
         <div className="column-selector-header">
-          <h6>Manage <br/> Columns</h6>
+          <h6>Manage <br /> Columns</h6>
           <div className="column-selector-actions">
             <button
               className="btn btn-sm btn-outline-primary me-2"
@@ -286,15 +286,17 @@ export default function Affiliate() {
   }, [])
 
   const pageChange = (e) => {
-    setFilter({ ...filters, page: e.selected })
-    getData({ page: e.selected + 1 })
+    // ReactPaginate provides zero-based index, convert to one-based for API
+    const newPage = e.selected + 1;
+    setFilter({ ...filters, page: newPage })
+    getData({ page: newPage })
   }
 
   const filter = (p = {}) => {
     setFilter({ ...filters, ...p })
     getData({ ...p, page: 1 })
   }
-  
+
   const ChangeStatus = (e, key) => {
     setFilter({ ...filters, [key]: e })
     getData({ [key]: e, page: 1, user_id: user?.id })
@@ -374,9 +376,9 @@ export default function Affiliate() {
     let filter;
 
     if (user?.role == "brand") {
-      filter = {...filters, brand_id: user?.id, export_to_xls: "yes" };
+      filter = { ...filters, brand_id: user?.id, export_to_xls: "yes" };
     } else {
-      filter = {...filters, affiliate_id: user?.id, export_to_xls: "yes" };
+      filter = { ...filters, affiliate_id: user?.id, export_to_xls: "yes" };
     }
 
     delete filter?.search
@@ -446,7 +448,7 @@ export default function Affiliate() {
                         value={filters.search}
                         placeholder="Search"
                         className="form-control h-100"
-                        onChange={(e) =>{setShowColumnSelector(false); e.target.value == "" ? reset() : setFilter({...filters, search: e.target.value })}}
+                        onChange={(e) => { setShowColumnSelector(false); e.target.value == "" ? reset() : setFilter({ ...filters, search: e.target.value }) }}
                       />
                       <i className="fa fa-search search_fa" onClick={() => {
                         filter()
@@ -458,7 +460,7 @@ export default function Affiliate() {
                       displayValue="name"
                       placeholder="Commission Status"
                       intialValue={filters.commission_status}
-                      result={e => { ChangeStatus(e.value, "commission_status");setShowColumnSelector(false) }}
+                      result={e => { ChangeStatus(e.value, "commission_status"); setShowColumnSelector(false) }}
                       options={[
                         { id: 'pending', name: 'Pending' },
                         { id: 'accepted', name: 'Accepted' },
@@ -482,7 +484,7 @@ export default function Affiliate() {
                         displayValue="name"
                         placeholder="Paid Status"
                         intialValue={filters.commission_paid}
-                        result={e => { ChangeStatus(e.value, "commission_paid");setShowColumnSelector(false) }}
+                        result={e => { ChangeStatus(e.value, "commission_paid"); setShowColumnSelector(false) }}
                         options={[
                           { id: 'pending', name: 'Pending' },
                           { id: 'paid', name: 'Paid' },
@@ -517,7 +519,7 @@ export default function Affiliate() {
                       {showColumnSelector && renderColumnSelector()}
                     </div>
 
-                    <button 
+                    <button
                       className="btn btn-primary"
                       onClick={exportToExcel}
                       disabled={loaging || total === 0}
@@ -611,10 +613,10 @@ export default function Affiliate() {
                             {isColumnVisible('commissionPaid') && (
                               !itm?.amount_of_commission ? <td className='name-person ml-2' >
                                 {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
-                              </td> : 
-                              <td className='name-person ml-2' >
-                                {`$${convertedCurrency(itm?.amount_of_commission)}`}
-                              </td>
+                              </td> :
+                                <td className='name-person ml-2' >
+                                  {`$${convertedCurrency(itm?.amount_of_commission)}`}
+                                </td>
                             )}
                             {isColumnVisible('commissionStatus') && (
                               <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
@@ -671,7 +673,7 @@ export default function Affiliate() {
           <ReactPaginate
             breakLabel="..."
             nextLabel="Next >"
-            initialPage={filters?.page}
+            initialPage={filters?.page - 1} // Convert one-based to zero-based
             onPageChange={pageChange}
             pageRangeDisplayed={2}
             marginPagesDisplayed={1}
