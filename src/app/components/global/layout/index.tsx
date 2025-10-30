@@ -57,7 +57,7 @@ export default function Layout({
     pathname.includes("/performance") ||
     pathname.includes("/CreativeEmails") ||
     pathname.includes("/EmailMessages") ||
-    pathname.includes("/DataFeeds") ||
+    pathname.includes("/ProductFeeds") ||
     pathname.includes("/CreativeAsset") ||
     pathname.includes("/EmailTemplate") ||
     pathname.includes("/coupons") ||

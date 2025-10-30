@@ -9,7 +9,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
-const DataFeedslisting = ({ file , loaderData}) => {
+const ProductFeedslisting = ({ file , loaderData}) => {
     const user = crendentialModel.getUser()
     const { role } = useParams()
     const [filters, setFilter] = useState({ page: 0, count: 10, search: '', isDeleted: false, status: '' })
@@ -142,4 +142,4 @@ const DataFeedslisting = ({ file , loaderData}) => {
     </>;
 };
 
-export default DataFeedslisting;
+export default ProductFeedslisting;

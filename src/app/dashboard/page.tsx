@@ -642,7 +642,7 @@ export default function Dashboard() {
                       <li>Creative Assets</li>
                       <li>Banners</li>
                       <li>Email Templates</li>
-                      <li>Data Feeds</li>
+                      <li>Product Feeds</li>
                       <li>Generate Links</li>
                       <li>Add Coupon</li>
                       <li>Newsletter</li>

@@ -173,7 +173,27 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
+
         <div className="d-flex justify-content-md-end gap-2 flex-wrap align-items-center all_flexbx">
+          <div className="tabs-container d-flex align-items-center">
+            <button
+              className={`tab-button active`}
+              onClick={() => {
+                history.push("/banners");
+              }}
+            >
+              Banners
+            </button>
+            <button
+              className={`tab-button`}
+              onClick={() => {
+                history.push("/textlinks");
+              }}
+            >
+              Add Text Link
+
+            </button>
+          </div>
           {user?.role == "affiliate" && (
             <SelectDropdown
               theme="search"

@@ -100,7 +100,7 @@ const Html = ({
       setFilter={setFilter}
       reset={reset}
       filter={filter}
-      name="Data Feeds"
+      name="Product Feeds"
       filters={filters}
     >
       <div className="sidebar-left-content">
@@ -300,7 +300,7 @@ const Html = ({
               <option value={150}>150</option>
               <option value={200}>200</option>
             </select>{" "}
-            from {total} Data Feeds
+            from {total} Product Feeds
           </span>
           <ReactPaginate
             breakLabel="..."

@@ -596,7 +596,7 @@ const Html = ({
                 "CreativeAsset",
                 "EmailTemplate",
                 "EmailMessages",
-                "DataFeeds"
+                "ProductFeeds"
               ) ? (
                 <>
                   <div className="nav-item">
@@ -640,12 +640,12 @@ const Html = ({
                     </i>
                     <span className="side_head">
                       {user.role == "brand" || addedUser?.role == "brand"
-                        ? "Banners"
-                        : "Banners"}
+                        ? "Banners/Text Link"
+                        : "Banners/Text Link"}
                     </span>
                   </ListItemLink>
                 )}
-
+{/* 
                 <ListItemLink to="/textlinks" title="Text Links">
                   <i className="material-icons  svg_iconbx" title="Text Links">
                     timeline
@@ -655,7 +655,7 @@ const Html = ({
                       ? "Add Text Link"
                       : "Text Links"}
                   </span>
-                </ListItemLink>
+                </ListItemLink> */}
 
                 <ListItemLink to="/coupons" title="Coupons">
                   <i
@@ -673,12 +673,12 @@ const Html = ({
 
                 {user?.role == "brand" || addedUser?.role == "brand" ? (
                   <>
-                    <ListItemLink to="/CreativeAsset" title="Data Feeds">
+                    <ListItemLink to="/CreativeAsset" title="Product Feeds">
                       <div className="d-flex align-items-center icns_center gap-0">
                         <i class="material-icons  svg_iconbx">
                           manage_accounts
                         </i>
-                        <span className="side_head">Data Feeds</span>
+                        <span className="side_head">Product Feeds</span>
                       </div>
                     </ListItemLink>
                   </>
@@ -686,16 +686,16 @@ const Html = ({
                   <></>
                 )}
 
-                {urlAllow("DataFeeds") &&
+                {urlAllow("ProductFeeds") &&
                 (user?.role == "affiliate" ||
                   addedUser?.role == "affiliate") ? (
                   <>
-                    <ListItemLink to="/DataFeeds" title="Data Feeds">
+                    <ListItemLink to="/ProductFeeds" title="Product Feeds">
                       <div className="d-flex align-items-center icns_center gap-0">
                         <i class="material-icons  svg_iconbx">
                           manage_accounts
                         </i>
-                        <span className="side_head">Data Feeds</span>
+                        <span className="side_head">Product Feeds</span>
                       </div>
                     </ListItemLink>
                   </>

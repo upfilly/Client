@@ -5,7 +5,7 @@ import './style.scss'
 import { toast } from 'react-toastify';
 import 'react-quill/dist/quill.snow.css';
 import { Modal } from 'react-bootstrap';
-import DataFeedslisting from '../CreativeAsset/listings'
+import ProductFeedslisting from '../CreativeAsset/listings'
 import environment from '@/environment';
 import Papa from 'papaparse';
 import crendentialModel from '@/models/credential.model';
@@ -181,14 +181,14 @@ const Html = () => {
 
     return (
         <>
-            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Data Feeds" filters={''} >
+            <Layout handleKeyPress={''} setFilter={''} reset={''} filter={''} name="Product Feeds" filters={''} >
                 <div className='sidebar-left-content'>
                     <div className="card">
                         <div className='card-header'>
                             <div className='main_title_head d-flex justify-content-between align-items-center'>
                                 <h3 className="link_default m-0">
                                     <i className="fa fa-bullhorn link_icon" aria-hidden="true">
-                                        </i> Send Data Feeds   
+                                        </i> Send Product Feeds   
                                 </h3> 
                             </div>
                         </div>
@@ -351,7 +351,7 @@ const Html = () => {
                             </div>}
                         </div>
                     </div>
-                    <DataFeedslisting file={file} loaderData={loaderData} />
+                    <ProductFeedslisting file={file} loaderData={loaderData} />
                 </div>
             </Layout>
         </>
