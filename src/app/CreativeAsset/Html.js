@@ -346,7 +346,7 @@ const Html = () => {
                                 </Modal.Body>
                             </Modal>
 
-                            {!loaderData && <div className='text-end mt-3'>
+                            {!loaderData && <div className='text-end '>
                                 <button type="button" className="btn btn-primary" onClick={handleSubmit}>Send Data</button>
                             </div>}
                         </div>
