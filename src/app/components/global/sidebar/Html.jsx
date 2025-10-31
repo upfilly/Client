@@ -171,7 +171,7 @@ const Html = ({
                 {urlAllow("EmailTemplate") &&
                 (user?.role == "brand" || addedUser?.role == "brand") ? (
                   <>
-                    <ListItemLink to="/EmailTemplate" title="Newsletter">
+                    <ListItemLink to="/emailtemplate" title="Newsletter">
                       <div className="d-flex align-items-center  icns_center">
                         <i class="material-icons svg_iconbx">note</i>
                         <span className="side_head">Newsletter</span>
@@ -193,7 +193,7 @@ const Html = ({
                     <ListItemLink to="/requests" title="Sent Offers">
                       <i
                         className="material-icons  svg_iconbx"
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         business
                       </i>
@@ -208,7 +208,7 @@ const Html = ({
                     <ListItemLink to="/makeLink" title="Generate Link">
                       <i
                         className="material-icons  svg_iconbx"
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         timeline
                       </i>
@@ -265,7 +265,7 @@ const Html = ({
                     <ListItemLink to="/campaign" title="Campaign">
                       <i
                         className="material-icons  svg_iconbx"
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         recent_actors
                       </i>
@@ -278,7 +278,7 @@ const Html = ({
                     <ListItemLink to="/requestCampaigns" title="Campaign">
                       <i
                         className="material-icons  svg_iconbx"
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         alarm_add
                       </i>
@@ -326,7 +326,7 @@ const Html = ({
                 }`}
               >
                 {/* {urlAllow('requests') && (permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests" title="Offer Request" >
-                <i className="material-icons  svg_iconbx " title="campaignManagement">business_center</i>
+                <i className="material-icons  svg_iconbx " title="campaignmanagement">business_center</i>
                 <span className="side_head">Offer Request</span>
               </ListItemLink>} */}
 
@@ -336,7 +336,7 @@ const Html = ({
                     <ListItemLink to="/invitations" title="Merchant Invites">
                       <i
                         className="material-icons  svg_iconbx "
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         transfer_within_a_station
                       </i>
@@ -348,12 +348,12 @@ const Html = ({
                   ((user?.role == "affiliate" ||
                     addedUser?.role == "affiliate") && (
                     <ListItemLink
-                      to="/campaignManagement"
+                      to="/campaignmanagement"
                       title="Campaign Management"
                     >
                       <i
                         className="material-icons  svg_iconbx"
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         manage_accounts
                       </i>
@@ -403,7 +403,7 @@ const Html = ({
                     <ListItemLink to="/requests" title="Offer Requests">
                       <i
                         className="material-icons  svg_iconbx "
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         business_center
                       </i>
@@ -414,7 +414,7 @@ const Html = ({
                 {(permission("marketplace_product_add") ||
                   user?.role == "affiliate" ||
                   addedUser?.role == "affiliate") && (
-                  <ListItemLink to="/Offers" title="Add Offer">
+                  <ListItemLink to="/offers" title="Add Offer">
                     <i
                       className="material-icons  svg_iconbx ListItemLink"
                       title="product"
@@ -461,10 +461,10 @@ const Html = ({
               tabclass("communication") || tab == "communication" ? "show" : ""
             }`}
           >
-            {urlAllow("EmailMessages") &&
+            {urlAllow("emailmessages") &&
             (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
               <>
-                <ListItemLink to="/EmailMessages" title="Email Messages">
+                <ListItemLink to="/emailmessages" title="Email Messages">
                   <div className="d-flex align-items-center  icns_center">
                     <i class="material-icons svg_iconbx">note</i>
                     <span className="side_head">Email Messages</span>
@@ -490,12 +490,12 @@ const Html = ({
             }
 
             {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
-                <i className="material-icons  svg_iconbx " title="campaignManagement">transfer_within_a_station</i>
+                <i className="material-icons  svg_iconbx " title="campaignmanagement">transfer_within_a_station</i>
                 <span className="side_head">Merchant Invites</span>
               </ListItemLink>} */}
 
-            {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignManagement" title="Campaign Management">
-                <i className="material-icons  svg_iconbx" title="campaignManagement">manage_accounts</i>
+            {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignmanagement" title="Campaign Management">
+                <i className="material-icons  svg_iconbx" title="campaignmanagement">manage_accounts</i>
                 <span className="side_head">Campaign Management</span>
               </ListItemLink>} */}
           </div>
@@ -554,7 +554,7 @@ const Html = ({
               </ListItemLink>
             </> : <></>} */}
                 {
-                  <ListItemLink to="/salesTracking" title="Untracked Sales">
+                  <ListItemLink to="/salestracking" title="Untracked Sales">
                     <i
                       className="material-icons  svg_iconbx"
                       title="untracked sales"
@@ -581,7 +581,7 @@ const Html = ({
                 )}
 
                 {user && user?.role == "brand" && (
-                  <ListItemLink to="/trackingData" title="Transactions">
+                  <ListItemLink to="/trackingdata" title="Transactions">
                     <i class="material-icons svg_iconbx">compare_arrows</i>
                     <span className="side_head">Transactions</span>
                   </ListItemLink>
@@ -593,21 +593,21 @@ const Html = ({
           {
             <>
               {urlAllow(
-                "CreativeAsset",
-                "EmailTemplate",
-                "EmailMessages",
-                "ProductFeeds"
+                "creativeasset",
+                "emailtemplate",
+                "emailmessages",
+                "productfeeds"
               ) ? (
                 <>
                   <div className="nav-item">
                     <CustomTooltip text="Creative Assets">
                       <a
                         className={` side_titles  nav-link hoverclass affilate ${
-                          tabclass("CreativeAssets") || tab == "CreativeAssets"
+                          tabclass("creativeasset") || tab == "creativeasset"
                             ? ""
                             : "collapsed-m"
                         }`}
-                        onClick={() => tabChange("CreativeAssets")}
+                        onClick={() => tabChange("creativeasset")}
                       >
                         <i class="material-icons  svg_iconbx">layers</i>
                         <span className="  side_head">Creative Assets</span>
@@ -625,7 +625,7 @@ const Html = ({
 
               <div
                 className={`collapse dropdown-btm ${
-                  tabclass("CreativeAssets") || tab == "CreativeAssets"
+                  tabclass("creativeasset") || tab == "creativeasset"
                     ? "show"
                     : ""
                 }`}
@@ -660,7 +660,7 @@ const Html = ({
                 <ListItemLink to="/coupons" title="Coupons">
                   <i
                     className="material-icons  svg_iconbx"
-                    title="campaignManagement"
+                    title="campaignmanagement"
                   >
                     confirmation_number
                   </i>
@@ -673,7 +673,7 @@ const Html = ({
 
                 {user?.role == "brand" || addedUser?.role == "brand" ? (
                   <>
-                    <ListItemLink to="/CreativeAsset" title="Product Feeds">
+                    <ListItemLink to="/creativeasset" title="Product Feeds">
                       <div className="d-flex align-items-center icns_center gap-0">
                         <i class="material-icons  svg_iconbx">
                           manage_accounts
@@ -686,11 +686,11 @@ const Html = ({
                   <></>
                 )}
 
-                {urlAllow("ProductFeeds") &&
+                {urlAllow("productfeeds") &&
                 (user?.role == "affiliate" ||
                   addedUser?.role == "affiliate") ? (
                   <>
-                    <ListItemLink to="/ProductFeeds" title="Product Feeds">
+                    <ListItemLink to="/productfeeds" title="Product Feeds">
                       <div className="d-flex align-items-center icns_center gap-0">
                         <i class="material-icons  svg_iconbx">
                           manage_accounts
@@ -707,10 +707,10 @@ const Html = ({
                   (user?.role == "affiliate" ||
                     addedUser?.role == "affiliate") &&
                   permission("generate_link_add") && (
-                    <ListItemLink to="/generateLink" title="Generate Link">
+                    <ListItemLink to="/generatelink" title="Generate Link">
                       <i
                         className="material-icons  svg_iconbx"
-                        title="campaignManagement"
+                        title="campaignmanagement"
                       >
                         timeline
                       </i>
@@ -725,11 +725,11 @@ const Html = ({
                   </div>
                 </ListItemLink>
               </> : <></>} */}
-                {urlAllow("CreativeEmails") &&
+                {urlAllow("creativeemails") &&
                 (user?.role == "affiliate" ||
                   addedUser?.role == "affiliate") ? (
                   <>
-                    <ListItemLink to="/CreativeEmails" title="Email Messages">
+                    <ListItemLink to="/creativeemails" title="Email Messages">
                       <div className="d-flex align-items-center  icns_center gap-0">
                         <i class="material-icons svg_iconbx">local_library</i>
                         <span className="side_head"> Emails</span>
@@ -741,7 +741,7 @@ const Html = ({
                 )}
                 {user?.role == "brand" || addedUser?.role == "brand" ? (
                   <>
-                    <ListItemLink to="/CreativeEmails" title="Creative Email">
+                    <ListItemLink to="/creativeemails" title="Creative Email">
                       <div className="d-flex align-items-center  icns_center gap-0">
                         <i class="material-icons svg_iconbx">local_library</i>
                         <span className="side_head">Email</span>
@@ -821,7 +821,7 @@ const Html = ({
                   user.role == "brand" ||
                   addedUser?.role == "brand") && (
                   <ListItemLink
-                    to="/allowNotifications"
+                    to="/allownotifications"
                     title="Allow Notifications"
                   >
                     <i className="material-icons  svg_iconbx" title="product">
@@ -904,7 +904,7 @@ const Html = ({
             <ListItemLink to="/payments" title="Payments">
               <i
                 className="material-icons  svg_iconbx"
-                title="campaignManagement"
+                title="campaignmanagement"
               >
                 recent_actors
               </i>
@@ -913,17 +913,17 @@ const Html = ({
           )}
 
           {/* {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/campaign" title="Campaign">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
+            <i className="material-icons  svg_iconbx" title="campaignmanagement">recent_actors</i>
             <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
 
           {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requestCampaigns" title="Campaign">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">alarm_add</i>
+            <i className="material-icons  svg_iconbx" title="campaignmanagement">alarm_add</i>
             <span className="side_head">Campaign Request</span>
           </ListItemLink>} */}
 
           {/* {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/mapping" title="Map data">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">recent_actors</i>
+            <i className="material-icons  svg_iconbx" title="campaignmanagement">recent_actors</i>
             <span className="side_head">Map Keys</span>
           </ListItemLink>} */}
 
@@ -938,27 +938,27 @@ const Html = ({
           </ListItemLink>} */}
 
           {/* {(permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests" title="Offer Request" >
-            <i className="material-icons  svg_iconbx " title="campaignManagement">business_center</i>
+            <i className="material-icons  svg_iconbx " title="campaignmanagement">business_center</i>
             <span className="side_head">Offer Request</span>
           </ListItemLink>} */}
 
           {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
-            <i className="material-icons  svg_iconbx " title="campaignManagement">transfer_within_a_station</i>
+            <i className="material-icons  svg_iconbx " title="campaignmanagement">transfer_within_a_station</i>
             <span className="side_head">Merchant Invites</span>
           </ListItemLink>} */}
 
-          {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignManagement" title="Campaign Management">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">manage_accounts</i>
+          {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignmanagement" title="Campaign Management">
+            <i className="material-icons  svg_iconbx" title="campaignmanagement">manage_accounts</i>
             <span className="side_head">Campaign Management</span>
           </ListItemLink>} */}
 
           {/* {user && user?.role == "affiliate" && <ListItemLink to="/inviteUsers"  title="Offer Request" >
-          <i class="material-icons svg_iconbx " title="campaignManagement">person_add</i>
+          <i class="material-icons svg_iconbx " title="campaignmanagement">person_add</i>
           <span className="side_head">Invite Users</span>
         </ListItemLink>} */}
 
           {/* {user && (user?.role == "affiliate" ) && <ListItemLink to="/invitedUsers"  title="Offer Request" >
-          <i className="material-icons  svg_iconbx " title="campaignManagement">group_add</i>
+          <i className="material-icons  svg_iconbx " title="campaignmanagement">group_add</i>
           <span className="side_head">Invited Users</span>
         </ListItemLink>} */}
 
@@ -1000,12 +1000,12 @@ const Html = ({
         </ListItemLink>} */}
 
           {/* <ListItemLink to="/coupons" title="Coupons">
-            <i className="material-icons  svg_iconbx" title="campaignManagement">confirmation_number</i>
+            <i className="material-icons  svg_iconbx" title="campaignmanagement">confirmation_number</i>
             <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
           </ListItemLink> */}
 
           {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && (permission('generate_link_add')) && <ListItemLink to="/generateLink" title="Generate Link" >
-            <i className="material-icons  svg_iconbx" title="campaignManagement">timeline</i>
+            <i className="material-icons  svg_iconbx" title="campaignmanagement">timeline</i>
             <span className="side_head">Generate Link</span>
           </ListItemLink>} */}
 

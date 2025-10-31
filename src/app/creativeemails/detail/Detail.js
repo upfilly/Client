@@ -71,7 +71,7 @@ const Detail = (p) => {
     const back = () => {
         const searchParams = window.location.search;
 
-        window.location.href = '/CreativeEmails' + searchParams;
+        window.location.href = '/creativeemails' + searchParams;
         // history.back()
     }
 

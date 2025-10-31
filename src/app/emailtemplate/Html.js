@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import moment from "moment";
 import environment from "@/environment";
 import { Editor } from "@tinymce/tinymce-react";
-import EmailLogsModal from "../EmailTemplate/EmailModal";
+import EmailLogsModal from "../emailtemplate/EmailModal";
 
 const Html = ({ relatedAffiliate, form, setForm, handleSubmit }) => {
   const user = crendentialModel.getUser();

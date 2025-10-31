@@ -33,12 +33,12 @@ export default function Header2({
     "/campaign",
     "/payments",
     "/product",
-    "/campaignManagement",
-    "/CreativeEmails",
+    "/campaignmanagement",
+    "/creativeemails",
     "/banners",
     "/coupons",
     "/invitations",
-    "/allowNotifications",
+    "/allownotifications",
   ];
 
   const isDashboard = validPaths.includes(pathname);
@@ -276,7 +276,7 @@ export default function Header2({
                               history.push("/requests");
                             } else {
                               if (user?.role !== "brand") {
-                                history.push("/campaignManagement");
+                                history.push("/campaignmanagement");
                               } else {
                                 history.push("/campaign");
                               }

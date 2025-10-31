@@ -112,7 +112,7 @@ const EmailMessages = () => {
     // }
 
     const view = (id) => {
-        history.push("/EmailMessages/detail/" + id)
+        history.push("/emailmessages/detail/" + id)
     }
 
     // const edit=(id)=>{

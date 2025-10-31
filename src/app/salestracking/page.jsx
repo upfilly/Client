@@ -154,19 +154,19 @@ const untrackedSales = () => {
         
           const queryString = new URLSearchParams(filterParams).toString();
         
-          history.push(`/salesTracking/detail/${id}?${queryString}`);
+          history.push(`/salestracking/detail/${id}?${queryString}`);
         // history.push("/salesTracking/detail/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/salesTracking/edit/${id}`
-        if(role) url=`/salesTracking/${role}/edit/${id}`
+        let url=`/salestracking/edit/${id}`
+        if(role) url=`/salestracking/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/salesTracking/add`
-        if(role) url=`/salesTracking/${role}/add`
+        let url=`/salestracking/add`
+        if(role) url=`/salestracking/${role}/add`
         history.push(url)
     }
 
