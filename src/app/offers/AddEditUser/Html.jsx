@@ -455,7 +455,7 @@ const Html = ({
                 <div className="text-right edit-btns">
                   <a
                     className="btn btn-secondary mr-2 "
-                    onClick={() => history.push("/Offers")}
+                    onClick={() => history.push("/offers")}
                   >
                     Back
                   </a>

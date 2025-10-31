@@ -6,6 +6,7 @@ import './style.scss';
 import methodModel from '@/methods/methods';
 import { useRouter, useParams } from 'next/navigation';
 import crendentialModel from '@/models/credential.model';
+import datepipeModel from '@/models/datepipemodel';
 
 const Detail = (p) => {
     const history = useRouter()
@@ -14,7 +15,7 @@ const Detail = (p) => {
     const [data, setData] = useState()
     const getDetail = (did) => {
         loader(true)
-        ApiClient.get(`product`, { id: did }).then(res => {
+        ApiClient.get(`getTrackingById`, { id: did }).then(res => {
             if (res.success) {
                 setData(res.data)
             }
@@ -25,7 +26,8 @@ const Detail = (p) => {
     const back = () => {
         const searchParams = window.location.search;
                 
-        window.location.href = '/Offers' + searchParams;
+        window.location.href = '/salestracking' + searchParams;
+        // history.back()
     }
 
     useEffect(() => {
@@ -39,7 +41,7 @@ const Detail = (p) => {
                 <div className='card'>
                     <div className='card-header'>
                         <div className="main_title_head">
-                            <h3> <a to="/campaign" onClick={back}>  <i className=" left_btx fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>Offer Detail</h3>
+                            <h3> <a to="/campaign" onClick={back}>  <i className="fa fa-arrow-left mr-2" title='Back' aria-hidden="true"></i></a>  untarcked Sale Detail</h3>
                         </div>
                     </div>
 
@@ -50,25 +52,89 @@ const Detail = (p) => {
                                 <div className='campaine_detls_wrapper'>
 
                                     <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Name:</p>
+                                                <p className='headmain'>Type:</p>
                                             </div>
                                         </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.name)}</p>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.type)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Title:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.title)}</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Order Reference:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && data?.order_reference}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Order Date:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && datepipeModel.date(data?.order_date)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Commission:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && data?.commission}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Customer Reference:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data && methodModel.capitalizeFirstLetter(data?.customer_reference)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Description:</p>
                                             </div>
                                         </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub mb-0' dangerouslySetInnerHTML={{ __html: data?.description }} />
                                             </div>
@@ -76,119 +142,42 @@ const Detail = (p) => {
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
-                                                <p className='headmain'>Category:</p>
+                                                <p className='headmain'>Brand detail:</p>
                                             </div>
                                         </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.all_categories?.map((dat) => dat?.name)?.join(",")}</p>
+                                                <ul className='ulclass'>
+                                                    <li> <div className='profiledetailscls mr-3'><b><i className='fa fa-user blue-icon mr-2'></i></b>{data?.affiliate_fullName}</div>
+                                                    </li>
+                                                    <li> <div className='profiledetailscls'><b><i className='fa fa-envelope blue-icon mr-2'></i></b>{data?.affiliate_email}</div></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
-                                            <div className='userdata'>
-                                                <p className='headmain'>Sub-Category:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.all_sub_categories?.map((dat) => dat?.name)?.join(",")}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
-                                            <div className='userdata'>
-                                                <p className='headmain'>Sub-Child-Category:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.all_sub_child_categories?.map((dat) => {
-                                                    if (dat == null) {
-                                                        return
-                                                    }
-                                                    dat?.name
-                                                })?.join(",")}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
-                                            <div className='userdata'>
-                                                <p className='headmain'>Quantity:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data && data?.quantity}</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
-                                            <div className='userdata'>
-                                                <p className='headmain'>Opportunity:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data?.opportunity_type?.map((itm) => itm).join(',\n')}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
-                                            <div className='userdata'>
-                                                <p className='headmain'>Placement:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>{data?.placement?.map((itm) => itm).join(',\n')}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
-                                            <div className='userdata'>
-                                                <p className='headmain'>Price:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>${data?.price}</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
-
-                                    <div className='row'>
-                                        <div className='col-12 col-sm-4 col-md-3 ' >
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
                                                 <p className='headmain'>Images:</p>
                                             </div>
                                         </div>
-                                        <div className='col-12 col-sm-8 col-md-9 '>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <div>
-                                                    {data?.image?.map((itm) =>
+                                                    {/* {data?.images?.map((itm) => */}
                                                         <div className="imagethumbWrapper">
-                                                            <img src={methodModel.noImg(itm)} className="" />
+                                                            <img src={methodModel.noImg(data?.image)} className="" />
                                                         </div>
-                                                    )}
+                                                    {/* )} */}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>

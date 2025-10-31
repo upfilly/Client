@@ -175,7 +175,7 @@ const Html = () => {
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res?.message);
-        router.push("/CreativeEmails");
+        router.push("/creativeemails");
       }
       loader(false);
     });

@@ -5,7 +5,7 @@ import './style.scss'
 import { toast } from 'react-toastify';
 import 'react-quill/dist/quill.snow.css';
 import { Modal } from 'react-bootstrap';
-import ProductFeedslisting from '../CreativeAsset/listings'
+import ProductFeedslisting from './listings'
 import environment from '@/environment';
 import Papa from 'papaparse';
 import crendentialModel from '@/models/credential.model';

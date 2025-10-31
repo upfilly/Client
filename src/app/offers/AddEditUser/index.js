@@ -114,7 +114,7 @@ const AddEditUser = () => {
         ApiClient.allApi(url, value, method).then(res => {
             if (res.success) {
                 toast.success(res.message)
-                let url = '/Offers'
+                let url = '/offers'
                 // if(role) url="/campaign/"+role
                 history.push(url)
             }

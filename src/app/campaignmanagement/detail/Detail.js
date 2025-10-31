@@ -41,7 +41,7 @@ const CampaignDetail = () => {
     const back = () => {
         const searchParams = window.location.search;
                 
-        window.location.href = '/campaignManagement' + searchParams;
+        window.location.href = '/campaignmanagement' + searchParams;
     }
 
     const handleCopyLink = () => {

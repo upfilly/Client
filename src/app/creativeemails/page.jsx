@@ -177,17 +177,17 @@ const Users = () => {
   };
 
   // const view=(id)=>{
-  //     history.push("/CreativeEmails/detail/"+id)
+  //     history.push("/creativeemails/detail/"+id)
   // }
 
   const edit = (id) => {
-    let url = `/CreativeEmails/edit/${id}`;
+    let url = `/creativeemails/edit/${id}`;
     if (role) url = `/campaign/${role}/edit/${id}`;
     history.push(url);
   };
 
   const add = () => {
-    let url = `/CreativeEmails/edit/add`;
+    let url = `/creativeemails/edit/add`;
     history.push(url);
   };
 

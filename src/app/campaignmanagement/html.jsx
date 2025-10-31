@@ -368,7 +368,7 @@ const Html = ({
 
     const queryString = new URLSearchParams(filterParams).toString();
 
-    history.push(`/campaignManagement/detail/${id}?${queryString}`);
+    history.push(`/campaignmanagement/detail/${id}?${queryString}`);
   };
 
   useEffect(() => {
@@ -407,7 +407,7 @@ const Html = ({
     setFilter({ ...filters, ...filter });
     getData({ ...filter, page: 1 });
     setSelectedCurrency("USD");
-    history.push("/campaignManagement");
+    history.push("/campaignmanagement");
   };
 
   const handleCountChange = (count) => {

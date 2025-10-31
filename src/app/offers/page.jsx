@@ -149,19 +149,19 @@ const Users = () => {
 
         const queryString = new URLSearchParams(filterParams).toString();
 
-        history.push(`/Offers/detail/${id}?${queryString}`);
+        history.push(`/offers/detail/${id}?${queryString}`);
         // history.push("/Offers/detail/" + id)
     }
 
     const edit = (id) => {
-        let url = `/Offers/edit/${id}`
+        let url = `/offers/edit/${id}`
         if (role) url = `/product/${role}/edit/${id}`
         history.push(url)
     }
 
     const add = () => {
-        let url = `/Offers/add`
-        if (role) url = `/Offers/${role}/add`
+        let url = `/offers/add`
+        if (role) url = `/offers/${role}/add`
         history.push(url)
     }
 

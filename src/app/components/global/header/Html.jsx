@@ -15,7 +15,7 @@ const Html = ({ settingData, Logout }) => {
   const pathname = usePathname()
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingForm') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate')
+  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingForm') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignmanagement') || pathname.includes('/affiliate')
   const param = useSearchParams()
   const id = param.get("id")
   const code = param.get("campaign_code")

@@ -35,7 +35,7 @@ const Html = ({
 
   const view = (id) => {
     history.push(
-      "/CreativeEmails/detail/" +
+      "/creativeemails/detail/" +
         id +
         `?startDate=${
           startDate ? startDate.toISOString().split("T")[0] : ""
@@ -57,7 +57,7 @@ const Html = ({
     setEndDate(null);
     setFilter({ ...filters, ...filter });
     getData({ ...filter });
-    history.push("/CreativeEmails");
+    history.push("/creativeemails");
     // dispatch(search_success(''))
   };
 
