@@ -340,7 +340,7 @@ const Html = ({
                       >
                         alarm_add
                       </i>
-                      <span className="side_head">Campaign Requests</span>
+                      <span className="side_head">Pending Applications</span>
                     </ListItemLink>
                   ))}
               </div>
@@ -493,8 +493,8 @@ const Html = ({
                   </i>
                   <span className="side_head">
                     {user.role == "brand" || addedUser?.role == "brand"
-                      ? "Add Coupon"
-                      : "Coupons/Offers"}
+                      ? "Coupons/Offers"
+                      : "Coupons"}
                   </span>
                 </ListItemLink>
 
@@ -766,6 +766,12 @@ const Html = ({
               </div>
               </ListItemLink>
             </> : <></>} */}
+                 {user && user?.role == "brand" && (
+                  <ListItemLink to="/trackingdata" title="Transactions">
+                    <i class="material-icons svg_iconbx">compare_arrows</i>
+                    <span className="side_head">Transactions</span>
+                  </ListItemLink>
+                )}
                 {
                   <ListItemLink to="/salestracking" title="Untracked Sales">
                     <i
@@ -781,11 +787,11 @@ const Html = ({
                   <>
                     <ListItemLink
                       to="/commission/manualCommission/view"
-                      title="Commissions"
+                      title="Bonus/Commission"
                     >
                       <div className="d-flex align-items-center icns_center gap-0">
                         <i class="material-icons svg_iconbx">monetization_on</i>
-                        <span className="side_head">Manual Commission</span>
+                        <span className="side_head">Add Bonus/Commission</span>
                       </div>
                     </ListItemLink>
                   </>
@@ -793,12 +799,7 @@ const Html = ({
                   <></>
                 )}
 
-                {user && user?.role == "brand" && (
-                  <ListItemLink to="/trackingdata" title="Transactions">
-                    <i class="material-icons svg_iconbx">compare_arrows</i>
-                    <span className="side_head">Transactions</span>
-                  </ListItemLink>
-                )}
+           
               </div>
             </>
           )}
