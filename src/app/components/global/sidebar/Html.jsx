@@ -58,6 +58,7 @@ const Html = ({
                 <>
                   <div className="nav-item">
                     <CustomTooltip text="Dashboard">
+                      
                       <a
                         className={` side_titles  nav-link hoverclass affilate ${tabclass("dashboard") || tab == "dashboard"
                             ? ""
@@ -396,7 +397,7 @@ const Html = ({
                       >
                         transfer_within_a_station
                       </i>
-                      <span className="side_head">Campaign Invites (old merchant invites)</span>
+                      <span className="side_head">Campaign Invites</span>
                     </ListItemLink>
                   )}
 
