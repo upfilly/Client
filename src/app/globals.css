@@ -157,6 +157,9 @@ a.demos-button {
   width: 18px;
 }
 
+.tox-statusbar__path-item{
+    display: none !important;
+}
    .mc-campaign-dropdown ::-webkit-scrollbar {
     width: 5px !important;
     height: 8px !important;
