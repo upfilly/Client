@@ -731,7 +731,7 @@ export default function Chat() {
             <div className="row h-100">
               <div className="col-lg-5">
                 {/* original all chata */}
-                <div className="conversations mb-4 d-none d-lg-block  h-100">
+                <div className="conversations mb-4 d-none d-lg-block ">
                   <div className="card p-2 h-100">
                     <div
                       className="card-header pl-0 pr-0 p-0 d-flex justify-content-between align-items-center"

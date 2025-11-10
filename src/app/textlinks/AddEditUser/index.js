@@ -15,7 +15,7 @@ const AddEditUser = () => {
     title: "",
     destination_url: "",
     description: "",
-    seo_attributes: "",
+    // seo_attributes: "",
     activation_date: "",
     availability_date: "",
     expiration_date: "",
@@ -100,7 +100,7 @@ const AddEditUser = () => {
       description: form.description || "",
       startDate: form.activation_date ? form.activation_date : "",
       endDate: form.expiration_date ? form.expiration_date : "",
-      seo: !!form.seo_attributes,
+      // seo: !!form.seo_attributes,
       deepLink: !!form.is_deep_linking,
       category: selectedItems.categories ? selectedItems.categories : []
     }
@@ -111,7 +111,7 @@ const AddEditUser = () => {
       description: form.description || "",
       startDate: form.activation_date ? form.activation_date : "",
       endDate: form.expiration_date ? form.expiration_date : "",
-      seo: !!form.seo_attributes,
+      // seo: !!form.seo_attributes,
       deepLink: !!form.is_deep_linking,
       category: selectedItems.categories ? selectedItems.categories : []
     }
@@ -190,7 +190,7 @@ const AddEditUser = () => {
             title: value?.linkName,
             destination_url: `${value?.destinationUrl}`,
             description: value?.description,
-            seo_attributes: value?.seo,
+            // seo_attributes: value?.seo,
             access_type: value?.access_type,
             affiliate_id: value?.affiliate_id,
             // "category_id": value?.category_id?.id,
