@@ -670,7 +670,7 @@ const Html = ({ user,
                                         // value:addressData
                                       })} />
                                     {/* {(inputFocused && address.length > 0) && <div className='shadow p-3'> */}
-                                    {loading && <div>Loading...</div>}
+                                    {/* {loading && <div>Loading...</div>} */}
                                     {suggestions.map((suggestion) => {
                                       const style = {
                                         backgroundColor: suggestion.active ? '#41b6e6' : '#fff',

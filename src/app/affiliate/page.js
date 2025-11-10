@@ -214,7 +214,7 @@ export default function affilate() {
     setFilter({ ...filters, ...filter });
     getData({ ...filter, page: 1 });
     setSelectedCurrency("USD");
-    history.push("/campaignManagement");
+    history.push("/campaignmanagement");
   };
 
   const toggleCategoryExpand = (categoryId) => {

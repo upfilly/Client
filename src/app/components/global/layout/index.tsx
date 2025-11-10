@@ -53,13 +53,13 @@ export default function Layout({
     pathname.includes("/reports") ||
     pathname.includes("/brand-report") ||
     pathname.includes("/affiliate-report") ||
-    pathname.includes("/trackingData") ||
+    pathname.includes("/trackingdata") ||
     pathname.includes("/performance") ||
-    pathname.includes("/CreativeEmails") ||
-    pathname.includes("/EmailMessages") ||
-    pathname.includes("/DataFeeds") ||
-    pathname.includes("/CreativeAsset") ||
-    pathname.includes("/EmailTemplate") ||
+    pathname.includes("/creativeemails") ||
+    pathname.includes("/emailmessages") ||
+    pathname.includes("/productfeeds") ||
+    pathname.includes("/creativeasset") ||
+    pathname.includes("/emailtemplate") ||
     pathname.includes("/coupons") ||
     pathname.includes("/appliedjobs") ||
     pathname.includes("/applymerchants") ||
@@ -68,31 +68,31 @@ export default function Layout({
     pathname.includes("/invitations") ||
     pathname.includes("/inviteUsers") ||
     pathname.includes("/users") ||
-    pathname.includes("/salesTracking") ||
+    pathname.includes("/salestracking") ||
     pathname.includes("makeLink") ||
-    pathname.includes("/generateLink") ||
+    pathname.includes("/generatelink") ||
     pathname.includes("/Trackings") ||
     pathname.includes("/invites") ||
     pathname.includes("/requests") ||
     pathname.includes("/addAccount/detail") ||
-    pathname.includes("/Offers") ||
+    pathname.includes("/offers") ||
     pathname.includes("/proposals") ||
     pathname.includes("/dashboard") ||
     pathname.includes("/campaign") ||
-    pathname.includes("/campaignManagement") ||
+    pathname.includes("/campaignmanagement") ||
     pathname.includes("/affiliate") ||
     pathname.includes("/group") ||
     pathname.includes("/commission") ||
     pathname.includes("/payments") ||
     pathname.includes("/chat") ||
-    pathname.includes("/allowNotifications") || pathname.includes("textlinks");
+    pathname.includes("/allownotifications") || pathname.includes("textlinks");
 
   const isAuthenticate =
     pathname.includes("/reports") ||
     pathname.includes("/brand-report") ||
     pathname.includes("/affiliate-report") ||
     pathname.includes("/campaign") ||
-    pathname.includes("/campaignManagement") ||
+    pathname.includes("/campaignmanagement") ||
     pathname.includes("/affiliate") ||
     pathname.includes("/profile") ||
     pathname.includes("/payments") ||

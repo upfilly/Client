@@ -59,7 +59,7 @@ const NotificationPage = () => {
                                     history.push("/requests")
                                 } else {
                                     if (user?.role !== 'brand') {
-                                        history.push("/campaignManagement")
+                                        history.push("/campaignmanagement")
                                     } else {
                                         history.push("/campaign")
                                     }

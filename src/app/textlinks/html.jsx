@@ -96,7 +96,27 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
+       
         <div className="d-flex justify-content-md-end gap-2 flex-wrap align-items-center all_flexbx">
+           <div className="tabs-container d-flex align-items-center">
+          <button
+            className={`tab-button`}
+            onClick={() => {
+              history.push("/banners");
+            }}
+          >
+            Banners
+          </button>
+          <button
+            className={`tab-button active`}
+            onClick={() => {
+              history.push("/textlinks");
+            }}
+          >
+            Add Text Link
+
+          </button>
+        </div>
           <SelectDropdown
             theme="search"
             id="statusDropdown"
@@ -133,7 +153,7 @@ const Html = ({
                   className="btn btn-primary mb-0 set_reset"
                   onClick={(e) => add()}
                 >
-                   <i className="fa fa-plus mr-1"> </i> 
+                  <i className="fa fa-plus mr-1"> </i>
                   Add Text Links
                 </a>
               </>
