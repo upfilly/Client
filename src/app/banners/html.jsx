@@ -190,7 +190,7 @@ const Html = ({
                 history.push("/textlinks");
               }}
             >
-              Add Text Link
+               Text Link
 
             </button>
           </div>

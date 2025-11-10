@@ -113,7 +113,7 @@ const Html = ({
               history.push("/textlinks");
             }}
           >
-            Add Text Link
+           Text Link
 
           </button>
         </div>
@@ -198,9 +198,9 @@ const Html = ({
                   <th scope="col" className="table_data">
                     End Date
                   </th>
-                  <th scope="col" className="table_data">
+                  {/* <th scope="col" className="table_data">
                     SEO
-                  </th>
+                  </th> */}
                   <th scope="col" className="table_data">
                     Deep Link
                   </th>
@@ -250,9 +250,9 @@ const Html = ({
                         <td className="table_dats">
                           {datepipeModel.date(itm.endDate)}
                         </td>
-                        <td className="table_dats">
+                        {/* <td className="table_dats">
                           {itm.seo ? "Yes" : "No"}
-                        </td>
+                        </td> */}
                         <td className="table_dats">
                           {itm.deepLink ? "Yes" : "No"}
                         </td>

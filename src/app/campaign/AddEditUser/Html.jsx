@@ -328,7 +328,8 @@ const Html = ({
                     }}
                   >
                     <label>
-                      Affiliate<span className="star">*</span>
+                      Affiliate
+                      {/* <span className="star">*</span> */}
                     </label>
                     <div className="select_row">
                       <MultiSelectValue
@@ -344,11 +345,11 @@ const Html = ({
                         options={affiliateData}
                       />
                     </div>
-                    {submitted && !form?.affiliate_id && (
+                    {/* {submitted && !form?.affiliate_id && (
                       <div className="invalid-feedback d-block">
                         {errors?.affiliate_id}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 )}
 
