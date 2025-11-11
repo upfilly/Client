@@ -304,11 +304,13 @@ export default function Dashboard() {
               </div>
             </div>
 
-             {user.role == "brand" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
+            {user.role == "brand" && 
+            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
 
                   {user.role == "brand" ? (
+                    <>
                     <div className="ml-2 ">
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -327,6 +329,8 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </div>
+                 
+                    </>
                   ) : (
                     <></>
                   )}
@@ -339,7 +343,50 @@ export default function Dashboard() {
                   <div></div>
                 </div>
               </div>
-            </div>}
+            </div>
+            }
+                        {user.role == "brand" && 
+            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
+              <div className="fixi-ic">
+                <div className="d-flex align-items-center flex-wrap">
+
+                  {user.role == "brand" ? (
+                    <>
+                   
+                    <div className="ml-2 ">
+                      <div className="d-flex items-center gap-2">
+                        <div className="img-div-first">
+                          <img
+                            className="fixi-boxx"
+                            src="/assets/img/visiter.png"
+                            alt=""
+                          ></img>
+                        </div>
+                        <div className="d-flex flex-column justify-content-center">
+                          <p className="revuh">Pending Affiliates</p>
+
+                          <h3 className="dollars-t">
+                            {/* {CampaignRequest?.pendingRequestsCount} */}
+                            0
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="">
+                  {/* <div className='text-right'>
+                  <p className='colrs-blues'>2-56</p>
+                  <p className='week-last'>Last week</p>
+                </div> */}
+                  <div></div>
+                </div>
+              </div>
+            </div>
+            }
 
 
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
@@ -460,7 +507,7 @@ export default function Dashboard() {
         <div className="mt-3">
           <div className="container-fluid">
             <div className="row mb-3 justify-content-center justify-content-sm-end">
-              
+
               <div className="col-auto">
                 <div className="btn-group btnsgroup" role="group" aria-label="Filter">
                   <button
