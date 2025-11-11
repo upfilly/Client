@@ -366,8 +366,7 @@ export default function Dashboard() {
                           <p className="revuh">Pending Affiliates</p>
 
                           <h3 className="dollars-t">
-                            {/* {CampaignRequest?.pendingRequestsCount} */}
-                            0
+                            {CampaignRequest?.totalPending || 0}
                           </h3>
                         </div>
                       </div>
