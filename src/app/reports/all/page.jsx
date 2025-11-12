@@ -53,29 +53,16 @@ export default function AnalyticsDashboard() {
   const [showDropdown, setShowDropdown] = useState(true);
 
   const downloadOptions = [
-    { id: 1, name: "Download CSV", value: "csv" },
-    { id: 2, name: "Download PDF", value: "pdf" },
-    { id: 3, name: "Download Excel", value: "excel" },
+    { id: 'csv', name: "Download CSV", value: "csv" },
+    { id: "xml", name: "Download XML", value: "xml" },
+    { id: "excel", name: "Download Excel", value: "excel" },
   ];
 
   const handleDownload = (e) => {
     const type = e.value;
     setSelectedType(type);
     // setShowDropdown(false);
-
-    switch (type) {
-      case "csv":
-        exportCsv();
-        break;
-      case "pdf":
-        exportPdf();
-        break;
-      case "excel":
-        exportExcel();
-        break;
-      default:
-        break;
-    }
+    exportCsv(type)
   };
 
   const dateRange = {
@@ -176,17 +163,17 @@ export default function AnalyticsDashboard() {
     });
   };
 
-  const exportCsv = () => {
+  const exportCsv = (type) => {
     ApiClient.get("reports/performance/export", {
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      format: "excel",
+      format: type,
     })
       .then((csvData) => {
 
         if (csvData && csvData.success !== false) {
           // csvData is plain CSV string
-          downloadFile(csvData, `Performance Report`);
+          downloadFile(csvData, `Performance_Report.${type}`, type); 
         } else {
           alert("No data to download.");
         }
@@ -199,7 +186,7 @@ export default function AnalyticsDashboard() {
 
   // Trigger file download
   function downloadFile(csvData, filename) {
-    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvData], { type: `text/csv;charset=utf-8;` });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
