@@ -401,6 +401,11 @@ export default function CampaignReport() {
                         />
                       </div>
                     </div>
+                    <div className="col-12 mt-3 mb-3">
+                      <button className="btn btn-primary" onClick={resetAllFilters}>
+                        Export Csv
+                      </button>
+                    </div>
 
                     {/* Reset Button */}
                     {hasActiveFilters && (

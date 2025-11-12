@@ -31,7 +31,6 @@ export default function AnalyticsDashboard() {
       key: "selection2",
     },
   });
-  console.log(user, "user==");
   const [data, setData] = useState();
   const [data2, setData2] = useState();
   const [clicks, setClicks] = useState();
@@ -50,8 +49,6 @@ export default function AnalyticsDashboard() {
   const [comparisonPeriod, setComparisonPeriod] = useState("none");
   const [CampaignData, setCamapign] = useState([]);
   const [campaignId, setCampaignId] = useState([]);
-
-  console.log(affiliateData, "affiliateData");
 
   const dateRange = {
     selection1: {
@@ -150,6 +147,41 @@ export default function AnalyticsDashboard() {
       }
     });
   };
+
+  const exportCsv = () => {
+    ApiClient.get("reports/performance/export", {
+      startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+      endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+      format: "excel",
+    })
+      .then((csvData) => {
+
+        if (csvData && csvData.success !== false) {
+          // csvData is plain CSV string
+          downloadFile(csvData, `Performance Report`);
+        } else {
+          alert("No data to download.");
+        }
+      })
+      .catch((err) => {
+        loader(false);
+        alert("Error fetching data: " + (err.message || err));
+      });
+  };
+
+  // Trigger file download
+  function downloadFile(csvData, filename) {
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
 
   useEffect(() => {
     getBrandData();
@@ -305,7 +337,7 @@ export default function AnalyticsDashboard() {
   return (
     <Layout name="Reports">
       <div className="dashboard">
-        <aside className="sidebar" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
+        <aside className="sidebar" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
           <h3 className="sidebar-title mb-0">Insights</h3>
           <nav className="sidebar-nav">
             {/* <button className="sidebar-button">Program Overview</button> */}
@@ -323,20 +355,20 @@ export default function AnalyticsDashboard() {
                 onBlur={() => setHandleDateFilter(false)}
               >
                 {baseDates?.[0] ||
-                baseDates?.[1] ||
-                compDates?.[0] ||
-                compDates?.[1]
+                  baseDates?.[1] ||
+                  compDates?.[0] ||
+                  compDates?.[1]
                   ? comparisonPeriod == "none"
                     ? `${moment(baseDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
+                      "MMMM DD, YYYY"
+                    )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
                     : `${moment(baseDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(baseDates?.[1]).format(
-                        "MMMM DD, YYYY"
-                      )} ⇆ ${moment(compDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
+                      "MMMM DD, YYYY"
+                    )} - ${moment(baseDates?.[1]).format(
+                      "MMMM DD, YYYY"
+                    )} ⇆ ${moment(compDates?.[0]).format(
+                      "MMMM DD, YYYY"
+                    )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
                   : "Select Date Range"}
               </span>
 
@@ -426,11 +458,18 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="reset-filters-container" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
+          <div className="col-12 mt-3 mb-3">
+            <button className="btn btn-primary" onClick={() => exportCsv()}>
+              Download
+            </button>
+          </div>
+
+          <div className="reset-filters-container" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
             {isFilterApplied() && (
               <button className="btn-primary " onClick={resetFilters}>
                 Reset Filters
               </button>
+
             )}
           </div>
 
