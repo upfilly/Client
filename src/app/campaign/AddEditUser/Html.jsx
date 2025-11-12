@@ -339,9 +339,9 @@ const Html = ({
                         result={(e) =>
                           setform({ ...form, affiliate_id: e.value })
                         }
-                        disabled={
-                          form?.status === "rejected" || !id ? false : true
-                        }
+                        // disabled={
+                        //   form?.status === "rejected" || !id ? false : true
+                        // }
                         options={affiliateData}
                       />
                     </div>
