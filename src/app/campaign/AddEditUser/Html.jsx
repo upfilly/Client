@@ -419,6 +419,116 @@ const Html = ({
                   )}
                 </div>
 
+                {form?.event_type?.includes("purchase") && (
+                  <div className="col-md-6 mb-3 custom-type">
+                    <label>
+                      Purchase Amount/Percentage Type
+                      <span className="star">*</span>
+                    </label>
+                    <div className="select_row">
+                      <SelectDropdown
+                        theme="search"
+                        id="amount_typeDropdown"
+                        displayValue="name"
+                        placeholder="Select Amount or Percentage"
+                        intialValue={form?.commission_type}
+                        disabled={!id ? false : true}
+                        result={(e) => {
+                          setform({ ...form, commission_type: e.value });
+                        }}
+                        options={[
+                          { id: "percentage", name: "Percentage" },
+                          { id: "amount", name: "Amount" },
+                        ]}
+                      />
+                    </div>
+                    {submitted && !form?.commission_type && (
+                      <div className="invalid-feedback d-block">
+                        {errors?.commission_type}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {form?.commission_type === "percentage" &&
+                  form?.event_type?.includes("purchase") && (
+                    <div className="col-md-6 mb-3">
+                      <label>
+                        Commission(%)<span className="star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={form?.commission || ""}
+                        disabled={!id ? false : true}
+                        onChange={(e) =>
+                          handleNumericCommissionInput(e, "commission")
+                        }
+                        placeholder="Enter Commission"
+                      />
+                      {submitted && !form?.commission && (
+                        <div className="invalid-feedback d-block">
+                          {errors?.commission}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                {form?.commission_type === "amount" &&
+                  form?.event_type?.includes("purchase") && (
+                    <div className="col-md-6 mb-3">
+                      <label>
+                        Commission Amount<span className="star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={form?.commission || ""}
+                        disabled={!id ? false : true}
+                        onChange={(e) => handleNumericInput(e, "commission")}
+                        placeholder="Enter Commission Amount"
+                      />
+                      {submitted && !form?.commission && (
+                        <div className="invalid-feedback d-block">
+                          {errors?.commission}
+                        </div>
+                      )}
+                      {id && (
+                        <div className="invalid-feedback d-block">
+                          Note: Commission can't be changed on a published
+                          campaign.
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                {form?.event_type?.includes("lead") && (
+                  <div className="col-md-6 mb-3 custom-input">
+                    <label>
+                      Lead Amount<span className="star">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={form?.lead_amount || ""}
+                      disabled={!id ? false : true}
+                      onChange={(e) => handleNumericInput(e, "lead_amount")}
+                      placeholder="Enter Lead Amount"
+                    />
+                    {submitted && !form?.lead_amount && (
+                      <div className="invalid-feedback d-block">
+                        {errors?.lead_amount}
+                      </div>
+                    )}
+                    {id && (
+                      <div className="invalid-feedback d-block">
+                        Note: Lead Amount can't be changed on a published
+                        campaign.
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Categories */}
                 <div
                   className="col-md-12 mb-3 category-dropdown"
