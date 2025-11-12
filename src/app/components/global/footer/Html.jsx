@@ -14,7 +14,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
           <div className="col-md-12 text-center  mt-0 mb-5 mt-md-5  mb-md-5">
             <h2 className="footer_heading" >Start Your Growth Today</h2>
             <p className="footer_para"  >Here are more ways to discover how we can help you.</p>
-            <Link className="btn btn-primary mr-3" href='/contactUs'>Contact Us</Link>
+            <Link className="btn btn-primary mr-3" href='/contact'>Contact Us</Link>
             <Link className="btn btn-primary" href="/aboutus"> About Us</Link>
           </div>
           </div>
@@ -40,7 +40,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
               {/* <li><Link href="/aboutus">About Us</Link></li> */}
               <li><Link href="/partners">Partners</Link></li>
               <li><Link href="/signup-guide">Affiliate/Brand Guide</Link></li>
-              {/* <li><Link href="/contactUs">Contact Us</Link></li> */}
+              {/* <li><Link href="/contact">Contact Us</Link></li> */}
             </ul>
           </div>
           <div className=" col-12 col-sm-12  col-md-2">

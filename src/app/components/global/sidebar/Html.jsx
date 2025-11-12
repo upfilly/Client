@@ -166,7 +166,7 @@ const Html = ({
                   )}
 
                 {(user?.role == "brand" || addedUser?.role == "brand") && (
-                  <ListItemLink to="/reports" title="Campaign Overview">
+                  <ListItemLink to="/overview" title="Campaign Overview">
                     <i class="material-icons  svg_iconbx">stacked_line_chart</i>
                     <span className="side_head">Campaign Overview</span>
                   </ListItemLink>

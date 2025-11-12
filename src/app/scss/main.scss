@@ -252,6 +252,9 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
   border-radius: 8px;
   padding: 0.25rem 1rem;
 }
+.mc-campaign-dropdown:hover{
+  background: unset !important;
+}
 
 .dropdown-menu.shadow.bg_hover.show {
   border: none;

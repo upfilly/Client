@@ -243,10 +243,10 @@ const Html = ({ settingData, Logout }) => {
             {(user?.role == "brand" || !user) && <Link class="btn btn-primary login" href="/pricing">Book a Demo</Link>}
             </li> */}
                 {/* <li class="nav-item">
-                  <Link class={`btn btn-primary login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Book a Demo</Link>
+                  <Link class={`btn btn-primary login ms-2 ${pathname == "/contact" ? 'active_btn' : ''}`} href="/contact">Book a Demo</Link>
                 </li> */}
                 {/* <li class="nav-item text-center">
-                  <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
+                  <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contact" ? '' : ''}`} href="/contact">Contact Us</Link>
                 </li> */}
               </form>
             </div>

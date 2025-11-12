@@ -66,6 +66,7 @@ const Html = ({
       return;
     }
 
+    // Handle action items first
     if (actionMeta.option?.isSelectAll) {
       handleChange([...options], "select-all");
       return;
@@ -76,13 +77,16 @@ const Html = ({
       return;
     }
 
+    // For regular multi-select changes
     if (Array.isArray(selected)) {
-      handleChange(
-        selected
-          .map((item) => item.value)
-          .filter((item) => !item?.isActionItem),
-        actionMeta.action
-      );
+      // Filter out action items and get only the actual option values
+      const filteredSelected = selected
+        .filter(item => !item?.isActionItem)
+        .map(item => item.value);
+
+      handleChange(filteredSelected, actionMeta.action);
+    } else {
+      handleChange([], actionMeta.action);
     }
   };
 
@@ -101,13 +105,14 @@ const Html = ({
       backgroundColor: data?.isActionItem
         ? "#f8f8f8"
         : isSelected
-        ? "#0066cc"
-        : isFocused
-        ? "#f0f7ff"
-        : "white",
+          ? "#0066cc"
+          : isFocused
+            ? "#f0f7ff"
+            : "white",
       color: data?.isActionItem ? "#333" : isSelected ? "white" : "#333",
       fontWeight: data?.isActionItem ? "bold" : "normal",
-      cursor: "pointer",
+      cursor: isSelected ? "not-allowed" : "pointer",
+      opacity: isSelected ? 0.6 : 1,
     }),
     multiValue: (base) => ({
       ...base,
@@ -135,14 +140,14 @@ const Html = ({
           singleSelect
             ? selectedValues[0]
               ? {
-                  label: selectedValues[0][displayValue],
-                  value: selectedValues[0],
-                }
+                label: selectedValues[0][displayValue],
+                value: selectedValues[0],
+              }
               : null
             : selectedValues.map((item) => ({
-                label: item[displayValue],
-                value: item,
-              }))
+              label: item[displayValue],
+              value: item,
+            }))
         }
         onChange={onChange}
         styles={customStyles}
