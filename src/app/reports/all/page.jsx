@@ -16,6 +16,7 @@ import crendentialModel from "@/models/credential.model";
 import CustomDatePicker from "../../components/common/DatePicker/DatePickerCustom";
 import { CurencyData } from "@/methods/currency";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
+import loader from "@/methods/loader";
 
 export default function AnalyticsDashboard() {
   const user = crendentialModel.getUser();
@@ -60,6 +61,7 @@ export default function AnalyticsDashboard() {
 
   const handleDownload = (e) => {
     const type = e.value;
+    if(!type){setSelectedType("")}
     setSelectedType(type);
     // setShowDropdown(false);
     exportCsv(type)
@@ -164,43 +166,56 @@ export default function AnalyticsDashboard() {
   };
 
   const exportCsv = (type) => {
-    ApiClient.get("reports/performance/export", {
+    const config = type != "excel" ? {
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
       format: type,
-      // responseType: type === "excel" ? "arraybuffer" : "text" 
-    })
+      responseType: type === "excel" ? "arraybuffer" : ""
+    } : {
+      params: {
+        startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+        endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+        format: type,
+      },
+      responseType: type === "excel" ? "arraybuffer" : ""
+    }
+
+
+    ApiClient.get("reports/performance/export", config)
       .then((response) => {
-        let newType = type === "excel" ? "xlsx" : type;
+        console.log(`Response for ${type}:`, response);
+
+        let fileExtension = type === "excel" ? "xlsx" : type;
+
         if (response && response.success !== false) {
-          if (type == "excel") {
-            // If it's an XLSX file (binary data)
-            downloadFile(response, `Performance_Report.${newType}`, type);
-          } else {
-            // For CSV and XML
-            downloadFile(response, `Performance_Report.${newType}`, type);
+          if (type === 'xml') {
+            const responseStr = typeof response === 'string' ? response : new TextDecoder('utf-8').decode(response);
+            if (!responseStr.trim().startsWith('<?xml') && !responseStr.trim().startsWith('<')) {
+              console.error('Invalid XML data received:', responseStr.substring(0, 500));
+              alert('Server returned invalid XML data. Check console for details.');
+              return;
+            }
           }
+
+          downloadFile(response, `Performance_Report.${fileExtension}`, type);
         } else {
           alert("No data to download.");
         }
       })
       .catch((err) => {
-        loader(false);
+        console.error("Error fetching data:", err);
         alert("Error fetching data: " + (err.message || err));
       });
   };
 
-
-  // Trigger file download
+  // Define downloadFile function first (at the top level or in the same scope)
   function downloadFile(data, filename, type) {
     let blob;
 
     if (type === 'excel') {
-      // For XLSX files, create a Blob with binary data and the correct MIME type
       blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     } else if (type === 'csv') {
-      // For CSV files, create a Blob with the correct MIME type
-      blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+      blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
     } else if (type === 'xml') {
       // For XML files, create a Blob with the correct MIME type
       blob = new Blob([data], { type: 'application/xml;charset=utf-8;' });
@@ -216,7 +231,6 @@ export default function AnalyticsDashboard() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   }
-
 
   useEffect(() => {
     getBrandData();
