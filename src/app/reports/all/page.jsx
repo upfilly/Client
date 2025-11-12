@@ -168,12 +168,18 @@ export default function AnalyticsDashboard() {
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
       format: type,
+      // responseType: type === "excel" ? "arraybuffer" : "text" 
     })
-      .then((csvData) => {
-
-        if (csvData && csvData.success !== false) {
-          // csvData is plain CSV string
-          downloadFile(csvData, `Performance_Report.${type}`, type); 
+      .then((response) => {
+        let newType = type === "excel" ? "xlsx" : type;
+        if (response && response.success !== false) {
+          if (type == "excel") {
+            // If it's an XLSX file (binary data)
+            downloadFile(response, `Performance_Report.${newType}`, type);
+          } else {
+            // For CSV and XML
+            downloadFile(response, `Performance_Report.${newType}`, type);
+          }
         } else {
           alert("No data to download.");
         }
@@ -184,9 +190,23 @@ export default function AnalyticsDashboard() {
       });
   };
 
+
   // Trigger file download
-  function downloadFile(csvData, filename) {
-    const blob = new Blob([csvData], { type: `text/csv;charset=utf-8;` });
+  function downloadFile(data, filename, type) {
+    let blob;
+
+    if (type === 'excel') {
+      // For XLSX files, create a Blob with binary data and the correct MIME type
+      blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    } else if (type === 'csv') {
+      // For CSV files, create a Blob with the correct MIME type
+      blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    } else if (type === 'xml') {
+      // For XML files, create a Blob with the correct MIME type
+      blob = new Blob([data], { type: 'application/xml;charset=utf-8;' });
+    }
+
+    // Create a download link and trigger the download
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
