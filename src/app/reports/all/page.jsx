@@ -49,6 +49,34 @@ export default function AnalyticsDashboard() {
   const [comparisonPeriod, setComparisonPeriod] = useState("none");
   const [CampaignData, setCamapign] = useState([]);
   const [campaignId, setCampaignId] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(true);
+
+  const downloadOptions = [
+    { id: 1, name: "Download CSV", value: "csv" },
+    { id: 2, name: "Download PDF", value: "pdf" },
+    { id: 3, name: "Download Excel", value: "excel" },
+  ];
+
+  const handleDownload = (e) => {
+    const type = e.value;
+    setSelectedType(type);
+    // setShowDropdown(false);
+
+    switch (type) {
+      case "csv":
+        exportCsv();
+        break;
+      case "pdf":
+        exportPdf();
+        break;
+      case "excel":
+        exportExcel();
+        break;
+      default:
+        break;
+    }
+  };
 
   const dateRange = {
     selection1: {
@@ -458,19 +486,34 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="col-12 mt-3 mb-3">
-            <button className="btn btn-primary" onClick={() => exportCsv()}>
+
+          <div className="d-flex align-items-center flex-wrap gap-2 justify-content-end mt-3 mb-3">
+            {/* <button
+              className="btn btn-primary"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
               Download
-            </button>
-          </div>
+            </button> */}
 
-          <div className="reset-filters-container" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
-            {isFilterApplied() && (
-              <button className="btn-primary " onClick={resetFilters}>
-                Reset Filters
-              </button>
-
+            {showDropdown && (
+              <SelectDropdown
+                theme="search"
+                id="downloadDropdown"
+                displayValue="name"
+                placeholder="Download"
+                intialValue={selectedType}
+                result={handleDownload}
+                options={downloadOptions}
+              />
             )}
+            <div className="reset-filters-container mt-0 px-0" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
+              {isFilterApplied() && (
+                <button className="btn btn-primary" onClick={resetFilters}>
+                  Reset Filters
+                </button>
+
+              )}
+            </div>
           </div>
 
           <AnalyticsChartData
