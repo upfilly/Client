@@ -12,21 +12,31 @@ const AddEditUser = () => {
   const user = crendentialModel.getUser();
   const [images, setImages] = useState("");
   const [form, setform] = useState({
+    addType: "banner", // Default to banner
+    // Banner fields
     title: "",
     destination_url: "",
     description: "",
     seo_attributes: "",
     activation_date: "",
-    availability_date: "",
     expiration_date: "",
     image: "",
     is_animation: false,
     is_deep_linking: false,
     mobile_creative: false,
     expireCheck: false,
+    access_type: "public",
+    affiliate_id: "",
+    // Link fields
+    linkName: "",
+    linkDestinationUrl: "",
+    linkDescription: "",
+    linkStartDate: "",
+    linkEndDate: "",
+    linkSeo: false,
+    linkDeepLink: false,
   });
   const [affiliateData, setAffiliateData] = useState();
-  const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
   const [submitted, setSubmitted] = useState(false);
   const history = useRouter();
   const [emailLoader, setEmailLoader] = useState(false);
@@ -39,19 +49,16 @@ const AddEditUser = () => {
     subSubCategories: [],
   });
   const [errors, setErrors] = useState({
-    selectedBrand: "",
-    SelectedCampaign: "",
     DestinationUrl: "",
     websiteAllowed: "",
     expirationDate: "",
-    dateComparison: "", // Added for date comparison error
+    dateComparison: "",
   });
   const [closeActv, setCloseActv] = useState(false);
   const [closeExp, setCloseExp] = useState(false);
   const dateRef2 = useRef(null);
-  // const [ActivationDate,setActivationDate] = useState('')
-  // const [AvailabilityDate,setAvailabilityDate] = useState('')
-  // const [ExpirationDate,setExpirationDate] =  useState('')
+
+  console.log("Current ID:", id); // Debug log
 
   const getCategory = (p = {}) => {
     let url = "main-category/all";
@@ -84,10 +91,6 @@ const AddEditUser = () => {
     });
   };
 
-  const getError = (key) => {
-    return methodModel.getError(key, form, formValidation);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -95,30 +98,41 @@ const AddEditUser = () => {
       return;
     }
 
-    if (form?.access_type == "private") {
-      if (
-        !form?.title ||
-        !form?.destination_url ||
-        !form?.activation_date ||
-        // !form?.availability_date ||
-        // !form?.expiration_date ||
-        !images ||
-        !form?.access_type ||
-        !form?.access_type ||
-        !form?.affiliate_id
-      ) {
-        setSubmitted(true);
-        return;
+    // Banner validation
+    if (form?.addType === 'banner') {
+      if (form?.access_type == "private") {
+        if (
+          !form?.title ||
+          !form?.destination_url ||
+          !form?.activation_date ||
+          !images ||
+          !form?.access_type ||
+          !form?.affiliate_id
+        ) {
+          setSubmitted(true);
+          return;
+        }
+      } else {
+        if (
+          !form?.title ||
+          !form?.destination_url ||
+          !form?.activation_date ||
+          !images ||
+          !form?.access_type
+        ) {
+          setSubmitted(true);
+          return;
+        }
       }
-    } else {
+    }
+
+    // Link validation
+    if (form?.addType === 'link') {
       if (
-        !form?.title ||
-        !form?.destination_url ||
-        !form?.activation_date ||
-        // !form?.availability_date ||
-        // !form?.expiration_date ||
-        !images ||
-        !form?.access_type
+        !form?.linkName ||
+        !form?.linkDestinationUrl ||
+        !form?.linkStartDate ||
+        !form?.linkEndDate
       ) {
         setSubmitted(true);
         return;
@@ -126,53 +140,93 @@ const AddEditUser = () => {
     }
 
     let method = "post";
-    let url = "banner";
+    let url = form?.addType === 'banner' ? "banner" : "banner";
 
+    // Prepare payload based on type
     let value = {
-      ...form,
-      image: images,
-      category_id: selectedItems?.categories,
-      subCategory: selectedItems?.subCategories,
-      subChildCategory: selectedItems?.subSubCategories,
+      addType: form.addType,
     };
 
-    console.log(value, "value");
+    // Add category data based on type
+    if (form?.addType === 'banner') {
+      value = {
+        ...value,
+        category_id: selectedItems?.categories,
+        subCategory: selectedItems?.subCategories,
+        subChildCategory: selectedItems?.subSubCategories,
+      };
+    } else {
+      // For link type, combine all categories into a single array for linkCategory
+      const allCategories = [
+        ...(selectedItems?.categories || []),
+      ].filter(item => item);
 
-    if (form?.access_type === "private") {
-      value[
-        "destination_url"
-      ] = `${form?.destination_url}?fp_sid=${form?.affiliate_id}`;
+      value = {
+        ...value,
+        linkCategory: allCategories
+      };
     }
 
-    if (!value?.seo_attributes) {
-      delete value?.seo_attributes;
-    }
+    if (form?.addType === 'banner') {
+      value = {
+        ...value,
+        title: form.title,
+        destination_url: form.destination_url,
+        description: form.description,
+        seo_attributes: form.seo_attributes,
+        activation_date: form.activation_date,
+        expiration_date: form.expiration_date,
+        image: images,
+        is_animation: form.is_animation,
+        is_deep_linking: form.is_deep_linking,
+        mobile_creative: form.mobile_creative,
+        expireCheck: form.expireCheck,
+        access_type: form.access_type,
+        // Conditionally include affiliate_id only for private access
+        ...(form.access_type === "private" && { affiliate_id: form.affiliate_id }),
+      };
 
-    if (!value?.image) {
-      delete value?.image;
-    }
+      if (form?.access_type === "private") {
+        value.destination_url = `${form?.destination_url}?fp_sid=${form?.affiliate_id}`;
+      }
 
-    delete value.status;
-    if (value.id) {
-      method = "put";
-      url = "banner";
-      if (form?.expireCheck === true) {
-        delete value.expiration_date;
-      } else if (!value.expiration_date) {
-        value.expiration_date = form.expiration_date;
+      if (!value?.seo_attributes) {
+        delete value?.seo_attributes;
       }
     } else {
-      delete value.id;
+      value = {
+        ...value,
+        linkName: form.linkName,
+        linkDestinationUrl: form.linkDestinationUrl,
+        linkDescription: form.linkDescription,
+        linkStartDate: form.linkStartDate,
+        linkEndDate: form.linkEndDate,
+        linkSeo: form.linkSeo,
+        linkDeepLink: form.linkDeepLink,
+      };
     }
 
-    delete value.confirmPassword;
+    // Handle edit case - Include ID in the payload
+    if (id) {
+      method = "put";
+      value.id = id; // Add ID to payload for edit
+
+      if (form?.addType === 'banner' && form?.expireCheck === true) {
+        delete value.expiration_date;
+      }
+    }
+
+    console.log("Submitting with:", { method, url, value }); // Debug log
+
     loader(true);
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res.message);
-        let url = "/banners";
-        if (role) url = "/banners/" + role;
-        history.push(url);
+        let redirectUrl = form?.addType === 'banner' ? "/banners" : "/banners";
+        if (role) redirectUrl += "/" + role;
+        history.push(redirectUrl);
+      } else {
+        toast.error(res.message || "Something went wrong");
       }
       loader(false);
     });
@@ -182,19 +236,8 @@ const AddEditUser = () => {
     setImages(e?.value);
   };
 
-  const addressResult = (e) => {
-    setform({ ...form, address: e.value });
-  };
-
   const back = () => {
     history.back();
-  };
-
-  const emailCheck = (email) => {
-    let isValid = methodModel.emailvalidation(email);
-    if (isValid) {
-      // Email validation logic
-    }
   };
 
   useEffect(() => {
@@ -202,52 +245,93 @@ const AddEditUser = () => {
 
     if (id) {
       loader(true);
-      ApiClient.get("banner", { id }).then((res) => {
+      const apiUrl = "banner";
+
+      ApiClient.get(apiUrl, { id }).then((res) => {
         if (res.success) {
           let value = res.data;
-          console.log(value, "value");
           setDetail(value);
-          setform({
-            id: value?.id || value?._id,
-            title: value?.title,
-            destination_url: `${value?.destination_url}`,
-            description: value?.description,
-            seo_attributes: value?.seo_attributes,
-            access_type: value?.access_type,
-            affiliate_id: value?.affiliate_id,
-            // "category_id": value?.category_id?.id,
-            activation_date: new Date(value?.activation_date),
-            // availability_date: new Date(value?.availability_date),
-            expiration_date: value?.expiration_date
-              ? new Date(value?.expiration_date)
-              : null,
-            image: value?.image,
-            is_animation: value?.is_animation,
-            is_deep_linking: value?.is_deep_linking,
-            mobile_creative: value?.mobile_creative,
-            expireCheck: value?.expireCheck,
-          });
-          setSelectedItems({
-            categories: value?.category_id,
-            subCategories: value?.subCategory,
-            subSubCategories: value?.subChildCategory,
-          });
-          setImages(value?.image);
+
+          const addType = value?.addType || 'banner';
+
+          if (addType === 'banner') {
+            setform({
+              // Don't set id here, use the id from useParams
+              addType: 'banner',
+              title: value?.title || "",
+              destination_url: value?.destination_url || "",
+              description: value?.description || "",
+              seo_attributes: value?.seo_attributes || "",
+              activation_date: value?.activation_date ? new Date(value?.activation_date) : "",
+              expiration_date: value?.expiration_date ? new Date(value?.expiration_date) : null,
+              image: value?.image || "",
+              is_animation: value?.is_animation || false,
+              is_deep_linking: value?.is_deep_linking || false,
+              mobile_creative: value?.mobile_creative || false,
+              expireCheck: value?.expireCheck || false,
+              access_type: value?.access_type || "public",
+              affiliate_id: value?.affiliate_id || "",
+              // Reset link fields to empty
+              linkName: "",
+              linkDestinationUrl: "",
+              linkDescription: "",
+              linkStartDate: "",
+              linkEndDate: "",
+              linkSeo: false,
+              linkDeepLink: false,
+            });
+            setImages(value?.image || "");
+          } else {
+            setform({
+              // Don't set id here, use the id from useParams
+              addType: 'link',
+              title: "",
+              destination_url: "",
+              description: "",
+              seo_attributes: "",
+              activation_date: "",
+              expiration_date: "",
+              image: "",
+              is_animation: false,
+              is_deep_linking: false,
+              mobile_creative: false,
+              expireCheck: false,
+              access_type: "public",
+              affiliate_id: "",
+              // Link fields
+              linkName: value?.linkName || "",
+              linkDestinationUrl: value?.linkDestinationUrl || "",
+              linkDescription: value?.linkDescription || "",
+              linkStartDate: value?.linkStartDate ? new Date(value?.linkStartDate) : "",
+              linkEndDate: value?.linkEndDate ? new Date(value?.linkEndDate) : "",
+              linkSeo: value?.linkSeo || false,
+              linkDeepLink: value?.linkDeepLink || false,
+            });
+          }
+          if (addType == "banner") {
+            setSelectedItems({
+              categories: value?.category_id || [],
+              subCategories: value?.subCategory || [],
+              subSubCategories: value?.subChildCategory || [],
+            });
+          } else {
+            setSelectedItems({
+              categories: value?.linkCategory?.map((dat) => dat?.id) || [],
+              subCategories: value?.subCategory || [],
+              subSubCategories: value?.subChildCategory || [],
+            });
+          }
+        } else {
+          toast.error("Failed to fetch banner details");
         }
+        loader(false);
+      }).catch(error => {
+        console.error("Error fetching banner:", error);
+        toast.error("Error fetching banner details");
         loader(false);
       });
     }
   }, [id]);
-
-  // const getData = () => {
-  //     let url = 'users/list'
-  //     ApiClient.get(url, {role:"affiliate", createBybrand_id: user?.id,}).then(res => {
-  //         if (res.success) {
-  //             const data1 = res.data.data.filter(item => item.status === "active");
-  //             setAffiliateData(data1)
-  //         }
-  //     })
-  // }
 
   const getData = (p = {}) => {
     let url = "getallaffiliatelisting";
@@ -285,8 +369,7 @@ const AddEditUser = () => {
     if (!user || !user?.website) {
       return {
         allowed: false,
-        message:
-          "Please update your website in your profile to use this feature",
+        message: "Please update your website in your profile to use this feature",
       };
     }
 
@@ -294,14 +377,13 @@ const AddEditUser = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-        ? user.website
-        : [];
+          ? user.website
+          : [];
 
     if (allowedDomains.length === 0) {
       return {
         allowed: false,
-        message:
-          "Please update your website in your profile to use this feature",
+        message: "Please update your website in your profile to use this feature",
       };
     }
 
@@ -317,14 +399,8 @@ const AddEditUser = () => {
       const inputHostname = urlObj.hostname.replace("www.", "").toLowerCase();
 
       const isAllowed = allowedDomains.some((domain) => {
-        // Clean the allowed domain
         let domainStr = String(domain).trim().toLowerCase();
-
-        // Remove protocol if present
-        if (
-          domainStr.startsWith("http://") ||
-          domainStr.startsWith("https://")
-        ) {
+        if (domainStr.startsWith("http://") || domainStr.startsWith("https://")) {
           try {
             const domainUrl = new URL(domainStr);
             domainStr = domainUrl.hostname;
@@ -332,21 +408,13 @@ const AddEditUser = () => {
             domainStr = domainStr.replace(/^https?:\/\//, "");
           }
         }
-
-        // Remove www. and trailing slashes
         domainStr = domainStr.replace("www.", "").replace(/\/+$/, "");
-
-        // Compare the hostnames
-        return (
-          inputHostname === domainStr || inputHostname.endsWith(`.${domainStr}`)
-        );
+        return inputHostname === domainStr || inputHostname.endsWith(`.${domainStr}`);
       });
 
       return {
         allowed: isAllowed,
-        message: isAllowed
-          ? ""
-          : `URL must be from allowed domains: ${allowedDomains.join(", ")}`,
+        message: isAllowed ? "" : `URL must be from allowed domains: ${allowedDomains.join(", ")}`,
       };
     } catch (e) {
       console.error("Error parsing URL:", e);
@@ -362,36 +430,51 @@ const AddEditUser = () => {
     let expirationDateError = "";
     let dateComparisonError = "";
 
-    if (form?.expireCheck == false && !form?.expiration_date) {
-      expirationDateError = "Expiration date is required";
-    }
+    // Banner specific validation
+    if (form?.addType === 'banner') {
+      if (form?.expireCheck == false && !form?.expiration_date) {
+        expirationDateError = "Expiration date is required";
+      }
 
-    if (form?.activation_date && form?.expiration_date) {
-      const activationDate = new Date(form.activation_date);
-      const expirationDate = new Date(form.expiration_date);
+      if (form?.activation_date && form?.expiration_date) {
+        const activationDate = new Date(form.activation_date);
+        const expirationDate = new Date(form.expiration_date);
 
-      if (activationDate.toDateString() === expirationDate.toDateString()) {
-        dateComparisonError =
-          "Activation date and expiration date cannot be the same";
+        if (activationDate.toDateString() === expirationDate.toDateString()) {
+          dateComparisonError = "Activation date and expiration date cannot be the same";
+        }
+      }
+
+      if (form?.destination_url) {
+        if (!isValidUrl(form?.destination_url)) {
+          websiteAllowedError = "Please enter a valid URL (including http:// or https://)";
+        } else {
+          const websiteCheck = isWebsiteAllowed(form?.destination_url);
+          if (!websiteCheck.allowed) {
+            websiteAllowedError = websiteCheck.message;
+          }
+        }
       }
     }
 
-    if (form?.destination_url) {
-      if (!isValidUrl(form?.destination_url)) {
-        websiteAllowedError =
-          "Please enter a valid URL (including http:// or https://)";
-      } else {
-        const websiteCheck = isWebsiteAllowed(form?.destination_url);
-        if (!websiteCheck.allowed) {
-          websiteAllowedError = websiteCheck.message;
+    // Link specific validation
+    if (form?.addType === 'link') {
+      if (form?.linkDestinationUrl) {
+        if (!isValidUrl(form?.linkDestinationUrl)) {
+          websiteAllowedError = "Please enter a valid URL (including http:// or https://)";
+        } else {
+          const websiteCheck = isWebsiteAllowed(form?.linkDestinationUrl);
+          if (!websiteCheck.allowed) {
+            websiteAllowedError = websiteCheck.message;
+          }
         }
       }
     }
 
     const newErrors = {
-      DestinationUrl: !form?.destination_url
-        ? "Destination URL is required"
-        : "",
+      DestinationUrl: form?.addType === 'banner'
+        ? (!form?.destination_url ? "Destination URL is required" : "")
+        : (!form?.linkDestinationUrl ? "Destination URL is required" : ""),
       websiteAllowed: websiteAllowedError,
       expirationDate: expirationDateError,
       dateComparison: dateComparisonError,
@@ -420,23 +503,15 @@ const AddEditUser = () => {
   return (
     <>
       <Html
-        id={id}
+        id={id} // Pass the id from useParams to Html component
         form={form}
         detail={detail}
-        emailCheck={emailCheck}
-        emailLoader={emailLoader}
-        // emailErr={emailErr}
         back={back}
-        setEyes={setEyes}
-        eyes={eyes}
-        role={role}
         setform={setform}
         submitted={submitted}
         images={images}
-        addressResult={addressResult}
         handleSubmit={handleSubmit}
         imageResult={imageResult}
-        getError={getError}
         affiliateData={affiliateData}
         BrandData={BrandData}
         category={category}

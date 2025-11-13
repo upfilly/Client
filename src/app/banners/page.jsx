@@ -30,7 +30,8 @@ const banneres = () => {
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
   const [brandData, setBrandData] = useState([]);
-  const [active, setActive] = useState("active");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -44,7 +45,7 @@ const banneres = () => {
     setLoader(true);
     let filter = { ...filters, ...p };
     if (user?.role == "brand") {
-      filter = { ...filters, ...p, addedBy: user?.id };
+      filter = { ...filters, ...p, addedBy: user?.id, };
     } else {
       filter = {
         ...filters,
@@ -153,10 +154,17 @@ const banneres = () => {
     setFilter({ ...filters, role: e, page: 1 });
     getData({ role: e, page: 1 });
   };
+
   const ChangeStatus = (e) => {
     setFilter({ ...filters, status: e, page: 1 });
     getData({ status: e, page: 1 });
   };
+
+  const ChangeAddType = (e) => {
+    setFilter({ ...filters, addType: e, page: 1 });
+    getData({ addType: e, page: 1 });
+  };
+
   const changeBrand = (e) => {
     setFilter({ ...filters, addedBy: e, page: 1 });
     getData({ addedBy: e, page: 1 });
@@ -193,7 +201,10 @@ const banneres = () => {
       page: 1,
       count: 10,
       addedBy: "",
+      addType: ""
     };
+    setStartDate(null)
+    setEndDate(null)
     setFilter({ ...filters, ...filter });
     getData({ ...filter });
     history.push("/banners");
@@ -254,6 +265,11 @@ const banneres = () => {
         getData={getData}
         brandData={brandData}
         changeBrand={changeBrand}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
+        ChangeAddType={ChangeAddType}
       />
     </>
   );
