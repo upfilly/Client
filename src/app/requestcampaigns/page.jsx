@@ -171,7 +171,7 @@ const Users = () => {
   }
 
   const view = (id) => {
-    // history.push("/requestCampaigns/detail/" + id)
+    // history.push("/requestcampaigns/detail/" + id)
   }
 
   const edit = (id) => {
@@ -197,7 +197,7 @@ const Users = () => {
     }
     setFilter({ ...filters, ...filter })
     getData({ ...filter })
-    history.push("/requestCampaigns")
+    history.push("/requestcampaigns")
     // dispatch(search_success(''))
   }
 

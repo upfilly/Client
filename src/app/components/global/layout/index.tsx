@@ -48,7 +48,7 @@ export default function Layout({
   const isDashboard =
     pathname.includes("/marketplace") ||
     pathname.includes("/notifications") ||
-    pathname.includes("/requestCampaigns") ||
+    pathname.includes("/requestcampaigns") ||
     pathname.includes("/mapping") ||
     pathname.includes("/reports") ||
     pathname.includes("/brand-report") ||

@@ -210,7 +210,7 @@ const Html = ({
               >
                 {permission("camapaign_get") ||
                   ((user?.role == "brand" || addedUser?.role == "brand") && (
-                    <ListItemLink to="/requestCampaigns" title="Campaign">
+                    <ListItemLink to="/requestcampaigns" title="Campaign">
                       <i
                         className="material-icons  svg_iconbx"
                         title="campaignmanagement"
@@ -932,7 +932,7 @@ const Html = ({
             <span className="side_head">Manage Campaign</span>
           </ListItemLink>}
 
-          {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requestCampaigns" title="Campaign">
+          {(permission('camapaign_get')) || (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/requestcampaigns" title="Campaign">
             <i className="material-icons  svg_iconbx" title="campaignmanagement">alarm_add</i>
             <span className="side_head">Campaign Request</span>
           </ListItemLink>} */}

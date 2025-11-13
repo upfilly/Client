@@ -25,7 +25,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     commisions: ["commisionplan", "manualCommission", "trackingdata","salestracking"],
     catalogue: ["types", "categories", "category/"],
     affiliates: [
-      "requestCampaigns",
+      "requestcampaigns",
       "affiliate",
       "group",
       "marketplace",
