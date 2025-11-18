@@ -175,9 +175,80 @@ const Html = ({
             </>
           }
 
+                    {(user?.role == "affiliate" || addedUser?.role == "affiate") && (
+            <>
+              {urlAllow("partnermanagement") ? (
+                <>
+                  <div className="nav-item">
+                    <CustomTooltip text="Partner Management">
+                      <a
+                        className={` side_titles  nav-link hoverclass affilate ${tabclass("partnermanagement") ||
+                          tab == "partnermanagement"
+                          ? ""
+                          : "collapsed-m"
+                          }`}
+                        onClick={() => tabChange("partnermanagement")}
+                      >
+                        <i class="material-icons  svg_iconbx">handshake</i>
+                        <span className="  side_head">Partner Management</span>
+                        <i
+                          className="fa fa-angle-down fontsize20"
+                          aria-hidden="true"
+                        ></i>
+                      </a>
+                    </CustomTooltip>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
 
+              <div
+                className={`collapse dropdown-btm ${tabclass("partnermanagement") || tab == "partnermanagement"
+                  ? "show"
+                  : ""
+                  }`}
+              >
+                {/* {urlAllow('requests') && (permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests" title="Offer Request" >
+                <i className="material-icons  svg_iconbx " title="campaignmanagement">business_center</i>
+                <span className="side_head">Offer Request</span>
+              </ListItemLink>} */}
 
-          {(user?.role == "brand" || addedUser?.role == "brand") && (
+                {user &&
+                  (user?.role == "affiliate" ||
+                    addedUser?.role == "affiliate") && (
+                    <ListItemLink to="/invitations" title="Merchant Invites">
+                      <i
+                        className="material-icons  svg_iconbx "
+                        title="campaignmanagement"
+                      >
+                        transfer_within_a_station
+                      </i>
+                      <span className="side_head">Campaign Invites</span>
+                    </ListItemLink>
+                  )}
+
+                {permission("camapaign_get") ||
+                  ((user?.role == "affiliate" ||
+                    addedUser?.role == "affiliate") && (
+                      <ListItemLink
+                        to="/campaignmanagement"
+                        title="Campaign Management"
+                      >
+                        <i
+                          className="material-icons  svg_iconbx"
+                          title="campaignmanagement"
+                        >
+                          manage_accounts
+                        </i>
+                        <span className="side_head">Campaign Management</span>
+                      </ListItemLink>
+                    ))}
+              </div>
+            </>
+          )}
+
+                    {(user?.role == "brand" || addedUser?.role == "brand") && (
             <>
               {urlAllow("affiliate", "group") ? (
                 <>
@@ -299,177 +370,7 @@ const Html = ({
             </>
           )}
 
-          {(user?.role == "brand" || addedUser?.role == "brand") && (
-            <>
-              {urlAllow("commisionplan", "manualCommission") ? (
-                <>
-                  <div className="nav-item">
-                    <CustomTooltip text="Commissions">
-                      <a
-                        className={` side_titles nav-link hoverclass affilate ${tabclass("commisions") || tab == "commisions"
-                          ? ""
-                          : "collapsed-m"
-                          }`}
-                        onClick={() => tabChange("commisions")}
-                      >
-                        <i class="material-icons  svg_iconbx">
-                          monetization_on
-                        </i>
-                        <span className="side_head">Commissions</span>
-                        <i
-                          className="fa fa-angle-down fontsize20"
-                          aria-hidden="true"
-                        ></i>
-                        <div></div>
-                      </a>
-                    </CustomTooltip>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-
-              <div
-                className={`collapse dropdown-btm ${tabclass("commisions") || tab == "commisions" ? "show" : ""
-                  }`}
-              >
-                {/* {urlAllow('commisionplan') ? <>
-                <ListItemLink to="/commission/commisionplan" title="Manage Commissions">
-                  <div className="d-flex align-items-center icns_center">
-                    <i class="material-icons  svg_iconbx" >manage_accounts</i>
-                    <span className="side_head">Manage</span>
-                  </div>
-                </ListItemLink>
-              </> : <></>} */}
-                {/* {urlAllow('addcommision') ? <>
-              <ListItemLink to="/commission/addcommision"  title="Commissions">
-              <div className="d-flex align-items-center icns_center">
-              <i  class="material-icons svg_iconbx">payments</i >
-                <span className="side_head">Add Commissions</span>
-              </div>
-              </ListItemLink>
-            </> : <></>} */}
-                {user && user?.role == "brand" && (
-                  <ListItemLink to="/trackingdata" title="Transactions">
-                    <i class="material-icons svg_iconbx">compare_arrows</i>
-                    <span className="side_head">Transactions</span>
-                  </ListItemLink>
-                )}
-                {
-                  <ListItemLink to="/salestracking" title="Untracked Sales">
-                    <i
-                      className="material-icons  svg_iconbx"
-                      title="untracked sales"
-                    >
-                      real_estate_agent
-                    </i>
-                    <span className="side_head">Untracked Sales</span>
-                  </ListItemLink>
-                }
-                {permission("commission_add") ? (
-                  <>
-                    <ListItemLink
-                      to="/commission/manualCommission/view"
-                      title="Bonus/Commission"
-                    >
-                      <div className="d-flex align-items-center icns_center gap-0">
-                        <i class="material-icons svg_iconbx">monetization_on</i>
-                        <span className="side_head">Add Bonus/Commission</span>
-                      </div>
-                    </ListItemLink>
-                  </>
-                ) : (
-                  <></>
-                )}
-
-
-              </div>
-            </>
-          )}
-          {urlAllow("communication") ? (
-            <>
-              <div className="nav-item">
-                <CustomTooltip text="Communication">
-                  <a
-                    className={` side_titles  nav-link hoverclass affilate ${tabclass("communication") || tab == "communication"
-                      ? ""
-                      : "collapsed-m"
-                      }`}
-                    onClick={() => tabChange("communication")}
-                  >
-                    <i class="material-icons  svg_iconbx">border_color</i>
-                    <span className="  side_head">Communication</span>
-                    <i
-                      className="fa fa-angle-down fontsize20"
-                      aria-hidden="true"
-                    ></i>
-                  </a>
-                </CustomTooltip>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
-
-              <div
-            className={`collapse dropdown-btm ${tabclass("communication") || tab == "communication" ? "show" : ""
-              }`}
-          >
-            {urlAllow("emailmessages") &&
-              (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
-              <>
-                <ListItemLink to="/emailmessages" title="Email Messages">
-                  <div className="d-flex align-items-center  icns_center">
-                    <i class="material-icons svg_iconbx">note</i>
-                    <span className="side_head">Email Messages</span>
-                  </div>
-                </ListItemLink>
-              </>
-            ) : (
-              <></>
-            )}
-            {
-              <ListItemLink to="/chat" title="Messages">
-                <i class="material-icons  svg_iconbx">question_answer</i>
-                <span className="side_head">Messages</span>
-              </ListItemLink>
-            }
-               {urlAllow("EmailTemplate") &&
-                  (user?.role == "brand" || addedUser?.role == "brand") ? (
-                  <>
-                    <ListItemLink to="/emailtemplate" title="Newsletter">
-                      <div className="d-flex align-items-center  icns_center">
-                        <i class="material-icons svg_iconbx">note</i>
-                        <span className="side_head">Newsletter</span>
-                      </div>
-                    </ListItemLink>
-                  </>
-                ) : (
-                  <></>
-                )}
-
-            {
-              <ListItemLink to="/notifications" title="Notifications">
-                <i class="material-icons  svg_iconbx">notifications_active</i>
-                <span className="side_head">Notifications</span>
-              </ListItemLink>
-            }
-
-
-
-
-            {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
-                <i className="material-icons  svg_iconbx " title="campaignmanagement">transfer_within_a_station</i>
-                <span className="side_head">Merchant Invites</span>
-              </ListItemLink>} */}
-
-            {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignmanagement" title="Campaign Management">
-                <i className="material-icons  svg_iconbx" title="campaignmanagement">manage_accounts</i>
-                <span className="side_head">Campaign Management</span>
-              </ListItemLink>} */}
-          </div>
-
-          {
+          {user?.role == "affiliate" &&
             <>
               {urlAllow(
                 "creativeasset",
@@ -632,6 +533,341 @@ const Html = ({
             </>
           }
 
+
+
+          {(user?.role == "brand" || addedUser?.role == "brand") && (
+            <>
+              {urlAllow("commisionplan", "manualCommission") ? (
+                <>
+                  <div className="nav-item">
+                    <CustomTooltip text="Commissions">
+                      <a
+                        className={` side_titles nav-link hoverclass affilate ${tabclass("commisions") || tab == "commisions"
+                          ? ""
+                          : "collapsed-m"
+                          }`}
+                        onClick={() => tabChange("commisions")}
+                      >
+                        <i class="material-icons  svg_iconbx">
+                          monetization_on
+                        </i>
+                        <span className="side_head">Commissions</span>
+                        <i
+                          className="fa fa-angle-down fontsize20"
+                          aria-hidden="true"
+                        ></i>
+                        <div></div>
+                      </a>
+                    </CustomTooltip>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+
+              <div
+                className={`collapse dropdown-btm ${tabclass("commisions") || tab == "commisions" ? "show" : ""
+                  }`}
+              >
+                {/* {urlAllow('commisionplan') ? <>
+                <ListItemLink to="/commission/commisionplan" title="Manage Commissions">
+                  <div className="d-flex align-items-center icns_center">
+                    <i class="material-icons  svg_iconbx" >manage_accounts</i>
+                    <span className="side_head">Manage</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>} */}
+                {/* {urlAllow('addcommision') ? <>
+              <ListItemLink to="/commission/addcommision"  title="Commissions">
+              <div className="d-flex align-items-center icns_center">
+              <i  class="material-icons svg_iconbx">payments</i >
+                <span className="side_head">Add Commissions</span>
+              </div>
+              </ListItemLink>
+            </> : <></>} */}
+                {user && user?.role == "brand" && (
+                  <ListItemLink to="/trackingdata" title="Transactions">
+                    <i class="material-icons svg_iconbx">compare_arrows</i>
+                    <span className="side_head">Transactions</span>
+                  </ListItemLink>
+                )}
+                {
+                  <ListItemLink to="/salestracking" title="Untracked Sales">
+                    <i
+                      className="material-icons  svg_iconbx"
+                      title="untracked sales"
+                    >
+                      real_estate_agent
+                    </i>
+                    <span className="side_head">Untracked Sales</span>
+                  </ListItemLink>
+                }
+                {permission("commission_add") ? (
+                  <>
+                    <ListItemLink
+                      to="/commission/manualCommission/view"
+                      title="Bonus/Commission"
+                    >
+                      <div className="d-flex align-items-center icns_center gap-0">
+                        <i class="material-icons svg_iconbx">monetization_on</i>
+                        <span className="side_head">Add Bonus/Commission</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+
+              </div>
+            </>
+          )}
+          {urlAllow("communication") ? (
+            <>
+              <div className="nav-item">
+                <CustomTooltip text="Communication">
+                  <a
+                    className={` side_titles  nav-link hoverclass affilate ${tabclass("communication") || tab == "communication"
+                      ? ""
+                      : "collapsed-m"
+                      }`}
+                    onClick={() => tabChange("communication")}
+                  >
+                    <i class="material-icons  svg_iconbx">border_color</i>
+                    <span className="  side_head">Communication</span>
+                    <i
+                      className="fa fa-angle-down fontsize20"
+                      aria-hidden="true"
+                    ></i>
+                  </a>
+                </CustomTooltip>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {user?.role == "brand" &&
+            <>
+              {urlAllow(
+                "creativeasset",
+                "emailtemplate",
+                "emailmessages",
+                "productfeeds"
+              ) ? (
+                <>
+                  <div className="nav-item">
+                    <CustomTooltip text="Creative Assets">
+                      <a
+                        className={` side_titles  nav-link hoverclass affilate ${tabclass("creativeasset") || tab == "creativeasset"
+                          ? ""
+                          : "collapsed-m"
+                          }`}
+                        onClick={() => tabChange("creativeasset")}
+                      >
+                        <i class="material-icons  svg_iconbx">layers</i>
+                        <span className="  side_head">Creative Assets</span>
+                        <i
+                          className="fa fa-angle-down fontsize20"
+                          aria-hidden="true"
+                        ></i>
+                      </a>
+                    </CustomTooltip>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+
+              <div
+                className={`collapse dropdown-btm ${tabclass("creativeasset") || tab == "creativeasset"
+                  ? "show"
+                  : ""
+                  }`}
+              >
+                {(user.role == "affiliate" ||
+                  addedUser?.role == "affiliate" ||
+                  user.role == "brand" ||
+                  addedUser?.role == "brand") && (
+                    <ListItemLink to="/banners" title="Banners">
+                      <i className="material-icons  svg_iconbx" title="Banners">
+                        collections
+                      </i>
+                      <span className="side_head">
+                        {user.role == "brand" || addedUser?.role == "brand"
+                          ? "Banners/Text Link"
+                          : "Banners/Text Link"}
+                      </span>
+                    </ListItemLink>
+                  )}
+                {/* 
+                <ListItemLink to="/textlinks" title="Text Links">
+                  <i className="material-icons  svg_iconbx" title="Text Links">
+                    timeline
+                  </i>
+                  <span className="side_head">
+                    {user.role == "brand" || addedUser?.role == "brand"
+                      ? "Add Text Link"
+                      : "Text Links"}
+                  </span>
+                </ListItemLink> */}
+
+                <ListItemLink to="/coupons" title="Coupons">
+                  <i
+                    className="material-icons  svg_iconbx"
+                    title="campaignmanagement"
+                  >
+                    confirmation_number
+                  </i>
+                  <span className="side_head">
+                    {user.role == "brand" || addedUser?.role == "brand"
+                      ? "Coupons/Offers"
+                      : "Coupons"}
+                  </span>
+                </ListItemLink>
+
+                {user?.role == "brand" || addedUser?.role == "brand" ? (
+                  <>
+                    <ListItemLink to="/creativeasset" title="Product Feeds">
+                      <div className="d-flex align-items-center icns_center gap-0">
+                        <i class="material-icons  svg_iconbx">
+                          manage_accounts
+                        </i>
+                        <span className="side_head">Product Feeds</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+                {urlAllow("productfeeds") &&
+                  (user?.role == "affiliate" ||
+                    addedUser?.role == "affiliate") ? (
+                  <>
+                    <ListItemLink to="/productfeeds" title="Product Feeds">
+                      <div className="d-flex align-items-center icns_center gap-0">
+                        <i class="material-icons  svg_iconbx">
+                          manage_accounts
+                        </i>
+                        <span className="side_head">Product Feeds</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+                {user &&
+                  (user?.role == "affiliate" ||
+                    addedUser?.role == "affiliate") &&
+                  permission("generate_link_add") && (
+                    <ListItemLink to="/generatelink" title="Generate Link">
+                      <i
+                        className="material-icons  svg_iconbx"
+                        title="campaignmanagement"
+                      >
+                        timeline
+                      </i>
+                      <span className="side_head">Generate Link</span>
+                    </ListItemLink>
+                  )}
+                {/* {urlAllow('EmailMessages') && (user?.role == "affiliate" || addedUser?.role == "affiliate") ? <>
+                <ListItemLink to="/EmailMessages" title="Email Messages">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">note</i>
+                    <span className="side_head">Email Messages</span>
+                  </div>
+                </ListItemLink>
+              </> : <></>} */}
+                {urlAllow("creativeemails") &&
+                  (user?.role == "affiliate" ||
+                    addedUser?.role == "affiliate") ? (
+                  <>
+                    <ListItemLink to="/creativeemails" title="Email Messages">
+                      <div className="d-flex align-items-center  icns_center gap-0">
+                        <i class="material-icons svg_iconbx">local_library</i>
+                        <span className="side_head"> Emails</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {user?.role == "brand" || addedUser?.role == "brand" ? (
+                  <>
+                    <ListItemLink to="/creativeemails" title="Creative Email">
+                      <div className="d-flex align-items-center  icns_center gap-0">
+                        <i class="material-icons svg_iconbx">local_library</i>
+                        <span className="side_head">Email</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </>
+          }
+
+              <div
+            className={`collapse dropdown-btm ${tabclass("communication") || tab == "communication" ? "show" : ""
+              }`}
+          >
+            {urlAllow("emailmessages") &&
+              (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
+              <>
+                <ListItemLink to="/emailmessages" title="Email Messages">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">note</i>
+                    <span className="side_head">Email Messages</span>
+                  </div>
+                </ListItemLink>
+              </>
+            ) : (
+              <></>
+            )}
+            {
+              <ListItemLink to="/chat" title="Messages">
+                <i class="material-icons  svg_iconbx">question_answer</i>
+                <span className="side_head">Messages</span>
+              </ListItemLink>
+            }
+               {urlAllow("EmailTemplate") &&
+                  (user?.role == "brand" || addedUser?.role == "brand") ? (
+                  <>
+                    <ListItemLink to="/emailtemplate" title="Newsletter">
+                      <div className="d-flex align-items-center  icns_center">
+                        <i class="material-icons svg_iconbx">note</i>
+                        <span className="side_head">Newsletter</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+            {
+              <ListItemLink to="/notifications" title="Notifications">
+                <i class="material-icons  svg_iconbx">notifications_active</i>
+                <span className="side_head">Notifications</span>
+              </ListItemLink>
+            }
+
+
+
+
+            {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
+                <i className="material-icons  svg_iconbx " title="campaignmanagement">transfer_within_a_station</i>
+                <span className="side_head">Merchant Invites</span>
+              </ListItemLink>} */}
+
+            {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignmanagement" title="Campaign Management">
+                <i className="material-icons  svg_iconbx" title="campaignmanagement">manage_accounts</i>
+                <span className="side_head">Campaign Management</span>
+              </ListItemLink>} */}
+          </div>
+
       
 
           {/* {
@@ -680,78 +916,7 @@ const Html = ({
             </>
           } */}
 
-          {(user?.role == "affiliate" || addedUser?.role == "affiate") && (
-            <>
-              {urlAllow("partnermanagement") ? (
-                <>
-                  <div className="nav-item">
-                    <CustomTooltip text="Partner Management">
-                      <a
-                        className={` side_titles  nav-link hoverclass affilate ${tabclass("partnermanagement") ||
-                          tab == "partnermanagement"
-                          ? ""
-                          : "collapsed-m"
-                          }`}
-                        onClick={() => tabChange("partnermanagement")}
-                      >
-                        <i class="material-icons  svg_iconbx">handshake</i>
-                        <span className="  side_head">Partner Management</span>
-                        <i
-                          className="fa fa-angle-down fontsize20"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                    </CustomTooltip>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
 
-              <div
-                className={`collapse dropdown-btm ${tabclass("partnermanagement") || tab == "partnermanagement"
-                  ? "show"
-                  : ""
-                  }`}
-              >
-                {/* {urlAllow('requests') && (permission('offer_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/requests" title="Offer Request" >
-                <i className="material-icons  svg_iconbx " title="campaignmanagement">business_center</i>
-                <span className="side_head">Offer Request</span>
-              </ListItemLink>} */}
-
-                {user &&
-                  (user?.role == "affiliate" ||
-                    addedUser?.role == "affiliate") && (
-                    <ListItemLink to="/invitations" title="Merchant Invites">
-                      <i
-                        className="material-icons  svg_iconbx "
-                        title="campaignmanagement"
-                      >
-                        transfer_within_a_station
-                      </i>
-                      <span className="side_head">Campaign Invites</span>
-                    </ListItemLink>
-                  )}
-
-                {permission("camapaign_get") ||
-                  ((user?.role == "affiliate" ||
-                    addedUser?.role == "affiliate") && (
-                      <ListItemLink
-                        to="/campaignmanagement"
-                        title="Campaign Management"
-                      >
-                        <i
-                          className="material-icons  svg_iconbx"
-                          title="campaignmanagement"
-                        >
-                          manage_accounts
-                        </i>
-                        <span className="side_head">Campaign Management</span>
-                      </ListItemLink>
-                    ))}
-              </div>
-            </>
-          )}
 
           {/* {(user?.role == "affiliate" || addedUser?.role == "affiate") && <> */}
 
