@@ -55,6 +55,38 @@ const getDateRange = (option) => {
   }
 };
 
+// New function to calculate comparison periods based on base period
+const getComparisonDates = (baseDates, comparisonType) => {
+  const [baseStart, baseEnd] = baseDates;
+  
+  if (comparisonType === "previousperiod") {
+    // Calculate the duration of base period
+    const duration = baseEnd.getTime() - baseStart.getTime();
+    
+    // Calculate previous period by subtracting duration from both dates
+    const compStart = new Date(baseStart);
+    compStart.setTime(compStart.getTime() - duration - (24 * 60 * 60 * 1000)); // -1 day to avoid overlap
+    
+    const compEnd = new Date(baseStart);
+    compEnd.setTime(compEnd.getTime() - (24 * 60 * 60 * 1000)); // day before base start
+    
+    return [compStart, compEnd];
+  }
+  
+  if (comparisonType === "previousyear") {
+    // Subtract 1 year from both dates
+    const compStart = new Date(baseStart);
+    compStart.setFullYear(compStart.getFullYear() - 1);
+    
+    const compEnd = new Date(baseEnd);
+    compEnd.setFullYear(compEnd.getFullYear() - 1);
+    
+    return [compStart, compEnd];
+  }
+  
+  return [new Date(), new Date()];
+};
+
 const CustomDatePicker = ({
   baseDates,
   setBaseDates,
@@ -66,9 +98,6 @@ const CustomDatePicker = ({
   setComparisonPeriod,
 }) => {
   const [basePeriod, setBasePeriod] = useState("currentmonth");
-  // const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
-  // const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
-  // const [compDates, setCompDates] = useState([new Date(), new Date()]);
 
   const handlePeriodChange = (option, type) => {
     const [start, end] = getDateRange(option);
@@ -86,35 +115,41 @@ const CustomDatePicker = ({
   const handleRadioPeriodChange = (option, type) => {
     const [start, end] = getDateRange(option);
     if (start && end) {
-      //   if (type === "base") {
       setBaseDates([start, end]);
       setBasePeriod(option);
-      // setComparisonPeriod(option);
-      setCompDates([start, end]);
-      //   } else {
-      //     setComparisonPeriod(option);
-      //     setCompDates([start, end]);
-      //   }
+      
+      // Update comparison dates if comparison period is set to previous period or previous year
+      if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+        const [compStart, compEnd] = getComparisonDates([start, end], comparisonPeriod);
+        setCompDates([compStart, compEnd]);
+      }
     }
   };
 
   const handleCompareRadioPeriodChange = (option, type) => {
-    const [start, end] = getDateRange(option);
-    // if (start && end) {
-    //   if (type === "base") {
-    // setBasePeriod(option);
-    setBaseDates([start, end]);
     setComparisonPeriod(option);
-    if (option == "none") {
+    
+    if (option === "none") {
       setCompDates(["", ""]);
+    } else if (option === "previousperiod" || option === "previousyear") {
+      // Calculate comparison dates based on current base dates
+      const [compStart, compEnd] = getComparisonDates(baseDates, option);
+      setCompDates([compStart, compEnd]);
+    } else if (option === "custom") {
+      // For custom, you might want to set some default dates or keep existing
+      if (!compDates[0] || !compDates[1]) {
+        setCompDates([new Date(), new Date()]);
+      }
     }
-    // setCompDates([start, end]);
-    //   } else {
-    //     setComparisonPeriod(option);
-    //     setCompDates([start, end]);
-    //   }
-    // }
   };
+
+  // Update comparison dates when base dates change (if comparison is active)
+  React.useEffect(() => {
+    if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+      const [compStart, compEnd] = getComparisonDates(baseDates, comparisonPeriod);
+      setCompDates([compStart, compEnd]);
+    }
+  }, [baseDates, comparisonPeriod]);
 
   return (
     <div className={comparisonPeriod == "none" ?  "single-date-picker-container"  : "date-picker-container"}>
@@ -185,12 +220,19 @@ const CustomDatePicker = ({
                 key: "selection",
               },
             ]}  
-            onChange={(ranges) =>
-              setBaseDates([
+            onChange={(ranges) => {
+              const newBaseDates = [
                 ranges.selection.startDate,
                 ranges.selection.endDate,
-              ])
-            }
+              ];
+              setBaseDates(newBaseDates);
+              
+              // Update comparison dates automatically for previous period/year
+              if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+                const [compStart, compEnd] = getComparisonDates(newBaseDates, comparisonPeriod);
+                setCompDates([compStart, compEnd]);
+              }
+            }}
             moveRangeOnFirstSelection={true}
             editableDateInputs={false}
             maxDate={new Date()}
@@ -204,16 +246,20 @@ const CustomDatePicker = ({
                   key: "selection",
                 },
               ]}
-              onChange={(ranges) =>
-                setCompDates([
-                  ranges.selection.startDate,
-                  ranges.selection.endDate,
-                ])
-              }
+              onChange={(ranges) => {
+                // Only allow manual changes if comparison period is set to custom
+                if (comparisonPeriod === "custom") {
+                  setCompDates([
+                    ranges.selection.startDate,
+                    ranges.selection.endDate,
+                  ]);
+                }
+              }}
               moveRangeOnFirstSelection={true}
               rangeColors={["#198754"]}
-              editableDateInputs={false}
+              editableDateInputs={comparisonPeriod === "custom"}
               maxDate={new Date()}
+              disabled={comparisonPeriod !== "custom"} // Disable interaction for non-custom comparisons
             />
           )}
         </div>
