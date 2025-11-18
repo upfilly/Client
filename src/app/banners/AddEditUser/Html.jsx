@@ -648,7 +648,7 @@ const Html = ({
                       <div className="col-md-6 mb-3 ">
                         <label>Options : </label>
                         <div className="select_check p-0 pl-1">
-                          <div className="form-check">
+                          {/* <div className="form-check">
                             <input
                               type="checkbox"
                               className="form-check-input mr-4"
@@ -663,7 +663,7 @@ const Html = ({
                             <label className="form-check-label">
                               SEO Enabled
                             </label>
-                          </div>
+                          </div> */}
                           <div className="form-check">
                             <input
                               type="checkbox"

@@ -646,6 +646,63 @@ const Html = ({
           ) : (
             <></>
           )}
+          <div
+            className={`collapse dropdown-btm ${tabclass("communication") || tab == "communication" ? "show" : ""
+              }`}
+          >
+            {urlAllow("emailmessages") &&
+              (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
+              <>
+                <ListItemLink to="/emailmessages" title="Email Messages">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">note</i>
+                    <span className="side_head">Email Messages</span>
+                  </div>
+                </ListItemLink>
+              </>
+            ) : (
+              <></>
+            )}
+            {
+              <ListItemLink to="/chat" title="Messages">
+                <i class="material-icons  svg_iconbx">question_answer</i>
+                <span className="side_head">Messages</span>
+              </ListItemLink>
+            }
+            {urlAllow("EmailTemplate") &&
+              (user?.role == "brand" || addedUser?.role == "brand") ? (
+              <>
+                <ListItemLink to="/emailtemplate" title="Newsletter">
+                  <div className="d-flex align-items-center  icns_center">
+                    <i class="material-icons svg_iconbx">note</i>
+                    <span className="side_head">Newsletter</span>
+                  </div>
+                </ListItemLink>
+              </>
+            ) : (
+              <></>
+            )}
+
+            {
+              <ListItemLink to="/notifications" title="Notifications">
+                <i class="material-icons  svg_iconbx">notifications_active</i>
+                <span className="side_head">Notifications</span>
+              </ListItemLink>
+            }
+
+
+
+
+            {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
+                <i className="material-icons  svg_iconbx " title="campaignmanagement">transfer_within_a_station</i>
+                <span className="side_head">Merchant Invites</span>
+              </ListItemLink>} */}
+
+            {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignmanagement" title="Campaign Management">
+                <i className="material-icons  svg_iconbx" title="campaignmanagement">manage_accounts</i>
+                <span className="side_head">Campaign Management</span>
+              </ListItemLink>} */}
+          </div>
 
           {user?.role == "brand" &&
             <>
@@ -810,63 +867,7 @@ const Html = ({
             </>
           }
 
-              <div
-            className={`collapse dropdown-btm ${tabclass("communication") || tab == "communication" ? "show" : ""
-              }`}
-          >
-            {urlAllow("emailmessages") &&
-              (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
-              <>
-                <ListItemLink to="/emailmessages" title="Email Messages">
-                  <div className="d-flex align-items-center  icns_center">
-                    <i class="material-icons svg_iconbx">note</i>
-                    <span className="side_head">Email Messages</span>
-                  </div>
-                </ListItemLink>
-              </>
-            ) : (
-              <></>
-            )}
-            {
-              <ListItemLink to="/chat" title="Messages">
-                <i class="material-icons  svg_iconbx">question_answer</i>
-                <span className="side_head">Messages</span>
-              </ListItemLink>
-            }
-               {urlAllow("EmailTemplate") &&
-                  (user?.role == "brand" || addedUser?.role == "brand") ? (
-                  <>
-                    <ListItemLink to="/emailtemplate" title="Newsletter">
-                      <div className="d-flex align-items-center  icns_center">
-                        <i class="material-icons svg_iconbx">note</i>
-                        <span className="side_head">Newsletter</span>
-                      </div>
-                    </ListItemLink>
-                  </>
-                ) : (
-                  <></>
-                )}
-
-            {
-              <ListItemLink to="/notifications" title="Notifications">
-                <i class="material-icons  svg_iconbx">notifications_active</i>
-                <span className="side_head">Notifications</span>
-              </ListItemLink>
-            }
-
-
-
-
-            {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/invitations" title="Merchant Invites" >
-                <i className="material-icons  svg_iconbx " title="campaignmanagement">transfer_within_a_station</i>
-                <span className="side_head">Merchant Invites</span>
-              </ListItemLink>} */}
-
-            {/* {(permission('camapaign_get')) || (user?.role == "affiliate" || addedUser?.role == "affiliate") && <ListItemLink to="/campaignmanagement" title="Campaign Management">
-                <i className="material-icons  svg_iconbx" title="campaignmanagement">manage_accounts</i>
-                <span className="side_head">Campaign Management</span>
-              </ListItemLink>} */}
-          </div>
+              
 
       
 
