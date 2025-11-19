@@ -201,7 +201,7 @@ export default function Dashboard() {
                   {/* <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img> */}
 
                   {user.role == "brand" ? (
-                    <div className="ml-2 ">
+                    <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -220,7 +220,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="ml-2 ">
+                    <div className="ml-2 " style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -255,7 +255,7 @@ export default function Dashboard() {
                 <div className="d-flex align-items-center flex-wrap">
 
                   {user.role == "brand" ? (
-                    <div className="ml-2 ">
+                    <div className="ml-2 " style={{"cursor": "pointer"}} onClick={()=>history.push("/affiliate")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -274,7 +274,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="ml-2 ">
+                    <div className="ml-2 " style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -311,7 +311,7 @@ export default function Dashboard() {
 
                   {user.role == "brand" ? (
                     <>
-                    <div className="ml-2 ">
+                    <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/affiliate")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -353,7 +353,7 @@ export default function Dashboard() {
                   {user.role == "brand" ? (
                     <>
                    
-                    <div className="ml-2 ">
+                    <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/requestcampaigns")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -414,7 +414,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : ( */}
-                  <div className="ml-2 ">
+                  <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
                     <div className="d-flex items-center gap-2">
                       <div className="img-div-first">
                         <img
@@ -472,7 +472,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : ( */}
-                  <div className="ml-2 ">
+                  <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
                     <div className="d-flex items-center gap-2">
                       <div className="img-div-first">
                         <img
@@ -560,7 +560,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {user.role == "brand" && (
+        {/* {user.role == "brand" && (
           <div className="row mt-3  mx-0">
             <div className="col-12">
               <div className="recent-sales active-users h-auto">
@@ -606,7 +606,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       <Modal show={show} onHide={handleClose} className="shadowboxmodal new-modal">

@@ -195,3 +195,6 @@ a.demos-button {
 
 
 
+.echarts-for-react>div{
+  margin-left: -20px !important;
+}

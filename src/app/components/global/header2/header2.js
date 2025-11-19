@@ -193,7 +193,7 @@ export default function Header2({
               </>
             )}
 
-            <a href="#" className="help-icon">
+            {/* <a href="#" className="help-icon">
               <svg
                 className="fonts15"
                 xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +211,7 @@ export default function Header2({
                   fill="#252849"
                 />
               </svg>
-            </a>
+            </a> */}
 
             <div className="bell_icon">
               <div class="dropdown notifications position-relative">

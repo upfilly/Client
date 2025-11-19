@@ -417,15 +417,34 @@ export default function AnalyticsDashboard() {
         </aside>
 
         <main className="main-content p-2 md-p-0 ">
-          {/* Apply Filters Button at the TOP */}
-          <div className="d-flex align-items-center flex-wrap gap-2 justify-content-start mb-3">
-            <button
+
+          <div className="d-flex align-items-center flex-wrap gap-2 justify-content-end mt-3 mb-3">
+             <button
               className="btn btn-primary apply-filters-btn"
               onClick={applyFilters}
               disabled={!hasPendingChanges()}
             >
               Apply Filters {hasPendingChanges() && "•"}
             </button>
+            
+            {showDropdown && (
+              <SelectDropdown
+                theme="search"
+                id="downloadDropdown"
+                displayValue="name"
+                placeholder="Download"
+                intialValue={selectedType}
+                result={handleDownload}
+                options={downloadOptions}
+              />
+            )}
+            <div className="reset-filters-container mt-0 px-0" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
+              {isFilterApplied() && (
+                <button className="btn btn-primary" onClick={resetFilters}>
+                  Reset Filters
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="custom-dropdown position-relative">
@@ -507,26 +526,7 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="d-flex align-items-center flex-wrap gap-2 justify-content-end mt-3 mb-3">
-            {showDropdown && (
-              <SelectDropdown
-                theme="search"
-                id="downloadDropdown"
-                displayValue="name"
-                placeholder="Download"
-                intialValue={selectedType}
-                result={handleDownload}
-                options={downloadOptions}
-              />
-            )}
-            <div className="reset-filters-container mt-0 px-0" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
-              {isFilterApplied() && (
-                <button className="btn btn-primary" onClick={resetFilters}>
-                  Reset Filters
-                </button>
-              )}
-            </div>
-          </div>
+          
 
           <AnalyticsChartData
             data={data}
