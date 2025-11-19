@@ -48,7 +48,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
               <li className="mb-3"><Link href="/resources"><b>Resources</b></Link></li>
               <li><Link href="/platforms">Platform</Link></li>
               <li><Link href='faq'>FAQ</Link></li>
-              <li><Link href='/Blog'>Blog</Link></li>
+              <li><Link href='/blog'>Blog</Link></li>
             </ul>
           </div>
 

@@ -65,7 +65,7 @@ export default function BlogDetail({ params }) {
           <div className="row">
             <div className="col-md-12">
               <div className="blog_cols">
-                <a className="overflowTitle" href="/Blog">
+                <a className="overflowTitle" href="/blog">
                   <i className="fa fa-arrow-left" aria-hidden="true"></i>
                 </a>
                 <h3 className="overflowTitle">
