@@ -266,34 +266,6 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Affiliate Link Section - Only show for brand users */}
-            {isBrandUser() && (
-              <div className="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
-                <div className='inputFlexs width400'>
-                  <label className="fw-bold text-primary">Affiliate Invitation Link:</label>
-                  <div className="d-flex align-items-center gap-2 mt-2">
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      value={affiliateLink || generateAffiliateLink()} 
-                      readOnly 
-                      placeholder="Generate affiliate link..."
-                    />
-                    <button 
-                      className="btn btn-success" 
-                      onClick={copyAffiliateLink}
-                      title="Copy affiliate link"
-                    >
-                      <i className="material-icons">content_copy</i>
-                      {/* Copy Link */}
-                    </button>
-                  </div>
-                  <small className="text-muted">
-                    Share this link with potential affiliates to join your program
-                  </small>
-                </div>
-              </div>
-            )}
 
             {data?.activeUser?.address &&
               <div className="col-12 col-sm-12 col-md-12 col-lg-12">
