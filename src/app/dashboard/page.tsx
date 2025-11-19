@@ -10,6 +10,7 @@ import MyHoriBarChart from "../components/common/BarChart/Horizontalbarchart";
 import environment from "@/environment";
 import { Modal, Button } from 'react-bootstrap';
 import loader from "@/methods/loader";
+import { toast } from 'react-toastify';
 
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -24,8 +25,51 @@ export default function Dashboard() {
   const [clicksAnalyticData, setClicksAnalyticData] = useState<any>();
   const [transactionAnalyticData, setTransactionAnalyticData] = useState<any>();
   const [show, setShow] = useState(false);
+  const [affiliateLink, setAffiliateLink] = useState('');
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
+
+  const generateAffiliateLink = () => {
+    if (user?.id || user?._id) {
+      const baseUrl = window.location.origin;
+      const affiliateLink = `${baseUrl}/signup/publisher?brandId=${user.id || user._id}`;
+      setAffiliateLink(affiliateLink);
+      return affiliateLink;
+    }
+    return '';
+  };
+
+  // Copy affiliate link to clipboard
+  const copyAffiliateLink = () => {
+    const link = affiliateLink || generateAffiliateLink();
+    if (link) {
+      navigator.clipboard.writeText(link).then(() => {
+        toast.success('Affiliate link copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        toast.error('Failed to copy affiliate link');
+      });
+    } else {
+      toast.error('Unable to generate affiliate link');
+    }
+  };
+
+  // Share affiliate link
+  const shareAffiliateLink = () => {
+    const link = affiliateLink || generateAffiliateLink();
+    if (navigator.share) {
+      navigator.share({
+        title: 'Join My Affiliate Program',
+        text: 'Join my affiliate program and start earning commissions!',
+        url: link,
+      }).catch(err => {
+        console.error('Error sharing:', err);
+        copyAffiliateLink(); // Fallback to copy if share fails
+      });
+    } else {
+      copyAffiliateLink(); // Fallback to copy if Web Share API not supported
+    }
+  };
 
   const handleFilterChange = (e: any) => {
     setFilter(e.target.value);
@@ -46,22 +90,6 @@ export default function Dashboard() {
     getSalesAnalyticsData({ filter: filter });
     getTransactionData({ filter: filter })
   }, [filter]);
-
-  //   useEffect(() => {
-  //     if (user) {
-  //       if ((user?.role == 'affiliate' && user?.account_id == '') || (user?.role == 'affiliate' && user?.tax_detail?.tax_classification == '')) {
-  //         history.push('/addAccount/detail')
-  //       }
-  //     }
-  // }, [user])
-
-  // const handleAddCampaignClick = () => {
-  //   history.push('campaign')
-  // };
-
-  const navigateToSection = (data: any) => {
-    history.push(data)
-  }
 
   useEffect(() => {
     if (user?.total_campaign == 0) {
@@ -89,7 +117,6 @@ export default function Dashboard() {
     ApiClient.get(url, filters).then((res) => {
       if (res) {
         setAnalyticData(res?.data);
-        // getData(res?.data?.id)
         loader(false)
       }
     });
@@ -106,7 +133,6 @@ export default function Dashboard() {
     ApiClient.get(url, filters).then((res) => {
       if (res) {
         setClicksAnalyticData(res?.data?.data);
-        // getData(res?.data?.id)
       }
     });
   };
@@ -122,12 +148,9 @@ export default function Dashboard() {
     ApiClient.get(url, filters).then((res) => {
       if (res) {
         setTransactionAnalyticData(res?.data);
-        // getData(res?.data?.id)
       }
     });
   };
-
-  // console.log(analyticData,"analyticDataanalyticDataanalyticData")
 
   useEffect(() => {
     if (user) {
@@ -141,6 +164,10 @@ export default function Dashboard() {
       getClicksData()
       getSalesAnalyticsData();
       getTransactionData()
+      // Generate affiliate link for brand users
+      if (user?.role === "brand") {
+        generateAffiliateLink();
+      }
     }
   }, []);
 
@@ -184,7 +211,6 @@ export default function Dashboard() {
   return (
     <Layout
       activeSidebar={activeSidebar}
-      // setShow={setShow}
       handleKeyPress={undefined}
       setFilter={undefined}
       reset={undefined}
@@ -194,14 +220,13 @@ export default function Dashboard() {
     >
       <div className="main-dashboards  main_box mb-3">
         <div className="container-fluid">
+
           <div className="row ">
             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-                  {/* <img className='fixi-boxx' src='/assets/img/three-dollar.png' alt=''></img> */}
-
                   {user.role == "brand" ? (
-                    <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
+                    <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -212,7 +237,6 @@ export default function Dashboard() {
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                           <p className="revuh">Total Campaigns</p>
-
                           <h3 className="dollars-t">
                             {campaignData?.myTotalCampaigns}
                           </h3>
@@ -220,7 +244,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="ml-2 " style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
+                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -231,7 +255,6 @@ export default function Dashboard() {
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                           <p className="revuh">Accepted Campaigns </p>
-
                           <h3 className="dollars-t">
                             {CampaignRequest?.acceptedRequestCount}
                           </h3>
@@ -240,22 +263,14 @@ export default function Dashboard() {
                     </div>
                   )}
                 </div>
-                <div className="">
-                  {/* <div className='text-right'>
-                  <p className='colrs-blue'>2-56</p>
-                  <p className='week-last'>Last week</p>
-                </div> */}
-                  <div></div>
-                </div>
               </div>
             </div>
 
             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-
                   {user.role == "brand" ? (
-                    <div className="ml-2 " style={{"cursor": "pointer"}} onClick={()=>history.push("/affiliate")}>
+                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -266,7 +281,6 @@ export default function Dashboard() {
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                           <p className="revuh">Joined Affiliates</p>
-
                           <h3 className="dollars-t">
                             {campaignData?.totalJoined + campaignData?.totalActive}
                           </h3>
@@ -274,7 +288,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="ml-2 " style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
+                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -285,7 +299,6 @@ export default function Dashboard() {
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                           <p className="revuh">Pending Campaigns</p>
-
                           <h3 className="dollars-t">
                             {CampaignRequest?.pendingRequestsCount}
                           </h3>
@@ -294,127 +307,73 @@ export default function Dashboard() {
                     </div>
                   )}
                 </div>
-                <div className="">
-                  {/* <div className='text-right'>
-                  <p className='colrs-blues'>2-56</p>
-                  <p className='week-last'>Last week</p>
-                </div> */}
-                  <div></div>
-                </div>
               </div>
             </div>
 
-            {user.role == "brand" && 
-            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
-              <div className="fixi-ic">
-                <div className="d-flex align-items-center flex-wrap">
-
-                  {user.role == "brand" ? (
-                    <>
-                    <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/affiliate")}>
-                      <div className="d-flex items-center gap-2">
-                        <div className="img-div-first">
-                          <img
-                            className="fixi-boxx purchase"
-                            src="/assets/img/approved.png"
-                            alt=""
-                          ></img>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Active Affiliates</p>
-
-                          <h3 className="dollars-t">
-                            {campaignData?.totalActive}
-                          </h3>
+            {user.role == "brand" &&
+              <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
+                <div className="fixi-ic">
+                  <div className="d-flex align-items-center flex-wrap">
+                    {user.role == "brand" ? (
+                      <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate")}>
+                        <div className="d-flex items-center gap-2">
+                          <div className="img-div-first">
+                            <img
+                              className="fixi-boxx purchase"
+                              src="/assets/img/approved.png"
+                              alt=""
+                            ></img>
+                          </div>
+                          <div className="d-flex flex-column justify-content-center">
+                            <p className="revuh">Active Affiliates</p>
+                            <h3 className="dollars-t">
+                              {campaignData?.totalActive}
+                            </h3>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                 
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="">
-                  {/* <div className='text-right'>
-                  <p className='colrs-blues'>2-56</p>
-                  <p className='week-last'>Last week</p>
-                </div> */}
-                  <div></div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
             }
-                        {user.role == "brand" && 
-            <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
-              <div className="fixi-ic">
-                <div className="d-flex align-items-center flex-wrap">
 
-                  {user.role == "brand" ? (
-                    <>
-                   
-                    <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/requestcampaigns")}>
-                      <div className="d-flex items-center gap-2">
-                        <div className="img-div-first">
-                          <img
-                            className="fixi-boxx"
-                            src="/assets/img/visiter.png"
-                            alt=""
-                          ></img>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Pending Affiliates</p>
-
-                          <h3 className="dollars-t">
-                            {campaignData?.totalPending || 0}
-                          </h3>
+            {user.role == "brand" &&
+              <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
+                <div className="fixi-ic">
+                  <div className="d-flex align-items-center flex-wrap">
+                    {user.role == "brand" ? (
+                      <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/requestcampaigns")}>
+                        <div className="d-flex items-center gap-2">
+                          <div className="img-div-first">
+                            <img
+                              className="fixi-boxx"
+                              src="/assets/img/visiter.png"
+                              alt=""
+                            ></img>
+                          </div>
+                          <div className="d-flex flex-column justify-content-center">
+                            <p className="revuh">Pending Affiliates</p>
+                            <h3 className="dollars-t">
+                              {campaignData?.totalPending || 0}
+                            </h3>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="">
-                  {/* <div className='text-right'>
-                  <p className='colrs-blues'>2-56</p>
-                  <p className='week-last'>Last week</p>
-                </div> */}
-                  <div></div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
             }
-
 
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-
-
-
-                  {/* {user.role == "brand" ? (
-                    <div className="ml-2 ">
-                      <div className="d-flex items-center gap-2">
-                        <div className="img-div-first">
-                          <img
-                             className="fixi-boxx purchase"
-                            src="/assets/img/pending.png"
-                            alt=""
-                          ></img>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Pending Campaigns</p>
-
-                          <h3 className="dollars-t">
-                            {campaignData?.pendingCampaigns}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  ) : ( */}
-                  <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
+                  <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
                     <div className="d-flex items-center gap-2">
                       <div className="img-div-first">
                         <img
@@ -425,54 +384,20 @@ export default function Dashboard() {
                       </div>
                       <div className="d-flex flex-column justify-content-center">
                         <p className="revuh">Rejected Campaigns</p>
-
                         <h3 className="dollars-t">
                           {CampaignRequest?.rejectedRequestsCount}
                         </h3>
                       </div>
                     </div>
                   </div>
-                  {/* )} */}
-                </div>
-                <div className="">
-                  {/* <div className='text-right'>
-                  <p className='colrs-blues'>2-56</p>
-                  <p className='week-last'>Last week</p>
-                </div> */}
-                  <div></div>
                 </div>
               </div>
             </div>}
+
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-                  {/* <img
-                    className="fixi-boxx"
-                    src="/assets/img/growth.png"
-                    alt=""
-                  ></img> */}
-
-                  {/* {user.role == "brand" ? (
-                    <div className="ml-2 ">
-                      <div className="d-flex items-center gap-2">
-                        <div className="img-div-first">
-                          <img
-                            className="fixi-boxx purchase"
-                            src="/assets/img/rejected.png"
-                            alt=""
-                          ></img>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
-                          <p className="revuh">Rejected Campaigns</p>
-
-                          <h3 className="dollars-t">
-                            {CampaignRequest?.rejectedCampaigns || 0}
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  ) : ( */}
-                  <div className="ml-2" style={{"cursor": "pointer"}} onClick={()=>history.push("/campaign")}>
+                  <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
                     <div className="d-flex items-center gap-2">
                       <div className="img-div-first">
                         <img
@@ -483,30 +408,21 @@ export default function Dashboard() {
                       </div>
                       <div className="d-flex flex-column justify-content-center">
                         <p className="revuh">Brands Associated</p>
-
                         <h3 className="dollars-t">
                           {CampaignRequest?.brandsAssociatedCount}
                         </h3>
                       </div>
                     </div>
                   </div>
-                  {/* )} */}
-                </div>
-                <div className="">
-                  {/* <div className='text-right'>
-                  <p className='colrs-blue'>2-56</p>
-                  <p className='week-last'>Last week</p>
-                </div> */}
-                  <div></div>
                 </div>
               </div>
             </div>}
           </div>
         </div>
+
         <div className="mt-3">
           <div className="container-fluid">
             <div className="row mb-3 justify-content-center justify-content-sm-end">
-
               <div className="col-auto">
                 <div className="btn-group btnsgroup" role="group" aria-label="Filter">
                   <button
@@ -560,64 +476,64 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* {user.role == "brand" && (
-          <div className="row mt-3  mx-0">
+        {user?.role === "brand" && (
+          <div className="row mb-4">
             <div className="col-12">
-              <div className="recent-sales active-users h-auto">
-                <div className="d-flex align-items-center flex-wrap justify-content-between">
-                  <p className="tives mb-0">Recent Users</p>
-                  <i
-                    className="fa fa-chevron-right awes"
-                    aria-hidden="true"
-                  ></i>
+              <div className="affiliate-link-card card shadow-sm border-0">
+                <div className="card-body p-4">
+                  <div className="row align-items-center">
+                    <div className="col-md-12">
+                      <h5 className="card-title text-primary mb-2">
+                        <i className="fas fa-link me-2"></i>
+                        Your Affiliate Invitation Link
+                      </h5>
+                      <p className="text-muted mb-3">
+                        Share this link with potential affiliates to join your program.
+                        When they sign up using this link, they'll be automatically associated with your brand.
+                      </p>
+                      <div className="d-flex align-items-center gap-2">
+                        <input
+                          type="text"
+                          className="form-control form-control-lg"
+                          value={affiliateLink}
+                          readOnly
+                          placeholder="Generating affiliate link..."
+                        />
+                        <button
+                          className="btn btn-primary btn-lg"
+                          onClick={copyAffiliateLink}
+                          title="Copy to clipboard"
+                        >
+                          <i className="fas fa-copy"></i>
+                        </button>
+                        {/* <button
+                          className="btn btn-outline-primary btn-lg"
+                          onClick={shareAffiliateLink}
+                          title="Share link"
+                        >
+                          <i className="fas fa-share-alt"></i>
+                        </button> */}
+                      </div>
+                    </div>
+                    {/* <div className="col-md-4 text-center">
+                      <div className="affiliate-stats bg-light rounded p-3">
+                        <h4 className="text-success mb-1">{campaignData?.totalActive || 0}</h4>
+                        <p className="text-muted mb-0">Active Affiliates</p>
+                      </div>
+                    </div> */}
+                  </div>
                 </div>
-                <ul className="sales-listing">
-                  {recentUser?.slice(0, 5)?.map((data: any) => (
-                    <li onClick={() => history.push(`affiliate/detail/${data?.id || data?._id}`)}>
-                      <div className="d-flex flex-wrap align-items-center item-name">
-                        {data?.image ? (
-                          <img
-                            src={`${environment.api}${data?.image}`}
-                            className="dashboard_image"
-                          />
-                        ) : (
-                          <img
-                            src="/assets/img/person.jpg"
-                            className="dashboard_image"
-                          />
-                        )}
-                        <p className="mb-0">{data?.fullName}</p>
-                      </div>
-
-                      <div className="d-flex flex-wrap align-items-center item-status">
-                        <p className="yellow-badge">{data?.role}</p>
-                        <i
-                          className="fa fa-chevron-right "
-                          aria-hidden="true"
-                        ></i>
-                      </div>
-                    </li>
-                  ))}
-
-                  {recentUser?.length == 0 && (
-                    <div className="py-3 text-center">No User</div>
-                  )}
-                </ul>
               </div>
             </div>
           </div>
-        )} */}
+        )}
       </div>
 
       <Modal show={show} onHide={handleClose} className="shadowboxmodal new-modal">
-        {/* <Modal.Header className="align-items-center" closeButton>
-          <h5 className="modal-title">Welcome to Upfilly Dashboard</h5>
-        </Modal.Header> */}
         <Modal.Body>
-          {/* <p>Welcome to your Upfilly Dashboard! Here's how to get started:</p> */}
           <div className="mt-2">
             <h4 className="mb-2 fs-5 fw-bold text-center">👋 Welcome to your Upfilly Dashboard</h4>
-            <p className="text-center mb-3 fs-6">Here’s how to get started:</p>
+            <p className="text-center mb-3 fs-6">Here's how to get started:</p>
 
             <ul className="dashboard-list list-unstyled">
               <li className="dashboard-item" >
@@ -627,13 +543,13 @@ export default function Dashboard() {
                     <strong>Dashboard</strong><br />
                     <small>Overview of your performance and key metrics.</small>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('dashboard')} className="">
+                  <Button variant="" onClick={() => history.push('dashboard')} className="">
                     Click here
                   </Button>
                 </div>
               </li>
 
-              <li className="dashboard-item" onClick={() => navigateToSection('affiliate')}>
+              <li className="dashboard-item">
                 <i className="fas fa-users text-success"></i>
                 <div>
                   <div>
@@ -644,7 +560,7 @@ export default function Dashboard() {
                       <li>Affiliate Groups</li>
                     </ul>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('affiliate')} className="">
+                  <Button variant="" onClick={() => history.push('affiliate')} className="">
                     Click here
                   </Button>
                 </div>
@@ -657,13 +573,10 @@ export default function Dashboard() {
                     <strong>Chat</strong><br />
                     <small>Communicate directly with your affiliates.</small>
                   </div>
-                  {/* <Button variant="" onClick={() => navigateToSection('dashboard')} className="">
-                    Click here
-                  </Button> */}
                 </div>
               </li>
 
-              <li className="dashboard-item" >
+              <li className="dashboard-item">
                 <i className="fas fa-clipboard-list text-danger"></i>
                 <div>
                   <div>
@@ -673,13 +586,13 @@ export default function Dashboard() {
                       <li>Campaign Requests</li>
                     </ul>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('campaign')} className="">
+                  <Button variant="" onClick={() => history.push('campaign')} className="">
                     Click here
                   </Button>
                 </div>
               </li>
 
-              <li className="dashboard-item" >
+              <li className="dashboard-item">
                 <i className="fas fa-tools text-warning"></i>
                 <div>
                   <div>
@@ -694,13 +607,13 @@ export default function Dashboard() {
                       <li>Newsletter</li>
                     </ul>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('banners')} className="">
+                  <Button variant="" onClick={() => history.push('banners')} className="">
                     Click here
                   </Button>
                 </div>
               </li>
 
-              <li className="dashboard-item" >
+              <li className="dashboard-item">
                 <i className="fas fa-chart-line text-info"></i>
                 <div>
                   <div>
@@ -711,7 +624,7 @@ export default function Dashboard() {
                       <li>Affiliate Marketing Stats</li>
                     </ul>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('reports/all')} className="">
+                  <Button variant="" onClick={() => history.push('reports/all')} className="">
                     Click here
                   </Button>
                 </div>
@@ -727,32 +640,28 @@ export default function Dashboard() {
                       <li>Sent Offers</li>
                     </ul>
                   </div>
-                  <Button variant="" onClick={() => navigateToSection('marketplace')} className="">
+                  <Button variant="" onClick={() => history.push('marketplace')} className="">
                     Click here
                   </Button>
                 </div>
               </li>
 
-              <li className="dashboard-item" >
+              <li className="dashboard-item">
                 <i className="fas fa-user-plus text-secondary"></i>
-                <div><div>
-                  <strong>User Management</strong>
-                  <ul className="sub-list">
-                    <li>Add Users</li>
-                  </ul>
-                </div>
-                  <Button variant="" onClick={() => navigateToSection('users')} className="">
+                <div>
+                  <div>
+                    <strong>User Management</strong>
+                    <ul className="sub-list">
+                      <li>Add Users</li>
+                    </ul>
+                  </div>
+                  <Button variant="" onClick={() => history.push('users')} className="">
                     Click here
                   </Button>
                 </div>
               </li>
             </ul>
-
-            <div className="text-center ">
-
-            </div>
           </div>
-
         </Modal.Body>
       </Modal>
 
