@@ -106,6 +106,7 @@ const Html = ({
       <div className="sidebar-left-content">
         <div className="d-flex justify-content-end align-items-center flex-wrap gap-3 ">
           <div className="d-flex align-items-center flex-wrap gap-2">
+            <p className="description-text">Here you can find the Product feeds of your joined brands</p>
             <div className="searchInput">
               <input
                 type="text"
