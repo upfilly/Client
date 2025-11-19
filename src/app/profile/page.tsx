@@ -295,7 +295,15 @@ const Profile = () => {
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Property Type:</label>
-                  <p className="profile_data">{data && data.propertyType.join(', ')}</p>
+                  <p className="profile_data">{data && data.propertyType?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                </div>
+              </div>}
+
+               {data?.activeUser?.role &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Role:</label>
+                  <p className="profile_data">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.role)}</p>
                 </div>
               </div>}
 
@@ -303,17 +311,27 @@ const Profile = () => {
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Category:</label>
-                  <p className="profile_data">{data && data.all_category.join(', ')}</p>
+                  <p className="profile_data">{data && data.all_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
                 </div>
               </div>}
 
-            {data?.activeUser?.role &&
+               {data?.all_sub_category && data.all_sub_category.length > 0 &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
-                  <label>Role:</label>
-                  <p className="profile_data">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.role)}</p>
+                  <label>Sub-Category:</label>
+                  <p className="profile_data">{data && data.all_sub_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
                 </div>
               </div>}
+
+               {data?.all_sub_child_category && data.all_sub_child_category.length > 0 &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Sub Child Category:</label>
+                  <p className="profile_data">{data && data.all_sub_child_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                </div>
+              </div>}
+
+           
 
             {data?.activeUser?.phone &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
