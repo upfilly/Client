@@ -15,6 +15,11 @@ const EditProfile = () => {
   const history = useRouter();
   const user = crendentialModel.getUser();
   const [data, setData] = useState("");
+
+  // Separate states for image and logo
+  const [imageLoader, setImageLoader] = useState(false);
+  const [logoLoader, setLogoLoader] = useState(false);
+
   const [form, setForm] = useState({
     id: "",
     fullName: "",
@@ -24,7 +29,8 @@ const EditProfile = () => {
     email: "",
     mobileNo: "",
     address: "",
-    image: [],
+    image: [], // Profile image
+    logo1: [], // Logo image
     currencies: [],
     role: "",
     instagram_username: "",
@@ -37,6 +43,7 @@ const EditProfile = () => {
     linkedin_profile_link: "",
     website: "",
     description: "",
+    affiliateSignupText: "",
     tags: [],
     dialCode: "+1",
     pincode: "",
@@ -55,7 +62,7 @@ const EditProfile = () => {
     cat_type: "",
     defaultCurrency: "",
   });
-  const [picLoader, setPicLoader] = useState(false);
+
   const [submitted, setSubmitted] = useState(false);
   const [category, setCategory] = useState([]);
   const [changeSubCategory, setChangeSubCategory] = useState("");
@@ -73,19 +80,11 @@ const EditProfile = () => {
   const [dob, setDOB] = useState(null);
   const [platforms, setPlatforms] = useState([]);
   const [formData, setFormData] = useState({
-    // auto_invoice: false,
-    // is_hide_invoice: false,
-    // billing_frequency: '',
-    // payment_method: '',
-    // tax_detail: '',
     accountholder_name: "",
     routing_number: "",
     account_number: "",
     ssn_number: "",
     company_name: "",
-    // front_image:"",
-    // back_image:""
-    // default_invoice_setting: '',
   });
   const [formatedDob, setFormatedDob] = useState();
   const formValidation = [
@@ -93,10 +92,6 @@ const EditProfile = () => {
     { key: "mobileNo", minLength: 10 },
     { key: "gender", required: true },
     { key: "dialCode", minLength: 1 },
-    // { key: 'affiliate_type', required:true },
-    // { key: 'category_id', required:true },
-    // { key: 'sub_category_id', required:true },
-    // { key: 'sub_child_category_id', required:true },
   ];
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
@@ -148,7 +143,6 @@ const EditProfile = () => {
     loader(true);
     ApiClient.get(`user/detail`, { id: user?.activeUser?.id }).then((res) => {
       if (res.success) {
-        // setForm(res.data)
         let value = res.data;
         let payload = userType;
         let oarr = Object.keys(userType);
@@ -160,6 +154,8 @@ const EditProfile = () => {
           firstName: capitalizeFirstLetter(value.firstName),
           lastName: capitalizeFirstLetter(value.lastName),
           platforms: res?.data?.propertyType || [],
+          logo1: value.logo1 || [],
+          affiliateSignupText: value.affiliateSignupText || "",
         });
         setFormData(payload);
         setWebsites(value?.affiliate_website || [""]);
@@ -175,10 +171,44 @@ const EditProfile = () => {
     });
   };
 
-  console.log(platforms, "platformsplatforms");
-
   const getError = (key) => {
     return formModel.getError("profileForm", key);
+  };
+
+  // Separate upload function for profile image
+  const uploadImage = (e) => {
+    setForm({ ...form, baseImg: e.target.value });
+    let files = e.target.files;
+    let file = files.item(0);
+    setImageLoader(true);
+    ApiClient.postFormData("upload/image?modelName=users", {
+      file: file,
+      modelName: "users",
+    }).then((res) => {
+      if (res.data) {
+        let image = res?.data?.fullpath;
+        setForm({ ...form, image: `images/users/${image}` });
+      }
+      setImageLoader(false);
+    });
+  };
+
+  // Separate upload function for logo1
+  const uploadLogo1 = (e) => {
+    setForm({ ...form, baseLogo1: e.target.value });
+    let files = e.target.files;
+    let file = files.item(0);
+    setLogoLoader(true);
+    ApiClient.postFormData("upload/image?modelName=users", {
+      file: file,
+      modelName: "users",
+    }).then((res) => {
+      if (res.data) {
+        let image = res?.data?.fullpath;
+        setForm({ ...form, logo1: `images/users/${image}` });
+      }
+      setLogoLoader(false);
+    });
   };
 
   const handleSubmit = (e) => {
@@ -204,21 +234,17 @@ const EditProfile = () => {
       state: selectedLocation?.state || form?.state,
       city: selectedLocation?.city || form?.city,
       pincode: selectedLocation?.pincode || form?.pincode,
-      // payment_method:formData?.payment_method,
       accountholder_name: formData?.accountholder_name,
       routing_number: formData?.routing_number,
       account_number: formData?.account_number,
       ssn_number: formData?.ssn_number,
       company_name: formData?.company_name,
-      // sub_category_id: selectedSubcategory,
-      // sub_child_category_id: selectedSubSubcategory,
-      // category_id: selectedCategory,
       propertyType: form?.platforms,
       category_id: selectedItems?.categories,
       sub_category_id: selectedItems?.subCategories,
       sub_child_category_id: selectedItems?.subSubCategories,
-      // cat_type:form?.cat_type
-      // dob: formatedDob,
+      logo1: form?.logo1,
+      affiliateSignupText: form?.affiliateSignupText,
     };
     delete value?.platforms;
     delete value?.websites;
@@ -235,7 +261,6 @@ const EditProfile = () => {
       delete value?.sub_child_category_id;
     }
     delete value.category_name;
-    // delete value.category_id
     delete value.role;
     delete value.addedBy;
 
@@ -307,24 +332,6 @@ const EditProfile = () => {
     }
   };
 
-  const uploadImage = (e) => {
-    setForm({ ...form, baseImg: e.target.value });
-    let files = e.target.files;
-    let file = files.item(0);
-    // loader(true)
-    setPicLoader(true);
-    ApiClient.postFormData("upload/image?modelName=users", {
-      file: file,
-      modelName: "users",
-    }).then((res) => {
-      if (res.data) {
-        let image = res?.data?.fullpath;
-        setForm({ ...form, image: `images/users/${image}` });
-      }
-      setPicLoader(false);
-    });
-  };
-
   useEffect(() => {
     if (user) {
       gallaryData();
@@ -332,15 +339,13 @@ const EditProfile = () => {
   }, []);
 
   const getCategory = (p = {}) => {
-    let url = `categoryWithSub?page&count&search&cat_type=${
-      user?.role == "affiliate" ? "promotional_models" : "advertiser_categories"
-    }&status=active`;
+    let url = `categoryWithSub?page&count&search&cat_type=${user?.role == "affiliate" ? "promotional_models" : "advertiser_categories"
+      }&status=active`;
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data.data
           .map((data) => (data.parent_cat_name ? data : undefined))
           .filter((item) => item !== undefined);
-        // setCategories(data);
         setCategory(data);
       }
     });
@@ -353,7 +358,6 @@ const EditProfile = () => {
   const handleFeatureCheckbox = (item) => {
     if (selectedItems1.includes(item)) {
       setSelectedItems1(selectedItems1.filter((selected) => selected !== item));
-      // Clear the corresponding form fields when the checkbox is unchecked
       setForm((prevForm) => ({
         ...prevForm,
         [`${item}_username`]: "",
@@ -379,6 +383,7 @@ const EditProfile = () => {
         setForm={setForm}
         form={form}
         uploadImage={uploadImage}
+        uploadLogo1={uploadLogo1}
         getError={getError}
         submitted={submitted}
         category={category}
@@ -392,7 +397,8 @@ const EditProfile = () => {
         selectedItems={selectedItems}
         setSelectedItems={setSelectedItems}
         handleFeatureCheckbox={handleFeatureCheckbox}
-        picLoader={picLoader}
+        imageLoader={imageLoader} // Separate loader for image
+        logoLoader={logoLoader} // Separate loader for logo
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
         formData={formData}
