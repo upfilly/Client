@@ -12,6 +12,7 @@ import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
 import useReferralTracking from "../../firstPromoter"
 import { toast } from 'react-toastify';
+import methodModel from '@/methods/methods';
 
 export default function SignupBrand() {
   const role = "affiliate"
@@ -20,9 +21,9 @@ export default function SignupBrand() {
   const [showPopup, setShowPopup] = useState(false);
   const [ip, setIP] = useState("");
   const [settingData, setSettingData] = useState([])
+  const [detailData, setDetailData] = useState(null)
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false, currentPassword: false });
-  const [showForm, setShowForm] = useState(false); // New state to control form visibility
-  
+  const [showForm, setShowForm] = useState(false);
   const param = useSearchParams()
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
@@ -31,6 +32,8 @@ export default function SignupBrand() {
   const invite_email = param.get("invite_email") || null
   const history = useRouter()
   const user = crendentialModel.getUser()
+
+  console.log(detailData,"detailDatadetailData")
 
   if (user) {
     history.push('/')
@@ -45,6 +48,14 @@ export default function SignupBrand() {
     getData();
     setForm({...form,"email":invite_email})
   }, []);
+
+  useEffect(() => {
+    ApiClient.get(`user/detail`, { id:BrandId}).then(res => {
+      if (res.success) {
+        setDetailData(res?.data)
+      }
+    })
+  }, [])
 
   useEffect(() => {
     ApiClient.get('settings').then(res => {
@@ -182,8 +193,8 @@ export default function SignupBrand() {
                 <div className='right_side py-3 text-center text-white'>
                   {/* UPFILLY Logo/Header */}
                   <div className="mb-4">
-                    <h1 className="display-4 fw-bold">UPFILLY</h1>
-                    <h2 className="h3">Upfilly</h2>
+                      <img src={methodModel.nologoImg(detailData && detailData.logo1)} className="profileuserimg" />
+                    {/* <h2 className="h3">Upfilly</h2> */}
                   </div>
                   
                   {/* Apply Now Button */}
@@ -197,17 +208,20 @@ export default function SignupBrand() {
                   {/* Partner Requirements */}
                   <div className="mb-4">
                     <p className="mb-2">
-                      To partner with Upfilly, you must have an active account on CJ.
+                      To partner with Upfilly, you must have an active account on Upfilly.
                     </p>
                     <p>
-                      Already have a CJ publisher account? <Link href="/login" className="text-white text-decoration-underline">Log in and join</Link>
+                      Already have a Upfilly publisher account? <Link href="/login" className="text-white text-decoration-underline">Log in and join</Link>
                     </p>
                   </div>
                   
                   {/* Benefits Section */}
                   <div className="benefits-section">
                     <h3 className="h4 mb-3">Start Earning with Upfilly Today:</h3>
-                    <p className="mb-2">
+                    <p dangerouslySetInnerHTML={{
+                      __html: detailData?.affiliateSignupText,
+                    }}></p>
+                    {/* <p className="mb-2">
                       Transform your audience's unboxing experiences and your earnings potential.
                     </p>
                     <p className="mb-2">
@@ -215,7 +229,7 @@ export default function SignupBrand() {
                     </p>
                     <p className="fw-bold">
                       Sign up for our affiliate program now and enjoy a competitive 5% commission on every successful referral you bring to Upfilly.
-                    </p>
+                    </p> */}
                   </div>
                   
                   {/* Footer */}
