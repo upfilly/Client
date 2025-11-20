@@ -190,7 +190,9 @@ export default function AnalyticsDashboard() {
           (item, index, self) =>
             index === self.findIndex((t) => t.id === item.id)
         );
-        setAffiliateData(uniqueData);
+        setAffiliateData(uniqueData?.map((dat)=>{
+          return({userName:dat?.userName || dat?.firstName,id:dat?.id || dat?._id})
+        }));
       } else {
         setAffiliateData([]);
       }
