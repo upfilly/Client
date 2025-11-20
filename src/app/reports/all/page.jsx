@@ -179,9 +179,11 @@ export default function AnalyticsDashboard() {
     ApiClient.get(url, {
       campaign: pendingFilters.campaignId?.map((dat) => dat).join(","),
     }).then((res) => {
-      if (res.success) {
+      if (res.success || res.data?.length > 0) {
         const data = res.data;
         const filteredData = data.affiliateFetch?.filter(
+          (item) => item !== null
+        ) || data?.filter(
           (item) => item !== null
         );
         const uniqueData = filteredData?.filter(
@@ -419,14 +421,14 @@ export default function AnalyticsDashboard() {
         <main className="main-content p-2 md-p-0 ">
 
           <div className="d-flex align-items-center flex-wrap gap-2 justify-content-end mt-3 mb-3">
-             <button
+            <button
               className="btn btn-primary apply-filters-btn"
               onClick={applyFilters}
               disabled={!hasPendingChanges()}
             >
               Apply Filters {hasPendingChanges() && "•"}
             </button>
-            
+
             {showDropdown && (
               <SelectDropdown
                 theme="search"
@@ -526,7 +528,7 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          
+
 
           <AnalyticsChartData
             data={data}

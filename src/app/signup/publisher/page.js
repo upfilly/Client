@@ -17,6 +17,7 @@ import methodModel from '@/methods/methods';
 export default function SignupBrand() {
   const role = "affiliate"
   const [form, setForm] = useState({});
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const [ip, setIP] = useState("");
@@ -24,6 +25,9 @@ export default function SignupBrand() {
   const [detailData, setDetailData] = useState(null)
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false, currentPassword: false });
   const [showForm, setShowForm] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(null);
+  const [checkingUsername, setCheckingUsername] = useState(false);
+
   const param = useSearchParams()
   const code = param.get("campaign_code") || ''
   const eventType = param.get("event_type")
@@ -33,7 +37,7 @@ export default function SignupBrand() {
   const history = useRouter()
   const user = crendentialModel.getUser()
 
-  console.log(detailData,"detailDatadetailData")
+  console.log(detailData, "detailDatadetailData")
 
   if (user) {
     history.push('/')
@@ -46,11 +50,11 @@ export default function SignupBrand() {
 
   useEffect(() => {
     getData();
-    setForm({...form,"email":invite_email})
+    setForm({ ...form, "email": invite_email })
   }, []);
 
   useEffect(() => {
-    ApiClient.get(`user/detail`, { id:BrandId}).then(res => {
+    ApiClient.get(`user/detail`, { id: BrandId }).then(res => {
       if (res.success) {
         setDetailData(res?.data)
       }
@@ -65,6 +69,88 @@ export default function SignupBrand() {
     })
   }, [])
 
+  const checkUsernameExists = async (username) => {
+    try {
+      const response = await ApiClient.post('userName/check', { userName: username });
+      return response.success;
+    } catch (error) {
+      console.error('Error checking username:', error);
+      return true;
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (form.userName && form.userName.length >= 3 && /^[a-zA-Z0-9_]+$/.test(form.userName)) {
+        setCheckingUsername(true);
+        const exists = await checkUsernameExists(form.userName);
+        setUsernameAvailable(exists);
+        setCheckingUsername(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [form.userName]);
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {};
+
+    // Validate first name
+    if (!form.firstName?.trim()) {
+      newErrors.firstName = "First name is required";
+      isValid = false;
+    } else if (form.firstName.trim().length < 3) {
+      newErrors.firstName = "First name must be at least 3 characters";
+      isValid = false;
+    }
+
+    // Validate last name for affiliate
+    if (role !== 'brand') {
+      if (!form.lastName?.trim()) {
+        newErrors.lastName = "Last name is required";
+        isValid = false;
+      } else if (form.lastName.trim().length < 2) {
+        newErrors.lastName = "Last name must be at least 2 characters";
+        isValid = false;
+      }
+    }
+
+    // Validate username
+    if (!form.userName) {
+      newErrors.userName = "Username is required";
+      isValid = false;
+    } else if (form.userName.length < 3) {
+      newErrors.userName = "Username must be at least 3 characters";
+      isValid = false;
+    } else if (!/^[a-zA-Z0-9_]+$/.test(form.userName)) {
+      newErrors.userName = "Username can only contain letters, numbers and underscores";
+      isValid = false;
+    }
+
+    // Validate email
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!form.email) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(form.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    // Validate password
+    if (!form.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (form.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const googleLogin = () => {
     ApiClient.get('google/login/authentication').then((res) => {
       localStorage.setItem('campaign_unique_id', code)
@@ -77,8 +163,8 @@ export default function SignupBrand() {
     const FullName = e?.name || ""
     const data = {
       "role": "affiliate",
-      campaign_unique_id:code,
-      device_token:localStorage.getItem("device_token") || '',
+      campaign_unique_id: code,
+      device_token: localStorage.getItem("device_token") || '',
       "email": e?.email || "",
       "facebook_auth_id": e?.id || "",
       "firstName": FullName?.split(" ")[0] || "",
@@ -89,12 +175,6 @@ export default function SignupBrand() {
       ApiClient.post('user/social-lggin', data).then((res) => {
         if (res.success == true) {
           localStorage?.removeItem('campaign_unique_id')
-          if (remember) {
-            localStorage.setItem('remember', JSON.stringify(data))
-          } else {
-            localStorage.removeItem('remember')
-          }
-          // toast.success(res.message)
           localStorage.setItem('token', res.data.access_token)
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
@@ -107,69 +187,102 @@ export default function SignupBrand() {
       return
     }
   }
-  
-  const hendleSubmit = (e) => {
+
+  const hendleSubmit = async (e) => {
     setSubmitted(true)
     e.preventDefault()
-    // useReferralTracking("bry6ko3r")
 
-   let data;
-    if(localStorage.getItem("device_token")){
+    if (!validateForm()) {
+      return;
+    }
+
+    if (usernameAvailable === false) {
+      toast.error("Please choose a different username");
+      return;
+    }
+
+    if (usernameAvailable === null && form.userName) {
+      setCheckingUsername(true);
+      const exists = await checkUsernameExists(form.userName);
+      setCheckingUsername(false);
+
+      if (exists) {
+        setUsernameAvailable(false);
+        toast.error("Username is already taken");
+        return;
+      }
+      setUsernameAvailable(true);
+    }
+
+    let data;
+    if (localStorage.getItem("device_token")) {
       data = {
         ...form,
         role: role,
-        device_token:localStorage.getItem("device_token"),
+        device_token: localStorage.getItem("device_token"),
         "request_status": "accepted",
-        brand_id:BrandId
-        // campaign_unique_id:code,
-        // referral_code:referralCode,
-        // createdByBrand:BrandId,
+        brand_id: BrandId
       };
-    }else{
+    } else {
       data = {
         ...form,
         role: role,
-        device_token:'',
+        device_token: '',
         "request_status": "accepted",
-        "brand_id":BrandId
-        // campaign_unique_id:code,
-        // referral_code:referralCode,
-        // createdByBrand:BrandId,
+        "brand_id": BrandId
       };
-    }
-
-    if (role === 'brand') {
-      if (!form?.firstName || !form?.email || !form?.password || !form?.brand_name || form?.brand_name?.length < 3 || form?.firstName?.trim()?.length < 3 || form?.password?.length < 8) return
-    }
-
-    if (role === 'affiliate') {
-      if (!form?.firstName || !form?.lastName || !form?.email || !form?.password || form?.firstName?.trim()?.length < 3 || form?.password?.length < 8) return
     }
 
     loader(true)
     ApiClient.post('userRegisterByBrandId', data).then(res => {
       if (res.success == true) {
-        const data1={
-          campaign_unique_id:code,
-          event_type:eventType,
-          ip_address:ip
+        const data1 = {
+          campaign_unique_id: code,
+          event_type: eventType,
+          ip_address: ip
         }
 
         if (!data1?.campaign_unique_id) {
           loader(false)
           setShowPopup(true)
         }
-        
-        // if (data1?.campaign_unique_id) {
-        //   ApiClient.post('tracking', data1).then(res => {
-        //     if (res.success == true) {
-        //       loader(false)
-        //       setShowPopup(true)
-        //     }
-        //   })
-        // }
+      } else {
+        loader(false);
+
+        // Handle the specific error format
+        if (res.error && res.error.message) {
+          // Handle common errors like email already exists
+          if (res.error.message.includes("Email-Id already exists")) {
+            setErrors({
+              ...errors,
+              email: "Email address already exists. Please use a different email."
+            });
+          } else {
+            toast.error(res.error.message);
+          }
+        } else if (res.errors) {
+          // Handle other validation errors format
+          const apiErrors = {};
+          if (res.errors.email) apiErrors.email = res.errors.email;
+          if (res.errors.password) apiErrors.password = res.errors.password;
+          if (res.errors.firstName) apiErrors.firstName = res.errors.firstName;
+          if (res.errors.lastName) apiErrors.lastName = res.errors.lastName;
+          if (res.errors.userName) apiErrors.userName = res.errors.userName;
+
+          setErrors({ ...errors, ...apiErrors });
+        } else if (res.message) {
+          toast.error(res.message);
+        }
       }
-    })
+    }).catch(err => {
+      loader(false);
+      toast.error("An error occurred. Please try again.");
+    });
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value.replace(/\s/g, "");
+    setForm({ ...form, password: newPassword });
   };
 
   const handleClick = () => {
@@ -193,18 +306,17 @@ export default function SignupBrand() {
                 <div className='right_side py-3 text-center text-white'>
                   {/* UPFILLY Logo/Header */}
                   <div className="mb-4">
-                      <img src={methodModel.nologoImg(detailData && detailData.logo1)} className="profileuserimg" />
-                    {/* <h2 className="h3">Upfilly</h2> */}
+                    <img src={methodModel.nologoImg(detailData && detailData.logo1)} className="profileuserimg" />
                   </div>
-                  
+
                   {/* Apply Now Button */}
-                  <button 
+                  <button
                     className="btn btn-primary btn-lg mb-4"
                     onClick={handleApplyNow}
                   >
                     APPLY NOW
                   </button>
-                  
+
                   {/* Partner Requirements */}
                   <div className="mb-4">
                     <p className="mb-2">
@@ -214,29 +326,19 @@ export default function SignupBrand() {
                       Already have a Upfilly publisher account? <Link href="/login" className="text-white text-decoration-underline">Log in and join</Link>
                     </p>
                   </div>
-                  
+
                   {/* Benefits Section */}
                   <div className="benefits-section">
                     <h3 className="h4 mb-3">Start Earning with Upfilly Today:</h3>
                     <p dangerouslySetInnerHTML={{
                       __html: detailData?.affiliateSignupText,
                     }}></p>
-                    {/* <p className="mb-2">
-                      Transform your audience's unboxing experiences and your earnings potential.
-                    </p>
-                    <p className="mb-2">
-                      Partner with Upfilly and join our mission to redefine brand engagement through innovative packaging.
-                    </p>
-                    <p className="fw-bold">
-                      Sign up for our affiliate program now and enjoy a competitive 5% commission on every successful referral you bring to Upfilly.
-                    </p> */}
                   </div>
-                  
+
                   {/* Footer */}
                   <div className="mt-4 pt-3 border-top">
                     <small>
                       © 2025 Commission Junction LLC
-                      {/* <Link href="#" className="text-white text-decoration-underline">Privacy Policy</Link> | <Link href="#" className="text-white text-decoration-underline">Support Center</Link> */}
                     </small>
                   </div>
                 </div>
@@ -248,7 +350,6 @@ export default function SignupBrand() {
               <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
                 <div className='right_side py-3'>
                   <form className="centerLogin" onSubmit={hendleSubmit}>
-                    {/* <Link href="/"><i className="fa fa-angle-double-left back_button" aria-hidden="true"></i></Link> */}
                     <div className="text-center mb-2">
                       <h3 className="text-center lgtext">Register Now </h3>
                     </div>
@@ -256,59 +357,83 @@ export default function SignupBrand() {
                       <div className="col-12 col-sm-12 col col-md-6 ">
                         <div className="mb-3">
                           <input
-                            type="First Name"
-                            className="form-control mb-0 bginput"
-                            placeholder={role === 'brand' ? 'Full Name' : 'First Name'}
+                            type="text"
+                            className={`form-control mb-0 bginput ${submitted && errors.firstName ? '' : ''}`}
+                            placeholder="First Name"
                             onChange={(e) => {
                               setForm({ ...form, firstName: e.target.value })
+                              if (submitted) validateForm();
                             }}
                           />
-                          {submitted && !form?.firstName && <p className='text-danger'>This field required</p>}
-                          {submitted && form?.firstName && form?.firstName?.trim()?.length < 3 && <p className='text-danger'>Required minimum length minimum 3</p>}
+                          {submitted && errors.firstName && <p className='text-danger small mt-1'>{errors.firstName}</p>}
                         </div>
                       </div>
                       <div className="col-12 col-sm-12 col col-md-6 ">
                         <div className='mb-3' >
                           <input
                             type="text"
-                            className="form-control mb-0 bginput"
-                            placeholder={role === 'brand' ? 'Brand Name' : 'Last Name'}
-                            value={role === 'brand' ? form?.brand_name : form?.lastName}
+                            className={`form-control mb-0 bginput ${submitted && errors.lastName ? '' : ''}`}
+                            placeholder="Last Name"
                             onChange={(e) => {
-                              role === 'brand' ? setForm({ ...form, brand_name: e.target.value }) :
-                                setForm({ ...form, lastName: e.target.value })
+                              setForm({ ...form, lastName: e.target.value })
+                              if (submitted) validateForm();
                             }}
                           />
+                          {submitted && errors.lastName && <p className='text-danger small mt-1'>{errors.lastName}</p>}
                         </div>
                       </div>
                     </div>
                     <div className="mb-3">
                       <input
                         type="email"
-                        className="form-control mb-0 bginput" placeholder='Email address'
+                        className={`form-control mb-0 bginput ${submitted && errors.email ? '' : ''}`}
+                        placeholder='Email address'
                         value={form?.email}
                         onChange={(e) => {
                           setForm({ ...form, email: e.target.value })
+                          if (submitted) validateForm();
                         }}
                       />
-                      {submitted && !form?.email && <p className='text-danger'>This field required</p>}
+                      {submitted && errors.email && <p className='text-danger small mt-1'>{errors.email}</p>}
                     </div>
                     <div className="mb-3">
-                      <div className="inputWrapper">
+                      <input
+                        type="text"
+                        className={`form-control mb-0 bginput ${submitted && errors.userName ? '' : ''}`}
+                        placeholder='Username'
+                        value={form.userName}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\s/g, "");
+                          setForm({ ...form, userName: value });
+                          setUsernameAvailable(null);
+                          if (submitted) validateForm();
+                        }}
+                      />
+                      {submitted && errors.userName && <p className='text-danger small mt-1'>{errors.userName}</p>}
+                      {!errors.userName && form.userName && (
+                        <div className="small mt-1">
+                          {checkingUsername ? (
+                            <span className="text-muted">Checking username...</span>
+                          ) : usernameAvailable === true ? (
+                            <span className="text-success">Username is available!</span>
+                          ) : usernameAvailable === false ? (
+                            <span className="text-danger">Username is already taken</span>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
+                    <div className="mb-3">
+                      <div className="inputWrapper password-invalid">
                         <input
                           type={eyes.password ? 'text' : 'password'}
-                          className="form-control mb-0 bginput"
+                          className={`form-control mb-0 bginput ${submitted && errors.password ? '' : ''}`}
                           value={form?.password}
-                          onChange={(e) => {
-                            const newPassword = e.target.value.replace(/\s/g, "");
-                            setForm({ ...form, password: newPassword })
-                          }}
+                          onChange={handlePasswordChange}
                           placeholder="Password"
                         />
                         <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
                       </div>
-                      {submitted && !form?.password && <p className='text-danger'>This field required</p>}
-                      {submitted && form?.password && form?.password?.length < 8 && <p className='text-danger'>Required minimum length minimum 8</p>}
+                      {submitted && errors.password && <p className='text-danger small mt-1'>{errors.password}</p>}
                     </div>
                     <div className="mt-0 border-bottom">
                       <button type="submit" className="btn btn-primary loginclass mb-2" >
@@ -353,7 +478,7 @@ export default function SignupBrand() {
               </div>
             </div>
           )}
-          
+
           {showPopup && (
             <div class="modal d-block">
               <div class="modal-dialog  dateModal" role="document">
