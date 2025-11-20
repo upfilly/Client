@@ -572,7 +572,8 @@ const Html = ({
 
                       <div className="col-md-6 mb-3">
                         <label className="form-label ">
-                          End Date<span className="star">*</span>
+                          End Date
+                          {/* <span className="star">*</span> */}
                         </label>
                         <ReactDatePicker
                           showIcon
@@ -586,13 +587,13 @@ const Html = ({
                           dateFormat="MM/dd/yyyy"
                           minDate={form?.linkStartDate}
                         />
-                        {submitted && !form?.linkEndDate ? (
+                        {/* {submitted && !form?.linkEndDate ? (
                           <div className="invalid-feedback d-block">
                             End Date is Required
                           </div>
                         ) : (
                           <></>
-                        )}
+                        )} */}
                       </div>
 
                       <div className="col-md-12 mb-3 custom-description">

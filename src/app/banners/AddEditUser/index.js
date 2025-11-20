@@ -131,8 +131,8 @@ const AddEditUser = () => {
       if (
         !form?.linkName ||
         !form?.linkDestinationUrl ||
-        !form?.linkStartDate ||
-        !form?.linkEndDate
+        !form?.linkStartDate
+        // !form?.linkEndDate
       ) {
         setSubmitted(true);
         return;
@@ -503,7 +503,7 @@ const AddEditUser = () => {
   return (
     <>
       <Html
-        id={id} // Pass the id from useParams to Html component
+        id={id}
         form={form}
         detail={detail}
         back={back}
