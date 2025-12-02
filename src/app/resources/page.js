@@ -30,7 +30,7 @@ const shopifyTrackingInfo = {
     "Customizable tracking parameters",
     "User-friendly interface for easy management"
   ],
-  link: "/shopifyGuide",
+  link: "/shopifyguide",
 };
 
 export default function Resources() {

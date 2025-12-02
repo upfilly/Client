@@ -234,7 +234,7 @@ const Html = ({ settingData, Logout }) => {
                   <Link class={`nav-link py-2 ${pathname == "/company" ? 'active' : ''}`} href="/company">Services</Link>
                 </li>
                 {(user?.role == "brand" || !user) && <li class="nav-item">
-                  <Link class={`nav-link py-2 ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Script</Link>
+                  <Link class={`nav-link py-2 ${pathname == "/scriptguide" ? 'active' : ''}`} href="/scriptguide">Script</Link>
                 </li>}
 
               </ul>
