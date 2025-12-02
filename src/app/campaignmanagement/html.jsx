@@ -963,9 +963,9 @@ const Html = ({
                                     </div>
                                   </td>
                                 )}
-                                {isColumnVisible('brandName') && itm?.brand_detail?.fullName && (
+                                {isColumnVisible('brandName') && (
                                   <td className="table_dats">
-                                    {itm?.brand_detail?.fullName}
+                                    {itm?.brand_detail?.fullName || "--"}
                                   </td>
                                 )}
                                 {isColumnVisible('affiliateApproval') && (

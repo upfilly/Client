@@ -244,7 +244,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
+                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/campaignmanagement?status=accepted")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -270,7 +270,7 @@ export default function Dashboard() {
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
                   {user.role == "brand" ? (
-                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate")}>
+                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate?association_status=accepted")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -288,7 +288,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
+                    <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/campaignmanagement?status=pending")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
                           <img
@@ -315,7 +315,7 @@ export default function Dashboard() {
                 <div className="fixi-ic">
                   <div className="d-flex align-items-center flex-wrap">
                     {user.role == "brand" ? (
-                      <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate")}>
+                      <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/trackingdata")}>
                         <div className="d-flex items-center gap-2">
                           <div className="img-div-first">
                             <img
@@ -373,7 +373,7 @@ export default function Dashboard() {
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-                  <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
+                  <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaignmanagement?status=rejected")}>
                     <div className="d-flex items-center gap-2">
                       <div className="img-div-first">
                         <img
@@ -397,7 +397,7 @@ export default function Dashboard() {
             {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-                  <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
+                  <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaignmanagement?status=accepted")}>
                     <div className="d-flex items-center gap-2">
                       <div className="img-div-first">
                         <img

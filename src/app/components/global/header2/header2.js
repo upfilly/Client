@@ -213,7 +213,8 @@ export default function Header2({
               </svg>
             </a> */}
 
-            <div className="bell_icon">
+            {/* <div className="bell_icon"> */}
+            <div className="help-icon">
               <div class="dropdown notifications position-relative">
                 <div
                   type="button"
