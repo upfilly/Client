@@ -98,10 +98,10 @@ export default function AnalyticsDashboard() {
       selectedAffiliate?.length > 0 ||
       selectedBrand?.length > 0 ||
       campaignId?.length > 0 ||
-      baseDates[0]?.getTime() !== firstDayOfMonth.getTime() ||
-      baseDates[1]?.getTime() !== today.getTime() ||
-      compDates[0]?.getTime() !== firstDayOfMonth.getTime() ||
-      compDates[1]?.getTime() !== today.getTime() ||
+      baseDates[0]?.getTime?.() !== firstDayOfMonth.getTime() ||
+      baseDates[1]?.getTime?.() !== today.getTime() ||
+      compDates[0]?.getTime?.() !== firstDayOfMonth.getTime() ||
+      compDates[1]?.getTime?.() !== today.getTime() ||
       selectedCurrency !== "USD" ||
       comparisonPeriod !== "none"
     );
@@ -109,10 +109,10 @@ export default function AnalyticsDashboard() {
 
   const hasPendingChanges = () => {
     return (
-      pendingFilters.baseDates[0]?.getTime() !== baseDates[0]?.getTime() ||
-      pendingFilters.baseDates[1]?.getTime() !== baseDates[1]?.getTime() ||
-      pendingFilters.compDates[0]?.getTime() !== compDates[0]?.getTime() ||
-      pendingFilters.compDates[1]?.getTime() !== compDates[1]?.getTime() ||
+      pendingFilters.baseDates[0]?.getTime?.() !== baseDates[0]?.getTime?.() ||
+      pendingFilters.baseDates[1]?.getTime?.() !== baseDates[1]?.getTime?.() ||
+      pendingFilters.compDates[0]?.getTime?.() !== compDates[0]?.getTime?.() ||
+      pendingFilters.compDates[1]?.getTime?.() !== compDates[1]?.getTime?.() ||
       pendingFilters.selectedCurrency !== selectedCurrency ||
       JSON.stringify(pendingFilters.campaignId) !== JSON.stringify(campaignId) ||
       JSON.stringify(pendingFilters.selectedAffiliate) !== JSON.stringify(selectedAffiliate) ||
@@ -190,8 +190,8 @@ export default function AnalyticsDashboard() {
           (item, index, self) =>
             index === self.findIndex((t) => t.id === item.id)
         );
-        setAffiliateData(uniqueData?.map((dat)=>{
-          return({userName:dat?.userName || dat?.firstName,id:dat?.id || dat?._id})
+        setAffiliateData(uniqueData?.map((dat) => {
+          return ({ userName: dat?.userName || dat?.firstName, id: dat?.id || dat?._id })
         }));
       } else {
         setAffiliateData([]);
@@ -264,10 +264,13 @@ export default function AnalyticsDashboard() {
 
   useEffect(() => {
     getBrandData();
-    getCamapignData();
     // Apply initial filters on component mount
     applyFilters();
   }, []);
+
+    useEffect(() => {
+    getCamapignData();
+  }, [pendingFilters.selectedAffiliate]);
 
   useEffect(() => {
     getData();
@@ -296,7 +299,7 @@ export default function AnalyticsDashboard() {
   };
 
   const getCamapignData = (p = {}) => {
-    let filter = { ...p };
+    let filter = { ...p , affiliate_ids: pendingFilters.selectedAffiliate?.map((dat) => dat).join(","),};
     let url = "campaign/brand/all";
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
@@ -314,12 +317,12 @@ export default function AnalyticsDashboard() {
   // Main function to apply all filters
   const applyFilters = () => {
     // Update the actual filter states with pending values
-    setBaseDates(pendingFilters.baseDates);
-    setCompDates(pendingFilters.compDates);
+    setBaseDates([...pendingFilters.baseDates]);
+    setCompDates([...pendingFilters.compDates]);
     setSelectedCurrency(pendingFilters.selectedCurrency);
-    setCampaignId(pendingFilters.campaignId);
-    setSelectedAffiliate(pendingFilters.selectedAffiliate);
-    setSelectedBrand(pendingFilters.selectedBrand);
+    setCampaignId([...pendingFilters.campaignId]);
+    setSelectedAffiliate([...pendingFilters.selectedAffiliate]);
+    setSelectedBrand([...pendingFilters.selectedBrand]);
     setComparisonPeriod(pendingFilters.comparisonPeriod);
 
     // Ensure compDates are valid when switching from "none" to another period
@@ -351,7 +354,7 @@ export default function AnalyticsDashboard() {
     const filterParams = {
       startDate: moment(pendingFilters.baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(pendingFilters.baseDates?.[1]).format("YYYY-MM-DD"),
-      affiliate_id: pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || "",
+      affiliate_id: pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || "", // Add affiliate filter
       brand_id: user?.id,
       campaign: pendingFilters.campaignId?.map((dat) => dat).join(",") || "",
       startDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
@@ -381,12 +384,12 @@ export default function AnalyticsDashboard() {
     setPendingFilters(defaultFilters);
 
     // Immediately update all applied filter states
-    setBaseDates(defaultFilters.baseDates);
-    setCompDates(defaultFilters.compDates);
+    setBaseDates([...defaultFilters.baseDates]);
+    setCompDates([...defaultFilters.compDates]);
     setSelectedCurrency(defaultFilters.selectedCurrency);
-    setCampaignId(defaultFilters.campaignId);
-    setSelectedAffiliate(defaultFilters.selectedAffiliate);
-    setSelectedBrand(defaultFilters.selectedBrand);
+    setCampaignId([...defaultFilters.campaignId]);
+    setSelectedAffiliate([...defaultFilters.selectedAffiliate]);
+    setSelectedBrand([...defaultFilters.selectedBrand]);
     setComparisonPeriod(defaultFilters.comparisonPeriod);
 
     // Apply the reset filters immediately
@@ -529,8 +532,6 @@ export default function AnalyticsDashboard() {
               )}
             </div>
           </div>
-
-
 
           <AnalyticsChartData
             data={data}
