@@ -315,7 +315,7 @@ export default function Dashboard() {
                 <div className="fixi-ic">
                   <div className="d-flex align-items-center flex-wrap">
                     {user.role == "brand" ? (
-                      <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/trackingdata")}>
+                      <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate?association_status=accepted")}>
                         <div className="d-flex items-center gap-2">
                           <div className="img-div-first">
                             <img

@@ -247,7 +247,7 @@ const Html = ({
       setFilter={setFilter}
       reset={reset}
       filter={filter}
-      name="Banners & Links"
+      name="Text links"
       filters={filters}
     >
       <div className="sidebar-left-content">

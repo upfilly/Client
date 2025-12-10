@@ -87,7 +87,7 @@ const NotificationPage = () => {
                             </div>
                         )})
                     ) : (
-                        <p>No notifications available.</p>
+                        <p className='text-center'>No notifications available.</p>
                     )}
                 </div>
             </div>

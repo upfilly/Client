@@ -27,6 +27,7 @@ export default function SignupBrand() {
   const [showForm, setShowForm] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState(null);
   const [checkingUsername, setCheckingUsername] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const param = useSearchParams()
   const code = param.get("campaign_code") || ''
@@ -36,8 +37,6 @@ export default function SignupBrand() {
   const invite_email = param.get("invite_email") || null
   const history = useRouter()
   const user = crendentialModel.getUser()
-
-  console.log(detailData, "detailDatadetailData")
 
   if (user) {
     history.push('/')
@@ -50,7 +49,9 @@ export default function SignupBrand() {
 
   useEffect(() => {
     getData();
-    setForm({ ...form, "email": invite_email })
+    if (invite_email) {
+      setForm(prev => ({ ...prev, email: invite_email }))
+    }
   }, []);
 
   useEffect(() => {
@@ -189,15 +190,18 @@ export default function SignupBrand() {
   }
 
   const hendleSubmit = async (e) => {
-    setSubmitted(true)
     e.preventDefault()
+    setSubmitted(true)
+    setIsSubmitting(true)
 
     if (!validateForm()) {
+      setIsSubmitting(false)
       return;
     }
 
     if (usernameAvailable === false) {
       toast.error("Please choose a different username");
+      setIsSubmitting(false)
       return;
     }
 
@@ -209,6 +213,7 @@ export default function SignupBrand() {
       if (exists) {
         setUsernameAvailable(false);
         toast.error("Username is already taken");
+        setIsSubmitting(false)
         return;
       }
       setUsernameAvailable(true);
@@ -235,6 +240,7 @@ export default function SignupBrand() {
 
     loader(true)
     ApiClient.post('userRegisterByBrandId', data).then(res => {
+      setIsSubmitting(false)
       if (res.success == true) {
         const data1 = {
           campaign_unique_id: code,
@@ -251,7 +257,6 @@ export default function SignupBrand() {
 
         // Handle the specific error format
         if (res.error && res.error.message) {
-          // Handle common errors like email already exists
           if (res.error.message.includes("Email-Id already exists")) {
             setErrors({
               ...errors,
@@ -261,7 +266,6 @@ export default function SignupBrand() {
             toast.error(res.error.message);
           }
         } else if (res.errors) {
-          // Handle other validation errors format
           const apiErrors = {};
           if (res.errors.email) apiErrors.email = res.errors.email;
           if (res.errors.password) apiErrors.password = res.errors.password;
@@ -276,6 +280,7 @@ export default function SignupBrand() {
       }
     }).catch(err => {
       loader(false);
+      setIsSubmitting(false)
       toast.error("An error occurred. Please try again.");
     });
   };
@@ -295,211 +300,288 @@ export default function SignupBrand() {
     setShowForm(true);
   }
 
+  const handleBack = () => {
+    setShowForm(false);
+  }
+
   return (
     <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
-      <div className='card_parent bg-black'>
-        <div className="container h-100">
-          {/* Show the image/content section first */}
-          {!showForm ? (
-            <div className="row align-items-center h-100">
-              <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-                <div className='right_side py-3 text-center text-white'>
-                  {/* UPFILLY Logo/Header */}
-                  <div className="mb-4">
-                    <img src={methodModel.nologoImg(detailData && detailData.logo1)} className="profileuserimg" />
-                  </div>
-
-                  {/* Apply Now Button */}
-                  <button
-                    className="btn btn-primary btn-lg mb-4"
-                    onClick={handleApplyNow}
-                  >
-                    APPLY NOW
-                  </button>
-
-                  {/* Partner Requirements */}
-                  <div className="mb-4">
-                    <p className="mb-2">
-                      To partner with Upfilly, you must have an active account on Upfilly.
-                    </p>
-                    <p>
-                      Already have a Upfilly publisher account? <Link href="/login" className="text-white text-decoration-underline">Log in and join</Link>
-                    </p>
-                  </div>
-
-                  {/* Benefits Section */}
-                  <div className="benefits-section">
-                    <h3 className="h4 mb-3">Start Earning with Upfilly Today:</h3>
-                    <p dangerouslySetInnerHTML={{
-                      __html: detailData?.affiliateSignupText,
-                    }}></p>
-                  </div>
-
-                  {/* Footer */}
-                  <div className="mt-4 pt-3 border-top">
-                    <small>
-                      © 2025 Commission Junction LLC
-                    </small>
-                  </div>
+      <div className='signup-brand-page'>
+        <div className="container h-100 d-flex align-items-center">
+          <div className="row justify-content-center w-100">
+            <div className="col-12 col-lg-8 col-xl-6">
+              <div className='right_side'>
+                {/* Brand Header */}
+                <div className="brand-header">
+                  {detailData && detailData.logo1 && (
+                    <img
+                      src={methodModel.nologoImg(detailData.logo1)}
+                      className="brand-logo"
+                      alt={detailData.name || "Brand Logo"}
+                    />
+                  )}
+                  <h1>Join {detailData?.name || "Our Brand"} Program</h1>
+                  <p>Start earning commissions by promoting amazing products</p>
                 </div>
-              </div>
-            </div>
-          ) : (
-            /* Show the form when user clicks Apply Now */
-            <div className="row align-items-center h-100">
-              <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-                <div className='right_side py-3'>
-                  <form className="centerLogin" onSubmit={hendleSubmit}>
-                    <div className="text-center mb-2">
-                      <h3 className="text-center lgtext">Register Now </h3>
-                    </div>
-                    <div className="form-row">
-                      <div className="col-12 col-sm-12 col col-md-6 ">
-                        <div className="mb-3">
-                          <input
-                            type="text"
-                            className={`form-control mb-0 bginput ${submitted && errors.firstName ? '' : ''}`}
-                            placeholder="First Name"
-                            onChange={(e) => {
-                              setForm({ ...form, firstName: e.target.value })
-                              if (submitted) validateForm();
-                            }}
-                          />
-                          {submitted && errors.firstName && <p className='text-danger small mt-1'>{errors.firstName}</p>}
+
+                <div className="content-wrapper">
+                  {!showForm ? (
+                    <div className="welcome-content">
+                      <div className="apply-section mb-4">
+                        <button
+                          className="btn btn-primary btn-lg mb-4 apply-btn"
+                          onClick={handleApplyNow}
+                        >
+                          APPLY NOW
+                        </button>
+
+                        <div className="login-prompt mb-4">
+                          <p className="mb-2">
+                            To join this brand program, you must have an active Upfilly account.
+                          </p>
+                          <p>
+                            Already an Upfilly affiliate? <Link href="/login" className="login-link">Log in and join the program.</Link>
+                          </p>
                         </div>
                       </div>
-                      <div className="col-12 col-sm-12 col col-md-6 ">
-                        <div className='mb-3' >
-                          <input
-                            type="text"
-                            className={`form-control mb-0 bginput ${submitted && errors.lastName ? '' : ''}`}
-                            placeholder="Last Name"
-                            onChange={(e) => {
-                              setForm({ ...form, lastName: e.target.value })
-                              if (submitted) validateForm();
-                            }}
-                          />
-                          {submitted && errors.lastName && <p className='text-danger small mt-1'>{errors.lastName}</p>}
-                        </div>
+
+                      {/* Benefits Section */}
+                      <div className="benefits-section">
+                        <h3 className="h4 mb-3">Start Earning with Upfilly Today:</h3>
+                        {detailData?.affiliateSignupText ? (
+                          <div dangerouslySetInnerHTML={{ __html: detailData.affiliateSignupText }} />
+                        ) : (
+                          <p>Join our affiliate program and start earning competitive commissions by promoting our products. Get access to marketing materials, track your performance in real-time, and receive timely payments.</p>
+                        )}
+                      </div>
+
+                      {/* Footer */}
+                      <div className="mt-4 pt-3 border-top">
+                        <small className="text-muted">
+                          © 2025 Upfilly LLC
+                        </small>
                       </div>
                     </div>
-                    <div className="mb-3">
-                      <input
-                        type="email"
-                        className={`form-control mb-0 bginput ${submitted && errors.email ? '' : ''}`}
-                        placeholder='Email address'
-                        value={form?.email}
-                        onChange={(e) => {
-                          setForm({ ...form, email: e.target.value })
-                          if (submitted) validateForm();
-                        }}
-                      />
-                      {submitted && errors.email && <p className='text-danger small mt-1'>{errors.email}</p>}
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="text"
-                        className={`form-control mb-0 bginput ${submitted && errors.userName ? '' : ''}`}
-                        placeholder='Username'
-                        value={form.userName}
-                        onChange={(e) => {
-                          const value = e.target.value.replace(/\s/g, "");
-                          setForm({ ...form, userName: value });
-                          setUsernameAvailable(null);
-                          if (submitted) validateForm();
-                        }}
-                      />
-                      {submitted && errors.userName && <p className='text-danger small mt-1'>{errors.userName}</p>}
-                      {!errors.userName && form.userName && (
-                        <div className="small mt-1">
-                          {checkingUsername ? (
-                            <span className="text-muted">Checking username...</span>
-                          ) : usernameAvailable === true ? (
-                            <span className="text-success">Username is available!</span>
-                          ) : usernameAvailable === false ? (
-                            <span className="text-danger">Username is already taken</span>
-                          ) : null}
-                        </div>
+                  ) : (
+                    <div className="signup-form">
+                      {showForm && (
+                        <button
+                          className="btn btn-link back-button mb-3 p-0"
+                          onClick={handleBack}
+                        >
+                          ← Back
+                        </button>
                       )}
-                    </div>
-                    <div className="mb-3">
-                      <div className="inputWrapper password-invalid">
-                        <input
-                          type={eyes.password ? 'text' : 'password'}
-                          className={`form-control mb-0 bginput ${submitted && errors.password ? '' : ''}`}
-                          value={form?.password}
-                          onChange={handlePasswordChange}
-                          placeholder="Password"
-                        />
-                        <i className={eyes.password ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => setEyes({ ...eyes, password: !eyes.password })}></i>
+
+                      <div className="form-header">
+                        <h2>Create Your Account</h2>
+                        <p>Join {detailData?.name || "the brand"} program in minutes</p>
                       </div>
-                      {submitted && errors.password && <p className='text-danger small mt-1'>{errors.password}</p>}
-                    </div>
-                    <div className="mt-0 border-bottom">
-                      <button type="submit" className="btn btn-primary loginclass mb-2" >
-                        Create Account
-                      </button>
-                      <p className='text-center mb-2'>By signing up, you agree to our Terms and Privacy Policy</p>
-                    </div>
 
-                    <div className="text-center or mt-2 mb-1 orbx">
-                      OR
-                    </div>
-                    <button className='btn btn-outline-white' type='button' onClick={googleLogin}>
-                      <svg className='google_right' xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-                        <path d="M16.1094 13.1786V19.3466H24.6803C24.4975 20.3198 24.1199 21.2461 23.5699 22.0696C23.02 22.8931 22.3093 23.5969 21.4803 24.1386L26.6493 28.1496C28.2163 26.6381 29.4487 24.8146 30.2667 22.797C31.0848 20.7794 31.4702 18.6125 31.3983 16.4366C31.3992 15.3441 31.3021 14.2537 31.1083 13.1786H16.1094Z" fill="#4285F4" />
-                        <path d="M7.18359 19.1056L6.01758 19.9976L1.8916 23.2116C3.21419 25.85 5.24393 28.069 7.75439 29.6208C10.2649 31.1726 13.1572 31.9962 16.1085 31.9996C19.9844 32.1073 23.755 30.7296 26.6486 28.1486L21.4796 24.1376C19.8839 25.1767 18.0123 25.7115 16.1085 25.6726C14.1233 25.6473 12.1959 25.0011 10.5966 23.8248C8.9972 22.6485 7.80617 21.0011 7.19055 19.1136L7.18359 19.1056Z" fill="#34A853" />
-                        <path d="M1.8916 8.93561C0.767523 11.147 0.18226 13.5929 0.183596 16.0736C0.18226 18.5543 0.767523 21.0002 1.8916 23.2116C1.8916 23.2256 7.19165 19.0996 7.19165 19.0996C6.86063 18.1249 6.68934 17.103 6.68457 16.0736C6.68936 15.0442 6.86065 14.0224 7.19165 13.0476L1.8916 8.93561Z" fill="#FBBC05" />
-                        <path d="M16.1095 6.4896C18.3746 6.45551 20.5635 7.30731 22.2096 8.86356L26.7705 4.30259C23.8904 1.59022 20.0705 0.100722 16.1145 0.147556C13.1624 0.148065 10.2687 0.970441 7.75757 2.52256C5.24642 4.07467 3.21695 6.29526 1.89648 8.93558L7.19653 13.0476C7.81191 11.161 9.00221 9.51428 10.6006 8.33823C12.199 7.16218 14.1253 6.51576 16.1095 6.4896Z" fill="#EA4335" />
-                      </svg>
-                      Sign In With Google
-                    </button>
-                    <div className='facebok_width'>
-                      <FacebookLogin
-                        className="p-0"
-                        appId="425676736552748"
-                        fields="name,email,picture"
-                        render={(renderProps) => (
-                          <button className='btn btn-outline-white font_set' type='button' onClick={renderProps.onClick}>
-                            <svg className='facebook_right' xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32" fill="none">
-                              <path d="M11.438 31.08H6.13803C5.97129 31.08 5.81135 30.8962 5.69326 30.7785C5.57517 30.6608 5.50856 30.5009 5.50803 30.3342V17.557H1.46203C1.29494 17.557 1.1347 17.4906 1.01655 17.3725C0.898406 17.2543 0.832031 17.0941 0.832031 16.927V11.817C0.832561 11.6503 0.899169 11.4905 1.01726 11.3728C1.13535 11.2551 1.29529 11.189 1.46203 11.189H5.51503V7.661C5.43491 6.68612 5.55764 5.70521 5.87548 4.78013C6.19332 3.85504 6.69938 3.00584 7.36175 2.28607C8.02411 1.56629 8.82843 0.991558 9.72397 0.5981C10.6195 0.204642 11.5869 0.000995435 12.565 0H17C17.0835 0.000308738 17.1661 0.0171726 17.243 0.0496149C17.3199 0.0820572 17.3896 0.129434 17.448 0.189C17.5074 0.248241 17.5541 0.318965 17.5852 0.396852C17.6163 0.47474 17.6312 0.558155 17.629 0.642V5.415C17.6285 5.58174 17.5619 5.74147 17.4438 5.85918C17.3257 5.9769 17.1658 6.043 16.999 6.043H14.287C12.415 6.043 12.072 6.773 12.072 8.21V11.195H16.811C16.9778 11.195 17.1377 11.2611 17.2558 11.3788C17.3739 11.4965 17.4405 11.6563 17.441 11.823V16.936C17.441 17.0187 17.4247 17.1007 17.3931 17.1771C17.3614 17.2535 17.315 17.323 17.2565 17.3815C17.198 17.44 17.1286 17.4864 17.0521 17.518C16.9757 17.5497 16.8938 17.566 16.811 17.566H12.073V30.448C12.0736 30.5314 12.0575 30.6141 12.0257 30.6912C11.994 30.7683 11.9472 30.8383 11.8881 30.8972C11.8289 30.956 11.7587 31.0025 11.6814 31.0338C11.6042 31.0652 11.5214 31.0809 11.438 31.08Z" fill="#4285F4" />
+                      <form onSubmit={hendleSubmit}>
+                        <div className="row">
+                          <div className="col-md-6 mb-3">
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                className={`form-control ${submitted && errors.firstName ? 'is-invalid' : ''}`}
+                                placeholder="First Name *"
+                                value={form.firstName || ''}
+                                onChange={(e) => {
+                                  setForm({ ...form, firstName: e.target.value })
+                                  if (submitted) validateForm();
+                                }}
+                              />
+                              {submitted && errors.firstName && (
+                                <div className="invalid-feedback d-block">{errors.firstName}</div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="col-md-6 mb-3">
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                className={`form-control ${submitted && errors.lastName ? 'is-invalid' : ''}`}
+                                placeholder="Last Name *"
+                                value={form.lastName || ''}
+                                onChange={(e) => {
+                                  setForm({ ...form, lastName: e.target.value })
+                                  if (submitted) validateForm();
+                                }}
+                              />
+                              {submitted && errors.lastName && (
+                                <div className="invalid-feedback d-block">{errors.lastName}</div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mb-3">
+                          <div className="form-group">
+                            <input
+                              type="email"
+                              className={`form-control ${submitted && errors.email ? 'is-invalid' : ''}`}
+                              placeholder='Email Address *'
+                              value={form.email || ''}
+                              onChange={(e) => {
+                                setForm({ ...form, email: e.target.value })
+                                if (submitted) validateForm();
+                              }}
+                            />
+                            {submitted && errors.email && (
+                              <div className="invalid-feedback d-block">{errors.email}</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="mb-3">
+                          <div className="form-group">
+                            <input
+                              type="text"
+                              className={`form-control ${submitted && errors.userName ? 'is-invalid' : ''}`}
+                              placeholder='Username *'
+                              value={form.userName || ''}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\s/g, "");
+                                setForm({ ...form, userName: value });
+                                setUsernameAvailable(null);
+                                if (submitted) validateForm();
+                              }}
+                            />
+                            {submitted && errors.userName && (
+                              <div className="invalid-feedback d-block">{errors.userName}</div>
+                            )}
+                            {!errors.userName && form.userName && (
+                              <div className="username-status">
+                                {checkingUsername ? (
+                                  <span className="checking">Checking username...</span>
+                                ) : usernameAvailable === true ? (
+                                  <span className="available">✓ Username is available</span>
+                                ) : usernameAvailable === false ? (
+                                  <span className="taken">✗ Username is already taken</span>
+                                ) : null}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="mb-4">
+                          <div className="form-group password-input">
+                            <input
+                              type={eyes.password ? 'text' : 'password'}
+                              className={`form-control ${submitted && errors.password ? 'is-invalid' : ''}`}
+                              value={form.password || ''}
+                              onChange={handlePasswordChange}
+                              placeholder="Password *"
+                            />
+                            <button
+                              type="button"
+                              className="toggle-password"
+                              onClick={() => setEyes({ ...eyes, password: !eyes.password })}
+                            >
+                              {eyes.password ? '👁️' : '👁️‍🗨️'}
+                            </button>
+                            {submitted && errors.password && (
+                              <div className="invalid-feedback d-block">{errors.password}</div>
+                            )}
+                            <small className="form-text text-muted">
+                              Password must be at least 8 characters long
+                            </small>
+                          </div>
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="btn btn-primary submit-btn"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? 'Creating Account...' : 'Create Account'}
+                        </button>
+
+                        <div className="terms-text mt-3">
+                          By signing up, you agree to our{' '}
+                          <Link href="/terms">Terms of Service</Link> and{' '}
+                          <Link href="/privacy">Privacy Policy</Link>
+                        </div>
+
+                        <div className="divider">
+                          <span>Or continue with</span>
+                        </div>
+
+                        <div className="social-buttons">
+                          <button
+                            type="button"
+                            className="social-btn google-btn"
+                            onClick={googleLogin}
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                             </svg>
-                            Sign In With Facebook
-                          </button>)}
-                        buttonStyle={{ border: "none", background: "none" }}
-                        callback={e => FaceBookLoginHandler(e)} />
-                    </div>
-                    <p className='text-center border-top pt-2 mb-1 mt-2 account_bx'>Already have an account?</p>
-                    <Link className='btn btn-outline-white mb-0' type='button' href='/login'>
-                      Login Here
-                    </Link>
-                  </form>
-                </div>
-              </div>
-            </div>
-          )}
+                            Sign up with Google
+                          </button>
 
-          {showPopup && (
-            <div class="modal d-block">
-              <div class="modal-dialog  dateModal" role="document">
-                <div class="modal-content text-center">
-                  <div class="modal-body">
-                    <div>
-                      <img src="../../../assets/img/logo.png" class="greentik" />
+                          <FacebookLogin
+                            appId="425676736552748"
+                            fields="name,email,picture"
+                            render={(renderProps) => (
+                              <button
+                                type="button"
+                                className="social-btn facebook-btn"
+                                onClick={renderProps.onClick}
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                  <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                                Sign up with Facebook
+                              </button>
+                            )}
+                            callback={FaceBookLoginHandler}
+                          />
+                        </div>
+
+                        <div className="login-link">
+                          Already have an account? <Link href="/login">Login here</Link>
+                        </div>
+                      </form>
                     </div>
-                    <h5 Class="tital mt-5">Successfully Registered</h5>
-                    <div class="paraclass">
-                      We have send you the verification by email.
-                    </div>
-                    <div>
-                      <button type="button" class="btn btn-primary " onClick={() => handleClick()} >Ok</button>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
+
+        {/* Success Modal */}
+        {showPopup && (
+          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content success-modal">
+                <div className="modal-body">
+                  <div className="success-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                  </div>
+                  <h4 className="success-title">Successfully Registered!</h4>
+                  <p className="success-message">
+                    We have sent a verification link to your email address.
+                    Please check your inbox and click the verification link to activate your account.
+                  </p>
+                  <button
+                    className="btn ok-btn"
+                    onClick={handleClick}
+                  >
+                    OK
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </PageContainer>
   )
