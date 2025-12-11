@@ -514,8 +514,15 @@ const Html = ({
                             <DynamicReactQuill
                               theme="snow"
                               value={form?.description ? form?.description : ''}
-                              onChange={(newValue, editor) => {
-                                setForm({ ...form, description: newValue })
+                              // onChange={(newValue, editor) => {
+                              //   setForm({ ...form, description: newValue })
+                              // }}
+                              onChange={(newValue) => {
+                                setForm((prev) => ({
+                                  ...prev,
+                                  description: newValue
+                                }))
+                                // ({ ...form,  })
                               }}
                               className='tuncketcls'
                               modules={{
@@ -548,7 +555,11 @@ const Html = ({
                               theme="snow"
                               value={form?.affiliateSignupText ? form?.affiliateSignupText : ''}
                               onChange={(newValue) => {
-                                setForm({ ...form, affiliateSignupText: newValue })
+                                setForm((prev) => ({
+                                ...prev,
+                                affiliateSignupText: newValue
+                              }))
+                                // ({ ...form,  })
                               }}
                               className='tuncketcls'
                               modules={{
