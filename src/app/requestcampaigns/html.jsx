@@ -50,7 +50,7 @@ const Html = ({
         <div className="card">
           <div className="campaign-request-header-wrapper">
             <div className="main_title_head d-flex justify-content-between align-items-center gap-2">
-              <h3 className="">Campaign Request  </h3>
+              <h3 className="">Campaign Request</h3>
               <div className="d-flex align-items-center gap-2">
                 <SelectDropdown
                   theme="search"
@@ -74,7 +74,6 @@ const Html = ({
                     className="btn btn-outline-secondary reset-btn"
                     onClick={(e) => reset()}
                   >
-                    {/* <i className="material-icons me-1">refresh</i> */}
                     Reset
                   </button>
                 )}
@@ -92,7 +91,14 @@ const Html = ({
                         className="table_data"
                         onClick={(e) => sorting("campaign_name")}
                       >
-                        Name {filters?.sorder === "asc" ? "↑" : "↓"}
+                        Campaign Name {filters?.sorder === "asc" ? "↑" : "↓"}
+                      </th>
+                      <th
+                        scope="col"
+                        className="table_data"
+                        onClick={(e) => sorting("affiliate_name")}
+                      >
+                        Affiliate Name {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
                       <th scope="col" className="table_data">
                         Event Type
@@ -105,14 +111,10 @@ const Html = ({
                         className="table_data"
                         onClick={(e) => sorting("createdAt")}
                       >
-                        Created Date {filters?.sorder === "asc" ? "↑" : "↓"}
+                        Request Date {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                      <th
-                        scope="col"
-                        className="table_data"
-                        onClick={(e) => sorting("updatedAt")}
-                      >
-                        Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
+                      <th scope="col" className="table_data">
+                        Status
                       </th>
                       <th scope="col" className="table_data">
                         Actions
@@ -125,43 +127,59 @@ const Html = ({
                         <td
                           className="table_dats"
                           onClick={(e) =>
-                            view(
-                              itm.campaign_details?.id ||
-                                itm?.campaign_details?._id
-                            )
+                            view(itm.id || itm._id)
                           }
+                          style={{ cursor: 'pointer' }}
                         >
                           <div className="user_detail">
                             <div className="user_name">
                               <h4 className="user">
                                 {methodModel.capitalizeFirstLetter(
-                                  itm?.campaign_name
+                                  itm?.campaign_name || itm?.campaign_details?.name
                                 )}
                               </h4>
                             </div>
                           </div>
                         </td>
-                        {itm?.campaign_details?.event_type && (
-                          <td className="table_dats">
-                            {itm?.campaign_details?.event_type.join(",")}
-                          </td>
-                        )}
                         <td className="table_dats">
-                          {itm?.campaign_details?.commission || "--"}{" "}
-                          {itm?.campaign_details?.commission_type ==
-                          "percentage"
-                            ? "%"
-                            : "$"}
+                          <div className="user_detail">
+                            <div className="user_name">
+                              <h6 className="user mb-0">
+                                {methodModel.capitalizeFirstLetter(
+                                  itm?.affiliate_name
+                                )}
+                              </h6>
+                              <small className="text-muted">
+                                {itm?.affiliate_email}
+                              </small>
+                            </div>
+                          </div>
                         </td>
                         <td className="table_dats">
-                          {datepipeModel.date(itm.campaign_details?.createdAt)}
+                          {itm?.campaign_details?.event_type?.join(", ") || "--"}
                         </td>
                         <td className="table_dats">
-                          {datepipeModel.date(itm?.campaign_details?.updatedAt)}
+                          {itm?.campaign_details?.commission !== undefined
+                            ? `${itm.campaign_details.commission} ${itm?.campaign_details?.commission_type === "percentage"
+                              ? "%"
+                              : "$"
+                            }`
+                            : "--"}
                         </td>
-                        <td className="table_dats d-flex align-items-center">
+                        <td className="table_dats">
+                          {datepipeModel.date(itm.createdAt)}
+                        </td>
+                        <td className="table_dats">
+                          <span className={`badge bg-${itm?.status === "pending" ? "warning" :
+                              itm?.status === "accepted" ? "success" :
+                                itm?.status === "rejected" ? "danger" : "secondary"
+                            }`}>
+                            {methodModel.capitalizeFirstLetter(itm?.status)}
+                          </span>
+                        </td>
+                        <td className="table_dats d-flex align-items-center gap-2">
                           {itm?.status === "pending" ? (
-                            <div className="d-flex align-items-center">
+                            <>
                               <button
                                 onClick={() =>
                                   statusChange(
@@ -170,7 +188,8 @@ const Html = ({
                                     itm?.id || itm?._id
                                   )
                                 }
-                                className="btn btn-primary mr-2 btn_actions"
+                                className="btn btn-success btn-sm"
+                                title="Accept"
                               >
                                 <i className="fa fa-check"></i>
                               </button>
@@ -182,22 +201,28 @@ const Html = ({
                                     itm?.id || itm?._id
                                   )
                                 }
-                                className="btn btn-danger bg-red mr-2 btn_actions"
+                                className="btn btn-danger btn-sm"
+                                title="Reject"
                               >
                                 <i className="fa fa-times"></i>
                               </button>
-                            </div>
+                            </>
                           ) : itm?.status === "rejected" ? (
-                            <div className="btn bg-danger text-white  mr-2">Rejected</div>
+                            <span className="badge bg-danger">Rejected</span>
+                          ) : itm?.status === "accepted" ? (
+                            <span className="badge bg-success">Accepted</span>
                           ) : (
-                            <div className="btn btn-primary mr-2">Accepted</div>
+                            <span className="badge bg-secondary">{itm?.status}</span>
                           )}
+
                           <button
-                            className="btn btn-primary btn_actions"
+                            className="btn btn-info btn-sm"
                             onClick={() => {
                               history.push(`/chat`);
                               localStorage.setItem("chatId", itm?.brand_id);
+                              localStorage.setItem("affiliateId", itm?.affiliate_id);
                             }}
+                            title="Chat"
                           >
                             <i className="fa fa-comment-o"></i>
                           </button>
@@ -207,20 +232,19 @@ const Html = ({
                   </tbody>
                 </table>
                 {!loaging && total === 0 && (
-                  <div className="py-3 text-center">No Data</div>
+                  <div className="py-3 text-center">No Campaign Requests Found</div>
                 )}
               </div>
             </div>
 
             <div
-              className={`paginationWrapper ${
-                !loaging && total > 10 ? "" : "d-none"
-              }`}
+              className={`paginationWrapper ${!loaging && total > 10 ? "" : "d-none"
+                }`}
             >
               <span>
                 Show{" "}
                 <select
-                  className="form-control"
+                  className="form-control d-inline w-auto"
                   onChange={(e) => handleCountChange(parseInt(e.target.value))}
                   value={filters.count}
                 >
@@ -230,7 +254,7 @@ const Html = ({
                   <option value={150}>150</option>
                   <option value={200}>200</option>
                 </select>{" "}
-                from {total} Users
+                from {total} Requests
               </span>
               <ReactPaginate
                 breakLabel="..."
@@ -240,7 +264,6 @@ const Html = ({
                 pageRangeDisplayed={2}
                 marginPagesDisplayed={1}
                 pageCount={Math.ceil(total / filters?.count)}
-                // pageCount={2}
                 previousLabel="< Previous"
                 renderOnZeroPageCount={null}
                 pageClassName={"pagination-item"}
@@ -250,7 +273,7 @@ const Html = ({
 
             {loaging && (
               <div className="text-center py-4">
-                <img src="/assets/img/loader.gif" className="pageLoader" />
+                <img src="/assets/img/loader.gif" className="pageLoader" alt="Loading..." />
               </div>
             )}
           </div>

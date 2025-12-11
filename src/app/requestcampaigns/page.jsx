@@ -171,7 +171,7 @@ const Users = () => {
   }
 
   const view = (id) => {
-    // history.push("/requestcampaigns/detail/" + id)
+    history.push("/requestcampaigns/detail/" + id)
   }
 
   const edit = (id) => {
