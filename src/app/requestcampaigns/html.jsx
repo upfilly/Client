@@ -106,6 +106,9 @@ const Html = ({
                       <th scope="col" className="table_data">
                         Commission
                       </th>
+                      <th scope="col" className="table_data">
+                        Lead Amount
+                      </th>
                       <th
                         scope="col"
                         className="table_data"
@@ -121,7 +124,7 @@ const Html = ({
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  {!loaging && <tbody>
                     {data.map((itm, i) => (
                       <tr className="data_row" key={i}>
                         <td
@@ -165,6 +168,9 @@ const Html = ({
                               : "$"
                             }`
                             : "--"}
+                        </td>
+                        <td className="table_dats">
+                          ${itm?.campaign_details?.lead_amount}
                         </td>
                         <td className="table_dats">
                           {datepipeModel.date(itm.createdAt)}
@@ -229,7 +235,7 @@ const Html = ({
                         </td>
                       </tr>
                     ))}
-                  </tbody>
+                  </tbody>}
                 </table>
                 {!loaging && total === 0 && (
                   <div className="py-3 text-center">No Campaign Requests Found</div>
