@@ -126,7 +126,7 @@ export default function Affiliate() {
     if (commission_type === "percentage") {
       CalPrice = price * commission / 100;
     } else {
-      CalPrice = price - commission;
+      CalPrice = commission;
     }
 
     const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
@@ -611,12 +611,14 @@ export default function Affiliate() {
                               <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
                             )}
                             {isColumnVisible('commissionPaid') && (
-                              !itm?.amount_of_commission ? <td className='name-person ml-2' >
-                                {selectedCurrency ? calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission) : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
-                              </td> :
-                                <td className='name-person ml-2' >
-                                  {`$${convertedCurrency(itm?.amount_of_commission)}`}
-                                </td>
+                              // !itm?.amount_of_commission ? 
+                              <td className='name-person ml-2' >
+                                {selectedCurrency != "USD" ? `${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}` : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
+                              </td> 
+                              // :
+                                // <td className='name-person ml-2' >
+                                //   {`$${convertedCurrency(itm?.amount_of_commission)}`}
+                                // </td>
                             )}
                             {isColumnVisible('commissionStatus') && (
                               <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
