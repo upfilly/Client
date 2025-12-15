@@ -141,7 +141,7 @@ export default function Affiliate() {
     if (commission_type === "percentage") {
       CalPrice = price * commission / 100;
     } else {
-      CalPrice = price - commission;
+      CalPrice = commission;
     }
 
     const finalPrice = CalPrice * user?.plan_id?.commission_override / 100
