@@ -302,9 +302,9 @@ export default function Affiliate() {
     getData({ [key]: e, page: 1, user_id: user?.id })
   }
 
-  const statusChange = (itm, id) => {
+  const statusChange = (itm, id,data) => {
     if (itm === 'accepted') {
-      ApiClient.put('update/commission/status', { commission_status: itm, id: id }).then((res) => {
+      ApiClient.put('update/commission/status', {campaignId:data?.campaign_details?._id, commission_status: itm, id: id }).then((res) => {
         if (res.success) {
           toast.success(res.message)
           getData({ page: 1 });
@@ -630,10 +630,10 @@ export default function Affiliate() {
                               <td className='table_dats d-flex align-items-center '>
                                 {itm?.commission_status == 'pending' ? (
                                   <div className='d-flex align-items-center'>
-                                    <button onClick={() => statusChange("accepted", itm?.id || itm?._id)} className="btn btn-primary mr-2 btn_actions">
+                                    <button onClick={() => statusChange("accepted", itm?.id || itm?._id,itm)} className="btn btn-primary mr-2 btn_actions">
                                       <i className='fa fa-check'></i>
                                     </button>
-                                    <button onClick={() => statusChange("rejected", itm?.id || itm?._id)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
+                                    <button onClick={() => statusChange("rejected", itm?.id || itm?._id,itm)} className="btn btn-danger br50 bg-red mr-2 btn_actions">
                                       <i className='fa fa-times'></i>
                                     </button>
                                   </div>

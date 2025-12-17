@@ -314,6 +314,120 @@ table {
   font-size: 12px;
 }
 
+// Invoice Actions Styles
+.invoice-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    
+    i {
+      font-size: 12px;
+      margin-right: 4px;
+    }
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    &.btn-outline-primary:hover {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    &.btn-outline-secondary:hover {
+      background-color: #6c757d;
+      color: white;
+    }
+  }
+}
+
+// Status badge enhancements
+.badge {
+  &.bg-success {
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
+  }
+  
+  &.bg-danger {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+  }
+  
+  &.bg-warning {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+  }
+}
+
+// Table improvements
+.table {
+  th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+  }
+  
+  .data_row {
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: #f5f5f5;
+    }
+    
+    td {
+      vertical-align: middle;
+    }
+  }
+}
+
+// Modal enhancements
+.modal {
+  .modal-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  }
+  
+  .card {
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Distribution bar animation
+.distribution-bar {
+  .bg-success, .bg-warning, .bg-danger {
+    transition: width 0.5s ease;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .invoice-actions {
+    flex-direction: column;
+    gap: 4px;
+    
+    .btn {
+      width: 100%;
+    }
+  }
+  
+  .all_flexbx {
+    justify-content: flex-start !important;
+  }
+}
+
 .payable-section {
   border: 2px solid #667eea;
   border-radius: 8px;

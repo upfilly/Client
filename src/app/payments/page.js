@@ -38,21 +38,103 @@ export default function Affilate() {
   const [loading, setLoader] = useState(true);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [planData, setPlanData] = useState(null);
   const [pendingPaymentData, setPendingPaymentData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
+  const activePlans = planData?.filter((plan) => plan.isActive);
+  const comissionAmount = activePlans?.[0]?.commission_override;
 
   // Payment modal states
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const modalRef = useRef(null);
 
+  // Invoice download functions
+  const downloadInvoice = (transaction) => {
+    if (!transaction.invoice_url) {
+      alert('No invoice available for this transaction');
+      return;
+    }
+
+    // Direct download method
+    const link = document.createElement('a');
+    link.href = transaction.invoice_url;
+    link.download = `invoice_${transaction.transaction_id || transaction._id}_${new Date(transaction.createdAt).toISOString().split('T')[0]}.pdf`;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const viewInvoice = (transaction) => {
+    if (transaction.invoice_url) {
+      window.open(transaction.invoice_url, '_blank');
+    } else {
+      alert('Invoice URL not available');
+    }
+  };
+
+  // API-based download for CORS issues
+  const downloadInvoiceViaAPI = async (transaction) => {
+    if (!transaction.invoice_url) {
+      alert('No invoice available');
+      return;
+    }
+
+    try {
+      // Show loading
+      setLoader(true);
+
+      // Use API endpoint to proxy the download
+      const response = await ApiClient.get(`transaction/invoice/${transaction._id}`, {
+        responseType: 'blob'
+      });
+
+      if (response) {
+        // Create download link
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `invoice_${transaction._id}_${new Date().toISOString().split('T')[0]}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+    } catch (error) {
+      console.error('Failed to download invoice:', error);
+      alert('Failed to download invoice. Please try again.');
+    } finally {
+      setLoader(false);
+    }
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       filter();
     }
   };
+
+  const getPlanData = (p = {}) => {
+    setLoader(true);
+
+    if (user) {
+      let filter = {
+        page: 1,
+        count: 50, userId: user?.id, category: "Network"
+      }
+      let url = 'subscription-plan/all'
+      ApiClient.get(url, filter).then(res => {
+        if (res) {
+          setPlanData(res?.data?.data)
+        }
+        setLoader(false)
+      })
+    }
+  }
 
   const getData = (p = {}) => {
     setLoader(true);
@@ -84,6 +166,7 @@ export default function Affilate() {
     if (user.role == "brand") {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, user_id: user?.id, ...params });
+      getPlanData()
     } else if (user.role != "brand") {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, paid_to: user?.id, ...params });
@@ -175,7 +258,6 @@ export default function Affilate() {
     getData({ transaction_type: e, page: 1, user_id: user?.id });
   };
 
-  // Calculate distribution
   const calculateDistribution = () => {
     if (!pendingPaymentData || !pendingPaymentData.totalPayableAmount) {
       return {
@@ -192,19 +274,16 @@ export default function Affilate() {
     }
 
     const totalAmount = pendingPaymentData.totalPayableAmount;
-    
-    // Calculate fees (example percentages - adjust based on your business logic)
-    const stripePercentage = 0.029; // 2.9%
+
+    const stripePercentage = 0.029;
     const stripeFixedFee = pendingPaymentData.totalPendingTransactions * 0.30;
     const stripeFee = (totalAmount * stripePercentage) + stripeFixedFee;
-    
-    const upfillyPercentage = 0.05; // 5%
+
+    const upfillyPercentage = comissionAmount / 100;
     const upfillyFee = totalAmount * upfillyPercentage;
-    
-    // Affiliate commission (rest of the amount)
+
     const affiliateCommission = totalAmount - stripeFee - upfillyFee;
-    
-    // Calculate percentages
+
     const stripePercentageOfTotal = (stripeFee / totalAmount) * 100;
     const upfillyPercentageOfTotal = (upfillyFee / totalAmount) * 100;
     const affiliatePercentageOfTotal = (affiliateCommission / totalAmount) * 100;
@@ -222,9 +301,7 @@ export default function Affilate() {
     };
   };
 
-  // Payment modal handlers
   const handleOpenPaymentModal = () => {
-    // Fetch pending payment data when opening modal
     getPendingPaymentData();
     setIsPaymentModalOpen(true);
   };
@@ -246,33 +323,20 @@ export default function Affilate() {
 
     try {
       const distribution = calculateDistribution();
-      
+
       const response = await ApiClient.post('pay/commission/to/admin', {
         transaction_ids: pendingPaymentData.transaction_ids,
-        // paid_by: user?.id,
         commission: parseFloat(pendingPaymentData.totalPayableAmount),
-        // stripe_fee: parseFloat(distribution.stripeFee),
-        // upfilly_fee: parseFloat(distribution.upfillyFee),
-        // affiliate_commission: parseFloat(distribution.affiliateCommission),
-        // transaction_type: 'pay_commission'
       });
 
-      console.log(response?.success,"ghghghg")
-
       if (response?.success) {
-        // toast.success(`Successfully processed ${pendingPaymentData.totalPendingTransactions} pending payment(s)!`);
-        // Refresh the data
         window.open(response.data.url, "_self")
         getData();
-        // Close modal
         setIsPaymentModalOpen(false);
         setPendingPaymentData(null);
-      } else {
-        // toast.error(response.message || "Payment failed. Please try again.");
       }
     } catch (error) {
       console.error("Payment error:", error);
-      // toast.error("An error occurred. Please try again.");
     } finally {
       setIsProcessing(false);
     }
@@ -428,6 +492,8 @@ export default function Affilate() {
                             Last Modified{" "}
                             {filters?.sorder === "asc" ? "↑" : "↓"}
                           </th>
+                          {/* Invoice Column Header */}
+                          <th>Invoice</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -451,8 +517,8 @@ export default function Affilate() {
                                   {itm?.currency}
                                 </td>
                                 <td className="name-person ml-2">
-                                  <span className={`badge bg-${itm?.transaction_status === 'successful' ? 'success' : 'danger'}`}>
-                                    {itm?.transaction_status}
+                                  <span className={`badge bg-${(itm?.transaction_status === 'successful' || itm?.transaction_status === 'paid') ? 'success' : 'danger'}`}>
+                                    {(itm?.transaction_status === 'successful' || itm?.transaction_status === 'paid') ? "Successful" : itm?.transaction_status}
                                   </span>
                                 </td>
                                 <td className="name-person ml-2">
@@ -460,6 +526,35 @@ export default function Affilate() {
                                 </td>
                                 <td className="name-person ml-2">
                                   {datepipeModel.date(itm?.updatedAt)}
+                                </td>
+                                {/* Invoice Actions Column */}
+                                <td className="name-person ml-2">
+                                  <div className="invoice-actions" style={{ display: 'flex', gap: '8px' }}>
+                                    {itm.invoice_url ? (
+                                      <>
+                                        <button
+                                          onClick={() => downloadInvoice(itm)}
+                                          className="btn btn-sm btn-outline-primary"
+                                          title="Download Invoice"
+                                          style={{ padding: '4px 8px', fontSize: '12px' }}
+                                        >
+                                          <i className="fa fa-download me-1" aria-hidden="true"></i>
+                                          Download
+                                        </button>
+                                        {/* <button
+                                          onClick={() => viewInvoice(itm)}
+                                          className="btn btn-sm btn-outline-secondary"
+                                          title="View Invoice"
+                                          style={{ padding: '4px 8px', fontSize: '12px' }}
+                                        >
+                                          <i className="fa fa-eye me-1" aria-hidden="true"></i>
+                                          View
+                                        </button> */}
+                                      </>
+                                    ) : (
+                                      <span className="text-muted small">No invoice</span>
+                                    )}
+                                  </div>
                                 </td>
                               </tr>
                             );
@@ -546,7 +641,6 @@ export default function Affilate() {
           </div>
 
           <div className="modal-body" style={{ padding: '20px' }}>
-            
             {pendingPaymentData ? (
               <>
                 {/* Total Summary */}
@@ -560,21 +654,13 @@ export default function Affilate() {
                       {pendingPaymentData.totalPendingTransactions} Transaction(s)
                     </span>
                   </div>
-                  
+
                   <div className="total-amount-display text-center my-3">
                     <div className="text-muted small">Total Amount to Pay</div>
                     <div className="display-4 fw-bold" style={{ color: '#28a745' }}>
                       ${distribution.totalAmount}
                     </div>
                   </div>
-                  
-                  {/* {pendingPaymentData.ids && pendingPaymentData.ids.length > 0 && (
-                    <div className="mt-2">
-                      <small className="text-muted">
-                        <strong>Transaction IDs:</strong> {pendingPaymentData.ids.join(', ')}
-                      </small>
-                    </div>
-                  )} */}
                 </div>
 
                 {/* Distribution Breakdown */}
@@ -583,7 +669,7 @@ export default function Affilate() {
                     <i className="fa fa-pie-chart me-2" aria-hidden="true"></i>
                     Amount Distribution
                   </h6>
-                  
+
                   {/* Distribution Cards */}
                   <div className="row mb-4">
                     {/* Stripe Fee Card */}
@@ -600,7 +686,7 @@ export default function Affilate() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Upfilly Fee Card */}
                     <div className="col-md-4 mb-3">
                       <div className="card border-warning h-100">
@@ -615,7 +701,7 @@ export default function Affilate() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Affiliate Commission Card */}
                     <div className="col-md-4 mb-3">
                       <div className="card border-success h-100">
@@ -640,7 +726,6 @@ export default function Affilate() {
                           <th>Component</th>
                           <th>Amount</th>
                           <th>Percentage</th>
-                          <th>Description</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -648,25 +733,21 @@ export default function Affilate() {
                           <td><strong>Total Gross Amount</strong></td>
                           <td><strong>${distribution.totalAmount}</strong></td>
                           <td><strong>100%</strong></td>
-                          <td>Total amount collected from sales</td>
                         </tr>
                         <tr>
                           <td>Stripe Processing Fee</td>
                           <td className="text-danger">-${distribution.stripeFee}</td>
                           <td>{distribution.percentageBreakdown.stripe}</td>
-                          <td>Payment gateway fees (2.9% + $0.30 per transaction)</td>
                         </tr>
                         <tr>
                           <td>Upfilly Platform Fee</td>
                           <td className="text-warning">-${distribution.upfillyFee}</td>
                           <td>{distribution.percentageBreakdown.upfilly}</td>
-                          <td>Platform maintenance and service fee (5%)</td>
                         </tr>
                         <tr className="table-success">
                           <td><strong>Net Affiliate Commission</strong></td>
                           <td><strong className="text-success">${distribution.affiliateCommission}</strong></td>
                           <td><strong>{distribution.percentageBreakdown.affiliate}</strong></td>
-                          <td>Amount paid to affiliates after all fees</td>
                         </tr>
                       </tbody>
                     </table>
@@ -681,25 +762,25 @@ export default function Affilate() {
                   </h6>
                   <div className="distribution-bar mb-3">
                     <div className="d-flex" style={{ height: '30px', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div 
-                        className="bg-success" 
-                        style={{ 
+                      <div
+                        className="bg-success"
+                        style={{
                           width: `${parseFloat(distribution.percentageBreakdown.affiliate)}%`,
                           transition: 'width 0.5s ease'
                         }}
                         title={`Affiliate: ${distribution.percentageBreakdown.affiliate}`}
                       ></div>
-                      <div 
-                        className="bg-warning" 
-                        style={{ 
+                      <div
+                        className="bg-warning"
+                        style={{
                           width: `${parseFloat(distribution.percentageBreakdown.upfilly)}%`,
                           transition: 'width 0.5s ease'
                         }}
                         title={`Upfilly: ${distribution.percentageBreakdown.upfilly}`}
                       ></div>
-                      <div 
-                        className="bg-danger" 
-                        style={{ 
+                      <div
+                        className="bg-danger"
+                        style={{
                           width: `${parseFloat(distribution.percentageBreakdown.stripe)}%`,
                           transition: 'width 0.5s ease'
                         }}
@@ -739,7 +820,7 @@ export default function Affilate() {
                 <div className="alert alert-info">
                   <small>
                     <i className="fa fa-info-circle me-2" aria-hidden="true"></i>
-                    <strong>Important:</strong> Total payment of ${distribution.totalAmount} will be processed. 
+                    <strong>Important:</strong> Total payment of ${distribution.totalAmount} will be processed.
                     Affiliates will receive ${distribution.affiliateCommission} after deducting all fees.
                   </small>
                 </div>
