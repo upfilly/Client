@@ -51,14 +51,14 @@ export default function Layout({
   description,
   children,
   title,
-  activeSidebar = false,
+  // activeSidebar = false,
   handleKeyPress,
   setFilter,
   reset,
   filter,
   name,
   filters,
-  setActiveSidebar
+  // setActiveSidebar
 }: LayoutProps) {
   const [user, setUser] = useState<User | null>(crendentialModel.getUser());
   const history = useRouter();
@@ -66,6 +66,7 @@ export default function Layout({
   const [settingData, setSettingData] = useState<SettingData[]>([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showChatbot, setShowChatbot] = useState(false);
+  const [activeSidebar, setActiveSidebar] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [email, setEmail] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
