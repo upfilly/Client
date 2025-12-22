@@ -14,9 +14,10 @@ import { requestForToken, message } from "../../../firebase/function";
 import PageContainer from "../../main/PageContainer";
 
 export default function Layout({
-  title,
   description,
   children,
+  title,
+  activeSidebar,
   handleKeyPress,
   setFilter,
   reset,

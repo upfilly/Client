@@ -15,15 +15,15 @@ import { toast } from 'react-toastify';
 export default function Dashboard() {
   const [activeSidebar, setActiveSidebar] = useState(false);
   const history = useRouter();
-  const user: any = crendentialModel.getUser();
+  const user = crendentialModel.getUser();
   const [filter, setFilter] = useState('this_month')
-  const [dashboardData, setDashboardData] = useState<any>(null);
-  const [campaignData, setCampaignData] = useState<any>(null);
-  const [recentUser, setRecentUser] = useState<any>([]);
-  const [CampaignRequest, setCampaignRequest] = useState<any>(null);
-  const [analyticData, setAnalyticData] = useState<any>();
-  const [clicksAnalyticData, setClicksAnalyticData] = useState<any>();
-  const [transactionAnalyticData, setTransactionAnalyticData] = useState<any>();
+  const [dashboardData, setDashboardData] = useState(null);
+  const [campaignData, setCampaignData] = useState(null);
+  const [recentUser, setRecentUser] = useState([]);
+  const [CampaignRequest, setCampaignRequest] = useState(null);
+  const [analyticData, setAnalyticData] = useState();
+  const [clicksAnalyticData, setClicksAnalyticData] = useState();
+  const [transactionAnalyticData, setTransactionAnalyticData] = useState();
   const [show, setShow] = useState(false);
   const [affiliateLink, setAffiliateLink] = useState('');
   const handleClose = () => { setShow(false) };
@@ -71,7 +71,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleFilterChange = (e: any) => {
+  const handleFilterChange = (e) => {
     setFilter(e.target.value);
   };
 
