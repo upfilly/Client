@@ -332,7 +332,7 @@ export default function Affiliate() {
           }
 
           loader(true);
-          ApiClient.put('update/commission/status', { commission_status: itm, id: id, reason: denialReason }).then((res) => {
+          ApiClient.put('update/commission/status', {campaignId:data?.campaign_details?._id, commission_status: itm, id: id, reason: denialReason }).then((res) => {
             if (res.success) {
               toast.success(res.message)
               getData({ page: 1 });
@@ -596,7 +596,7 @@ export default function Affiliate() {
                               <td className='name-person ml-2' >{itm?.brand_name || "--"}</td>
                             )}
                             {isColumnVisible('currency') && (
-                              <td className='name-person ml-2' >{itm?.currency}</td>
+                              <td className='name-person ml-2' >{itm?.currency || "USD"}</td>
                             )}
                             {isColumnVisible('orderPrice') && (
                               <td className='name-person ml-2' >{convertedCurrency(itm?.price)}</td>
