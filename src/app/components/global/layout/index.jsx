@@ -28,7 +28,7 @@ export default function Layout({
   let user = crendentialModel.getUser();
   const history = useRouter();
   const pathname = usePathname();
-  const [activeSidebar, setActiveSidebar] = useState(false);
+  // const [activeSidebar, setActiveSidebar] = useState(false);
   const [settingData, setSettingData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showChatbot, setShowChatbot] = useState(false);
