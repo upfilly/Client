@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, ReactNode, CSSProperties } from "react";
 import "./style.scss";
 import Sidebar from "../sidebar";
 import Header from "../header";
@@ -13,32 +13,66 @@ import { usePathname, useRouter } from "next/navigation";
 import { requestForToken, message } from "../../../firebase/function";
 import PageContainer from "../../main/PageContainer";
 
+interface Message {
+  id: number;
+  text: string;
+  sender: 'user' | 'bot';
+  timestamp: string;
+}
+
+interface User {
+  id?: string;
+  _id?: string;
+  email?: string;
+  isPayment?: boolean;
+  role?: string;
+}
+
+interface SettingData {
+  // Define the structure of settingData based on your API response
+  [key: string]: any;
+}
+
+interface LayoutProps {
+  description?: string;
+  children: ReactNode;
+  title?: string;
+  activeSidebar?: boolean;
+  handleKeyPress?: (e: React.KeyboardEvent) => void;
+  setFilter?: (filter: any) => void;
+  reset?: () => void;
+  filter?: any;
+  name?: string;
+  filters?: any;
+  setActiveSidebar?: (active: boolean) => void;
+}
+
 export default function Layout({
   description,
   children,
   title,
-  activeSidebar,
+  activeSidebar = false,
   handleKeyPress,
   setFilter,
   reset,
   filter,
   name,
   filters,
-}) {
-  let user = crendentialModel.getUser();
+  setActiveSidebar
+}: LayoutProps) {
+  const [user, setUser] = useState<User | null>(crendentialModel.getUser());
   const history = useRouter();
   const pathname = usePathname();
-  // const [activeSidebar, setActiveSidebar] = useState(false);
-  const [settingData, setSettingData] = useState([]);
+  const [settingData, setSettingData] = useState<SettingData[]>([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showChatbot, setShowChatbot] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [email, setEmail] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const isDashboard =
     pathname.includes("/marketplace") ||
@@ -80,7 +114,9 @@ export default function Layout({
     pathname.includes("/commission") ||
     pathname.includes("/payments") ||
     pathname.includes("/chat") ||
-    pathname.includes("/allownotifications") || pathname.includes("textlinks") || pathname.includes("/overview");
+    pathname.includes("/allownotifications") || 
+    pathname.includes("textlinks") || 
+    pathname.includes("/overview");
 
   const isAuthenticate =
     pathname.includes("/reports") ||
@@ -98,8 +134,11 @@ export default function Layout({
     const savedEmail = localStorage.getItem('upfilly_chatbot_email');
     const savedMessages = localStorage.getItem('upfilly_chatbot_messages');
 
-    if (user?.id || user?._id) {
-      setEmail(user.email || '');
+    const currentUser = crendentialModel.getUser();
+    setUser(currentUser);
+
+    if (currentUser?.id || currentUser?._id) {
+      setEmail(currentUser.email || '');
       setEmailSubmitted(true);
 
       if (savedEmail) {
@@ -128,7 +167,7 @@ export default function Layout({
 
   useEffect(() => {
     if (user) {
-      ApiClient.get("user/detail", { id: user.id }).then((res) => {
+      ApiClient.get("user/detail", { id: user.id }).then((res: any) => {
         if (res.success) {
           if (res?.data?.total_campaign == 0) {
             // setShow(true)
@@ -142,7 +181,7 @@ export default function Layout({
   }, []);
 
   useEffect(() => {
-    ApiClient.get("settings").then((res) => {
+    ApiClient.get("settings").then((res: any) => {
       if (res.success) {
         setSettingData(res?.data);
       }
@@ -163,7 +202,7 @@ export default function Layout({
         history.push("/login");
       }
     }
-  }, []);
+  }, [isAuthenticate, user, history]);
 
   useEffect(() => {
     if (isAuthenticate) {
@@ -171,7 +210,7 @@ export default function Layout({
         history.push("/pricing");
       }
     }
-  }, []);
+  }, [isAuthenticate, user, history]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -179,12 +218,12 @@ export default function Layout({
   }, [messages, isTyping]);
 
   // Chatbot Functions
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
 
-  const handleEmailSubmit = useCallback((e) => {
+  const handleEmailSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (email && validateEmail(email)) {
       if (!user?.id) {
@@ -199,11 +238,11 @@ export default function Layout({
         user_id: user?.id || 'guest',
         page: "home",
         timestamp: new Date().toISOString()
-      }).catch(err => {
+      }).catch((err: Error) => {
         console.error("Error saving email:", err);
       });
 
-      const welcomeMessage = {
+      const welcomeMessage: Message = {
         id: Date.now(),
         text: user?.id
           ? `Hi ${user.email}! 👋 Welcome back to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`
@@ -237,12 +276,12 @@ export default function Layout({
     setShowEmailModal(true);
   }, [user, emailSubmitted]);
 
-  const handleSendMessage = useCallback((e) => {
+  const handleSendMessage = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
 
     // Add user message
-    const userMessage = {
+    const userMessage: Message = {
       id: Date.now(),
       text: inputMessage,
       sender: "user",
@@ -282,7 +321,7 @@ export default function Layout({
         botResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
       }
 
-      const botMessage = {
+      const botMessage: Message = {
         id: Date.now() + 1,
         text: botResponse,
         sender: "bot",
@@ -304,13 +343,12 @@ export default function Layout({
   }, []);
 
   const logo = () => {
-    let value = "/assets/img/logo.png";
-    return value;
+    return "/assets/img/logo.png";
   };
 
   const router = () => {
     let route = localStorage.getItem("route");
-    history.push(route);
+    history.push(route || "/");
   };
 
   const handleClose = () => {
@@ -341,12 +379,12 @@ export default function Layout({
         transition: 'all 0.3s ease',
       }}
       onMouseEnter={(e) => {
-        e.target.style.transform = 'scale(1.1)';
-        e.target.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+        e.currentTarget.style.transform = 'scale(1.1)';
+        e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
       }}
       onMouseLeave={(e) => {
-        e.target.style.transform = 'scale(1)';
-        e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
       }}
       aria-label="Open chat support"
     >
@@ -355,7 +393,7 @@ export default function Layout({
   ), [handleChatButtonClick]);
 
   const EmailModal = useCallback(() => {
-    const emailInputRef = useRef(null);
+    const emailInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       if (showEmailModal && emailInputRef.current) {
@@ -367,14 +405,14 @@ export default function Layout({
 
     if (!showEmailModal || user?.id || emailSubmitted) return null;
 
-    const handleModalSubmit = (e) => {
+    const handleModalSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       if (email && validateEmail(email)) {
         handleEmailSubmit(e);
       }
     };
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
     };
 
@@ -382,41 +420,45 @@ export default function Layout({
       setShowEmailModal(false);
     };
 
-    const handleOverlayClick = (e) => {
+    const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === e.currentTarget) {
         handleMaybeLater();
       }
     };
 
+    const modalOverlayStyle: CSSProperties = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1002,
+      backdropFilter: 'blur(3px)'
+    };
+
+    const modalContentStyle: CSSProperties = {
+      backgroundColor: 'white',
+      padding: '40px',
+      borderRadius: '16px',
+      maxWidth: '450px',
+      width: '90%',
+      textAlign: 'center',
+      boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+    };
+
     return (
       <div
         className="email-modal-overlay"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1002,
-          backdropFilter: 'blur(3px)'
-        }}
+        style={modalOverlayStyle}
         onClick={handleOverlayClick}
       >
         <div
           className="email-modal-content"
-          style={{
-            backgroundColor: 'white',
-            padding: '40px',
-            borderRadius: '16px',
-            maxWidth: '450px',
-            width: '90%',
-            textAlign: 'center',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
-          }}
+          style={modalContentStyle}
         >
           <div style={{ marginBottom: '25px' }}>
             <div style={{
@@ -530,7 +572,7 @@ export default function Layout({
     const shouldShowEmailInput = !emailSubmitted && !user?.id;
 
     // Use ref for the input to maintain focus
-    const messageInputRef = useRef(null);
+    const messageInputRef = useRef<HTMLInputElement>(null);
 
     // Local state for input message within the component
     const [localInputMessage, setLocalInputMessage] = useState("");
@@ -549,12 +591,12 @@ export default function Layout({
       }
     }, [showChatbot, shouldShowEmailInput]);
 
-    const handleLocalSendMessage = (e) => {
+    const handleLocalSendMessage = (e: React.FormEvent) => {
       e.preventDefault();
       if (!localInputMessage.trim()) return;
 
       // Add user message
-      const userMessage = {
+      const userMessage: Message = {
         id: Date.now(),
         text: localInputMessage,
         sender: "user",
@@ -595,7 +637,7 @@ export default function Layout({
           botResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
         }
 
-        const botMessage = {
+        const botMessage: Message = {
           id: Date.now() + 1,
           text: botResponse,
           sender: "bot",
@@ -612,12 +654,12 @@ export default function Layout({
       }, 1000);
     };
 
-    const handleLocalInputChange = (e) => {
+    const handleLocalInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setLocalInputMessage(e.target.value);
       setInputMessage(e.target.value);
     };
 
-    const handleSuggestionClick = (suggestion) => {
+    const handleSuggestionClick = (suggestion: string) => {
       setLocalInputMessage(suggestion);
       setInputMessage(suggestion);
       setTimeout(() => {
@@ -625,26 +667,28 @@ export default function Layout({
       }, 50);
     };
 
+    const chatbotWindowStyle: CSSProperties = {
+      position: 'fixed',
+      bottom: '100px',
+      right: '30px',
+      width: '380px',
+      maxWidth: 'calc(100vw - 60px)',
+      height: '500px',
+      maxHeight: 'calc(100vh - 150px)',
+      backgroundColor: 'white',
+      borderRadius: '16px',
+      boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
+      zIndex: 1001,
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      border: '1px solid #e0e0e0'
+    };
+
     return (
       <div
         className="chatbot-window"
-        style={{
-          position: 'fixed',
-          bottom: '100px',
-          right: '30px',
-          width: '380px',
-          maxWidth: 'calc(100vw - 60px)',
-          height: '500px',
-          maxHeight: 'calc(100vh - 150px)',
-          backgroundColor: 'white',
-          borderRadius: '16px',
-          boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
-          zIndex: 1001,
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          border: '1px solid #e0e0e0'
-        }}
+        style={chatbotWindowStyle}
       >
         {/* Header */}
         <div style={{
@@ -695,10 +739,10 @@ export default function Layout({
               transition: 'background-color 0.3s'
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = 'rgba(255,255,255,0.2)';
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = 'transparent';
+              e.currentTarget.style.backgroundColor = 'transparent';
             }}
             aria-label="Close chat"
           >
@@ -752,12 +796,12 @@ export default function Layout({
                       transition: 'all 0.3s'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#f0f0f0';
-                      e.target.style.borderColor = '#007bff';
+                      e.currentTarget.style.backgroundColor = '#f0f0f0';
+                      e.currentTarget.style.borderColor = '#007bff';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.borderColor = '#e0e0e0';
+                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.borderColor = '#e0e0e0';
                     }}
                   >
                     💰 Tell me about pricing
@@ -774,12 +818,12 @@ export default function Layout({
                       transition: 'all 0.3s'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#f0f0f0';
-                      e.target.style.borderColor = '#007bff';
+                      e.currentTarget.style.backgroundColor = '#f0f0f0';
+                      e.currentTarget.style.borderColor = '#007bff';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.borderColor = '#e0e0e0';
+                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.borderColor = '#e0e0e0';
                     }}
                   >
                     📝 How do I sign up as an affiliate?
@@ -796,12 +840,12 @@ export default function Layout({
                       transition: 'all 0.3s'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#f0f0f0';
-                      e.target.style.borderColor = '#007bff';
+                      e.currentTarget.style.backgroundColor = '#f0f0f0';
+                      e.currentTarget.style.borderColor = '#007bff';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.borderColor = '#e0e0e0';
+                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.borderColor = '#e0e0e0';
                     }}
                   >
                     🗓️ Schedule a demo
@@ -950,11 +994,11 @@ export default function Layout({
                 }}
                 onMouseEnter={(e) => {
                   if (localInputMessage.trim() && !isTyping) {
-                    e.target.style.backgroundColor = '#0056b3';
+                    e.currentTarget.style.backgroundColor = '#0056b3';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#007bff';
+                  e.currentTarget.style.backgroundColor = '#007bff';
                 }}
                 aria-label="Send message"
               >
@@ -1044,7 +1088,7 @@ export default function Layout({
           box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
         }
         100% {
-          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+          boxShadow: 0 0 0 0 rgba(0, 123, 255, 0);
         }
       }
       
