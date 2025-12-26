@@ -359,7 +359,7 @@ export default function Chat() {
   const getChatList = (p = {}) => {
     let url = `${SocketURL}chat/user/recent-chats/all?user_id=${
       user?.id
-    }&login_user_id=${user?.id}&search=${!p?.search ? "" : p?.search}`;
+    }&login_user_id=${user?.id}&search=${!p?.search ? "" : p?.search}&&support=true`;
     axios.get(url, filters).then((res) => {
       if (res.data.success) {
         setChatList(res?.data?.data?.data);

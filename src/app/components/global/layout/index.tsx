@@ -12,12 +12,15 @@ import crendentialModel from "@/models/credential.model";
 import { usePathname, useRouter } from "next/navigation";
 import { requestForToken, message } from "../../../firebase/function";
 import PageContainer from "../../main/PageContainer";
+import axios from "axios";
+import { ConnectSocket, SocketURL } from "@/app/chat/socket";
 
 interface Message {
   id: number;
   text: string;
-  sender: 'user' | 'bot';
+  sender: 'user' | 'bot' | 'admin';
   timestamp: string;
+  senderId?: string;
 }
 
 interface User {
@@ -29,7 +32,6 @@ interface User {
 }
 
 interface SettingData {
-  // Define the structure of settingData based on your API response
   [key: string]: any;
 }
 
@@ -51,14 +53,12 @@ export default function Layout({
   description,
   children,
   title,
-  // activeSidebar = false,
   handleKeyPress,
   setFilter,
   reset,
   filter,
   name,
   filters,
-  // setActiveSidebar
 }: LayoutProps) {
   const [user, setUser] = useState<User | null>(crendentialModel.getUser());
   const history = useRouter();
@@ -74,6 +74,11 @@ export default function Layout({
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [roomId, setRoomId] = useState("");
+  const [adminId, setadminId] = useState("654227e78fd3b1018600710d");
+  const [chat, setChat] = useState<any[]>([]);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [incomingMessages, setIncomingMessages] = useState<Message[]>([]);
 
   const isDashboard =
     pathname.includes("/marketplace") ||
@@ -115,8 +120,8 @@ export default function Layout({
     pathname.includes("/commission") ||
     pathname.includes("/payments") ||
     pathname.includes("/chat") ||
-    pathname.includes("/allownotifications") || 
-    pathname.includes("textlinks") || 
+    pathname.includes("/allownotifications") ||
+    pathname.includes("textlinks") ||
     pathname.includes("/overview");
 
   const isAuthenticate =
@@ -130,6 +135,130 @@ export default function Layout({
     pathname.includes("/payments") ||
     pathname.includes("/proposals") ||
     pathname.includes("/commission");
+
+  const loadChatMessages = useCallback((roomId: string, userId: string) => {
+    if (!roomId) return;
+
+    setLoadingMessages(true);
+    axios
+      .get(
+        `${SocketURL}chat/user/message/all?room_id=${roomId}&user_id=${adminId}&login_user_id=${userId}`
+      )
+      .then((res) => {
+        if (res?.data.success) {
+          const chatData = res.data.data.data || [];
+          setChat(chatData);
+
+          // Convert API messages to Message format
+          const formattedMessages: Message[] = chatData.map((msg: any, index: number) => ({
+            id: index,
+            text: msg.content || '',
+            sender: msg.sender === userId ? 'user' : msg.sender === adminId ? 'admin' : 'bot',
+            timestamp: msg.createdAt || new Date().toISOString(),
+            senderId: msg.sender
+          }));
+
+          // Add welcome message if no previous messages
+          if (formattedMessages.length === 0) {
+            const welcomeMessage: Message = {
+              id: Date.now(),
+              text: user?.id
+                ? `Hi ${user.email}! 👋 Welcome back to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`
+                : `Hi there! 👋 Welcome to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`,
+              sender: "bot",
+              timestamp: new Date().toISOString(),
+            };
+            setMessages([welcomeMessage]);
+          } else {
+            setMessages(formattedMessages);
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Error loading chat messages:", err);
+        // Add default welcome message on error
+        const welcomeMessage: Message = {
+          id: Date.now(),
+          text: user?.id
+            ? `Hi ${user.email}! 👋 Welcome back to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`
+            : `Hi there! 👋 Welcome to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`,
+          sender: "bot",
+          timestamp: new Date().toISOString(),
+        };
+        setMessages([welcomeMessage]);
+      })
+      .finally(() => {
+        setLoadingMessages(false);
+      });
+  }, [adminId, user]);
+
+  // Combine messages and incomingMessages
+  useEffect(() => {
+    if (incomingMessages.length > 0) {
+      const lastIncoming = incomingMessages[incomingMessages.length - 1];
+
+      // Check if this message is already in messages
+      const isDuplicate = messages.some(msg =>
+        msg.text === lastIncoming.text &&
+        msg.sender === lastIncoming.sender &&
+        Math.abs(new Date(msg.timestamp).getTime() - new Date(lastIncoming.timestamp).getTime()) < 1000
+      );
+
+      if (!isDuplicate) {
+        setMessages(prev => [...prev, lastIncoming]);
+        setIsTyping(false); // Stop typing indicator when message arrives
+      }
+    }
+  }, [incomingMessages]);
+
+  // Clean up incomingMessages periodically
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (incomingMessages.length > 20) {
+        setIncomingMessages(prev => prev.slice(-10));
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [incomingMessages]);
+
+  // Socket listener for incoming messages
+  useEffect(() => {
+    const handleReceiveMessage = (newdata: any) => {
+      console.log("Socket message received:", newdata);
+      console.log("Current roomId in localStorage:", localStorage.getItem("chatbotroomId"));
+      console.log("Message room_id:", newdata.data?._doc?.room_id);
+
+      const data = newdata.data;
+      const currentRoomId = localStorage.getItem("chatbotroomId");
+
+      if (currentRoomId === data?._doc?.room_id) {
+        console.log("Message belongs to current chat room");
+
+        const currentUserId = user?.id || localStorage.getItem("chatbotuserId");
+        const newMessage: Message = {
+          id: Date.now(),
+          text: data?._doc?.content || '',
+          sender: data?._doc?.sender === adminId ? 'admin' :
+            data?._doc?.sender === currentUserId ? 'user' : 'bot',
+          timestamp: data?._doc?.createdAt || new Date().toISOString(),
+          senderId: data?._doc?.sender
+        };
+
+        console.log("Adding new message to incomingMessages:", newMessage);
+        setIncomingMessages(prev => [...prev, newMessage]);
+      } else {
+        console.log("Message belongs to different room, ignoring");
+      }
+    };
+
+    ConnectSocket.on("receive-message", handleReceiveMessage);
+
+    // Cleanup function
+    return () => {
+      ConnectSocket.off("receive-message", handleReceiveMessage);
+    };
+  }, [adminId, user?.id]);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('upfilly_chatbot_email');
@@ -234,108 +363,97 @@ export default function Layout({
       setEmailSubmitted(true);
       setShowEmailModal(false);
 
-      ApiClient.post("chatbot/register-email", {
-        email,
-        user_id: user?.id || 'guest',
-        page: "home",
-        timestamp: new Date().toISOString()
-      }).catch((err: Error) => {
-        console.error("Error saving email:", err);
-      });
-
-      const welcomeMessage: Message = {
-        id: Date.now(),
-        text: user?.id
-          ? `Hi ${user.email}! 👋 Welcome back to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`
-          : `Hi there! 👋 Welcome to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`,
-        sender: "bot",
-        timestamp: new Date().toISOString(),
-      };
-
-      setMessages([welcomeMessage]);
+      getData();
     }
   }, [email, user]);
 
+  const getData = useCallback(() => {
+    if (email) {
+      let payload = {};
+
+      if (user?._id) {
+        payload = {
+          email: user?.id,
+          // chat_with: adminId,
+        };
+      } else {
+        payload = {
+          chat_by: email,
+          // chat_with: adminId,
+        };
+      }
+
+      axios.post(`${SocketURL}chat/user/join-group-bot`, payload).then((res) => {
+        if (res?.data?.success) {
+          const data = res.data;
+          setRoomId(res.data.data.room_id);
+
+          const userId = user?.id || res.data.data.user_id;
+          loadChatMessages(data.data.room_id, userId);
+
+          joinRoom(data.data.room_id, data.data.user_id);
+          localStorage.setItem("chatbotroomId", data.data.room_id);
+          localStorage.setItem("chatbotuserId", data.data.user_id);
+        }
+      }).catch(err => {
+        console.error("Error joining chat:", err);
+        // Add default welcome message on error
+        const welcomeMessage: Message = {
+          id: Date.now(),
+          text: user?.id
+            ? `Hi ${user.email}! 👋 Welcome back to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`
+            : `Hi there! 👋 Welcome to Upfilly support. I'm here to help you with any questions about our affiliate marketing platform. How can I assist you today?`,
+          sender: "bot",
+          timestamp: new Date().toISOString(),
+        };
+        setMessages([welcomeMessage]);
+      });
+    }
+  }, [email, user, adminId, loadChatMessages]);
+
+  const userMessage = (roomuid: any, u_id: any) => {
+    axios
+      .get(
+        `${SocketURL}chat/user/message/all?room_id=${roomuid}&user_id=${adminId}&login_user_id=${user?.id || u_id}`
+      )
+      .then((res) => {
+        if (res?.data.success) {
+          setChat(res.data.data.data);
+        }
+      });
+  };
+
+  const joinRoom = (jId: any, uId: any) => {
+    const payload = {
+      room_id: jId,
+      user_id: user && user.id || uId,
+    };
+    ConnectSocket.emit("join-room", payload);
+  };
+
   const handleChatButtonClick = useCallback(() => {
-    // If user is logged in with ID, don't ask for email
     if (user?.id || user?._id) {
       if (!emailSubmitted) {
         setEmail(user.email || '');
         setEmailSubmitted(true);
       }
+      getData();
       setShowChatbot(true);
       return;
     }
 
-    // For non-logged in users, check if email was previously submitted
     if (emailSubmitted) {
+      getData();
       setShowChatbot(true);
       return;
     }
 
-    // Show email modal for non-logged in users without saved email
     setShowEmailModal(true);
-  }, [user, emailSubmitted]);
-
-  const handleSendMessage = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputMessage.trim()) return;
-
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now(),
-      text: inputMessage,
-      sender: "user",
-      timestamp: new Date().toISOString(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage("");
-    setIsTyping(true);
-
-    // Prepare bot response based on user input
-    setTimeout(() => {
-      let botResponse = "";
-      const userMessageLower = inputMessage.toLowerCase();
-
-      if (userMessageLower.includes("pricing") || userMessageLower.includes("cost") || userMessageLower.includes("price")) {
-        botResponse = "We offer flexible pricing plans for both merchants and affiliates. You can check our detailed pricing at: https://yourwebsite.com/pricing or I can have a sales representative contact you.";
-      } else if (userMessageLower.includes("demo") || userMessageLower.includes("meeting") || userMessageLower.includes("schedule")) {
-        botResponse = "Great! You can schedule a demo with our team at: https://yourwebsite.com/demo. What's the best time for you?";
-      } else if (userMessageLower.includes("affiliate") && userMessageLower.includes("signup")) {
-        botResponse = "Affiliates can sign up here: https://yourwebsite.com/track/signup/affiliate. Merchants can start here: https://yourwebsite.com/merchant.";
-      } else if (userMessageLower.includes("support") || userMessageLower.includes("help")) {
-        botResponse = "For immediate support, you can email us at support@upfilly.com or check our FAQ section. What specific issue can I help you with?";
-      } else if (userMessageLower.includes("feature") || userMessageLower.includes("how does it work")) {
-        botResponse = "Upfilly offers real-time tracking, automated payouts, Shopify integration, and managed program options. Would you like more details about any specific feature?";
-      } else if (userMessageLower.includes("contact") || userMessageLower.includes("phone") || userMessageLower.includes("email")) {
-        botResponse = "You can reach us at:\n📧 Email: support@upfilly.com\n🌐 Website: https://upfilly.com\n📞 Phone: +1 (555) 123-4567\n⏰ Hours: Mon-Fri, 9AM-6PM EST";
-      } else {
-        // Default response
-        const defaultResponses = [
-          "I understand you're asking about: " + inputMessage + ". Our team can help with that. Would you like me to connect you with a specialist?",
-          "Thank you for your question! Our support team will get back to you within 24 hours. In the meantime, you can check our FAQ section for similar questions.",
-          "I'll help you with that. For detailed assistance, please email support@upfilly.com with your query and we'll respond promptly.",
-          "Great question! Let me connect you with a specialist who can provide detailed information about this. What's the best email to contact you?",
-          "I've noted your question. Our team typically responds within a few hours. You can also visit our help center at: https://help.upfilly.com"
-        ];
-        botResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-      }
-
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        text: botResponse,
-        sender: "bot",
-        timestamp: new Date().toISOString(),
-      };
-
-      setMessages(prev => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 1000);
-  }, [inputMessage]);
+  }, [user, emailSubmitted, getData]);
 
   const clearChatHistory = useCallback(() => {
     setMessages([]);
+    setIncomingMessages([]);
     localStorage.removeItem('upfilly_chatbot_messages');
   }, []);
 
@@ -356,42 +474,141 @@ export default function Layout({
     setShowPopup(false);
   };
 
-  const ChatButton = useCallback(() => (
-    <button
-      onClick={handleChatButtonClick}
-      className="chatbot-button"
-      style={{
-        position: 'fixed',
-        bottom: '30px',
-        right: '30px',
-        backgroundColor: '#007bff',
-        color: 'white',
-        border: 'none',
-        borderRadius: '50%',
-        width: '60px',
-        height: '60px',
-        fontSize: '24px',
-        cursor: 'pointer',
-        zIndex: 1000,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        transition: 'all 0.3s ease',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'scale(1.1)';
-        e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-      }}
-      aria-label="Open chat support"
-    >
-      💬
-    </button>
-  ), [handleChatButtonClick]);
+  const ChatButton = useCallback(() => {
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    const handleClick = () => {
+      // Toggle chatbot visibility
+      setShowChatbot(prev => !prev);
+
+      // If opening the chatbot, handle email/auth logic
+      if (!showChatbot) {
+        if (user?.id || user?._id) {
+          if (!emailSubmitted) {
+            setEmail(user.email || '');
+            setEmailSubmitted(true);
+          }
+          getData();
+          return;
+        }
+
+        if (emailSubmitted) {
+          getData();
+          return;
+        }
+
+        setShowEmailModal(true);
+      }
+    };
+
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          bottom: "82px",
+          right: "10px",
+          zIndex: 1000,
+        }}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        {/* Tooltip */}
+        {showTooltip && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '40px',
+              right: '0',
+              backgroundColor: '#333',
+              color: 'white',
+              padding: '6px 12px',
+              borderRadius: '4px',
+              fontSize: '12px',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              zIndex: 1001,
+            }}
+          >
+            Upfilly Support
+            {/* Tooltip arrow */}
+            <div style={{
+              position: 'absolute',
+              bottom: '-5px',
+              right: '12px',
+              width: '0',
+              height: '0',
+              borderLeft: '5px solid transparent',
+              borderRight: '5px solid transparent',
+              borderTop: '5px solid #333',
+            }} />
+          </div>
+        )}
+
+        {/* Chat Button */}
+        <button
+          onClick={handleClick}
+          className="chatbot-button"
+          style={{
+            backgroundColor: showChatbot ? '#0056b3' : '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '30px',
+            height: '30px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease',
+            position: 'relative',
+          }}
+          aria-label={showChatbot ? "Close chat support" : "Open chat support"}
+        >
+          {showChatbot ? '×' : '💬'}
+        </button>
+      </div>
+    );
+  }, [showChatbot, user, emailSubmitted, getData]);
+
+  // Add hover effect styles to the existing ChatbotStyles component
+  const ChatbotStyles = () => (
+    <style jsx global>{`
+    /* ... existing styles ... */
+    
+    .chatbot-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+      }
+    }
+    
+    /* Tooltip animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* ... rest of the existing styles ... */
+  `}</style>
+  );
 
   const EmailModal = useCallback(() => {
     const emailInputRef = useRef<HTMLInputElement>(null);
@@ -511,7 +728,9 @@ export default function Layout({
                 fontSize: '16px',
                 outline: 'none',
                 boxSizing: 'border-box',
-                backgroundColor: 'white'
+                backgroundColor: 'white',
+                color: '#333',
+                caretColor: '#007bff'
               }}
             />
 
@@ -568,15 +787,11 @@ export default function Layout({
   const ChatbotWindow = useCallback(() => {
     if (!showChatbot) return null;
 
-    // If user has ID, they should already have emailSubmitted = true
-    // For non-logged in users, check emailSubmitted
     const shouldShowEmailInput = !emailSubmitted && !user?.id;
-
-    // Use ref for the input to maintain focus
     const messageInputRef = useRef<HTMLInputElement>(null);
 
-    // Local state for input message within the component
-    const [localInputMessage, setLocalInputMessage] = useState("");
+    // Local state for input message
+    const [localInputMessage, setLocalInputMessage] = useState(inputMessage || "");
 
     // Update local input when prop changes
     useEffect(() => {
@@ -592,90 +807,77 @@ export default function Layout({
       }
     }, [showChatbot, shouldShowEmailInput]);
 
+    // Key handler for Enter key
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleLocalSendMessage(e);
+      }
+    };
+
     const handleLocalSendMessage = (e: React.FormEvent) => {
       e.preventDefault();
-      if (!localInputMessage.trim()) return;
+      if (!localInputMessage.trim() || !roomId) return;
 
-      // Add user message
+      // Add user message immediately for better UX
       const userMessage: Message = {
         id: Date.now(),
         text: localInputMessage,
-        sender: "user",
+        sender: "user" as const,
         timestamp: new Date().toISOString(),
+        senderId: user?.id || localStorage.getItem("chatbotuserId") || ''
       };
 
       setMessages(prev => [...prev, userMessage]);
       setInputMessage("");
-      setLocalInputMessage("");
+      setLocalInputMessage(""); // Clear local state
       setIsTyping(true);
 
-      // Prepare bot response based on user input
-      setTimeout(() => {
-        let botResponse = "";
-        const userMessageLower = localInputMessage.toLowerCase();
+      // Send message via Socket.io
+      const payload = {
+        content: localInputMessage,
+        room_id: roomId,
+        user_id: user?.id || localStorage.getItem("chatbotuserId"),
+        reciver_id: adminId,
+        type: "TEXT"
+      };
 
-        if (userMessageLower.includes("pricing") || userMessageLower.includes("cost") || userMessageLower.includes("price")) {
-          botResponse = "We offer flexible pricing plans for both merchants and affiliates. You can check our detailed pricing at: https://yourwebsite.com/pricing or I can have a sales representative contact you.";
-        } else if (userMessageLower.includes("demo") || userMessageLower.includes("meeting") || userMessageLower.includes("schedule")) {
-          botResponse = "Great! You can schedule a demo with our team at: https://yourwebsite.com/demo. What's the best time for you?";
-        } else if (userMessageLower.includes("affiliate") && userMessageLower.includes("signup")) {
-          botResponse = "Affiliates can sign up here: https://yourwebsite.com/track/signup/affiliate. Merchants can start here: https://yourwebsite.com/merchant.";
-        } else if (userMessageLower.includes("support") || userMessageLower.includes("help")) {
-          botResponse = "For immediate support, you can email us at support@upfilly.com or check our FAQ section. What specific issue can I help you with?";
-        } else if (userMessageLower.includes("feature") || userMessageLower.includes("how does it work")) {
-          botResponse = "Upfilly offers real-time tracking, automated payouts, Shopify integration, and managed program options. Would you like more details about any specific feature?";
-        } else if (userMessageLower.includes("contact") || userMessageLower.includes("phone") || userMessageLower.includes("email")) {
-          botResponse = "You can reach us at:\n📧 Email: support@upfilly.com\n🌐 Website: https://upfilly.com\n📞 Phone: +1 (555) 123-4567\n⏰ Hours: Mon-Fri, 9AM-6PM EST";
-        } else {
-          // Default response
-          const defaultResponses = [
-            "I understand you're asking about: " + localInputMessage + ". Our team can help with that. Would you like me to connect you with a specialist?",
-            "Thank you for your question! Our support team will get back to you within 24 hours. In the meantime, you can check our FAQ section for similar questions.",
-            "I'll help you with that. For detailed assistance, please email support@upfilly.com with your query and we'll respond promptly.",
-            "Great question! Let me connect you with a specialist who can provide detailed information about this. What's the best email to contact you?",
-            "I've noted your question. Our team typically responds within a few hours. You can also visit our help center at: https://help.upfilly.com"
-          ];
-          botResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-        }
+      console.log("Sending message via socket:", payload);
+      ConnectSocket.emit("send-message", payload);
 
-        const botMessage: Message = {
+      // Fallback timeout in case socket doesn't respond
+      const fallbackTimeout = setTimeout(() => {
+        setIsTyping(false);
+        const fallbackMessage: Message = {
           id: Date.now() + 1,
-          text: botResponse,
-          sender: "bot",
+          text: "Thanks for your message! Our support team has received it and will respond shortly.",
+          sender: "admin",
           timestamp: new Date().toISOString(),
         };
+        setMessages(prev => [...prev, fallbackMessage]);
+      }, 10000);
 
-        setMessages(prev => [...prev, botMessage]);
-        setIsTyping(false);
+      // Store timeout ID to clear it if real response arrives
+      const timeoutId = fallbackTimeout;
 
-        // Refocus input after bot response
-        setTimeout(() => {
-          messageInputRef.current?.focus();
-        }, 100);
-      }, 1000);
+      // Clear timeout when component unmounts or new message is sent
+      return () => clearTimeout(timeoutId);
     };
 
     const handleLocalInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLocalInputMessage(e.target.value);
-      setInputMessage(e.target.value);
-    };
-
-    const handleSuggestionClick = (suggestion: string) => {
-      setLocalInputMessage(suggestion);
-      setInputMessage(suggestion);
-      setTimeout(() => {
-        messageInputRef.current?.focus();
-      }, 50);
+      const value = e.target.value;
+      setLocalInputMessage(value);
+      setInputMessage(value); // Also update the parent state
     };
 
     const chatbotWindowStyle: CSSProperties = {
       position: 'fixed',
-      bottom: '100px',
-      right: '30px',
-      width: '380px',
-      maxWidth: 'calc(100vw - 60px)',
+      bottom: "100px",
+      right: "42px",
+      width: '350px',
+      maxWidth: 'calc(100vw - 40px)',
       height: '500px',
-      maxHeight: 'calc(100vh - 150px)',
+      maxHeight: 'calc(100vh - 120px)',
       backgroundColor: 'white',
       borderRadius: '16px',
       boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
@@ -686,6 +888,39 @@ export default function Layout({
       border: '1px solid #e0e0e0'
     };
 
+    // Input styles with explicit color and visibility properties
+    const inputStyle: CSSProperties = {
+      flex: 1,
+      padding: '10px 14px',
+      border: '1px solid #e0e0e0',
+      borderRadius: '20px',
+      fontSize: '13px',
+      outline: 'none',
+      boxSizing: 'border-box',
+      backgroundColor: 'white',
+      color: '#333',
+      caretColor: '#007bff',
+      opacity: 1,
+      WebkitAppearance: 'none',
+      MozAppearance: 'textfield',
+    };
+
+    const inputFocusStyle: CSSProperties = {
+      ...inputStyle,
+      borderColor: '#007bff',
+      boxShadow: '0 0 0 2px rgba(0, 123, 255, 0.1)',
+    };
+
+    const [currentInputStyle, setCurrentInputStyle] = useState(inputStyle);
+
+    const handleInputFocus = () => {
+      setCurrentInputStyle(inputFocusStyle);
+    };
+
+    const handleInputBlur = () => {
+      setCurrentInputStyle(inputStyle);
+    };
+
     return (
       <div
         className="chatbot-window"
@@ -693,7 +928,7 @@ export default function Layout({
       >
         {/* Header */}
         <div style={{
-          padding: '20px',
+          padding: '15px 20px',
           backgroundColor: '#007bff',
           color: 'white',
           display: 'flex',
@@ -702,24 +937,24 @@ export default function Layout({
           borderTopLeftRadius: '16px',
           borderTopRightRadius: '16px'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
-              width: '40px',
-              height: '40px',
+              width: '36px',
+              height: '36px',
               backgroundColor: 'white',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#007bff',
-              fontSize: '20px',
+              fontSize: '16px',
               fontWeight: 'bold'
             }}>
               U
             </div>
             <div>
-              <h4 style={{ margin: 0, fontSize: '16px' }}>Upfilly Support</h4>
-              <small style={{ opacity: 0.9 }}>Online • Typically replies in minutes</small>
+              <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '600' }}>Upfilly Support</h4>
+              <small style={{ opacity: 0.9, fontSize: '11px' }}>Online • Typically replies in minutes</small>
             </div>
           </div>
           <button
@@ -728,11 +963,11 @@ export default function Layout({
               background: 'none',
               border: 'none',
               color: 'white',
-              fontSize: '24px',
+              fontSize: '20px',
               cursor: 'pointer',
               padding: '0',
-              width: '30px',
-              height: '30px',
+              width: '28px',
+              height: '28px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -756,7 +991,7 @@ export default function Layout({
           className="chatbot-messages"
           style={{
             flex: 1,
-            padding: '20px',
+            padding: '15px',
             overflowY: 'auto',
             backgroundColor: '#f8f9fa'
           }}
@@ -768,8 +1003,21 @@ export default function Layout({
               color: '#666'
             }}>
               <div style={{ fontSize: '48px', marginBottom: '20px' }}>👋</div>
-              <h5 style={{ marginBottom: '10px' }}>Welcome to Upfilly Support</h5>
+              <h5 style={{ marginBottom: '10px', fontSize: '16px' }}>Welcome to Upfilly Support</h5>
               <p>Please enter your email to start chatting</p>
+            </div>
+          ) : loadingMessages ? (
+            <div style={{
+              textAlign: 'center',
+              padding: '40px 20px',
+              color: '#666'
+            }}>
+              <div className="typing-indicator" style={{ justifyContent: 'center' }}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <p>Loading messages...</p>
             </div>
           ) : messages.length === 0 ? (
             <div style={{
@@ -778,81 +1026,10 @@ export default function Layout({
               color: '#666'
             }}>
               <div style={{ fontSize: '48px', marginBottom: '20px' }}>🤖</div>
-              <h5 style={{ marginBottom: '10px' }}>
+              <h5 style={{ marginBottom: '10px', fontSize: '16px' }}>
                 {user?.id ? `Hi ${user.email}!` : 'Hi there!'}
               </h5>
               <p>How can I help you with Upfilly today?</p>
-              <div style={{ marginTop: '30px', textAlign: 'left' }}>
-                <p style={{ fontSize: '14px', color: '#999', marginBottom: '10px' }}>Try asking:</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <button
-                    onClick={() => handleSuggestionClick("Tell me about pricing")}
-                    style={{
-                      backgroundColor: 'white',
-                      border: '1px solid #e0e0e0',
-                      borderRadius: '8px',
-                      padding: '10px 15px',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#f0f0f0';
-                      e.currentTarget.style.borderColor = '#007bff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'white';
-                      e.currentTarget.style.borderColor = '#e0e0e0';
-                    }}
-                  >
-                    💰 Tell me about pricing
-                  </button>
-                  <button
-                    onClick={() => handleSuggestionClick("How do I sign up as an affiliate?")}
-                    style={{
-                      backgroundColor: 'white',
-                      border: '1px solid #e0e0e0',
-                      borderRadius: '8px',
-                      padding: '10px 15px',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#f0f0f0';
-                      e.currentTarget.style.borderColor = '#007bff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'white';
-                      e.currentTarget.style.borderColor = '#e0e0e0';
-                    }}
-                  >
-                    📝 How do I sign up as an affiliate?
-                  </button>
-                  <button
-                    onClick={() => handleSuggestionClick("Schedule a demo")}
-                    style={{
-                      backgroundColor: 'white',
-                      border: '1px solid #e0e0e0',
-                      borderRadius: '8px',
-                      padding: '10px 15px',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#f0f0f0';
-                      e.currentTarget.style.borderColor = '#007bff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'white';
-                      e.currentTarget.style.borderColor = '#e0e0e0';
-                    }}
-                  >
-                    🗓️ Schedule a demo
-                  </button>
-                </div>
-              </div>
             </div>
           ) : (
             <>
@@ -860,47 +1037,49 @@ export default function Layout({
                 <div
                   key={message.id}
                   style={{
-                    marginBottom: '15px',
+                    marginBottom: '12px',
                     display: 'flex',
                     flexDirection: message.sender === 'user' ? 'row-reverse' : 'row',
                     alignItems: 'flex-end',
                     gap: '8px'
                   }}
                 >
-                  {message.sender === 'bot' && (
+                  {message.sender !== 'user' && (
                     <div style={{
-                      width: '32px',
-                      height: '32px',
-                      backgroundColor: '#007bff',
+                      width: '30px',
+                      height: '30px',
+                      backgroundColor: message.sender === 'admin' ? '#28a745' : '#007bff',
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: 'white',
-                      fontSize: '14px',
+                      fontSize: '13px',
                       fontWeight: 'bold',
                       flexShrink: 0
                     }}>
-                      U
+                      {message.sender === 'admin' ? 'A' : 'U'}
                     </div>
                   )}
                   <div
                     style={{
-                      maxWidth: '70%',
-                      padding: '12px 16px',
-                      borderRadius: '18px',
-                      backgroundColor: message.sender === 'user' ? '#007bff' : 'white',
+                      maxWidth: '75%',
+                      padding: '10px 14px',
+                      borderRadius: '16px',
+                      backgroundColor: message.sender === 'user' ? '#007bff' :
+                        message.sender === 'admin' ? '#e7f5e9' : 'white',
                       color: message.sender === 'user' ? 'white' : '#333',
                       boxShadow: message.sender === 'user'
                         ? '0 2px 5px rgba(0,123,255,0.2)'
                         : '0 2px 5px rgba(0,0,0,0.1)',
                       wordBreak: 'break-word',
-                      whiteSpace: 'pre-line'
+                      whiteSpace: 'pre-line',
+                      fontSize: '14px'
                     }}
                   >
                     {message.text}
                     <div style={{
-                      fontSize: '11px',
+                      fontSize: '10px',
                       opacity: 0.7,
                       marginTop: '4px',
                       textAlign: message.sender === 'user' ? 'right' : 'left'
@@ -914,15 +1093,15 @@ export default function Layout({
               {isTyping && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{
-                    width: '32px',
-                    height: '32px',
+                    width: '30px',
+                    height: '30px',
                     backgroundColor: '#007bff',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontWeight: 'bold',
                     flexShrink: 0
                   }}>
@@ -930,8 +1109,8 @@ export default function Layout({
                   </div>
                   <div
                     style={{
-                      padding: '12px 16px',
-                      borderRadius: '18px',
+                      padding: '10px 14px',
+                      borderRadius: '16px',
                       backgroundColor: 'white',
                       boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
                     }}
@@ -951,29 +1130,23 @@ export default function Layout({
         </div>
 
         {/* Input Area */}
-        {!shouldShowEmailInput && (
+        {!shouldShowEmailInput && !loadingMessages && (
           <div style={{
-            padding: '15px 20px',
+            padding: '12px 15px',
             borderTop: '1px solid #e0e0e0',
             backgroundColor: 'white'
           }}>
-            <form onSubmit={handleLocalSendMessage} style={{ display: 'flex', gap: '10px' }}>
+            <form onSubmit={handleLocalSendMessage} style={{ display: 'flex', gap: '8px' }}>
               <input
                 ref={messageInputRef}
                 type="text"
                 value={localInputMessage}
                 onChange={handleLocalInputChange}
+                onKeyDown={handleKeyDown}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
                 placeholder="Type your message..."
-                style={{
-                  flex: 1,
-                  padding: '12px 16px',
-                  border: '1px solid #e0e0e0',
-                  borderRadius: '24px',
-                  fontSize: '14px',
-                  outline: 'none',
-                  boxSizing: 'border-box',
-                  backgroundColor: 'white'
-                }}
+                style={currentInputStyle}
                 disabled={isTyping}
               />
               <button
@@ -984,14 +1157,15 @@ export default function Layout({
                   color: 'white',
                   border: 'none',
                   borderRadius: '50%',
-                  width: '44px',
-                  height: '44px',
+                  width: '40px',
+                  height: '40px',
                   cursor: localInputMessage.trim() && !isTyping ? 'pointer' : 'not-allowed',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   opacity: localInputMessage.trim() && !isTyping ? 1 : 0.5,
-                  transition: 'all 0.3s'
+                  transition: 'all 0.3s',
+                  fontSize: '16px'
                 }}
                 onMouseEnter={(e) => {
                   if (localInputMessage.trim() && !isTyping) {
@@ -1003,22 +1177,20 @@ export default function Layout({
                 }}
                 aria-label="Send message"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor" />
-                </svg>
+                →
               </button>
             </form>
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginTop: '10px',
-              fontSize: '12px',
+              marginTop: '8px',
+              fontSize: '11px',
               color: '#999'
             }}>
               <span>
                 {user?.id
-                  ? `Chatting as: ${user.email} (Logged in)`
+                  ? `Chatting as: ${user.email}`
                   : `Chatting as: ${email}`}
               </span>
               <button
@@ -1028,7 +1200,7 @@ export default function Layout({
                   border: 'none',
                   color: '#999',
                   cursor: 'pointer',
-                  fontSize: '12px',
+                  fontSize: '11px',
                   textDecoration: 'underline'
                 }}
               >
@@ -1039,90 +1211,7 @@ export default function Layout({
         )}
       </div>
     );
-  }, [showChatbot, emailSubmitted, user, email, messages, isTyping, inputMessage, clearChatHistory, handleCloseChatbot]);
-
-  // Add CSS animations
-  const ChatbotStyles = () => (
-    <style jsx global>{`
-      @keyframes modalSlideIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      
-      @keyframes typing {
-        0%, 60%, 100% {
-          transform: translateY(0);
-        }
-        30% {
-          transform: translateY(-5px);
-        }
-      }
-      
-      .typing-indicator {
-        display: flex;
-        gap: 4px;
-      }
-      
-      .typing-indicator span {
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        background-color: #999;
-        border-radius: 50%;
-      }
-      
-      .chatbot-button:hover {
-        animation: pulse 1.5s infinite;
-      }
-      
-      @keyframes pulse {
-        0% {
-          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
-        }
-        70% {
-          box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
-        }
-        100% {
-          boxShadow: 0 0 0 0 rgba(0, 123, 255, 0);
-        }
-      }
-      
-      /* Scrollbar styling for messages */
-      .chatbot-messages::-webkit-scrollbar {
-        width: 6px;
-      }
-      
-      .chatbot-messages::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 3px;
-      }
-      
-      .chatbot-messages::-webkit-scrollbar-thumb {
-        background: #c1c1c1;
-        border-radius: 3px;
-      }
-      
-      .chatbot-messages::-webkit-scrollbar-thumb:hover {
-        background: #a8a8a8;
-      }
-      
-      /* Prevent input blinking */
-      .email-modal-content input {
-        caret-color: #007bff;
-      }
-      
-      .email-modal-content input:focus {
-        border-color: #007bff !important;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1) !important;
-      }
-    `}</style>
-  );
+  }, [showChatbot, emailSubmitted, user, email, messages, isTyping, inputMessage, loadingMessages, roomId, adminId, clearChatHistory, handleCloseChatbot]);
 
   return (
     <>

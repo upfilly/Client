@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import methodModel from "../../methods/methods";
 import Modal from 'react-modal';
 import toast from 'react-toastify';
+import environment from "@/environment";
 
 if (typeof window !== 'undefined') {
   Modal.setAppElement('body');
@@ -61,6 +62,22 @@ export default function Affilate() {
     // Direct download method
     const link = document.createElement('a');
     link.href = transaction.invoice_url;
+    link.download = `invoice_${transaction.transaction_id || transaction._id}_${new Date(transaction.createdAt).toISOString().split('T')[0]}.pdf`;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const downloadInvoicepending = (transaction) => {
+    if (!transaction.invoice_url) {
+      alert('No invoice available for this transaction');
+      return;
+    }
+
+    // Direct download method
+    const link = document.createElement('a');
+    link.href = `${environment.api}${transaction.custom_invoice_url}`;
     link.download = `invoice_${transaction.transaction_id || transaction._id}_${new Date(transaction.createdAt).toISOString().split('T')[0]}.pdf`;
     link.target = '_blank';
     document.body.appendChild(link);
@@ -551,9 +568,19 @@ export default function Affilate() {
                                           View
                                         </button> */}
                                       </>
-                                    ) : (
+                                    ) : !itm?.custom_invoice_url ?
                                       <span className="text-muted small">No invoice</span>
-                                    )}
+                                      : (
+                                        <button
+                                          onClick={() => downloadInvoicepending(itm)}
+                                          className="btn btn-sm btn-outline-primary"
+                                          title="Download Invoice"
+                                          style={{ padding: '4px 8px', fontSize: '12px' }}
+                                        >
+                                          <i className="fa fa-download me-1" aria-hidden="true"></i>
+                                          Download
+                                        </button>
+                                      )}
                                   </div>
                                 </td>
                               </tr>
