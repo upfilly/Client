@@ -130,12 +130,12 @@ const Detail = (p) => {
                                                             <p>{data?.linkName ? methodModel.capitalizeFirstLetter(data.linkName) : '-'}</p>
                                                         </div>
                                                     </div>
-                                                    <div className='col-md-6'>
+                                                    {/* <div className='col-md-6'>
                                                         <div className='detail-item'>
                                                             <label>SEO Enabled</label>
                                                             <p>{data?.seo ? 'Yes' : 'No'}</p>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                     <div className='col-md-6'>
                                                         <div className='detail-item'>
                                                             <label>Deep Link</label>

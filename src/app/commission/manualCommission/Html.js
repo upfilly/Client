@@ -90,7 +90,7 @@ const Html = () => {
 
   const getCampaignData = (p = {}) => {
     let url = "campaign/brand/all";
-    ApiClient.get(url, { brand_id: user?.id }).then((res) => {
+    ApiClient.get(url, {...p, brand_id: user?.id }).then((res) => {
       if (res.success) {
         setCamppaignData(
           res.data.data.map((dat) => {
@@ -165,9 +165,12 @@ const Html = () => {
   };
 
   useEffect(() => {
+    getCampaignData({affiliate_ids:formData?.publisher_id});
+  }, [formData.publisher_id]);
+
+    useEffect(() => {
     getData();
     fetchCSV();
-    getCampaignData();
   }, []);
 
   const validateForm = () => {

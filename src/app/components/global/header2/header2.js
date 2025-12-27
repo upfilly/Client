@@ -33,12 +33,12 @@ export default function Header2({
     "/campaign",
     "/payments",
     "/product",
-    "/campaignManagement",
-    "/CreativeEmails",
+    "/campaignmanagement",
+    "/creativeemails",
     "/banners",
     "/coupons",
     "/invitations",
-    "/allowNotifications",
+    "/allownotifications",
   ];
 
   const isDashboard = validPaths.includes(pathname);
@@ -193,7 +193,7 @@ export default function Header2({
               </>
             )}
 
-            <a href="#" className="help-icon">
+            {/* <a href="#" className="help-icon">
               <svg
                 className="fonts15"
                 xmlns="http://www.w3.org/2000/svg"
@@ -211,9 +211,10 @@ export default function Header2({
                   fill="#252849"
                 />
               </svg>
-            </a>
+            </a> */}
 
-            <div className="bell_icon">
+            {/* <div className="bell_icon"> */}
+            <div className="help-icon">
               <div class="dropdown notifications position-relative">
                 <div
                   type="button"
@@ -276,7 +277,7 @@ export default function Header2({
                               history.push("/requests");
                             } else {
                               if (user?.role !== "brand") {
-                                history.push("/campaignManagement");
+                                history.push("/campaignmanagement");
                               } else {
                                 history.push("/campaign");
                               }

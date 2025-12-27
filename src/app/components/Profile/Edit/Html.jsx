@@ -21,8 +21,10 @@ import { Currency } from 'lucide-react';
 
 const DynamicReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const Html = ({ user,
-  picLoader,
+const Html = ({
+  user,
+  imageLoader, // Separate loader for image
+  logoLoader, // Separate loader for logo
   selectedItems1,
   handleFeatureCheckbox,
   handleSubmit,
@@ -39,6 +41,7 @@ const Html = ({ user,
   setSelectedItems,
   setSelectedItems1,
   uploadImage,
+  uploadLogo1,
   submitted,
   category,
   setForm,
@@ -46,7 +49,8 @@ const Html = ({ user,
   platforms,
   setPlatforms,
   setWebsites,
-  history, }) => {
+  history,
+}) => {
   const [inputFocused, setInputFocused] = useState(false)
   const [categories, setCategories] = useState([]);
   const data = ["youtube", "X(formerly Twitter)", "instagram", "linkedin"]
@@ -155,7 +159,7 @@ const Html = ({ user,
     { "name": "Pacific/Tongatapu", "id": "Pacific/Tongatapu" }
   ]
 
-  console.log(selectedItems, "selectedItemsselectedItems")
+  console.log(form,"hjhjhjhjhj")
 
   const handleAddNewItem = () => {
     if (newItem.trim() !== "" && !customItems.includes(newItem)) {
@@ -278,6 +282,7 @@ const Html = ({ user,
               </div>
               <div className='card-body p-3'>
                 <div className='row'>
+                  {/* Profile Image Section */}
                   <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
                     <div className='profile-edit-sec  flex-wrap  mb-3'>
                       <label className="">
@@ -286,8 +291,8 @@ const Html = ({ user,
 
                       <div className='d-flex gap-2 align-items-center width-profile '>
 
-                        {picLoader ?
-                          <div className="text-success text-center mt-5 top_loading">Uploading... <i className="fa fa-spinner fa-spin"></i></div>
+                        {imageLoader ?
+                          <div className="text-success text-center mt-5 top_loading">Uploading Profile Image... <i className="fa fa-spinner fa-spin"></i></div>
                           : <div>
                             <label className="btn btn-primary  edit_btns mb-0">
                               <input
@@ -297,15 +302,41 @@ const Html = ({ user,
                                 accept="image/*"
                                 value={form.baseImg ? form.baseImg : ''}
                                 onChange={(e) => { uploadImage(e); }}
-                              />{form.image ? '  Change' : 'Upload'} Image</label>
+                              />{form.image ? '  Change' : 'Upload'} Profile Image</label>
                           </div>}
                         <div>
-                          {form.image ? <label className="btn btn-secondary mb-0 edit_btns" onClick={e => setForm({ ...form, image: "" })}>Remove Image</label> : <></>}
+                          {form.image ? <label className="btn btn-secondary mb-0 edit_btns" onClick={e => setForm({ ...form, image: "" })}>Remove Profile Image</label> : <></>}
                         </div>
-                        {/* <input type="hidden" name='image' required value={form.image} /> */}
-                        {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Image is required</div> : <></>}
+                        {submitted && getError('image')?.invalid ? <div className="invalid-feedback d-block">Profile Image is required</div> : <></>}
                       </div>
+                    </div>
+                  </div>
 
+                  {/* Logo1 Upload Section */}
+                  <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
+                    <div className='profile-edit-sec  flex-wrap  mb-3'>
+                      <label className="">
+                        <img src={methodModel.nologoImg(form && form.logo1)} className="profileuserimg" />
+                      </label>
+
+                      <div className='d-flex gap-2 align-items-center width-profile '>
+
+                        {logoLoader ?
+                          <div className="text-success text-center mt-5 top_loading">Uploading Logo... <i className="fa fa-spinner fa-spin"></i></div>
+                          : <div>
+                            <label className="btn btn-primary  edit_btns mb-0">
+                              <input
+                                type="file"
+                                className="d-none"
+                                accept="image/*"
+                                value={form.baseLogo1 ? form.baseLogo1 : ''}
+                                onChange={(e) => { uploadLogo1(e); }}
+                              />{form.logo1 ? '  Change' : 'Upload'} Logo</label>
+                          </div>}
+                        <div>
+                          {form.logo1 ? <label className="btn btn-secondary mb-0 edit_btns" onClick={e => setForm({ ...form, logo1: "" })}>Remove Logo</label> : <></>}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -323,9 +354,7 @@ const Html = ({ user,
                               name='fullName'
                               value={form.userName}
                               disabled
-                              // onChange={e => setForm({ ...form, firstName: e.target.value })}
                             />
-                            {/* {submitted && !form?.firstName ? <div className="invalid-feedback d-block">Name is Required</div> : <></>} */}
                           </div>
                         </div>
 
@@ -355,7 +384,6 @@ const Html = ({ user,
                               value={form.lastName}
                               onChange={e => setForm({ ...form, lastName: e.target.value })}
                             />
-                            {/* {submitted && !form?.firstName ? <div className="invalid-feedback d-block">Name is Required</div> : <></>} */}
                           </div>
                         </div>
 
@@ -403,7 +431,6 @@ const Html = ({ user,
                             {submitted && getError('dialCode').invalid ? <div className="invalid-feedback d-block">Invalid country code</div> : <></>}
                             {submitted && getError('mobileNo').invalid && !getError('dialCode').invalid ? <div className="invalid-feedback d-block">Min Length is 10</div> : <></>}
                             {submitted && !form?.mobileNo && !form?.dialCode ? <div className="invalid-feedback d-block"> DailCode is Required*   Mobile Number is Required* </div> : submitted && !form?.mobileNo ? <div className="invalid-feedback d-block">Mobile Number is Required*</div> : <></>}
-                            {/* {submitted && !form?.dialCode ? <div className="invalid-feedback d-block">DailCode is Required</div> : <></>} */}
                           </div>
 
                         </div>
@@ -480,44 +507,59 @@ const Html = ({ user,
                             </div>
                           </div>
                         </div>
-                        {/*<div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
-                          <div className='form-group'>
-                            <div className="select_drop ">
-                              <label>Default Currency</label>
-                              <div className="select_row">
-                                <SelectDropdown 
-                                  theme='search'
-                                  id="statusDropdown"
-                                  displayValue="name"
-                                  placeholder="Select"
-                                  intialValue={form?.defaultCurrency}
-                                  result={e => setForm({ ...form, defaultCurrency: e.value })}
-                                  options={CurencyData}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>*/}
 
                         <div className=" col-12 col-sm-12 col-md-12">
                           <label>Description</label>
-                          {/* <Editor  apiKey='e9b46x5ebse3zswyqxc5gpl8b5zzduu2ziq9r75c2s91ytpe' textareaName='content' value={form?.description ? form?.description : ''} className='tuncketcls'
-                            onEditorChange={(newValue, editor) => {
-                              setForm({ ...form, description: newValue })
-                            }}
-
-                            init={{
-                              selector: 'textarea#autocompleter-cardmenuitem',
-                              height: 200,
-                            }}
-                          /> */}
                           <div className="descript_editpro">
                             <DynamicReactQuill
                               theme="snow"
                               value={form?.description ? form?.description : ''}
+                              // onChange={(newValue, editor) => {
+                              //   setForm({ ...form, description: newValue })
+                              // }}
+                              onChange={(newValue) => {
+                                setForm((prev) => ({
+                                  ...prev,
+                                  description: newValue
+                                }))
+                                // ({ ...form,  })
+                              }}
+                              className='tuncketcls'
+                              modules={{
+                                toolbar: [
+                                  [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                  [{ size: [] }],
+                                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                  [{ 'list': 'ordered' }, { 'list': 'bullet' },
+                                  { 'indent': '-1' }, { 'indent': '+1' }],
+                                  ['link', 'image', 'video'],
+                                  ['clean']
+                                ],
+                              }}
+                              formats={[
+                                'header', 'font', 'size',
+                                'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                'list', 'bullet', 'indent',
+                                'link', 'image', 'video'
+                              ]}
+                              bounds={'.app'}
+                            />
+                          </div>
+                        </div>
 
-                              onChange={(newValue, editor) => {
-                                setForm({ ...form, description: newValue })
+                        {/* Affiliate Signup Text Editor */}
+                        <div className=" col-12 col-sm-12 col-md-12 mt-3">
+                          <label>Affiliate Signup Text</label>
+                          <div className="descript_editpro">
+                            <DynamicReactQuill
+                              theme="snow"
+                              value={form?.affiliateSignupText ? form?.affiliateSignupText : ''}
+                              onChange={(newValue) => {
+                                setForm((prev) => ({
+                                ...prev,
+                                affiliateSignupText: newValue
+                              }))
+                                // ({ ...form,  })
                               }}
                               className='tuncketcls'
                               modules={{
@@ -561,57 +603,6 @@ const Html = ({ user,
                     </div>
                     <div className='card-body'>
                       <div className='row'>
-                        {/* {user?.role == 'affiliate' &&
-
-                          <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                            <div className='form-group'>
-                              <div className="select_drop ">
-                                <label>Category Type</label>
-                                <div className="select_row">
-                                  <SelectDropdown                                                     theme='search'
-                                    id="statusDropdown"
-                                    displayValue="name"
-                                    placeholder="Select Type"
-                                    intialValue={form?.cat_type}
-                                    result={e => setForm({ ...form, cat_type: e.value })}
-                                    options={categoryTypes}
-                                  />
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>} */}
-
-
-                        {/* <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                          <label htmlFor="category">Category:</label>
-                          <select class="form-select mb-2" id="category" value={selectedCategory} onChange={handleCategoryChange}>
-                            <option value="">Select a category</option>
-                            {category?.map(category => (
-                              <option key={category._id} value={category._id}>{category.parent_cat_name}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                          <label htmlFor="subcategory">Subcategory:</label>
-                          <select class="form-select mb-2" id="subcategory" value={selectedSubcategory} onChange={handleSubcategoryChange}>
-                            <option value="">Select a subcategory</option>
-                            {selectedCategory && category.find(cat => cat._id === selectedCategory).subCategories.map(subcategory => (
-                              <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className='col-12 col-sm-12 col-md-6 mb-3'>
-                          <label htmlFor="subsubcategory">Sub-subcategory:</label>
-                          <select class="form-select mb-2" id="subsubcategory" value={selectedSubSubcategory} onChange={handleSubsubcategoryChange}>
-                            <option value="">Select a sub-subcategory</option>
-                            {selectedSubcategory && category.find(cat => cat._id === selectedCategory).subCategories.find(subcat => subcat.id || subcat?._id === selectedSubcategory).subchildcategory.map(subsubcat => (
-                              <option key={subsubcat._id} value={subsubcat._id}>{subsubcat.name}</option>
-                            ))}
-                          </select>
-                        </div> */}
-
-
                         <div className="col-md-12 mb-3 custom-dropdown">
                           <div className='w-100'>
                             <label className='d-block'>Select Category<span className="star">*</span></label>
@@ -625,9 +616,7 @@ const Html = ({ user,
                               />
                             </div>
                           </div>
-                          {/* {submitted && selectedItems?.categories?.length == 0 && <div className="invalid-feedback d-block">{errors?.categories}</div>} */}
                         </div>
-
 
                         {user?.role == 'affiliate' &&
                           <div className='col-12 col-sm-12 col-md-6 mb-3 custom-dropdown'>
@@ -650,7 +639,7 @@ const Html = ({ user,
                             </div>
                           </div>}
 
-                        {<><>
+                        <><>
                           <div className="col-12 col-sm-12 col-md-6 mb-3 custom-input">
                             <div className="form-group">
                               <label>Location</label>
@@ -662,15 +651,11 @@ const Html = ({ user,
                                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                   <div>
                                     <input className="form-control"
-
                                       {...getInputProps({
                                         placeholder: 'Enter an address...',
                                         onFocus: () => setInputFocused(true),
                                         onBlur: () => setInputFocused(false),
-                                        // value:addressData
                                       })} />
-                                    {/* {(inputFocused && address.length > 0) && <div className='shadow p-3'> */}
-                                    {loading && <div>Loading...</div>}
                                     {suggestions.map((suggestion) => {
                                       const style = {
                                         backgroundColor: suggestion.active ? '#41b6e6' : '#fff',
@@ -685,14 +670,9 @@ const Html = ({ user,
                                         </div>
                                       );
                                     })}
-                                    {/* </div>} */}
                                   </div>
                                 )}
                               </PlacesAutocomplete>
-                              <div>
-
-                              </div>
-
                             </div>
                           </div>
                         </>
@@ -714,7 +694,6 @@ const Html = ({ user,
                               <input type="text" value={form?.pincode} onChange={(e) => setForm({ ...form, pincode: e.target.value })} className="form-control " id="exampleFormControlInput1" />
                             </div>
                           </div></>
-                        }
 
                         {user?.role != "affiliate" ? <div className="col-12 col-sm-12 col-md-6 mb-3">
                           <div className='form-group custom-input'>
@@ -762,43 +741,6 @@ const Html = ({ user,
                             </div>
                           </div>
                         }
-
-
-                        {/* {
-                          <div className='col-12 col-sm-12 col-md-6 mb-3  col-lg-12'>
-                            <div className=" form-group custom-input">
-                              <label> Tags</label>
-                              <div className="d-flex gap-2  flex-row">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  value={changeSubCategory}
-                                  placeholder="Enter..."
-                                  onChange={e => setChangeSubCategory(e.target.value)}
-                                  onKeyDown={handleKeyDown}
-
-                                />
-                                <a
-                                  className="add-btn d-flex justify-content-center align-items-center btn btn-primary"
-                                  onClick={addTag}
-                                ><i className='fa fa-plus'></i></a>
-                              </div>
-                              <div className="d-flex gap-3 align-items-center flex-wrap mt-4 ">
-                                {form && form?.tags?.map((item, i) => {
-                                  return (
-                                    <button type="button" class="btn btn-primary d-flex gap-2  align-items-center" key={i}>
-                                      <span className=' pt_bx'> {item}</span>
-                                      <i className='fa fa-close cloosebtn' onClick={() => cancele(item, 'tags')} ></i>
-                                    </button>
-
-
-                                  )
-                                })}
-                              </div>
-
-                            </div>
-                          </div>
-                        } */}
                       </div>
                     </div>
                   </div>

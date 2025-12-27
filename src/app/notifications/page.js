@@ -59,7 +59,7 @@ const NotificationPage = () => {
                                     history.push("/requests")
                                 } else {
                                     if (user?.role !== 'brand') {
-                                        history.push("/campaignManagement")
+                                        history.push("/campaignmanagement")
                                     } else {
                                         history.push("/campaign")
                                     }
@@ -87,7 +87,7 @@ const NotificationPage = () => {
                             </div>
                         )})
                     ) : (
-                        <p>No notifications available.</p>
+                        <p className='text-center'>No notifications available.</p>
                     )}
                 </div>
             </div>

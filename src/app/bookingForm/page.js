@@ -193,7 +193,11 @@ export default function BillingForm() {
     switch (name) {
       case "firstName":
       case "lastName":
-        error = value.trim() ? "" : "This field is required";
+        if (!value.trim()) {
+          error = "This field is required";
+        } else if (value.trim().length < 3) {
+          error = "Must be at least 3 characters";
+        }
         break;
       case "email":
         error = validateEmail(value)
@@ -250,6 +254,16 @@ export default function BillingForm() {
       [name]: newValue,
     }));
 
+    // Real-time validation for firstName and lastName
+    if (name === "firstName" || name === "lastName") {
+      if (newValue.length >= 3) {
+        setErrors((prev) => ({
+          ...prev,
+          [name]: "",
+        }));
+      }
+    }
+
     // Validate on change for immediate feedback
     if (name in errors) {
       setErrors((prev) => ({
@@ -290,7 +304,7 @@ export default function BillingForm() {
 
     // Validate form fields
     newErrors.firstName = validateField("firstName", formData.firstName);
-    // newErrors.lastName = validateField("lastName", formData.lastName);
+    newErrors.lastName = validateField("lastName", formData.lastName);
     newErrors.email = validateField("email", formData.email);
     newErrors.password = validateField("password", formData.password);
     newErrors.confirmPassword = validateField(
@@ -379,7 +393,7 @@ export default function BillingForm() {
     console.log("Buy button clicked - Starting validation");
 
     if (!validateForm()) {
-      toast.error("Please fix all form errors before submitting");
+      toast.error("Please fill in all the required fields.");
       return;
     }
 
@@ -598,9 +612,8 @@ export default function BillingForm() {
                         const cardClass =
                           selectedId === itm?._id
                             ? "checked_tbn"
-                            : `checked_tbn_after ${
-                                errors?.plan ? "border-red" : ""
-                              }`;
+                            : `checked_tbn_after ${errors?.plan ? "border-red" : ""
+                            }`;
 
                         return (
                           <label
@@ -718,14 +731,14 @@ export default function BillingForm() {
                               <label className="label-set">First Name</label>
                               <input
                                 type="text"
-                                className={`form-control quick-radius ${
-                                  errors.firstName ? "is-invalid" : ""
-                                }`}
-                                placeholder="Enter first name"
+                                className={`form-control quick-radius ${errors.firstName ? "is-invalid" : ""
+                                  }`}
+                                placeholder="Enter first name (min 3 characters)"
                                 id="firstName"
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleInputChange}
+                                maxLength={50}
                                 onBlur={() =>
                                   setErrors((prev) => ({
                                     ...prev,
@@ -741,6 +754,11 @@ export default function BillingForm() {
                                   {errors.firstName}
                                 </div>
                               )}
+                              {!errors.firstName && formData.firstName && (
+                                <div className="small mt-1 text-muted">
+                                  {formData.firstName.length}/3 characters
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="col-12 col-md-6 col-lg-6">
@@ -748,14 +766,14 @@ export default function BillingForm() {
                               <label className="label-set">Last Name </label>
                               <input
                                 type="text"
-                                className={`form-control quick-radius ${
-                                  errors.lastName ? "is-invalid" : ""
-                                }`}
-                                placeholder="Enter last name"
+                                className={`form-control quick-radius ${errors.lastName ? "is-invalid" : ""
+                                  }`}
+                                placeholder="Enter last name (min 3 characters)"
                                 id="lastName"
                                 name="lastName"
                                 value={formData.lastName}
                                 onChange={handleInputChange}
+                                maxLength={50}
                                 onBlur={() =>
                                   setErrors((prev) => ({
                                     ...prev,
@@ -766,11 +784,16 @@ export default function BillingForm() {
                                   }))
                                 }
                               />
-                              {/* {errors.lastName && (
+                              {errors.lastName && (
                                 <div className="invalid-feedback d-block">
                                   {errors.lastName}
                                 </div>
-                              )} */}
+                              )}
+                              {!errors.lastName && formData.lastName && (
+                                <div className="small mt-1 text-muted">
+                                  {formData.lastName.length}/3 characters
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="col-12 col-md-6 col-lg-12">
@@ -778,9 +801,8 @@ export default function BillingForm() {
                               <label className="label-set">Email </label>
                               <input
                                 type="email"
-                                className={`form-control quick-radius ${
-                                  errors.email ? "is-invalid" : ""
-                                }`}
+                                className={`form-control quick-radius ${errors.email ? "is-invalid" : ""
+                                  }`}
                                 placeholder="Enter email"
                                 id="email"
                                 name="email"
@@ -809,9 +831,8 @@ export default function BillingForm() {
                               <label className="label-set">Username </label>
                               <input
                                 type="text"
-                                className={`form-control quick-radius ${
-                                  errors.userName ? "is-invalid" : ""
-                                }`}
+                                className={`form-control quick-radius ${errors.userName ? "is-invalid" : ""
+                                  }`}
                                 placeholder="Enter username"
                                 id="userName"
                                 name="userName"
@@ -858,9 +879,8 @@ export default function BillingForm() {
                               <div className="input-group position-relative">
                                 <input
                                   type={eyes.password ? "text" : "password"}
-                                  className={`form-control quick-radius password_space ${
-                                    errors.password ? "is-invalid" : ""
-                                  }`}
+                                  className={`form-control quick-radius password_space ${errors.password ? "is-invalid" : ""
+                                    }`}
                                   placeholder="Enter password (min 8 characters)"
                                   id="password"
                                   name="password"
@@ -910,9 +930,8 @@ export default function BillingForm() {
                                   type={
                                     eyes.confirmPassword ? "text" : "password"
                                   }
-                                  className={`form-control quick-radius password_space ${
-                                    errors.confirmPassword ? "is-invalid" : ""
-                                  }`}
+                                  className={`form-control quick-radius password_space ${errors.confirmPassword ? "is-invalid" : ""
+                                    }`}
                                   placeholder="Confirm your password"
                                   id="confirmPassword"
                                   name="confirmPassword"
@@ -1011,9 +1030,8 @@ export default function BillingForm() {
                               }) => (
                                 <div>
                                   <input
-                                    className={`form-control quick-radius ${
-                                      errors.address ? "is-invalid" : ""
-                                    }`}
+                                    className={`form-control quick-radius ${errors.address ? "is-invalid" : ""
+                                      }`}
                                     {...getInputProps({
                                       placeholder: "Enter an address...",
                                       onFocus: () => setInputFocused(true),
@@ -1070,9 +1088,8 @@ export default function BillingForm() {
                             onChange={(e) =>
                               handleLocationChange("country", e.target.value)
                             }
-                            className={`form-control quick-radius ${
-                              errors.country ? "is-invalid" : ""
-                            }`}
+                            className={`form-control quick-radius ${errors.country ? "is-invalid" : ""
+                              }`}
                             onBlur={() =>
                               setErrors((prev) => ({
                                 ...prev,
@@ -1100,9 +1117,8 @@ export default function BillingForm() {
                             onChange={(e) =>
                               handleLocationChange("city", e.target.value)
                             }
-                            className={`form-control quick-radius ${
-                              errors.city ? "is-invalid" : ""
-                            }`}
+                            className={`form-control quick-radius ${errors.city ? "is-invalid" : ""
+                              }`}
                             onBlur={() =>
                               setErrors((prev) => ({
                                 ...prev,
@@ -1130,9 +1146,8 @@ export default function BillingForm() {
                             onChange={(e) =>
                               handleLocationChange("pincode", e.target.value)
                             }
-                            className={`form-control quick-radius ${
-                              errors.pincode ? "is-invalid" : ""
-                            }`}
+                            className={`form-control quick-radius ${errors.pincode ? "is-invalid" : ""
+                              }`}
                             onBlur={() =>
                               setErrors((prev) => ({
                                 ...prev,
@@ -1157,9 +1172,8 @@ export default function BillingForm() {
                         <div className="form-check">
                           <input
                             type="checkbox"
-                            className={`form-check-input ${
-                              errors.terms ? "is-invalid" : ""
-                            }`}
+                            className={`form-check-input ${errors.terms ? "is-invalid" : ""
+                              }`}
                             id="termsCheck"
                             checked={isTermsAccepted}
                             onChange={(e) => {

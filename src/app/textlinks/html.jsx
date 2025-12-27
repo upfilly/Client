@@ -96,7 +96,27 @@ const Html = ({
       filters={filters}
     >
       <div className="sidebar-left-content">
+       
         <div className="d-flex justify-content-md-end gap-2 flex-wrap align-items-center all_flexbx">
+           <div className="tabs-container d-flex align-items-center">
+          <button
+            className={`tab-button`}
+            onClick={() => {
+              history.push("/banners");
+            }}
+          >
+            Banners
+          </button>
+          <button
+            className={`tab-button active`}
+            onClick={() => {
+              history.push("/textlinks");
+            }}
+          >
+           Text Link
+
+          </button>
+        </div>
           <SelectDropdown
             theme="search"
             id="statusDropdown"
@@ -133,7 +153,7 @@ const Html = ({
                   className="btn btn-primary mb-0 set_reset"
                   onClick={(e) => add()}
                 >
-                   <i className="fa fa-plus mr-1"> </i> 
+                  <i className="fa fa-plus mr-1"> </i>
                   Add Text Links
                 </a>
               </>
@@ -178,9 +198,9 @@ const Html = ({
                   <th scope="col" className="table_data">
                     End Date
                   </th>
-                  <th scope="col" className="table_data">
+                  {/* <th scope="col" className="table_data">
                     SEO
-                  </th>
+                  </th> */}
                   <th scope="col" className="table_data">
                     Deep Link
                   </th>
@@ -230,9 +250,9 @@ const Html = ({
                         <td className="table_dats">
                           {datepipeModel.date(itm.endDate)}
                         </td>
-                        <td className="table_dats">
+                        {/* <td className="table_dats">
                           {itm.seo ? "Yes" : "No"}
-                        </td>
+                        </td> */}
                         <td className="table_dats">
                           {itm.deepLink ? "Yes" : "No"}
                         </td>

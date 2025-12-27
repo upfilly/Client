@@ -15,7 +15,7 @@ const Html = ({ settingData, Logout }) => {
   const pathname = usePathname()
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingForm') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignManagement') || pathname.includes('/affiliate')
+  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingForm') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignmanagement') || pathname.includes('/affiliate')
   const param = useSearchParams()
   const id = param.get("id")
   const code = param.get("campaign_code")
@@ -234,7 +234,7 @@ const Html = ({ settingData, Logout }) => {
                   <Link class={`nav-link py-2 ${pathname == "/company" ? 'active' : ''}`} href="/company">Services</Link>
                 </li>
                 {(user?.role == "brand" || !user) && <li class="nav-item">
-                  <Link class={`nav-link py-2 ${pathname == "/scriptGuide" ? 'active' : ''}`} href="/scriptGuide">Script</Link>
+                  <Link class={`nav-link py-2 ${pathname == "/scriptguide" ? 'active' : ''}`} href="/scriptguide">Script</Link>
                 </li>}
 
               </ul>
@@ -243,10 +243,10 @@ const Html = ({ settingData, Logout }) => {
             {(user?.role == "brand" || !user) && <Link class="btn btn-primary login" href="/pricing">Book a Demo</Link>}
             </li> */}
                 {/* <li class="nav-item">
-                  <Link class={`btn btn-primary login ms-2 ${pathname == "/contactUs" ? 'active_btn' : ''}`} href="/contactUs">Book a Demo</Link>
+                  <Link class={`btn btn-primary login ms-2 ${pathname == "/contact" ? 'active_btn' : ''}`} href="/contact">Book a Demo</Link>
                 </li> */}
                 {/* <li class="nav-item text-center">
-                  <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contactUs" ? '' : ''}`} href="/contactUs">Contact Us</Link>
+                  <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contact" ? '' : ''}`} href="/contact">Contact Us</Link>
                 </li> */}
               </form>
             </div>

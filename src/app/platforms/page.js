@@ -227,14 +227,7 @@ const UpFillyPage = () => {
               Important Updates
             </h2>
             <p>
-              {/* Stay on top of your affiliate program with real-time tracking.
-            UpFilly provides precise data on clicks, conversions, and
-            commissions, ensuring you never miss a detail. Our advanced
-            attribution technology guarantees accurate results, while fraud
-            protection tools keep your campaigns secure. */}
-              Whether you are just beginning to build or expand your business, Upfilly offers a broad set of programs to help you innovate, expand, and differentiate your offerings. <br></br><br></br>
-
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+              Whether you are just beginning to build or expand your business, Upfilly offers a broad set of programs to help you innovate, expand, and differentiate your offerings. Access industry expertise, cutting-edge technology solutions, and strategic partnerships that reduce time-to-market, optimize operations, and create unique value propositions that resonate with your target customers.
             </p>
             {/* <div className="tracking-visual">
           <img src="/assets/images/affiliate-tracking.png" alt="Tracking Flow" />
@@ -266,9 +259,9 @@ const UpFillyPage = () => {
                 <h1 className='text-center text-md-left'>
                   Usable Upfilly Platform
                 </h1>
-                <p className='mt-2 para text-center text-md-left'>
+                {/* <p className='mt-2 para text-center text-md-left'>
                   Lorem Ipsum is simply dummy text of the  printing and type lorem Ipsum is simply
-                </p>
+                </p> */}
                 <div className="platform-content mt-3">
                   <h3>
                     Understand Buyers
@@ -332,9 +325,9 @@ const UpFillyPage = () => {
                   <h1>
                     Usable Upfilly Platform
                   </h1>
-                  <p className="para">
+                  {/* <p className="para">
                     Lorem Ipsum is simply dummy text of the   printing and type lorem Ipsum is simply
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="platform-content mt-3">

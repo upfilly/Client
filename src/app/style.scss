@@ -1,5 +1,5 @@
 .main-section {
-  background: #E8E9ED;
+  background: #e8e9ed;
   padding: 26px;
   border-radius: 20px;
   margin-top: 5px;
@@ -21,10 +21,7 @@ p.desc {
 .btn-primary {
   // border: none !important;
   border-radius: 6px !important;
-
 }
-
-
 
 .blog_img {
   height: 220px !important;
@@ -32,8 +29,7 @@ p.desc {
 }
 
 .social {
-  color: #ADB0C2;
-
+  color: #adb0c2;
 }
 
 img.social_img {
@@ -48,7 +44,7 @@ h2.leading_heading {
 }
 
 .bg_blue {
-  background-color: #19294D;
+  background-color: #19294d;
   border-radius: 15px;
   color: #fff;
 }
@@ -61,8 +57,6 @@ img.checkmark {
   width: 30px;
   margin-right: 10px;
 }
-
-
 
 ul.tool_list li {
   list-style: none;
@@ -87,10 +81,7 @@ img.check_list {
   padding: 50px 40px;
   background-repeat: no-repeat;
   border-radius: 30px;
-
 }
-
-
 
 .bg_goal {
   background-image: url(../../public/assets/img/goal_bg.png);
@@ -105,7 +96,7 @@ img.check_list {
 }
 
 button.btn.btn-blue {
-  background: #032E72;
+  background: #032e72;
   color: #fff;
   border-radius: 50px;
   font-size: 15px;
@@ -132,8 +123,6 @@ button.btn.btn-white {
   margin-top: 20px;
 }
 
-
-
 .borderbottom {
   border-bottom: 1px solid #b8b8b8 !important;
 }
@@ -158,18 +147,16 @@ input.form-control-file.over_input {
 }
 
 .btn-blue-new {
-  background-color: #032E72 !important;
+  background-color: #032e72 !important;
   color: #fff !important;
   padding: 5px 10px;
 }
 
 .btn-blue-new {
-  background-color: #032E72 !important;
+  background-color: #032e72 !important;
   color: #fff !important;
   padding: 5px 10px;
 }
-
-
 
 .bg_blue:hover {
   box-shadow: 3px 10px 10px #1b284d5c;
@@ -182,17 +169,13 @@ input.form-control-file.over_input {
   transition: 0.8s;
 }
 
-
 .btn-secondary {
   border-radius: 6px !important;
 }
 
-
-
 .btn.btn-secondary:hover {
   border: 1px solid transparent !important;
 }
-
 
 .fb_reset button.swal2-cancel.swal2-styled.swal2-default-outline {
   background-color: rgb(133 127 127) !important;
@@ -294,9 +277,44 @@ h4 {
   clear: both;
 }
 
-
 .table_dats .action_icons {
   display: flex !important;
 }
 
+.whyupfillycard {
+  min-height: 133px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
 
+
+.features-card {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 182px;
+}
+
+.features-card h4 {
+ font-size: 23px;
+}
+
+.features-card p {
+  margin-bottom: 0px;
+  font-size: 16px;
+}
+
+
+
+@media all and (min-width: 992px) and (max-width: 1200px) {
+  .whyupfillycard {
+    min-height: 165px;
+  }
+
+  .features-card h4 {
+    font-size: 16px;
+  }
+
+
+}

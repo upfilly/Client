@@ -86,8 +86,7 @@ const AnalyticsChartData = ({
     const end = new Date(endDate);
     while (currentDate <= end) {
       dates.push(
-        `${currentDate.getFullYear()}-${
-          currentDate.getMonth() + 1
+        `${currentDate.getFullYear()}-${currentDate.getMonth() + 1
         }-${currentDate.getDate()}`
       );
       currentDate.setDate(currentDate.getDate() + 1);
@@ -140,6 +139,24 @@ const AnalyticsChartData = ({
     const startDate = selection.startDate.toLocaleDateString();
     const endDate = selection.endDate.toLocaleDateString();
     return `${startDate} - ${endDate} (${percentage})`;
+  };
+
+  const formatCurrency = (value, useConverted = false) => {
+    const numValue = Number(value) || 0;
+
+    if (useConverted && exchangeRate && convertedCurrency) {
+      try {
+        if (typeof convertedCurrency === 'function') {
+          const result = convertedCurrency(numValue);
+          return typeof result === 'string' ? result : `$${numValue.toFixed(2)}`;
+        }
+      } catch (error) {
+        console.error('Error in currency conversion:', error);
+      }
+    }
+
+    // Fallback to USD formatting
+    return `$${numValue.toFixed(2)}`;
   };
 
   // Get all dates in the selected range
@@ -270,65 +287,195 @@ const AnalyticsChartData = ({
         data: data1,
         type: "line",
         smooth: true,
-        areaStyle: {},
-        lineStyle: { width: 2 },
+        areaStyle: {
+          opacity: 0.1
+        },
+        lineStyle: { width: 3 },
         itemStyle: { color: "#1E90FF" },
+        symbol: 'circle',
+        symbolSize: 6
       },
       legend2 && {
         name: legend2,
         data: data2,
         type: "line",
         smooth: true,
-        areaStyle: {},
-        lineStyle: { width: 2 },
-        itemStyle: { color: "#4682B4" },
+        areaStyle: {
+          opacity: 0.1
+        },
+        lineStyle: { width: 3 },
+        itemStyle: { color: "#FF6B6B" },
+        symbol: 'circle',
+        symbolSize: 6
       },
     ].filter(Boolean);
 
+    // Format x-axis labels to show only day
+    const xAxisLabels = allDates1.map(date => {
+      const dateObj = new Date(date);
+      return dateObj.getDate().toString(); // Only the day number
+    });
+
+    // Get year-month for the title or subtitle
+    const getYearMonthRange = (dates) => {
+      if (!dates || dates.length === 0) return '';
+
+      const firstDate = new Date(dates[0]);
+      const lastDate = new Date(dates[dates.length - 1]);
+
+      const firstYearMonth = `${firstDate.getFullYear()}-${String(firstDate.getMonth() + 1).padStart(2, '0')}`;
+      const lastYearMonth = `${lastDate.getFullYear()}-${String(lastDate.getMonth() + 1).padStart(2, '0')}`;
+
+      return firstYearMonth === lastYearMonth ? firstYearMonth : `${firstYearMonth} to ${lastYearMonth}`;
+    };
+
+    const yearMonthRange = getYearMonthRange(allDates1);
+
+    // Safe y-axis formatter for revenue
+    const yAxisFormatter = (value) => {
+      if (isPercentage) {
+        return `${value.toFixed(1)}%`;
+      }
+      if (isRevenue) {
+        if (exchangeRate) {
+          // For converted currency, show abbreviated format for large numbers
+          if (value >= 1000000) {
+            return formatCurrency(value / 1000000, true).replace(/(\.\d+)?$/, 'M');
+          } else if (value >= 1000) {
+            return formatCurrency(value / 1000, true).replace(/(\.\d+)?$/, 'K');
+          }
+          return formatCurrency(value, true);
+        } else {
+          // For USD, show abbreviated format
+          if (value >= 1000000) {
+            return `$${(value / 1000000).toFixed(1)}M`;
+          } else if (value >= 1000) {
+            return `$${(value / 1000).toFixed(1)}K`;
+          }
+          return `$${value.toFixed(0)}`;
+        }
+      }
+      // For counts (actions, clicks)
+      if (value >= 1000000) {
+        return `${(value / 1000000).toFixed(1)}M`;
+      } else if (value >= 1000) {
+        return `${(value / 1000).toFixed(1)}K`;
+      }
+      return value.toFixed(0);
+    };
+
     return {
-      // title: {
-      //   text: comparisonPeriod === "none" ? title : `${title} Comparison`,
-      // },
+      title: {
+        text: comparisonPeriod === "none" ? `${title}` : `${title} Comparison`,
+        subtext: yearMonthRange,
+        left: 'center',
+        textStyle: {
+          fontSize: 16,
+          fontWeight: 'bold'
+        },
+        subtextStyle: {
+          fontSize: 12,
+          color: '#666'
+        }
+      },
       tooltip: {
         trigger: "axis",
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        borderColor: '#ddd',
+        borderWidth: 1,
+        textStyle: {
+          color: '#333'
+        },
         formatter: function (params) {
-          let tooltipContent = "";
-          params.forEach((item, index) => {
-            const date = allDates1[item.dataIndex];
-            const value1 = Number(item.data) || 0;
+          const date = allDates1[params[0].dataIndex];
+          const dateObj = new Date(date);
+          const formattedDate = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
 
-            const percentageDifference = calculatePercentageDifference(value1);
+          let tooltipContent = `<div style="margin-bottom: 8px; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 5px;">${formattedDate}</div>`;
 
-            let formattedValue = value1;
+          params.forEach((item) => {
+            const value = Number(item.data) || 0;
+            let formattedValue = value;
+
             if (isRevenue) {
-              formattedValue = !exchangeRate
-                ? `$${value1.toFixed(2)}`
-                : `${convertedCurrency(value1)}`;
+              formattedValue = formatCurrency(value, true);
             } else if (isPercentage) {
-              formattedValue = `${value1.toFixed(2)}%`;
+              formattedValue = `${value.toFixed(2)}%`;
+            } else {
+              formattedValue = value.toLocaleString();
             }
 
-            tooltipContent += `<div>${item.seriesName}: ${formattedValue} (${percentageDifference})</div>`;
+            const color = item.color;
+            tooltipContent += `
+              <div style="display: flex; align-items: center; margin: 3px 0;">
+                <span style="display: inline-block; width: 10px; height: 10px; background: ${color}; border-radius: 50%; margin-right: 8px;"></span>
+                <span>${item.seriesName}: <strong>${formattedValue}</strong></span>
+              </div>
+            `;
           });
           return tooltipContent;
         },
       },
       legend: {
         data: legendData,
-        bottom: 0,
+        bottom: 5,
         left: "center",
+        itemWidth: 12,
+        itemHeight: 12,
+        textStyle: {
+          fontSize: 11
+        }
+      },
+      grid: {
+        top: 75,
+        right: 20,
+        bottom: 45,
+        left: 60,
+        containLabel: true
       },
       xAxis: {
         type: "category",
-        data: allDates1,
+        data: xAxisLabels,
         boundaryGap: false,
+        axisLine: {
+          lineStyle: {
+            color: '#ccc'
+          }
+        },
+        axisLabel: {
+          color: '#666',
+          fontSize: 11
+        },
+        name: 'Day',
+        nameLocation: 'middle',
+        nameGap: 25,
+        nameTextStyle: {
+          color: '#666',
+          fontSize: 11
+        }
       },
       yAxis: {
         type: "value",
-        axisLabel: {
-          show: true,
-          formatter: isPercentage ? "{value}%" : undefined,
+        axisLine: {
+          lineStyle: {
+            color: '#ccc'
+          }
         },
+        axisLabel: {
+          color: '#666',
+          fontSize: 11,
+          formatter: yAxisFormatter
+        },
+        splitLine: {
+          lineStyle: {
+            color: '#f0f0f0',
+            type: 'dashed'
+          }
+        }
       },
       series,
     };
@@ -380,8 +527,16 @@ const AnalyticsChartData = ({
           onExpand={() => toggleExpand("Revenue Over Time")}
           cardRef={revenueCardRef}
         >
-          <div className="w-100">
-            <ReactECharts option={revenueChartOption} className="chart" />
+          <div className="chart-container">
+            <ReactECharts
+              option={revenueChartOption}
+              className="chart"
+              style={{
+                height: expandedCard === "Revenue Over Time" ? '500px' : '300px',
+                width: '100%'
+              }}
+              opts={{ renderer: 'svg' }}
+            />
           </div>
         </CustomCard>
       ),
@@ -397,8 +552,16 @@ const AnalyticsChartData = ({
           onExpand={() => toggleExpand("Actions")}
           cardRef={actionsCardRef}
         >
-          <div className="w-100">
-            <ReactECharts option={actionsChartOption} className="chart" />
+          <div className="chart-container">
+            <ReactECharts
+              option={actionsChartOption}
+              className="chart"
+              style={{
+                height: expandedCard === "Actions" ? '500px' : '300px',
+                width: '100%'
+              }}
+              opts={{ renderer: 'svg' }}
+            />
           </div>
         </CustomCard>
       ),
@@ -414,8 +577,16 @@ const AnalyticsChartData = ({
           onExpand={() => toggleExpand("Conversion Rate")}
           cardRef={conversionCardRef}
         >
-          <div className="w-100">
-            <ReactECharts option={conversionChartOption} className="chart" />
+          <div className="chart-container">
+            <ReactECharts
+              option={conversionChartOption}
+              className="chart"
+              style={{
+                height: expandedCard === "Conversion Rate" ? '500px' : '300px',
+                width: '100%'
+              }}
+              opts={{ renderer: 'svg' }}
+            />
           </div>
         </CustomCard>
       ),
@@ -431,8 +602,16 @@ const AnalyticsChartData = ({
           onExpand={() => toggleExpand("Clicks")}
           cardRef={clicksCardRef}
         >
-          <div className="w-100">
-            <ReactECharts option={clicksChartOption} className="chart" />
+          <div className="chart-container">
+            <ReactECharts
+              option={clicksChartOption}
+              className="chart"
+              style={{
+                height: expandedCard === "Clicks" ? '500px' : '300px',
+                width: '100%'
+              }}
+              opts={{ renderer: 'svg' }}
+            />
           </div>
         </CustomCard>
       ),
@@ -447,7 +626,7 @@ const AnalyticsChartData = ({
   });
 
   return (
-    <div className="analytics-container" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
+    <div className="analytics-container" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
       <div className="row">
         {sortedCharts.map((chart, index) => (
           <div
@@ -456,8 +635,8 @@ const AnalyticsChartData = ({
               chart.isExpanded
                 ? "col-12 mt-3"
                 : index === 0 && expandedCard
-                ? "col-lg-6 mt-3"
-                : "col-md-6 mt-3"
+                  ? "col-lg-6 mt-3"
+                  : "col-lg-6 mt-3"
             }
           >
             {chart.component}

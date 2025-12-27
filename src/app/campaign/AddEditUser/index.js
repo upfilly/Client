@@ -242,7 +242,6 @@ const AddEditUser = () => {
     // if (!form?.description || !form?.name || !form?.event_type) {
 
     // }
-    console.log(validate(), "opoppop");
 
     if (!validate()) {
       setSubmitted(true);

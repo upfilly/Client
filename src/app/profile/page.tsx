@@ -27,12 +27,44 @@ const Profile = () => {
   const [bankData, setBankData] = useState<any>([])
   const [roles, setRoles] = useState<any>('')
   const [showApprovalPrompt, setShowApprovalPrompt] = useState(false);
-  const [activeTab, setActiveTab] = useState('basic-info'); // State for active tab
+  const [activeTab, setActiveTab] = useState('basic-info');
+  const [affiliateLink, setAffiliateLink] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleApprovalPromptClose = () => setShowApprovalPrompt(false);
   const handleApprovalPromptShow = () => setShowApprovalPrompt(true);
+
+  // Generate affiliate link
+  const generateAffiliateLink = () => {
+    if (user?.id || user?._id) {
+      const baseUrl = window.location.origin;
+      const affiliateLink = `${baseUrl}/signup/publisher?brandId=${user.id || user._id}`;
+      setAffiliateLink(affiliateLink);
+      return affiliateLink;
+    }
+    return '';
+  };
+
+  // Copy affiliate link to clipboard
+  const copyAffiliateLink = () => {
+    const link = affiliateLink || generateAffiliateLink();
+    if (link) {
+      navigator.clipboard.writeText(link).then(() => {
+        toast.success('Affiliate link copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        toast.error('Failed to copy affiliate link');
+      });
+    } else {
+      toast.error('Unable to generate affiliate link');
+    }
+  };
+
+  // Function to check if user is a brand
+  const isBrandUser = () => {
+    return user?.activeUser?.role === "brand" || roles === "brand" || user?.role === "brand";
+  };
 
   // Function to check if all required fields are present for admin approval
   const checkApprovalRequirements = (userData: any) => {
@@ -168,6 +200,10 @@ const Profile = () => {
       AssosiateUserData()
       handleSwitchUser(user?.id || user?._id)
       setRoles(user?.activeUser?.role)
+      // Generate affiliate link on component mount for brand users
+      if (isBrandUser()) {
+        generateAffiliateLink();
+      }
     }
   }, []);
 
@@ -230,7 +266,7 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Rest of the basic info fields */}
+
             {data?.activeUser?.address &&
               <div className="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div className='inputFlexs width400'>
@@ -239,8 +275,71 @@ const Profile = () => {
                 </div>
               </div>}
 
-            {/* Continue with other fields... */}
+            {data?.activeUser?.timezone &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Timezone:</label>
+                  <p className="profile_data">{data && data?.activeUser?.timezone}</p>
+                </div>
+              </div>}
 
+            {data?.currencies && data.currencies.length > 0 &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Currency:</label>
+                  <p className="profile_data">{data && data.currencies.join(', ')}</p>
+                </div>
+              </div>}
+
+            {data?.propertyType && data.propertyType.length > 0 &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Property Type:</label>
+                  <p className="profile_data">{data && data.propertyType?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                </div>
+              </div>}
+
+               {data?.activeUser?.role &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Role:</label>
+                  <p className="profile_data">{data && methodModel.capitalizeFirstLetter(data?.activeUser?.role)}</p>
+                </div>
+              </div>}
+
+            {data?.all_category && data.all_category.length > 0 &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Category:</label>
+                  <p className="profile_data">{data && data.all_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                </div>
+              </div>}
+
+               {data?.all_sub_category && data.all_sub_category.length > 0 &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Sub-Category:</label>
+                  <p className="profile_data">{data && data.all_sub_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                </div>
+              </div>}
+
+               {data?.all_sub_child_category && data.all_sub_child_category.length > 0 &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Sub Child Category:</label>
+                  <p className="profile_data">{data && data.all_sub_child_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                </div>
+              </div>}
+
+           
+
+            {data?.activeUser?.phone &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Phone:</label>
+                  <p className="profile_data">{data && data?.activeUser?.phone}</p>
+                </div>
+              </div>}
           </div>
         </div>
       </div>
@@ -308,6 +407,94 @@ const Profile = () => {
     </div>
   );
 
+  const renderBrandTab = () => (
+    <div className='card p-3 rounded-3 mb-4 inner-card-two mt-3'>
+      <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 basic_info">
+        <div className='main_title_head'>
+          <h3 className=''>Brand Management</h3>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-12">
+          <div className="affiliate-link-section p-4 bg-light rounded">
+            <h5 className="mb-3 text-primary">Affiliate Program Invitation</h5>
+            <p className="text-muted mb-3">
+              Invite affiliates to join your program by sharing the link below. When affiliates sign up using this link, they will be automatically associated with your brand.
+            </p>
+            
+            <div className="d-flex align-items-center gap-2 mb-3">
+              <input 
+                type="text" 
+                className="form-control form-control-lg" 
+                value={affiliateLink || generateAffiliateLink()} 
+                readOnly 
+              />
+              <button 
+                className="btn btn-primary btn-lg" 
+                onClick={copyAffiliateLink}
+              >
+                <i className="material-icons me-2">content_copy</i>
+                {/* Copy */}
+              </button>
+            </div>
+            
+            <div className="d-flex gap-2 flex-wrap">
+              <button 
+                className="btn btn-outline-primary"
+                onClick={() => {
+                  const subject = "Join My Affiliate Program";
+                  const body = `Hi! I'd like to invite you to join my affiliate program. Use this link to sign up: ${affiliateLink || generateAffiliateLink()}`;
+                  window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+                }}
+              >
+                <i className="material-icons me-2">email</i>
+                Email Link
+              </button>
+              <button 
+                className="btn btn-outline-primary"
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'Join My Affiliate Program',
+                      text: 'Join my affiliate program and start earning commissions!',
+                      url: affiliateLink || generateAffiliateLink(),
+                    });
+                  } else {
+                    copyAffiliateLink();
+                  }
+                }}
+              >
+                <i className="material-icons me-2">share</i>
+                Share
+              </button>
+              <button 
+                className="btn btn-outline-primary" 
+                onClick={() => {
+                  const link = affiliateLink || generateAffiliateLink();
+                  window.open(link, '_blank');
+                }}
+              >
+                <i className="material-icons me-2">open_in_new</i>
+                Preview
+              </button>
+            </div>
+
+            <div className="mt-4 p-3 bg-white rounded border">
+              <h6 className="mb-2">How it works:</h6>
+              <ul className="list-unstyled mb-0">
+                <li className="mb-1">• Share the link with potential affiliates</li>
+                <li className="mb-1">• They'll be directed to the signup page</li>
+                <li className="mb-1">• Their account will be automatically linked to your brand</li>
+                <li className="mb-1">• You can manage all your affiliates from your dashboard</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
       <div className="pprofile1 edit-profile-page">
@@ -351,9 +538,19 @@ const Profile = () => {
                           <Tab eventKey="basic-info" title="Basic Information">
                             {renderBasicInfoTab()}
                           </Tab>
-                         {user.role == "affiliate" && <Tab eventKey="accounts" title="Accounts">
-                            {renderAccountsTab()}
-                          </Tab>}
+                          
+                          {/* Brand Management Tab - Only for brand users */}
+                          {/* {isBrandUser() && (
+                            <Tab eventKey="brand-management" title="Brand Management">
+                              {renderBrandTab()}
+                            </Tab>
+                          )} */}
+                          
+                          {user.role == "affiliate" && (
+                            <Tab eventKey="accounts" title="Accounts">
+                              {renderAccountsTab()}
+                            </Tab>
+                          )}
                         </Tabs>
                       </div>
                     </>

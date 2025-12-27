@@ -31,6 +31,13 @@ const userImg = (img) => {
     return value
 }
 
+const nologoImg = (img) => {
+    let value = '/assets/img/no-image.jpg'
+    // if(!img)return
+    if (img) value = environment.api + img
+    return value
+}
+
 const noImg = (img,modal='blogs') => {
     let value = '/assets/img/placeholder.png'
     if (img) value = environment.api + img
@@ -191,5 +198,5 @@ function capitalizeFirstLetter(str) {
   }
 
 
-const methodModel = { capitalizeFirstLetter,userImg,route, isNumber, isRatio, find, getError, getFormError, getPrams, emailRequiredFor, emailvalidation, noImg, isTranslatePage, generatekeysArr }
+const methodModel = {nologoImg, capitalizeFirstLetter,userImg,route, isNumber, isRatio, find, getError, getFormError, getPrams, emailRequiredFor, emailvalidation, noImg, isTranslatePage, generatekeysArr }
 export default methodModel

@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 import Layout from "../components/global/layout";
+import { useRouter } from "next/navigation";
 
-export default function Company() {
+export default function Company(){
+ const history = useRouter()
   return (
     <>
       <Layout
@@ -158,8 +160,13 @@ export default function Company() {
                   <h2 className="cta-subtitle">Maximize your affiliate marketing success with the help of our dedicated specialists.</h2>
                 </header>
                 <div className="cta-buttons">
-                  <button className="cta-btn primary">Get Started with Managed Subscriptions</button>
-                  <button className="cta-btn secondary">Contact Us for a Custom Plan</button>
+                  <button className="cta-btn primary" onClick={()=>history.push("/pricing")}>Get Started with Managed Subscriptions</button>
+                  <button
+                    className="cta-btn secondary"
+                    onClick={() => window.open('mailto:dev@upfilly.com')}
+                  >
+                    Contact Us for a Custom Plan
+                  </button>
                 </div>
               </div>
             </div>

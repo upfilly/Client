@@ -298,7 +298,7 @@ export default function Home() {
               <h2>Who Is Upfilly For?</h2>
             </div>
             <div className="col-md-6 text-center">
-              <div className="p-4">
+              <div className="p-4 whyupfillycard">
                 <h3>Merchants</h3>
                 <p>
                   Launch and manage a scalable affiliate program in minutes.
@@ -306,7 +306,7 @@ export default function Home() {
               </div>
             </div>
             <div className="col-md-6 text-center">
-              <div className="p-4">
+              <div className="p-4 whyupfillycard">
                 <h3>Affiliates</h3>
                 <p>Promote trusted brands and earn commissions.</p>
               </div>
@@ -320,26 +320,27 @@ export default function Home() {
             <div className="col-md-12 text-center mb-4">
               <h2>What Makes Upfilly Different?</h2>
             </div>
-            <div className="col-md-3 text-center">
-              <div className="p-4">
+
+            <div className="col-md-6 col-lg-3 text-center h-100">
+              <div className="p-4 features-card">
                 <h4>Real-Time Tracking</h4>
                 <p>Know exactly which clicks convert, and who's performing.</p>
               </div>
             </div>
-            <div className="col-md-3 text-center">
-              <div className="p-4">
+            <div className="col-md-6 col-lg-3 text-center h-100">
+              <div className="p-4 features-card">
                 <h4>Automated Payouts</h4>
                 <p>Say goodbye to spreadsheets and manual transfers.</p>
               </div>
             </div>
-            <div className="col-md-3 text-center">
-              <div className="p-4">
+            <div className="col-md-6 col-lg-3 text-center h-100">
+              <div className="p-4 features-card">
                 <h4>Shopify Friendly</h4>
                 <p>Track affiliate sales across major platforms.</p>
               </div>
             </div>
-            <div className="col-md-3 text-center">
-              <div className="p-4">
+            <div className="col-md-6 col-lg-3 text-center h-100">
+              <div className="p-4 features-card">
                 <h4>Managed Program Option</h4>
                 <p>
                   Let our experts handle strategy, outreach, and optimization.
@@ -350,7 +351,7 @@ export default function Home() {
         </div>
 
         <div class="container py-5">
-          <div class="bg_blue text-white text-center p-5 rounded-4 shadow-lg">
+          <div class="bg_blue text-white text-center p-3 p-md-5 rounded-4 shadow-lg">
             <h2 class="display-5 fw-semibold mb-4">
               Start your affiliate program today — no setup fees.
             </h2>
@@ -605,7 +606,7 @@ export default function Home() {
                     <h4 className="affiliatebx">
                       Performance
                       <br />
-                      Insights 
+                      Insights
                     </h4>
                     <p className="text-white para_affiliate">
                       Data-driven analytics to optimize your <br></br>{" "}

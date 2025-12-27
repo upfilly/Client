@@ -6,6 +6,8 @@ import methodModel from "../../methods/methods";
 import datepipeModel from "@/models/datepipemodel";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import { useRouter } from "next/navigation";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Html = ({
   view,
@@ -28,6 +30,11 @@ const Html = ({
   campaign,
   brandData,
   changeBrand,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  ChangeAddType
 }) => {
   const history = useRouter();
   const [activeSidebar, setActiveSidebar] = useState(false);
@@ -53,8 +60,10 @@ const Html = ({
   }, [showColumnSelector]);
 
   const allColumns = [
+    { key: 'type', label: 'Type', sortable: false, default: true },
     { key: 'title', label: 'Title', sortable: true, default: true },
     { key: 'brandName', label: 'Brand Name', sortable: false, default: true },
+    { key: 'destination', label: 'Destination', sortable: false, default: true },
     { key: 'seoAttributes', label: 'SEO Attributes', sortable: false, default: false },
     { key: 'expirationDate', label: 'Expiration Date', sortable: false, default: false },
     { key: 'activationDate', label: 'Activation Date', sortable: false, default: false },
@@ -68,11 +77,35 @@ const Html = ({
     return defaultColumns;
   });
 
-  console.log(data, "data");
-
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       filter();
+    }
+  };
+
+  function formatLocalDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+
+    const newFilters = {
+      ...filters,
+      startDate: start ? formatLocalDate(start) : "",
+      endDate: end ? formatLocalDate(end) : "",
+      page: 1
+    };
+
+    setFilter(newFilters);
+
+    if (start && end) {
+      getData(newFilters);
     }
   };
 
@@ -91,7 +124,7 @@ const Html = ({
 
   const toggleColumn = (columnKey) => {
     const column = allColumns.find(col => col.key === columnKey);
-    if (column?.alwaysShow) return; // Don't allow hiding always-show columns
+    if (column?.alwaysShow) return;
 
     setVisibleColumns(prev => {
       if (prev.includes(columnKey)) {
@@ -113,6 +146,51 @@ const Html = ({
 
   const showAllColumns = () => {
     setVisibleColumns(allColumns.map(col => col.key));
+  };
+
+  // Helper function to determine item type
+  const getItemType = (item) => {
+    return item.addType === "link" ? "Text Link" : "Banner";
+  };
+
+  // Helper function to get display title
+  const getDisplayTitle = (item) => {
+    if (item.addType === "link") {
+      return item.linkName || "Untitled Link";
+    }
+    return item.title || "Untitled Banner";
+  };
+
+  // Helper function to get destination URL
+  const getDestinationUrl = (item) => {
+    if (item.addType === "link") {
+      return item.linkDestinationUrl;
+    }
+    return item.destination_url;
+  };
+
+  // Helper function to get description
+  const getDescription = (item) => {
+    if (item.addType === "link") {
+      return item.linkDescription;
+    }
+    return item.description;
+  };
+
+  // Helper function to get activation date
+  const getActivationDate = (item) => {
+    if (item.addType === "link") {
+      return item.linkStartDate;
+    }
+    return item.activation_date;
+  };
+
+  // Helper function to get expiration date
+  const getExpirationDate = (item) => {
+    if (item.addType === "link") {
+      return item.linkEndDate;
+    }
+    return item.expiration_date;
   };
 
   const renderColumnSelector = () => (
@@ -169,11 +247,32 @@ const Html = ({
       setFilter={setFilter}
       reset={reset}
       filter={filter}
-      name="Banners"
+      name={filters.addType == "banner" ? "Banners" : "Text links"}
       filters={filters}
     >
       <div className="sidebar-left-content">
+
         <div className="d-flex justify-content-md-end gap-2 flex-wrap align-items-center all_flexbx">
+          <div className="tabs-container d-flex align-items-center">
+            {/* <button
+              className={`tab-button active`}
+              onClick={() => {
+                history.push("/banners");
+              }}
+            >
+              Banners & Links
+            </button> */}
+            {/* Uncomment if you have separate pages for banners and text links */}
+            {/* <button
+              className={`tab-button`}
+              onClick={() => {
+                history.push("/textlinks");
+              }}
+            >
+              Text Links
+            </button> */}
+          </div>
+
           {user?.role == "affiliate" && (
             <SelectDropdown
               theme="search"
@@ -198,6 +297,23 @@ const Html = ({
             id="statusDropdown"
             style={"cursor: pointer"}
             displayValue="name"
+            placeholder="Type"
+            intialValue={filters.addType}
+            result={(e) => {
+              ChangeAddType(e.value);
+              setShowColumnSelector(false)
+            }}
+            options={[
+              { name: "Banner", id: "banner" },
+              { name: "Link", id: "link" },
+            ]}
+          />
+
+          <SelectDropdown
+            theme="search"
+            id="statusDropdown"
+            style={"cursor: pointer"}
+            displayValue="name"
             placeholder="Status"
             intialValue={filters.status}
             result={(e) => {
@@ -209,6 +325,19 @@ const Html = ({
               { id: "deactive", name: "Inactive" },
             ]}
           />
+
+          <div className="datepicker-dropdown-wrapper">
+            <DatePicker
+              className="datepicker-field"
+              selected={startDate}
+              onChange={onChange}
+              startDate={startDate}
+              endDate={endDate}
+              showIcon
+              placeholderText="Date Range"
+              selectsRange
+            />
+          </div>
 
           <article className="d-flex filterFlex phView gap-2">
             {/* Column Selector Button */}
@@ -231,12 +360,12 @@ const Html = ({
                   onClick={(e) => add()}
                 >
                   <i className="fa fa-plus mr-1"> </i>
-                  Add Banner
+                  Add Banner/Link
                 </a>
               </>
             )}
 
-            {filters.status || filters?.addedBy ? (
+            {startDate || endDate || filters.addType || filters.status || filters?.addedBy ? (
               <>
                 <a className="btn btn-primary" onClick={(e) => reset()}>
                   Reset
@@ -253,6 +382,11 @@ const Html = ({
             <table className="table table-striped table-width">
               <thead className="table_head">
                 <tr className="heading_row">
+                  {isColumnVisible('type') && (
+                    <th scope="col" className="table_data">
+                      Type
+                    </th>
+                  )}
                   {isColumnVisible('title') && (
                     <th
                       scope="col"
@@ -265,6 +399,11 @@ const Html = ({
                   {isColumnVisible('brandName') && (
                     <th scope="col" className="table_data">
                       Brand Name
+                    </th>
+                  )}
+                  {isColumnVisible('destination') && (
+                    <th scope="col" className="table_data">
+                      Destination
                     </th>
                   )}
                   {isColumnVisible('seoAttributes') && (
@@ -307,22 +446,44 @@ const Html = ({
                 {!loaging &&
                   data &&
                   data.map((itm, i) => {
+                    const itemType = getItemType(itm);
+                    const isLink = itemType === "Text Link";
+
                     return (
                       <tr className="data_row" key={i}>
+                        {isColumnVisible('type') && (
+                          <td className="table_dats">
+                            <span className={`type-badge ${isLink ? 'link-type' : 'banner-type'}`}>
+                              {itemType}
+                            </span>
+                          </td>
+                        )}
                         {isColumnVisible('title') && (
                           <td
                             className="table_dats inline_bx"
                             onClick={(e) => view(itm.id || itm?._id)}
                           >
-                            <img
-                              src={methodModel.userImg(itm?.image)}
-                              className="user_imgs"
-                            />
+                            {!isLink && itm?.image ? (
+                              <img
+                                src={methodModel.userImg(itm?.image)}
+                                className="user_imgs"
+                                alt={getDisplayTitle(itm)}
+                              />
+                            ) : (
+                              <div className="link-icon-placeholder">
+                                <i className="fa fa-link"></i>
+                              </div>
+                            )}
                             <div className="user_detail">
                               <div className="user_name">
                                 <h4 className="user">
-                                  {methodModel.capitalizeFirstLetter(itm.title)}
+                                  {methodModel.capitalizeFirstLetter(getDisplayTitle(itm))}
                                 </h4>
+                                {isLink && (
+                                  <p className="user-description text-muted small mb-0">
+                                    {getDescription(itm) || "No description"}
+                                  </p>
+                                )}
                               </div>
                             </div>
                           </td>
@@ -340,19 +501,32 @@ const Html = ({
                             </div>
                           </td>
                         )}
+                        {isColumnVisible('destination') && (
+                          <td className="table_dats">
+                            <a
+                              href={getDestinationUrl(itm)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-truncate d-inline-block max-w-200"
+                              title={getDestinationUrl(itm)}
+                            >
+                              {getDestinationUrl(itm) || "--"}
+                            </a>
+                          </td>
+                        )}
                         {isColumnVisible('seoAttributes') && (
                           <td className="table_dats">
-                            {itm.seo_attributes || "--"}
+                            {isLink ? (itm.linkSeo ? "Yes" : "No") : (itm.seo_attributes || "--")}
                           </td>
                         )}
                         {isColumnVisible('expirationDate') && (
                           <td className="table_dats">
-                            {datepipeModel.date(itm.expiration_date)}
+                            {datepipeModel.date(getExpirationDate(itm)) || "--"}
                           </td>
                         )}
                         {isColumnVisible('activationDate') && (
                           <td className="table_dats">
-                            {datepipeModel.date(itm.activation_date)}
+                            {datepipeModel.date(getActivationDate(itm)) || "--"}
                           </td>
                         )}
                         {isColumnVisible('status') && (
@@ -466,7 +640,7 @@ const Html = ({
               <option value={150}>150</option>
               <option value={200}>200</option>
             </select>{" "}
-            from {total} Banners
+            from {total} Items
           </span>
           <ReactPaginate
             breakLabel="..."
@@ -491,8 +665,45 @@ const Html = ({
           <></>
         )}
       </div>
+
+      <style jsx>{`
+        .type-badge {
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+        .banner-type {
+          background-color: #e3f2fd;
+          color: #1976d2;
+        }
+        .link-type {
+          background-color: #f3e5f5;
+          color: #7b1fa2;
+        }
+        .link-icon-placeholder {
+          width: 40px;
+          height: 40px;
+          background: #f8f9fa;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #6c757d;
+        }
+        .user-description {
+          max-width: 200px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .max-w-200 {
+          max-width: 200px;
+        }
+      `}</style>
     </Layout>
   );
 };
 
-export default Html
+export default Html;

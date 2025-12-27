@@ -90,7 +90,7 @@ export default function Signup() {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      if (form.userName && form.userName.length >= 3 && /^[a-zA-Z0-9_]+$/.test(form.userName)) {
+      if (form.userName && form.userName.length >= 2 && /^[a-zA-Z0-9_]+$/.test(form.userName)) {
         setCheckingUsername(true);
         const exists = await checkUsernameExists(form.userName);
         setUsernameAvailable(exists);
@@ -113,24 +113,26 @@ export default function Signup() {
       userName: ""
     };
 
-    // Validate first name
+    // Validate first name - minimum 2 characters
     if (!form.firstName.trim()) {
       newErrors.firstName = "First name is required";
       isValid = false;
-    } else if (form.firstName.trim().length < 3) {
-      newErrors.firstName = "First name must be at least 3 characters";
+    } else if (form.firstName.trim().length < 2) {
+      newErrors.firstName = "First name must be at least 2 characters";
       isValid = false;
     }
 
     if (role === "brand") {
+      // Validate brand name - minimum 2 characters
       if (!form.brand_name || form.brand_name.trim() === "") {
         newErrors.brand_name = "Brand name is required";
         isValid = false;
-      } else if (form.brand_name.trim().length < 3) {
-        newErrors.brand_name = "Brand name must be at least 3 characters";
+      } else if (form.brand_name.trim().length < 2) {
+        newErrors.brand_name = "Brand name must be at least 2 characters";
         isValid = false;
       }
     } else {
+      // Validate last name - minimum 2 characters
       if (!form.lastName || form.lastName.trim() === "") {
         newErrors.lastName = "Last name is required";
         isValid = false;
@@ -140,11 +142,12 @@ export default function Signup() {
       }
     }
 
+    // Validate username - minimum 2 characters
     if (!form.userName) {
       newErrors.userName = "Username is required";
       isValid = false;
-    } else if (form.userName.length < 3) {
-      newErrors.userName = "Username must be at least 3 characters";
+    } else if (form.userName.length < 2) {
+      newErrors.userName = "Username must be at least 2 characters";
       isValid = false;
     } else if (!/^[a-zA-Z0-9_]+$/.test(form.userName)) {
       newErrors.userName = "Username can only contain letters, numbers and underscores";
@@ -161,18 +164,21 @@ export default function Signup() {
       isValid = false;
     }
 
-    // Validate password
+    // Validate password - minimum 2 characters (changed from 8 to 2)
     if (!form.password) {
       newErrors.password = "Password is required";
       isValid = false;
-    } else if (form.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    } else if (form.password.length < 2) {
+      newErrors.password = "Password must be at least 2 characters";
       isValid = false;
     }
 
-    // Validate confirm password
+    // Validate confirm password - minimum 2 characters
     if (!form.confirmPassword) {
       newErrors.confirmPassword = "Please confirm your password";
+      isValid = false;
+    } else if (form.confirmPassword.length < 2) {
+      newErrors.confirmPassword = "Confirm password must be at least 2 characters";
       isValid = false;
     } else if (form.password !== form.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";

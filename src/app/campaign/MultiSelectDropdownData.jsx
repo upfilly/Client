@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./MultiSelectDropdownData.css";
 
-const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelectedItems }) => {
-  // const [isOpen, setIsOpen] = useState(false);
+const MultiSelectDropdown = ({ isOpen, setIsOpen, data, selectedItems, setSelectedItems }) => {
   const [expandedCategories, setExpandedCategories] = useState({});
   const [expandedSubCategories, setExpandedSubCategories] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const [displaySelections, setDisplaySelections] = useState({
-    categories: [],
-    subCategories: [],
-    subSubCategories: []
-  });
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -441,8 +435,8 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
       ));
   };
 
-  const getSelectedCategoryNames = (items = selectedItems) => {
-    return items && items?.categories
+  const getSelectedCategoryNames = () => {
+    return selectedItems && selectedItems?.categories
       ?.map((categoryId) => {
         const category = data?.find((cat) => cat._id === categoryId);
         return category ? category?.parent_cat_name : "";
@@ -451,8 +445,8 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
       .join(", ");
   };
 
-  const getSelectedSubCategoryNames = (items = selectedItems) => {
-    return items && items?.subCategories
+  const getSelectedSubCategoryNames = () => {
+    return selectedItems && selectedItems?.subCategories
       ?.map((subcategoryId) => {
         const subCategory = data
           ?.flatMap((category) => category?.subCategories)
@@ -463,8 +457,8 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
       .join(", ");
   };
 
-  const getSelectedSubSubCategoryNames = (items = selectedItems) => {
-    return items && items?.subSubCategories
+  const getSelectedSubSubCategoryNames = () => {
+    return selectedItems && selectedItems?.subSubCategories
       ?.map((subSubCategoryId) => {
         const subSubCategory = data
           ?.flatMap((category) =>
@@ -480,7 +474,6 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
   };
 
   useEffect(() => {
-    setDisplaySelections(selectedItems)
     if (searchTerm) {
       // Expand all categories that match the search or have matching children
       const newExpandedCategories = {};
@@ -525,20 +518,13 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
     }
   }, [searchTerm, data]);
 
-  const handleSave = () => {
-    // Save the current selections to be displayed in the toggle
-    setDisplaySelections({ ...selectedItems });
-    // Close the dropdown
-    setIsOpen(false);
-  };
-
   return (
     <div className="dropdown-container show-drop">
       <div className="category-input">
         <span onClick={toggleDropdown} className="dropdown-toggle">
-          {getSelectedCategoryNames(displaySelections) || "Select Categories"}{" "}
-          {getSelectedSubCategoryNames(displaySelections) && `| ${getSelectedSubCategoryNames(displaySelections)}`}
-          {getSelectedSubSubCategoryNames(displaySelections) && `| ${getSelectedSubSubCategoryNames(displaySelections)}`}
+          {getSelectedCategoryNames() || "Select Categories"}{" "}
+          {getSelectedSubCategoryNames() && `| ${getSelectedSubCategoryNames()}`}
+          {getSelectedSubSubCategoryNames() && `| ${getSelectedSubSubCategoryNames()}`}
         </span>
       </div>
 
@@ -564,7 +550,6 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
             )}
           </div>
 
-
           <div className="select-actions">
             <input
               className="form-check-input"
@@ -585,13 +570,6 @@ const MultiSelectDropdown = ({isOpen, setIsOpen, data, selectedItems, setSelecte
           </div>
 
           {renderCategories()}
-
-          {/* Save button at the bottom */}
-          <div className="dropdown-footer">
-            <button className="save-button" onClick={handleSave}>
-              Save
-            </button>
-          </div>
         </div>
       )}
     </div>

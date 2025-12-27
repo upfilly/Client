@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { addDays } from "date-fns";
 import Layout from "@/app/components/global/layout";
-// import { DateRangePicker } from "react-date-range";
 import moment from "moment";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -16,9 +15,24 @@ import crendentialModel from "@/models/credential.model";
 import CustomDatePicker from "../../components/common/DatePicker/DatePickerCustom";
 import { CurencyData } from "@/methods/currency";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
+import loader from "@/methods/loader";
 
 export default function AnalyticsDashboard() {
   const user = crendentialModel.getUser();
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  // Default filter values
+  const defaultFilters = {
+    baseDates: [firstDayOfMonth, today],
+    compDates: [firstDayOfMonth, today],
+    selectedCurrency: "USD",
+    campaignId: [],
+    selectedAffiliate: [],
+    selectedBrand: [],
+    comparisonPeriod: "none"
+  };
+
   const [state, setState] = useState({
     selection1: {
       startDate: addDays(new Date(), -6),
@@ -31,7 +45,6 @@ export default function AnalyticsDashboard() {
       key: "selection2",
     },
   });
-  console.log(user, "user==");
   const [data, setData] = useState();
   const [data2, setData2] = useState();
   const [clicks, setClicks] = useState();
@@ -41,8 +54,6 @@ export default function AnalyticsDashboard() {
   const [selectedAffiliate, setSelectedAffiliate] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState([]);
   const [brands, setBrands] = useState();
-  const today = new Date();
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const [baseDates, setBaseDates] = useState([firstDayOfMonth, today]);
   const [compDates, setCompDates] = useState([firstDayOfMonth, today]);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
@@ -50,8 +61,24 @@ export default function AnalyticsDashboard() {
   const [comparisonPeriod, setComparisonPeriod] = useState("none");
   const [CampaignData, setCamapign] = useState([]);
   const [campaignId, setCampaignId] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(true);
 
-  console.log(affiliateData, "affiliateData");
+  // State to track pending filter changes (not applied yet)
+  const [pendingFilters, setPendingFilters] = useState(defaultFilters);
+
+  const downloadOptions = [
+    { id: 'csv', name: "Download CSV", value: "csv" },
+    { id: "xml", name: "Download XML", value: "xml" },
+    { id: "excel", name: "Download Excel", value: "excel" },
+  ];
+
+  const handleDownload = (e) => {
+    const type = e.value;
+    if (!type) { setSelectedType("") }
+    setSelectedType(type);
+    exportCsv(type)
+  };
 
   const dateRange = {
     selection1: {
@@ -68,12 +95,29 @@ export default function AnalyticsDashboard() {
 
   const isFilterApplied = () => {
     return (
-      selectedAffiliate ||
-      selectedBrand ||
-      state.selection1.startDate !== addDays(new Date(), -6) ||
-      state.selection1.endDate !== new Date() ||
-      state.selection2.startDate !== addDays(new Date(), 1) ||
-      state.selection2.endDate !== addDays(new Date(), 7)
+      selectedAffiliate?.length > 0 ||
+      selectedBrand?.length > 0 ||
+      campaignId?.length > 0 ||
+      baseDates[0]?.getTime?.() !== firstDayOfMonth.getTime() ||
+      baseDates[1]?.getTime?.() !== today.getTime() ||
+      compDates[0]?.getTime?.() !== firstDayOfMonth.getTime() ||
+      compDates[1]?.getTime?.() !== today.getTime() ||
+      selectedCurrency !== "USD" ||
+      comparisonPeriod !== "none"
+    );
+  };
+
+  const hasPendingChanges = () => {
+    return (
+      pendingFilters.baseDates[0]?.getTime?.() !== baseDates[0]?.getTime?.() ||
+      pendingFilters.baseDates[1]?.getTime?.() !== baseDates[1]?.getTime?.() ||
+      pendingFilters.compDates[0]?.getTime?.() !== compDates[0]?.getTime?.() ||
+      pendingFilters.compDates[1]?.getTime?.() !== compDates[1]?.getTime?.() ||
+      pendingFilters.selectedCurrency !== selectedCurrency ||
+      JSON.stringify(pendingFilters.campaignId) !== JSON.stringify(campaignId) ||
+      JSON.stringify(pendingFilters.selectedAffiliate) !== JSON.stringify(selectedAffiliate) ||
+      JSON.stringify(pendingFilters.selectedBrand) !== JSON.stringify(selectedBrand) ||
+      pendingFilters.comparisonPeriod !== comparisonPeriod
     );
   };
 
@@ -98,19 +142,19 @@ export default function AnalyticsDashboard() {
         setExchangeRate(data.conversion_rate);
       } else {
         setExchangeRate("");
-        // toast.error('Failed to fetch exchange rate');
       }
     } catch (err) {
       setExchangeRate("");
       console.error(err);
-      // toast.error('Error fetching exchange rate');
     }
   };
 
   const handleCurrencyChange = (e) => {
     const currency = e.value;
-    setSelectedCurrency(currency);
-    getExchangeRate(currency);
+    setPendingFilters(prev => ({
+      ...prev,
+      selectedCurrency: currency
+    }));
   };
 
   const getBrandData = (p = {}) => {
@@ -133,31 +177,104 @@ export default function AnalyticsDashboard() {
   const getData = (p = {}) => {
     let url = "campaign/affiliate";
     ApiClient.get(url, {
-      campaign: campaignId?.map((dat) => dat).join(","),
+      campaign: pendingFilters.campaignId?.map((dat) => dat).join(","),
     }).then((res) => {
-      if (res.success) {
+      if (res.success || res.data?.length > 0) {
         const data = res.data;
         const filteredData = data.affiliateFetch?.filter(
+          (item) => item !== null
+        ) || data?.filter(
           (item) => item !== null
         );
         const uniqueData = filteredData?.filter(
           (item, index, self) =>
             index === self.findIndex((t) => t.id === item.id)
         );
-        setAffiliateData(uniqueData);
+        setAffiliateData(uniqueData?.map((dat) => {
+          return ({ userName: dat?.userName || dat?.firstName, id: dat?.id || dat?._id })
+        }));
       } else {
         setAffiliateData([]);
       }
     });
   };
 
+  const exportCsv = (type) => {
+    const config = type != "excel" ? {
+      startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+      endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+      format: type,
+      responseType: type === "excel" ? "arraybuffer" : ""
+    } : {
+      params: {
+        startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
+        endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
+        format: type,
+      },
+      responseType: type === "excel" ? "arraybuffer" : ""
+    }
+
+    ApiClient.get("reports/performance/export", config)
+      .then((response) => {
+        console.log(`Response for ${type}:`, response);
+
+        let fileExtension = type === "excel" ? "xlsx" : type;
+
+        if (response && response.success !== false) {
+          if (type === 'xml') {
+            const responseStr = typeof response === 'string' ? response : new TextDecoder('utf-8').decode(response);
+            if (!responseStr.trim().startsWith('<?xml') && !responseStr.trim().startsWith('<')) {
+              console.error('Invalid XML data received:', responseStr.substring(0, 500));
+              alert('Server returned invalid XML data. Check console for details.');
+              return;
+            }
+          }
+
+          downloadFile(response, `Performance_Report.${fileExtension}`, type);
+        } else {
+          alert("No data to download.");
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        alert("Error fetching data: " + (err.message || err));
+      });
+  };
+
+  function downloadFile(data, filename, type) {
+    let blob;
+
+    if (type === 'excel') {
+      blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    } else if (type === 'csv') {
+      blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
+    } else if (type === 'xml') {
+      blob = new Blob([data], { type: 'application/xml;charset=utf-8;' });
+    }
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
   useEffect(() => {
     getBrandData();
+    // Apply initial filters on component mount
+    applyFilters();
   }, []);
+
+    useEffect(() => {
+    getCamapignData();
+  }, [pendingFilters.selectedAffiliate]);
 
   useEffect(() => {
     getData();
-  }, [campaignId]);
+  }, [pendingFilters.campaignId]);
 
   const getAnalyticsData = (p = {}) => {
     let filter = { ...p };
@@ -182,7 +299,7 @@ export default function AnalyticsDashboard() {
   };
 
   const getCamapignData = (p = {}) => {
-    let filter = { ...p };
+    let filter = { ...p , affiliate_ids: pendingFilters.selectedAffiliate?.map((dat) => dat).join(","),};
     let url = "campaign/brand/all";
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
@@ -197,181 +314,171 @@ export default function AnalyticsDashboard() {
     });
   };
 
-  useEffect(() => {
-    getCamapignData();
-    getClicksAnalyticsData({
-      startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
-      endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
-      brand_id: user?.id,
-      campaign: campaignId?.map((dat) => dat).join(",") || "",
-      startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
-      endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
-    });
-    getAnalyticsData({
-      startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
-      endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      campaign: campaignId?.map((dat) => dat).join(",") || "",
-      affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
-      brand_id: user?.id,
-      startDate2: moment(compDates?.[0]).format("YYYY-MM-DD"),
-      endDate2: moment(compDates?.[1]).format("YYYY-MM-DD"),
-    });
-  }, [selectedAffiliate, selectedBrand, campaignId]);
+  // Main function to apply all filters
+  const applyFilters = () => {
+    // Update the actual filter states with pending values
+    setBaseDates([...pendingFilters.baseDates]);
+    setCompDates([...pendingFilters.compDates]);
+    setSelectedCurrency(pendingFilters.selectedCurrency);
+    setCampaignId([...pendingFilters.campaignId]);
+    setSelectedAffiliate([...pendingFilters.selectedAffiliate]);
+    setSelectedBrand([...pendingFilters.selectedBrand]);
+    setComparisonPeriod(pendingFilters.comparisonPeriod);
 
-  const ApplyDateFilter = () => {
     // Ensure compDates are valid when switching from "none" to another period
-    let effectiveCompDates = compDates;
-    if (comparisonPeriod !== "none" && (!compDates[0] || !compDates[1])) {
-      // Set default comparison dates based on the selected period
+    let effectiveCompDates = pendingFilters.compDates;
+    if (pendingFilters.comparisonPeriod !== "none" && (!pendingFilters.compDates[0] || !pendingFilters.compDates[1])) {
       const today = new Date();
-      const firstDayOfMonth = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        1
-      );
+      const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
-      switch (comparisonPeriod) {
+      switch (pendingFilters.comparisonPeriod) {
         case "previousPeriod":
-          const duration = baseDates[1] - baseDates[0];
+          const duration = pendingFilters.baseDates[1] - pendingFilters.baseDates[0];
           effectiveCompDates = [
-            new Date(baseDates[0].getTime() - duration - 1),
-            new Date(baseDates[1].getTime() - duration - 1),
+            new Date(pendingFilters.baseDates[0].getTime() - duration - 1),
+            new Date(pendingFilters.baseDates[1].getTime() - duration - 1),
           ];
           break;
         case "previousYear":
           effectiveCompDates = [
-            new Date(
-              baseDates[0].getFullYear() - 1,
-              baseDates[0].getMonth(),
-              baseDates[0].getDate()
-            ),
-            new Date(
-              baseDates[1].getFullYear() - 1,
-              baseDates[1].getMonth(),
-              baseDates[1].getDate()
-            ),
+            new Date(pendingFilters.baseDates[0].getFullYear() - 1, pendingFilters.baseDates[0].getMonth(), pendingFilters.baseDates[0].getDate()),
+            new Date(pendingFilters.baseDates[1].getFullYear() - 1, pendingFilters.baseDates[1].getMonth(), pendingFilters.baseDates[1].getDate()),
           ];
           break;
         default:
           effectiveCompDates = [firstDayOfMonth, today];
       }
-      setCompDates(effectiveCompDates);
+      setPendingFilters(prev => ({ ...prev, compDates: effectiveCompDates }));
     }
 
-    getClicksAnalyticsData({
-      startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
-      endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
-      brand_id: selectedBrand?.map((dat) => dat).join(",") || "",
-      campaign: campaignId?.map((dat) => dat).join(",") || "",
-      startDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
-      endDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
-    });
+    const filterParams = {
+      startDate: moment(pendingFilters.baseDates?.[0]).format("YYYY-MM-DD"),
+      endDate: moment(pendingFilters.baseDates?.[1]).format("YYYY-MM-DD"),
+      affiliate_id: pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || "", // Add affiliate filter
+      brand_id: user?.id,
+      campaign: pendingFilters.campaignId?.map((dat) => dat).join(",") || "",
+      startDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
+      endDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
+    };
 
-    getAnalyticsData({
-      startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
-      endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      affiliate_id: selectedAffiliate?.map((dat) => dat).join(",") || "",
-      brand_id: selectedBrand?.map((dat) => dat).join(",") || "",
-      campaign: campaignId?.map((dat) => dat).join(",") || "",
-      startDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
-      endDate2:
-        comparisonPeriod == "none"
-          ? ""
-          : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
-    });
+    // Get exchange rate for the selected currency
+    if (pendingFilters.selectedCurrency !== "USD") {
+      getExchangeRate(pendingFilters.selectedCurrency);
+    } else {
+      setExchangeRate(1);
+    }
+
+    getClicksAnalyticsData(filterParams);
+    getAnalyticsData(filterParams);
 
     setHandleDateFilter(false);
   };
 
+  const ApplyDateFilter = () => {
+    // Just close the date picker, filters will be applied when user clicks "Apply Filters"
+    setHandleDateFilter(false);
+  };
+
   const resetFilters = () => {
-    setBaseDates([firstDayOfMonth, today]);
-    setCompDates([firstDayOfMonth, today]);
-    setSelectedAffiliate(null);
-    setSelectedBrand(null);
-    setCampaignId(null);
+    // Reset both pending and applied filters to defaults
+    setPendingFilters(defaultFilters);
+
+    // Immediately update all applied filter states
+    setBaseDates([...defaultFilters.baseDates]);
+    setCompDates([...defaultFilters.compDates]);
+    setSelectedCurrency(defaultFilters.selectedCurrency);
+    setCampaignId([...defaultFilters.campaignId]);
+    setSelectedAffiliate([...defaultFilters.selectedAffiliate]);
+    setSelectedBrand([...defaultFilters.selectedBrand]);
+    setComparisonPeriod(defaultFilters.comparisonPeriod);
+
+    // Apply the reset filters immediately
+    const filterParams = {
+      startDate: moment(defaultFilters.baseDates[0]).format("YYYY-MM-DD"),
+      endDate: moment(defaultFilters.baseDates[1]).format("YYYY-MM-DD"),
+      affiliate_id: "",
+      brand_id: user?.id,
+      campaign: "",
+      startDate2: "",
+      endDate2: "",
+    };
+
+    // Reset exchange rate
+    setExchangeRate(1);
+
+    // Fetch data with reset filters
+    getClicksAnalyticsData(filterParams);
+    getAnalyticsData(filterParams);
+
+    setHandleDateFilter(false);
   };
 
   return (
     <Layout name="Reports">
       <div className="dashboard">
-        <aside className="sidebar" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
+        <aside className="sidebar" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
           <h3 className="sidebar-title mb-0">Insights</h3>
           <nav className="sidebar-nav">
-            {/* <button className="sidebar-button">Program Overview</button> */}
-            {/* <button className="sidebar-button">Performance</button>
-                        <button className="sidebar-button">Customer Analysis</button> */}
+            {/* Navigation buttons */}
           </nav>
         </aside>
 
         <main className="main-content p-2 md-p-0 ">
-          <div className="custom-dropdown  position-relative ">
-            <div className="dropdown-item  date-picker-dropdown">
+
+          <div className="d-flex align-items-center flex-wrap gap-2 justify-content-end mt-3 mb-3">
+            <button
+              className="btn btn-primary apply-filters-btn"
+              onClick={applyFilters}
+              disabled={!hasPendingChanges()}
+            >
+              Apply Filters {hasPendingChanges() && "•"}
+            </button>
+
+            {showDropdown && (
+              <SelectDropdown
+                theme="search"
+                id="downloadDropdown"
+                displayValue="name"
+                placeholder="Download"
+                intialValue={selectedType}
+                result={handleDownload}
+                options={downloadOptions}
+              />
+            )}
+            <div className="reset-filters-container mt-0 px-0" onClick={() => { if (handleDateFilter) { setHandleDateFilter(false) }; }}>
+              {isFilterApplied() && (
+                <button className="btn btn-primary" onClick={resetFilters}>
+                  Reset Filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="custom-dropdown position-relative">
+            <div className="dropdown-item date-picker-dropdown">
               <span
-                className="form-select  date_select"
+                className="form-select date_select"
                 onClick={() => setHandleDateFilter(!handleDateFilter)}
                 onBlur={() => setHandleDateFilter(false)}
               >
-                {baseDates?.[0] ||
-                baseDates?.[1] ||
-                compDates?.[0] ||
-                compDates?.[1]
-                  ? comparisonPeriod == "none"
-                    ? `${moment(baseDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(baseDates?.[1]).format("MMMM DD, YYYY")}`
-                    : `${moment(baseDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(baseDates?.[1]).format(
-                        "MMMM DD, YYYY"
-                      )} ⇆ ${moment(compDates?.[0]).format(
-                        "MMMM DD, YYYY"
-                      )} - ${moment(compDates?.[1]).format("MMMM DD, YYYY")}`
+                {pendingFilters.baseDates?.[0] && pendingFilters.baseDates?.[1]
+                  ? pendingFilters.comparisonPeriod === "none"
+                    ? `${moment(pendingFilters.baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(pendingFilters.baseDates?.[1]).format("MMMM DD, YYYY")}`
+                    : `${moment(pendingFilters.baseDates?.[0]).format("MMMM DD, YYYY")} - ${moment(pendingFilters.baseDates?.[1]).format("MMMM DD, YYYY")} ⇆ ${moment(pendingFilters.compDates?.[0]).format("MMMM DD, YYYY")} - ${moment(pendingFilters.compDates?.[1]).format("MMMM DD, YYYY")}`
                   : "Select Date Range"}
               </span>
 
               <div className="controls mt-0 single-date-picker-wrapper">
-                {/* {handleDateFilter && (
-                            <DateRangePicker
-                                onChange={item => setState({ ...state, ...item })}
-                                showSelectionPreview={true}
-                                moveRangeOnFirstSelection={false}
-                                months={2}
-                                maxDate={new Date()}
-                                ranges={[state.selection1, state.selection2]}
-                                direction="horizontal"
-                                ariaLabels={{
-                                    dateInput: {
-                                        selection1: { startDate: "start date input of selction 1", endDate: "end date input of selction 1" },
-                                        selection2: { startDate: "start date input of selction 2", endDate: "end date input of selction 2" }
-                                    },
-                                    monthPicker: "month picker",
-                                    yearPicker: "year picker",
-                                    prevButton: "previous month button",
-                                    nextButton: "next month button",
-                                }}
-                            />
-                        )} */}
                 {handleDateFilter && (
                   <CustomDatePicker
-                    baseDates={baseDates}
-                    setBaseDates={setBaseDates}
-                    compDates={compDates}
-                    setCompDates={setCompDates}
+                    baseDates={pendingFilters.baseDates}
+                    setBaseDates={(dates) => setPendingFilters(prev => ({ ...prev, baseDates: dates }))}
+                    compDates={pendingFilters.compDates}
+                    setCompDates={(dates) => setPendingFilters(prev => ({ ...prev, compDates: dates }))}
                     setHandleDateFilter={setHandleDateFilter}
                     ApplyDateFilter={ApplyDateFilter}
-                    comparisonPeriod={comparisonPeriod}
-                    setComparisonPeriod={setComparisonPeriod}
+                    comparisonPeriod={pendingFilters.comparisonPeriod}
+                    setComparisonPeriod={(period) => setPendingFilters(prev => ({ ...prev, comparisonPeriod: period }))}
                   />
                 )}
               </div>
@@ -383,7 +490,7 @@ export default function AnalyticsDashboard() {
                 id="currencyDropdown"
                 displayValue="name"
                 placeholder="Select Currency"
-                intialValue={selectedCurrency}
+                intialValue={pendingFilters.selectedCurrency}
                 result={handleCurrencyChange}
                 options={CurencyData}
               />
@@ -396,8 +503,8 @@ export default function AnalyticsDashboard() {
                 placeholder="Select Campaign"
                 isClearable={true}
                 singleSelect={false}
-                intialValue={campaignId}
-                result={(e) => setCampaignId(e.value)}
+                intialValue={pendingFilters.campaignId}
+                result={(e) => setPendingFilters(prev => ({ ...prev, campaignId: e.value }))}
                 options={CampaignData}
               />
             </div>
@@ -408,8 +515,8 @@ export default function AnalyticsDashboard() {
                   id="statusDropdown"
                   displayValue="fullName"
                   placeholder="Select Brand"
-                  intialValue={selectedBrand}
-                  result={(e) => setSelectedBrand(e.value)}
+                  intialValue={pendingFilters.selectedBrand}
+                  result={(e) => setPendingFilters(prev => ({ ...prev, selectedBrand: e.value }))}
                   options={brands}
                 />
               ) : (
@@ -418,20 +525,12 @@ export default function AnalyticsDashboard() {
                   displayValue="userName"
                   placeholder="Select Affiliate"
                   isClearable={true}
-                  intialValue={selectedAffiliate}
-                  result={(e) => setSelectedAffiliate(e.value)}
+                  intialValue={pendingFilters.selectedAffiliate}
+                  result={(e) => setPendingFilters(prev => ({ ...prev, selectedAffiliate: e.value }))}
                   options={affiliateData}
                 />
               )}
             </div>
-          </div>
-
-          <div className="reset-filters-container" onClick={()=>{if(handleDateFilter){setHandleDateFilter(false)};}}>
-            {isFilterApplied() && (
-              <button className="btn-primary " onClick={resetFilters}>
-                Reset Filters
-              </button>
-            )}
           </div>
 
           <AnalyticsChartData

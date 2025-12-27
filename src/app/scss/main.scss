@@ -252,6 +252,9 @@ button.btn.btn-primary.dropdown-toggle.removeBg {
   border-radius: 8px;
   padding: 0.25rem 1rem;
 }
+.mc-campaign-dropdown:hover{
+  background: unset !important;
+}
 
 .dropdown-menu.shadow.bg_hover.show {
   border: none;
@@ -5272,7 +5275,7 @@ div:where(.swal2-icon).swal2-warning {
 }
 
 .user_name {
-  width: 130px;
+  width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

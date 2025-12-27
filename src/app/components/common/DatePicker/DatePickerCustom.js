@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CustomDatePicker.css";
@@ -55,6 +55,74 @@ const getDateRange = (option) => {
   }
 };
 
+// Helper function to check if two date ranges are equal
+const areDateRangesEqual = (range1, range2) => {
+  if (!range1[0] || !range1[1] || !range2[0] || !range2[1]) return false;
+
+  return (
+    range1[0].toDateString() === range2[0].toDateString() &&
+    range1[1].toDateString() === range2[1].toDateString()
+  );
+};
+
+// Helper function to find which predefined period matches the given dates
+const findMatchingPeriod = (dates) => {
+  if (!dates[0] || !dates[1]) return null;
+
+  const periodOptions = [
+    "today",
+    "yesterday",
+    "thisweek",
+    "lastweek",
+    "currentmonth",
+    "lastmonth",
+    "thisyear",
+    "lastyear",
+    "last7days"
+  ];
+
+  for (const option of periodOptions) {
+    const optionDates = getDateRange(option);
+    if (areDateRangesEqual(dates, optionDates)) {
+      return option;
+    }
+  }
+
+  return "custom"; // Return custom if no match found
+};
+
+// Helper function to check if comparison dates match a calculated period
+const checkIfComparisonMatchesPeriod = (baseDates, compDates, comparisonPeriod) => {
+  if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+    const calculatedCompDates = getComparisonDates(baseDates, comparisonPeriod);
+    return areDateRangesEqual(compDates, calculatedCompDates);
+  }
+  return false;
+};
+
+const getComparisonDates = (baseDates, comparisonType) => {
+  const [baseStart, baseEnd] = baseDates;
+
+  if (comparisonType === "previousperiod") {
+    const duration = baseEnd.getTime() - baseStart.getTime();
+    const compStart = new Date(baseStart);
+    compStart.setTime(compStart.getTime() - duration - (24 * 60 * 60 * 1000));
+    const compEnd = new Date(baseStart);
+    compEnd.setTime(compEnd.getTime() - (24 * 60 * 60 * 1000));
+    return [compStart, compEnd];
+  }
+
+  if (comparisonType === "previousyear") {
+    const compStart = new Date(baseStart);
+    compStart.setFullYear(compStart.getFullYear() - 1);
+    const compEnd = new Date(baseEnd);
+    compEnd.setFullYear(compEnd.getFullYear() - 1);
+    return [compStart, compEnd];
+  }
+
+  return [new Date(), new Date()];
+};
+
 const CustomDatePicker = ({
   baseDates,
   setBaseDates,
@@ -66,9 +134,37 @@ const CustomDatePicker = ({
   setComparisonPeriod,
 }) => {
   const [basePeriod, setBasePeriod] = useState("currentmonth");
-  // const [comparisonPeriod, setComparisonPeriod] = useState("previousYear");
-  // const [baseDates, setBaseDates] = useState([new Date(), new Date()]);
-  // const [compDates, setCompDates] = useState([new Date(), new Date()]);
+  const [prevCompDates, setPrevCompDates] = useState(compDates);
+
+  // Effect to update basePeriod when baseDates change (e.g., from calendar selection)
+  useEffect(() => {
+    const matchingPeriod = findMatchingPeriod(baseDates);
+    setBasePeriod(matchingPeriod);
+  }, [baseDates]);
+
+  // Effect to check if comparison dates have been manually modified
+  useEffect(() => {
+    // Skip if no comparison dates or comparison period is already custom
+    if (!compDates[0] || !compDates[1] || comparisonPeriod === "custom" || comparisonPeriod === "none") {
+      setPrevCompDates(compDates);
+      return;
+    }
+
+    // Check if dates have actually changed
+    const datesChanged = !areDateRangesEqual(compDates, prevCompDates);
+
+    if (datesChanged) {
+      // Check if the new dates still match the current comparison period calculation
+      const stillMatchesPeriod = checkIfComparisonMatchesPeriod(baseDates, compDates, comparisonPeriod);
+
+      if (!stillMatchesPeriod) {
+        // If dates were manually changed and no longer match the calculated period, switch to custom
+        setComparisonPeriod("custom");
+      }
+
+      setPrevCompDates(compDates);
+    }
+  }, [compDates, baseDates, comparisonPeriod]);
 
   const handlePeriodChange = (option, type) => {
     const [start, end] = getDateRange(option);
@@ -86,38 +182,42 @@ const CustomDatePicker = ({
   const handleRadioPeriodChange = (option, type) => {
     const [start, end] = getDateRange(option);
     if (start && end) {
-      //   if (type === "base") {
       setBaseDates([start, end]);
       setBasePeriod(option);
-      // setComparisonPeriod(option);
-      setCompDates([start, end]);
-      //   } else {
-      //     setComparisonPeriod(option);
-      //     setCompDates([start, end]);
-      //   }
+
+      if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+        const [compStart, compEnd] = getComparisonDates([start, end], comparisonPeriod);
+        setCompDates([compStart, compEnd]);
+      }
     }
   };
 
   const handleCompareRadioPeriodChange = (option, type) => {
-    const [start, end] = getDateRange(option);
-    // if (start && end) {
-    //   if (type === "base") {
-    // setBasePeriod(option);
-    setBaseDates([start, end]);
     setComparisonPeriod(option);
-    if (option == "none") {
+
+    if (option === "none") {
       setCompDates(["", ""]);
+    } else if (option === "previousperiod" || option === "previousyear") {
+      const [compStart, compEnd] = getComparisonDates(baseDates, option);
+      setCompDates([compStart, compEnd]);
+    } else if (option === "custom") {
+      if (!compDates[0] || !compDates[1]) {
+        setCompDates([new Date(), new Date()]);
+      }
     }
-    // setCompDates([start, end]);
-    //   } else {
-    //     setComparisonPeriod(option);
-    //     setCompDates([start, end]);
-    //   }
-    // }
   };
 
+  // Update comparison dates when base dates change (if comparison is active)
+  useEffect(() => {
+    if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+      const [compStart, compEnd] = getComparisonDates(baseDates, comparisonPeriod);
+      setCompDates([compStart, compEnd]);
+      setPrevCompDates([compStart, compEnd]);
+    }
+  }, [baseDates, comparisonPeriod]);
+
   return (
-    <div className={comparisonPeriod == "none" ?  "single-date-picker-container"  : "date-picker-container"}>
+    <div className={comparisonPeriod == "none" ? "single-date-picker-container" : "date-picker-container"}>
       <div className="flex-container">
         <div className="flex-container">
           <h3 className="section-title">Base Period</h3>
@@ -130,47 +230,42 @@ const CustomDatePicker = ({
             "Custom",
             "Current Month",
             "Last 7 Days",
-          ].map((option) => (
-            <label key={option} className="radio-label">
-              <input
-                type="radio"
-                name="basePeriod"
-                checked={
-                  basePeriod === option.toLowerCase().replace(/\s+/g, "")
-                }
-                onChange={() =>
-                  handleRadioPeriodChange(
-                    option.toLowerCase().replace(/\s+/g, ""),
-                    "base"
-                  )
-                }
-              />
-              {option}
-            </label>
-          ))}
-        </div>
-        <div>
-          <h3 className="section-title mt-3">Comparison Period</h3>
-          {["Previous Period", "Previous Year", "Custom", "None"].map(
-            (option) => (
+          ].map((option) => {
+            const optionKey = option.toLowerCase().replace(/\s+/g, "");
+            return (
               <label key={option} className="radio-label">
                 <input
                   type="radio"
-                  name="comparisonPeriod"
-                  checked={
-                    comparisonPeriod ===
-                    option.toLowerCase().replace(/\s+/g, "")
-                  }
+                  name="basePeriod"
+                  checked={basePeriod === optionKey}
                   onChange={() =>
-                    handleCompareRadioPeriodChange(
-                      option.toLowerCase().replace(/\s+/g, ""),
-                      "comparison"
-                    )
+                    handleRadioPeriodChange(optionKey, "base")
                   }
                 />
                 {option}
               </label>
-            )
+            );
+          })}
+        </div>
+        <div>
+          <h3 className="section-title mt-3">Comparison Period</h3>
+          {["Previous Period", "Previous Year", "Custom", "None"].map(
+            (option) => {
+              const optionKey = option.toLowerCase().replace(/\s+/g, "");
+              return (
+                <label key={option} className="radio-label">
+                  <input
+                    type="radio"
+                    name="comparisonPeriod"
+                    checked={comparisonPeriod === optionKey}
+                    onChange={() =>
+                      handleCompareRadioPeriodChange(optionKey, "comparison")
+                    }
+                  />
+                  {option}
+                </label>
+              );
+            }
           )}
         </div>
       </div>
@@ -184,13 +279,22 @@ const CustomDatePicker = ({
                 endDate: baseDates[1],
                 key: "selection",
               },
-            ]}  
-            onChange={(ranges) =>
-              setBaseDates([
+            ]}
+            onChange={(ranges) => {
+              const newBaseDates = [
                 ranges.selection.startDate,
                 ranges.selection.endDate,
-              ])
-            }
+              ];
+              setBaseDates(newBaseDates);
+
+              // The basePeriod will be updated automatically via the useEffect
+
+              if (comparisonPeriod === "previousperiod" || comparisonPeriod === "previousyear") {
+                const [compStart, compEnd] = getComparisonDates(newBaseDates, comparisonPeriod);
+                setCompDates([compStart, compEnd]);
+                setPrevCompDates([compStart, compEnd]);
+              }
+            }}
             moveRangeOnFirstSelection={true}
             editableDateInputs={false}
             maxDate={new Date()}
@@ -204,16 +308,20 @@ const CustomDatePicker = ({
                   key: "selection",
                 },
               ]}
-              onChange={(ranges) =>
-                setCompDates([
+              onChange={(ranges) => {
+                // Allow manual changes regardless of current comparison period
+                // The useEffect will detect the change and switch to custom if needed
+                const newCompDates = [
                   ranges.selection.startDate,
                   ranges.selection.endDate,
-                ])
-              }
+                ];
+                setCompDates(newCompDates);
+              }}
               moveRangeOnFirstSelection={true}
               rangeColors={["#198754"]}
-              editableDateInputs={false}
+              editableDateInputs={true} // Always allow date input
               maxDate={new Date()}
+            // Don't disable the calendar - allow interaction
             />
           )}
         </div>
@@ -225,7 +333,7 @@ const CustomDatePicker = ({
             Cancel
           </button>
           <button className="apply-btn" onClick={() => ApplyDateFilter()}>
-            Apply 
+            Apply
           </button>
         </div>
       </div>
