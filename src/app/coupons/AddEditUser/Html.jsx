@@ -204,7 +204,6 @@ const Html = ({
                     </div>
                   )}
 
-                  {/* {form?.visibility === "Public" ? ( */}
                   <div className="col-md-6 mb-3">
                     <label>
                       Coupon Type<span className="star">*</span>
@@ -242,47 +241,55 @@ const Html = ({
                     </div>
                   </div>
 
-                  {(
+                  {form?.visibility == "Public" && (
                     <div className="col-12 col-md-6">
                       <div className="mb-3">
                         <label className="mb-2">
-                          Select Campaign<span className="star">*</span>
+                          Select Campaign(s)<span className="star">*</span>
                         </label>
-                        <>
-                          <select
-                            className={`form-select mb-2 ${
-                              errors.SelectedCampaign && "is-invalid"
-                            }`}
+                        <div className="select_row media_row">
+                          <MultiSelectValue
                             id="campaignSelect"
-                            value={form?.campaign_id?.[0] || ""}
-                            onChange={(e) =>
+                            displayValue="name"
+                            placeholder="Select Campaign(s)"
+                            intialValue={form?.campaign_id || []}
+                            result={(e) => {
+                              // e.value will be an array of selected campaign IDs
                               setform({
                                 ...form,
-                                campaign_id: e.target.value && [e.target.value],
-                              })
-                            }
-                          >
-                            <option value="">Select Campaign</option>
-                            {campaignType.map((item) => (
-                              <option key={item.id} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                                campaign_id: e.value,
+                              });
 
-                          {campaignType.length === 0 &&
-                            form?.visibility ===
-                              "Exclusive to specific affiliate" &&
-                            form?.media && (
-                              <div className="text-danger small mt-1">
-                                No campaigns available for this affiliate
-                              </div>
-                            )}
-                        </>
+                              // Clear any previous campaign selection errors
+                              if (errors.SelectedCampaign) {
+                                setErrors({
+                                  ...errors,
+                                  SelectedCampaign: "",
+                                });
+                              }
+                            }}
+                            isSingle={false} // Set to false for multi-select
+                            options={campaignType}
+                          />
+                        </div>
+
+                        {campaignType.length === 0 &&
+                          form?.visibility === "Exclusive to specific affiliate" &&
+                          form?.media && (
+                            <div className="text-danger small mt-1">
+                              No campaigns available for this affiliate
+                            </div>
+                          )}
 
                         {errors.SelectedCampaign && (
                           <div className="invalid-feedback d-block">
                             {errors.SelectedCampaign}
+                          </div>
+                        )}
+
+                        {form?.campaign_id?.length > 0 && (
+                          <div className="mt-2 small text-muted">
+                            Selected {form.campaign_id.length} campaign(s)
                           </div>
                         )}
                       </div>
@@ -315,7 +322,7 @@ const Html = ({
                             },
                             {
                               name: "Percentage",
-                              id: "Percentage Commission",
+                              id: "Percentage",
                             },
                           ]}
                         />
@@ -331,16 +338,45 @@ const Html = ({
                         </label>
                         <input
                           type="number"
-                          className="form-control"
+                          className={`form-control ${form?.commissionType === "Percentage" &&
+                              form?.couponAmount &&
+                              parseFloat(form?.couponAmount) > 100
+                              ? "is-invalid"
+                              : ""
+                            }`}
                           placeholder={
                             form?.commissionType === "Percentage"
                               ? "Enter percentage"
                               : "Enter amount"
                           }
                           value={form.couponAmount || ""}
-                          onChange={(e) =>
-                            setform({ ...form, couponAmount: e.target.value })
-                          }
+                          onChange={(e) => {
+                            const value = e.target.value;
+
+                            // If it's a percentage type, validate the value
+                            if (form?.commissionType === "Percentage") {
+                              // Allow empty, or values between 0 and 100
+                              if (value === "" || (parseFloat(value) >= 0 && parseFloat(value) <= 100)) {
+                                setform({ ...form, couponAmount: value });
+                              }
+                              // Clear the error if value is within range
+                              if (value === "" || parseFloat(value) <= 100) {
+                                setErrors({
+                                  ...errors,
+                                  couponAmount: ""
+                                });
+                              }
+                            } else {
+                              // For fixed amount, accept any positive number
+                              if (value === "" || parseFloat(value) >= 0) {
+                                setform({ ...form, couponAmount: value });
+                              }
+                            }
+                          }}
+                          // Add HTML5 validation attributes
+                          min={form?.commissionType === "Percentage" ? "0" : "0"}
+                          max={form?.commissionType === "Percentage" ? "100" : undefined}
+                          step="0.01"
                         />
                         {submitted && !form?.couponAmount && (
                           <div className="invalid-feedback d-block">
@@ -350,9 +386,24 @@ const Html = ({
                           </div>
                         )}
                         {form?.commissionType === "Percentage" &&
-                          form?.couponCommissionValue > 100 && (
+                          form?.couponAmount &&
+                          parseFloat(form?.couponAmount) > 100 && (
                             <div className="invalid-feedback d-block">
                               Percentage cannot exceed 100%
+                            </div>
+                          )}
+                        {form?.commissionType === "Percentage" &&
+                          form?.couponAmount &&
+                          parseFloat(form?.couponAmount) < 0 && (
+                            <div className="invalid-feedback d-block">
+                              Percentage cannot be negative
+                            </div>
+                          )}
+                        {form?.commissionType === "Fixed amount" &&
+                          form?.couponAmount &&
+                          parseFloat(form?.couponAmount) < 0 && (
+                            <div className="invalid-feedback d-block">
+                              Amount cannot be negative
                             </div>
                           )}
                       </div>
@@ -414,7 +465,6 @@ const Html = ({
                         </label>
                       </div>
 
-                      {/* {!form.noExpiryDate && ( */}
                       <>
                         <label>
                           Expiry Date<span className="star">*</span>
@@ -444,7 +494,6 @@ const Html = ({
                             </div>
                           )}
                       </>
-                      {/* )} */}
                     </div>
                   </div>
 

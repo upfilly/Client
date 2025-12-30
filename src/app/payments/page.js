@@ -70,7 +70,7 @@ export default function Affilate() {
   };
 
   const downloadInvoicepending = (transaction) => {
-    if (!transaction.invoice_url) {
+    if (!transaction.custom_invoice_url) {
       alert('No invoice available for this transaction');
       return;
     }

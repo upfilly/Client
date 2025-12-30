@@ -468,6 +468,7 @@ export default function Dashboard() {
                       sales={analyticData}
                       clicks={clicksAnalyticData}
                       transaction={transactionAnalyticData}
+                      filter={filter} // Pass the filter prop
                     />
                   )}
                 </div>

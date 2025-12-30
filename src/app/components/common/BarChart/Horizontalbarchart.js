@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const MyHoriBarChart = ({ sales, clicks, transaction }) => {
+const MyHoriBarChart = ({ sales, clicks, transaction, filter = 'this_year' }) => {
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
 
@@ -18,40 +18,214 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
         return monthsShort[month - 1] || '';
       };
 
-      const monthlyData = {};
-      for (let i = 1; i <= 12; i++) {
-        monthlyData[i] = {
-          month: i,
-          revenue: 0,
-          clicks: 0,
-          transaction: 0
-        };
-      }
+      const monthNumberToFullName = (month) => {
+        const monthsFull = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return monthsFull[month - 1] || '';
+      };
 
-      sales.forEach(sale => {
-        const date = new Date(sale.createdAt);
-        const month = date.getMonth() + 1; // getMonth() returns 0-11
+      const getFilteredData = () => {
+        const now = new Date();
+        const currentMonth = now.getMonth() + 1; // 1-12
+        const currentYear = now.getFullYear();
 
-        monthlyData[month].revenue += sale.totalAmount || 0;
-      });
+        let monthsToShow = [];
 
-      if (clicks && clicks.length > 0 && clicks[0].clicks) {
-        clicks[0].clicks.forEach(click => {
-          const month = click._id?.month || 1;
-          monthlyData[month].clicks += click.count || 0;
-        });
-      }
+        switch (filter) {
+          case 'this_month': {
+            // Show days or weeks of current month
+            const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+            const dataByDay = {};
 
-      transaction.forEach(trans => {
-        const date = new Date(trans.createdAt);
-        const month = date.getMonth() + 1;
+            // Initialize all days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+              dataByDay[day] = {
+                label: `${currentMonth}/${day}`,
+                displayLabel: `Day ${day}`,
+                revenue: 0,
+                clicks: 0,
+                transaction: 0
+              };
+            }
 
-        monthlyData[month].transaction += trans.totalAmount || 0;
-      });
+            // Process sales data for current month
+            sales.forEach(sale => {
+              const date = new Date(sale.createdAt);
+              if (date.getMonth() + 1 === currentMonth && date.getFullYear() === currentYear) {
+                const day = date.getDate();
+                dataByDay[day].revenue += sale.totalAmount || 0;
+              }
+            });
 
-      const sortedData = Object.values(monthlyData).sort((a, b) => a.month - b.month);
+            // Process clicks data for current month
+            if (clicks && clicks.length > 0 && clicks[0].clicks) {
+              clicks[0].clicks.forEach(click => {
+                const date = new Date(click.date || click._id?.date);
+                if (date.getMonth() + 1 === currentMonth && date.getFullYear() === currentYear) {
+                  const day = date.getDate();
+                  dataByDay[day].clicks += click.count || 0;
+                }
+              });
+            }
 
-      const labels = sortedData.map(item => monthNumberToShortName(item.month));
+            // Process transaction data for current month
+            transaction.forEach(trans => {
+              const date = new Date(trans.createdAt);
+              if (date.getMonth() + 1 === currentMonth && date.getFullYear() === currentYear) {
+                const day = date.getDate();
+                dataByDay[day].transaction += trans.totalAmount || 0;
+              }
+            });
+
+            return Object.values(dataByDay);
+          }
+
+          case 'last_month': {
+            const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+            const lastMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+            const daysInLastMonth = new Date(lastMonthYear, lastMonth, 0).getDate();
+            const dataByDay = {};
+
+            for (let day = 1; day <= daysInLastMonth; day++) {
+              dataByDay[day] = {
+                label: `${lastMonth}/${day}`,
+                displayLabel: `Day ${day}`,
+                revenue: 0,
+                clicks: 0,
+                transaction: 0
+              };
+            }
+
+            // Similar processing as this_month but for last month
+            sales.forEach(sale => {
+              const date = new Date(sale.createdAt);
+              if (date.getMonth() + 1 === lastMonth && date.getFullYear() === lastMonthYear) {
+                const day = date.getDate();
+                dataByDay[day].revenue += sale.totalAmount || 0;
+              }
+            });
+
+            if (clicks && clicks.length > 0 && clicks[0].clicks) {
+              clicks[0].clicks.forEach(click => {
+                const date = new Date(click.date || click._id?.date);
+                if (date.getMonth() + 1 === lastMonth && date.getFullYear() === lastMonthYear) {
+                  const day = date.getDate();
+                  dataByDay[day].clicks += click.count || 0;
+                }
+              });
+            }
+
+            transaction.forEach(trans => {
+              const date = new Date(trans.createdAt);
+              if (date.getMonth() + 1 === lastMonth && date.getFullYear() === lastMonthYear) {
+                const day = date.getDate();
+                dataByDay[day].transaction += trans.totalAmount || 0;
+              }
+            });
+
+            return Object.values(dataByDay);
+          }
+
+          case 'this_year': {
+            // Original logic for showing all months of current year
+            const monthlyData = {};
+            for (let i = 1; i <= 12; i++) {
+              monthlyData[i] = {
+                label: monthNumberToShortName(i),
+                displayLabel: monthNumberToFullName(i),
+                revenue: 0,
+                clicks: 0,
+                transaction: 0
+              };
+            }
+
+            sales.forEach(sale => {
+              const date = new Date(sale.createdAt);
+              if (date.getFullYear() === currentYear) {
+                const month = date.getMonth() + 1;
+                monthlyData[month].revenue += sale.totalAmount || 0;
+              }
+            });
+
+            if (clicks && clicks.length > 0 && clicks[0].clicks) {
+              clicks[0].clicks.forEach(click => {
+                const date = new Date(click.date || click._id?.date);
+                if (date.getFullYear() === currentYear) {
+                  const month = date.getMonth() + 1;
+                  monthlyData[month].clicks += click.count || 0;
+                }
+              });
+            }
+
+            transaction.forEach(trans => {
+              const date = new Date(trans.createdAt);
+              if (date.getFullYear() === currentYear) {
+                const month = date.getMonth() + 1;
+                monthlyData[month].transaction += trans.totalAmount || 0;
+              }
+            });
+
+            return Object.values(monthlyData);
+          }
+
+          case 'last_year': {
+            const lastYear = currentYear - 1;
+            const monthlyData = {};
+            for (let i = 1; i <= 12; i++) {
+              monthlyData[i] = {
+                label: monthNumberToShortName(i),
+                displayLabel: monthNumberToFullName(i),
+                revenue: 0,
+                clicks: 0,
+                transaction: 0
+              };
+            }
+
+            sales.forEach(sale => {
+              const date = new Date(sale.createdAt);
+              if (date.getFullYear() === lastYear) {
+                const month = date.getMonth() + 1;
+                monthlyData[month].revenue += sale.totalAmount || 0;
+              }
+            });
+
+            if (clicks && clicks.length > 0 && clicks[0].clicks) {
+              clicks[0].clicks.forEach(click => {
+                const date = new Date(click.date || click._id?.date);
+                if (date.getFullYear() === lastYear) {
+                  const month = date.getMonth() + 1;
+                  monthlyData[month].clicks += click.count || 0;
+                }
+              });
+            }
+
+            transaction.forEach(trans => {
+              const date = new Date(trans.createdAt);
+              if (date.getFullYear() === lastYear) {
+                const month = date.getMonth() + 1;
+                monthlyData[month].transaction += trans.totalAmount || 0;
+              }
+            });
+
+            return Object.values(monthlyData);
+          }
+
+          default:
+            return [];
+        }
+      };
+
+      const filteredData = getFilteredData();
+
+      // Filter out empty data if needed (optional)
+      const sortedData = filteredData.filter(item =>
+        item.revenue > 0 || item.clicks > 0 || item.transaction > 0
+      );
+
+      const labels = sortedData.map(item => item.label);
+      const displayLabels = sortedData.map(item => item.displayLabel);
 
       const datasets = [
         {
@@ -78,9 +252,19 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
       ];
 
       // Calculate max value for scaling
-      const maxValue = Math.max(
-        ...datasets.flatMap(dataset => dataset.data)
-      );
+      const allValues = datasets.flatMap(dataset => dataset.data);
+      const maxValue = allValues.length > 0 ? Math.max(...allValues) : 100;
+
+      // Set appropriate chart title based on filter
+      const getChartTitle = () => {
+        switch (filter) {
+          case 'this_month': return 'This Month Daily Performance';
+          case 'last_month': return 'Last Month Daily Performance';
+          case 'this_year': return 'This Year Monthly Performance';
+          case 'last_year': return 'Last Year Monthly Performance';
+          default: return 'Performance Metrics';
+        }
+      };
 
       // Set chart options
       const options = {
@@ -92,7 +276,7 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
           },
           title: {
             display: true,
-            text: 'Monthly Performance Metrics',
+            text: getChartTitle(),
           },
           tooltip: {
             callbacks: {
@@ -128,7 +312,12 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
           y: {
             title: {
               display: false,
-              text: 'Month'
+              text: filter.includes('month') ? 'Day' : 'Month'
+            },
+            ticks: {
+              callback: function (value, index) {
+                return displayLabels[index] || labels[index] || value;
+              }
             }
           },
         },
@@ -139,11 +328,17 @@ const MyHoriBarChart = ({ sales, clicks, transaction }) => {
     };
 
     processData();
-  }, [sales, clicks, transaction]);
+  }, [sales, clicks, transaction, filter]); // Added filter to dependencies
 
   return (
     <div style={{ width: '100%', height: '500px', padding: '20px' }}>
-      <Bar data={chartData} options={chartOptions} />
+      {chartData.labels.length > 0 ? (
+        <Bar data={chartData} options={chartOptions} />
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <p>No data available for the selected period</p>
+        </div>
+      )}
     </div>
   );
 };
