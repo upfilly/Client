@@ -79,7 +79,8 @@ export default function Layout({
   const [chat, setChat] = useState<any[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [incomingMessages, setIncomingMessages] = useState<Message[]>([]);
-
+  const [onlineUserId, setOnlineUserId] = useState(null);
+  
   const isDashboard =
     pathname.includes("/marketplace") ||
     pathname.includes("/notifications") ||
@@ -390,7 +391,10 @@ export default function Layout({
 
           const userId = user?.id || res.data.data.user_id;
           loadChatMessages(data.data.room_id, userId);
-
+          ConnectSocket.on("user-online", (data) => {
+            // console.log(data,"daataaOnline")
+            setOnlineUserId(userId);
+          });
           joinRoom(data.data.room_id, data.data.user_id);
           localStorage.setItem("chatbotroomId", data.data.room_id);
           localStorage.setItem("chatbotuserId", data.data.user_id);
