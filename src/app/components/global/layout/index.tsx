@@ -478,10 +478,10 @@ export default function Layout({
     const [showTooltip, setShowTooltip] = useState(false);
 
     const handleClick = () => {
-      // Toggle chatbot visibility
-      setShowChatbot(prev => !prev);
+      if (user?.id || user?._id || emailSubmitted) {
+        setShowChatbot(prev => !prev);
+      }
 
-      // If opening the chatbot, handle email/auth logic
       if (!showChatbot) {
         if (user?.id || user?._id) {
           if (!emailSubmitted) {
@@ -497,6 +497,7 @@ export default function Layout({
           return;
         }
 
+        
         setShowEmailModal(true);
       }
     };
