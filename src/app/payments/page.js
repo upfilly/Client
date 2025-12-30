@@ -253,7 +253,7 @@ export default function Affilate() {
     };
     setStartDate("");
     setEndDate("");
-    setSelectedOptions([]);
+    // setSelectedOptions([]);
     setIsOpen(false);
     setFilter({ ...filters, ...filter });
     getData({ ...filter });
