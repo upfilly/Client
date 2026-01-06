@@ -154,7 +154,7 @@ const EditProfile = () => {
           firstName: capitalizeFirstLetter(value.firstName),
           lastName: capitalizeFirstLetter(value.lastName),
           platforms: res?.data?.propertyType || [],
-          logo1: value.logo1 || [],
+          logo1: value.logo1 || "",
           affiliateSignupText: value.affiliateSignupText || "",
         });
         setFormData(payload);
@@ -280,7 +280,7 @@ const EditProfile = () => {
         history.push("/profile");
         toast.success(res.message);
       }
-      toast.error(res.error.message);
+      // toast.error(res.error.message);
       loader(false);
     });
   };
