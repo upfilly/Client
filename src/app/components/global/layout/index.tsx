@@ -873,7 +873,7 @@ export default function Layout({
       setMessages(prev => [...prev, userMessage]);
       setInputMessage("");
       setLocalInputMessage(""); // Clear local state
-      setIsTyping(true);
+      // setIsTyping(true);
 
       // Send message via Socket.io
       const payload = {
@@ -909,7 +909,7 @@ export default function Layout({
     const handleLocalInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setLocalInputMessage(value);
-      setInputMessage(value); // Also update the parent state
+      setInputMessage(value);
     };
 
     const chatbotWindowStyle: CSSProperties = {
