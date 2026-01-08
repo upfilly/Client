@@ -79,7 +79,8 @@ export default function Layout({
   const [chat, setChat] = useState<any[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [incomingMessages, setIncomingMessages] = useState<Message[]>([]);
-
+  const [onlineUserId, setOnlineUserId] = useState(null);
+  
   const isDashboard =
     pathname.includes("/marketplace") ||
     pathname.includes("/notifications") ||
@@ -260,6 +261,43 @@ export default function Layout({
     };
   }, [adminId, user?.id]);
 
+    useEffect(() => {
+    const handleReceiveMessage = (newdata: any) => {
+      console.log("Socket message received:", newdata);
+      console.log("Current roomId in localStorage:", localStorage.getItem("chatbotroomId"));
+      console.log("Message room_id:", newdata.data?._doc?.room_id);
+
+      const data = newdata.data;
+      const currentRoomId = localStorage.getItem("chatbotroomId");
+
+      if (currentRoomId === data?._doc?.room_id) {
+        console.log("Message belongs to current chat room");
+
+        const currentUserId = user?.id || localStorage.getItem("chatbotuserId");
+        const newMessage: Message = {
+          id: Date.now(),
+          text: data?._doc?.content || '',
+          sender: data?._doc?.sender === adminId ? 'admin' :
+            data?._doc?.sender === currentUserId ? 'user' : 'bot',
+          timestamp: data?._doc?.createdAt || new Date().toISOString(),
+          senderId: data?._doc?.sender
+        };
+
+        console.log("Adding new message to incomingMessages:", newMessage);
+        setIncomingMessages(prev => [...prev, newMessage]);
+      } else {
+        console.log("Message belongs to different room, ignoring");
+      }
+    };
+
+    ConnectSocket.on("admin-offline-notification", handleReceiveMessage);
+
+    // Cleanup function
+    return () => {
+      ConnectSocket.off("admin-offline-notification", handleReceiveMessage);
+    };
+  }, [adminId, user?.id]);
+
   useEffect(() => {
     const savedEmail = localStorage.getItem('upfilly_chatbot_email');
     const savedMessages = localStorage.getItem('upfilly_chatbot_messages');
@@ -390,7 +428,10 @@ export default function Layout({
 
           const userId = user?.id || res.data.data.user_id;
           loadChatMessages(data.data.room_id, userId);
-
+          ConnectSocket.on("user-online", (data) => {
+            // console.log(data,"daataaOnline")
+            setOnlineUserId(userId);
+          });
           joinRoom(data.data.room_id, data.data.user_id);
           localStorage.setItem("chatbotroomId", data.data.room_id);
           localStorage.setItem("chatbotuserId", data.data.user_id);
@@ -478,10 +519,10 @@ export default function Layout({
     const [showTooltip, setShowTooltip] = useState(false);
 
     const handleClick = () => {
-      // Toggle chatbot visibility
-      setShowChatbot(prev => !prev);
+      if (user?.id || user?._id || emailSubmitted) {
+        setShowChatbot(prev => !prev);
+      }
 
-      // If opening the chatbot, handle email/auth logic
       if (!showChatbot) {
         if (user?.id || user?._id) {
           if (!emailSubmitted) {
@@ -497,6 +538,7 @@ export default function Layout({
           return;
         }
 
+        
         setShowEmailModal(true);
       }
     };
@@ -831,7 +873,7 @@ export default function Layout({
       setMessages(prev => [...prev, userMessage]);
       setInputMessage("");
       setLocalInputMessage(""); // Clear local state
-      setIsTyping(true);
+      // setIsTyping(true);
 
       // Send message via Socket.io
       const payload = {
@@ -846,28 +888,28 @@ export default function Layout({
       ConnectSocket.emit("send-message", payload);
 
       // Fallback timeout in case socket doesn't respond
-      const fallbackTimeout = setTimeout(() => {
-        setIsTyping(false);
-        const fallbackMessage: Message = {
-          id: Date.now() + 1,
-          text: "Thanks for your message! Our support team has received it and will respond shortly.",
-          sender: "admin",
-          timestamp: new Date().toISOString(),
-        };
-        setMessages(prev => [...prev, fallbackMessage]);
-      }, 10000);
+      // const fallbackTimeout = setTimeout(() => {
+      //   setIsTyping(false);
+      //   const fallbackMessage: Message = {
+      //     id: Date.now() + 1,
+      //     text: "Thanks for your message! Our support team has received it and will respond shortly.",
+      //     sender: "admin",
+      //     timestamp: new Date().toISOString(),
+      //   };
+      //   setMessages(prev => [...prev, fallbackMessage]);
+      // }, 10000);
 
       // Store timeout ID to clear it if real response arrives
-      const timeoutId = fallbackTimeout;
+      // const timeoutId = fallbackTimeout;
 
       // Clear timeout when component unmounts or new message is sent
-      return () => clearTimeout(timeoutId);
+      // return () => clearTimeout(timeoutId);
     };
 
     const handleLocalInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setLocalInputMessage(value);
-      setInputMessage(value); // Also update the parent state
+      setInputMessage(value);
     };
 
     const chatbotWindowStyle: CSSProperties = {

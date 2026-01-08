@@ -359,7 +359,7 @@ export default function Chat() {
   const getChatList = (p = {}) => {
     let url = `${SocketURL}chat/user/recent-chats/all?user_id=${
       user?.id
-    }&login_user_id=${user?.id}&search=${!p?.search ? "" : p?.search}&&support=true`;
+    }&login_user_id=${user?.id}&search=${!p?.search ? "" : p?.search}&&support=false`;
     axios.get(url, filters).then((res) => {
       if (res.data.success) {
         setChatList(res?.data?.data?.data);
@@ -731,7 +731,7 @@ export default function Chat() {
             <div className="row h-100">
               <div className="col-lg-5">
                 {/* original all chata */}
-                <div className="conversations mb-4 d-none d-lg-block ">
+                <div className="conversations mb-4  d-lg-block ">
                   <div className="card p-2 h-100">
                     <div
                       className="card-header pl-0 pr-0 p-0 d-flex justify-content-between align-items-center"

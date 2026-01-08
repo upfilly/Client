@@ -219,7 +219,7 @@ const AddEditUser = () => {
 
     if (form?.visibility === "Exclusive to specific affiliate") {
       requiredFields.media = "Affiliates";
-      requiredFields.campaign_id = "Campaign";
+      // requiredFields.campaign_id = "Campaign";
     }
 
     const missingFields = Object.keys(requiredFields).filter(
@@ -449,8 +449,6 @@ const AddEditUser = () => {
       if (res.success === true) {
         const data = res.data?.data || res.data || [];
         let processedData = data;
-
-        console.log(processedData, "ProcessedData");
 
         if (form?.visibility === "Exclusive to specific affiliate") {
           Array.isArray(processedData) || (processedData = [processedData]);

@@ -441,7 +441,7 @@ img.fonts15 {
 
 
 .dropdown_header .noti_head {
-  color: #fff;
+  color: #000000;
 }
 
 .bell_bg i {
@@ -479,7 +479,7 @@ img.fonts15 {
 
 .overflow_hight {
   position: absolute;
-  width: 300px;
+  width: 320px;
   left: 0;
   top: 52px;
   border-radius: 10px !important;
@@ -493,7 +493,7 @@ img.fonts15 {
 
 .view_btn {
   font-size: 13px;
-  color: white;
+  color: rgb(0, 0, 0);
   // color: #032E72;
   cursor: pointer;
 }
@@ -511,7 +511,7 @@ img.fonts15 {
 .noti_head {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .noti_text {

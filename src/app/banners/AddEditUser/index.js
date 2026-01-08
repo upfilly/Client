@@ -58,8 +58,6 @@ const AddEditUser = () => {
   const [closeExp, setCloseExp] = useState(false);
   const dateRef2 = useRef(null);
 
-  console.log("Current ID:", id); // Debug log
-
   const getCategory = (p = {}) => {
     let url = "main-category/all";
     ApiClient.get(url).then((res) => {
@@ -131,7 +129,8 @@ const AddEditUser = () => {
       if (
         !form?.linkName ||
         !form?.linkDestinationUrl ||
-        !form?.linkStartDate
+        !form?.linkStartDate ||
+        !form?.linkDescription
         // !form?.linkEndDate
       ) {
         setSubmitted(true);

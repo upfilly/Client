@@ -35,7 +35,6 @@ const Html = ({
   handleClick2,
   dateRef2,
 }) => {
-  console.log(form, "form");
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const user = crendentialModel.getUser();
@@ -362,7 +361,7 @@ const Html = ({
                               dateFormat="MM/dd/yyyy h:mm aa"
                               showTimeInput
                             />
-                            {errors.expirationDate && (
+                            {(errors.expirationDate && !form?.expireCheck) && (
                               <div className="text-danger small">
                                 {errors.expirationDate}
                               </div>
@@ -597,7 +596,7 @@ const Html = ({
                       </div>
 
                       <div className="col-md-12 mb-3 custom-description">
-                        <label>Description</label>
+                        <label>Description</label>{form?.addType === 'link' && <span className="star">*</span>}
                         <DynamicReactQuill
                           theme="snow"
                           value={form?.linkDescription ? form?.linkDescription : ""}
@@ -644,6 +643,13 @@ const Html = ({
                           ]}
                           bounds={".app"}
                         />
+                        {submitted && !form?.linkDescription ? (
+                          <div className="invalid-feedback d-block">
+                            Link Description is Required
+                          </div>
+                        ) : (
+                          <></>
+                        )}
                       </div>
 
                       <div className="col-md-6 mb-3 ">

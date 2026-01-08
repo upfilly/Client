@@ -64,7 +64,7 @@ export default function Affiliate() {
     { key: 'orderId', label: 'Order Id', sortable: false, default: true },
     { key: 'transactionDate', label: 'Transaction Date', sortable: true, default: true },
     { key: 'commission', label: 'Commission', sortable: true, default: true },
-    { key: 'commissionPaid', label: 'Commission paid', sortable: false, default: true },
+    // { key: 'commissionPaid', label: 'Commission paid', sortable: false, default: true },
     { key: 'commissionStatus', label: 'Commission Status', sortable: true, default: true },
     // { key: 'paymentStatus', label: 'Payment Status', sortable: true, default: true },
     { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
@@ -567,9 +567,9 @@ export default function Affiliate() {
                           {isColumnVisible('commission') && (
                             <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           )}
-                          {isColumnVisible('commissionPaid') && (
+                          {/* {isColumnVisible('commissionPaid') && (
                             <th scope="col" >Commission paid</th>
-                          )}
+                          )} */}
                           {isColumnVisible('commissionStatus') && (
                             <th scope="col" onClick={e => sorting('commission_status')}>Commission Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           )}
@@ -610,16 +610,16 @@ export default function Affiliate() {
                             {isColumnVisible('commission') && (
                               <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
                             )}
-                            {isColumnVisible('commissionPaid') && (
-                              // !itm?.amount_of_commission ? 
-                              <td className='name-person ml-2' >
+                            {/* {isColumnVisible('commissionPaid') && ( */}
+                              {/* // !itm?.amount_of_commission ?  */}
+                              {/* <td className='name-person ml-2' >
                                 {selectedCurrency != "USD" ? `${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}` : `$${calculatetotalCommission(itm?.campaign_details?.commission_type, itm?.price, itm?.campaign_details?.commission)}`}
-                              </td> 
-                              // :
+                              </td>  */}
+                              {/* // :
                                 // <td className='name-person ml-2' >
                                 //   {`$${convertedCurrency(itm?.amount_of_commission)}`}
-                                // </td>
-                            )}
+                                // </td> */}
+                            {/* )} */}
                             {isColumnVisible('commissionStatus') && (
                               <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
                             )}
@@ -638,8 +638,8 @@ export default function Affiliate() {
                                     </button>
                                   </div>
                                 ) : itm?.commission_status == 'rejected' ? (
-                                  <div className="btn btn-primary mr-2">Rejected</div>
-                                ) : <div className="btn btn-primary mr-2">Accepted</div>
+                                  <div className="mr-2">--</div>
+                                ) : <div className="mr-2">--</div>
                                 // (<>
                                 //   {itm?.commission_paid != "paid" ? <div className="btn btn-primary mr-2" onClick={() => handleShow(itm?.price, itm?.campaign_details?.commission, itm?.campaign_details?.commission_type, itm?.id || itm?._id)}>Pay Now</div> : "Paid"}
                                 // </>
