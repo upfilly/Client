@@ -36,6 +36,8 @@ export default function Affiliate() {
   const [showColumnSelector, setShowColumnSelector] = useState(false);
   const columnSelectorRef = useRef(null);
 
+  console.log(selectedCurrency,"exchangeRateexchangeRate")
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -608,7 +610,13 @@ export default function Affiliate() {
                               <td className='name-person ml-2' >{datepipeModel.date(itm?.timestamp || itm?.createdAt)}</td>
                             )}
                             {isColumnVisible('commission') && (
-                              <td className='name-person ml-2' >{itm?.campaign_details?.commission_type == "percentage" ? "" : "$"}{itm?.campaign_details?.commission_type == "percentage" ? itm?.campaign_details?.commission : convertedCurrency(itm?.campaign_details?.commission || itm?.amount_of_commission)}{itm?.campaign_details?.commission_type == "percentage" ? "%" : ""}</td>
+                              <td className="name-person ml-2">
+                                {itm?.amount_of_commission
+                                  ? `${(selectedCurrency == "") ? "$" : ""}${(selectedCurrency != "USD") ? "" : "$"}${convertedCurrency(itm.amount_of_commission)}`
+                                  : itm?.campaign_details?.commission_type === "percentage"
+                                    ? `${itm?.campaign_details?.commission}%`
+                                    : `${(selectedCurrency == "") ? "$" : ""}${(selectedCurrency != "USD") ? "" : "$"}${convertedCurrency(itm?.campaign_details?.commission)}`}
+                              </td>
                             )}
                             {/* {isColumnVisible('commissionPaid') && ( */}
                               {/* // !itm?.amount_of_commission ?  */}
