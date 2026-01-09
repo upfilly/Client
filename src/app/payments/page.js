@@ -447,7 +447,7 @@ export default function Affilate() {
     setIsProcessing(true);
     try {
       const response = await ApiClient.post('pay/commission/to/admin', {
-        transaction_ids: pendingPaymentData.transaction_ids,
+        transaction_ids: pendingPaymentData.ids,
         commission: parseFloat(pendingPaymentData.totalPayableAmount),
       });
 
