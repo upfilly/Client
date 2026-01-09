@@ -15,6 +15,7 @@ import methodModel from "../../methods/methods";
 import Modal from 'react-modal';
 import toast from 'react-toastify';
 import environment from "@/environment";
+import axios from "axios";
 
 if (typeof window !== 'undefined') {
   Modal.setAppElement('body');
@@ -100,19 +101,44 @@ export default function Affilate() {
     }
   };
 
+  // const downloadMonthlyInvoice = async (invoice) => {
+  //   try {
+  //     const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
+      
+  //     const link = document.createElement('a');
+  //     link.href = invoiceUrl;
+  //     link.download = invoice.invoice_url.split('/').pop() || `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
+  //     link.target = '_blank';
+      
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+      
+  //   } catch (error) {
+  //     console.error("Error downloading invoice:", error);
+  //     try {
+  //       const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
+  //       window.open(invoiceUrl, '_blank');
+  //     } catch (fallbackError) {
+  //       alert('Failed to download invoice. Please try again.');
+  //     }
+  //   }
+  // };
+
   const downloadMonthlyInvoice = async (invoice) => {
     try {
       const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
-      
+
+      const response = await axios.get(invoiceUrl, { responseType: 'blob' })
+      const url = window.URL.createObjectURL(new Blob([response.data]))
       const link = document.createElement('a');
-      link.href = invoiceUrl;
+      link.href = url;
       link.download = invoice.invoice_url.split('/').pop() || `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
-      link.target = '_blank';
-      
+      link.setAttribute('download', 'link.download')
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
     } catch (error) {
       console.error("Error downloading invoice:", error);
       try {
