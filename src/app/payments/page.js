@@ -1066,7 +1066,7 @@ export default function Affilate() {
                         All Transactions
                       </button>
                     </li>
-                    <li className="nav-item" role="presentation">
+                    {user?.role !== "brand" && <li className="nav-item" role="presentation">
                       <button
                         className={`nav-link ${activeTab === "monthly" ? "active" : ""}`}
                         onClick={() => setActiveTab("monthly")}
@@ -1083,7 +1083,7 @@ export default function Affilate() {
                         <i className="fa fa-file-text-o me-2" aria-hidden="true"></i>
                         Monthly Invoices
                       </button>
-                    </li>
+                    </li>}
                   </ul>
                 </div>
               </div>
