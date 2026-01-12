@@ -480,7 +480,7 @@ export default function Affiliate() {
                       options={CurencyData}
                     />
 
-                    <div className='width80'>
+                    {/* <div className='width80'>
                       <SelectDropdown theme='search'
                         id="statusDropdown"
                         displayValue="name"
@@ -493,7 +493,7 @@ export default function Affiliate() {
                           { id: 'unpaid', name: 'unpaid' },
                         ]}
                       />
-                    </div>
+                    </div> */}
 
                     <div class="date-picker-box">
                       <DatePicker

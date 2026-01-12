@@ -627,7 +627,7 @@ export default function Affilate() {
                       <th onClick={(e) => sorting("updatedAt")}>
                         Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                      <th>Invoice</th>
+                      <th>Report</th>
                     </tr>
                   </thead>
                   <tbody>
