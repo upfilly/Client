@@ -1066,7 +1066,8 @@ export default function Affilate() {
                         All Transactions
                       </button>
                     </li>
-                    {user?.role !== "brand" && <li className="nav-item" role="presentation">
+                    {user?.role !== "brand" && 
+                    <li className="nav-item" role="presentation">
                       <button
                         className={`nav-link ${activeTab === "monthly" ? "active" : ""}`}
                         onClick={() => setActiveTab("monthly")}
