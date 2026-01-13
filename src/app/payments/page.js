@@ -159,6 +159,40 @@ export default function Affilate() {
     }
   };
 
+  const downloadMonthlyReport = async (invoice) => {
+    try {
+      const invoiceUrl = `${environment.api}${invoice.report_url}`;
+
+      const response = await axios.get(invoiceUrl, { responseType: 'blob' })
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = invoice.report_url.split('/').pop() || `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
+      link.setAttribute('download', 'link.download')
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (error) {
+      console.error("Error downloading invoice:", error);
+      try {
+        const invoiceUrl = `${environment.api}${invoice.report_url}`;
+        window.open(invoiceUrl, '_blank');
+      } catch (fallbackError) {
+        alert('Failed to download invoice. Please try again.');
+      }
+    }
+  };
+
+  const viewMonthlyReport = (invoice) => {
+    if (invoice.invoice_url) {
+      const invoiceUrl = `${environment.api}${invoice.report_url}`;
+      window.open(invoiceUrl, '_blank');
+    } else {
+      alert('Invoice not available for viewing.');
+    }
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       if (activeTab === "all") {
@@ -783,7 +817,7 @@ export default function Affilate() {
 
           <div className="row">
             <div className="col-md-12">
-              {monthlyData.length > 0 && (
+              {/* {monthlyData.length > 0 && (
                 <div className="row mb-4">
                   <div className="col-md-2">
                     <div className="card bg-light border">
@@ -834,7 +868,7 @@ export default function Affilate() {
                     </div>
                   </div>
                 </div>
-              )}
+              )} */}
 
               <div className="respon_data">
                 <div className="table_section">
@@ -851,15 +885,16 @@ export default function Affilate() {
                           <th onClick={() => monthlySorting("total_amount")}>
                             Total Amount {monthlyFilters?.key === "total_amount" ? (monthlyFilters?.sorder === "asc" ? "↑" : "↓") : ""}
                           </th>
-                          <th>Commission Count</th>
-                          <th>Affiliates</th>
+                          {/* <th>Commission Count</th>
+                          <th>Affiliates</th> */}
                           <th onClick={() => monthlySorting("status")}>
                             Status {monthlyFilters?.key === "status" ? (monthlyFilters?.sorder === "asc" ? "↑" : "↓") : ""}
                           </th>
                           <th onClick={() => monthlySorting("createdAt")}>
                             Generated On {monthlyFilters?.key === "createdAt" ? (monthlyFilters?.sorder === "asc" ? "↑" : "↓") : ""}
                           </th>
-                          <th>Actions</th>
+                          <th>Invoices</th>
+                          <th>Reports</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -893,7 +928,7 @@ export default function Affilate() {
                                 Commission: ${(invoice.total_commission || 0).toFixed(2)}
                               </div>
                             </td>
-                            <td className="name-person ml-2">
+                            {/* <td className="name-person ml-2">
                               <div className="text-center">
                                 <span className="badge bg-info">
                                   {invoice.commission_count || 0}
@@ -902,8 +937,8 @@ export default function Affilate() {
                               <div className="small text-muted text-center">
                                 Transactions
                               </div>
-                            </td>
-                            <td className="name-person ml-2">
+                            </td> */}
+                            {/* <td className="name-person ml-2">
                               <div className="small">
                                 {invoice.details?.affiliates?.length || 0} Affiliate(s)
                               </div>
@@ -917,7 +952,7 @@ export default function Affilate() {
                                   +{invoice.details.affiliates.length - 2} more
                                 </div>
                               )}
-                            </td>
+                            </td> */}
                             <td className="name-person ml-2">
                               <span className={`badge bg-${invoice.status === 'paid' ? 'success' : invoice.status === 'pending' ? 'warning' : 'secondary'}`}>
                                 {invoice.status?.charAt(0).toUpperCase() + invoice.status?.slice(1) || 'Generated'}
@@ -949,6 +984,44 @@ export default function Affilate() {
                                 
                                 <button
                                   onClick={() => viewMonthlyInvoice(invoice)}
+                                  className="btn btn-sm btn-outline-secondary"
+                                  title="View Invoice"
+                                  style={{ padding: '4px 8px', fontSize: '12px' }}
+                                  disabled={!invoice.invoice_url}
+                                >
+                                  <i className="fa fa-eye me-1" aria-hidden="true"></i>
+                                  View
+                                </button>
+                                
+                                {/* {invoice.status === 'pending' && (
+                                  <button
+                                    onClick={() => handlePayMonthlyInvoice(invoice)}
+                                    className="btn btn-sm btn-success"
+                                    title="Pay Invoice"
+                                    style={{ padding: '4px 8px', fontSize: '12px' }}
+                                  >
+                                    <i className="fa fa-credit-card me-1" aria-hidden="true"></i>
+                                    Pay Now
+                                  </button>
+                                )} */}
+                              </div>
+                            </td>
+
+                            <td className="name-person ml-2">
+                              <div className="invoice-actions" style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                <button
+                                  onClick={() => downloadMonthlyReport(invoice)}
+                                  className="btn btn-sm btn-outline-primary"
+                                  title="Download Invoice PDF"
+                                  style={{ padding: '4px 8px', fontSize: '12px' }}
+                                  disabled={!invoice.invoice_url}
+                                >
+                                  <i className="fa fa-download me-1" aria-hidden="true"></i>
+                                  Download
+                                </button>
+                                
+                                <button
+                                  onClick={() => viewMonthlyReport(invoice)}
                                   className="btn btn-sm btn-outline-secondary"
                                   title="View Invoice"
                                   style={{ padding: '4px 8px', fontSize: '12px' }}
