@@ -322,7 +322,7 @@ const Html = ({
                             },
                             {
                               name: "Percentage",
-                              id: "Percentage",
+                              id: "Percentage Commission",
                             },
                           ]}
                         />
@@ -338,14 +338,14 @@ const Html = ({
                         </label>
                         <input
                           type="number"
-                          className={`form-control ${form?.commissionType === "Percentage" &&
+                          className={`form-control ${form?.commissionType === "Percentage Commission" &&
                               form?.couponAmount &&
                               parseFloat(form?.couponAmount) > 100
                               ? "is-invalid"
                               : ""
                             }`}
                           placeholder={
-                            form?.commissionType === "Percentage"
+                            form?.commissionType === "Percentage Commission"
                               ? "Enter percentage"
                               : "Enter amount"
                           }
@@ -354,7 +354,7 @@ const Html = ({
                             const value = e.target.value;
 
                             // If it's a percentage type, validate the value
-                            if (form?.commissionType === "Percentage") {
+                            if (form?.commissionType === "Percentage Commission") {
                               // Allow empty, or values between 0 and 100
                               if (value === "" || (parseFloat(value) >= 0 && parseFloat(value) <= 100)) {
                                 setform({ ...form, couponAmount: value });
@@ -374,25 +374,25 @@ const Html = ({
                             }
                           }}
                           // Add HTML5 validation attributes
-                          min={form?.commissionType === "Percentage" ? "0" : "0"}
-                          max={form?.commissionType === "Percentage" ? "100" : undefined}
+                          min={form?.commissionType === "Percentage Commission" ? "0" : "0"}
+                          max={form?.commissionType === "Percentage Commission" ? "100" : undefined}
                           step="0.01"
                         />
                         {submitted && !form?.couponAmount && (
                           <div className="invalid-feedback d-block">
-                            {form?.commissionType === "Percentage"
+                            {form?.commissionType === "Percentage Commission"
                               ? "Percentage is required"
                               : "Amount is required"}
                           </div>
                         )}
-                        {form?.commissionType === "Percentage" &&
+                        {form?.commissionType === "Percentage Commission" &&
                           form?.couponAmount &&
                           parseFloat(form?.couponAmount) > 100 && (
                             <div className="invalid-feedback d-block">
                               Percentage cannot exceed 100%
                             </div>
                           )}
-                        {form?.commissionType === "Percentage" &&
+                        {form?.commissionType === "Percentage Commission" &&
                           form?.couponAmount &&
                           parseFloat(form?.couponAmount) < 0 && (
                             <div className="invalid-feedback d-block">
