@@ -167,7 +167,7 @@ export default function Login() {
 
         let url = '/dashboard'
         // if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
-        //   history.push('/addAccount/detail')
+        //   history.push('/addaccount/detail')
         // } else {
         history.push(url)
           // }
@@ -280,7 +280,7 @@ export default function Login() {
 
 
                   <p className='text-center font_set border-top pt-2 mb-1 mt-2 account_ptag'>Don't have an account?</p>
-                  <Link className='btn btn-outline-white mb-0 font_set' type='button' href="/SignupOptions" >
+                  <Link className='btn btn-outline-white mb-0 font_set' type='button' href="/Signupoptions" >
                     Register Now
                   </Link>
                 </form>

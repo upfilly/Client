@@ -245,7 +245,7 @@ const Html = ({
                     <div className="col-12 col-md-6">
                       <div className="mb-3">
                         <label className="mb-2">
-                          Select Campaign(s)<span className="star">*</span>
+                          Select campaigns<span className="star">*</span>
                         </label>
                         <div className="select_row media_row">
                           <MultiSelectValue

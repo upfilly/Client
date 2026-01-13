@@ -387,7 +387,7 @@ const UpFillyPage = () => {
             <h2>Experience the Power of UpFilly</h2>
             <button
               className="cta-button"
-              onClick={() => history.push("/SignupOptions")}
+              onClick={() => history.push("/Signupoptions")}
             >
               Get Started Now
             </button>

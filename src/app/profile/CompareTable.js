@@ -146,7 +146,7 @@ import methodModel from '../../methods/methods';
                           <td className='name-person ml-2' >{itm?.type}</td>
                           <td className='name-person ml-2' >
                             <a className='edit_icon action-btn' onClick={() => {
-                              history.push(`/activityDetail/${itm?.id || itm?._id}`)
+                              history.push(`/activitydetail/${itm?.id || itm?._id}`)
                             }} title="View Details">
                               <i class="fa-solid fa-circle-chevron-right text-white">‌</i>
                             </a>

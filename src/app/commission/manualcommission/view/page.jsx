@@ -160,17 +160,17 @@ const Manualcommission = () => {
     }
 
     const view=(id)=>{
-        history.push("/commission/manualCommission/"+id)
+        history.push("/commission/manualcommission/"+id)
     }
 
     const edit=(id)=>{
-        let url=`/commission/manualCommission/${id}`
+        let url=`/commission/manualcommission/${id}`
         // if(role) url=`/banners/${role}/edit/${id}`
         history.push(url)
     }
 
     const add=()=>{
-        let url=`/commission/manualCommission`
+        let url=`/commission/manualcommission`
         // if(role) url=`/banners/${role}/add`
         history.push(url)
     }

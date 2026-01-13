@@ -105,12 +105,12 @@ export default function Layout({
     pathname.includes("/inviteUsers") ||
     pathname.includes("/users") ||
     pathname.includes("/salestracking") ||
-    pathname.includes("makeLink") ||
+    pathname.includes("makelink") ||
     pathname.includes("/generatelink") ||
-    pathname.includes("/Trackings") ||
+    pathname.includes("/trackings") ||
     pathname.includes("/invites") ||
     pathname.includes("/requests") ||
-    pathname.includes("/addAccount/detail") ||
+    pathname.includes("/addaccount/detail") ||
     pathname.includes("/offers") ||
     pathname.includes("/proposals") ||
     pathname.includes("/dashboard") ||

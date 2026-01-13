@@ -356,7 +356,7 @@ const Html = ({
                   (user?.role == "brand" ||
                     addedUser?.role == "brand" ||
                     permission("generate_link_add")) && (
-                    <ListItemLink to="/makeLink" title="Generate Link">
+                    <ListItemLink to="/makelink" title="Generate Link">
                       <i
                         className="material-icons  svg_iconbx"
                         title="campaignmanagement"
@@ -537,7 +537,7 @@ const Html = ({
 
           {(user?.role == "brand" || addedUser?.role == "brand") && (
             <>
-              {urlAllow("commisionplan", "manualCommission") ? (
+              {urlAllow("commisionplan", "manualcommission") ? (
                 <>
                   <div className="nav-item">
                     <CustomTooltip text="Commissions">
@@ -605,7 +605,7 @@ const Html = ({
                 {permission("commission_add") ? (
                   <>
                     <ListItemLink
-                      to="/commission/manualCommission/view"
+                      to="/commission/manualcommission/view"
                       title="Bonus/Commission"
                     >
                       <div className="d-flex align-items-center icns_center gap-0">
@@ -1032,7 +1032,7 @@ const Html = ({
               >
                 {user?.role == "affiliate" && (
                   <ListItemLink
-                    to="/addAccount/detail"
+                    to="/addaccount/detail"
                     title="Profile Management"
                   >
                     <i class="material-icons  svg_iconbx">list_alt</i>
@@ -1153,7 +1153,7 @@ const Html = ({
             <span className="side_head">Brand Report</span>
           </ListItemLink>} */}
 
-          {/* {(user?.role == "affiliate") && <ListItemLink to="/addAccount/detail" title="Change Plan">
+          {/* {(user?.role == "affiliate") && <ListItemLink to="/addaccount/detail" title="Change Plan">
             <i class="material-icons  svg_iconbx">list_alt</i>
             <span className="side_head">Add Tax Detail</span>
           </ListItemLink>} */}
@@ -1190,10 +1190,10 @@ const Html = ({
             <span className="side_head">Generate Link</span>
           </ListItemLink>} */}
 
-          {/* {user && (user?.role == "affiliate" ) && <ListItemLink to="/Trackings"  title="Trackings">
+          {/* {user && (user?.role == "affiliate" ) && <ListItemLink to="/trackings"  title="trackings">
           <i className="material-icons  svg_iconbx" title="tracking">show_chart</i>
   
-          <span className="side_head">Trackings</span>
+          <span className="side_head">trackings</span>
         </ListItemLink>} */}
 
           {/* <ListItemLink to="/notifications" title="Payments">

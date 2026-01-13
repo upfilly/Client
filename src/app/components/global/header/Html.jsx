@@ -15,7 +15,7 @@ const Html = ({ settingData, Logout }) => {
   const pathname = usePathname()
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingForm') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignmanagement') || pathname.includes('/affiliate')
+  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingform') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignmanagement') || pathname.includes('/affiliate')
   const param = useSearchParams()
   const id = param.get("id")
   const code = param.get("campaign_code")
@@ -139,7 +139,7 @@ const Html = ({ settingData, Logout }) => {
                   {(!user) && <>
                   <img src="/assets/img/users1.svg" className="hedsvg" />
 
-                  <Link className="ml-2 mr-2" href="/SignupOptions"
+                  <Link className="ml-2 mr-2" href="/Signupoptions"
                   // onClick={() => setShowPopup(true)}
                   >Sign Up</Link> /
                     <Link className="ml-2 mr-2" href="/login">Sign In</Link></>}
@@ -171,7 +171,7 @@ const Html = ({ settingData, Logout }) => {
             </div>
           </div>
         </div>
-        {/* {pathname.includes('/bookingForm') && <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        {/* {pathname.includes('/bookingform') && <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <Link href="/">
           <img src="/assets/img/logo.png" className="logo" alt="" />
         </Link>

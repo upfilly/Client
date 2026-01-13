@@ -100,7 +100,7 @@ const UpfillyMerchantGuide = () => {
         <p>
           Launching an affiliate program can sound complicated — but with Upfilly, it’s easy. You don’t need a developer. You don’t need to chase affiliates. You just need a product and a willingness to grow.
         </p>
-        <button className="cta-button" onClick={() => history.push('/bookingForm')}>Start Free Today</button>
+        <button className="cta-button" onClick={() => history.push('/bookingform')}>Start Free Today</button>
       </footer>
     </div>
     </Layout>

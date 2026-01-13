@@ -255,7 +255,7 @@ const Html = () => {
         toast.success(res?.message);
         setFormType("");
         setCommissionType("");
-        history.push("/commission/manualCommission/view");
+        history.push("/commission/manualcommission/view");
         setFormData({
           amount_of_sale: "",
           amount_of_commission: "",
@@ -298,7 +298,7 @@ const Html = () => {
                     className="fa-solid fa-arrow-left mr-2 link_icon"
                     aria-hidden="true"
                     onClick={() =>
-                      history.push("/commission/manualCommission/view")
+                      history.push("/commission/manualcommission/view")
                     }
                   ></i>
                   Manual Commission 

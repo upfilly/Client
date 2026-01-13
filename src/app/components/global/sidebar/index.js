@@ -18,11 +18,11 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
     partnermanagement: ["campaignmanagement", "invitations"],
     marketplace: ["requests", "offers"],
     communication: ["emailmessages", "notifications", "chat", "emailtemplate",],
-    accountSettings: ["campaign","addAccount", "users", "allownotifications"],
+    accountSettings: ["campaign","addaccount", "users", "allownotifications"],
     commissionspayments: ["payments", "salestracking"],
     performancereports: ["reports", "performance", "reports"],
     campaignsrequests: ["campaign", ],
-    commisions: ["commisionplan", "manualCommission", "trackingdata","salestracking"],
+    commisions: ["commisionplan", "manualcommission", "trackingdata","salestracking"],
     catalogue: ["types", "categories", "category/"],
     affiliates: [
       "requestcampaigns",
@@ -30,7 +30,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
       "group",
       "marketplace",
       "appliedjobs",
-      "makeLink",
+      "makelink",
       "requests",
     ],
     creativeasset: [

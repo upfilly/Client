@@ -619,7 +619,7 @@ export default function Affilate() {
                         Currency {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
                       <th onClick={(e) => sorting("transaction_status")}>
-                        Transaction Status {filters?.sorder === "asc" ? "↑" : "↓"}
+                        Payment Status {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
                       <th onClick={(e) => sorting("createdAt")}>
                         Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}
@@ -627,7 +627,7 @@ export default function Affilate() {
                       <th onClick={(e) => sorting("updatedAt")}>
                         Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                      <th>Report</th>
+                      {/* <th>Report</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -657,7 +657,7 @@ export default function Affilate() {
                         <td className="name-person ml-2">
                           {datepipeModel.date(itm?.updatedAt)}
                         </td>
-                        <td className="name-person ml-2">
+                        {/* <td className="name-person ml-2">
                           <div className="invoice-actions" style={{ display: 'flex', gap: '8px' }}>
                             {itm.invoice_url ? (
                               <button
@@ -683,7 +683,7 @@ export default function Affilate() {
                                 </button>
                               )}
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>

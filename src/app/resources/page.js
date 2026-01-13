@@ -228,7 +228,7 @@ export default function Resources() {
                 <h2 className="cta-subtitle">Discover how our platform can take your affiliate marketing to the next level.</h2>
               </div>
               <div className="mt-sm-5 mt-4">
-                <button className="cta-button" onClick={() => history.push("/SignupOptions")}>Get Started Now</button>
+                <button className="cta-button" onClick={() => history.push("/Signupoptions")}>Get Started Now</button>
                 {/* <button className="cta-btn secondary">Learn More About Features</button> */}
               </div>
             </section>

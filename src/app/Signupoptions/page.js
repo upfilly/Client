@@ -44,7 +44,7 @@ export default function SignupOption() {
                     </div>
                   </div>
                   <div className="col-12 col-sm-12 col-md-6"
-                    onClick={() => history.push("/bookingForm")}
+                    onClick={() => history.push("/bookingform")}
                   // onClick={()=>history.push("/track/signup/brand")}
                   >
                     <div className="miansign">
