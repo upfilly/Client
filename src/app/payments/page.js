@@ -242,7 +242,8 @@ export default function Affilate() {
       let filter = { 
         ...monthlyFilters, 
         ...p,
-        page: monthlyFilters.page + 1
+        page: monthlyFilters.page + 1,
+        brand_id:user?.id || user?._id,
       };
 
       const cleanFilter = Object.keys(filter).reduce((acc, key) => {
