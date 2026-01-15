@@ -616,7 +616,8 @@ export default function Affilate() {
                     ChangeStatus(e.value);
                   }}
                   options={[
-                    { id: "successful", name: "Successful" },
+                    { id: "paid", name: "Successful" },
+                    { id: "pending", name: "Pending" },
                     { id: "failed", name: "Failed" },
                   ]}
                 />

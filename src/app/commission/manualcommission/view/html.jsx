@@ -134,8 +134,8 @@ const Html = ({
                                             </div></td> */}
                                         <td className='table_dats'>{itm?.commission_type || "--"}</td>
                                         <td className='table_dats'>{itm?.affiliate_name || "--"}</td>
-                                        <td className='table_dats'>{itm?.amount_of_sale || "--"}</td>
-                                        <td className='table_dats'>{itm?.amount_of_commission || "--"}</td>
+                                        <td className='table_dats'>${itm?.amount_of_sale || "--"}</td>
+                                        <td className='table_dats'>${itm?.amount_of_commission || "--"}</td>
                                         <td className='table_dats'>{itm?.order_reference || "--"}</td>
                                         <td className='table_dats'>{datepipeModel.date(itm?.createdAt)}</td>
                                     </tr>
