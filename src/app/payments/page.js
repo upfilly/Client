@@ -643,6 +643,9 @@ export default function Affilate() {
                 <table className="table table-striped ">
                   <thead className="thead-clr">
                     <tr>
+                      {itm?.role == "affiliate" && <th scope="row">
+                       Brand Name 
+                      </th>}
                       <th scope="row" onClick={(e) => sorting("paid_to_name")}>
                         Name {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
@@ -669,6 +672,13 @@ export default function Affilate() {
                   <tbody>
                     {!loading && data?.data?.map((itm, i) => (
                       <tr className="data_row" key={i}>
+                        {itm?.role == "affiliate" && <td
+                          className="name-person ml-2"
+                          onClick={(e) => view(itm._id)}
+                          style={{ cursor: 'pointer', color: '#007bff' }}
+                        >
+                          {methodModel?.capitalizeFirstLetter(itm?.brand_details?.userName || itm?.brand_details?.fullName)}
+                        </td>}
                         <td
                           className="name-person ml-2"
                           onClick={(e) => view(itm._id)}
@@ -874,7 +884,7 @@ export default function Affilate() {
                                   Download
                                 </button>
 
-                                <button
+                                {/* <button
                                   onClick={() => viewMonthlyInvoice(invoice)}
                                   className="btn btn-sm btn-outline-secondary"
                                   title="View Invoice"
@@ -883,7 +893,7 @@ export default function Affilate() {
                                 >
                                   <i className="fa fa-eye me-1" aria-hidden="true"></i>
                                   View
-                                </button>
+                                </button> */}
                               </div>
                             </td>
 
@@ -900,7 +910,7 @@ export default function Affilate() {
                                   Download
                                 </button>
 
-                                <button
+                                {/* <button
                                   onClick={() => viewMonthlyReport(invoice)}
                                   className="btn btn-sm btn-outline-secondary"
                                   title="View Report"
@@ -909,7 +919,7 @@ export default function Affilate() {
                                 >
                                   <i className="fa fa-eye me-1" aria-hidden="true"></i>
                                   View
-                                </button>
+                                </button> */}
                               </div>
                             </td>
                           </tr>
