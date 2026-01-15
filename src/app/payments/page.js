@@ -651,18 +651,18 @@ export default function Affilate() {
                           Commission {filters?.sorder === "asc" ? "↑" : "↓"}
                         </th>
                       )}
-                      <th onClick={(e) => sorting("currency")}>
-                        Currency {filters?.sorder === "asc" ? "↑" : "↓"}
+                      <th>
+                        Currency
                       </th>
-                      <th onClick={(e) => sorting("transaction_status")}>
-                        Payment Status {filters?.sorder === "asc" ? "↑" : "↓"}
+                      <th>
+                        Payment Status
                       </th>
                       <th onClick={(e) => sorting("createdAt")}>
                         Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                      <th onClick={(e) => sorting("updatedAt")}>
+                      {/* <th onClick={(e) => sorting("updatedAt")}>
                         Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
-                      </th>
+                      </th> */}
                       {/* <th>Report</th> */}
                     </tr>
                   </thead>
@@ -690,9 +690,9 @@ export default function Affilate() {
                         <td className="name-person ml-2">
                           {datepipeModel.date(itm?.createdAt)}
                         </td>
-                        <td className="name-person ml-2">
+                        {/* <td className="name-person ml-2">
                           {datepipeModel.date(itm?.updatedAt)}
-                        </td>
+                        </td> */}
                         {/* <td className="name-person ml-2">
                           <div className="invoice-actions" style={{ display: 'flex', gap: '8px' }}>
                             {itm.invoice_url ? (
