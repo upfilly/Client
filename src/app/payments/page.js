@@ -1013,7 +1013,7 @@ export default function Affilate() {
                                 <button
                                   onClick={() => downloadMonthlyReport(invoice)}
                                   className="btn btn-sm btn-outline-primary"
-                                  title="Download Invoice PDF"
+                                  title="Download Report PDF"
                                   style={{ padding: '4px 8px', fontSize: '12px' }}
                                   disabled={!invoice.invoice_url}
                                 >
@@ -1024,7 +1024,7 @@ export default function Affilate() {
                                 <button
                                   onClick={() => viewMonthlyReport(invoice)}
                                   className="btn btn-sm btn-outline-secondary"
-                                  title="View Invoice"
+                                  title="View Report"
                                   style={{ padding: '4px 8px', fontSize: '12px' }}
                                   disabled={!invoice.invoice_url}
                                 >
