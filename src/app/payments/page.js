@@ -53,6 +53,7 @@ export default function Affilate() {
   const [endDate, setEndDate] = useState(null);
   const [planData, setPlanData] = useState(null);
   const [pendingPaymentData, setPendingPaymentData] = useState(null);
+  const [hasPendingPayments, setHasPendingPayments] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
@@ -100,30 +101,6 @@ export default function Affilate() {
       alert('Invoice URL not available');
     }
   };
-
-  // const downloadMonthlyInvoice = async (invoice) => {
-  //   try {
-  //     const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
-      
-  //     const link = document.createElement('a');
-  //     link.href = invoiceUrl;
-  //     link.download = invoice.invoice_url.split('/').pop() || `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
-  //     link.target = '_blank';
-      
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-      
-  //   } catch (error) {
-  //     console.error("Error downloading invoice:", error);
-  //     try {
-  //       const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
-  //       window.open(invoiceUrl, '_blank');
-  //     } catch (fallbackError) {
-  //       alert('Failed to download invoice. Please try again.');
-  //     }
-  //   }
-  // };
 
   const downloadMonthlyInvoice = async (invoice) => {
     try {
@@ -208,8 +185,8 @@ export default function Affilate() {
     if (user) {
       let filter = {
         page: 1,
-        count: 50, 
-        userId: user?.id, 
+        count: 50,
+        userId: user?.id,
         category: "Network"
       }
       let url = 'subscription-plan/all'
@@ -237,13 +214,13 @@ export default function Affilate() {
 
   const getMonthlyInvoices = async (p = {}) => {
     setMonthlyLoader(true);
-    
+
     try {
-      let filter = { 
-        ...monthlyFilters, 
+      let filter = {
+        ...monthlyFilters,
         ...p,
         page: monthlyFilters.page + 1,
-        brand_id:user?.id || user?._id,
+        brand_id: user?.id || user?._id,
       };
 
       const cleanFilter = Object.keys(filter).reduce((acc, key) => {
@@ -255,7 +232,7 @@ export default function Affilate() {
 
       if (user?.role === "brand") {
         const res = await ApiClient.get(`commission/monthly-invoices/list`, cleanFilter);
-        
+
         if (res?.success) {
           setMonthlyData(Array.isArray(res.data) ? res.data : (res.data?.data || []));
           setMonthlyTotal(Array.isArray(res.data) ? res.data.length : (res.data?.total || 0));
@@ -281,12 +258,18 @@ export default function Affilate() {
     ApiClient.get(`payableMonthlyTransactions`).then((res) => {
       if (res.success) {
         setPendingPaymentData(res?.data);
+        // Check if there are any pending payments
+        const hasPayments = res?.data?.totalPayableAmount > 0 &&
+          res?.data?.totalPendingTransactions > 0;
+        setHasPendingPayments(hasPayments);
       } else {
         setPendingPaymentData(null);
+        setHasPendingPayments(false);
       }
     }).catch(error => {
       console.error("Error fetching pending payments:", error);
       setPendingPaymentData(null);
+      setHasPendingPayments(false);
     });
   };
 
@@ -295,6 +278,8 @@ export default function Affilate() {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, user_id: user?.id, ...params });
       getPlanData();
+      // Check for pending payments when component mounts
+      getPendingPaymentData();
     } else if (user.role != "brand") {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, paid_to: user?.id, ...params });
@@ -306,6 +291,13 @@ export default function Affilate() {
       getMonthlyInvoices();
     }
   }, [activeTab, monthlyFilters.page, monthlyFilters.year, monthlyFilters.month, monthlyFilters.sortBy]);
+
+  // Refresh pending payments status when switching to transactions tab
+  useEffect(() => {
+    if (activeTab === "all" && user?.role === "brand") {
+      getPendingPaymentData();
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -362,12 +354,12 @@ export default function Affilate() {
     }
 
     let sortBy = `${key} ${sorder}`;
-    setMonthlyFilters({ 
-      ...monthlyFilters, 
+    setMonthlyFilters({
+      ...monthlyFilters,
       sortBy,
       key,
       sorder,
-      page: 0 
+      page: 0
     });
   };
 
@@ -489,8 +481,11 @@ export default function Affilate() {
       if (response?.success) {
         window.open(response.data.url, "_self");
         getData();
+        // After payment, refresh the pending payments status
+        setTimeout(() => {
+          getPendingPaymentData();
+        }, 2000);
         setIsPaymentModalOpen(false);
-        setPendingPaymentData(null);
       }
     } catch (error) {
       console.error("Payment error:", error);
@@ -504,7 +499,7 @@ export default function Affilate() {
     try {
       setIsProcessing(true);
       toast.info("Processing invoice payment...");
-      
+
       const response = await ApiClient.post('commission/monthly-invoices/pay', {
         invoice_id: invoice.id,
         amount: invoice.total_amount
@@ -564,7 +559,8 @@ export default function Affilate() {
         <div className="row">
           <div className="col-md-12">
             <div className="d-flex flex-wrap gap-2 all_flexbx justify-content-md-end">
-              {user?.role === "brand" && (
+              {/* Only show Pay Commission button if there are pending payments */}
+              {user?.role === "brand" && hasPendingPayments && (
                 <button
                   className="btn btn-primary"
                   onClick={handleOpenPaymentModal}
@@ -572,6 +568,14 @@ export default function Affilate() {
                   <i className="fa fa-money me-2" aria-hidden="true"></i>
                   Pay Commission
                 </button>
+              )}
+
+              {/* Optional: Show a message when there are no pending payments */}
+              {user?.role === "brand" && !hasPendingPayments && !loading && (
+                <div className="text-muted small d-flex align-items-center">
+                  <i className="fa fa-check-circle text-success me-2" aria-hidden="true"></i>
+                  No pending commissions to pay
+                </div>
               )}
 
               <div className="">
@@ -660,10 +664,6 @@ export default function Affilate() {
                       <th onClick={(e) => sorting("createdAt")}>
                         Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                      {/* <th onClick={(e) => sorting("updatedAt")}>
-                        Last Modified {filters?.sorder === "asc" ? "↑" : "↓"}
-                      </th> */}
-                      {/* <th>Report</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -690,36 +690,6 @@ export default function Affilate() {
                         <td className="name-person ml-2">
                           {datepipeModel.date(itm?.createdAt)}
                         </td>
-                        {/* <td className="name-person ml-2">
-                          {datepipeModel.date(itm?.updatedAt)}
-                        </td> */}
-                        {/* <td className="name-person ml-2">
-                          <div className="invoice-actions" style={{ display: 'flex', gap: '8px' }}>
-                            {itm.invoice_url ? (
-                              <button
-                                onClick={() => downloadInvoice(itm)}
-                                className="btn btn-sm btn-outline-primary"
-                                title="Download Invoice"
-                                style={{ padding: '4px 8px', fontSize: '12px' }}
-                              >
-                                <i className="fa fa-download me-1" aria-hidden="true"></i>
-                                Download
-                              </button>
-                            ) : !itm?.custom_invoice_url ?
-                              <span className="text-muted small">No invoice</span>
-                              : (
-                                <button
-                                  onClick={() => downloadInvoicepending(itm)}
-                                  className="btn btn-sm btn-outline-primary"
-                                  title="Download Invoice"
-                                  style={{ padding: '4px 8px', fontSize: '12px' }}
-                                >
-                                  <i className="fa fa-download me-1" aria-hidden="true"></i>
-                                  Download
-                                </button>
-                              )}
-                          </div>
-                        </td> */}
                       </tr>
                     ))}
                   </tbody>
@@ -746,7 +716,7 @@ export default function Affilate() {
 
   const renderMonthlyInvoicesTable = () => {
     const summary = calculateMonthlySummary();
-    
+
     return (
       <div className="nmain-list mb-3 main_box">
         <div className="container-fluid">
@@ -757,7 +727,7 @@ export default function Affilate() {
                   <h5 className="mb-0">Monthly Commission Invoices</h5>
                   <small className="text-muted">View and download your monthly commission invoices</small>
                 </div>
-                
+
                 {/* <div className="d-flex gap-2 align-items-center">
                   <div className="d-flex gap-2">
                     <div>
@@ -819,59 +789,6 @@ export default function Affilate() {
 
           <div className="row">
             <div className="col-md-12">
-              {/* {monthlyData.length > 0 && (
-                <div className="row mb-4">
-                  <div className="col-md-2">
-                    <div className="card bg-light border">
-                      <div className="card-body py-2">
-                        <h6 className="text-muted mb-1 small">Total Invoices</h6>
-                        <h4 className="mb-0">{summary.totalInvoices}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <div className="card bg-light border">
-                      <div className="card-body py-2">
-                        <h6 className="text-muted mb-1 small">Total Amount</h6>
-                        <h4 className="mb-0">${summary.totalAmount.toFixed(2)}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <div className="card bg-light border">
-                      <div className="card-body py-2">
-                        <h6 className="text-muted mb-1 small">Paid Invoices</h6>
-                        <h4 className="mb-0">{summary.paidInvoices}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <div className="card bg-light border">
-                      <div className="card-body py-2">
-                        <h6 className="text-muted mb-1 small">Pending Invoices</h6>
-                        <h4 className="mb-0">{summary.pendingInvoices}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <div className="card bg-light border">
-                      <div className="card-body py-2">
-                        <h6 className="text-muted mb-1 small">Total Commissions</h6>
-                        <h4 className="mb-0">{summary.totalCommissions}</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-2">
-                    <div className="card bg-light border">
-                      <div className="card-body py-2">
-                        <h6 className="text-muted mb-1 small">Avg per Invoice</h6>
-                        <h4 className="mb-0">${(summary.totalAmount / summary.totalInvoices).toFixed(2)}</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )} */}
-
               <div className="respon_data">
                 <div className="table_section">
                   <div className="table-responsive">
@@ -887,8 +804,6 @@ export default function Affilate() {
                           <th onClick={() => monthlySorting("total_amount")}>
                             Total Amount {monthlyFilters?.key === "total_amount" ? (monthlyFilters?.sorder === "asc" ? "↑" : "↓") : ""}
                           </th>
-                          {/* <th>Commission Count</th>
-                          <th>Affiliates</th> */}
                           <th onClick={() => monthlySorting("status")}>
                             Status {monthlyFilters?.key === "status" ? (monthlyFilters?.sorder === "asc" ? "↑" : "↓") : ""}
                           </th>
@@ -903,7 +818,7 @@ export default function Affilate() {
                         {!monthlyLoading && monthlyData.map((invoice, i) => (
                           <tr className="data_row" key={i}>
                             <td className="name-person ml-2">
-                              <strong 
+                              <strong
                                 onClick={() => viewInvoiceDetails(invoice)}
                                 style={{ cursor: 'pointer', color: '#007bff' }}
                                 title="Click to view details"
@@ -930,31 +845,6 @@ export default function Affilate() {
                                 Commission: ${(invoice.total_commission || 0).toFixed(2)}
                               </div>
                             </td>
-                            {/* <td className="name-person ml-2">
-                              <div className="text-center">
-                                <span className="badge bg-info">
-                                  {invoice.commission_count || 0}
-                                </span>
-                              </div>
-                              <div className="small text-muted text-center">
-                                Transactions
-                              </div>
-                            </td> */}
-                            {/* <td className="name-person ml-2">
-                              <div className="small">
-                                {invoice.details?.affiliates?.length || 0} Affiliate(s)
-                              </div>
-                              {invoice.details?.affiliates?.slice(0, 2).map((affiliate, idx) => (
-                                <div key={idx} className="small text-truncate" style={{ maxWidth: '150px' }} title={affiliate.affiliate_name}>
-                                  {affiliate.affiliate_name}
-                                </div>
-                              ))}
-                              {invoice.details?.affiliates?.length > 2 && (
-                                <div className="small text-muted">
-                                  +{invoice.details.affiliates.length - 2} more
-                                </div>
-                              )}
-                            </td> */}
                             <td className="name-person ml-2">
                               <span className={`badge bg-${invoice.status === 'paid' ? 'success' : invoice.status === 'pending' ? 'warning' : 'secondary'}`}>
                                 {invoice.status?.charAt(0).toUpperCase() + invoice.status?.slice(1) || 'Generated'}
@@ -983,7 +873,7 @@ export default function Affilate() {
                                   <i className="fa fa-download me-1" aria-hidden="true"></i>
                                   Download
                                 </button>
-                                
+
                                 <button
                                   onClick={() => viewMonthlyInvoice(invoice)}
                                   className="btn btn-sm btn-outline-secondary"
@@ -994,18 +884,6 @@ export default function Affilate() {
                                   <i className="fa fa-eye me-1" aria-hidden="true"></i>
                                   View
                                 </button>
-                                
-                                {/* {invoice.status === 'pending' && (
-                                  <button
-                                    onClick={() => handlePayMonthlyInvoice(invoice)}
-                                    className="btn btn-sm btn-success"
-                                    title="Pay Invoice"
-                                    style={{ padding: '4px 8px', fontSize: '12px' }}
-                                  >
-                                    <i className="fa fa-credit-card me-1" aria-hidden="true"></i>
-                                    Pay Now
-                                  </button>
-                                )} */}
                               </div>
                             </td>
 
@@ -1021,7 +899,7 @@ export default function Affilate() {
                                   <i className="fa fa-download me-1" aria-hidden="true"></i>
                                   Download
                                 </button>
-                                
+
                                 <button
                                   onClick={() => viewMonthlyReport(invoice)}
                                   className="btn btn-sm btn-outline-secondary"
@@ -1032,18 +910,6 @@ export default function Affilate() {
                                   <i className="fa fa-eye me-1" aria-hidden="true"></i>
                                   View
                                 </button>
-                                
-                                {/* {invoice.status === 'pending' && (
-                                  <button
-                                    onClick={() => handlePayMonthlyInvoice(invoice)}
-                                    className="btn btn-sm btn-success"
-                                    title="Pay Invoice"
-                                    style={{ padding: '4px 8px', fontSize: '12px' }}
-                                  >
-                                    <i className="fa fa-credit-card me-1" aria-hidden="true"></i>
-                                    Pay Now
-                                  </button>
-                                )} */}
                               </div>
                             </td>
                           </tr>
@@ -1063,7 +929,7 @@ export default function Affilate() {
                       <div className="mb-3 text-center py-4">
                         <i className="fa fa-file-text-o fa-3x text-muted mb-3" aria-hidden="true"></i>
                         <p className="text-muted">No monthly invoices found for the selected period.</p>
-                        <button 
+                        <button
                           className="btn btn-outline-primary btn-sm"
                           onClick={() => setMonthlyFilters({
                             ...monthlyFilters,
@@ -1130,7 +996,7 @@ export default function Affilate() {
                         className={`nav-link ${activeTab === "all" ? "active" : ""}`}
                         onClick={() => setActiveTab("all")}
                         type="button"
-                        style={{ 
+                        style={{
                           border: '1px solid #dee2e6',
                           borderBottom: activeTab === "all" ? 'none' : '1px solid #dee2e6',
                           borderRadius: '4px 4px 0 0',
@@ -1141,25 +1007,25 @@ export default function Affilate() {
                         All Transactions
                       </button>
                     </li>
-                    {user?.role == "brand" && 
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className={`nav-link ${activeTab === "monthly" ? "active" : ""}`}
-                        onClick={() => setActiveTab("monthly")}
-                        type="button"
-                        disabled={user?.role !== "brand"}
-                        title={user?.role !== "brand" ? "Only available for brands" : ""}
-                        style={{ 
-                          border: '1px solid #dee2e6',
-                          borderBottom: activeTab === "monthly" ? 'none' : '1px solid #dee2e6',
-                          borderRadius: '4px 4px 0 0',
-                          opacity: user?.role !== "brand" ? 0.5 : 1
-                        }}
-                      >
-                        <i className="fa fa-file-text-o me-2" aria-hidden="true"></i>
-                        Monthly Invoices
-                      </button>
-                    </li>}
+                    {user?.role == "brand" &&
+                      <li className="nav-item" role="presentation">
+                        <button
+                          className={`nav-link ${activeTab === "monthly" ? "active" : ""}`}
+                          onClick={() => setActiveTab("monthly")}
+                          type="button"
+                          disabled={user?.role !== "brand"}
+                          title={user?.role !== "brand" ? "Only available for brands" : ""}
+                          style={{
+                            border: '1px solid #dee2e6',
+                            borderBottom: activeTab === "monthly" ? 'none' : '1px solid #dee2e6',
+                            borderRadius: '4px 4px 0 0',
+                            opacity: user?.role !== "brand" ? 0.5 : 1
+                          }}
+                        >
+                          <i className="fa fa-file-text-o me-2" aria-hidden="true"></i>
+                          Monthly Invoices
+                        </button>
+                      </li>}
                   </ul>
                 </div>
               </div>
@@ -1231,7 +1097,7 @@ export default function Affilate() {
               <>
                 {(() => {
                   const distribution = calculateDistribution();
-                  
+
                   return (
                     <>
                       <div className="mb-4 p-3 border rounded" style={{ backgroundColor: '#f8f9fa' }}>
