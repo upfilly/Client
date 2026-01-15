@@ -643,7 +643,7 @@ export default function Affilate() {
                 <table className="table table-striped ">
                   <thead className="thead-clr">
                     <tr>
-                      {itm?.role == "affiliate" && <th scope="row">
+                      {user?.role == "affiliate" && <th scope="row">
                        Brand Name 
                       </th>}
                       <th scope="row" onClick={(e) => sorting("paid_to_name")}>
@@ -672,7 +672,7 @@ export default function Affilate() {
                   <tbody>
                     {!loading && data?.data?.map((itm, i) => (
                       <tr className="data_row" key={i}>
-                        {itm?.role == "affiliate" && <td
+                        {user?.role == "affiliate" && <td
                           className="name-person ml-2"
                           onClick={(e) => view(itm._id)}
                           style={{ cursor: 'pointer', color: '#007bff' }}
