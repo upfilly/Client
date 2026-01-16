@@ -306,11 +306,13 @@ export default function Affiliate() {
 
   const statusChange = (itm, id,data) => {
     if (itm === 'accepted') {
+      loader(true);
       ApiClient.put('update/commission/status', {campaignId:data?.campaign_details?._id, commission_status: itm, id: id }).then((res) => {
         if (res.success) {
           toast.success(res.message)
           getData({ page: 1 });
         }
+        loader(false);
       });
     } else {
       Swal.fire({
