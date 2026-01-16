@@ -248,7 +248,7 @@ const Detail = (p) => {
                                         } */}
 
                                         {/* Invoice Link */}
-                                        {data?.custom_invoice_url &&
+                                        {/* {data?.custom_invoice_url &&
                                             <div className='col-12 col-sm-12 col-md-6 col-lg-4'>
                                                 <div className='mb-3'>
                                                     <div className='userdata'>
@@ -267,7 +267,7 @@ const Detail = (p) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
+                                        } */}
 
                                         {/* Subscription Details */}
                                         {data?.subscription_plan_id &&
