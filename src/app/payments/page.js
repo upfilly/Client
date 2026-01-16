@@ -105,22 +105,48 @@ export default function Affilate() {
   const downloadMonthlyInvoice = async (invoice) => {
     try {
       const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
+      const response = await axios.get(invoiceUrl, { responseType: 'blob' });
 
-      const response = await axios.get(invoiceUrl, { responseType: 'blob' })
-      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const filename = invoice.invoice_url.split('/').pop() ||
+        `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
+
+      const url = window.URL.createObjectURL(response.data);
       const link = document.createElement('a');
       link.href = url;
-      link.download = invoice.invoice_url.split('/').pop() || `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
-      link.setAttribute('download', 'link.download')
+
+      link.download = filename;
+
+      link.style.display = 'none';
       document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+
+      if (navigator.userAgent.includes('Mac') || /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        const event = new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: true
+        });
+        link.dispatchEvent(event);
+      } else {
+        link.click();
+      }
+
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 100);
 
     } catch (error) {
       console.error("Error downloading invoice:", error);
+
       try {
-        const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
-        window.open(invoiceUrl, '_blank');
+        if (navigator.userAgent.includes('Mac') ||
+          navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+          const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
+          window.open(invoiceUrl, '_blank');
+        } else {
+          throw error; 
+        }
       } catch (fallbackError) {
         alert('Failed to download invoice. Please try again.');
       }
@@ -140,23 +166,66 @@ export default function Affilate() {
     try {
       const invoiceUrl = `${environment.api}${invoice.report_url}`;
 
-      const response = await axios.get(invoiceUrl, { responseType: 'blob' })
-      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const response = await axios.get(invoiceUrl, {
+        responseType: 'blob',
+        headers: {
+          'Cache-Control': 'no-cache', // Prevent caching issues
+          'Pragma': 'no-cache'
+        }
+      });
+
+      const filename = invoice.report_url.split('/').pop() ||
+        `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
+
+      const blob = new Blob([response.data], {
+        type: response.headers['content-type'] || 'application/pdf'
+      });
+
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
+
       link.href = url;
-      link.download = invoice.report_url.split('/').pop() || `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
-      link.setAttribute('download', 'link.download')
+      link.download = filename;
+      link.style.display = 'none';
+
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (isSafari) {
+        setTimeout(() => {
+          const safariWindow = window.open(url, '_blank');
+          if (!safariWindow) {
+            alert('Please allow pop-ups to download the file');
+          }
+        }, 500);
+      }
 
     } catch (error) {
       console.error("Error downloading invoice:", error);
+
       try {
         const invoiceUrl = `${environment.api}${invoice.report_url}`;
-        window.open(invoiceUrl, '_blank');
+
+        const isMac = /Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.userAgent);
+
+        if (isMac) {
+          const newWindow = window.open(invoiceUrl, '_blank');
+          if (!newWindow) {
+            alert('Please allow pop-ups to download the invoice. ' +
+              'If the file doesn\'t open automatically, right-click the link and select "Download".');
+          }
+        } else {
+          window.open(invoiceUrl, '_blank');
+        }
       } catch (fallbackError) {
-        alert('Failed to download invoice. Please try again.');
+        console.error("Fallback also failed:", fallbackError);
+        alert('Failed to download invoice. Please try again or contact support.');
       }
     }
   };
