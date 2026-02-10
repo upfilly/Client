@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback, ReactNode, CSSProperties } from "react";
+import React, { useEffect, useState, useRef, useCallback, ReactNode, CSSProperties, memo } from "react";
 import "./style.scss";
 import Sidebar from "../sidebar";
 import Header from "../header";
@@ -49,6 +49,64 @@ interface LayoutProps {
   setActiveSidebar?: (active: boolean) => void;
 }
 
+const MessageItem = memo(({ message }: { message: Message }) => (
+  <div
+    style={{
+      marginBottom: '12px',
+      display: 'flex',
+      flexDirection: message.sender === 'user' ? 'row-reverse' : 'row',
+      alignItems: 'flex-end',
+      gap: '8px'
+    }}
+  >
+    {message.sender !== 'user' && (
+      <div style={{
+        width: '30px',
+        height: '30px',
+        backgroundColor: message.sender === 'admin' ? '#28a745' : '#007bff',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'white',
+        fontSize: '13px',
+        fontWeight: 'bold',
+        flexShrink: 0
+      }}>
+        {message.sender === 'admin' ? 'A' : 'U'}
+      </div>
+    )}
+    <div
+      style={{
+        maxWidth: '75%',
+        padding: '10px 14px',
+        borderRadius: '16px',
+        backgroundColor: message.sender === 'user' ? '#007bff' :
+          message.sender === 'admin' ? '#e7f5e9' : 'white',
+        color: message.sender === 'user' ? 'white' : '#333',
+        boxShadow: message.sender === 'user'
+          ? '0 2px 5px rgba(0,123,255,0.2)'
+          : '0 2px 5px rgba(0,0,0,0.1)',
+        wordBreak: 'break-word',
+        whiteSpace: 'pre-line',
+        fontSize: '14px'
+      }}
+    >
+      {message.text}
+      <div style={{
+        fontSize: '10px',
+        opacity: 0.7,
+        marginTop: '4px',
+        textAlign: message.sender === 'user' ? 'right' : 'left'
+      }}>
+        {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </div>
+    </div>
+  </div>
+));
+
+MessageItem.displayName = 'MessageItem';
+
 export default function Layout({
   description,
   children,
@@ -74,13 +132,21 @@ export default function Layout({
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const [roomId, setRoomId] = useState("");
   const [adminId, setadminId] = useState("654227e78fd3b1018600710d");
   const [chat, setChat] = useState<any[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [incomingMessages, setIncomingMessages] = useState<Message[]>([]);
   const [onlineUserId, setOnlineUserId] = useState(null);
-  
+
+  // Use refs for values that don't need re-renders
+  const shouldAutoScrollRef = useRef(true);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const prevMessagesLengthRef = useRef(0);
+  const isTypingRef = useRef(false);
+  const userTypingRef = useRef(false);
+
   const isDashboard =
     pathname.includes("/marketplace") ||
     pathname.includes("/notifications") ||
@@ -150,7 +216,6 @@ export default function Layout({
           const chatData = res.data.data.data || [];
           setChat(chatData);
 
-          // Convert API messages to Message format
           const formattedMessages: Message[] = chatData.map((msg: any, index: number) => ({
             id: index,
             text: msg.content || '',
@@ -159,7 +224,6 @@ export default function Layout({
             senderId: msg.sender
           }));
 
-          // Add welcome message if no previous messages
           if (formattedMessages.length === 0) {
             const welcomeMessage: Message = {
               id: Date.now(),
@@ -172,12 +236,17 @@ export default function Layout({
             setMessages([welcomeMessage]);
           } else {
             setMessages(formattedMessages);
+            // Scroll to bottom after setting messages
+            setTimeout(() => {
+              if (chatContainerRef.current) {
+                chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+              }
+            }, 100);
           }
         }
       })
       .catch((err) => {
         console.error("Error loading chat messages:", err);
-        // Add default welcome message on error
         const welcomeMessage: Message = {
           id: Date.now(),
           text: user?.id
@@ -193,12 +262,47 @@ export default function Layout({
       });
   }, [adminId, user]);
 
-  // Combine messages and incomingMessages
+  // Optimized scroll to bottom function - simple and direct
+  const scrollToBottom = useCallback((force: boolean = false) => {
+    if (!chatContainerRef.current) return;
+
+    const container = chatContainerRef.current;
+
+    if (shouldAutoScrollRef.current || force) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, []);
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    const hasNewMessages = messages.length !== prevMessagesLengthRef.current;
+
+    if (hasNewMessages) {
+      // Small delay to ensure DOM has updated
+      const timer = setTimeout(() => {
+        scrollToBottom(true);
+      }, 50);
+
+      prevMessagesLengthRef.current = messages.length;
+      userTypingRef.current = false;
+
+      return () => clearTimeout(timer);
+    }
+
+    prevMessagesLengthRef.current = messages.length;
+    userTypingRef.current = false;
+  }, [messages, scrollToBottom]);
+
+  // Handle typing indicator - removed auto-scroll to prevent jumping
+  useEffect(() => {
+    isTypingRef.current = isTyping;
+  }, [isTyping]);
+
+  // Handle incoming messages
   useEffect(() => {
     if (incomingMessages.length > 0) {
       const lastIncoming = incomingMessages[incomingMessages.length - 1];
 
-      // Check if this message is already in messages
       const isDuplicate = messages.some(msg =>
         msg.text === lastIncoming.text &&
         msg.sender === lastIncoming.sender &&
@@ -207,10 +311,10 @@ export default function Layout({
 
       if (!isDuplicate) {
         setMessages(prev => [...prev, lastIncoming]);
-        setIsTyping(false); // Stop typing indicator when message arrives
+        setIsTyping(false);
       }
     }
-  }, [incomingMessages]);
+  }, [incomingMessages, messages]);
 
   // Clean up incomingMessages periodically
   useEffect(() => {
@@ -226,16 +330,10 @@ export default function Layout({
   // Socket listener for incoming messages
   useEffect(() => {
     const handleReceiveMessage = (newdata: any) => {
-      console.log("Socket message received:", newdata);
-      console.log("Current roomId in localStorage:", localStorage.getItem("chatbotroomId"));
-      console.log("Message room_id:", newdata.data?._doc?.room_id);
-
       const data = newdata.data;
       const currentRoomId = localStorage.getItem("chatbotroomId");
 
       if (currentRoomId === data?._doc?.room_id) {
-        console.log("Message belongs to current chat room");
-
         const currentUserId = user?.id || localStorage.getItem("chatbotuserId");
         const newMessage: Message = {
           id: Date.now(),
@@ -246,33 +344,23 @@ export default function Layout({
           senderId: data?._doc?.sender
         };
 
-        console.log("Adding new message to incomingMessages:", newMessage);
         setIncomingMessages(prev => [...prev, newMessage]);
-      } else {
-        console.log("Message belongs to different room, ignoring");
       }
     };
 
     ConnectSocket.on("receive-message", handleReceiveMessage);
 
-    // Cleanup function
     return () => {
       ConnectSocket.off("receive-message", handleReceiveMessage);
     };
   }, [adminId, user?.id]);
 
-    useEffect(() => {
+  useEffect(() => {
     const handleReceiveMessage = (newdata: any) => {
-      console.log("Socket message received:", newdata);
-      console.log("Current roomId in localStorage:", localStorage.getItem("chatbotroomId"));
-      console.log("Message room_id:", newdata.data?._doc?.room_id);
-
       const data = newdata.data;
       const currentRoomId = localStorage.getItem("chatbotroomId");
 
       if (currentRoomId === data?._doc?.room_id) {
-        console.log("Message belongs to current chat room");
-
         const currentUserId = user?.id || localStorage.getItem("chatbotuserId");
         const newMessage: Message = {
           id: Date.now(),
@@ -283,16 +371,12 @@ export default function Layout({
           senderId: data?._doc?.sender
         };
 
-        console.log("Adding new message to incomingMessages:", newMessage);
         setIncomingMessages(prev => [...prev, newMessage]);
-      } else {
-        console.log("Message belongs to different room, ignoring");
       }
     };
 
     ConnectSocket.on("admin-offline-notification", handleReceiveMessage);
 
-    // Cleanup function
     return () => {
       ConnectSocket.off("admin-offline-notification", handleReceiveMessage);
     };
@@ -324,6 +408,13 @@ export default function Layout({
         console.error("Error parsing saved messages:", e);
       }
     }
+
+    // Cleanup on unmount
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
   }, []);
 
   // Save messages to localStorage whenever they change
@@ -337,9 +428,6 @@ export default function Layout({
     if (user) {
       ApiClient.get("user/detail", { id: user.id }).then((res: any) => {
         if (res.success) {
-          if (res?.data?.total_campaign == 0) {
-            // setShow(true)
-          }
           let data = { ...user, ...res.data };
           crendentialModel.setUser(data);
           localStorage.setItem("browseload", "true");
@@ -380,10 +468,49 @@ export default function Layout({
     }
   }, [isAuthenticate, user, history]);
 
-  // Scroll to bottom when messages change
+  // FIX: Force scroll to bottom when chatbot opens
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+    if (showChatbot && chatContainerRef.current) {
+      // Enable auto-scroll when opening
+      shouldAutoScrollRef.current = true;
+
+      // Force immediate scroll to bottom when opening chatbot
+      const timer = setTimeout(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+      }, 150);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showChatbot]);
+
+  // FIX: Scroll to bottom after messages finish loading
+  useEffect(() => {
+    if (messages.length > 0 && chatContainerRef.current && !loadingMessages) {
+      // Enable auto-scroll
+      shouldAutoScrollRef.current = true;
+
+      // Scroll to bottom after messages finish loading
+      const timer = setTimeout(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadingMessages]);
+
+  // Handle scroll events - maintain auto-scroll unless user scrolls up significantly
+  const handleScroll = useCallback(() => {
+    if (chatContainerRef.current) {
+      const container = chatContainerRef.current;
+      const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+      // Only disable auto-scroll if user manually scrolls up more than 200px from bottom
+      shouldAutoScrollRef.current = distanceFromBottom < 200;
+    }
+  }, []);
 
   // Chatbot Functions
   const validateEmail = (email: string) => {
@@ -412,12 +539,10 @@ export default function Layout({
       if (user?._id) {
         payload = {
           email: user?.id,
-          // chat_with: adminId,
         };
       } else {
         payload = {
           chat_by: email,
-          // chat_with: adminId,
         };
       }
 
@@ -429,8 +554,7 @@ export default function Layout({
           const userId = user?.id || res.data.data.user_id;
           loadChatMessages(data.data.room_id, userId);
           ConnectSocket.on("user-online", (data) => {
-            // console.log(data,"daataaOnline")
-            setOnlineUserId(userId);
+            setOnlineUserId(data?.user_id);
           });
           joinRoom(data.data.room_id, data.data.user_id);
           localStorage.setItem("chatbotroomId", data.data.room_id);
@@ -438,7 +562,6 @@ export default function Layout({
         }
       }).catch(err => {
         console.error("Error joining chat:", err);
-        // Add default welcome message on error
         const welcomeMessage: Message = {
           id: Date.now(),
           text: user?.id
@@ -538,7 +661,6 @@ export default function Layout({
           return;
         }
 
-        
         setShowEmailModal(true);
       }
     };
@@ -554,7 +676,6 @@ export default function Layout({
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {/* Tooltip */}
         {showTooltip && (
           <div
             style={{
@@ -571,8 +692,7 @@ export default function Layout({
               zIndex: 1001,
             }}
           >
-            Upfilly Support 
-            {/* Tooltip arrow */}
+            Upfilly Support
             <div style={{
               position: 'absolute',
               bottom: '-5px',
@@ -586,7 +706,6 @@ export default function Layout({
           </div>
         )}
 
-        {/* Chat Button */}
         <button
           onClick={handleClick}
           className="chatbot-button"
@@ -613,43 +732,42 @@ export default function Layout({
     );
   }, [showChatbot, user, emailSubmitted, getData]);
 
-  // Add hover effect styles to the existing ChatbotStyles component
   const ChatbotStyles = () => (
     <style jsx global>{`
-    /* ... existing styles ... */
-    
-    .chatbot-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-      animation: pulse 1.5s infinite;
-    }
-    
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+      .chatbot-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        animation: pulse 1.5s infinite;
       }
-      70% {
-        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+      
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+        }
       }
-      100% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-    }
-    
-    /* Tooltip animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
+      
+      @keyframes typing {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    /* ... rest of the existing styles ... */
-  `}</style>
+    `}</style>
   );
 
   const EmailModal = useCallback(() => {
@@ -831,25 +949,48 @@ export default function Layout({
 
     const shouldShowEmailInput = !emailSubmitted && !user?.id;
     const messageInputRef = useRef<HTMLInputElement>(null);
-
-    // Local state for input message
     const [localInputMessage, setLocalInputMessage] = useState(inputMessage || "");
+
+    // Add scroll listener when chatbot window mounts
+    useEffect(() => {
+      const container = chatContainerRef.current;
+      if (container && showChatbot) {
+        // Ensure we start at bottom with auto-scroll enabled
+        shouldAutoScrollRef.current = true;
+        container.scrollTop = container.scrollHeight;
+
+        container.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+          container.removeEventListener('scroll', handleScroll);
+        };
+      }
+    }, [showChatbot]);
+
+    // Focus input when chatbot opens and maintain scroll position
+    useEffect(() => {
+      if (showChatbot && messageInputRef.current && !shouldShowEmailInput) {
+        const timer = setTimeout(() => {
+          messageInputRef.current?.focus();
+
+          // After focus, ensure scroll is at bottom
+          setTimeout(() => {
+            if (chatContainerRef.current) {
+              shouldAutoScrollRef.current = true;
+              chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+            }
+          }, 50);
+        }, 100);
+
+        return () => clearTimeout(timer);
+      }
+    }, [showChatbot, shouldShowEmailInput]);
 
     // Update local input when prop changes
     useEffect(() => {
       setLocalInputMessage(inputMessage);
     }, [inputMessage]);
 
-    // Focus input when chatbot opens
-    useEffect(() => {
-      if (showChatbot && messageInputRef.current && !shouldShowEmailInput) {
-        setTimeout(() => {
-          messageInputRef.current?.focus();
-        }, 100);
-      }
-    }, [showChatbot, shouldShowEmailInput]);
-
-    // Key handler for Enter key
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -870,10 +1011,12 @@ export default function Layout({
         senderId: user?.id || localStorage.getItem("chatbotuserId") || ''
       };
 
+      userTypingRef.current = true;
+      shouldAutoScrollRef.current = true; // Force auto-scroll enabled
+
       setMessages(prev => [...prev, userMessage]);
       setInputMessage("");
-      setLocalInputMessage(""); // Clear local state
-      // setIsTyping(true);
+      setLocalInputMessage("");
 
       // Send message via Socket.io
       const payload = {
@@ -884,26 +1027,7 @@ export default function Layout({
         type: "TEXT"
       };
 
-      console.log("Sending message via socket:", payload);
       ConnectSocket.emit("send-message", payload);
-
-      // Fallback timeout in case socket doesn't respond
-      // const fallbackTimeout = setTimeout(() => {
-      //   setIsTyping(false);
-      //   const fallbackMessage: Message = {
-      //     id: Date.now() + 1,
-      //     text: "Thanks for your message! Our support team has received it and will respond shortly.",
-      //     sender: "admin",
-      //     timestamp: new Date().toISOString(),
-      //   };
-      //   setMessages(prev => [...prev, fallbackMessage]);
-      // }, 10000);
-
-      // Store timeout ID to clear it if real response arrives
-      // const timeoutId = fallbackTimeout;
-
-      // Clear timeout when component unmounts or new message is sent
-      // return () => clearTimeout(timeoutId);
     };
 
     const handleLocalInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -930,7 +1054,6 @@ export default function Layout({
       border: '1px solid #e0e0e0'
     };
 
-    // Input styles with explicit color and visibility properties
     const inputStyle: CSSProperties = {
       flex: 1,
       padding: '10px 14px',
@@ -941,10 +1064,7 @@ export default function Layout({
       boxSizing: 'border-box',
       backgroundColor: 'white',
       color: '#333',
-      caretColor: '#007bff',
-      opacity: 1,
-      WebkitAppearance: 'none',
-      MozAppearance: 'textfield',
+      caretColor: '#007bff'
     };
 
     const inputFocusStyle: CSSProperties = {
@@ -957,6 +1077,11 @@ export default function Layout({
 
     const handleInputFocus = () => {
       setCurrentInputStyle(inputFocusStyle);
+      // Keep scroll at bottom when input is focused
+      shouldAutoScrollRef.current = true;
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
     };
 
     const handleInputBlur = () => {
@@ -968,7 +1093,6 @@ export default function Layout({
         className="chatbot-window"
         style={chatbotWindowStyle}
       >
-        {/* Header */}
         <div style={{
           padding: '15px 20px',
           backgroundColor: '#007bff',
@@ -997,8 +1121,8 @@ export default function Layout({
               U
             </div>
             <div>
-              <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '600' }}>Upfilly  Support</h4>
-              <small style={{ opacity: 0.9, fontSize: '11px' }}>Online • Typically replies in minutes</small>
+              <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '600' }}>Upfilly Support</h4>
+              <small style={{ opacity: 0.9, fontSize: '11px' }}>{onlineUserId == "654227e78fd3b1018600710d" ? "Online" : "Offline"}</small>
             </div>
           </div>
           <button
@@ -1030,14 +1154,19 @@ export default function Layout({
           </button>
         </div>
 
-        {/* Messages Area */}
         <div
+          ref={chatContainerRef}
           className="chatbot-messages"
           style={{
             flex: 1,
             padding: '15px',
-            overflowY: 'auto',
-            backgroundColor: '#f8f9fa'
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+            backgroundColor: '#f8f9fa',
+            WebkitOverflowScrolling: 'touch',
+            position: 'relative',
+            overscrollBehavior: 'contain',
+            scrollbarWidth: 'thin'
           }}
         >
           {shouldShowEmailInput ? (
@@ -1056,10 +1185,10 @@ export default function Layout({
               padding: '40px 20px',
               color: '#666'
             }}>
-              <div className="typing-indicator" style={{ justifyContent: 'center' }}>
-                <span></span>
-                <span></span>
-                <span></span>
+              <div className="typing-indicator" style={{ justifyContent: 'center', display: 'flex', gap: '4px' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007bff', animation: 'typing 1.4s infinite' }}></span>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007bff', animation: 'typing 1.4s infinite 0.2s' }}></span>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007bff', animation: 'typing 1.4s infinite 0.4s' }}></span>
               </div>
               <p>Loading messages...</p>
             </div>
@@ -1078,64 +1207,11 @@ export default function Layout({
           ) : (
             <>
               {messages.map((message) => (
-                <div
-                  key={message.id}
-                  style={{
-                    marginBottom: '12px',
-                    display: 'flex',
-                    flexDirection: message.sender === 'user' ? 'row-reverse' : 'row',
-                    alignItems: 'flex-end',
-                    gap: '8px'
-                  }}
-                >
-                  {message.sender !== 'user' && (
-                    <div style={{
-                      width: '30px',
-                      height: '30px',
-                      backgroundColor: message.sender === 'admin' ? '#28a745' : '#007bff',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: '13px',
-                      fontWeight: 'bold',
-                      flexShrink: 0
-                    }}>
-                      {message.sender === 'admin' ? 'A' : 'U'}
-                    </div>
-                  )}
-                  <div
-                    style={{
-                      maxWidth: '75%',
-                      padding: '10px 14px',
-                      borderRadius: '16px',
-                      backgroundColor: message.sender === 'user' ? '#007bff' :
-                        message.sender === 'admin' ? '#e7f5e9' : 'white',
-                      color: message.sender === 'user' ? 'white' : '#333',
-                      boxShadow: message.sender === 'user'
-                        ? '0 2px 5px rgba(0,123,255,0.2)'
-                        : '0 2px 5px rgba(0,0,0,0.1)',
-                      wordBreak: 'break-word',
-                      whiteSpace: 'pre-line',
-                      fontSize: '14px'
-                    }}
-                  >
-                    {message.text}
-                    <div style={{
-                      fontSize: '10px',
-                      opacity: 0.7,
-                      marginTop: '4px',
-                      textAlign: message.sender === 'user' ? 'right' : 'left'
-                    }}>
-                      {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                  </div>
-                </div>
+                <MessageItem key={`${message.id}-${message.timestamp}`} message={message} />
               ))}
 
               {isTyping && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
                   <div style={{
                     width: '30px',
                     height: '30px',
@@ -1159,10 +1235,10 @@ export default function Layout({
                       boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
                     }}
                   >
-                    <div className="typing-indicator">
-                      <span style={{ animation: 'typing 1.4s infinite' }}>.</span>
-                      <span style={{ animation: 'typing 1.4s infinite 0.2s' }}>.</span>
-                      <span style={{ animation: 'typing 1.4s infinite 0.4s' }}>.</span>
+                    <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007bff', animation: 'typing 1.4s infinite' }}></span>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007bff', animation: 'typing 1.4s infinite 0.2s' }}></span>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#007bff', animation: 'typing 1.4s infinite 0.4s' }}></span>
                     </div>
                   </div>
                 </div>
@@ -1173,12 +1249,14 @@ export default function Layout({
           )}
         </div>
 
-        {/* Input Area */}
         {!shouldShowEmailInput && !loadingMessages && (
           <div style={{
             padding: '12px 15px',
             borderTop: '1px solid #e0e0e0',
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+            position: 'sticky',
+            bottom: 0,
+            zIndex: 10
           }}>
             <form onSubmit={handleLocalSendMessage} style={{ display: 'flex', gap: '4px' }}>
               <input
@@ -1192,6 +1270,7 @@ export default function Layout({
                 placeholder="Type your message..."
                 style={currentInputStyle}
                 disabled={isTyping}
+                autoComplete="off"
               />
               <button
                 type="submit"
@@ -1257,7 +1336,7 @@ export default function Layout({
         )}
       </div>
     );
-  }, [showChatbot, emailSubmitted, user, email, messages, isTyping, inputMessage, loadingMessages, roomId, adminId, clearChatHistory, handleCloseChatbot]);
+  }, [showChatbot, emailSubmitted, user, email, messages, isTyping, inputMessage, loadingMessages, roomId, adminId, clearChatHistory, handleCloseChatbot, onlineUserId, handleScroll]);
 
   return (
     <>
@@ -1302,7 +1381,6 @@ export default function Layout({
             <span>{children}</span>
           )}
 
-          {/* Chatbot Components - Added here */}
           <ChatButton />
           <ChatbotWindow />
           <EmailModal />
