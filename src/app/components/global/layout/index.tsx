@@ -445,6 +445,10 @@ export default function Layout({
   }, []);
 
   useEffect(() => {
+     ConnectSocket.emit("user-online", { user_id: user?.id });
+    ConnectSocket.on("user-online", (data) => {
+      setOnlineUserId(data?.data?.user_id);
+    });
     requestForToken();
   }, []);
 
@@ -553,9 +557,7 @@ export default function Layout({
 
           const userId = user?.id || res.data.data.user_id;
           loadChatMessages(data.data.room_id, userId);
-          ConnectSocket.on("user-online", (data) => {
-            setOnlineUserId(data?.user_id);
-          });
+          
           joinRoom(data.data.room_id, data.data.user_id);
           localStorage.setItem("chatbotroomId", data.data.room_id);
           localStorage.setItem("chatbotuserId", data.data.user_id);
