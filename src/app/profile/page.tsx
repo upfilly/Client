@@ -307,6 +307,14 @@ const Profile = () => {
                 </div>
               </div>}
 
+              {(data?.payout_amount && user?.role == "affiliate") &&
+              <div className="col-12 col-sm-6 col-md-6 col-lg-6">
+                <div className='inputFlexs width400'>
+                  <label>Payout Amount:</label>
+                  <p className="profile_data">{data && data?.payout_amount}</p>
+                </div>
+              </div>}
+
             {data?.all_category && data.all_category.length > 0 &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
