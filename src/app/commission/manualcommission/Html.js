@@ -90,7 +90,7 @@ const Html = () => {
 
   const getCampaignData = (p = {}) => {
     let url = "campaign/brand/all";
-    ApiClient.get(url, {...p, brand_id: user?.id }).then((res) => {
+    ApiClient.get(url, { ...p, brand_id: user?.id }).then((res) => {
       if (res.success) {
         setCamppaignData(
           res.data.data.map((dat) => {
@@ -121,10 +121,52 @@ const Html = () => {
     setCommissionType(e.target.value);
   };
 
+  // Handle number change with 9-digit restriction
   const handleNumberChange = (e, field) => {
     const value = e.target.value;
-    if (/^\d*\.?\d*$/.test(value) || value === "") {
-      setFormData({ ...formData, [field]: value });
+
+    // Remove any non-numeric characters except decimal point
+    const numericValue = value.replace(/[^\d.]/g, '');
+
+    // Check if the numeric string (excluding decimal point) exceeds 9 digits
+    const digitsOnly = numericValue.replace(/\./g, '');
+
+    if (digitsOnly.length <= 9) {
+      setFormData({ ...formData, [field]: numericValue });
+
+      // Clear validation error for this field when user starts typing
+      if (errors[field]) {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors[field];
+          return newErrors;
+        });
+      }
+    } else {
+      // If user tries to enter more than 9 digits, show error immediately
+      setErrors(prev => ({
+        ...prev,
+        [field]: "Cannot exceed 9 digits"
+      }));
+
+      // Keep only first 9 digits (plus decimal point if already entered)
+      let truncatedValue = '';
+      let decimalFound = false;
+      let digitCount = 0;
+
+      for (let char of numericValue) {
+        if (digitCount >= 9) break;
+
+        if (char === '.' && !decimalFound) {
+          truncatedValue += char;
+          decimalFound = true;
+        } else if (/^\d$/.test(char)) {
+          truncatedValue += char;
+          digitCount++;
+        }
+      }
+
+      setFormData({ ...formData, [field]: truncatedValue });
     }
   };
 
@@ -161,17 +203,31 @@ const Html = () => {
         header: true,
         skipEmptyLines: true,
       });
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
-    getCampaignData({affiliate_ids:formData?.publisher_id});
+    getCampaignData({ affiliate_ids: formData?.publisher_id });
   }, [formData.publisher_id]);
 
-    useEffect(() => {
+  useEffect(() => {
     getData();
     fetchCSV();
   }, []);
+
+  // Validate max 9 digits for a field
+  const validateMaxDigits = (value, fieldName) => {
+    if (!value) return '';
+
+    // Remove decimal point and non-digit characters for digit count
+    const digitsOnly = value.replace(/[^\d]/g, '');
+
+    if (digitsOnly.length > 9) {
+      return "Cannot exceed 9 digits";
+    }
+
+    return '';
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -186,10 +242,22 @@ const Html = () => {
 
     if (!formData?.amount_of_sale && commissionSelectType != "lead") {
       newErrors.amount_of_sale = "Amount of Sale is required";
+    } else if (formData?.amount_of_sale) {
+      // Validate max 9 digits for amount_of_sale
+      const saleAmountError = validateMaxDigits(formData.amount_of_sale, 'amount_of_sale');
+      if (saleAmountError) {
+        newErrors.amount_of_sale = saleAmountError;
+      }
     }
 
     if (!formData?.amount_of_commission) {
       newErrors.amount_of_commission = "Amount of Commission is required";
+    } else if (formData?.amount_of_commission) {
+      // Validate max 9 digits for amount_of_commission
+      const commissionAmountError = validateMaxDigits(formData.amount_of_commission, 'amount_of_commission');
+      if (commissionAmountError) {
+        newErrors.amount_of_commission = commissionAmountError;
+      }
     }
 
     if (!formData?.commission_status) {
@@ -279,6 +347,21 @@ const Html = () => {
     }
   };
 
+  // Format number for display (adds commas)
+  const formatNumberForDisplay = (numString) => {
+    if (!numString) return '';
+
+    // Split into integer and decimal parts
+    const parts = numString.split('.');
+    let integerPart = parts[0];
+    const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+    // Add commas to integer part
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    return integerPart + decimalPart;
+  };
+
   return (
     <>
       <Layout
@@ -301,7 +384,7 @@ const Html = () => {
                       history.push("/commission/manualcommission/view")
                     }
                   ></i>
-                  Manual Commission 
+                  Manual Commission
                 </h3>
               </div>
             </div>
@@ -390,14 +473,13 @@ const Html = () => {
                       {commissionSelectType != "lead" && (
                         <div className="col-md-6 ">
                           <div className="mb-3">
-                            <label>Sale Amount</label>
+                            <label>Sale Amount (Max: 9 digits)</label>
                             <input
                               type="text"
-                              className={`form-control ${
-                                errors.amount_of_sale ? "is-invalid" : ""
-                              }`}
+                              className={`form-control ${errors.amount_of_sale ? "is-invalid" : ""
+                                }`}
                               placeholder="Enter your Amount of Sale"
-                              value={formData?.amount_of_sale}
+                              value={formatNumberForDisplay(formData?.amount_of_sale)}
                               onChange={(e) =>
                                 handleNumberChange(e, "amount_of_sale")
                               }
@@ -407,19 +489,27 @@ const Html = () => {
                                 {errors.amount_of_sale}
                               </div>
                             )}
+                            <div className="digit-counter mt-1">
+                              {/* {formData?.amount_of_sale ? (
+                                <small className={formData?.amount_of_sale.replace(/[^\d]/g, '').length > 9 ? "text-danger" : "text-muted"}>
+                                  {formData?.amount_of_sale.replace(/[^\d]/g, '').length} / 9 digits
+                                </small>
+                              ) : (
+                                <small className="text-muted">Max 9 digits</small>
+                              )} */}
+                            </div>
                           </div>
                         </div>
                       )}
                       <div className="col-md-6 ">
                         <div className="mb-3">
-                          <label>Commission Amount</label>
+                          <label>Commission Amount (Max: 9 digits)</label>
                           <input
                             type="text"
-                            className={`form-control ${
-                              errors.amount_of_commission ? "is-invalid" : ""
-                            }`}
+                            className={`form-control ${errors.amount_of_commission ? "is-invalid" : ""
+                              }`}
                             placeholder="Enter your Amount of Commission"
-                            value={formData?.amount_of_commission}
+                            value={formatNumberForDisplay(formData?.amount_of_commission)}
                             onChange={(e) =>
                               handleNumberChange(e, "amount_of_commission")
                             }
@@ -429,6 +519,15 @@ const Html = () => {
                               {errors.amount_of_commission}
                             </div>
                           )}
+                          <div className="digit-counter mt-1">
+                            {/* {formData?.amount_of_commission ? (
+                              <small className={formData?.amount_of_commission.replace(/[^\d]/g, '').length > 9 ? "text-danger" : "text-muted"}>
+                                {formData?.amount_of_commission.replace(/[^\d]/g, '').length} / 9 digits
+                              </small>
+                            ) : (
+                              <small className="text-muted">Max 9 digits</small>
+                            )} */}
+                          </div>
                         </div>
                       </div>
                       <div className="col-md-6 ">
@@ -461,7 +560,7 @@ const Html = () => {
 
                       <div className="col-md-6 ">
                         <div className="mb-3 mc-campaign-dropdown">
-                          <label>Campaign</label> 
+                          <label>Campaign</label>
                           <SelectDropdown
                             theme="search"
                             id="statusDropdown"
@@ -486,9 +585,8 @@ const Html = () => {
                             <label>Order Reference</label>
                             <input
                               type="text"
-                              className={`form-control ${
-                                errors.order_reference ? "is-invalid" : ""
-                              }`}
+                              className={`form-control ${errors.order_reference ? "is-invalid" : ""
+                                }`}
                               placeholder="Enter your Order Reference"
                               value={formData?.order_reference}
                               onChange={(e) =>
@@ -514,9 +612,8 @@ const Html = () => {
                             type="date"
                             ref={dateInputRef}
                             onClick={handleClick}
-                            className={`form-control cursor-pointer ${
-                              errors.transaction_date ? "is-invalid" : ""
-                            }`}
+                            className={`form-control cursor-pointer ${errors.transaction_date ? "is-invalid" : ""
+                              }`}
                             value={formData?.transaction_date}
                             onChange={(e) =>
                               setFormData({
@@ -707,8 +804,7 @@ const Html = () => {
                             YYYY-MM-DD format
                           </li>
                           <li>
-                            Amount fields should be numbers only (decimals
-                            allowed)
+                            <strong>Amount fields:</strong> Should not exceed 9 digits (decimals allowed)
                           </li>
                           <li>Do not add or remove columns</li>
                           <li>

@@ -509,7 +509,7 @@ const Html = ({
                         </div>
 
                         {/* Add Payout Amount Field */}
-                        <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
+                        {user?.role == 'affiliate' && <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
                           <label>Payout Amount</label>
                           <div>
                             <input
@@ -523,7 +523,7 @@ const Html = ({
                               onChange={e => setForm({ ...form, payout_amount: e.target.value })}
                             />
                           </div>
-                        </div>
+                        </div>}
 
                         <div className=" col-12 col-sm-12 col-md-12">
                           <label>Description</label>
