@@ -151,6 +151,24 @@ const Html = ({
                         )}
                       </div>
 
+                      {/* Add Payout Amount Field for Banner */}
+                      <div className="col-md-6 mb-3">
+                        <label>
+                          Payout Amount
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={form.payout_amount || ""}
+                          onChange={(e) =>
+                            setform({ ...form, payout_amount: e.target.value })
+                          }
+                          min="0"
+                          step="0.01"
+                          placeholder="Enter payout amount"
+                        />
+                      </div>
+
                       <div className="col-12 col-sm-12 col-md-6">
                         <div className="form-group">
                           <div className="select_drop ">
@@ -350,7 +368,7 @@ const Html = ({
                               isClearable={form?.expiration_date ? true : false}
                               placeholderText="Select Expiration Date"
                               selected={form?.expiration_date}
-                              minDate={form?.activation_date}
+                              minDate={form?.activation_date || new Date()}
                               className={`form-control ${form?.expireCheck === true ? 'disabled-datepicker' : ''}`}
                               open={closeExp}
                               disabled={form?.expireCheck === true}
@@ -374,27 +392,6 @@ const Html = ({
                           </div>
                         </div>
                       </div>
-                      {/* <div className="col-md-6 mb-3 ">
-                        <label>Select : </label>
-                        <div className="select_check p-0 pl-1">
-                          <div className="form-check">
-                            <input
-                              type="checkbox"
-                              className="form-check-input mr-4"
-                              checked={form?.mobile_creative}
-                              onClick={(e) =>
-                                setform({
-                                  ...form,
-                                  mobile_creative: !form?.mobile_creative,
-                                })
-                              }
-                            />
-                            <label className="form-check-label">
-                              Mobile Creative
-                            </label>
-                          </div>
-                        </div>
-                      </div> */}
                       <div className="col-md-12 mb-3 custom-description">
                         <label>Description</label>
                         {affiliateData && (
@@ -495,6 +492,24 @@ const Html = ({
                         )}
                       </div>
 
+                      {/* Add Payout Amount Field for Link */}
+                      <div className="col-md-6 mb-3">
+                        <label>
+                          Payout Amount
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={form.payout_amount || ""}
+                          onChange={(e) =>
+                            setform({ ...form, payout_amount: e.target.value })
+                          }
+                          min="0"
+                          step="0.01"
+                          placeholder="Enter payout amount"
+                        />
+                      </div>
+
                       <div className="col-md-6 mb-3">
                         <label>
                           Destination Url<span className="star">*</span>
@@ -572,7 +587,6 @@ const Html = ({
                       <div className="col-md-6 mb-3">
                         <label className="form-label ">
                           End Date
-                          {/* <span className="star">*</span> */}
                         </label>
                         <ReactDatePicker
                           showIcon
@@ -586,13 +600,6 @@ const Html = ({
                           dateFormat="MM/dd/yyyy"
                           minDate={form?.linkStartDate}
                         />
-                        {/* {submitted && !form?.linkEndDate ? (
-                          <div className="invalid-feedback d-block">
-                            End Date is Required
-                          </div>
-                        ) : (
-                          <></>
-                        )} */}
                       </div>
 
                       <div className="col-md-12 mb-3 custom-description">
@@ -650,44 +657,6 @@ const Html = ({
                         ) : (
                           <></>
                         )}
-                      </div>
-
-                      <div className="col-md-6 mb-3 ">
-                        {/* <label>Options : </label> */}
-                        <div className="select_check p-0 pl-1">
-                          {/* <div className="form-check">
-                            <input
-                              type="checkbox"
-                              className="form-check-input mr-4"
-                              checked={form?.linkSeo}
-                              onChange={(e) =>
-                                setform({
-                                  ...form,
-                                  linkSeo: !form?.linkSeo,
-                                })
-                              }
-                            />
-                            <label className="form-check-label">
-                              SEO Enabled
-                            </label>
-                          </div> */}
-                          {/* <div className="form-check">
-                            <input
-                              type="checkbox"
-                              className="form-check-input mr-4"
-                              checked={form?.linkDeepLink}
-                              onChange={(e) =>
-                                setform({
-                                  ...form,
-                                  linkDeepLink: !form?.linkDeepLink,
-                                })
-                              }
-                            />
-                            <label className="form-check-label">
-                              Deep Linking
-                            </label>
-                          </div> */}
-                        </div>
                       </div>
                     </div>
                   </>

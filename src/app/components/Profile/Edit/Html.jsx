@@ -159,7 +159,7 @@ const Html = ({
     { "name": "Pacific/Tongatapu", "id": "Pacific/Tongatapu" }
   ]
 
-  console.log(form,"hjhjhjhjhj")
+  console.log(form, "hjhjhjhjhj")
 
   const handleAddNewItem = () => {
     if (newItem.trim() !== "" && !customItems.includes(newItem)) {
@@ -508,21 +508,34 @@ const Html = ({
                           </div>
                         </div>
 
+                        {/* Add Payout Amount Field */}
+                        <div className='col-12 col-sm-12 col-md-6 form-group custom-input'>
+                          <label>Payout Amount</label>
+                          <div>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder="Enter Payout Amount"
+                              name='payout_amount'
+                              value={form.payout_amount || ''}
+                              min="0"
+                              step="0.01"
+                              onChange={e => setForm({ ...form, payout_amount: e.target.value })}
+                            />
+                          </div>
+                        </div>
+
                         <div className=" col-12 col-sm-12 col-md-12">
                           <label>Description</label>
                           <div className="descript_editpro">
                             <DynamicReactQuill
                               theme="snow"
                               value={form?.description ? form?.description : ''}
-                              // onChange={(newValue, editor) => {
-                              //   setForm({ ...form, description: newValue })
-                              // }}
                               onChange={(newValue) => {
                                 setForm((prev) => ({
                                   ...prev,
                                   description: newValue
                                 }))
-                                // ({ ...form,  })
                               }}
                               className='tuncketcls'
                               modules={{
@@ -556,10 +569,9 @@ const Html = ({
                               value={form?.affiliateSignupText ? form?.affiliateSignupText : ''}
                               onChange={(newValue) => {
                                 setForm((prev) => ({
-                                ...prev,
-                                affiliateSignupText: newValue
-                              }))
-                                // ({ ...form,  })
+                                  ...prev,
+                                  affiliateSignupText: newValue
+                                }))
                               }}
                               className='tuncketcls'
                               modules={{

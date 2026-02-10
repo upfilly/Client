@@ -61,6 +61,7 @@ const EditProfile = () => {
     affiliate_type: "",
     cat_type: "",
     defaultCurrency: "",
+    payout_amount: "", // Added payout_amount field
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -156,6 +157,7 @@ const EditProfile = () => {
           platforms: res?.data?.propertyType || [],
           logo1: value.logo1 || "",
           affiliateSignupText: value.affiliateSignupText || "",
+          payout_amount: value.payout_amount || "", // Added payout_amount
         });
         setFormData(payload);
         setWebsites(value?.affiliate_website || [""]);
@@ -245,6 +247,7 @@ const EditProfile = () => {
       sub_child_category_id: selectedItems?.subSubCategories,
       logo1: form?.logo1,
       affiliateSignupText: form?.affiliateSignupText,
+      payout_amount: form?.payout_amount, // Added payout_amount
     };
     delete value?.platforms;
     delete value?.websites;
