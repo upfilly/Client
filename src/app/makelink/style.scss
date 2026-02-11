@@ -95,3 +95,166 @@
 .select_parabx .search-wrapper .searchBox::placeholder {
   color: #afa3a3 !important;
 }
+
+// style.scss - Add these styles
+
+// React Select Custom Styles
+.react-select-container {
+  width: 100%;
+  
+  &.is-invalid {
+    .react-select__control {
+      border-color: #dc3545;
+      
+      &:hover {
+        border-color: #dc3545;
+      }
+      
+      &--is-focused {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+      }
+    }
+  }
+  
+  .react-select__control {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    min-height: 38px;
+    box-shadow: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #fff;
+    
+    &:hover {
+      border-color: #86b7fe;
+    }
+    
+    &--is-focused {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      outline: 0;
+    }
+  }
+  
+  .react-select__value-container {
+    padding: 2px 8px;
+  }
+  
+  .react-select__input {
+    color: #212529;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .react-select__placeholder {
+    color: #6c757d;
+    font-size: 1rem;
+  }
+  
+  .react-select__single-value {
+    color: #212529;
+    font-size: 1rem;
+  }
+  
+  .react-select__menu {
+    border-radius: 0.375rem;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    margin-top: 2px;
+    z-index: 9999;
+    background-color: #fff;
+  }
+  
+  .react-select__option {
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    
+    &--is-focused {
+      background-color: #e7f1ff;
+      color: #212529;
+    }
+    
+    &--is-selected {
+      background-color: #0d6efd;
+      color: white;
+    }
+  }
+  
+  .react-select__indicator-separator {
+    background-color: #dee2e6;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .react-select__dropdown-indicator,
+  .react-select__clear-indicator {
+    padding: 6px 8px;
+    cursor: pointer;
+    
+    &:hover {
+      color: #495057;
+    }
+  }
+  
+  .react-select__multi-value {
+    background-color: #e7f1ff;
+    border-radius: 0.25rem;
+  }
+  
+  .react-select__multi-value__label {
+    color: #0d6efd;
+    font-size: 0.875rem;
+  }
+  
+  .react-select__multi-value__remove {
+    &:hover {
+      background-color: #0d6efd;
+      color: white;
+    }
+  }
+}
+
+// Make sure the select dropdown appears above modal
+.react-select__menu {
+  z-index: 9999 !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .react-select-container {
+    .react-select__control {
+      min-height: 42px;
+    }
+    
+    .react-select__value-container {
+      padding: 4px 8px;
+    }
+  }
+}
+
+// Error state
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+
+// Ensure proper spacing
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+// Adjust label spacing
+label.mb-2 {
+  margin-bottom: 0.5rem !important;
+  display: inline-block;
+}
+
+// Star color for required fields
+.star {
+  color: #dc3545;
+  margin-left: 2px;
+}

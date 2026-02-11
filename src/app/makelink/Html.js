@@ -7,6 +7,7 @@ import crendentialModel from "@/models/credential.model";
 import { toast } from "react-toastify";
 import MultiSelectValue from "../components/common/MultiSelectValue";
 import axios from "axios";
+import Select from 'react-select';
 
 const Html = () => {
   const user = crendentialModel.getUser();
@@ -25,6 +26,7 @@ const Html = () => {
     { id: "newparam1", label: "newparam1" },
   ]);
   const [brandData, setBrandData] = useState([]);
+  const [brandOptions, setBrandOptions] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
   const [inputValues, setInputValues] = useState({});
   const [CampaignData, setCampaignData] = useState([]);
@@ -130,17 +132,24 @@ const Html = () => {
           };
         });
         setBrandData(manipulateData);
+
+        // Format data for react-select
+        const options = manipulateData.map((brand) => ({
+          value: brand.id,
+          label: brand.name,
+        }));
+        setBrandOptions(options);
       }
     });
   };
 
-  const handleBrandChange = (event) => {
-    setSelectedBrand(event.target.value);
+  const handleBrandChange = (selectedOption) => {
+    setSelectedBrand(selectedOption ? selectedOption.value : "");
     setErrors((prev) => ({ ...prev, selectedBrand: "" }));
   };
 
   const handleCampaignChange = (event) => {
-    setSelectedCampaign(event.campaignId);
+    setSelectedCampaign(event.target.value);
     setErrors((prev) => ({ ...prev, SelectedCampaign: "" }));
   };
 
@@ -337,6 +346,9 @@ const Html = () => {
     });
   };
 
+  // Find the selected option for react-select
+  const selectedBrandOption = brandOptions.find(option => option.value === selectedBrand);
+
   return (
     <>
       <Layout
@@ -368,21 +380,31 @@ const Html = () => {
                       Select Affiliate<span className="star">*</span>
                     </label>
 
-                    <select
-                      className={`form-select mb-2 ${
-                        errors.selectedBrand && "is-invalid"
-                      }`}
-                      id="brandSelect"
-                      value={selectedBrand}
+                    <Select
+                      className={`react-select-container ${errors.selectedBrand && "is-invalid"}`}
+                      classNamePrefix="react-select"
+                      options={brandOptions}
+                      value={selectedBrandOption}
                       onChange={handleBrandChange}
-                    >
-                      <option value="">Select Affiliate</option>
-                      {brandData.map((brand) => (
-                        <option key={brand.id} value={brand.id}>
-                          {brand.name}
-                        </option>
-                      ))}
-                    </select>
+                      placeholder="Search and select affiliate..."
+                      isSearchable={true}
+                      isClearable={true}
+                      noOptionsMessage={() => "No affiliates found"}
+                      styles={{
+                        control: (base) => ({
+                          ...base,
+                          minHeight: '38px',
+                          borderColor: errors.selectedBrand ? '#dc3545' : '#ced4da',
+                          '&:hover': {
+                            borderColor: errors.selectedBrand ? '#dc3545' : '#86b7fe'
+                          }
+                        }),
+                        menu: (base) => ({
+                          ...base,
+                          zIndex: 9999
+                        })
+                      }}
+                    />
 
                     {errors.selectedBrand && (
                       <div className="invalid-feedback d-block">
@@ -394,12 +416,11 @@ const Html = () => {
                 <div className="col-12 col-md-6">
                   <div className="mb-3">
                     <label className="mb-2">
-                      Select Campaign<span className="star">*</span>
+                      Campaign<span className="star">*</span>
                     </label>
                     <select
-                      className={`form-select mb-2 ${
-                        errors.SelectedCampaign && "is-invalid"
-                      }`}
+                      className={`form-select mb-2 ${errors.SelectedCampaign && "is-invalid"
+                        }`}
                       id="brandSelect"
                       value={SelectedCampaign}
                       onChange={handleCampaignChange}
@@ -428,9 +449,8 @@ const Html = () => {
                   </label>
                   <input
                     type="text"
-                    className={`form-control ${
-                      errors.websiteAllowed && "is-invalid"
-                    }`}
+                    className={`form-control ${errors.websiteAllowed && "is-invalid"
+                      }`}
                     value={DestinationUrl}
                     onChange={(e) => setDestinationUrl(e.target.value)}
                     placeholder="Enter your website URL"
