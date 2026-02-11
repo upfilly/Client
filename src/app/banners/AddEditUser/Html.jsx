@@ -604,7 +604,7 @@ const Html = ({
                       </div>
 
                       <div className="col-md-12 mb-3 custom-description">
-                        <label>{form?.addType === 'link' ?  "Link "  : "Description"}</label>{form?.addType === 'link' && <span className="star">*</span>}
+                        <label>{form?.addType === 'link' ?  "Link Description"  : "Description"}</label>{form?.addType === 'link' && <span className="star">*</span>}
                         <DynamicReactQuill
                           theme="snow"
                           value={form?.linkDescription ? form?.linkDescription : ""}
