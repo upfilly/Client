@@ -599,7 +599,7 @@ const Html = ({
                             setform({ ...form, linkEndDate: date })
                           }
                           dateFormat="MM/dd/yyyy"
-                          minDate={form?.linkStartDate}
+                          minDate={form?.linkStartDate || new Date()}
                         />
                       </div>
 
