@@ -39,6 +39,7 @@ export default function Header2({
     "/coupons",
     "/invitations",
     "/allownotifications",
+    "/requestcampaigns"
   ];
 
   const isDashboard = validPaths.includes(pathname);

@@ -29,7 +29,7 @@ const Users = () => {
 
   const getData = (p = {}) => {
     setLoader(true)
-    let filter = { ...filters, ...p }
+    let filter = { ...filters, ...p ,status:"pending"}
     let url = 'campaign-requests'
     ApiClient.get(url, filter).then(res => {
       if (res.success) {

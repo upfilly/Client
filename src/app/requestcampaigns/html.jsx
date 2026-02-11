@@ -51,7 +51,7 @@ const Html = ({
           <div className="campaign-request-header-wrapper">
             <div className="main_title_head d-flex justify-content-between align-items-center gap-2">
               <h3 className="">Campaign Request</h3>
-              <div className="d-flex align-items-center gap-2">
+              {/* <div className="d-flex align-items-center gap-2">
                 <SelectDropdown
                   theme="search"
                   id="statusDropdown"
@@ -77,7 +77,7 @@ const Html = ({
                     Reset
                   </button>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="card-body">
