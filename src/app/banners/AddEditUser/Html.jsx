@@ -152,7 +152,7 @@ const Html = ({
                       </div>
 
                       {/* Add Payout Amount Field for Banner */}
-                      <div className="col-md-6 mb-3">
+                      {/* <div className="col-md-6 mb-3">
                         <label>
                           Payout Amount
                         </label>
@@ -167,7 +167,7 @@ const Html = ({
                           step="0.01"
                           placeholder="Enter payout amount"
                         />
-                      </div>
+                      </div> */}
 
                       <div className="col-12 col-sm-12 col-md-6">
                         <div className="form-group">
@@ -493,7 +493,7 @@ const Html = ({
                       </div>
 
                       {/* Add Payout Amount Field for Link */}
-                      <div className="col-md-6 mb-3">
+                      {/* <div className="col-md-6 mb-3">
                         <label>
                           Payout Amount
                         </label>
@@ -508,7 +508,7 @@ const Html = ({
                           step="0.01"
                           placeholder="Enter payout amount"
                         />
-                      </div>
+                      </div> */}
 
                       <div className="col-md-6 mb-3">
                         <label>
@@ -570,6 +570,7 @@ const Html = ({
                           placeholderText="Select Start Date"
                           selected={form?.linkStartDate}
                           className="form-control"
+                           minDate={new Date()}
                           onChange={(date) =>
                             setform({ ...form, linkStartDate: date })
                           }
@@ -592,7 +593,7 @@ const Html = ({
                           showIcon
                           isClearable={form?.linkEndDate ? true : false}
                           placeholderText="Select End Date"
-                          selected={form?.linkEndDate}
+                          selected={form?.linkEndDate || new Date()}
                           className="form-control"
                           onChange={(date) =>
                             setform({ ...form, linkEndDate: date })
