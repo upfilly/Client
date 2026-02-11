@@ -7,6 +7,7 @@ import crendentialModel from "@/models/credential.model";
 import { toast } from "react-toastify";
 import MultiSelectValue from "../components/common/MultiSelectValue";
 import axios from "axios";
+import Select from 'react-select';
 
 const Html = () => {
   const user = crendentialModel.getUser();
@@ -25,6 +26,7 @@ const Html = () => {
     { id: "newparam1", label: "newparam1" },
   ]);
   const [brandData, setBrandData] = useState([]);
+  const [brandOptions, setBrandOptions] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
   const [inputValues, setInputValues] = useState({});
@@ -75,6 +77,13 @@ const Html = () => {
           id: itm?.id || itm?._id,
         }));
         setBrandData(manipulateData);
+
+        // Format data for react-select
+        const options = manipulateData.map((brand) => ({
+          value: brand.id,
+          label: brand.name,
+        }));
+        setBrandOptions(options);
       }
     });
   };
@@ -88,8 +97,8 @@ const Html = () => {
     )
   );
 
-  const handleBrandChange = (event) => {
-    setSelectedBrand(event.target.value);
+  const handleBrandChange = (selectedOption) => {
+    setSelectedBrand(selectedOption ? selectedOption.value : "");
   };
 
   useEffect(() => {
@@ -215,6 +224,9 @@ const Html = () => {
     setShowCustomParameters(e.target.checked);
   };
 
+  // Find the selected option for react-select
+  const selectedBrandOption = brandOptions.find(option => option.value === selectedBrand);
+
   return (
     <>
       <Layout name="Generate Link">
@@ -236,18 +248,31 @@ const Html = () => {
                 <div className="col-12 col-sm-6 col-md-6 custom-dropdown">
                   <div className="mb-3">
                     <label>Select a Merchant</label>
-                    <select
-                      className="form-select mb-2"
-                      value={selectedBrand}
+                    <Select
+                      className={`react-select-container ${!selectedBrand && isSubmited ? "is-invalid" : ""}`}
+                      classNamePrefix="react-select"
+                      options={brandOptions}
+                      value={selectedBrandOption}
                       onChange={handleBrandChange}
-                    >
-                      <option value="">Select a Merchant</option>
-                      {brands.map((brand) => (
-                        <option key={brand.id} value={brand.id}>
-                          {brand.name}
-                        </option>
-                      ))}
-                    </select>
+                      placeholder="Search and select merchant..."
+                      isSearchable={true}
+                      isClearable={true}
+                      noOptionsMessage={() => "No merchants found"}
+                      styles={{
+                        control: (base, state) => ({
+                          ...base,
+                          minHeight: '38px',
+                          borderColor: !selectedBrand && isSubmited ? '#dc3545' : '#ced4da',
+                          '&:hover': {
+                            borderColor: !selectedBrand && isSubmited ? '#dc3545' : '#86b7fe'
+                          }
+                        }),
+                        menu: (base) => ({
+                          ...base,
+                          zIndex: 9999
+                        })
+                      }}
+                    />
                     {!selectedBrand && isSubmited && (
                       <div className="invalid-feedback d-block">
                         Please select a merchant
@@ -378,12 +403,10 @@ const Html = () => {
                           className="form-control gen_links heauto br0 mb-0"
                         >
                           {url ||
-                            `https://api.upfilly.com/link/affiliate_id=${
-                              user?.id
-                            }${
-                              selectedBrand
-                                ? `&merchant_id=${selectedBrand}`
-                                : ""
+                            `https://api.upfilly.com/link/affiliate_id=${user?.id
+                            }${selectedBrand
+                              ? `&merchant_id=${selectedBrand}`
+                              : ""
                             }`}
                         </p>
                       </div>
