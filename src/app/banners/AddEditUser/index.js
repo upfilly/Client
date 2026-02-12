@@ -130,7 +130,8 @@ const AddEditUser = () => {
         !form?.linkName ||
         !form?.linkDestinationUrl ||
         !form?.linkStartDate ||
-        !form?.linkDescription
+        !form?.linkDescription || 
+        !form?.description
         // !form?.linkEndDate
       ) {
         setSubmitted(true);
@@ -202,6 +203,7 @@ const AddEditUser = () => {
         linkEndDate: form.linkEndDate,
         linkSeo: form.linkSeo,
         linkDeepLink: form.linkDeepLink,
+        description: form.description
       };
     }
 
@@ -305,6 +307,7 @@ const AddEditUser = () => {
               linkEndDate: value?.linkEndDate ? new Date(value?.linkEndDate) : "",
               linkSeo: value?.linkSeo || false,
               linkDeepLink: value?.linkDeepLink || false,
+              description: value?.description
             });
           }
           if (addType == "banner") {

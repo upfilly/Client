@@ -151,24 +151,6 @@ const Html = ({
                         )}
                       </div>
 
-                      {/* Add Payout Amount Field for Banner */}
-                      {/* <div className="col-md-6 mb-3">
-                        <label>
-                          Payout Amount
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          value={form.payout_amount || ""}
-                          onChange={(e) =>
-                            setform({ ...form, payout_amount: e.target.value })
-                          }
-                          min="0"
-                          step="0.01"
-                          placeholder="Enter payout amount"
-                        />
-                      </div> */}
-
                       <div className="col-12 col-sm-12 col-md-6">
                         <div className="form-group">
                           <div className="select_drop ">
@@ -492,24 +474,6 @@ const Html = ({
                         )}
                       </div>
 
-                      {/* Add Payout Amount Field for Link */}
-                      {/* <div className="col-md-6 mb-3">
-                        <label>
-                          Payout Amount
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          value={form.payout_amount || ""}
-                          onChange={(e) =>
-                            setform({ ...form, payout_amount: e.target.value })
-                          }
-                          min="0"
-                          step="0.01"
-                          placeholder="Enter payout amount"
-                        />
-                      </div> */}
-
                       <div className="col-md-6 mb-3">
                         <label>
                           Destination Url<span className="star">*</span>
@@ -570,7 +534,7 @@ const Html = ({
                           placeholderText="Select Start Date"
                           selected={form?.linkStartDate}
                           className="form-control"
-                           minDate={new Date()}
+                          minDate={new Date()}
                           onChange={(date) =>
                             setform({ ...form, linkStartDate: date })
                           }
@@ -603,8 +567,32 @@ const Html = ({
                         />
                       </div>
 
+                      {/* Ad Copy Textarea Field */}
+                      <div className="col-md-12 mb-3">
+                        <label>
+                          Ad Copy<span className="star">*</span>
+                        </label>
+                        <textarea
+                          className="form-control"
+                          rows="4"
+                          value={form?.description || ""}
+                          onChange={(e) =>
+                            setform({ ...form, description: e.target.value })
+                          }
+                          placeholder="<link>Shop now</link> for 40% off promotional items!"
+                        />
+                        {submitted && !form?.description ? (
+                          <div className="invalid-feedback d-block">
+                            Ad Copy is Required
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+
+                      {/* Link Description - React Quill Editor */}
                       <div className="col-md-12 mb-3 custom-description">
-                        <label>{form?.addType === 'link' ?  "Link Description"  : "Description"}</label>{form?.addType === 'link' && <span className="star">*</span>}
+                        <label>Link Description</label>
                         <DynamicReactQuill
                           theme="snow"
                           value={form?.linkDescription ? form?.linkDescription : ""}
@@ -651,13 +639,6 @@ const Html = ({
                           ]}
                           bounds={".app"}
                         />
-                        {submitted && !form?.linkDescription ? (
-                          <div className="invalid-feedback d-block">
-                            Link Description is Required
-                          </div>
-                        ) : (
-                          <></>
-                        )}
                       </div>
                     </div>
                   </>
