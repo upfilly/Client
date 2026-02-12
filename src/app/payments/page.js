@@ -145,7 +145,58 @@ export default function Affilate() {
           const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
           window.open(invoiceUrl, '_blank');
         } else {
-          throw error; 
+          throw error;
+        }
+      } catch (fallbackError) {
+        alert('Failed to download invoice. Please try again.');
+      }
+    }
+  };
+
+  const downloadMonthlyAffiliateInvoice = async (invoice) => {
+    try {
+      const invoiceUrl = `${environment.api}${invoice.custom_invoice_url}`;
+      const response = await axios.get(invoiceUrl, { responseType: 'blob' });
+
+      const filename = invoice.custom_invoice_url.split('/').pop() ||
+        `monthly_invoice_${invoice.month}_${invoice.year}_${invoice.id}.pdf`;
+
+      const url = window.URL.createObjectURL(response.data);
+      const link = document.createElement('a');
+      link.href = url;
+
+      link.download = filename;
+
+      link.style.display = 'none';
+      document.body.appendChild(link);
+
+      if (navigator.userAgent.includes('Mac') || /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        const event = new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: true
+        });
+        link.dispatchEvent(event);
+      } else {
+        link.click();
+      }
+
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+
+    } catch (error) {
+      console.error("Error downloading invoice:", error);
+
+      try {
+        if (navigator.userAgent.includes('Mac') ||
+          navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+          const invoiceUrl = `${environment.api}${invoice.invoice_url}`;
+          window.open(invoiceUrl, '_blank');
+        } else {
+          throw error;
         }
       } catch (fallbackError) {
         alert('Failed to download invoice. Please try again.');
@@ -713,7 +764,7 @@ export default function Affilate() {
                   <thead className="thead-clr">
                     <tr>
                       {user?.role == "affiliate" && <th scope="row">
-                       Brand Name 
+                        Brand Name
                       </th>}
                       <th scope="row" onClick={(e) => sorting("paid_to_name")}>
                         Name {filters?.sorder === "asc" ? "↑" : "↓"}
@@ -735,6 +786,9 @@ export default function Affilate() {
                       </th>
                       <th onClick={(e) => sorting("createdAt")}>
                         Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}
+                      </th>
+                      <th>
+                        Action
                       </th>
                     </tr>
                   </thead>
@@ -768,6 +822,20 @@ export default function Affilate() {
                         </td>
                         <td className="name-person ml-2">
                           {datepipeModel.date(itm?.createdAt)}
+                        </td>
+                        <td className="name-person ml-2">
+                          <div className="invoice-actions" style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                            <button
+                              onClick={() => downloadMonthlyAffiliateInvoice(itm)}
+                              className="btn btn-sm btn-outline-primary"
+                              title="Download Report PDF"
+                              style={{ padding: '4px 8px', fontSize: '12px' }}
+                            // disabled={!invoice.invoice_url}
+                            >
+                              <i className="fa fa-download me-1" aria-hidden="true"></i>
+                              Download
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}

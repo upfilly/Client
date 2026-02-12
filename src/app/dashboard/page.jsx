@@ -26,8 +26,15 @@ export default function Dashboard() {
   const [transactionAnalyticData, setTransactionAnalyticData] = useState();
   const [show, setShow] = useState(false);
   const [affiliateLink, setAffiliateLink] = useState('');
+  const [addedUser, setaddedUser] = useState();
   const handleClose = () => { setShow(false) };
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    setaddedUser(JSON.parse(localStorage.getItem("addedUser")));
+  }, []);
+
+  console.log(addedUser,"addedUseraddedUser")
 
   const generateAffiliateLink = () => {
     if (user?.id || user?._id) {
@@ -225,7 +232,7 @@ export default function Dashboard() {
             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-                  {user.role == "brand" ? (
+                  {(user.role == "brand" || addedUser?.role == "brand") ? (
                     <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaign")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -269,7 +276,7 @@ export default function Dashboard() {
             <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
-                  {user.role == "brand" ? (
+                  {(user.role == "brand" || addedUser?.role == "brand") ? (
                     <div className="ml-2 " style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate?association_status=accepted")}>
                       <div className="d-flex items-center gap-2">
                         <div className="img-div-first">
@@ -310,11 +317,11 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {user.role == "brand" &&
+            {(user.role == "brand" || addedUser?.role == "brand") &&
               <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
                 <div className="fixi-ic">
                   <div className="d-flex align-items-center flex-wrap">
-                    {user.role == "brand" ? (
+                    {(user.role == "brand" || addedUser?.role == "brand") ? (
                       <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/affiliate?association_status=accepted")}>
                         <div className="d-flex items-center gap-2">
                           <div className="img-div-first">
@@ -340,11 +347,11 @@ export default function Dashboard() {
               </div>
             }
 
-            {user.role == "brand" &&
+            {(user.role == "brand" || addedUser?.role == "brand") &&
               <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3  mb-3">
                 <div className="fixi-ic">
                   <div className="d-flex align-items-center flex-wrap">
-                    {user.role == "brand" ? (
+                    {(user.role == "brand" || addedUser?.role == "brand") ? (
                       <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/requestcampaigns")}>
                         <div className="d-flex items-center gap-2">
                           <div className="img-div-first">
@@ -370,7 +377,7 @@ export default function Dashboard() {
               </div>
             }
 
-            {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
+            {(user.role == "affiliate" || addedUser?.role == "affiliate") && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3 ">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
                   <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaignmanagement?status=rejected")}>
@@ -394,7 +401,7 @@ export default function Dashboard() {
               </div>
             </div>}
 
-            {user.role == "affiliate" && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
+            {(user.role == "affiliate" || addedUser?.role == "affiliate") && <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3   mb-3">
               <div className="fixi-ic">
                 <div className="d-flex align-items-center flex-wrap">
                   <div className="ml-2" style={{ "cursor": "pointer" }} onClick={() => history.push("/campaignmanagement?status=accepted")}>

@@ -15,6 +15,7 @@ const Html = ({
 }) => {
   const [addedUser, setaddedUser] = useState();
   const router = useRouter()
+  
   useEffect(() => {
     setaddedUser(JSON.parse(localStorage.getItem("addedUser")));
   }, []);
