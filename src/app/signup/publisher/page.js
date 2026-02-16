@@ -305,7 +305,14 @@ export default function SignupBrand() {
   }
 
   return (
-    <PageContainer title='Signup Page' description='Signup Page' settingData={settingData}>
+     <Layout
+      handleKeyPress={undefined}
+      setFilter={undefined}
+      reset={undefined}
+      filter={undefined}
+      name={undefined}
+      filters={undefined}
+    >
       <div className='signup-brand-page'>
         <div className="container h-100 d-flex align-items-center">
           <div className="row justify-content-center w-100">
@@ -583,6 +590,6 @@ export default function SignupBrand() {
           </div>
         )}
       </div>
-    </PageContainer>
+    </Layout>
   )
 }

@@ -26,7 +26,7 @@ const AnalyticsChartData = ({
   comparisonPeriod,
   handleDateFilter, setHandleDateFilter
 }) => {
-  const { selection1, selection2, selection3 } = state;
+  const { selection1, selection2 } = state;
   const [expandedCard, setExpandedCard] = useState(null);
   const revenueCardRef = useRef(null);
   const actionsCardRef = useRef(null);
@@ -43,7 +43,7 @@ const AnalyticsChartData = ({
               block: "start",
             });
             break;
-          case "Action":
+          case "Actions":
             actionsCardRef.current.scrollIntoView({
               behavior: "smooth",
               block: "start",
@@ -172,12 +172,12 @@ const AnalyticsChartData = ({
   // Extract data with fallbacks
   const revenueData1 = data?.[0]?.revenue || [];
   const actionData1 = data?.[0]?.actions || [];
-  const conversionData1 = data?.[0]?.conversions || [];
+  const conversionEvents1 = data?.[0]?.conversions || [];
   const clickData1 = clicks?.[0]?.clicks || [];
 
   const revenueData2 = data2?.[0]?.revenue || [];
   const actionData2 = data2?.[0]?.actions || [];
-  const conversionData2 = data2?.[0]?.conversions || [];
+  const conversionEvents2 = data2?.[0]?.conversions || [];
   const clickData2 = clicks2?.[0]?.clicks || [];
 
   // Get chart data for all selected dates
@@ -187,30 +187,30 @@ const AnalyticsChartData = ({
   const actionCounts1 = getChartData(actionData1, allDates1);
   const actionCounts2 = getChartData(actionData2, allDates2);
 
-  const conversionRate1 = getChartData(conversionData1, allDates1);
-  const conversionRate2 = getChartData(conversionData2, allDates2);
-
   const clickCounts1 = getChartData(clickData1, allDates1);
   const clickCounts2 = getChartData(clickData2, allDates2);
 
-  // Calculate conversion rates (conversions/clicks) with safe division
-  const calculateConversionRates = (conversions, clicks) => {
-    return conversions.map((conversion, index) => {
-      const conversionNum = Number(conversion) || 0;
-      const clickCount = Number(clicks[index]) || 0;
-      if (clickCount === 0) return 0;
-      return (conversionNum / clickCount) * 100; // Return as percentage
+  // Calculate conversion rates from conversion events data
+  const calculateConversionRatesFromEvents = (conversionEvents, allDates) => {
+    // Create a map of date to conversion rate from the events data
+    const conversionRateMap = {};
+
+    conversionEvents.forEach(event => {
+      const date = `${event._id.year}-${event._id.month}-${event._id.day}`;
+      // The conversion rate is already provided in the data
+      conversionRateMap[date] = event.conversionRate || 0;
+    });
+
+    // Map to array for all dates in range
+    return allDates.map(date => {
+      const rate = conversionRateMap[date];
+      return rate !== undefined ? rate : 0;
     });
   };
 
-  const conversionRates1 = calculateConversionRates(
-    conversionRate1,
-    clickCounts1
-  );
-  const conversionRates2 = calculateConversionRates(
-    conversionRate2,
-    clickCounts2
-  );
+  // Calculate conversion rates from the events data
+  const conversionRates1 = calculateConversionRatesFromEvents(conversionEvents1, allDates1);
+  const conversionRates2 = calculateConversionRatesFromEvents(conversionEvents2, allDates2);
 
   // Calculate overall totals and percentage differences with safe values
   const totalRevenue1 = calculateTotal(revenuePrices1);
@@ -313,7 +313,7 @@ const AnalyticsChartData = ({
     // Format x-axis labels to show only day
     const xAxisLabels = allDates1.map(date => {
       const dateObj = new Date(date);
-      return dateObj.getDate().toString(); // Only the day number
+      return dateObj.getDate().toString();
     });
 
     // Get year-month for the title or subtitle
@@ -331,38 +331,46 @@ const AnalyticsChartData = ({
 
     const yearMonthRange = getYearMonthRange(allDates1);
 
-    // Safe y-axis formatter for revenue
+    // Improved y-axis formatter for large numbers
     const yAxisFormatter = (value) => {
       if (isPercentage) {
-        return `${value.toFixed(1)}%`;
+        return `${value.toFixed(2)}%`;
       }
+
       if (isRevenue) {
-        if (exchangeRate) {
-          // For converted currency, show abbreviated format for large numbers
-          if (value >= 1000000) {
-            return formatCurrency(value / 1000000, true).replace(/(\.\d+)?$/, 'M');
-          } else if (value >= 1000) {
-            return formatCurrency(value / 1000, true).replace(/(\.\d+)?$/, 'K');
-          }
-          return formatCurrency(value, true);
-        } else {
-          // For USD, show abbreviated format
-          if (value >= 1000000) {
-            return `$${(value / 1000000).toFixed(1)}M`;
-          } else if (value >= 1000) {
-            return `$${(value / 1000).toFixed(1)}K`;
-          }
-          return `$${value.toFixed(0)}`;
+        // Handle extremely large numbers (like quadrillions)
+        if (value >= 1e15) { // Quadrillion
+          return `${(value / 1e15).toFixed(2)}Q`;
+        } else if (value >= 1e12) { // Trillion
+          return `${(value / 1e12).toFixed(2)}T`;
+        } else if (value >= 1e9) { // Billion
+          return `${(value / 1e9).toFixed(2)}B`;
+        } else if (value >= 1e6) { // Million
+          return `${(value / 1e6).toFixed(2)}M`;
+        } else if (value >= 1e3) { // Thousand
+          return `${(value / 1e3).toFixed(2)}K`;
         }
+
+        // For smaller numbers, show full value with currency
+        if (exchangeRate) {
+          return formatCurrency(value, true);
+        }
+        return `$${value.toFixed(2)}`;
       }
-      // For counts (actions, clicks)
-      if (value >= 1000000) {
-        return `${(value / 1000000).toFixed(1)}M`;
-      } else if (value >= 1000) {
-        return `${(value / 1000).toFixed(1)}K`;
+
+      // For counts (actions, clicks) - handle large numbers
+      if (value >= 1e9) {
+        return `${(value / 1e9).toFixed(2)}B`;
+      } else if (value >= 1e6) {
+        return `${(value / 1e6).toFixed(2)}M`;
+      } else if (value >= 1e3) {
+        return `${(value / 1e3).toFixed(2)}K`;
       }
       return value.toFixed(0);
     };
+
+    // Check if we need to use scientific notation for extremely large values
+    const hasExtremeValues = [...data1, ...data2].some(val => val > 1e12);
 
     return {
       title: {
@@ -402,20 +410,26 @@ const AnalyticsChartData = ({
             let formattedValue = value;
 
             if (isRevenue) {
-              formattedValue = formatCurrency(value, true);
+              // Show full value in tooltip without abbreviation
+              if (exchangeRate && typeof convertedCurrency === 'function') {
+                formattedValue = convertedCurrency(value);
+              } else {
+                // Format with commas for large numbers
+                formattedValue = `$${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+              }
             } else if (isPercentage) {
               formattedValue = `${value.toFixed(2)}%`;
             } else {
-              formattedValue = value.toLocaleString();
+              formattedValue = value.toLocaleString('en-US');
             }
 
             const color = item.color;
             tooltipContent += `
-              <div style="display: flex; align-items: center; margin: 3px 0;">
-                <span style="display: inline-block; width: 10px; height: 10px; background: ${color}; border-radius: 50%; margin-right: 8px;"></span>
-                <span>${item.seriesName}: <strong>${formattedValue}</strong></span>
-              </div>
-            `;
+            <div style="display: flex; align-items: center; margin: 3px 0;">
+              <span style="display: inline-block; width: 10px; height: 10px; background: ${color}; border-radius: 50%; margin-right: 8px;"></span>
+              <span>${item.seriesName}: <strong>${formattedValue}</strong></span>
+            </div>
+          `;
           });
           return tooltipContent;
         },
@@ -434,7 +448,7 @@ const AnalyticsChartData = ({
         top: 75,
         right: 20,
         bottom: 45,
-        left: 60,
+        left: hasExtremeValues ? 80 : 60, // More space for y-axis labels if needed
         containLabel: true
       },
       xAxis: {
