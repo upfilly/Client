@@ -64,6 +64,8 @@ export default function AnalyticsDashboard() {
   const [selectedType, setSelectedType] = useState(null);
   const [showDropdown, setShowDropdown] = useState(true);
 
+  console.log(brands,"brandsbrandsbrands")
+
   // State to track pending filter changes (not applied yet)
   const [pendingFilters, setPendingFilters] = useState(defaultFilters);
 
@@ -162,12 +164,13 @@ export default function AnalyticsDashboard() {
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data;
+        console.log(data,"jhjhjhj")
         const filteredData = data.filter((item) => item !== null);
         const manipulateData = filteredData.map((itm) => {
-          return {
+          return( {
             name: itm?.userName || itm?.firstName,
             id: itm?.id || itm?._id,
-          };
+          });
         });
         setBrands(manipulateData);
       }
@@ -354,8 +357,8 @@ export default function AnalyticsDashboard() {
     const filterParams = {
       startDate: moment(pendingFilters.baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(pendingFilters.baseDates?.[1]).format("YYYY-MM-DD"),
-      affiliate_id: pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || "", // Add affiliate filter
-      brand_id: user?.id,
+      affiliate_id: user?.role == "brand" ? pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || "" : user?.id, // Add affiliate filter
+      brand_id: user?.role == "brand" ? user?.id : pendingFilters.selectedBrand?.map((dat) => dat).join(",") || "" ,
       campaign: pendingFilters.campaignId?.map((dat) => dat).join(",") || "",
       startDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
       endDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
@@ -396,8 +399,8 @@ export default function AnalyticsDashboard() {
     const filterParams = {
       startDate: moment(defaultFilters.baseDates[0]).format("YYYY-MM-DD"),
       endDate: moment(defaultFilters.baseDates[1]).format("YYYY-MM-DD"),
-      affiliate_id: "",
-      brand_id: user?.id,
+      affiliate_id:user?.role == "brand" ? "" : user?.id,
+      brand_id:user?.role == "brand" ? user?.id : "",
       campaign: "",
       startDate2: "",
       endDate2: "",
@@ -510,10 +513,10 @@ export default function AnalyticsDashboard() {
             </div>
 
             <div className="dropdown-item mc-campaign-dropdown">
-              {user.role !== "brand" ? (
+              {user.role != "brand" ? (
                 <MultiSelectValue
                   id="statusDropdown"
-                  displayValue="fullName"
+                  displayValue="name"
                   placeholder="Select Brand"
                   intialValue={pendingFilters.selectedBrand}
                   result={(e) => setPendingFilters(prev => ({ ...prev, selectedBrand: e.value }))}
