@@ -787,9 +787,9 @@ export default function Affilate() {
                       <th onClick={(e) => sorting("createdAt")}>
                         Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                      <th>
+                     {user?.role === "affiliate" && <th>
                         Action
-                      </th>
+                      </th>}
                     </tr>
                   </thead>
                   <tbody>
@@ -823,7 +823,7 @@ export default function Affilate() {
                         <td className="name-person ml-2">
                           {datepipeModel.date(itm?.createdAt)}
                         </td>
-                        <td className="name-person ml-2">
+                        {user?.role === "affiliate" && <td className="name-person ml-2">
                           <div className="invoice-actions" style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             <button
                               onClick={() => downloadMonthlyAffiliateInvoice(itm)}
@@ -836,7 +836,7 @@ export default function Affilate() {
                               Download
                             </button>
                           </div>
-                        </td>
+                        </td>}
                       </tr>
                     ))}
                   </tbody>
