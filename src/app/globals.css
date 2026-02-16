@@ -193,7 +193,9 @@ a.demos-button {
     background: #89c2ff !important;
   }
 
-
+.react-select__input{
+  outline: none !important;
+}
 
 .echarts-for-react>div{
   margin-left: -20px !important;
