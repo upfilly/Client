@@ -140,6 +140,7 @@ const Profile = () => {
       if (res.success) {
         setBankData(res?.data)
       }
+      loader(false)
     })
   };
 
