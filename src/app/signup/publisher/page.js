@@ -13,6 +13,7 @@ import axios from 'axios';
 import useReferralTracking from "../../firstPromoter"
 import { toast } from 'react-toastify';
 import methodModel from '@/methods/methods';
+import Layout from '@/app/components/global/layout2';
 
 export default function SignupBrand() {
   const role = "affiliate"
@@ -38,9 +39,9 @@ export default function SignupBrand() {
   const history = useRouter()
   const user = crendentialModel.getUser()
 
-  if (user) {
-    history.push('/')
-  }
+  // if (user) {
+  //   history.push('/')
+  // }
 
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org?format=json");

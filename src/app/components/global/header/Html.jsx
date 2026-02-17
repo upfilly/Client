@@ -15,7 +15,7 @@ const Html = ({ settingData, Logout }) => {
   const pathname = usePathname()
   const history = useRouter()
   const user = crendentialModel.getUser()
-  const isDashboard = pathname.includes('/proposals') || pathname.includes('/bookingform') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignmanagement') || pathname.includes('/affiliate')
+  const isDashboard = pathname.includes('/publisher') || pathname.includes('/proposals') || pathname.includes('/bookingform') || pathname.includes('/dashboard') || pathname.includes('/campaign') || pathname.includes('/campaignmanagement') || pathname.includes('/affiliate')
   const param = useSearchParams()
   const id = param.get("id")
   const code = param.get("campaign_code")
@@ -187,7 +187,7 @@ const Html = ({ settingData, Logout }) => {
             />
           </Link>
           </nav>}
-        {(!isDashboard && pathname != "profile/edit" &&pathname != "/profile" && pathname != "/chat") &&
+        {(!isDashboard && pathname != "profile/edit" && pathname != "/profile" && pathname != "/chat") &&
           <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
             <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
               <img
