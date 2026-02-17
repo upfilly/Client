@@ -39,10 +39,6 @@ export default function SignupBrand() {
   const history = useRouter()
   const user = crendentialModel.getUser()
 
-  // if (user) {
-  //   history.push('/')
-  // }
-
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org?format=json");
     setIP(res.data.ip);
@@ -306,7 +302,7 @@ export default function SignupBrand() {
   }
 
   return (
-     <Layout
+    <Layout
       handleKeyPress={undefined}
       setFilter={undefined}
       reset={undefined}
@@ -315,7 +311,7 @@ export default function SignupBrand() {
       filters={undefined}
     >
       <div className='signup-brand-page'>
-        <div className="container h-100 d-flex align-items-center">
+        <div className="container-fluid h-100 d-flex align-items-center justify-content-center">
           <div className="row justify-content-center w-100">
             <div className="col-12 col-lg-8 col-xl-6">
               <div className='right_side'>
@@ -334,28 +330,19 @@ export default function SignupBrand() {
 
                 <div className="content-wrapper">
                   {!showForm ? (
-                    <div className="welcome-content">
-                      <div className="apply-section mb-4">
+                    <>
+                      <div className="apply-section text-center mb-4">
                         <button
-                          className="btn btn-primary btn-lg mb-4 apply-btn"
+                          className="btn btn-primary btn-lg apply-btn"
                           onClick={handleApplyNow}
                         >
                           APPLY NOW
                         </button>
-
-                        <div className="login-prompt mb-4">
-                          <p className="mb-2">
-                            To join this brand program, you must have an active Upfilly account.
-                          </p>
-                          <p>
-                            Already an Upfilly affiliate? <Link href="/login" className="login-link">Log in and join the program.</Link>
-                          </p>
-                        </div>
                       </div>
 
                       {/* Benefits Section */}
                       <div className="benefits-section">
-                        <h3 className="h4 mb-3">Start Earning with Upfilly Today:</h3>
+                        <h3>Start Earning with Upfilly Today:</h3>
                         {detailData?.affiliateSignupText ? (
                           <div dangerouslySetInnerHTML={{ __html: detailData.affiliateSignupText }} />
                         ) : (
@@ -363,23 +350,31 @@ export default function SignupBrand() {
                         )}
                       </div>
 
+                      {/* Login Prompt */}
+                      <div className="login-prompt text-center">
+                        <p className="mb-2">
+                          To join this brand program, you must have an active Upfilly account.
+                        </p>
+                        <p>
+                          Already an Upfilly affiliate? <Link href="/login" className="login-link">Log in and join the program.</Link>
+                        </p>
+                      </div>
+
                       {/* Footer */}
-                      <div className="mt-4 pt-3 border-top">
+                      <div className="footer">
                         <small className="text-muted">
                           © 2025 Upfilly LLC
                         </small>
                       </div>
-                    </div>
+                    </>
                   ) : (
                     <div className="signup-form">
-                      {showForm && (
-                        <button
-                          className="btn btn-link back-button mb-3 p-0"
-                          onClick={handleBack}
-                        >
-                          ← Back
-                        </button>
-                      )}
+                      <button
+                        className="btn btn-link back-button mb-3"
+                        onClick={handleBack}
+                      >
+                        ← Back
+                      </button>
 
                       <div className="form-header">
                         <h2>Create Your Account</h2>
@@ -401,7 +396,7 @@ export default function SignupBrand() {
                                 }}
                               />
                               {submitted && errors.firstName && (
-                                <div className="invalid-feedback d-block">{errors.firstName}</div>
+                                <div className="invalid-feedback">{errors.firstName}</div>
                               )}
                             </div>
                           </div>
@@ -419,7 +414,7 @@ export default function SignupBrand() {
                                 }}
                               />
                               {submitted && errors.lastName && (
-                                <div className="invalid-feedback d-block">{errors.lastName}</div>
+                                <div className="invalid-feedback">{errors.lastName}</div>
                               )}
                             </div>
                           </div>
@@ -438,7 +433,7 @@ export default function SignupBrand() {
                               }}
                             />
                             {submitted && errors.email && (
-                              <div className="invalid-feedback d-block">{errors.email}</div>
+                              <div className="invalid-feedback">{errors.email}</div>
                             )}
                           </div>
                         </div>
@@ -458,7 +453,7 @@ export default function SignupBrand() {
                               }}
                             />
                             {submitted && errors.userName && (
-                              <div className="invalid-feedback d-block">{errors.userName}</div>
+                              <div className="invalid-feedback">{errors.userName}</div>
                             )}
                             {!errors.userName && form.userName && (
                               <div className="username-status">
@@ -475,23 +470,25 @@ export default function SignupBrand() {
                         </div>
 
                         <div className="mb-4">
-                          <div className="form-group password-input">
-                            <input
-                              type={eyes.password ? 'text' : 'password'}
-                              className={`form-control ${submitted && errors.password ? 'is-invalid' : ''}`}
-                              value={form.password || ''}
-                              onChange={handlePasswordChange}
-                              placeholder="Password *"
-                            />
-                            <button
-                              type="button"
-                              className="toggle-password"
-                              onClick={() => setEyes({ ...eyes, password: !eyes.password })}
-                            >
-                              {eyes.password ? '👁️' : '👁️‍🗨️'}
-                            </button>
+                          <div className="form-group password-group">
+                            <div className="password-input-wrapper">
+                              <input
+                                type={eyes.password ? 'text' : 'password'}
+                                className={`form-control ${submitted && errors.password ? 'is-invalid' : ''}`}
+                                value={form.password || ''}
+                                onChange={handlePasswordChange}
+                                placeholder="Password *"
+                              />
+                              <button
+                                type="button"
+                                className="toggle-password"
+                                onClick={() => setEyes({ ...eyes, password: !eyes.password })}
+                              >
+                                {eyes.password ? '👁️' : '👁️‍🗨️'}
+                              </button>
+                            </div>
                             {submitted && errors.password && (
-                              <div className="invalid-feedback d-block">{errors.password}</div>
+                              <div className="invalid-feedback">{errors.password}</div>
                             )}
                             <small className="form-text text-muted">
                               Password must be at least 8 characters long
@@ -507,7 +504,7 @@ export default function SignupBrand() {
                           {isSubmitting ? 'Creating Account...' : 'Create Account'}
                         </button>
 
-                        <div className="terms-text mt-3">
+                        <div className="terms-text">
                           By signing up, you agree to our{' '}
                           <Link href="/terms">Terms of Service</Link> and{' '}
                           <Link href="/privacy">Privacy Policy</Link>
@@ -523,11 +520,11 @@ export default function SignupBrand() {
                             className="social-btn google-btn"
                             onClick={googleLogin}
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
                             </svg>
                             Sign up with Google
                           </button>
@@ -541,13 +538,13 @@ export default function SignupBrand() {
                                 className="social-btn facebook-btn"
                                 onClick={renderProps.onClick}
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                  <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2" />
                                 </svg>
                                 Sign up with Facebook
                               </button>
                             )}
-                            callback={FaceBookLoginHandler}
+                            onSuccess={FaceBookLoginHandler}
                           />
                         </div>
 
@@ -565,13 +562,13 @@ export default function SignupBrand() {
 
         {/* Success Modal */}
         {showPopup && (
-          <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-overlay">
+            <div className="modal-dialog">
               <div className="modal-content success-modal">
                 <div className="modal-body">
                   <div className="success-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    <svg viewBox="0 0 24 24" width="40" height="40">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white" />
                     </svg>
                   </div>
                   <h4 className="success-title">Successfully Registered!</h4>
