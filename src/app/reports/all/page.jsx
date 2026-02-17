@@ -64,7 +64,7 @@ export default function AnalyticsDashboard() {
   const [selectedType, setSelectedType] = useState(null);
   const [showDropdown, setShowDropdown] = useState(true);
 
-  console.log(brands,"brandsbrandsbrands")
+  console.log(brands, "brandsbrandsbrands")
 
   // State to track pending filter changes (not applied yet)
   const [pendingFilters, setPendingFilters] = useState(defaultFilters);
@@ -164,10 +164,10 @@ export default function AnalyticsDashboard() {
     ApiClient.get(url).then((res) => {
       if (res.success) {
         const data = res.data;
-        console.log(data,"jhjhjhj")
+        console.log(data, "jhjhjhj")
         const filteredData = data.filter((item) => item !== null);
         const manipulateData = filteredData.map((itm) => {
-          return( {
+          return ({
             name: itm?.userName || itm?.firstName,
             id: itm?.id || itm?._id,
           });
@@ -203,27 +203,42 @@ export default function AnalyticsDashboard() {
   };
 
   const exportCsv = (type) => {
-    // Common params for all types
+    // Build comprehensive params object with all applied filters
     const params = {
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      format: type  // This should be in params for all requests
+      affiliate_id: user?.role == "brand"
+        ? selectedAffiliate?.map((dat) => dat).join(",") || ""
+        : user?.id,
+      brand_id: user?.role == "brand"
+        ? user?.id
+        : selectedBrand?.map((dat) => dat).join(",") || "",
+      campaign: campaignId?.map((dat) => dat).join(",") || "",
+      startDate2: comparisonPeriod === "none"
+        ? ""
+        : moment(compDates?.[0]).format("YYYY-MM-DD"),
+      endDate2: comparisonPeriod === "none"
+        ? ""
+        : moment(compDates?.[1]).format("YYYY-MM-DD"),
+      format: type
     };
 
-    // Build config based on type
-    const config = type === "excel"
-      ? { params, format: type }  // Excel needs arraybuffer
-      : { params, format: type };        // Others can use text
+    // Set response type based on file format
+    const config = {
+      responseType: type === "excel" ? 'arraybuffer' : 'text'
+    };
 
-    ApiClient.get("reports/performance/export", config)
+    ApiClient.get("reports/performance/export", params)
       .then((response) => {
         console.log(`Response for ${type}:`, response);
 
         let fileExtension = type === "excel" ? "xlsx" : type;
 
-        if (response && response.success !== false) {
+        if (response) {
           if (type === 'xml') {
-            const responseStr = typeof response === 'string' ? response : new TextDecoder('utf-8').decode(response);
+            const responseStr = typeof response === 'string'
+              ? response
+              : new TextDecoder('utf-8').decode(response);
             if (!responseStr.trim().startsWith('<?xml') && !responseStr.trim().startsWith('<')) {
               console.error('Invalid XML data received:', responseStr.substring(0, 500));
               alert('Server returned invalid XML data. Check console for details.');
@@ -276,7 +291,7 @@ export default function AnalyticsDashboard() {
     applyFilters();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     getCamapignData();
   }, [pendingFilters.selectedAffiliate]);
 
@@ -307,7 +322,10 @@ export default function AnalyticsDashboard() {
   };
 
   const getCamapignData = (p = {}) => {
-    let filter = { ...p , affiliate_ids: pendingFilters.selectedAffiliate?.map((dat) => dat).join(","),};
+    let filter = {
+      ...p,
+      affiliate_ids: pendingFilters.selectedAffiliate?.map((dat) => dat).join(","),
+    };
     let url = "campaign/brand/all";
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
@@ -362,11 +380,19 @@ export default function AnalyticsDashboard() {
     const filterParams = {
       startDate: moment(pendingFilters.baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(pendingFilters.baseDates?.[1]).format("YYYY-MM-DD"),
-      affiliate_id: user?.role == "brand" ? pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || "" : user?.id, // Add affiliate filter
-      brand_id: user?.role == "brand" ? user?.id : pendingFilters.selectedBrand?.map((dat) => dat).join(",") || "" ,
+      affiliate_id: user?.role == "brand"
+        ? pendingFilters.selectedAffiliate?.map((dat) => dat).join(",") || ""
+        : user?.id,
+      brand_id: user?.role == "brand"
+        ? user?.id
+        : pendingFilters.selectedBrand?.map((dat) => dat).join(",") || "",
       campaign: pendingFilters.campaignId?.map((dat) => dat).join(",") || "",
-      startDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
-      endDate2: pendingFilters.comparisonPeriod === "none" ? "" : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
+      startDate2: pendingFilters.comparisonPeriod === "none"
+        ? ""
+        : moment(effectiveCompDates?.[0]).format("YYYY-MM-DD"),
+      endDate2: pendingFilters.comparisonPeriod === "none"
+        ? ""
+        : moment(effectiveCompDates?.[1]).format("YYYY-MM-DD"),
     };
 
     // Get exchange rate for the selected currency
@@ -404,8 +430,8 @@ export default function AnalyticsDashboard() {
     const filterParams = {
       startDate: moment(defaultFilters.baseDates[0]).format("YYYY-MM-DD"),
       endDate: moment(defaultFilters.baseDates[1]).format("YYYY-MM-DD"),
-      affiliate_id:user?.role == "brand" ? "" : user?.id,
-      brand_id:user?.role == "brand" ? user?.id : "",
+      affiliate_id: user?.role == "brand" ? "" : user?.id,
+      brand_id: user?.role == "brand" ? user?.id : "",
       campaign: "",
       startDate2: "",
       endDate2: "",
