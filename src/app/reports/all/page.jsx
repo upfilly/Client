@@ -16,6 +16,8 @@ import CustomDatePicker from "../../components/common/DatePicker/DatePickerCusto
 import { CurencyData } from "@/methods/currency";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
 import loader from "@/methods/loader";
+import environment from "@/environment";
+import axios from "axios";
 
 export default function AnalyticsDashboard() {
   const user = crendentialModel.getUser();
@@ -77,7 +79,7 @@ export default function AnalyticsDashboard() {
 
   const handleDownload = (e) => {
     const type = e.value;
-    if (!type) { setSelectedType("") }
+    if (!type) { return setSelectedType("") }
     setSelectedType(type);
     exportCsv(type)
   };
@@ -222,31 +224,39 @@ export default function AnalyticsDashboard() {
         : moment(compDates?.[1]).format("YYYY-MM-DD"),
       format: type
     };
-
+     const token = localStorage.getItem('token')
     // Set response type based on file format
     const config = {
-      responseType: type === "excel" ? 'arraybuffer' : 'text'
+      responseType: type === "excel" ? 'arraybuffer' : 'text',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Add your auth token here
+        'Accept': type === 'excel'
+          ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          : type === 'csv'
+            ? 'text/csv'
+            : type === 'xml'
+              ? 'application/xml'
+              : 'application/json'
+      }
     };
 
-    ApiClient.get("reports/performance/export", params)
+    axios.get(`${environment.api}reports/performance/export`, {
+      params: params,
+      ...config
+    })
       .then((response) => {
-        console.log(`Response for ${type}:`, response);
-
         let fileExtension = type === "excel" ? "xlsx" : type;
+        const responseData = response.data;
 
-        if (response) {
-          if (type === 'xml') {
-            const responseStr = typeof response === 'string'
-              ? response
-              : new TextDecoder('utf-8').decode(response);
-            if (!responseStr.trim().startsWith('<?xml') && !responseStr.trim().startsWith('<')) {
-              console.error('Invalid XML data received:', responseStr.substring(0, 500));
+        if (responseData) {
+          if (type === 'xml' && typeof responseData === 'string') {
+            if (!responseData.trim().startsWith('<?xml') && !responseData.trim().startsWith('<')) {
+              console.error('Invalid XML data received:', responseData.substring(0, 500));
               alert('Server returned invalid XML data. Check console for details.');
               return;
             }
           }
-
-          downloadFile(response, `Performance_Report.${fileExtension}`, type);
+          downloadFile(responseData, `Performance_Report.${fileExtension}`, type);
         } else {
           alert("No data to download.");
         }
