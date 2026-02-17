@@ -203,19 +203,17 @@ export default function AnalyticsDashboard() {
   };
 
   const exportCsv = (type) => {
-    const config = type != "excel" ? {
+    // Common params for all types
+    const params = {
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-      format: type,
-      responseType: type === "excel" ? "arraybuffer" : ""
-    } : {
-      params: {
-        startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
-        endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
-        format: type,
-      },
-      responseType: type === "excel" ? "arraybuffer" : ""
-    }
+      format: type  // This should be in params for all requests
+    };
+
+    // Build config based on type
+    const config = type === "excel"
+      ? { params, format: type }  // Excel needs arraybuffer
+      : { params, format: type };        // Others can use text
 
     ApiClient.get("reports/performance/export", config)
       .then((response) => {
@@ -246,23 +244,30 @@ export default function AnalyticsDashboard() {
 
   function downloadFile(data, filename, type) {
     let blob;
+    let mimeType;
 
     if (type === 'excel') {
-      blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      blob = new Blob([data], { type: mimeType });
     } else if (type === 'csv') {
-      blob = new Blob([data], { type: 'text/csv;charset=utf-8' });
+      mimeType = 'text/csv;charset=utf-8';
+      blob = new Blob([data], { type: mimeType });
     } else if (type === 'xml') {
-      blob = new Blob([data], { type: 'application/xml;charset=utf-8;' });
+      mimeType = 'application/xml;charset=utf-8';
+      blob = new Blob([data], { type: mimeType });
+    } else if (type === 'pdf') {
+      mimeType = 'application/pdf';
+      blob = new Blob([data], { type: mimeType });
     }
 
-    const url = URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.setAttribute("download", filename);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    window.URL.revokeObjectURL(url);
   }
 
   useEffect(() => {
