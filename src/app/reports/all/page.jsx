@@ -224,12 +224,14 @@ export default function AnalyticsDashboard() {
         : moment(compDates?.[1]).format("YYYY-MM-DD"),
       format: type
     };
-     const token = localStorage.getItem('token')
+
+    const token = localStorage.getItem('token')
+
     // Set response type based on file format
     const config = {
       responseType: type === "excel" ? 'arraybuffer' : 'text',
       headers: {
-        'Authorization': `Bearer ${token}`, // Add your auth token here
+        'Authorization': `Bearer ${token}`,
         'Accept': type === 'excel'
           ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
           : type === 'csv'
@@ -256,7 +258,24 @@ export default function AnalyticsDashboard() {
               return;
             }
           }
-          downloadFile(responseData, `Performance_Report.${fileExtension}`, type);
+
+          // Generate filename with date range
+          const dateRangeStr = `${moment(baseDates[0]).format('YYYY-MM-DD')}_to_${moment(baseDates[1]).format('YYYY-MM-DD')}`;
+
+          // Add comparison date range if applicable
+          let filename = `Performance_Report_${dateRangeStr}`;
+          if (comparisonPeriod !== "none" && compDates?.[0] && compDates?.[1]) {
+            const compDateRangeStr = `_vs_${moment(compDates[0]).format('YYYY-MM-DD')}_to_${moment(compDates[1]).format('YYYY-MM-DD')}`;
+            filename += compDateRangeStr;
+          }
+
+          // Add timestamp to ensure uniqueness (optional - uncomment if you want even more uniqueness)
+          // const timestamp = moment().format('_HHmmss');
+          // filename += timestamp;
+
+          filename += `.${fileExtension}`;
+
+          downloadFile(responseData, filename, type);
         } else {
           alert("No data to download.");
         }
