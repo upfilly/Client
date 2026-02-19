@@ -200,3 +200,9 @@ a.demos-button {
 .echarts-for-react>div{
   margin-left: -20px !important;
 }
+
+/* .custom-input3{ */
+  #react-select-3-input{
+    outline: none !important;
+  }
+/* } */
