@@ -113,7 +113,6 @@ const AnalyticsChartData = ({
   };
 
   const calculatePercentageDifference = (value1, value2) => {
-    // Handle undefined/null values
     const val1 = Number(value1) || 0;
     const val2 = Number(value2) || 0;
 
@@ -124,7 +123,6 @@ const AnalyticsChartData = ({
     const diff = val2 - val1;
     const percentageDiff = (diff / val1) * 100;
 
-    // Handle NaN and Infinity cases
     if (isNaN(percentageDiff) || !isFinite(percentageDiff)) {
       return "0%";
     }
@@ -155,11 +153,9 @@ const AnalyticsChartData = ({
       }
     }
 
-    // Fallback to USD formatting
     return `$${numValue.toFixed(2)}`;
   };
 
-  // Get all dates in the selected range
   const allDates1 = getAllDatesInRange(
     selection1?.startDate,
     selection1?.endDate
@@ -169,7 +165,6 @@ const AnalyticsChartData = ({
     selection2?.endDate
   );
 
-  // Extract data with fallbacks
   const revenueData1 = data?.[0]?.revenue || [];
   const actionData1 = data?.[0]?.actions || [];
   const conversionEvents1 = data?.[0]?.conversions || [];
@@ -180,7 +175,6 @@ const AnalyticsChartData = ({
   const conversionEvents2 = data2?.[0]?.conversions || [];
   const clickData2 = clicks2?.[0]?.clicks || [];
 
-  // Get chart data for all selected dates
   const revenuePrices1 = getChartData(revenueData1, allDates1);
   const revenuePrices2 = getChartData(revenueData2, allDates2);
 
@@ -190,29 +184,23 @@ const AnalyticsChartData = ({
   const clickCounts1 = getChartData(clickData1, allDates1);
   const clickCounts2 = getChartData(clickData2, allDates2);
 
-  // Calculate conversion rates from conversion events data
   const calculateConversionRatesFromEvents = (conversionEvents, allDates) => {
-    // Create a map of date to conversion rate from the events data
     const conversionRateMap = {};
 
     conversionEvents.forEach(event => {
       const date = `${event._id.year}-${event._id.month}-${event._id.day}`;
-      // The conversion rate is already provided in the data
       conversionRateMap[date] = event.conversionRate || 0;
     });
 
-    // Map to array for all dates in range
     return allDates.map(date => {
       const rate = conversionRateMap[date];
       return rate !== undefined ? rate : 0;
     });
   };
 
-  // Calculate conversion rates from the events data
   const conversionRates1 = calculateConversionRatesFromEvents(conversionEvents1, allDates1);
   const conversionRates2 = calculateConversionRatesFromEvents(conversionEvents2, allDates2);
 
-  // Calculate overall totals and percentage differences with safe values
   const totalRevenue1 = calculateTotal(revenuePrices1);
   const totalRevenue2 = calculateTotal(revenuePrices2);
   const revenuePercentage = calculatePercentageDifference(
@@ -247,7 +235,6 @@ const AnalyticsChartData = ({
     totalClicks2
   );
 
-  // Update legend labels with overall percentages
   const legendRevenue1 = formatLegendLabel(selection1, revenuePercentage);
   const legendRevenue2 =
     comparisonPeriod !== "none"
@@ -310,13 +297,11 @@ const AnalyticsChartData = ({
       },
     ].filter(Boolean);
 
-    // Format x-axis labels to show only day
     const xAxisLabels = allDates1.map(date => {
       const dateObj = new Date(date);
       return dateObj.getDate().toString();
     });
 
-    // Get year-month for the title or subtitle
     const getYearMonthRange = (dates) => {
       if (!dates || dates.length === 0) return '';
 
@@ -331,34 +316,30 @@ const AnalyticsChartData = ({
 
     const yearMonthRange = getYearMonthRange(allDates1);
 
-    // Improved y-axis formatter for large numbers
     const yAxisFormatter = (value) => {
       if (isPercentage) {
         return `${value.toFixed(2)}%`;
       }
 
       if (isRevenue) {
-        // Handle extremely large numbers (like quadrillions)
-        if (value >= 1e15) { // Quadrillion
+        if (value >= 1e15) {
           return `${(value / 1e15).toFixed(2)}Q`;
-        } else if (value >= 1e12) { // Trillion
+        } else if (value >= 1e12) {
           return `${(value / 1e12).toFixed(2)}T`;
-        } else if (value >= 1e9) { // Billion
+        } else if (value >= 1e9) {
           return `${(value / 1e9).toFixed(2)}B`;
-        } else if (value >= 1e6) { // Million
+        } else if (value >= 1e6) {
           return `${(value / 1e6).toFixed(2)}M`;
-        } else if (value >= 1e3) { // Thousand
+        } else if (value >= 1e3) {
           return `${(value / 1e3).toFixed(2)}K`;
         }
 
-        // For smaller numbers, show full value with currency
         if (exchangeRate) {
           return formatCurrency(value, true);
         }
         return `$${value.toFixed(2)}`;
       }
 
-      // For counts (actions, clicks) - handle large numbers
       if (value >= 1e9) {
         return `${(value / 1e9).toFixed(2)}B`;
       } else if (value >= 1e6) {
@@ -369,7 +350,6 @@ const AnalyticsChartData = ({
       return value.toFixed(0);
     };
 
-    // Check if we need to use scientific notation for extremely large values
     const hasExtremeValues = [...data1, ...data2].some(val => val > 1e12);
 
     return {
@@ -410,11 +390,9 @@ const AnalyticsChartData = ({
             let formattedValue = value;
 
             if (isRevenue) {
-              // Show full value in tooltip without abbreviation
               if (exchangeRate && typeof convertedCurrency === 'function') {
                 formattedValue = convertedCurrency(value);
               } else {
-                // Format with commas for large numbers
                 formattedValue = `$${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
               }
             } else if (isPercentage) {
@@ -448,7 +426,7 @@ const AnalyticsChartData = ({
         top: 75,
         right: 20,
         bottom: 45,
-        left: hasExtremeValues ? 80 : 60, // More space for y-axis labels if needed
+        left: hasExtremeValues ? 80 : 60,
         containLabel: true
       },
       xAxis: {
