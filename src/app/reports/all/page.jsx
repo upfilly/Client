@@ -15,7 +15,6 @@ import crendentialModel from "@/models/credential.model";
 import CustomDatePicker from "../../components/common/DatePicker/DatePickerCustom";
 import { CurencyData } from "@/methods/currency";
 import SelectDropdown from "@/app/components/common/SelectDropdown";
-import loader from "@/methods/loader";
 import environment from "@/environment";
 import axios from "axios";
 
@@ -65,8 +64,6 @@ export default function AnalyticsDashboard() {
   const [campaignId, setCampaignId] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
   const [showDropdown, setShowDropdown] = useState(true);
-
-  console.log(brands, "brandsbrandsbrands")
 
   // State to track pending filter changes (not applied yet)
   const [pendingFilters, setPendingFilters] = useState(defaultFilters);
@@ -205,7 +202,6 @@ export default function AnalyticsDashboard() {
   };
 
   const exportCsv = (type) => {
-    // Build comprehensive params object with all applied filters
     const params = {
       startDate: moment(baseDates?.[0]).format("YYYY-MM-DD"),
       endDate: moment(baseDates?.[1]).format("YYYY-MM-DD"),
@@ -227,7 +223,6 @@ export default function AnalyticsDashboard() {
 
     const token = localStorage.getItem('token')
 
-    // Set response type based on file format
     const config = {
       responseType: type === "excel" ? 'arraybuffer' : 'text',
       headers: {
@@ -248,30 +243,32 @@ export default function AnalyticsDashboard() {
     })
       .then((response) => {
         let fileExtension = type === "excel" ? "xlsx" : type;
-        const responseData = response.data;
+
+        let responseData;
+
+        if (type === 'excel') {
+          responseData = response.data;
+        } else if (type === 'xml') {
+          responseData = response.data;
+          if (typeof responseData === 'string' &&
+            !responseData.trim().startsWith('<?xml') &&
+            !responseData.trim().startsWith('<')) {
+            console.error('Invalid XML data received:', responseData.substring(0, 500));
+            alert('Server returned invalid XML data. Check console for details.');
+            return;
+          }
+        } else {
+          responseData = response.data;
+        }
 
         if (responseData) {
-          if (type === 'xml' && typeof responseData === 'string') {
-            if (!responseData.trim().startsWith('<?xml') && !responseData.trim().startsWith('<')) {
-              console.error('Invalid XML data received:', responseData.substring(0, 500));
-              alert('Server returned invalid XML data. Check console for details.');
-              return;
-            }
-          }
-
-          // Generate filename with date range
           const dateRangeStr = `${moment(baseDates[0]).format('YYYY-MM-DD')}_to_${moment(baseDates[1]).format('YYYY-MM-DD')}`;
 
-          // Add comparison date range if applicable
           let filename = `Performance_Report_${dateRangeStr}`;
           if (comparisonPeriod !== "none" && compDates?.[0] && compDates?.[1]) {
             const compDateRangeStr = `_vs_${moment(compDates[0]).format('YYYY-MM-DD')}_to_${moment(compDates[1]).format('YYYY-MM-DD')}`;
             filename += compDateRangeStr;
           }
-
-          // Add timestamp to ensure uniqueness (optional - uncomment if you want even more uniqueness)
-          // const timestamp = moment().format('_HHmmss');
-          // filename += timestamp;
 
           filename += `.${fileExtension}`;
 
@@ -282,7 +279,38 @@ export default function AnalyticsDashboard() {
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
-        alert("Error fetching data: " + (err.message || err));
+
+        // Handle error response
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          if (err.response.data && err.response.status) {
+            // Try to extract error message from response
+            let errorMsg = "Error downloading file: ";
+            if (err.response.status === 400) {
+              errorMsg += "Bad request. Please check your filters.";
+            } else if (err.response.status === 401) {
+              errorMsg += "Unauthorized. Please login again.";
+            } else if (err.response.status === 403) {
+              errorMsg += "Forbidden. You don't have permission.";
+            } else if (err.response.status === 404) {
+              errorMsg += "Export endpoint not found.";
+            } else if (err.response.status === 500) {
+              errorMsg += "Server error. Please try again later.";
+            } else {
+              errorMsg += err.message || err;
+            }
+            alert(errorMsg);
+          } else {
+            alert("Error fetching data: " + (err.message || err));
+          }
+        } else if (err.request) {
+          // The request was made but no response was received
+          alert("No response from server. Please check your network connection.");
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          alert("Error: " + err.message);
+        }
       });
   };
 
