@@ -34,6 +34,8 @@ const Html = ({
   const [showColumnSelector, setShowColumnSelector] = useState(false);
   const columnSelectorRef = useRef(null);
 
+  console.log(data,"datadata")
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (

@@ -21,7 +21,7 @@ const Settings = () => {
 
   return (
     <>
-    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Profile"} filters={undefined}>
         {!tab ? <>
           <h3 className="mb-3">Settings</h3>
           <ul className="nav nav-tabs">

@@ -25,7 +25,7 @@ const AddEditUser = () => {
     url: user?.website,
     couponCommission: "",
     status: "Enabled",
-    expireCheck: false,
+    expireCheck: false, // Added initial state
   });
   console.log(form?.media, "FormMedia");
   const [campaignType, setCampaignType] = useState([]);
@@ -48,6 +48,11 @@ const AddEditUser = () => {
   const [isOpenEnd, setIsOpenEnd] = useState(false);
   const dateRef1 = useRef(null);
   const dateRef2 = useRef(null);
+
+  // Helper function to determine if expiration date exists
+  const hasExpirationDate = () => {
+    return form.expirationDate && form.expirationDate.trim() !== "";
+  };
 
   const getCategory = (p = {}) => {
     let url = "main-category/all";
@@ -126,8 +131,8 @@ const AddEditUser = () => {
       typeof user.website === "string"
         ? [user.website]
         : Array.isArray(user.website)
-        ? user.website
-        : [];
+          ? user.website
+          : [];
 
     if (allowedDomains.length === 0) {
       return {
@@ -197,9 +202,12 @@ const AddEditUser = () => {
     e.preventDefault();
     setSubmitted(true);
 
+    const expireCheck = form.expireCheck; // Use form.expireCheck directly
+
     if (!validateForm()) {
       return;
     }
+
     const requiredFields = {
       title: "Title",
       visibility: "Type",
@@ -208,7 +216,7 @@ const AddEditUser = () => {
       url: "Site URL",
     };
 
-    if (!form.expireCheck) {
+    if (!expireCheck) {
       requiredFields.expirationDate = "Expiration Date";
     }
 
@@ -236,7 +244,7 @@ const AddEditUser = () => {
     }
 
     if (
-      form.expireCheck &&
+      !expireCheck &&
       new Date(form.expirationDate) < new Date(form.startDate)
     ) {
       toast.error("Expiration date must be after start date");
@@ -263,15 +271,12 @@ const AddEditUser = () => {
 
     let value = {
       ...form,
+      expireCheck, // Set based on checkbox state
     };
 
-    if (form.expireCheck) {
-      value = { ...value, expireCheck: true };
+    // If there's no expiration date (expireCheck is true), delete it from the payload
+    if (expireCheck) {
       delete value.expirationDate;
-    }
-
-    if (!form.expireCheck) {
-      value = { ...value, expireCheck: false };
     }
 
     if (value?.media) {
@@ -287,13 +292,10 @@ const AddEditUser = () => {
       delete value.couponAmount;
     }
 
-    const now = new Date();
-    const startDate = new Date(form?.startDate);
-
     if (value.id) {
       method = "put";
       url = "coupon/edit";
-      delete value?.expireCheck;
+      // Keep expireCheck for edit as well
     } else {
       delete value.id;
     }
@@ -344,11 +346,11 @@ const AddEditUser = () => {
     }
   };
 
-  const handleExpiryCheckChange = (checked) => {
+  // Handler for expiration date change
+  const handleExpirationDateChange = (date) => {
     setform({
       ...form,
-      expireCheck: checked,
-      expirationDate: checked ? form.expirationDate : "",
+      expirationDate: date,
     });
   };
 
@@ -368,13 +370,16 @@ const AddEditUser = () => {
               ? value.media[0]
               : value?.media || "";
 
+          // Determine if there's no expiry date (expirationDate is empty or null)
+          const hasNoExpiryDate = !value?.expirationDate || value?.expirationDate === "";
+
           setform({
             id: value?.id,
             media: mediaValue,
             couponCode: value?.couponCode,
             couponType: value?.couponType,
             startDate: value?.startDate,
-            expirationDate: value?.expirationDate,
+            expirationDate: value?.expirationDate && value?.expirationDate?.split('T')?.[0] || "",
             commissionType: value?.commissionType,
             couponAmount: value?.couponAmount,
             applicable: value?.applicable,
@@ -383,10 +388,10 @@ const AddEditUser = () => {
             description: value?.description,
             title: value?.title,
             status: "Enabled",
-            expireCheck: value?.expireCheck || false,
             campaign_id: Array.isArray(value?.campaign_id)
               ? value.campaign_id
               : [value?.campaign_id].filter(Boolean),
+            expireCheck: hasNoExpiryDate, // Set based on whether expirationDate exists
           });
           setDestinationUrl(value?.url);
           setImages(value?.image);
@@ -612,8 +617,8 @@ const AddEditUser = () => {
         handleClick2={handleClick2}
         dateRef1={dateRef1}
         dateRef2={dateRef2}
-        handleExpiryCheckChange={handleExpiryCheckChange}
-        hasExpiryDate={form.expireCheck}
+        handleExpiryCheckChange={handleExpirationDateChange}
+        hasExpiryDate={!hasExpirationDate()}
         handleAffiliateChange={handleAffiliateChange}
       />
     </>

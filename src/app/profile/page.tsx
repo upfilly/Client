@@ -505,7 +505,7 @@ const Profile = () => {
   );
 
   return (
-    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
+    <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={"Profile"} filters={undefined}>
       <div className="pprofile1 edit-profile-page">
         <div className='mx-5'>
           <div className='row'>

@@ -189,7 +189,8 @@ export default function Layout({
     pathname.includes("/chat") ||
     pathname.includes("/allownotifications") ||
     pathname.includes("textlinks") ||
-    pathname.includes("/overview");
+    pathname.includes("/overview")  ||
+    pathname.includes("/profile");
 
   const isAuthenticate =
     pathname.includes("/reports") ||

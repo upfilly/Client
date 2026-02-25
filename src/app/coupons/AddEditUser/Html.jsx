@@ -26,7 +26,6 @@ const Html = ({
   hasExpiryDate,
   handleAffiliateChange,
 }) => {
-  console.log(campaignType, "campaignType");
   console.log(form, "form");
 
   const user = crendentialModel.getUser();
@@ -339,10 +338,10 @@ const Html = ({
                         <input
                           type="number"
                           className={`form-control ${form?.commissionType === "Percentage Commission" &&
-                              form?.couponAmount &&
-                              parseFloat(form?.couponAmount) > 100
-                              ? "is-invalid"
-                              : ""
+                            form?.couponAmount &&
+                            parseFloat(form?.couponAmount) > 100
+                            ? "is-invalid"
+                            : ""
                             }`}
                           placeholder={
                             form?.commissionType === "Percentage Commission"
@@ -486,13 +485,11 @@ const Html = ({
                             }
                           />
                         </div>
-                        {submitted &&
-                          form.expireCheck == "true" &&
-                          !form.expirationDate && (
-                            <div className="invalid-feedback d-block">
-                              Expiration Date is Required
-                            </div>
-                          )}
+                        {submitted && !form.expireCheck && !form.expirationDate && (
+                          <div className="invalid-feedback d-block">
+                            Expiration Date is Required
+                          </div>
+                        )}
                       </>
                     </div>
                   </div>
