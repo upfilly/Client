@@ -214,16 +214,13 @@ const AddEditUser = () => {
   const validate = () => {
     let formErrors = {};
     if (!form.name) formErrors.name = "Name is required";
-     if (!form.access_type) formErrors.access_type = "Access Type is required";
+    if (!form.access_type) formErrors.access_type = "Access Type is required";
     if (form.event_type.length == 0)
       formErrors.event_type = "Event Type is required";
     if (form.event_type?.includes("lead") && !form.lead_amount)
       formErrors.lead_amount = "Lead Amount is required";
     if (form.event_type?.includes("purchase") && !form.campaign_type)
       formErrors.campaign_type = "Affiliate Approval is required";
-    // if (form.commission_type === "percentage" && !form.commission) formErrors.commission = 'Percentage is required';
-    // if (form.commission_type === "amount" && !form.commission) formErrors.commission = 'Amount is required';
-    // if (!form.category_type) formErrors.category_type = 'Category Type is required';
     if (!form.currencies) formErrors.currencies = "Currency is required";
     if (!form?.campaign_type)
       formErrors.campaign_type = "Campaign type is required";
@@ -232,6 +229,45 @@ const AddEditUser = () => {
       formErrors.region = "Country is required";
     if (selectedItems?.categories.length == 0)
       formErrors.categories = "Categories is required";
+
+    // Custom Parameter Validation
+    if (form.customparameter) {
+      // Check if it starts with ? or & or contains invalid characters
+      const customParamValue = form.customparameter.trim();
+
+      // Regular expression for valid URL parameter format
+      // Allows: param=value, ?param=value, &param=value, multiple params with &
+      const validParamRegex = /^[?&]?[a-zA-Z0-9_\-\[\]]+=[a-zA-Z0-9_\-\[\]{}]+(&[a-zA-Z0-9_\-\[\]]+=[a-zA-Z0-9_\-\[\]{}]+)*$/;
+
+      if (!validParamRegex.test(customParamValue)) {
+        formErrors.customparameter = "Invalid format. Use format: param=value or ?param=value or &param=value or param1=value1&param2=value2";
+      }
+
+      // Check if it contains spaces
+      if (customParamValue.includes(' ')) {
+        formErrors.customparameter = "Custom parameter cannot contain spaces";
+      }
+
+      // Check for valid characters only
+      const invalidCharsRegex = /[^a-zA-Z0-9_\-\[\]{}?=&]/;
+      if (invalidCharsRegex.test(customParamValue)) {
+        formErrors.customparameter = "Custom parameter contains invalid characters. Use only letters, numbers, and _ - [ ] { } ? = &";
+      }
+
+      // Check if it has at least one = sign
+      if (!customParamValue.includes('=')) {
+        formErrors.customparameter = "Custom parameter must contain at least one key=value pair";
+      }
+
+      // Check maximum length (optional - adjust as needed)
+      if (customParamValue.length > 255) {
+        formErrors.customparameter = "Custom parameter is too long (maximum 255 characters)";
+      }
+    } else {
+      // If customparameter is required, uncomment this:
+      // formErrors.customparameter = "Custom parameter is required";
+      // If optional, leave it empty
+    }
 
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
@@ -243,6 +279,13 @@ const AddEditUser = () => {
     // if (!form?.description || !form?.name || !form?.event_type) {
 
     // }
+
+    let sanitizedCustomParam = form.customparameter;
+    if (sanitizedCustomParam) {
+      sanitizedCustomParam = sanitizedCustomParam.trim();
+      // Remove leading ? or & for storage, they'll be added when constructing URLs
+      sanitizedCustomParam = sanitizedCustomParam.replace(/^[?&]/, '');
+    }
 
     if (!validate()) {
       setSubmitted(true);
@@ -258,7 +301,7 @@ const AddEditUser = () => {
       // commission: "1",
       region: selectedRegionItems?.regions,
       region_continents: selectedRegionItems?.countries,
-      customparameter: form.customparameter,
+      customparameter: sanitizedCustomParam,
       campaign_type: form?.campaign_type,
       category: selectedItems?.categories,
       sub_category: selectedItems?.subCategories,

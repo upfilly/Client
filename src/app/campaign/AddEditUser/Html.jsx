@@ -96,6 +96,31 @@ const Html = ({
     }
   };
 
+  const getCustomParameterValidationStatus = (value) => {
+    if (!value) return null;
+
+    const issues = [];
+
+    if (value.includes(' ')) {
+      issues.push("No spaces allowed");
+    }
+
+    if (!value.includes('=')) {
+      issues.push("Must contain key=value pair");
+    }
+
+    const invalidChars = value.match(/[^a-zA-Z0-9_\-\[\]{}?=&]/g);
+    if (invalidChars) {
+      issues.push(`Invalid characters: ${[...new Set(invalidChars)].join(' ')}`);
+    }
+
+    if (value.length > 255) {
+      issues.push("Too long (max 255 chars)");
+    }
+
+    return issues.length > 0 ? issues : null;
+  };
+
   const uploadDocument = async (e) => {
     const files = e.target.files;
     const uploadedFileNames = [];
@@ -236,24 +261,38 @@ const Html = ({
                   )}
                 </div>
 
+              {/* Custom Parameter */}
                 <div className="col-md-6 mb-3 custom-input">
                   <label>
-                    Custom Parameter<span className="star">*</span>
+                    Custom Parameter
                   </label>
                   <input
                     type="text"
-                    className="form-control"
-                    placeholder="e.g., ?subid={subid} or ?clickid={clickid}"
+                    className={`form-control ${form.customparameter && getCustomParameterValidationStatus(form.customparameter) ? 'is-invalid' : ''}`}
+                    placeholder="e.g., subid={subid} or clickid={clickid}"
                     value={form?.customparameter}
-                    onChange={(e) =>
-                      setform({ ...form, customparameter: e.target.value })
-                    }
+                    onChange={(e) => {
+                      setform({ ...form, customparameter: e.target.value });
+                      if (errors.customparameter) {
+                        setErrors({ ...errors, customparameter: null });
+                      }
+                    }}
                   />
-                  {/* {submitted && !form?.customparameter && (
+                  {form.customparameter && getCustomParameterValidationStatus(form.customparameter) && (
+                    <div className="invalid-feedback d-block">
+                      {getCustomParameterValidationStatus(form.customparameter).map((issue, index) => (
+                        <div key={index}>• {issue}</div>
+                      ))}
+                    </div>
+                  )}
+                  {submitted && errors?.customparameter && (
                     <div className="invalid-feedback d-block">
                       {errors?.customparameter}
                     </div>
-                  )} */}
+                  )}
+                  <small className="form-text text-muted">
+                    Examples: subid=123 | campaign=summer&source=facebook
+                  </small>
                 </div>
 
                 {/* Campaign Type */}
