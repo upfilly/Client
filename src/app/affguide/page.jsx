@@ -5,188 +5,329 @@ import "./affiliateguide.css";
 const affiliateguide = () => {
   return (
     <Layout>
-      <div className="affiliate-container">
-        <h1>What Is Affiliate Marketing and How Does It Work?</h1>
-        <p className="intro-text">
-          Affiliate marketing is a simple but powerful way to grow a business —
-          and earn money by promoting the products you love. Whether you're a
-          brand looking to scale or a content creator wanting to monetize your
-          audience, affiliate marketing connects the two sides in a win-win
-          partnership.
-        </p>
+      <div className="affiliate-guide">
+        {/* Hero Section */}
+        <section className="hero-section">
+          <div className="hero-content">
+            <span className="badge">Affiliate Marketing Guide</span>
+            <h1>What Is Affiliate Marketing and How Does It Work?</h1>
+            <p className="hero-description">
+              Affiliate marketing is a simple but powerful way to grow a business —
+              and earn money by promoting the products you love. Whether you're a
+              brand looking to scale or a content creator wanting to monetize your
+              audience, affiliate marketing connects the two sides in a win-win
+              partnership.
+            </p>
+            <div className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-number">$12B+</span>
+                <span className="stat-label">Industry Value</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">81%</span>
+                <span className="stat-label">Brands Use Affiliates</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">15%</span>
+                <span className="stat-label">Avg. Commission</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* <h2>Let's break it down.</h2> */}
+        {/* Who It's For Section */}
+        <section className="section">
+          <div className="section-header">
+            <h2>Who This Is For</h2>
+            <p className="section-subtitle">Upfilly welcomes all types of affiliates</p>
+          </div>
 
-        <div className="content-section">
-          {/* <div className="info-block">
-            <h3>The Basics</h3>
-            <ul>
-              <li>A merchant (brand) sets up an affiliate program — offering a commission for every sale that comes from a partner's referral.</li>
-              <li>An affiliate (creator, blogger, influencer) joins the program and gets a special tracking link.</li>
-              <li>The affiliate promotes the product through content, ads, or social media.</li>
-              <li>When someone clicks that link and makes a purchase, the affiliate gets paid.</li>
-            </ul>
-            <p>It's like word-of-mouth marketing — but smarter, scalable, and trackable.</p>
-          </div> */}
+          <div className="audience-grid">
+            <div className="audience-card">
+              <div className="card-icon">🎨</div>
+              <h3>Content Creators</h3>
+              <p>Bloggers, YouTubers, and social media influencers</p>
+            </div>
+            <div className="audience-card">
+              <div className="card-icon">📱</div>
+              <h3>Media Buyers</h3>
+              <p>Paid traffic specialists and media buyers</p>
+            </div>
+            <div className="audience-card">
+              <div className="card-icon">💰</div>
+              <h3>Cashback Sites</h3>
+              <p>Loyalty programs and cashback platforms</p>
+            </div>
+            <div className="audience-card">
+              <div className="card-icon">🔍</div>
+              <h3>Review Sites</h3>
+              <p>Product review and comparison websites</p>
+            </div>
+            <div className="audience-card">
+              <div className="card-icon">🏷️</div>
+              <h3>Coupon Sites</h3>
+              <p>Deal and coupon websites</p>
+            </div>
+            <div className="audience-card">
+              <div className="card-icon">🤝</div>
+              <h3>Subnetworks</h3>
+              <p>Affiliate networks and technology partners</p>
+            </div>
+          </div>
+        </section>
 
-          <div class="info-block">
-            <h3>Who this is for</h3>
-            <p>Upfilly is for:</p>
+        {/* How It Works Section */}
+        <section className="section bg-light">
+          <div className="section-header">
+            <h2>How Affiliates Make Money on Upfilly</h2>
+            <p className="section-subtitle">Simple 5-step process to start earning</p>
+          </div>
 
-            <div class="grid grid-cols-2 gap-4">
-              <ul class="list-disc pl-5 m-0">
-                <li>Content creators</li>
-                <li>Bloggers</li>
-                <li>Influencers</li>
-                <li>Media buyers</li>
-                <li>Coupon and deal websites</li>
-                <li>Technology Partners</li>
-                <li>Browser Extensions</li>
-              </ul>
-              <ul class="list-disc pl-5 m-0">
-                <li>Programmatic</li>
-                <li>Review Sites</li>
-                <li>Subnetworks</li>
-                <li>Loyalty or Cashback Sites</li>
-                <li>Search Affiliates</li>
-                <li>Comparison shopping</li>
-                <li>News & Media Sites</li>
-              </ul>
+          <div className="process-flow">
+            <div className="process-step">
+              <div className="step-number">1</div>
+              <div className="step-content">
+                <h3>Join</h3>
+                <p>Create your free affiliate account</p>
+              </div>
+            </div>
+            <div className="process-arrow">→</div>
+            <div className="process-step">
+              <div className="step-number">2</div>
+              <div className="step-content">
+                <h3>Apply</h3>
+                <p>Apply to relevant programs</p>
+              </div>
+            </div>
+            <div className="process-arrow">→</div>
+            <div className="process-step">
+              <div className="step-number">3</div>
+              <div className="step-content">
+                <h3>Get Links</h3>
+                <p>Receive unique tracking links</p>
+              </div>
+            </div>
+            <div className="process-arrow">→</div>
+            <div className="process-step">
+              <div className="step-number">4</div>
+              <div className="step-content">
+                <h3>Promote</h3>
+                <p>Share with your audience</p>
+              </div>
+            </div>
+            <div className="process-arrow">→</div>
+            <div className="process-step">
+              <div className="step-number">5</div>
+              <div className="step-content">
+                <h3>Get Paid</h3>
+                <p>Earn commissions on sales</p>
+              </div>
             </div>
           </div>
 
-          <div className="info-block">
-            <h3>How affiliates make money on Upfilly</h3>
-            <ul>
-              <li>
-                Join → apply to programs → get tracking links → promote → earn
-                commissions → get paid
-              </li>
-              <li>
-                Upfilly tracks your performance and ensures commissions are
-                calculated accurately.
-              </li>
-            </ul>
+          <div className="highlight-box">
+            <p>Upfilly tracks your performance and ensures commissions are calculated accurately in real-time.</p>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="section">
+          <div className="section-header">
+            <h2>What You Get as an Affiliate</h2>
+            <p className="section-subtitle">Everything you need to succeed</p>
           </div>
 
-          <div className="info-block">
-            <h3>What you get as an affiliate</h3>
-            <ul>
-              <li>Access to merchant affiliate programs</li>
-              <li>Unique tracking links for every offer</li>
-              <li>Real-time performance statistics</li>
-              <li>Transparent commission reporting</li>
-              <li>Reliable and timely payouts</li>
-            </ul>
+          <div className="benefits-grid">
+            <div className="benefit-item">
+              <span className="benefit-icon">✓</span>
+              <div>
+                <h4>Access to Top Merchants</h4>
+                <p>Hundreds of affiliate programs across multiple niches</p>
+              </div>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">✓</span>
+              <div>
+                <h4>Unique Tracking Links</h4>
+                <p>Track every click and conversion accurately</p>
+              </div>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">✓</span>
+              <div>
+                <h4>Real-time Analytics</h4>
+                <p>Monitor performance with live statistics</p>
+              </div>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">✓</span>
+              <div>
+                <h4>Transparent Reporting</h4>
+                <p>Clear commission tracking and reporting</p>
+              </div>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">✓</span>
+              <div>
+                <h4>Timely Payouts</h4>
+                <p>Reliable and scheduled commission payments</p>
+              </div>
+            </div>
+            <div className="benefit-item">
+              <span className="benefit-icon">✓</span>
+              <div>
+                <h4>24/7 Support</h4>
+                <p>Dedicated affiliate support team</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Getting Started Grid */}
+        <section className="section bg-gradient">
+          <div className="split-grid">
+            {/* Left Column - Prerequisites */}
+            <div className="info-card">
+              <h3>What You Need Before Signup</h3>
+              <ul className="checklist">
+                <li>A website, social account, or traffic source</li>
+                <li>Basic profile information</li>
+                <li>A payout method (PayPal, Bank Transfer, etc.)</li>
+              </ul>
+            </div>
+
+            {/* Right Column - Signup Steps */}
+            <div className="info-card">
+              <h3>Affiliate Signup Steps</h3>
+              <ol className="numbered-list">
+                <li>Create an account</li>
+                <li>Complete your affiliate profile</li>
+                <li>Verify your email address</li>
+                <li>Set your payout method</li>
+                <li>Apply to affiliate programs</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        {/* Checklist Section */}
+        <section className="section">
+          <div className="section-header">
+            <h2>After Signup Checklist</h2>
+            <p className="section-subtitle">5 steps to launch your first campaign</p>
           </div>
 
-          <div className="info-block">
-            <h3>What you need before signup</h3>
-            <p>To get started, you’ll need:</p>
-            <ul>
-              <li>A website, social account, or traffic source</li>
-              <li>Basic profile information</li>
-              <li>A payout method</li>
-            </ul>
+          <div className="checklist-grid">
+            <div className="checklist-item">
+              <div className="checklist-number">01</div>
+              <div className="checklist-content">
+                <h4>Complete Your Profile</h4>
+                <p>Fill out all profile details for better merchant approval rates</p>
+              </div>
+            </div>
+            <div className="checklist-item">
+              <div className="checklist-number">02</div>
+              <div className="checklist-content">
+                <h4>Choose Your Niche</h4>
+                <p>Select a clear niche that aligns with your audience</p>
+              </div>
+            </div>
+            <div className="checklist-item">
+              <div className="checklist-number">03</div>
+              <div className="checklist-content">
+                <h4>Apply to Programs</h4>
+                <p>Start with 3-5 relevant programs to test performance</p>
+              </div>
+            </div>
+            <div className="checklist-item">
+              <div className="checklist-number">04</div>
+              <div className="checklist-content">
+                <h4>Generate Links</h4>
+                <p>Create your unique tracking links for each offer</p>
+              </div>
+            </div>
+            <div className="checklist-item">
+              <div className="checklist-number">05</div>
+              <div className="checklist-content">
+                <h4>Start Promoting</h4>
+                <p>Publish your first promotion and track results</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Rules Section */}
+        <section className="section bg-light">
+          <div className="section-header">
+            <h2>Rules & Compliance</h2>
+            <p className="section-subtitle">Important guidelines for all affiliates</p>
           </div>
 
-          <div className="info-block">
-            <h3>Affiliate signup steps</h3>
-            <ul>
-              <li>Create an account</li>
-              <li>Complete your affiliate profile</li>
-              <li>Verify your email address</li>
-              <li>Set your payout method</li>
-              <li>Apply to affiliate programs</li>
-            </ul>
+          <div className="rules-grid">
+            <div className="rule-card warning">
+              <div className="rule-icon">🚫</div>
+              <h4>No Fraudulent Traffic</h4>
+              <p>Prohibited or fraudulent traffic is strictly not allowed</p>
+            </div>
+            <div className="rule-card">
+              <div className="rule-icon">🔍</div>
+              <h4>Brand Bidding Rules</h4>
+              <p>Respect merchant brand bidding policies</p>
+            </div>
+            <div className="rule-card">
+              <div className="rule-icon">🏷️</div>
+              <h4>Coupon Policies</h4>
+              <p>Deal and coupon rules vary by merchant</p>
+            </div>
+            <div className="rule-card">
+              <div className="rule-icon">📢</div>
+              <h4>Proper Disclosure</h4>
+              <p>Always disclose affiliate relationships</p>
+            </div>
+            <div className="rule-card highlight">
+              <div className="rule-icon">⚠️</div>
+              <h4>Account Suspension</h4>
+              <p>Violations may result in immediate account suspension</p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="section">
+          <div className="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p className="section-subtitle">Got questions? We've got answers.</p>
           </div>
 
-          <div className="info-block">
-            <h3>After the signup checklist</h3>
-            <ul>
-              <li>Complete your profile fully</li>
-              <li>Choose a clear niche</li>
-              <li>Apply to 3–5 relevant programs</li>
-              <li>Generate your tracking links</li>
-              <li>Publish your first promotion</li>
-            </ul>
+          <div className="faq-grid">
+            <div className="faq-item">
+              <h4>How do payouts work?</h4>
+              <p>Commissions are paid once approved and after reaching the minimum payout threshold. Payouts are processed on a monthly basis.</p>
+            </div>
+            <div className="faq-item">
+              <h4>What is the minimum payout?</h4>
+              <p>The minimum payout amount varies by payment method and is clearly displayed in your account settings.</p>
+            </div>
+            <div className="faq-item">
+              <h4>Why was my application rejected?</h4>
+              <p>Merchants review applications individually based on traffic quality, relevance, and site content. You can always reapply after improving your application.</p>
+            </div>
+            <div className="faq-item">
+              <h4>What if a commission is missing?</h4>
+              <p>You can report missing commissions directly from your dashboard. Our support team will investigate and resolve the issue within 48 hours.</p>
+            </div>
           </div>
+        </section>
 
-          <div className="info-block">
-            <h3>Rules & compliance</h3>
-            <ul>
-              <li>Prohibited or fraudulent traffic is not allowed</li>
-              <li>Brand bidding rules must be respected</li>
-              <li>Coupon and deal policies vary by merchant</li>
-              <li>Proper affiliate disclosures are required</li>
-              <li>Violations may result in account suspension</li>
-            </ul>
+        {/* CTA Section */}
+        <section className="cta-section">
+          <div className="cta-content">
+            <h2>Ready to Start Your Affiliate Journey?</h2>
+            <p>Join thousands of affiliates already earning on Upfilly</p>
+            <button className="cta-button">Create Free Account</button>
+            <p className="cta-note">No credit card required • 5-minute setup</p>
           </div>
-          <div className="info-block">
-            <h3 className="mb-4">Affiliate FAQs</h3>
-            <ul className="space-y-3">
-              <li>
-                <p>
-                  <strong>How do payouts work?</strong> <br />
-                  Commissions are paid once approved and after reaching the
-                  minimum payout threshold.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>What is the minimum payout?</strong> <br />
-                  The minimum payout amount is defined in your account.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>Why was my application rejected?</strong> <br />
-                  Merchants review applications individually based on traffic
-                  quality and relevance.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>What if a commission is missing?</strong> <br />
-                  You can report missing commissions directly from your
-                  dashboard.
-                </p>
-              </li>
-            </ul>
-          </div>
-          {/* <div className="info-block">
-            <h3>Real-Life Example</h3>
-            <p>
-              Let's say <strong>Maria</strong> is a fitness blogger. She signs up for a protein brand's affiliate program on Upfilly. She writes a review post with her unique link. Her audience clicks the link, buys the product, and Maria earns 15% commission on every sale.
-            </p>
-            <p>Maria helps her followers. The brand grows its customer base. Maria gets paid. Everyone wins.</p>
-          </div> */}
-
-          {/* <div className="info-block">
-            <h3>What Makes Affiliate Marketing Work</h3>
-            <ul>
-              <li><strong>Trust:</strong> Audiences convert best when they trust the affiliate's opinion.</li>
-              <li><strong>Relevance:</strong> Niche affiliates perform better because they promote what their audience actually cares about.</li>
-              <li><strong>Transparency:</strong> Clear tracking, fair commissions, and consistent payouts keep the ecosystem healthy.</li>
-            </ul>
-          </div>
-
-          <div className="info-block">
-            <h3>Why It's Growing Fast</h3>
-            <ul>
-              <li>Ad costs are rising.</li>
-              <li>Social media influencers are everywhere.</li>
-              <li>People trust peer recommendations more than ads.</li>
-              <li>Merchants want cost-effective growth. Affiliates want flexible income. Affiliate marketing delivers both.</li>
-            </ul>
-          </div>
-
-          <div className="info-block">
-            <h3>Key Takeaways</h3>
-            <p>Affiliate marketing is not a get-rich-quick scheme. It's a long-term, performance-driven channel that rewards quality content, trust, and consistency.</p>
-            <p>Whether you're a merchant or affiliate, platforms like <strong>Upfilly</strong> make it easier than ever to get started — with no tech headaches.</p>
-          </div> */}
-        </div>
+        </section>
       </div>
     </Layout>
   );

@@ -6,181 +6,283 @@ import Layout from '../components/global/layout';
 import { useRouter } from 'next/navigation';
 
 const UpfillyMerchantGuide = () => {
-  const history = useRouter()
+  const router = useRouter();
 
   return (
     <Layout>
-    <div className="guide-container">
-      <header className="guide-header">
-        <h1>Getting Started with Upfilly as a Merchant</h1>
-        <p className="subtitle">Launch Your Affiliate Program in Minutes</p>
-      </header>
+      <div className="merchant-guide">
+        {/* Hero Section */}
+        <section className="hero">
+          <div className="hero-content">
+            <span className="badge">Merchant Guide</span>
+            <h1>Launch Your Affiliate Program <span className="gradient-text">in Minutes</span></h1>
+            <p className="hero-subtitle">Join 10,000+ merchants scaling their business with Upfilly's affiliate marketing platform</p>
+            <div className="hero-cta">
+              <button className="btn-primary" onClick={() => router.push('/bookingform')}>
+                Start Free Trial
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.16666 10H15.8333M15.8333 10L11.6667 5.83333M15.8333 10L11.6667 14.1667" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button className="btn-secondary1" onClick={() => document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' })}>
+                Learn More
+              </button>
+            </div>
+            <div className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-number">10K+</span>
+                <span className="stat-label">Active Merchants</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">$50M+</span>
+                <span className="stat-label">Commissions Paid</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">98%</span>
+                <span className="stat-label">Satisfaction Rate</span>
+              </div>
+            </div>
+          </div>
+          <div className="hero-pattern"></div>
+        </section>
 
-      <section className="intro">
-        <p>
-          Looking for a cost-effective way to scale your sales? Welcome to affiliate marketing — and more importantly, welcome to Upfilly. In this guide, you’ll learn exactly how to start your affiliate program using Upfilly, step-by-step. No jargon. No technical headaches. Just growth.
-        </p>
-      </section>
+        {/* Introduction */}
+        <section className="intro-section">
+          <div className="container">
+            <div className="intro-card">
+              <div className="quote-mark">"</div>
+              <p className="intro-text">
+                Looking for a cost-effective way to scale your sales? Welcome to affiliate marketing — and more importantly, welcome to Upfilly. No jargon. No technical headaches. Just growth.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      {/* <section className="section">
-        <h2>What Is Upfilly?</h2>
-        <ul>
-          <li>Create and manage your affiliate program</li>
-          <li>Track affiliate sales and conversions</li>
-          <li>Automate commissions and payouts</li>
-          <li>Attract the right affiliates for your brand</li>
-        </ul>
-        <p>
-          Whether you’re selling through Shopify, Amazon, or your own eCommerce store, Upfilly gives you full control and visibility — from day one.
-        </p>
-      </section>
+        {/* What Merchants Get */}
+        <section className="features-section">
+          <div className="container">
+            <div className="section-header">
+              <h2>Everything You Need to <span className="gradient-text">Succeed</span></h2>
+              <p>Powerful tools designed to help you launch, manage, and scale your affiliate program</p>
+            </div>
+            <div className="features-grid">
+              {[
+                { icon: "🎯", title: "Accurate Tracking", desc: "Precise attribution and real-time tracking" },
+                { icon: "🤝", title: "Affiliate Recruitment", desc: "Find and approve the perfect partners" },
+                { icon: "💰", title: "Flexible Commissions", desc: "Customize rates for any business model" },
+                { icon: "🎨", title: "Creative Management", desc: "Upload banners, links, and promos" },
+                { icon: "📊", title: "Advanced Analytics", desc: "Detailed reports and performance insights" },
+                { icon: "⚡", title: "Automated Payouts", desc: "Calculate and pay commissions automatically" }
+              ].map((feature, index) => (
+                <div key={index} className="feature-card">
+                  <div className="feature-icon">{feature.icon}</div>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <section className="section">
-        <h2>Why Start an Affiliate Program?</h2>
-        <ul>
-          <li>Pay-per-sale model – no wasted ad budgets</li>
-          <li>Leverage other people’s audiences</li>
-          <li>Track everything in real time</li>
-          <li>Scale fast without hiring a marketing team</li>
-        </ul>
-        <p>
-          With the right platform, affiliate marketing becomes one of the most scalable and low-risk strategies for growth.
-        </p>
-      </section> */}
+        {/* How It Works */}
+        <section id="how-it-works" className="how-it-works">
+          <div className="container">
+            <div className="section-header">
+              <h2>How <span className="gradient-text">Upfilly</span> Works</h2>
+              <p>Five simple steps to launch your affiliate program</p>
+            </div>
+            <div className="steps">
+              {[
+                { number: "01", title: "Create Program", desc: "Set up your affiliate program in minutes" },
+                { number: "02", title: "Set Terms", desc: "Define commissions and program rules" },
+                { number: "03", title: "Recruit Affiliates", desc: "Approve partners or let them find you" },
+                { number: "04", title: "Track Performance", desc: "Monitor sales and affiliate activity" },
+                { number: "05", title: "Pay Commissions", desc: "Automated payouts based on results" }
+              ].map((step, index) => (
+                <div key={index} className="step-item">
+                  <div className="step-number">{step.number}</div>
+                  <div className="step-content">
+                    <h3>{step.title}</h3>
+                    <p>{step.desc}</p>
+                  </div>
+                  {index < 4 && <div className="step-connector"></div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-     
-      <section className="section">
-        <h2>What merchants get</h2>
-        <ul>
-          <li>Accurate tracking and attribution</li>
-          <li>Affiliate recruitment and approvals</li>
-          <li>Flexible commission models</li>
-          <li>Creative management (banners, links)</li>
-          <li>Detailed reporting and analytics</li>
-          <li>Automated commission calculations and payouts</li>
-        </ul>
-      </section>
-      {/* <section className="section">
-        <h2>Step-by-Step: Setting Up as a Merchant on Upfilly</h2>
-        <ol>
-          <li>
-            <strong>Step 1: Create Your Free Account</strong><br />
-            Go to upfilly.com and click Start Free. It takes less than 2 minutes to set up.
-          </li>
-          <li>
-            <strong>Step 2: Add Your Store</strong><br />
-            Connect your Shopify store, Amazon products, or manually integrate your checkout — depending on where you sell.
-          </li>
-          <li>
-            <strong>Step 3: Set Commission Rules</strong><br />
-            Choose flat-rate, % per order, or tiered commissions. Add validation windows to prevent fraud.
-          </li>
-          <li>
-            <strong>Step 4: Upload Banners and Creatives</strong><br />
-            Add banners, product shots, and coupon codes for affiliates.
-          </li>
-          <li>
-            <strong>Step 5: Invite Affiliates or Let Them Find You</strong><br />
-            Invite partners or be discovered through Upfilly’s network. Ask about our Managed Program option.
-          </li>
-        </ol>
-      </section>
+        {/* Prerequisites */}
+        <section className="prerequisites">
+          <div className="container">
+            <div className="prerequisites-grid">
+              <div className="prerequisites-content">
+                <span className="badge">Get Ready</span>
+                <h2>What You'll Need <span className="gradient-text">Before Starting</span></h2>
+                <p>Prepare these items to make your setup smooth and fast</p>
+                <ul className="checklist">
+                  {[
+                    "Your website or product URL",
+                    "Product or service details",
+                    "Commission structure (CPA, CPS, etc.)",
+                    "Marketing creatives (optional)",
+                    "Preferred payout method"
+                  ].map((item, index) => (
+                    <li key={index}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                        <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="prerequisites-illustration">
+                <div className="illustration-grid">
+                  <div className="grid-item"></div>
+                  <div className="grid-item"></div>
+                  <div className="grid-item"></div>
+                  <div className="grid-item"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section className="section">
-        <h2>What You Can Track with Upfilly</h2>
-        <ul>
-          <li>Clicks and conversion rate</li>
-          <li>Affiliate performance</li>
-          <li>Top-selling campaigns</li>
-          <li>Commission totals</li>
-          <li>ROI per campaign</li>
-        </ul>
-      </section> */}
-        <section className="section">
-        <h2>How Upfilly works for merchants</h2>
-        <ul>
-          <li>1. Create your affiliate program</li>
-          <li>2. Define commissions and terms</li>
-          <li>3. Recruit and approve affiliates</li>
-          <li>4. Track sales and performance</li>
-          <li>5. Pay commissions based on results</li>
-        </ul>
-      </section>
+        {/* Step-by-Step Setup */}
+        <section className="setup-guide">
+          <div className="container">
+            <div className="section-header">
+              <h2>Step-by-Step <span className="gradient-text">Setup Guide</span></h2>
+              <p>Follow these simple steps to get your affiliate program running</p>
+            </div>
+            <div className="setup-steps">
+              {[
+                {
+                  step: "Step 1",
+                  title: "Create Your Free Account",
+                  desc: "Visit upfilly.com and click 'Start Free'. Takes less than 2 minutes.",
+                  icon: "📝"
+                },
+                {
+                  step: "Step 2",
+                  title: "Add Your Store",
+                  desc: "Connect Shopify, Amazon, or integrate manually with your checkout.",
+                  icon: "🛍️"
+                },
+                {
+                  step: "Step 3",
+                  title: "Set Commission Rules",
+                  desc: "Choose flat-rate, percentage, or tiered commissions. Add validation windows.",
+                  icon: "⚙️"
+                },
+                {
+                  step: "Step 4",
+                  title: "Upload Creatives",
+                  desc: "Add banners, product shots, and coupon codes for your affiliates.",
+                  icon: "🎨"
+                },
+                {
+                  step: "Step 5",
+                  title: "Launch & Recruit",
+                  desc: "Invite partners or get discovered through Upfilly's network.",
+                  icon: "🚀"
+                }
+              ].map((item, index) => (
+                <div key={index} className="setup-card">
+                  <div className="setup-icon">{item.icon}</div>
+                  <div className="setup-content">
+                    <span className="setup-step">{item.step}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <section className="section">
-        <h2>What you need before signup</h2>
-        <p>Before creating your account, have:</p>
-        <ul>
-          <li>1. Your website or product URL</li>
-          <li>2. Product or service details</li>
-          <li>3. Commission structure (CPA, CPS, etc.)</li>
-          <li>4. Marketing creatives (optional but recommended)</li>
-          <li>5. Preferred payout method</li>
-        </ul>
-      </section>
+        {/* Post-Signup Checklist */}
+        <section className="checklist-section">
+          <div className="container">
+            <div className="checklist-card">
+              <h3>📋 After Signup Checklist</h3>
+              <p>Complete these tasks to optimize your program</p>
+              <div className="checklist-grid">
+                {[
+                  "Install tracking on your website",
+                  "Create your first affiliate offer",
+                  "Upload creatives and banners",
+                  "Set program terms and rules",
+                  "Review affiliate applications"
+                ].map((item, index) => (
+                  <div key={index} className="checklist-item">
+                    <div className="checkbox">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                      </svg>
+                    </div>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
+        {/* FAQ Section */}
+        <section className="faq-section">
+          <div className="container">
+            <div className="section-header">
+              <h2>Frequently Asked <span className="gradient-text">Questions</span></h2>
+              <p>Everything you need to know about getting started</p>
+            </div>
+            <div className="faq-grid">
+              {[
+                {
+                  q: "How are affiliates tracked?",
+                  a: "Sales and actions are tracked automatically using Upfilly's advanced tracking technology with real-time attribution."
+                },
+                {
+                  q: "Can I approve affiliates manually?",
+                  a: "Yes, you have full control. Review and approve each affiliate before they can promote your program."
+                },
+                {
+                  q: "When do I pay commissions?",
+                  a: "Commissions are paid based on your monthly payout schedule. You can customize approval settings."
+                },
+                {
+                  q: "Can I change commissions later?",
+                  a: "Absolutely! Update commissions and terms anytime to optimize your program performance."
+                }
+              ].map((faq, index) => (
+                <div key={index} className="faq-card">
+                  <h4>{faq.q}</h4>
+                  <p>{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <section className="section">
-        <h2>Step-by-Step: Setting Up as a Merchant on Upfilly</h2>
-        <ol>
-          <li>
-            <strong>Step 1: Create Your Free Account</strong><br />
-          Go to upfilly.com and click Start Free. It takes less than 2 minutes to set up.
-          </li>
-          <li>
-            <strong>Step 2: Add Your Store</strong><br />
-            Connect your Shopify store, Amazon products, or manually integrate your checkout — depending on where you sell.
-          </li>
-          <li>
-            <strong>Step 3: Set Commission Rules</strong><br />
-            Choose flat-rate, % per order, or tiered commissions. Add validation windows to prevent fraud.
-          </li>
-          <li>
-            <strong>Step 4: Upload Banners and Creatives</strong><br />
-            Add banners, product shots, and coupon codes for affiliates.
-          </li>
-          <li>
-            <strong>Step 5: Invite Affiliates or Let Them Find You</strong><br />
-            Invite partners or be discovered through Upfilly’s network. Ask about our Managed Program option.
-          </li>
-        </ol>
-      </section>
-
-      
-       <section className="section">
-        <h2>After the signup checklist</h2>
-        <p>Once your account is created:</p>
-        <ul>
-          <li>Install tracking on your website</li>
-          <li>Create your first affiliate program or offer</li>
-          <li>Upload creatives (banners, links, promos)</li>
-          <li>Set program terms and approval rules</li>
-          <li>Review and approve affiliate applications</li>
-        </ul>
-      </section> 
-
-       <section className="section">
-        <h2>Merchant FAQs</h2>
-        <ul>
-          <strong>How are affiliates tracked?</strong>
-          <li> Sales and actions are tracked automatically using Upfilly’s tracking technology.</li>
-          <strong>Can I approve affiliates manually?</strong>
-          <li> Yes, you control who can join and promote your program.</li>
-          <strong>When do I pay commissions?</strong>
-          <li> Commissions are paid based on your monthly payout schedule and approval settings.</li>
-          <strong>Can I change commissions later?</strong>
-          <li> Yes, commissions and terms can be updated at any time.</li>
-        </ul>
-      </section>
-
-      <footer className="footer">
-        <h3>Final Thoughts</h3>
-        <p>
-          Launching an affiliate program can sound complicated — but with Upfilly, it’s easy. You don’t need a developer. You don’t need to chase affiliates. You just need a product and a willingness to grow.
-        </p>
-        <button className="cta-button" onClick={() => history.push('/bookingform')}>Start Free Today</button>
-      </footer>
-    </div>
+        {/* Final CTA */}
+        <section className="cta-section">
+          <div className="container">
+            <div className="cta-card">
+              <h2>Ready to Scale Your Business?</h2>
+              <p>Join thousands of merchants already growing with Upfilly</p>
+              <button className="btn-primary btn-large" onClick={() => router.push('/bookingform')}>
+                Start Your Free Trial
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.16666 10H15.8333M15.8333 10L11.6667 5.83333M15.8333 10L11.6667 14.1667" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <p className="cta-note">No credit card required • 14-day free trial</p>
+            </div>
+          </div>
+        </section>
+      </div>
     </Layout>
   );
 };
