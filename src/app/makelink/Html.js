@@ -465,7 +465,7 @@ const Html = () => {
                   </small>
                 </div>
 
-                <div className="col-12 col-md-12 mb-3">
+                {/* <div className="col-12 col-md-12 mb-3">
                   <div className="form-check pl-4">
                     <input
                       className="form-check-input"
@@ -481,7 +481,7 @@ const Html = () => {
                       Show Custom Parameters
                     </label>
                   </div>
-                </div>
+                </div> */}
 
                 {showCustomParameters && (
                   <div className="col-12 col-md-12">

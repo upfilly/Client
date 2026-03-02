@@ -21,9 +21,9 @@ const Html = () => {
   const [showNewKeyForm, setShowNewKeyForm] = useState(false);
   const [showCustomParameters, setShowCustomParameters] = useState(false);
   const [checkboxValues, setCheckboxValues] = useState([
-    { id: "param", label: "param" },
-    { id: "newparam", label: "newparam" },
-    { id: "newparam1", label: "newparam1" },
+    { id: "subId", label: "subId" },
+    { id: "subId1", label: "subId1" },
+    { id: "subId2", label: "subId2" },
   ]);
   const [brandData, setBrandData] = useState([]);
   const [brandOptions, setBrandOptions] = useState([]);
