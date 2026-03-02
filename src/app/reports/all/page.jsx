@@ -496,7 +496,7 @@ export default function AnalyticsDashboard() {
 
     // Reset exchange rate
     setExchangeRate(1);
-
+    setSelectedType(null)
     // Fetch data with reset filters
     getClicksAnalyticsData(filterParams);
     getAnalyticsData(filterParams);
