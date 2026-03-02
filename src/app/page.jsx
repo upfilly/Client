@@ -250,13 +250,13 @@ export default function Home() {
                   <p className="desc">
                     Connect with top affiliates, grow your brand, and track
                     every conversion — all in one performance-driven platform.
-                  </p>
+                  </p>``
 
                   {/* {(user?.role == "brand" || !user) && <a className='btn btn-primary mt-3 mr-2' href="/pricing">Book a Demo</a>} */}
                   {(user?.role == "brand" || !user) && (
                     <a
                       className="btn btn-outline-primary mt-3"
-                      href="/merchant"
+                      href="/Signupoptions"
                     >
                       Get Started
                     </a>
@@ -301,14 +301,18 @@ export default function Home() {
               <div className="p-4 whyupfillycard">
                 <h3>Merchants</h3>
                 <p>
-                  Launch and manage a scalable affiliate program in minutes.
+                  Launch and scale an affiliate program without complex setup.
                 </p>
               </div>
             </div>
             <div className="col-md-6 text-center">
               <div className="p-4 whyupfillycard">
                 <h3>Affiliates</h3>
-                <p>Promote trusted brands and earn commissions.</p>
+                <p>
+                  {" "}
+                  Promote trusted brands, track performance, and earn
+                  commissions.
+                </p>
               </div>
             </div>
           </div>
@@ -318,25 +322,25 @@ export default function Home() {
         <div className="container py-5 bg-light">
           <div className="row">
             <div className="col-md-12 text-center mb-4">
-              <h2>What Makes Upfilly Different?</h2>
+              <h2>Why Upfilly?</h2>
             </div>
 
             <div className="col-md-6 col-lg-3 text-center h-100">
               <div className="p-4 features-card">
                 <h4>Real-Time Tracking</h4>
-                <p>Know exactly which clicks convert, and who's performing.</p>
+                <p>Easy program management for merchants</p>
               </div>
             </div>
             <div className="col-md-6 col-lg-3 text-center h-100">
               <div className="p-4 features-card">
                 <h4>Automated Payouts</h4>
-                <p>Say goodbye to spreadsheets and manual transfers.</p>
+                <p>Reliable payouts for affiliates</p>
               </div>
             </div>
             <div className="col-md-6 col-lg-3 text-center h-100">
               <div className="p-4 features-card">
                 <h4>Shopify Friendly</h4>
-                <p>Track affiliate sales across major platforms.</p>
+                <p>Real-time reporting for both sides</p>
               </div>
             </div>
             <div className="col-md-6 col-lg-3 text-center h-100">
@@ -349,7 +353,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-
+       
         <div class="container py-5">
           <div class="bg_blue text-white text-center p-3 p-md-5 rounded-4 shadow-lg">
             <h2 class="display-5 fw-semibold mb-4">

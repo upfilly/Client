@@ -22,7 +22,7 @@ const UpfillyMerchantGuide = () => {
         </p>
       </section>
 
-      <section className="section">
+      {/* <section className="section">
         <h2>What Is Upfilly?</h2>
         <ul>
           <li>Create and manage your affiliate program</li>
@@ -46,9 +46,21 @@ const UpfillyMerchantGuide = () => {
         <p>
           With the right platform, affiliate marketing becomes one of the most scalable and low-risk strategies for growth.
         </p>
-      </section>
+      </section> */}
 
+     
       <section className="section">
+        <h2>What merchants get</h2>
+        <ul>
+          <li>Accurate tracking and attribution</li>
+          <li>Affiliate recruitment and approvals</li>
+          <li>Flexible commission models</li>
+          <li>Creative management (banners, links)</li>
+          <li>Detailed reporting and analytics</li>
+          <li>Automated commission calculations and payouts</li>
+        </ul>
+      </section>
+      {/* <section className="section">
         <h2>Step-by-Step: Setting Up as a Merchant on Upfilly</h2>
         <ol>
           <li>
@@ -83,15 +95,81 @@ const UpfillyMerchantGuide = () => {
           <li>Commission totals</li>
           <li>ROI per campaign</li>
         </ul>
+      </section> */}
+        <section className="section">
+        <h2>How Upfilly works for merchants</h2>
+        <ul>
+          <li>1. Create your affiliate program</li>
+          <li>2. Define commissions and terms</li>
+          <li>3. Recruit and approve affiliates</li>
+          <li>4. Track sales and performance</li>
+          <li>5. Pay commissions based on results</li>
+        </ul>
       </section>
 
       <section className="section">
-        <h2>Best Practices for New Merchants</h2>
+        <h2>What you need before signup</h2>
+        <p>Before creating your account, have:</p>
         <ul>
-          <li>Offer a competitive commission</li>
-          <li>Pay affiliates on time — Upfilly automates this for you</li>
-          <li>Communicate regularly with affiliates</li>
-          <li>Vet affiliates before approving them</li>
+          <li>1. Your website or product URL</li>
+          <li>2. Product or service details</li>
+          <li>3. Commission structure (CPA, CPS, etc.)</li>
+          <li>4. Marketing creatives (optional but recommended)</li>
+          <li>5. Preferred payout method</li>
+        </ul>
+      </section>
+
+
+      <section className="section">
+        <h2>Step-by-Step: Setting Up as a Merchant on Upfilly</h2>
+        <ol>
+          <li>
+            <strong>Step 1: Create Your Free Account</strong><br />
+          Go to upfilly.com and click Start Free. It takes less than 2 minutes to set up.
+          </li>
+          <li>
+            <strong>Step 2: Add Your Store</strong><br />
+            Connect your Shopify store, Amazon products, or manually integrate your checkout — depending on where you sell.
+          </li>
+          <li>
+            <strong>Step 3: Set Commission Rules</strong><br />
+            Choose flat-rate, % per order, or tiered commissions. Add validation windows to prevent fraud.
+          </li>
+          <li>
+            <strong>Step 4: Upload Banners and Creatives</strong><br />
+            Add banners, product shots, and coupon codes for affiliates.
+          </li>
+          <li>
+            <strong>Step 5: Invite Affiliates or Let Them Find You</strong><br />
+            Invite partners or be discovered through Upfilly’s network. Ask about our Managed Program option.
+          </li>
+        </ol>
+      </section>
+
+      
+       <section className="section">
+        <h2>After the signup checklist</h2>
+        <p>Once your account is created:</p>
+        <ul>
+          <li>Install tracking on your website</li>
+          <li>Create your first affiliate program or offer</li>
+          <li>Upload creatives (banners, links, promos)</li>
+          <li>Set program terms and approval rules</li>
+          <li>Review and approve affiliate applications</li>
+        </ul>
+      </section> 
+
+       <section className="section">
+        <h2>Merchant FAQs</h2>
+        <ul>
+          <strong>How are affiliates tracked?</strong>
+          <li> Sales and actions are tracked automatically using Upfilly’s tracking technology.</li>
+          <strong>Can I approve affiliates manually?</strong>
+          <li> Yes, you control who can join and promote your program.</li>
+          <strong>When do I pay commissions?</strong>
+          <li> Commissions are paid based on your monthly payout schedule and approval settings.</li>
+          <strong>Can I change commissions later?</strong>
+          <li> Yes, commissions and terms can be updated at any time.</li>
         </ul>
       </section>
 

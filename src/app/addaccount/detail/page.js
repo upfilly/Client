@@ -20,6 +20,12 @@ import { toast } from "react-toastify";
 import { Label } from "reactstrap";
 import $ from "jquery";
 import datepipeModel from "@/models/datepipemodel";
+import {
+  CitySelect,
+  CountrySelect,
+  StateSelect,
+  } from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 
 export default function addAffiliateAccount() {
   const user = crendentialModel.getUser();
@@ -56,11 +62,16 @@ export default function addAffiliateAccount() {
     social_security_number: "",
     is_us_citizen: true,
     signature_date: "",
+    country:null,
+    state:null,
+    city:null,
+    tax:"",
   });
+  
   const currentDate = new Date().toISOString().split("T")[0];
   const [sumitted, setSumitted] = useState(false);
   const [taxDetailTabEnabled, setTaxDetailTabEnabled] = useState(false);
-
+ 
   console.log(form, "fghfghfghfhg");
 
   const uploadSignatureImage = (e) => {
@@ -345,6 +356,7 @@ export default function addAffiliateAccount() {
     ApiClient.get(`user/detail`, { id: user?.id || user?._id }).then((res) => {
       if (res.success) {
         let value = res?.data?.tax_detail;
+        console.log(res,"==data")
         if (!res?.data?.tax_detail?.tax_name) {
           setForm({
             tax_name: value?.tax_name,
@@ -357,6 +369,10 @@ export default function addAffiliateAccount() {
             ein: value?.ein,
             trade_name: value?.trade_name,
             signature_date: value?.signature_date?.split("T")[0],
+            country : value?.country,
+            state : value?.state,
+            city : value?.city,
+            tax : value?.tax,
           });
         } else {
           setForm({
@@ -372,6 +388,10 @@ export default function addAffiliateAccount() {
             ein: value?.ein,
             trade_name: value?.trade_name,
             signature_date: value?.signature_date?.split("T")[0],
+            country : value?.country,
+            state : value?.state,
+            city : value?.city,
+            tax : value?.tax,
           });
         }
       }
@@ -791,7 +811,7 @@ export default function addAffiliateAccount() {
                                                 src={
                                                   itm?.url?.length > 0
                                                     ? methodModel.noImg(
-                                                        itm?.url
+                                                        itm?.url,
                                                       )
                                                     : ""
                                                 }
@@ -870,7 +890,7 @@ export default function addAffiliateAccount() {
                                                 src={
                                                   itm?.url?.length > 0
                                                     ? methodModel.noImg(
-                                                        itm?.url
+                                                        itm?.url,
                                                       )
                                                     : ""
                                                 }
@@ -949,7 +969,7 @@ export default function addAffiliateAccount() {
                                                     suggestion,
                                                     {
                                                       style,
-                                                    }
+                                                    },
                                                   )}
                                                 >
                                                   <i class="fa-solid fa-location-dot mr-1"></i>
@@ -1219,6 +1239,58 @@ export default function addAffiliateAccount() {
                                   This field is required
                                 </p>
                               )}
+                            </div>
+
+                            <div className="row">
+                              <div className="col-md-4">
+                                <CountrySelect
+                                  value={form.country}
+                                  onChange={(country) =>
+                                    setForm({
+                                      ...form,
+                                      country,
+                                      state: null,
+                                      city: null,
+                                    })
+                                  }
+                                  placeHolder="Select Country"
+                                  inputClassName="form-control custom-field"
+                                />
+                              </div>
+
+                              <div className="col-md-4">
+                                <StateSelect
+                                  countryid={form?.country?.id}
+                                  value={form.state}
+                                  onChange={(state) =>
+                                    setForm({
+                                      ...form,
+                                      state,
+                                      city: null,
+                                    })
+                                  }
+                                  placeHolder="Select State"
+                                  inputClassName="form-control custom-field"
+                                  noOptionsMessage={() => "No states available"}
+                                />
+                              </div>
+
+                              <div className="col-md-4">
+                                <CitySelect
+                                  countryid={form?.country?.id}
+                                  stateid={form?.state?.id}
+                                  value={form.city}
+                                  onChange={(city) =>
+                                    setForm({
+                                      ...form,
+                                      city,
+                                    })
+                                  }
+                                  placeHolder="Select City"
+                                  inputClassName="form-control custom-field"
+                                  noOptionsMessage={() => "No cities available"}
+                                />
+                              </div>
                             </div>
 
                             <div className="col-md-12">
@@ -1617,7 +1689,7 @@ export default function addAffiliateAccount() {
                                                   setImgLoder(true);
                                                   uploadSignatureImage(
                                                     e,
-                                                    "images"
+                                                    "images",
                                                   );
                                                 }}
                                               />
@@ -1636,7 +1708,7 @@ export default function addAffiliateAccount() {
                                               <img
                                                 className="signurimg"
                                                 src={methodModel.noImg(
-                                                  form?.signature
+                                                  form?.signature,
                                                 )}
                                               />
                                               <i
@@ -1677,8 +1749,6 @@ export default function addAffiliateAccount() {
                                     )}
                                   </div>
                                 </div>
-
-
 
                                 <div className="col-md-12 pl-0 ">
                                   <div className="mb-4 mt-4 mt-md-5 text-start text-sm-end ">
