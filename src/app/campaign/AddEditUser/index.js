@@ -167,6 +167,7 @@ const AddEditUser = () => {
     status: "",
     access_type: "",
     event_type: [],
+    customparameter: "",
   });
   const [affiliateData, setAffiliateData] = useState();
   const [eyes, setEyes] = useState({ password: false, confirmPassword: false });
@@ -213,7 +214,7 @@ const AddEditUser = () => {
   const validate = () => {
     let formErrors = {};
     if (!form.name) formErrors.name = "Name is required";
-    if (!form.access_type) formErrors.access_type = "Access Type is required";
+     if (!form.access_type) formErrors.access_type = "Access Type is required";
     if (form.event_type.length == 0)
       formErrors.event_type = "Event Type is required";
     if (form.event_type?.includes("lead") && !form.lead_amount)
@@ -257,6 +258,7 @@ const AddEditUser = () => {
       // commission: "1",
       region: selectedRegionItems?.regions,
       region_continents: selectedRegionItems?.countries,
+      customparameter: form.customparameter,
       campaign_type: form?.campaign_type,
       category: selectedItems?.categories,
       sub_category: selectedItems?.subCategories,
@@ -269,7 +271,6 @@ const AddEditUser = () => {
       publisher: formPublisherData,
       deDuplicate: formData,
     };
-    console.log(value, "subbbbb");
     // return;
     if (!form.event_type?.includes("purchase")) {
       value = {
@@ -289,6 +290,7 @@ const AddEditUser = () => {
         ppc: formPpcData,
         publisher: formPublisherData,
         deDuplicate: formData,
+        customparameter : form.customparameter,
       };
     }
     delete value.status;
@@ -315,6 +317,8 @@ const AddEditUser = () => {
 
     delete value.confirmPassword;
     loader(true);
+    // console.log("Sending:", value.customparameter, typeof value.customparameter); 
+    
     ApiClient.allApi(url, value, method).then((res) => {
       if (res.success) {
         toast.success(res.message);
@@ -356,7 +360,6 @@ const AddEditUser = () => {
     }
   };
 
-  console.log(form, "klklklklklklkl");
 
   useEffect(() => {
     setSubmitted(false);
@@ -365,7 +368,6 @@ const AddEditUser = () => {
       ApiClient.get("campaign", { id }).then((res) => {
         if (res.success) {
           const value = res.data;
-          console.log(value, "oopopopopop");
           setDetail(value);
           // let payload = { ...defaultvalue };
           // let oarr = Object.keys(defaultvalue);
@@ -380,6 +382,7 @@ const AddEditUser = () => {
           setform({
             id: value?.id || value?._id,
             name: value?.name,
+           customparameter: value?.customparameter || "", 
             isDefault: value?.isDefault,
             commission: value?.commission,
             commission_type: value?.commission_type,

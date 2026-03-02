@@ -227,7 +227,21 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                     </div>
+                                      
+                                    <div className='row'>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Custom Parameter:</p>
+                                            </div>
+                                        </div>
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>{data?.customparameter}</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                      
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>

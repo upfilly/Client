@@ -63,6 +63,7 @@ const Html = ({
     { key: "affiliates", label: "Affiliates", sortable: true, default: true },
     { key: "commission", label: "Commission", sortable: true, default: true },
     { key: "leadAmount", label: "Lead Amount", sortable: true, default: true },
+    // { key : "customparameter", label:"Custom Parameter" , sortable:true,default:true},
     { key: "currency", label: "Currency", sortable: true, default: true },
     { key: "status", label: "Status", sortable: false, default: true },
     {
@@ -365,6 +366,15 @@ const Html = ({
                       Lead Amount{filters?.sorder === "asc" ? "↑" : "↓"}
                     </th>
                   )}
+                   {/* {isColumnVisible("customparameter") && (
+                    <th
+                      scope="col"
+                      className="table_data"
+                      onClick={(e) => sorting("customparameter")}
+                    >
+                      Custom Parameter{filters?.sorder === "asc" ? "↑" : "↓"}
+                    </th>
+                  )} */}
                   {isColumnVisible("currency") && (
                     <th
                       scope="col"
@@ -454,6 +464,11 @@ const Html = ({
                             itm?.lead_amount || "--"
                           }`}</td>
                         )}
+                         {/* {isColumnVisible("customparameter") && (
+                          <td className="table_dats">{` ${
+                            itm?.customparameter || "--"
+                          }`}</td>
+                        )} */}
                         {isColumnVisible("currency") && (
                           <td className="table_dats">
                             {itm?.currencies || "--"}
