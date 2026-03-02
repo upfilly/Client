@@ -337,14 +337,14 @@ export default function Home() {
               <div className="role-card p-4 h-100">
                 <h3 className="text-primary mb-3">Merchants</h3>
                 <p className="lead">Launch and scale an affiliate program without complex setup.</p>
-                <a href="/merchant-signup" className="btn btn-outline-primary mt-3">Learn More →</a>
+                <a href="/bookingform" className="btn btn-outline-primary mt-3">Learn More →</a>
               </div>
             </div>
             <div className="col-md-6">
               <div className="role-card p-4 h-100">
                 <h3 className="text-success mb-3">Affiliates</h3>
                 <p className="lead">Promote trusted brands, track performance, and earn commissions.</p>
-                <a href="/affiliate-signup" className="btn btn-outline-success mt-3">Learn More →</a>
+                <a href="/track/signup/affiliate" className="btn btn-outline-success mt-3">Learn More →</a>
               </div>
             </div>
           </div>
