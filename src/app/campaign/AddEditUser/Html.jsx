@@ -44,7 +44,6 @@ const Html = ({
   formPpcFields,
   formTransactionFields,
   formPublisherFields,
-  campaignType,
 }) => {
   const [loadDocerr, setDocLoader] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
@@ -214,7 +213,6 @@ const Html = ({
               </div>
 
               <div className="form-row">
-                {/* Campaign Name */}
                 <div
                   className="col-md-6 mb-3 custom-input"
                   onClick={() => {
@@ -234,6 +232,26 @@ const Html = ({
                   {submitted && !form?.name && (
                     <div className="invalid-feedback d-block">
                       {errors?.name}
+                    </div>
+                  )}
+                </div>
+
+                {/* Custom Parameter */}
+                <div className="col-md-6 mb-3 custom-input">
+                  <label>
+                    Custom Parameter<span className="star">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={form?.customparameter}
+                    onChange={(e) =>
+                      setform({ ...form, customparameter: e.target.value })
+                    }
+                  />
+                  {submitted && !form?.customparameter && (
+                    <div className="invalid-feedback d-block">
+                      {errors?.customparameter}
                     </div>
                   )}
                 </div>
@@ -345,6 +363,7 @@ const Html = ({
                         options={affiliateData}
                       />
                     </div>
+
                     {/* {submitted && !form?.affiliate_id && (
                       <div className="invalid-feedback d-block">
                         {errors?.affiliate_id}

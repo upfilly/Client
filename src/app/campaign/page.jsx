@@ -49,6 +49,7 @@ const Users = () => {
     let url = "campaign/brand/all";
     ApiClient.get(url, filter).then((res) => {
       if (res.success) {
+        console.log(res,"==mydata")
         const updatedData = res.data.data.map((item) => {
           if (item.isArchive) {
             return { ...item, status: "deactive" };
