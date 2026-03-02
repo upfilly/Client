@@ -108,7 +108,7 @@ const Detail = (p) => {
     }
 
     const handleCopyLink = () => {
-        const link = `https://upfilly.com?affiliate_id=${user?.id || user?._id}&url=${user?.website}&brand_id=${data?.addedBy}`;
+        const link = `https://upfilly.com?affiliate_id=${id}&url=${user?.website}&brand_id=${data?.addedBy}${data?.customparameter ? `&${data?.customparameter.replace(/^\?/, '')}` : ''}`;
         navigator.clipboard.writeText(link).then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
@@ -431,7 +431,7 @@ const Detail = (p) => {
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
                                                 <p className='headsub'>
-                                                    <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}&brand_id=${data?.addedBy}`}</span>
+                                                    <span>{`https://upfilly.com?affiliate_id=${id}&url=${user?.website}&brand_id=${data?.addedBy}${data?.customparameter ? `&${data?.customparameter.replace(/^\?/, '')}` : ''}`}</span>
                                                     <button onClick={handleCopyLink} className='btn btn-primary ml-1 btn-sm'>
                                                         {copied ? 'Copied!' : 'Copy Link'}
                                                     </button>

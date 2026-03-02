@@ -236,7 +236,6 @@ const Html = ({
                   )}
                 </div>
 
-                {/* Custom Parameter */}
                 <div className="col-md-6 mb-3 custom-input">
                   <label>
                     Custom Parameter<span className="star">*</span>
@@ -244,16 +243,17 @@ const Html = ({
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="e.g., ?subid={subid} or ?clickid={clickid}"
                     value={form?.customparameter}
                     onChange={(e) =>
                       setform({ ...form, customparameter: e.target.value })
                     }
                   />
-                  {submitted && !form?.customparameter && (
+                  {/* {submitted && !form?.customparameter && (
                     <div className="invalid-feedback d-block">
                       {errors?.customparameter}
                     </div>
-                  )}
+                  )} */}
                 </div>
 
                 {/* Campaign Type */}
