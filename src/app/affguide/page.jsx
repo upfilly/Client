@@ -1,8 +1,10 @@
 import React from "react";
 import Layout from "../components/global/layout";
 import "./affiliateguide.css";
+import { useRouter } from "next/navigation";
 
 const affiliateguide = () => {
+   const history = useRouter();
   return (
     <Layout>
       <div className="affiliate-guide">
@@ -324,7 +326,7 @@ const affiliateguide = () => {
           <div className="cta-content">
             <h2>Ready to Start Your Affiliate Journey?</h2>
             <p>Join thousands of affiliates already earning on Upfilly</p>
-            <button className="cta-button">Create Free Account</button>
+            <button className="cta-button" onClick={()=>history.push("/track/signup/affiliate")}>Create Free Account</button>
             <p className="cta-note">No credit card required • 5-minute setup</p>
           </div>
         </section>
