@@ -149,7 +149,6 @@ const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
         });
       });
     } else {
-      // Legacy format - convert old format to new array format
       const formKeys = Object.keys(form);
       const platformNames = new Set();
 
@@ -182,26 +181,22 @@ const PropertyDataEntry = ({ form, setForm, platforms, setPlatforms }) => {
       });
     }
 
-    // Only set platforms if we found some data, otherwise keep existing platforms state
     if (existingPlatforms.length > 0) {
       setPlatforms(existingPlatforms);
     }
   }, [form?.fullName]);
 
-  // Update form whenever platforms array changes
   useEffect(() => {
     if (!platforms || platforms.length === 0) return;
 
     const newForm = { ...form };
 
-    // Remove old platform data format if it exists
     Object.keys(newForm).forEach((key) => {
       if (key.includes("_url") || key.includes("_username")) {
         delete newForm[key];
       }
     });
 
-    // Set the platforms array in the form
     newForm.platforms = platforms
       .filter((p) => p.isSelected && (p.url || p.username)) // Only include platforms with data
       .map((p) => ({

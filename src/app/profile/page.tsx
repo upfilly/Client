@@ -30,6 +30,11 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState('basic-info');
   const [affiliateLink, setAffiliateLink] = useState('');
 
+  // Country selection states
+  const [showCountryModal, setShowCountryModal] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('US');
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleApprovalPromptClose = () => setShowApprovalPrompt(false);
@@ -144,17 +149,32 @@ const Profile = () => {
     })
   };
 
-  const GenerateAddAcountLink = () => {
-    loader(true)
+  // Updated function to handle account creation with selected country
+  const handleAddAccountWithCountry = () => {
+    if (!selectedCountry) {
+      toast.error('Please select a country');
+      return;
+    }
+
+    setIsLoading(true);
+
     ApiClient.post(`account/create`, {
       "email": user?.email,
       "businessName": user?.fullName,
-      "country": "US"
+      "country": selectedCountry,
     }).then(res => {
+      setIsLoading(false);
       if (res.success) {
+        setShowCountryModal(false);
         window.location.href = res?.data?.url;
+      } else {
+        toast.error(res?.message || 'Failed to create account link');
       }
-    })
+    }).catch(error => {
+      setIsLoading(false);
+      toast.error('An error occurred while creating account');
+      console.error('Account creation error:', error);
+    });
   };
 
   const handleDelete = (id: any) => {
@@ -296,11 +316,11 @@ const Profile = () => {
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Property Type:</label>
-                  <p className="profile_data">{data && data.propertyType?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                  <p className="profile_data">{data && data.propertyType?.map((item: any) => { return item?.name })?.join(",")}</p>
                 </div>
               </div>}
 
-               {data?.activeUser?.role &&
+            {data?.activeUser?.role &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Role:</label>
@@ -308,7 +328,7 @@ const Profile = () => {
                 </div>
               </div>}
 
-              {(data?.payout_amount && user?.role == "affiliate") &&
+            {(data?.payout_amount && user?.role == "affiliate") &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Payout Amount:</label>
@@ -320,27 +340,27 @@ const Profile = () => {
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Category:</label>
-                  <p className="profile_data">{data && data.all_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                  <p className="profile_data">{data && data.all_category?.map((item: any) => { return item?.name })?.join(",")}</p>
                 </div>
               </div>}
 
-               {data?.all_sub_category && data.all_sub_category.length > 0 &&
+            {data?.all_sub_category && data.all_sub_category.length > 0 &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Sub-Category:</label>
-                  <p className="profile_data">{data && data.all_sub_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                  <p className="profile_data">{data && data.all_sub_category?.map((item: any) => { return item?.name })?.join(",")}</p>
                 </div>
               </div>}
 
-               {data?.all_sub_child_category && data.all_sub_child_category.length > 0 &&
+            {data?.all_sub_child_category && data.all_sub_child_category.length > 0 &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div className='inputFlexs width400'>
                   <label>Sub Child Category:</label>
-                  <p className="profile_data">{data && data.all_sub_child_category?.map((item:any)=>{return item?.name})?.join(",")}</p>
+                  <p className="profile_data">{data && data.all_sub_child_category?.map((item: any) => { return item?.name })?.join(",")}</p>
                 </div>
               </div>}
 
-           
+
 
             {data?.activeUser?.phone &&
               <div className="col-12 col-sm-6 col-md-6 col-lg-6">
@@ -363,10 +383,12 @@ const Profile = () => {
           <h3 className=''>Accounts</h3>
         </div>
         <div className='d-flex gap-3 align-items-center'>
-          {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && !bankData?.bank_name && <button onClick={GenerateAddAcountLink} className="btn btn-primary profiles">
-            <i className="material-icons prob" title="Edit Profile">mode_edit_outline</i>
-            Add Account
-          </button>}
+          {(Id == user?.id) && (user?.activeUser?.role == "affiliate" || user?.activeUser?.role == "brand" || roles == 'affiliate' || roles == 'brand') && !bankData?.bank_name &&
+            <button onClick={() => setShowCountryModal(true)} className="btn btn-primary profiles">
+              <i className="material-icons prob" title="Add Account">add_circle_outline</i>
+              Add Account
+            </button>
+          }
         </div>
       </div>
 
@@ -431,25 +453,24 @@ const Profile = () => {
             <p className="text-muted mb-3">
               Invite affiliates to join your program by sharing the link below. When affiliates sign up using this link, they will be automatically associated with your brand.
             </p>
-            
+
             <div className="d-flex align-items-center gap-2 mb-3">
-              <input 
-                type="text" 
-                className="form-control form-control-lg" 
-                value={affiliateLink || generateAffiliateLink()} 
-                readOnly 
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                value={affiliateLink || generateAffiliateLink()}
+                readOnly
               />
-              <button 
-                className="btn btn-primary btn-lg" 
+              <button
+                className="btn btn-primary btn-lg"
                 onClick={copyAffiliateLink}
               >
                 <i className="material-icons me-2">content_copy</i>
-                {/* Copy */}
               </button>
             </div>
-            
+
             <div className="d-flex gap-2 flex-wrap">
-              <button 
+              <button
                 className="btn btn-outline-primary"
                 onClick={() => {
                   const subject = "Join My Affiliate Program";
@@ -460,7 +481,7 @@ const Profile = () => {
                 <i className="material-icons me-2">email</i>
                 Email Link
               </button>
-              <button 
+              <button
                 className="btn btn-outline-primary"
                 onClick={() => {
                   if (navigator.share) {
@@ -477,8 +498,8 @@ const Profile = () => {
                 <i className="material-icons me-2">share</i>
                 Share
               </button>
-              <button 
-                className="btn btn-outline-primary" 
+              <button
+                className="btn btn-outline-primary"
                 onClick={() => {
                   const link = affiliateLink || generateAffiliateLink();
                   window.open(link, '_blank');
@@ -547,14 +568,14 @@ const Profile = () => {
                           <Tab eventKey="basic-info" title="Basic Information">
                             {renderBasicInfoTab()}
                           </Tab>
-                          
+
                           {/* Brand Management Tab - Only for brand users */}
                           {/* {isBrandUser() && (
                             <Tab eventKey="brand-management" title="Brand Management">
                               {renderBrandTab()}
                             </Tab>
                           )} */}
-                          
+
                           {user.role == "affiliate" && (
                             <Tab eventKey="accounts" title="Accounts">
                               {renderAccountsTab()}
@@ -633,6 +654,137 @@ const Profile = () => {
                   )}
                   {ActivityData?.length == 0 && <div className='d-flex justify-content-center align-items-center height_fix'> <img src="/assets/img/no-data.jpg" className='n-databx' alt="" /> </div>}
                 </Modal.Body>
+              </Modal>
+
+              {/* Country Selection Modal */}
+              <Modal show={showCountryModal} onHide={() => setShowCountryModal(false)} centered>
+                <Modal.Header closeButton>
+                  <Modal.Title>Select Country for Account</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p className="text-muted mb-3">Please select the country where you want to create your account:</p>
+
+                  <div className="d-flex flex-column gap-3">
+                    <label className="country-option d-flex align-items-center gap-3 p-4 border rounded cursor-pointer">
+                      <input
+                        type="radio"
+                        name="country"
+                        value="US"
+                        checked={selectedCountry === 'US'}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        className="form-check-input"
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="flag-icon">🇺🇸</span>
+                        <span className="fw-bold">United States</span>
+                        <span className="text-muted">(USD)</span>
+                      </div>
+                    </label>
+
+                    <label className="country-option d-flex align-items-center gap-3 p-4 border rounded cursor-pointer">
+                      <input
+                        type="radio"
+                        name="country"
+                        value="CA"
+                        checked={selectedCountry === 'CA'}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        className="form-check-input"
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="flag-icon">🇨🇦</span>
+                        <span className="fw-bold">Canada</span>
+                        <span className="text-muted">(CAD)</span>
+                      </div>
+                    </label>
+
+                    <label className="country-option d-flex align-items-center gap-3 p-4 border rounded cursor-pointer">
+                      <input
+                        type="radio"
+                        name="country"
+                        value="GB"
+                        checked={selectedCountry === 'GB'}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        className="form-check-input"
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="flag-icon">🇬🇧</span>
+                        <span className="fw-bold">United Kingdom</span>
+                        <span className="text-muted">(GBP)</span>
+                      </div>
+                    </label>
+
+                    <label className="country-option d-flex align-items-center gap-3 p-4 border rounded cursor-pointer">
+                      <input
+                        type="radio"
+                        name="country"
+                        value="AU"
+                        checked={selectedCountry === 'AU'}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        className="form-check-input"
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="flag-icon">🇦🇺</span>
+                        <span className="fw-bold">Australia</span>
+                        <span className="text-muted">(AUD)</span>
+                      </div>
+                    </label>
+
+                    <label className="country-option d-flex align-items-center gap-3 p-4 border rounded cursor-pointer">
+                      <input
+                        type="radio"
+                        name="country"
+                        value="DE"
+                        checked={selectedCountry === 'DE'}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        className="form-check-input"
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="flag-icon">🇩🇪</span>
+                        <span className="fw-bold">Germany</span>
+                        <span className="text-muted">(EUR)</span>
+                      </div>
+                    </label>
+
+                    <label className="country-option d-flex align-items-center gap-3 p-4 border rounded cursor-pointer">
+                      <input
+                        type="radio"
+                        name="country"
+                        value="FR"
+                        checked={selectedCountry === 'FR'}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        className="form-check-input"
+                      />
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="flag-icon">🇫🇷</span>
+                        <span className="fw-bold">France</span>
+                        <span className="text-muted">(EUR)</span>
+                      </div>
+                    </label>
+                  </div>
+
+                  {isLoading && (
+                    <div className="text-center mt-3">
+                      <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  )}
+                </Modal.Body>
+                <Modal.Footer>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => setShowCountryModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleAddAccountWithCountry}
+                    disabled={!selectedCountry || isLoading}
+                  >
+                    {isLoading ? 'Processing...' : 'Continue'}
+                  </button>
+                </Modal.Footer>
               </Modal>
 
               {showApprovalPrompt && <ApprovalRequirementsModal
