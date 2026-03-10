@@ -39,18 +39,27 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
               <li className="mb-3"><Link href="/company"><b>Company</b></Link></li>
               {/* <li><Link href="/aboutus">About Us</Link></li> */}
               <li><Link href="/partners">Partners</Link></li>
-              <li><Link href="/signup-guide">Affiliate/Brand Guide</Link></li>
+              <li><Link href="/platforms">Platform</Link></li>
+              {/* <li><Link href="/signup-guide">Affiliate/Brand Guide</Link></li> */}
               {/* <li><Link href="/contact">Contact Us</Link></li> */}
             </ul>
           </div>
-          <div className=" col-12 col-sm-12  col-md-2">
-            <ul className="footer_list">
-              <li className="mb-3"><Link href="/resources"><b>Resources</b></Link></li>
-              <li><Link href="/platforms">Platform</Link></li>
-              <li><Link href='faq'>FAQ</Link></li>
-              <li><Link href='/blog'>Blog</Link></li>
-            </ul>
-          </div>
+
+            <div className=" col-12 col-sm-12  col-md-2">
+              <ul className="footer_list">
+                <li className="mb-3">
+                  <Link href="/resources"><b>Resources</b></Link></li>
+                {/* <li><Link href="/platforms">Platform</Link></li> */}
+
+                <li><Link href='/blog'>Blog</Link></li>
+                {/* <li><Link href='/blog'>Guides</Link></li> */}
+                <li><Link href='/affguide'>Affiliate Guides</Link></li>
+                <li><Link href='/merchant'>Merchant Guides</Link></li>
+                {/* <li><Link href='faq'>FAQ</Link></li> */}
+
+                <li><Link href='/faq'>FAQ</Link></li>
+              </ul>
+            </div>
 
           <div className=" col-12 col-sm-12  col-md-4">
             <div className="mobile-center">
