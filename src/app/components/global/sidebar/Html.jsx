@@ -655,10 +655,10 @@ const Html = ({
               (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
               <>
                 <ListItemLink to="/emailmessages" title="Email Messages">
-                  <div className="d-flex align-items-center  icns_center">
+                  {/* <div className="d-flex align-items-center  icns_center"> */}
                     <i class="material-icons svg_iconbx">note</i>
                     <span className="side_head">Email Messages</span>
-                  </div>
+                  {/* </div> */}
                 </ListItemLink>
               </>
             ) : (
