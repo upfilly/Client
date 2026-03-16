@@ -75,7 +75,7 @@ const Html = ({ settingData, Logout }) => {
       .then((res) => {
         localStorage.setItem("ip_address", res.ip)
       })
-      .catch((error) =>{ 
+      .catch((error) => {
         // console.log(error, "==Ip Address Error")
       });
   };
@@ -137,11 +137,11 @@ const Html = ({ settingData, Logout }) => {
               <div className={!user ? "col-12 col-md-12 col-lg-3 col-xl-2 " : "col-12 col-md-12 px-0"}>
                 <div className="right_auth d-flex align-items-center blue-header-main justify-content-center justify-content-lg-end">
                   {(!user) && <>
-                  <img src="/assets/img/users1.svg" className="hedsvg" />
+                    <img src="/assets/img/users1.svg" className="hedsvg" />
 
-                  <Link className="ml-2 mr-2" href="/Signupoptions"
-                  // onClick={() => setShowPopup(true)}
-                  >Sign Up</Link> /
+                    <Link className="ml-2 mr-2" href="/signupoptions"
+                    // onClick={() => setShowPopup(true)}
+                    >Sign Up</Link> /
                     <Link className="ml-2 mr-2" href="/login">Sign In</Link></>}
                   {user && <>
                     {(user?.request_status != "accepted") && <span className="text-danger">Please update your profile details to ensure they meet the required criteria for verification. Once your details are updated, the admin will review your request.</span>}
@@ -158,7 +158,7 @@ const Html = ({ settingData, Logout }) => {
                         }
                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2 " /> Profile</Dropdown.Item>
                         {/* {(user?.request_status == "accepted") &&<Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}><i class="fa-solid fa-chart-simple mr-2 "></i> MarketPlace</Dropdown.Item>}                        */}
-                         <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
+                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
                         <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout </Dropdown.Item>
 
                       </Dropdown.Menu>
@@ -177,7 +177,7 @@ const Html = ({ settingData, Logout }) => {
         </Link>
       </nav>} */}
 
-        {(pathname == "profile/edit" || pathname == "/profile" || pathname == "/chat")&&<nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3">
+        {(pathname == "profile/edit" || pathname == "/profile" || pathname == "/chat") && <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3">
           <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
             <img
               src={`${environment?.api}${settingData?.logo}`}
@@ -186,7 +186,7 @@ const Html = ({ settingData, Logout }) => {
               style={{ width: '200px', height: 'auto' }}
             />
           </Link>
-          </nav>}
+        </nav>}
         {(!isDashboard && pathname != "profile/edit" && pathname != "/profile" && pathname != "/chat") &&
           <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
             <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
@@ -204,39 +204,50 @@ const Html = ({ settingData, Logout }) => {
 
             <div class="collapse navbar-collapse set_nabx py-2" id="navbarSupportedContent">
               <ul class="navbar-nav d-flex gap-0 ml-auto set_navbx">
-              <li class="nav-item">
-                  <Link
-                    class={`nav-link py-2 ${pathname == "/merchant" ? 'active' : ''}`}
-                    href="/merchant">Merchant</Link>
-                </li>
                 <li class="nav-item">
                   <Link
-                    class={`nav-link py-2 ${pathname == "/affguide" ? 'active' : ''}`}
-                    href="/affguide">Affiliate</Link>
+                    class={`nav-link py-2 ${pathname == "/" ? 'active' : ''}`}
+                    href="/">Home</Link>
                 </li>
-                <li class="nav-item">
-                  <Link
-                    class={`nav-link py-2 ${pathname == "/platforms" ? 'active' : ''}`}
-                    href="/platforms">Platform</Link>
-                </li>
-                {/* {false && */}
-                 <>{(user?.role == "brand" || !user) && <li class="nav-item">
-                  <Link class={`nav-link py-2 ${pathname == "/pricing" ? 'active' : ''}`} href="/pricing">Pricing</Link>
-                </li>}</>
-                {/* } */}
-                {/* <li class="nav-item">
-                  <Link class={`nav-link ${pathname == "/partners" ? 'active' : ''}`} href="/partners">Partners</Link>
-                </li> */}
-                <li class="nav-item">
-                  <Link class={`nav-link py-2 ${pathname == "/resources" ? 'active' : ''}`} href="/resources">Features</Link>
-                </li>
-                <li class="nav-item">
-                  <Link class={`nav-link py-2 ${pathname == "/company" ? 'active' : ''}`} href="/company">Services</Link>
-                </li>
-                {(user?.role == "brand" || !user) && <li class="nav-item">
-                  <Link class={`nav-link py-2 ${pathname == "/scriptguide" ? 'active' : ''}`} href="/scriptguide">Script</Link>
-                </li>}
 
+                <li class="nav-item dropdown">
+                  <Link
+                    class={`nav-link py-2 dropdown-toggle ${pathname.includes("/how-it-works") || pathname == "/for-merchants" || pathname == "/for-affiliates" ? 'active' : ''}`}
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    How It Works
+                  </Link>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                      <Link class={`dropdown-item ${pathname == "/merchant" ? 'active' : ''}`} href="/merchant">For Merchants</Link>
+                    </li>
+                    <li>
+                      <Link class={`dropdown-item ${pathname == "/affguide" ? 'active' : ''}`} href="/affguide">For Affiliates</Link>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <Link
+                    class={`nav-link py-2 ${pathname == "/pricing" ? 'active' : ''}`}
+                    href="/pricing">Pricing</Link>
+                </li>
+
+                <li class="nav-item">
+                  <Link
+                    class={`nav-link py-2 ${pathname == "/resources" ? 'active' : ''}`}
+                    href="/resources">Resources</Link>
+                </li>
+
+                <li class="nav-item">
+                  <Link
+                    class={`nav-link py-2 ${pathname == "/get-started" ? 'active' : ''}`}
+                    href="/signupoptions">Get Started</Link>
+                </li>
               </ul>
               <form class="my-2 my-lg-0 ">
                 {/* <li class="nav-item">
@@ -251,21 +262,10 @@ const Html = ({ settingData, Logout }) => {
               </form>
             </div>
           </nav>
-
-
         }
-
       </div>
     </>
-
-
-
-
   );
 }
 
-
-
-
-export default Html
-
+export default Html;

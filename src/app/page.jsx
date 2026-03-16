@@ -246,7 +246,7 @@ export default function Home() {
                 </p>
                 {(user?.role == "brand" || !user) && (
                   <div className="d-flex gap-3">
-                    <a href="/Signupoptions" className="btn btn-light btn-lg px-4">
+                    <a href="/signupoptions" className="btn btn-light btn-lg px-4">
                       Get Started
                     </a>
                     {/* <a href="/pricing" className="btn btn-outline-light btn-lg px-4">
@@ -506,7 +506,7 @@ export default function Home() {
             <h2 className="display-5 fw-bold mb-4">Ready to grow with performance-based partnerships?</h2>
             <p className="lead mb-4">Join Upfilly today and start scaling your revenue through affiliate marketing.</p>
             {(user?.role == "brand" || !user) && (
-              <a href="/Signupoptions" className="btn btn-light btn-lg px-5">
+              <a href="/signupoptions" className="btn btn-light btn-lg px-5">
                 Get Started Now
               </a>
             )}

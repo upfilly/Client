@@ -7,10 +7,6 @@ a.btn.barlink.text-primary {
   top: 13px;
 }
 
-// .right_auth a {
-//   color: #000 !important;
-//   font-size: 16px !important;
-// }
 .right_auth a {
   color: #fff;
   font-size: 14px;
@@ -23,7 +19,6 @@ a.dropdown-item {
 
 a.dropdown-item:hover {
   color: rgb(255, 255, 255) !important;
-
   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
 }
 
@@ -33,13 +28,7 @@ a.dropdown-item:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // padding: 13px 3rem;
   padding: 10px 2rem !important;
-}
-
-nav.navbar.navbar-expand-lg.navbar-light.bg-white {
-  // padding: 10px 3rem !important;
-  // margin-top: 20px ;
 }
 
 a.btn.barlink.text-primary {
@@ -56,17 +45,8 @@ a.btn.barlink.text-primary {
 .ml-1.nameFont b {
   font-size: 14px;
   font-weight: 500;
-  // color: #202020;
 }
 
-// a.btn.btn-outline-primary.login:hover{
-//   border-radius: 50px;
-//   color: #000 ;
-//   border: 1px solid #000 !important;
-//   padding: 9px 20px;
-//   font-size: 14px;
-//   background:#fff;
-// }
 a.btn.btn-outline-primary.login {
   border-radius: 50px;
   color: #000;
@@ -98,7 +78,6 @@ a:hover {
 }
 
 .sidebar-brand.p-3.pt-4.text-left.pl-5 {
-  // border-bottom: 1px solid #E8E8E8;
   padding: 0px !important;
   height: 72px;
   margin-bottom: 10px;
@@ -146,9 +125,7 @@ input.Searchbar:focus {
   font-size: 14px;
   color: #000;
 
-
   .Searchbar {
-    // background: #F9F9F9;
     border: none;
     padding: 10px 35px;
     border-radius: 8px;
@@ -202,9 +179,7 @@ input.Searchbar:focus {
   margin-right: 10px !important;
   width: 41px;
   justify-content: center;
-
 }
-
 
 .min-sidebar~div>.main-sidebar a.col_side {
   padding: 8px;
@@ -216,14 +191,8 @@ input.Searchbar:focus {
   &:hover {
     justify-content: center;
     margin-right: 0px !important;
-
   }
-
 }
-
-
-
-
 
 img.rounded-circle.mr-1 {
   width: 35px;
@@ -240,11 +209,12 @@ form.form-inline li a {
 }
 
 a.nav-link.dropdown-toggle {
-  font-size: 20px;
+  font-size: 16px;
   color: #000 !important;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding: 0.5rem 1rem !important;
 }
 
 img.logo {
@@ -269,6 +239,153 @@ ul.dropdown-menu.show {
   box-shadow: 0px 8px 15px #ccc;
   border: none;
   border-radius: 10px;
+  min-width: 200px;
+  margin-top: 10px !important;
+}
+
+/* Navigation Dropdown Styles */
+.nav-item.dropdown {
+  position: relative;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-item.dropdown .dropdown-menu {
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  transform: translateY(-10px);
+  display: block !important;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 0 !important;
+  margin-top: 10px;
+  min-width: 200px;
+  background: #fff;
+}
+
+.nav-item.dropdown .dropdown-menu .dropdown-item {
+  padding: 10px 20px !important;
+  font-size: 15px;
+  color: #333 !important;
+  transition: all 0.2s ease;
+}
+
+.nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
+  color: #fff !important;
+  padding-left: 25px !important;
+}
+
+.nav-item.dropdown .dropdown-menu .dropdown-item.active {
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
+  color: #fff !important;
+}
+
+.navbar-nav .nav-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333 !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #00BAFF !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: #00BAFF !important;
+}
+
+.navbar-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%);
+  border-radius: 2px;
+}
+
+/* Dropdown toggle arrow */
+.nav-item.dropdown .dropdown-toggle::after {
+  display: inline-block;
+  margin-left: 0.5em;
+  vertical-align: middle;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.nav-item.dropdown:hover .dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+/* Main navigation container */
+.set_navbx {
+  gap: 0.5rem;
+}
+
+.set_navbx .nav-item {
+  margin: 0 2px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 10px 10px;
+    z-index: 1000;
+  }
+
+  .set_navbx {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .set_navbx .nav-item {
+    width: 100%;
+    margin: 2px 0;
+  }
+
+  .nav-item.dropdown .dropdown-menu {
+    position: static !important;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    box-shadow: none;
+    margin-top: 0;
+    padding-left: 1rem !important;
+    border-left: 2px solid #00BAFF;
+    margin-left: 1rem;
+  }
+
+  .nav-item.dropdown:hover .dropdown-menu {
+    transform: none;
+  }
+
+  .navbar-nav .nav-link.active::after {
+    display: none;
+  }
 }
 
 a#dropdownMenuButton1:hover {
@@ -283,27 +400,26 @@ a.btn.btn-primary.login {
   border: none;
   margin-right: 10px;
 }
-a.btn.btn-primary.contact-btn{
+
+a.btn.btn-primary.contact-btn {
   background: #fff;
   border: 1px solid #123554 !important;
   color: #123554 !important;
 }
+
 .navbar-light .navbar-nav .nav-link {
   color: #000 !important;
 }
 
 .blue-header-main a:hover {
-
   color: #fff;
 }
-
 
 .navbar-light .navbar-nav .active>.nav-link,
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .show>.nav-link {
-  color: rgba(0, 0, 0, .9) !important;
-  border-bottom: 1px solid #ccc;
+  color: #00BAFF !important;
 }
 
 .active_btn {
@@ -311,7 +427,6 @@ a.btn.btn-primary.contact-btn{
   color: #fff !important;
   border: 1px solid #00BAFF !important;
 }
-
 
 .active_btn:hover {
   background: linear-gradient(40deg, #032E72 -25.12%, #00BAFF 76.03%) !important;
@@ -329,9 +444,7 @@ a.btn.btn-primary.contact-btn{
   color: #fff !important;
 }
 
-
 .notifications button.dropdown-toggle::after {
-
   display: none;
 }
 
@@ -391,13 +504,10 @@ img.fonts15 {
   background-color: transparent;
 }
 
-
 .notifications button:active {
   border: none;
   outline: 0;
 }
-
-
 
 .dropdown-item.list_notif {
   background: #f3f2f2;
@@ -405,10 +515,6 @@ img.fonts15 {
   border-bottom: 1px solid #ccc;
   padding: 10px 20px !important;
 }
-
-
-
-
 
 .bell_icon .dropdown-menu .dropdown_header .triangle {
   position: absolute;
@@ -437,8 +543,6 @@ img.fonts15 {
   border-image: linear-gradient(to right, white 0%, #cedae0 40%, #cedae0 60%, white 100%) 1 20%;
   box-shadow: 0px 2px 10px -2px #cedae0;
 }
-
-
 
 .dropdown_header .noti_head {
   color: #000000;
@@ -469,7 +573,6 @@ img.fonts15 {
   right: 4px;
 }
 
-
 .noti_scroll_data {
   max-height: 150px;
   min-height: auto;
@@ -485,7 +588,6 @@ img.fonts15 {
   border-radius: 10px !important;
 }
 
-
 .clear_btn {
   font-size: 13px;
   cursor: pointer;
@@ -494,10 +596,8 @@ img.fonts15 {
 .view_btn {
   font-size: 13px;
   color: rgb(0, 0, 0);
-  // color: #032E72;
   cursor: pointer;
 }
-
 
 .noti_scroll_data a.dropdown-item:hover {
   color: rgb(34, 33, 33) !important;
@@ -541,32 +641,30 @@ img.fonts15 {
   padding: 8px 29px;
 }
 
-// .proifle_dropbx .dropdown-menu.show {
-//   padding: 6px 12px;
-// }
-
-.subscribe_text{
+.subscribe_text {
   font-size: 14px;
 }
 
-
-// Nikhil CSS
-
-.sponsor-wrapper{
+/* Nikhil CSS */
+.sponsor-wrapper {
   width: 80%;
   margin: 0 auto;
 }
-.sponsor-wrapper h2{
+
+.sponsor-wrapper h2 {
   color: #ADB0C2;
   font-size: 16px;
   text-align: center;
   font-weight: 300;
 }
-.dropdown-menu{
+
+.dropdown-menu {
   padding: 0 !important;
-  a{
+
+  a {
     padding: 6px 12px !important;
-    &:hover{
+
+    &:hover {
       border-radius: 2px !important;
     }
   }
