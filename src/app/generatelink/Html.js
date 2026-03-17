@@ -340,14 +340,29 @@ const Html = () => {
                           options={checkboxValues}
                         />
                       </div>
-                      <div className="addkey mt-3 d-flex justify-content-end">
+
+                      <div className="addkey mt-3 d-flex justify-content-end" style={{
+                        cursor: checkboxValues.length >= 6 ? "not-allowed" : "pointer"
+                      }} >
                         <button
-                          className="btn btn-primary"
+                          className="btn btn-primary "
                           onClick={() => setShowNewKeyForm(true)}
+                          disabled={checkboxValues.length >= 6}
+                          title={
+                            checkboxValues.length >= 6
+                              ? "Maximum 6 keys allowed"
+                              : ""
+                          }
                         >
                           <i className="fa fa-plus mr-1"></i>Add Key
                         </button>
                       </div>
+                      {checkboxValues.length >= 6 && (
+                        <div className="text-danger mt-1">
+                          Maximum 6 keys allowed
+                        </div>
+                      )}
+
 
                       <div className="row">
                         {selectedValues.map((selected, index) => (
@@ -358,6 +373,7 @@ const Html = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder={`Input value for ${selected}`}
+                                maxLength={50}
                                 value={inputValues[selected] || ""}
                                 onChange={(e) =>
                                   handleInputChange(selected, e.target.value)
@@ -461,6 +477,7 @@ const Html = () => {
                     type="text"
                     className="form-control"
                     value={newKey}
+                    maxLength={20}
                     onChange={(e) => setNewKey(e.target.value)}
                     placeholder="Enter Key"
                   />
@@ -472,6 +489,7 @@ const Html = () => {
                     type="text"
                     className="form-control"
                     value={newLabel}
+                    maxLength={50}
                     onChange={(e) => setNewLabel(e.target.value)}
                     placeholder="Enter Label"
                   />

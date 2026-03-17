@@ -1866,7 +1866,7 @@ export default function TaxDetailForm() {
     }
 
     if (form?.tax_classification === "business") {
-      if (!form?.ein || !form?.federal_text_classification || !form?.signature_date) {
+      if ( !form?.federal_text_classification || !form?.signature_date) {
         setSubmitted(true);
         toast.error("Please fill all required fields");
         return;
@@ -1874,7 +1874,7 @@ export default function TaxDetailForm() {
     }
 
     if (form?.tax_classification === "individual") {
-      if (!form?.signature_date || !form?.tax_name || !form?.social_security_number) {
+      if (!form?.signature_date || !form?.tax_name ) {
         setSubmitted(true);
         toast.error("Please fill all required fields");
         return;
@@ -2291,7 +2291,8 @@ export default function TaxDetailForm() {
                                     </div>
                                     <div className="col-md-6 mb-3">
                                       <label className="form-label">
-                                        Social Security Number <span className="text-danger">*</span>
+                                        Social Security Number 
+                                        {/* <span className="text-danger">*</span> */}
                                       </label>
                                       <input
                                         type="text"
@@ -2301,11 +2302,11 @@ export default function TaxDetailForm() {
                                         value={form?.social_security_number || ""}
                                         onChange={handleSSNChange}
                                       />
-                                      {submitted && !form?.social_security_number && (
+                                      {/* {submitted && !form?.social_security_number && (
                                         <div className="text-danger small mt-1">
                                           SSN is required
                                         </div>
-                                      )}
+                                      )} */}
                                       <small className="text-muted">Format: XXX-XX-XXXX</small>
                                     </div>
                                   </>
@@ -2329,7 +2330,8 @@ export default function TaxDetailForm() {
                                     </div>
                                     <div className="col-md-6 mb-3">
                                       <label className="form-label">
-                                        EIN <span className="text-danger">*</span>
+                                        EIN
+                                         {/* <span className="text-danger">*</span> */}
                                       </label>
                                       <input
                                         type="text"
@@ -2339,11 +2341,11 @@ export default function TaxDetailForm() {
                                         value={form?.ein || ""}
                                         onChange={handleEINChange}
                                       />
-                                      {submitted && !form?.ein && (
+                                      {/* {submitted && !form?.ein && (
                                         <div className="text-danger small mt-1">
                                           EIN is required
                                         </div>
-                                      )}
+                                      )} */}
                                       <small className="text-muted">Format: XX-XXXXXXX</small>
                                     </div>
                                   </>
