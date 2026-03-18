@@ -244,9 +244,13 @@ const Html = ({ settingData, Logout }) => {
                 </li>
 
                 <li class="nav-item">
-                  <Link
-                    class={`nav-link py-2 ${pathname == "/get-started" ? 'active' : ''}`}
-                    href="/signupoptions">Get Started</Link>
+                 {!user && <Link
+                    class={`nav-link py-2 ${pathname == "/signupoptions" ? 'active' : ''}`}
+                    href="/signupoptions">Get Started</Link>}
+
+                  {user?.role == "brand" && <Link
+                    class={`nav-link py-2 ${pathname == "/scriptguide" ? 'active' : ''}`}
+                    href="/scriptguide">Tracking Script</Link>}
                 </li>
               </ul>
               <form class="my-2 my-lg-0 ">
