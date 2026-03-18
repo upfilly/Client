@@ -180,8 +180,8 @@ export default function CampaignReport() {
   };
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
-    if (itm?.urlParams && typeof itm.urlParams === "object") {
-      Object.keys(itm.urlParams).forEach((key) => {
+    if (itm?.subIds && typeof itm.subIds === "object") {
+      Object.keys(itm.subIds).forEach((key) => {
         if (!headers.includes(key)) {
           headers.push(key);
         }
@@ -459,9 +459,9 @@ export default function CampaignReport() {
                                 <tr className="data_row" key={i}>
                                   {uniqueKeys?.map((key) => {
                                     const value =
-                                      itm?.urlParams &&
-                                        itm.urlParams[key] !== undefined
-                                        ? itm.urlParams[key]
+                                      itm?.subIds &&
+                                        itm.subIds[key] !== undefined
+                                        ? itm.subIds[key]
                                         : null;
                                     return (
                                       <td

@@ -119,8 +119,8 @@ export default function BrandReport() {
   }
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
-    if (itm?.urlParams && typeof itm.urlParams === 'object') {
-      Object.keys(itm.urlParams).forEach(key => {
+    if (itm?.subIds && typeof itm.subIds === 'object') {
+      Object.keys(itm.subIds).forEach(key => {
         if (!headers.includes(key)) {
           headers.push(key);
         }
@@ -173,8 +173,8 @@ export default function BrandReport() {
                       <thead className="thead-clr">
                         <tr>
                           {data?.data?.reduce((headers, itm) => {
-                            if (itm?.urlParams && typeof itm.urlParams === 'object') {
-                              Object.keys(itm.urlParams).forEach(key => {
+                            if (itm?.subIds && typeof itm.subIds === 'object') {
+                              Object.keys(itm.subIds).forEach(key => {
                                 if (!headers.includes(key)) {
                                   headers.push(key);
                                 }
@@ -199,7 +199,7 @@ export default function BrandReport() {
 
                           return <tr className='data_row' key={i}>
                             {uniqueKeys?.map(key => {
-                              const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
+                              const value = itm?.subIds && itm.subIds[key] !== undefined ? itm.subIds[key] : null;
                               return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                             })}
                             <td className='name-person ml-2' >{itm?.affiliate_name}</td>

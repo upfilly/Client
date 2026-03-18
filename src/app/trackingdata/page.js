@@ -58,7 +58,7 @@ export default function Affiliate() {
 
   // Define all available columns
   const allColumns = [
-    { key: 'urlParams', label: 'URL Parameters', sortable: false, default: true },
+    { key: 'subIds', label: 'URL Parameters', sortable: false, default: true },
     { key: 'affiliate', label: 'Affiliate', sortable: true, default: true },
     { key: 'brand', label: 'Brand', sortable: true, default: true },
     { key: 'currency', label: 'Currency', sortable: false, default: true },
@@ -423,8 +423,8 @@ export default function Affiliate() {
   };
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
-    if (itm?.urlParams && typeof itm.urlParams === 'object') {
-      Object.keys(itm.urlParams).forEach(key => {
+    if (itm?.subIds && typeof itm.subIds === 'object') {
+      Object.keys(itm.subIds).forEach(key => {
         if (!headers.includes(key)) {
           headers.push(key);
         }
@@ -547,7 +547,7 @@ export default function Affiliate() {
                     <table className="table table-striped ">
                       <thead className="thead-clr">
                         <tr>
-                          {isColumnVisible('urlParams') && uniqueKeys?.map(key => (
+                          {isColumnVisible('subIds') && uniqueKeys?.map(key => (
                             <th key={key} scope="col">{key}</th>
                           ))}
                           {isColumnVisible('affiliate') && (
@@ -589,8 +589,8 @@ export default function Affiliate() {
                       <tbody>
                         {!loaging && data?.data?.map((itm, i) => {
                           return <tr className='data_row' key={i}>
-                            {isColumnVisible('urlParams') && uniqueKeys?.map(key => {
-                              const value = itm?.urlParams && itm.urlParams[key] !== undefined ? itm.urlParams[key] : null;
+                            {isColumnVisible('subIds') && uniqueKeys?.map(key => {
+                              const value = itm?.subIds && itm.subIds[key] !== undefined ? itm.subIds[key] : null;
                               return <td key={key} className='name-person ml-2'>{value || "--"}</td>;
                             })}
                             {isColumnVisible('affiliate') && (

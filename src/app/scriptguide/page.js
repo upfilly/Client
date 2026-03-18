@@ -67,7 +67,7 @@ const TrackingGuide = () => {
             orderRef: getCookie("order_id") || "defaultOrder",  // value not in cookies then implement this script where it get 
             voucher: getCookie("voucher") || "noVoucher",  // value not in cookies then implement this script where it get 
             couponId: getCookie("couponId") || "noVoucher",
-            urlParams: {
+            subIds: {
                       subId:22222,
                       subId2:3432423
                       }   // value not in cookies then implement this script where it get all parameter

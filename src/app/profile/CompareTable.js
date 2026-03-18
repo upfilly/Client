@@ -97,8 +97,8 @@ import methodModel from '../../methods/methods';
   }
 
   const uniqueKeys = data?.data?.reduce((headers, itm) => {
-    if (itm?.urlParams && typeof itm.urlParams === 'object') {
-      Object.keys(itm.urlParams).forEach(key => {
+    if (itm?.subIds && typeof itm.subIds === 'object') {
+      Object.keys(itm.subIds).forEach(key => {
         if (!headers.includes(key)) {
           headers.push(key);
         }

@@ -53,9 +53,9 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const subIds = new URLSearchParams(window.location.search);
     const params = {};
-    for (const [key, value] of urlParams.entries()) {
+    for (const [key, value] of subIds.entries()) {
       params[key] = value;
     }
     setQueryParams(params);

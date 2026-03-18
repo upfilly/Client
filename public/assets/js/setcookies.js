@@ -23,7 +23,7 @@
 // console.log("Username from cookie: ", username);
 
 // Function to extract all query parameters from the URL
-// function getUrlParams() {
+// function getsubIds() {
 //     const params = new URLSearchParams(window.location.search);
 //     let paramObject = {};
 //     for (let [key, value] of params.entries()) {
@@ -42,7 +42,7 @@
 
 // // Function to store all URL parameters in cookies
 // function storeParamsInCookies() {
-//     const params = getUrlParams();
+//     const params = getsubIds();
 //     for (let key in params) {
 //         if (params.hasOwnProperty(key)) {
 //             // Store each URL parameter as a cookie

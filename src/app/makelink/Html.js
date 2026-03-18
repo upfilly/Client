@@ -312,7 +312,7 @@ const Html = () => {
       domainExtension = domainParts[1];
     }
 
-    const urlParams = `fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`;
+    const subIds = `fp_sid=${selectedBrand}&affiliate=${selectedBrand}&brand=${user?.id}`;
 
     let finalUrl = new URL(base_url);
 
