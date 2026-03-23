@@ -269,7 +269,7 @@ const Html = ({
                   <input
                     type="text"
                     className={`form-control ${form.customparameter && getCustomParameterValidationStatus(form.customparameter) ? 'is-invalid' : ''}`}
-                    placeholder="e.g., subid={subid} or clickid={clickid}"
+                    placeholder="e.g., uuid={subid} or clickid={clickid}"
                     value={form?.customparameter}
                     onChange={(e) => {
                       setform({ ...form, customparameter: e.target.value });
@@ -291,7 +291,7 @@ const Html = ({
                     </div>
                   )}
                   <small className="form-text text-muted">
-                    Examples: subid=123 | campaign=summer&source=facebook
+                    Examples: uuid=123 | campaign=summer&source=facebook
                   </small>
                 </div>
 
