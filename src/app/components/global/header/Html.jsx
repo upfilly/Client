@@ -10,7 +10,6 @@ import { Dropdown } from "react-bootstrap";
 import { ConnectSocket } from "@/app/chat/socket";
 import environment from "@/environment";
 
-
 const Html = ({ settingData, Logout }) => {
   const pathname = usePathname()
   const history = useRouter()
@@ -20,30 +19,11 @@ const Html = ({ settingData, Logout }) => {
   const id = param.get("id")
   const code = param.get("campaign_code")
   const eventType = param.get("event_type")
-
-  // const ipLocation = async () => {
-  //   // Get the user's IP address
-  //   const ipRes = await axios.get("https://geolocation-db.com/json/");
-  //   if (ipRes && ipRes.data && ipRes.data.ip) {
-  //     const ipAddress = ipRes.data.ip;
-  //     const locationRes = await axios.get(`https://ipapi.co/${ipAddress}/json/`);
-  //     if (locationRes && locationRes.data) {
-  //       // console.log(locationRes,"========locationRes")
-  //       localStorage.setItem("ip", ipAddress);
-  //       localStorage.setItem("location", JSON.stringify(locationRes.data));
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   ipLocation()
-  // }, [])
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     ConnectSocket.emit("notify-message", { user_id: user?.id });
-    ConnectSocket.on(`notify-message`, (data) => {
-      // console.log("notify-message", data)
-    });
+    ConnectSocket.on(`notify-message`, (data) => {});
   }, [])
 
   const getData = async () => {
@@ -57,10 +37,8 @@ const Html = ({ settingData, Logout }) => {
       ApiClient.post('tracking', data).then(res => {
         if (res.success == true) {
         }
-        // loader(false)
       })
     }
-    // };
   };
 
   useEffect(() => {
@@ -75,9 +53,7 @@ const Html = ({ settingData, Logout }) => {
       .then((res) => {
         localStorage.setItem("ip_address", res.ip)
       })
-      .catch((error) => {
-        // console.log(error, "==Ip Address Error")
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {
@@ -86,7 +62,6 @@ const Html = ({ settingData, Logout }) => {
     }
   }, [])
 
-
   const handleAutologin = () => {
     loader(true)
     ApiClient.post('user/auto-login', { "id": id }).then(res => {
@@ -94,8 +69,6 @@ const Html = ({ settingData, Logout }) => {
         crendentialModel?.setUser(res?.data)
         localStorage.setItem('token', res.data.access_token)
         localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
-        // let url = '/dashboard'
-        // history.push(url);
         window.location.reload();
       }
       loader(false)
@@ -108,166 +81,577 @@ const Html = ({ settingData, Logout }) => {
     }
   }, [id])
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  // Check if we should show main navigation
+  const showMainNav = !isDashboard && pathname !== "/profile/edit" && pathname !== "/profile" && pathname !== "/chat"
 
   return (
     <>
-      <div className="">
-        <div className="blue_header ">
-          <div className="container">
-            <div className="row" >
-              {!user ?
-                <div className="col-12 col-md-12 col-lg-9 col-xl-10 text-center text-lg-left">
-                  <div className=" set_heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 38 36" fill="none">
-                      <g clipPath="url(#clip0_3_252)">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M25.8435 1.79235C25.7584 1.89299 25.503 2.25472 25.2761 2.59616C22.4244 6.87846 18.3355 10.5844 15.0286 11.8907L14.4627 12.1141L17.2073 23.2505L17.7684 23.1943C21.4018 22.8295 26.2999 24.0742 30.9824 26.5419C32.2521 27.2117 32.2416 27.2082 32.6276 27.1125C32.7887 27.0888 32.9398 27.0199 33.0636 26.9136C33.1874 26.8074 33.2789 26.668 33.3279 26.5113C33.4384 26.1944 27.4666 1.96335 27.2214 1.73404C27.0267 1.56476 26.7758 1.47635 26.5198 1.48675C26.2638 1.49716 26.0217 1.60561 25.8429 1.79008M5.89448 14.4769C1.36936 16.9333 2.34567 23.8988 7.37111 25.0083C8.56016 25.2712 8.73435 25.2488 12.2557 24.3809L15.3515 23.618L12.6483 12.65L9.53074 13.4213C6.44804 14.1841 6.40737 14.1959 5.89448 14.4745M32.2 13.6473C32.6592 15.5104 33.0033 16.8097 33.0371 16.8013C33.4993 16.3407 33.8344 15.766 34.0097 15.1338C34.185 14.5015 34.1944 13.8333 34.037 13.1945C33.8796 12.5558 33.5607 11.9685 33.1117 11.4901C32.6627 11.0117 32.0989 10.6586 31.4756 10.4655C31.4435 10.4734 31.7409 11.7842 32.2 13.6473ZM9.65679 26.9687C9.87739 27.8639 11.6995 31.4053 12.7158 32.915C13.361 33.8733 13.1101 33.8609 16.2465 33.0879C19.1171 32.3804 19.0272 32.4153 19.196 31.9324C19.3422 31.5131 19.2028 31.2336 18.3111 30.164C17.866 29.6296 17.4699 29.1369 17.431 29.0686C17.3604 28.9448 17.361 28.9446 18.4685 28.6512C20.1219 28.2135 20.2359 27.9542 19.4195 26.4804C19.205 26.0944 18.9499 25.5899 18.8508 25.3596C18.6996 25.0081 18.6486 24.9416 18.5323 24.9419C18.0373 24.9595 17.5455 25.0271 17.0643 25.1437L16.7313 25.2463L17.0076 25.9213C17.1588 26.2927 17.3255 26.6808 17.3765 26.7835L17.4692 26.9707L16.8331 27.1274C16.2798 27.2638 16.1898 27.2715 16.1388 27.1857C15.9879 26.9295 15.4027 25.878 15.335 25.7413L15.2589 25.5875L12.5566 26.2293C11.0703 26.5823 9.8015 26.8606 9.73679 26.8476C9.64212 26.8293 9.62649 26.8531 9.65482 26.968" fill="white" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_3_252">
-                          <rect width="31.7804" height="28.2493" fill="white" transform="translate(0 8) rotate(-13.8449)" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-
-                    <span className="ml-2">Subscribe to an annual plan to lock in today's pricing before December 1st, 2023!</span>
-                  </div>
-
-                </div> : <div></div>}
-
-              <div className={!user ? "col-12 col-md-12 col-lg-3 col-xl-2 " : "col-12 col-md-12 px-0"}>
-                <div className="right_auth d-flex align-items-center blue-header-main justify-content-center justify-content-lg-end">
-                  {(!user) && <>
-                    <img src="/assets/img/users1.svg" className="hedsvg" />
-
-                    <Link className="ml-2 mr-2" href="/signupoptions"
-                    // onClick={() => setShowPopup(true)}
-                    >Sign Up</Link> /
-                    <Link className="ml-2 mr-2" href="/login">Sign In</Link></>}
-                  {user && <>
-                    {(user?.request_status != "accepted") && <span className="text-danger">Please update your profile details to ensure they meet the required criteria for verification. Once your details are updated, the admin will review your request.</span>}
-                    <Dropdown className="ml-auto ml-2 proifle_dropbx">
-                      <Dropdown.Toggle className="d-flex align-items-center justify-content-end drpdown_new" variant="" id="">
-                        <img alt="image" src={user?.image ? methodModel.userImg(user && user?.image) : '/assets/img/person.jpg'} className="rounded-circle mr-1" />
-                        <div className="ml-1 nameFont text-white">
-                          <b className="name_user">{user?.firstName}</b>
-                        </div>
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        {(user?.request_status == "accepted") && <Dropdown.Item className="has-icon" onClick={() => history.push('/dashboard')}><i class="fa fa-dashboard mr-2 " /> My DashBoard</Dropdown.Item>
-                        }
-                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile')}> <i className="fa fa-user mr-2 " /> Profile</Dropdown.Item>
-                        {/* {(user?.request_status == "accepted") &&<Dropdown.Item className="has-icon" onClick={() => history.push('/marketplace')}><i class="fa-solid fa-chart-simple mr-2 "></i> MarketPlace</Dropdown.Item>}                        */}
-                        <Dropdown.Item className="has-icon" onClick={() => history.push('/profile/change-password')}> <i className="fa fa-cog mr-2" aria-hidden="true"></i> Change Password</Dropdown.Item>
-                        <Dropdown.Item className="has-icon" onClick={() => Logout()}> <i class="fa fa-sign-out mr-2" aria-hidden="true"></i> Logout </Dropdown.Item>
-
-                      </Dropdown.Menu>
-
-                    </Dropdown>
-
-                  </>}
-                </div>
+      <header className="professional-header">
+        {/* Top Announcement Bar */}
+        {!user && (
+          <div className="top-announcement">
+            <div className="container">
+              <div className="announcement-wrapper">
+                <svg className="announcement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 8V12L15 15M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className="announcement-text">Subscribe to an annual plan to lock in today's pricing before December 1st, 2023!</span>
               </div>
             </div>
           </div>
-        </div>
-        {/* {pathname.includes('/bookingform') && <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <Link href="/">
-          <img src="/assets/img/logo.png" className="logo" alt="" />
-        </Link>
-      </nav>} */}
+        )}
 
-        {(pathname == "profile/edit" || pathname == "/profile" || pathname == "/chat") && <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3">
-          <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
-            <img
-              src={`${environment?.api}${settingData?.logo}`}
-              className="logo"
-              alt=""
-              style={{ width: '200px', height: 'auto' }}
-            />
-          </Link>
-        </nav>}
-        {(!isDashboard && pathname != "profile/edit" && pathname != "/profile" && pathname != "/chat") &&
-          <nav class="navbar container navbar-expand-lg navbar-light bg-white pl-4 pr-4 pt-3 pb-2">
-            <Link href={(user?.id || user?._id) ? "/dashboard" : "/"}>
-              <img
-                src={`${environment?.api}${settingData?.logo}`}
-                className="logo"
-                alt=""
-                style={{ width: '200px', height: 'auto' }}
-              />
-            </Link>
+        {/* Main Navigation */}
+        <div className="main-navigation">
+          <div className="container">
+            <div className="nav-wrapper">
+              {/* Logo */}
+              <Link href={(user?.id || user?._id) ? "/dashboard" : "/"} className="brand-logo">
+                <img
+                  src={`${environment?.api}${settingData?.logo}`}
+                  className="brand-logo-img"
+                  alt="Upfilly"
+                />
+              </Link>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse set_nabx py-2" id="navbarSupportedContent">
-              <ul class="navbar-nav d-flex gap-0 ml-auto set_navbx">
-                <li class="nav-item">
-                  <Link
-                    class={`nav-link py-2 ${pathname == "/" ? 'active' : ''}`}
-                    href="/">Home</Link>
-                </li>
-
-                <li class="nav-item dropdown">
-                  <Link
-                    class={`nav-link py-2 dropdown-toggle ${pathname.includes("/how-it-works") || pathname == "/for-merchants" || pathname == "/for-affiliates" ? 'active' : ''}`}
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    How It Works
+              {/* Desktop Navigation Links - Only show on non-dashboard pages */}
+              {showMainNav && (
+                <nav className="desktop-nav">
+                  <Link href="/" className={`nav-link ${pathname === "/" ? 'active' : ''}`}>
+                    Home
                   </Link>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <Link class={`dropdown-item ${pathname == "/merchant" ? 'active' : ''}`} href="/merchant">For Merchants</Link>
-                    </li>
-                    <li>
-                      <Link class={`dropdown-item ${pathname == "/affguide" ? 'active' : ''}`} href="/affguide">For Affiliates</Link>
-                    </li>
-                  </ul>
-                </li>
+                  <div className="nav-dropdown">
+                    <span className={`nav-link dropdown-trigger ${pathname.includes("/how-it-works") || pathname === "/merchant" || pathname === "/affguide" ? 'active' : ''}`}>
+                      How It Works
+                    </span>
+                    <div className="dropdown-menu-custom">
+                      <Link href="/merchant" className="dropdown-item">For Merchants</Link>
+                      <Link href="/affguide" className="dropdown-item">For Affiliates</Link>
+                    </div>
+                  </div>
+                  <Link href="/pricing" className={`nav-link ${pathname === "/pricing" ? 'active' : ''}`}>
+                    Pricing
+                  </Link>
+                  <Link href="/resources" className={`nav-link ${pathname === "/resources" ? 'active' : ''}`}>
+                    Resources
+                  </Link>
+                </nav>
+              )}
 
-                <li class="nav-item">
-                  <Link
-                    class={`nav-link py-2 ${pathname == "/pricing" ? 'active' : ''}`}
-                    href="/pricing">Pricing</Link>
-                </li>
+              {/* Auth Section */}
+              <div className="auth-wrapper">
+                {!user ? (
+                  <div className="auth-links">
+                    <Link href="/signupoptions" className="auth-link signup-link">Sign Up</Link>
+                    <span className="auth-divider">/</span>
+                    <Link href="/login" className="auth-link login-link">Sign In</Link>
+                  </div>
+                ) : (
+                  <div className="user-section">
+                    {user?.request_status !== "accepted" && (
+                      <div className="verification-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                        </svg>
+                        <span>Pending Verification</span>
+                      </div>
+                    )}
+                    <Dropdown className="user-dropdown">
+                      <Dropdown.Toggle className="user-trigger">
+                        <img 
+                          src={user?.image ? methodModel.userImg(user?.image) : '/assets/img/person.jpg'} 
+                          className="user-avatar" 
+                          alt={user?.firstName}
+                        />
+                        <span className="user-name">{user?.firstName}</span>
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="user-dropdown-menu">
+                        <Dropdown.Item onClick={() => history.push('/dashboard')} className="user-menu-item">
+                          Dashboard
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => history.push('/profile')} className="user-menu-item">
+                          Profile
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => history.push('/profile/change-password')} className="user-menu-item">
+                          Change Password
+                        </Dropdown.Item>
+                        <Dropdown.Divider className="menu-divider" />
+                        <Dropdown.Item onClick={() => Logout()} className="user-menu-item logout-item">
+                          Logout
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                )}
+              </div>
 
-                <li class="nav-item">
-                  <Link
-                    class={`nav-link py-2 ${pathname == "/resources" ? 'active' : ''}`}
-                    href="/resources">Resources</Link>
-                </li>
-
-                <li class="nav-item">
-                 {!user && <Link
-                    class={`nav-link py-2 ${pathname == "/signupoptions" ? 'active' : ''}`}
-                    href="/signupoptions">Get Started</Link>}
-
-                  {user?.role == "brand" && <Link
-                    class={`nav-link py-2 ${pathname == "/scriptguide" ? 'active' : ''}`}
-                    href="/scriptguide">Tracking Script</Link>}
-                </li>
-              </ul>
-              <form class="my-2 my-lg-0 ">
-                {/* <li class="nav-item">
-            {(user?.role == "brand" || !user) && <Link class="btn btn-primary login" href="/pricing">Book a Demo</Link>}
-            </li> */}
-                {/* <li class="nav-item">
-                  <Link class={`btn btn-primary login ms-2 ${pathname == "/contact" ? 'active_btn' : ''}`} href="/contact">Book a Demo</Link>
-                </li> */}
-                {/* <li class="nav-item text-center">
-                  <Link class={`btn btn-primary   contact-btn ms-2 ${pathname == "/contact" ? '' : ''}`} href="/contact">Contact Us</Link>
-                </li> */}
-              </form>
+              {/* Mobile Menu Button - Only show on non-dashboard pages */}
+              {showMainNav && (
+                <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+                  <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                </button>
+              )}
             </div>
-          </nav>
+
+            {/* Mobile Navigation Menu */}
+            {showMainNav && mobileMenuOpen && (
+              <div className="mobile-nav-menu">
+                <Link href="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+                <div className="mobile-dropdown">
+                  <span className="mobile-dropdown-trigger">How It Works</span>
+                  <div className="mobile-dropdown-items">
+                    <Link href="/merchant" className="mobile-nav-link sub" onClick={() => setMobileMenuOpen(false)}>For Merchants</Link>
+                    <Link href="/affguide" className="mobile-nav-link sub" onClick={() => setMobileMenuOpen(false)}>For Affiliates</Link>
+                  </div>
+                </div>
+                <Link href="/pricing" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+                <Link href="/resources" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <style>{`
+        .professional-header {
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          background: #ffffff;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
-      </div>
+
+        /* Top Announcement Bar */
+        .top-announcement {
+          background: #1a1f36;
+          color: white;
+          padding: 10px 0;
+          font-size: 13px;
+        }
+
+        .container {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        .announcement-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+        }
+
+        .announcement-icon {
+          flex-shrink: 0;
+          color: #ff6b35;
+        }
+
+        .announcement-text {
+          font-weight: 500;
+        }
+
+        /* Main Navigation */
+        .main-navigation {
+          border-bottom: 1px solid #e5e7eb;
+          background: #ffffff;
+        }
+
+        .nav-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 32px;
+          min-height: 70px;
+        }
+
+        /* Brand Logo */
+        .brand-logo {
+          flex-shrink: 0;
+          text-decoration: none;
+        }
+
+        .brand-logo-img {
+          height: 36px;
+          width: auto;
+          object-fit: contain;
+        }
+
+        /* Desktop Navigation */
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          flex: 1;
+        }
+
+        .nav-link {
+          display: inline-block;
+          padding: 8px 18px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #374151;
+          text-decoration: none;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+          cursor: pointer;
+          background: transparent;
+          border: none;
+        }
+
+        .nav-link:hover {
+          color: #4361ee;
+          background: #eef2ff;
+        }
+
+        .nav-link.active {
+          color: #4361ee;
+          background: #eef2ff;
+        }
+
+        /* Dropdown */
+        .nav-dropdown {
+          position: relative;
+        }
+
+        .dropdown-trigger {
+          cursor: pointer;
+        }
+
+        .dropdown-menu-custom {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background: #ffffff;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          min-width: 180px;
+          padding: 8px 0;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-8px);
+          transition: all 0.2s ease;
+          z-index: 1001;
+          border: 1px solid #e5e7eb;
+        }
+
+        .nav-dropdown:hover .dropdown-menu-custom {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        .dropdown-item {
+          display: block;
+          padding: 10px 20px;
+          font-size: 13px;
+          font-weight: 500;
+          color: #374151;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+          background: #eef2ff;
+          color: #4361ee;
+        }
+
+        /* Auth Section */
+        .auth-wrapper {
+          flex-shrink: 0;
+        }
+
+        .auth-links {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .auth-link {
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .signup-link {
+          color: #374151;
+        }
+
+        .signup-link:hover {
+          color: #4361ee;
+        }
+
+        .login-link {
+          color: #4361ee;
+        }
+
+        .login-link:hover {
+          color: #3a56d4;
+        }
+
+        .auth-divider {
+          color: #d1d5db;
+        }
+
+        /* User Section */
+        .user-section {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .verification-badge {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          background: #fef3c7;
+          color: #d97706;
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        .verification-badge svg {
+          flex-shrink: 0;
+        }
+
+        /* User Dropdown */
+        .user-dropdown {
+          position: relative;
+        }
+
+        .user-trigger {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 4px 8px;
+          border-radius: 40px;
+          transition: all 0.2s ease;
+        }
+
+        .user-trigger:hover {
+          background: #f3f4f6;
+        }
+
+        .user-avatar {
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .user-name {
+          font-size: 14px;
+          font-weight: 500;
+          color: #374151;
+        }
+
+        .user-dropdown-menu {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          left: auto;
+          min-width: 220px;
+          background: #ffffff;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          padding: 8px 0;
+          margin-top: 8px;
+          border: 1px solid #e5e7eb;
+        }
+
+        .user-menu-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 16px;
+          font-size: 13px;
+          font-weight: 500;
+          color: #374151;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .user-menu-item:hover {
+          background: #eef2ff;
+          color: #4361ee;
+        }
+
+        .logout-item {
+          color: #6b7280;
+        }
+
+        .menu-divider {
+          height: 1px;
+          background: #e5e7eb;
+          margin: 8px 0;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-toggle {
+          display: none;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 8px;
+        }
+
+        .hamburger {
+          display: block;
+          width: 22px;
+          height: 16px;
+          position: relative;
+        }
+
+        .hamburger span {
+          display: block;
+          position: absolute;
+          height: 2px;
+          width: 100%;
+          background: #374151;
+          border-radius: 2px;
+          transition: all 0.2s ease;
+        }
+
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 7px; }
+        .hamburger span:nth-child(3) { top: 14px; }
+
+        .hamburger.open span:nth-child(1) {
+          transform: rotate(45deg);
+          top: 7px;
+        }
+        .hamburger.open span:nth-child(2) {
+          opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+          transform: rotate(-45deg);
+          top: 7px;
+        }
+
+        /* Mobile Navigation Menu */
+        .mobile-nav-menu {
+          display: none;
+          padding: 16px 0;
+          border-top: 1px solid #e5e7eb;
+          animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .mobile-nav-link {
+          display: block;
+          padding: 12px 0;
+          font-size: 15px;
+          font-weight: 500;
+          color: #374151;
+          text-decoration: none;
+          border-bottom: 1px solid #f3f4f6;
+        }
+
+        .mobile-nav-link.sub {
+          padding-left: 16px;
+          font-size: 14px;
+          font-weight: 400;
+          color: #6b7280;
+        }
+
+        .mobile-dropdown-trigger {
+          display: block;
+          padding: 12px 0;
+          font-size: 15px;
+          font-weight: 500;
+          color: #374151;
+          cursor: pointer;
+          border-bottom: 1px solid #f3f4f6;
+        }
+
+        .mobile-dropdown-items {
+          padding-left: 16px;
+          border-left: 2px solid #eef2ff;
+          margin: 4px 0 8px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+          .desktop-nav {
+            display: none;
+          }
+
+          .mobile-menu-toggle {
+            display: block;
+          }
+
+          .mobile-nav-menu {
+            display: block;
+          }
+
+          .verification-badge span {
+            display: none;
+          }
+
+          .verification-badge {
+            padding: 6px;
+          }
+
+          .user-name {
+            display: none;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .container {
+            padding: 0 16px;
+          }
+
+          .nav-wrapper {
+            min-height: 60px;
+          }
+
+          .brand-logo-img {
+            height: 30px;
+          }
+
+          .user-avatar {
+            width: 30px;
+            height: 30px;
+          }
+
+          .announcement-text {
+            font-size: 11px;
+          }
+
+          .auth-links {
+            gap: 4px;
+          }
+
+          .auth-link {
+            font-size: 13px;
+          }
+        }
+      `}</style>
     </>
   );
 }

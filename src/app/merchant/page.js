@@ -28,7 +28,7 @@ const UpfillyMerchantGuide = () => {
                 Learn More
               </button>
             </div>
-            <div className="hero-stats">
+            {/* <div className="hero-stats">
               <div className="stat-item">
                 <span className="stat-number">10K+</span>
                 <span className="stat-label">Active Merchants</span>
@@ -41,7 +41,7 @@ const UpfillyMerchantGuide = () => {
                 <span className="stat-number">98%</span>
                 <span className="stat-label">Satisfaction Rate</span>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="hero-pattern"></div>
         </section>

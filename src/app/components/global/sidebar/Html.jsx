@@ -1040,6 +1040,15 @@ const Html = ({
                     <span className="side_head">Profile Management</span>
                   </ListItemLink>
                 )}
+                {user?.role == "brand" && (
+                  <ListItemLink
+                    to="/scriptguide"
+                    title="Profile Management"
+                  >
+                    <i class="material-icons  svg_iconbx">list_alt</i>
+                    <span className="side_head">Tracking Script</span>
+                  </ListItemLink>
+                )}
                 {permission("camapaign_get") ||
                   ((user?.role == "brand" || addedUser?.role == "brand") && (
                     <ListItemLink to="/campaign" title="Campaign">

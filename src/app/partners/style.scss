@@ -1,73 +1,344 @@
-.heighteual {
-    height: auto;
-    width: 100px;
+/* Modern Upfilly Partners Page Styles */
+
+:root {
+  --primary: #4353ff;
+  --primary-light: #6b78ff;
+  --primary-dark: #3043e5;
+  --accent: #ff6b35;
+  --gradient-1: linear-gradient(135deg, #4353ff 0%, #6b78ff 100%);
+  --gradient-2: linear-gradient(135deg, #ff6b35 0%, #ff8f6b 100%);
+  --dark: #1a1f36;
+  --dark-light: #2a2f45;
+  --gray-100: #f7f9fc;
+  --gray-200: #e9ecf2;
+  --gray-300: #d0d5e0;
+  --gray-400: #9aa1b4;
+  --gray-500: #6b7280;
+  --white: #ffffff;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 40px rgba(67, 83, 255, 0.15);
+  --border-radius: 16px;
+  --border-radius-sm: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card_box {
-    border-radius: 7.588px;
-    background: #FFF;
-    box-shadow: 1.50808px 6.03233px 18.097px 0px rgba(0, 0, 0, 0.25);
-    padding: 10px;
+.partners-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--dark);
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-
-.imgtag_card>* {
-    margin: 10px;
-    /* Adjust this value as needed */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.cpadd {
-    padding: 60px 0px 0px;
+/* Hero Section */
+.partners-hero {
+  position: relative;
+  background: linear-gradient(135deg, #f5f7ff 0%, #f0f3ff 100%);
+  padding: 80px 24px;
+  text-align: center;
+  overflow: hidden;
 }
 
-.hover_box {
-    margin-bottom: 30px;
+.partners-hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--dark);
 }
 
-
-
-
-
-
-.hover_box p {
-    font-size: 14px;
+.partners-hero .gradient-text {
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+.partners-hero .hero-subtitle {
+  font-size: 18px;
+  color: var(--gray-500);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
 
-.imgtag_card h4 {
+/* CTA Button */
+.btn-primary-gradient {
+  background: var(--gradient-1);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.btn-primary-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Updates Section */
+.updates-section {
+  padding: 80px 0;
+}
+
+.updates-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.updates-content h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.updates-content p {
+  font-size: 18px;
+  color: var(--gray-500);
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+/* Programs Section */
+.programs-section {
+  padding: 80px 0;
+  background: var(--gray-100);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--dark);
+}
+
+.section-header p {
+  font-size: 18px;
+  color: var(--gray-500);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.program-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 32px;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  position: relative;
+  overflow: hidden;
+}
+
+.program-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-1);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.program-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.program-card:hover::before {
+  transform: scaleX(1);
+}
+
+.program-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.program-icon svg {
+  color: white;
+}
+
+.program-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--dark);
+  line-height: 1.4;
+}
+
+.program-card p {
+  color: var(--gray-500);
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Partner Benefits Section */
+.benefits-section {
+  padding: 80px 0;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 32px;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  border: 1px solid var(--gray-200);
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.benefit-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.benefit-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--dark);
+}
+
+.benefit-card p {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin: 0;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 80px 0;
+  background: var(--gradient-1);
+  text-align: center;
+  color: white;
+}
+
+.cta-section h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-section p {
+  font-size: 18px;
+  margin-bottom: 32px;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button-white {
+  background: white;
+  color: var(--primary);
+  padding: 16px 48px;
+  border-radius: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cta-button-white:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .partners-hero h1 {
+    font-size: 36px;
+  }
+
+  .section-header h2 {
+    font-size: 32px;
+  }
+
+  .updates-content h2 {
+    font-size: 28px;
+  }
+
+  .updates-content p {
     font-size: 16px;
-    color: #1969BC;
+  }
+
+  .cta-section h2 {
+    font-size: 32px;
+  }
+
+  .programs-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.blue-color {
-    color: #00BAFF !important;
-    font-size: 30px;
-    margin-bottom: 15px;
-}
+@media (max-width: 480px) {
+  .program-card {
+    padding: 24px;
+  }
 
-.bap-btn{
-    padding: 14px 20px !important;
-    font-size: 18px !important;
-    @media(max-width:767px){
-        padding: 12px 20px !important;
-        font-size: 16px !important;
-    }
-}
-.partners-heading{
-    font-size: 30px;
-    @media(max-width:767px){
-        font-size: 28px !important;
-        line-height: 38px;
-        text-align: center;
-    }
-    @media(max-width:575px){
-        font-size: 24px !important;
-        line-height: 32px;
-    }
-}
-.partners-page{
-    .imgtag_card{
-        width: 100% !important;
-        padding:0px !important;
-    }
+  .program-card h3 {
+    font-size: 18px;
+  }
+
+  .cta-button-white {
+    padding: 12px 32px;
+    font-size: 16px;
+  }
+
+  .btn-primary-gradient {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
 }

@@ -26,7 +26,7 @@ export default function Home() {
     isSet: false,
   });
   const [queryParams, setQueryParams] = useState({});
-  const [selectedRole, setSelectedRole] = useState('merchant'); // 'merchant' or 'affiliate'
+  const [selectedRole, setSelectedRole] = useState('merchant');
 
   const testimonials = [
     {
@@ -232,8 +232,8 @@ export default function Home() {
     >
       <div className="home-page">
         {/* Hero Section */}
-        <div className="container py-5">
-          <div className="hero-section bg-gradient-primary rounded-4 p-5 text-white">
+        <div className="container">
+          <div className="hero-section">
             <div className="row align-items-center">
               <div className="col-lg-6">
                 <h1 className="display-4 fw-bold mb-4">
@@ -249,9 +249,6 @@ export default function Home() {
                     <a href="/signupoptions" className="btn btn-light btn-lg px-4">
                       Get Started
                     </a>
-                    {/* <a href="/pricing" className="btn btn-outline-light btn-lg px-4">
-                      Book a Demo
-                    </a> */}
                   </div>
                 )}
               </div>
@@ -268,14 +265,14 @@ export default function Home() {
 
         {/* Why Upfilly Section */}
         <div className="container py-5">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold">Why Upfilly</h2>
+          <div className="section-header">
+            <h2>Why Upfilly</h2>
           </div>
           <div className="row g-4">
             <div className="col-md-6 col-lg-3">
-              <div className="feature-card h-100 p-4 text-center">
+              <div className="feature-card">
                 <div className="feature-icon mb-3">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#19294d" strokeWidth="2">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                     <path d="M12 22V12" />
                     <path d="M3.3 7L12 12l8.7-5" />
@@ -285,9 +282,9 @@ export default function Home() {
               </div>
             </div>
             <div className="col-md-6 col-lg-3">
-              <div className="feature-card h-100 p-4 text-center">
+              <div className="feature-card">
                 <div className="feature-icon mb-3">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#19294d" strokeWidth="2">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="2" y="2" width="20" height="20" rx="2.18" />
                     <path d="M7 2v20" />
                     <path d="M17 2v20" />
@@ -302,9 +299,9 @@ export default function Home() {
               </div>
             </div>
             <div className="col-md-6 col-lg-3">
-              <div className="feature-card h-100 p-4 text-center">
+              <div className="feature-card">
                 <div className="feature-icon mb-3">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#19294d" strokeWidth="2">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="10" />
                     <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
                     <path d="M12 18V6" />
@@ -314,9 +311,9 @@ export default function Home() {
               </div>
             </div>
             <div className="col-md-6 col-lg-3">
-              <div className="feature-card h-100 p-4 text-center">
+              <div className="feature-card">
                 <div className="feature-icon mb-3">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#19294d" strokeWidth="2">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12h-3M3 12h3M12 3v3M12 21v-3" />
                     <circle cx="12" cy="12" r="5" />
                   </svg>
@@ -328,23 +325,25 @@ export default function Home() {
         </div>
 
         {/* Who is Upfilly For Section */}
-        <div className="container py-5 bg-light rounded-4">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold">Who is Upfilly for</h2>
-          </div>
-          <div className="row g-4">
-            <div className="col-md-6">
-              <div className="role-card p-4 h-100">
-                <h3 className="text-primary mb-3">Merchants</h3>
-                <p className="lead">Launch and scale an affiliate program without complex setup.</p>
-                <a href="/bookingform" className="btn btn-outline-primary mt-3">Learn More →</a>
-              </div>
+        <div className="container py-5">
+          <div className="bg-light rounded-4 p-5">
+            <div className="section-header">
+              <h2>Who is Upfilly for</h2>
             </div>
-            <div className="col-md-6">
-              <div className="role-card p-4 h-100">
-                <h3 className="text-success mb-3">Affiliates</h3>
-                <p className="lead">Promote trusted brands, track performance, and earn commissions.</p>
-                <a href="/track/signup/affiliate" className="btn btn-outline-success mt-3">Learn More →</a>
+            <div className="row g-4">
+              <div className="col-md-6">
+                <div className="role-card">
+                  <h3 className="text-primary mb-3">Merchants</h3>
+                  <p className="lead">Launch and scale an affiliate program without complex setup.</p>
+                  <a href="/bookingform" className="btn btn-outline-primary mt-3">Learn More →</a>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="role-card">
+                  <h3 className="text-success mb-3">Affiliates</h3>
+                  <p className="lead">Promote trusted brands, track performance, and earn commissions.</p>
+                  <a href="/track/signup/affiliate" className="btn btn-outline-success mt-3">Learn More →</a>
+                </div>
               </div>
             </div>
           </div>
@@ -352,31 +351,31 @@ export default function Home() {
 
         {/* How it works Section */}
         <div className="container py-5">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold">How it works</h2>
+          <div className="section-header">
+            <h2>How it works</h2>
           </div>
           <div className="row g-4">
             <div className="col-md-6 col-lg-3">
-              <div className="step-card p-4">
-                <div className="step-number mb-3">1</div>
+              <div className="step-card">
+                <div className="step-number">1</div>
                 <h4>Merchants create affiliate programs</h4>
               </div>
             </div>
             <div className="col-md-6 col-lg-3">
-              <div className="step-card p-4">
-                <div className="step-number mb-3">2</div>
+              <div className="step-card">
+                <div className="step-number">2</div>
                 <h4>Affiliates apply and promote offers</h4>
               </div>
             </div>
             <div className="col-md-6 col-lg-3">
-              <div className="step-card p-4">
-                <div className="step-number mb-3">3</div>
+              <div className="step-card">
+                <div className="step-number">3</div>
                 <h4>Sales and leads are tracked automatically</h4>
               </div>
             </div>
             <div className="col-md-6 col-lg-3">
-              <div className="step-card p-4">
-                <div className="step-number mb-3">4</div>
+              <div className="step-card">
+                <div className="step-number">4</div>
                 <h4>Commissions are calculated and paid</h4>
               </div>
             </div>
@@ -385,13 +384,13 @@ export default function Home() {
 
         {/* Choose Your Role Section */}
         <div className="container py-5">
-          <div className="role-selector-section bg-gradient-secondary rounded-4 p-5 text-white">
-            <div className="text-center mb-5">
-              <h2 className="display-5 fw-bold">How it works - Choose your role</h2>
-              <p className="lead">Upfilly is built for two sides. Select the experience that fits you.</p>
+          <div className="role-selector-section">
+            <div className="section-header text-white">
+              <h2 className="text-white">How it works - Choose your role</h2>
+              <p className="text-white-50">Upfilly is built for two sides. Select the experience that fits you.</p>
             </div>
 
-            <div className="role-toggle mb-4">
+            <div className="role-toggle">
               <button
                 className={`role-btn ${selectedRole === 'merchant' ? 'active' : ''}`}
                 onClick={() => setSelectedRole('merchant')}
@@ -406,16 +405,16 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="role-content text-center">
+            <div className="role-content">
               {selectedRole === 'merchant' ? (
                 <div>
-                  <h3 className="mb-3">Launch and manage affiliate programs</h3>
-                  <a href="/bookingform" className="btn btn-light btn-lg px-4">Get Started as Merchant</a>
+                  <h3>Launch and manage affiliate programs</h3>
+                  <a href="/bookingform" className="btn btn-light btn-lg px-4 mt-3">Get Started as Merchant</a>
                 </div>
               ) : (
                 <div>
-                  <h3 className="mb-3">Discover programs and earn commissions</h3>
-                  <a href="/track/signup/affiliate" className="btn btn-light btn-lg px-4">Get Started as Affiliate</a>
+                  <h3>Discover programs and earn commissions</h3>
+                  <a href="/track/signup/affiliate" className="btn btn-light btn-lg px-4 mt-3">Get Started as Affiliate</a>
                 </div>
               )}
             </div>
@@ -424,14 +423,14 @@ export default function Home() {
 
         {/* Who this is for Section */}
         <div className="container py-5">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold">Who this is for</h2>
-            <p className="lead">Upfilly is designed for:</p>
+          <div className="section-header">
+            <h2>Who this is for</h2>
+            <p>Upfilly is designed for:</p>
           </div>
           <div className="row justify-content-center">
             <div className="col-md-8">
-              <div className="target-audience-card p-5 text-center">
-                <h3 className="mb-0">E-commerce brands</h3>
+              <div className="target-audience-card">
+                <h3>E-commerce brands</h3>
                 <p className="lead mt-3">If you sell online, you can run an affiliate program with Upfilly</p>
               </div>
             </div>
@@ -439,40 +438,42 @@ export default function Home() {
         </div>
 
         {/* Testimonials Section */}
-        <div className="container py-5 bg-light">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold">What Our Users Say</h2>
-          </div>
-          <div className="row g-4">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="col-md-4">
-                <div className="testimonial-card h-100 p-4">
-                  <div className="quote-icon mb-3">"</div>
-                  <p className="mb-4">{testimonial.feedback}</p>
-                  <div className="d-flex align-items-center">
-                    <img src={testimonial.image} alt={testimonial.name} className="testimonial-image rounded-circle me-3" />
-                    <div>
-                      <h5 className="mb-1">{testimonial.name}</h5>
-                      <small className="text-muted">{testimonial.location}</small>
+        <div className="container py-5">
+          <div className="bg-light rounded-4 p-5">
+            <div className="section-header">
+              <h2>What Our Users Say</h2>
+            </div>
+            <div className="row g-4">
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="col-md-4">
+                  <div className="testimonial-card">
+                    <div className="quote-icon">"</div>
+                    <p className="mb-4">{testimonial.feedback}</p>
+                    <div className="d-flex align-items-center">
+                      <img src={testimonial.image} alt={testimonial.name} className="testimonial-image rounded-circle me-3" />
+                      <div>
+                        <h5 className="mb-1">{testimonial.name}</h5>
+                        <small className="text-muted">{testimonial.location}</small>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         {/* FAQ Section */}
         {FAQdata && FAQdata.length > 0 && (
           <div className="container py-5">
-            <div className="text-center mb-5">
-              <h2 className="display-5 fw-bold">Frequently Asked Questions</h2>
+            <div className="section-header">
+              <h2>Frequently Asked Questions</h2>
             </div>
             <div className="row">
               <div className="col-lg-8 mx-auto">
                 <div className="accordion" id="faqAccordion">
                   {FAQdata.slice(0, 4).map((faq, index) => (
-                    <div key={faq._id} className="accordion-item mb-3">
+                    <div key={faq._id} className="accordion-item">
                       <h2 className="accordion-header">
                         <button
                           className="accordion-button collapsed"
@@ -502,9 +503,9 @@ export default function Home() {
 
         {/* CTA Section */}
         <div className="container py-5">
-          <div className="cta-section bg-primary text-white rounded-4 p-5 text-center">
-            <h2 className="display-5 fw-bold mb-4">Ready to grow with performance-based partnerships?</h2>
-            <p className="lead mb-4">Join Upfilly today and start scaling your revenue through affiliate marketing.</p>
+          <div className="cta-section">
+            <h2>Ready to grow with performance-based partnerships?</h2>
+            <p className="lead">Join Upfilly today and start scaling your revenue through affiliate marketing.</p>
             {(user?.role == "brand" || !user) && (
               <a href="/signupoptions" className="btn btn-light btn-lg px-5">
                 Get Started Now

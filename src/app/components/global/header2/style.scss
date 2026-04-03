@@ -1,0 +1,629 @@
+/* Professional Header CSS Upgrade */
+/* Add this to your global CSS file or component styles */
+
+/* Root Variables */
+:root {
+  --primary: #4361ee;
+  --primary-dark: #3a56d4;
+  --primary-light: #eef2ff;
+  --secondary: #ff6b35;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --dark: #1a1f36;
+  --dark-800: #2d3348;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --white: #ffffff;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fixed Topbar */
+.fixed-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Header Right Section */
+.header-right {
+  padding: 0.75rem 1.5rem;
+  background: var(--white);
+  transition: var(--transition);
+}
+
+/* Header Logo */
+.header-logo {
+  gap: 0.75rem;
+}
+
+.header-logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.upfilly_logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  transition: var(--transition);
+}
+
+.upfilly_logo:hover {
+  transform: scale(1.02);
+}
+
+.page-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--gray-300);
+}
+
+/* Header Content */
+.header-content {
+  gap: 1rem;
+}
+
+/* Search Input Styles */
+.searchInput {
+  position: relative;
+  width: 280px;
+}
+
+.searchInput .form-control {
+  height: 38px;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  transition: var(--transition);
+}
+
+.searchInput .form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.searchInput .form-control::placeholder {
+  color: var(--gray-400);
+}
+
+.search_fa {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-400);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.search_fa:hover {
+  color: var(--primary);
+}
+
+/* Help Icon / Bell Icon */
+.help-icon {
+  position: relative;
+}
+
+.notifications {
+  position: relative;
+}
+
+.notifications .count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--secondary);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  animation: pulse 2s infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+  }
+}
+
+.bell_bg {
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.bell_bg:hover {
+  background: var(--gray-100);
+  transform: translateY(-2px);
+}
+
+.bell_bg svg {
+  transition: var(--transition);
+}
+
+.bell_bg:hover svg path {
+  fill: var(--primary);
+}
+
+/* Notification Dropdown */
+.notifications .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto !important;
+  width: 380px;
+  max-height: 500px;
+  margin-top: 0.5rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  background: var(--white);
+  transform: translateY(0);
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown_header {
+  position: relative;
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--gray-50);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.triangle {
+  position: absolute;
+  top: -8px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--gray-50);
+}
+
+.noti_head {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clear_btn, .view_btn {
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.clear_btn {
+  color: var(--gray-500);
+}
+
+.clear_btn:hover {
+  color: var(--gray-700);
+  background: var(--gray-200);
+}
+
+.view_btn {
+  color: var(--primary);
+}
+
+.view_btn:hover {
+  background: var(--primary-light);
+}
+
+/* Notification Scroll Area */
+.noti_scroll_data {
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.noti_scroll_data::-webkit-scrollbar {
+  width: 6px;
+}
+
+.noti_scroll_data::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: 3px;
+}
+
+.noti_scroll_data::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 3px;
+}
+
+.noti_scroll_data::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* Notification Item */
+.messagetext {
+  cursor: pointer;
+  transition: var(--transition);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.messagetext:hover {
+  background: var(--gray-50);
+}
+
+.messagetext .bgblue {
+  padding: 1rem;
+  margin: 0 !important;
+}
+
+.messagetext .noti_head {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.noti_text_msg, .noti_text_chat {
+  font-size: 0.813rem;
+  color: var(--gray-600);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.noti_date_chat {
+  font-size: 0.688rem;
+  color: var(--gray-400);
+  margin: 0;
+}
+
+/* No Notification */
+.no_Notification {
+  padding: 2rem;
+  text-align: center;
+  color: var(--gray-400);
+  font-size: 0.875rem;
+}
+
+/* Profile Image Section */
+.profile-img {
+  margin-left: 0.5rem;
+}
+
+.proifle_dropbx .dropdown-toggle {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.proifle_dropbx .dropdown-toggle::after {
+  display: none;
+}
+
+.drpdown_new {
+  padding: 0.25rem;
+  border-radius: var(--radius-xl);
+  transition: var(--transition);
+}
+
+.drpdown_new:hover {
+  background: var(--gray-100);
+  transform: translateY(-2px);
+}
+
+.profile-img img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.profile-img img:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+/* Campaign Dropdown Menu */
+.campaingh-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto !important;
+  min-width: 200px;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0;
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  background: var(--white);
+  animation: slideDown 0.2s ease;
+}
+
+.dropdown-item.has-icon {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  color: var(--gray-700);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.dropdown-item.has-icon:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding-left: 1.25rem;
+}
+
+.dropdown-item.has-icon i {
+  width: 1.25rem;
+  font-size: 0.875rem;
+  transition: var(--transition);
+}
+
+.dropdown-item.has-icon:hover i {
+  color: var(--primary);
+}
+
+/* Mobile Search Dropdown */
+.set_search_icons .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto !important;
+  width: 320px;
+  padding: 1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  margin-top: 0.5rem;
+}
+
+.payment_bx .searchInput {
+  width: 100%;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .header-right {
+    padding: 0.75rem 1rem;
+  }
+
+  .show_bx {
+    display: none;
+  }
+
+  .none_bx {
+    display: block;
+  }
+
+  .set_search_icons .dropdown-menu {
+    width: 280px;
+    right: -60px;
+  }
+
+  .notifications .dropdown-menu {
+    width: 340px;
+    right: -80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-name {
+    display: none;
+  }
+
+  .upfilly_logo {
+    height: 32px;
+  }
+
+  .header-content {
+    gap: 0.5rem;
+  }
+
+  .bell_bg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bell_bg svg {
+    width: 30px;
+    height: 34px;
+  }
+
+  .profile-img img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .notifications .dropdown-menu {
+    width: 300px;
+    right: -100px;
+  }
+
+  .set_search_icons .dropdown-menu {
+    width: 260px;
+    right: -80px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-right {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .upfilly_logo {
+    height: 28px;
+  }
+
+  .header-content {
+    gap: 0.25rem;
+  }
+
+  .bell_bg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .bell_bg svg {
+    width: 26px;
+    height: 30px;
+  }
+
+  .profile-img img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .notifications .dropdown-menu {
+    width: 280px;
+    right: -120px;
+  }
+
+  .set_search_icons .dropdown-menu {
+    width: 240px;
+    right: -100px;
+  }
+
+  .campaingh-dropdown {
+    min-width: 180px;
+  }
+
+  .dropdown-item.has-icon {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.813rem;
+  }
+}
+
+/* Hover Effects */
+.header-right {
+  transition: var(--transition);
+}
+
+/* Loading State for Images */
+.profile-img img {
+  transition: opacity 0.3s ease;
+}
+
+.profile-img img[src=""] {
+  opacity: 0;
+}
+
+/* Focus States */
+.form-control:focus,
+.dropdown-item:focus,
+.bell_bg:focus {
+  outline: none;
+}
+
+/* Smooth Scroll for Notifications */
+.noti_scroll_data {
+  scroll-behavior: smooth;
+}
+
+/* Badge Animation */
+@keyframes badgePop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.count {
+  animation: badgePop 0.3s ease-out;
+}
+
+/* Glassmorphism Effect for Dropdowns (Optional) */
+@supports (backdrop-filter: blur(10px)) {
+  .dropdown-menu {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+/* Dark Mode Support (Optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --white: #1f2937;
+    --gray-50: #374151;
+    --gray-100: #4b5563;
+    --gray-200: #6b7280;
+    --gray-800: #f3f4f6;
+    --gray-700: #e5e7eb;
+    --gray-600: #d1d5db;
+  }
+}

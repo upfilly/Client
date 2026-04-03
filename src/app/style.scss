@@ -1,304 +1,473 @@
+/* Modern Upfilly Homepage Styles */
+
+:root {
+  --primary: #4353ff;
+  --primary-light: #6b78ff;
+  --primary-dark: #3043e5;
+  --accent: #ff6b35;
+  --gradient-1: linear-gradient(135deg, #4353ff 0%, #6b78ff 100%);
+  --gradient-2: linear-gradient(135deg, #ff6b35 0%, #ff8f6b 100%);
+  --dark: #1a1f36;
+  --dark-light: #2a2f45;
+  --gray-100: #f7f9fc;
+  --gray-200: #e9ecf2;
+  --gray-300: #d0d5e0;
+  --gray-400: #9aa1b4;
+  --gray-500: #6b7280;
+  --white: #ffffff;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 40px rgba(67, 83, 255, 0.15);
+  --border-radius: 16px;
+  --border-radius-sm: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .home-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--dark);
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
-// Hero Section
-.hero-section {
-  background: linear-gradient(135deg, #19294d 0%, #2a3f6e 100%);
-  position: relative;
-  overflow: hidden;
-
-  .hero-image {
-    animation: float 6s ease-in-out infinite;
-    max-height: 400px;
-    object-fit: contain;
-  }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-@keyframes float {
+/* Hero Section */
+.hero-section {
+  position: relative;
+  background: var(--gradient-1);
+  border-radius: var(--border-radius);
+  padding: 64px 48px;
+  color: white;
+  overflow: hidden;
+  margin: 40px 0;
+}
 
-  0%,
-  100% {
+.hero-section h1 {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.hero-section .lead {
+  font-size: 18px;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.hero-section .btn-light {
+  background: white;
+  color: var(--primary);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 40px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.hero-section .btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-image {
+  max-width: 100%;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Section Headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--dark);
+}
+
+.section-header p {
+  font-size: 18px;
+  color: var(--gray-500);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Feature Cards */
+.feature-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  text-align: center;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.feature-icon svg {
+  stroke: var(--primary);
+}
+
+.feature-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 0;
+}
+
+/* Role Cards */
+.role-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.role-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.role-card .text-primary {
+  color: var(--primary);
+}
+
+.role-card .text-success {
+  color: var(--accent);
+}
+
+.role-card .btn-outline-primary {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  border-radius: 40px;
+  padding: 8px 24px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.role-card .btn-outline-primary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.role-card .btn-outline-success {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: 40px;
+  padding: 8px 24px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.role-card .btn-outline-success:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* Step Cards */
+.step-card {
+  background: var(--gray-100);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid var(--gray-200);
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--primary-light);
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  background: var(--gradient-1);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 auto 16px;
+}
+
+.step-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 0;
+}
+
+/* Role Selector Section */
+.role-selector-section {
+  background: linear-gradient(135deg, #1a1f36 0%, #2a2f45 100%);
+  border-radius: var(--border-radius);
+  padding: 64px 48px;
+  color: white;
+  text-align: center;
+}
+
+.role-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.role-btn {
+  padding: 12px 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.role-btn.active {
+  background: var(--gradient-1);
+  box-shadow: var(--shadow-lg);
+}
+
+.role-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.role-content h3 {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+.role-content .btn-light {
+  background: white;
+  color: var(--primary);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 40px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.role-content .btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Target Audience Card */
+.target-audience-card {
+  background: var(--gradient-1);
+  border-radius: var(--border-radius);
+  padding: 48px;
+  text-align: center;
+  color: white;
+}
+
+.target-audience-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.target-audience-card .lead {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: var(--transition);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.quote-icon {
+  font-size: 48px;
+  color: var(--primary);
+  opacity: 0.3;
+  font-family: serif;
+  line-height: 1;
+}
+
+.testimonial-card p {
+  font-size: 16px;
+  color: var(--gray-600);
+  font-style: italic;
+}
+
+.testimonial-image {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+
+/* FAQ Accordion */
+.accordion-item {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.accordion-button {
+  background: white;
+  color: var(--dark);
+  font-weight: 600;
+  padding: 20px 24px;
+}
+
+.accordion-button:not(.collapsed) {
+  background: var(--gray-100);
+  color: var(--primary);
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: var(--primary-light);
+}
+
+.accordion-body {
+  padding: 20px 24px;
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* CTA Section */
+.cta-section {
+  background: var(--gradient-1);
+  border-radius: var(--border-radius);
+  padding: 64px 48px;
+  text-align: center;
+  color: white;
+}
+
+.cta-section h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-section .lead {
+  font-size: 18px;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.cta-section .btn-light {
+  background: white;
+  color: var(--primary);
+  border: none;
+  padding: 16px 48px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 18px;
+  transition: var(--transition);
+}
+
+.cta-section .btn-light:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Background Utilities */
+.bg-light {
+  background: var(--gray-100);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-20px);
   }
 }
 
-// Feature Cards
-.feature-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  .feature-icon {
-    svg {
-      transition: transform 0.3s ease;
-    }
-  }
-
-  &:hover .feature-icon svg {
-    transform: scale(1.1);
-  }
-
-  h4 {
-    color: #19294d;
-    font-size: 1.1rem;
-    margin: 0;
-  }
-}
-
-// Role Cards
-.role-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  h3 {
-    font-size: 1.8rem;
-  }
-
-  p {
-    font-size: 1.2rem;
-    color: #666;
-  }
-}
-
-// Step Cards
-.step-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  }
-
-  .step-number {
-    width: 40px;
-    height: 40px;
-    background: #19294d;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0 auto;
-  }
-
-  h4 {
-    color: #19294d;
-    font-size: 1.1rem;
-    margin: 0;
-  }
-}
-
-// Role Selector Section
-.role-selector-section {
-  background: linear-gradient(135deg, #2a3f6e 0%, #19294d 100%);
-
-  .role-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-
-    .role-btn {
-      padding: 1rem 2rem;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      background: transparent;
-      color: white;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: white;
-      }
-
-      &.active {
-        background: white;
-        color: #19294d;
-        border-color: white;
-      }
-    }
-  }
-
-  .role-content {
-    animation: fadeIn 0.5s ease;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Target Audience Card
-.target-audience-card {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-radius: 16px;
-
-  h3 {
-    color: #19294d;
-    font-size: 2rem;
-  }
-
-  p {
-    color: #666;
-    font-size: 1.2rem;
-  }
-}
-
-// Testimonial Cards
-.testimonial-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  }
-
-  .quote-icon {
-    font-size: 4rem;
-    color: #19294d;
-    opacity: 0.2;
-    line-height: 1;
-    font-family: serif;
-  }
-
-  p {
-    color: #666;
-    font-style: italic;
-  }
-
-  .testimonial-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-  }
-}
-
-// CTA Section
-.cta-section {
-  background: linear-gradient(135deg, #19294d 0%, #2a3f6e 100%);
-}
-
-// Accordion Styling
-.accordion-item {
-  border: none;
-  border-radius: 8px !important;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-
-  .accordion-button {
-    padding: 1.2rem;
-    font-weight: 600;
-    color: #19294d;
-    background: white;
-    border: none;
-
-    &:focus {
-      box-shadow: none;
-      border-color: transparent;
-    }
-
-    &:not(.collapsed) {
-      background: #f8f9fa;
-      color: #19294d;
-    }
-  }
-
-  .accordion-body {
-    padding: 1.2rem;
-    background: #f8f9fa;
-    color: #666;
-  }
-}
-
-// Utility Classes
-.bg-gradient-primary {
-  background: linear-gradient(135deg, #19294d 0%, #2a3f6e 100%);
-}
-
-.bg-gradient-secondary {
-  background: linear-gradient(135deg, #2a3f6e 0%, #19294d 100%);
-}
-
-// Responsive Design
+/* Responsive */
 @media (max-width: 768px) {
-  .hero-section {
-    h1 {
-      font-size: 2rem;
-    }
-
-    .hero-image {
-      margin-top: 2rem;
-    }
+  .container {
+    padding: 0 20px;
   }
-
+  
+  .hero-section {
+    padding: 40px 24px;
+  }
+  
+  .hero-section h1 {
+    font-size: 32px;
+  }
+  
+  .section-header h2 {
+    font-size: 32px;
+  }
+  
+  .role-selector-section {
+    padding: 40px 24px;
+  }
+  
+  .cta-section {
+    padding: 40px 24px;
+  }
+  
+  .cta-section h2 {
+    font-size: 32px;
+  }
+  
   .role-toggle {
     flex-direction: column;
-
-    .role-btn {
-      width: 100%;
-    }
+    align-items: center;
   }
-
-  h2.display-5 {
-    font-size: 2rem;
+  
+  .role-btn {
+    width: 100%;
+    max-width: 200px;
   }
 }
 
-// Animations
-@keyframes slideInUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
+@media (max-width: 480px) {
+  .hero-section .d-flex {
+    flex-direction: column;
+    gap: 12px;
   }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
+  
+  .hero-section .btn-light {
+    width: 100%;
+    text-align: center;
   }
-}
-
-.hero-section,
-.feature-card,
-.role-card,
-.step-card,
-.testimonial-card {
-  animation: slideInUp 0.6s ease-out;
+  
+  .feature-card, .role-card, .step-card, .testimonial-card {
+    padding: 24px;
+  }
 }

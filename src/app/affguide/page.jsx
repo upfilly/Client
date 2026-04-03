@@ -22,7 +22,7 @@ const affiliateguide = () => {
               audience, affiliate marketing connects the two sides in a win-win
               partnership.
             </p>
-            <div className="hero-stats">
+            {/* <div className="hero-stats">
               <div className="stat-item">
                 <span className="stat-number">$12B+</span>
                 <span className="stat-label">Industry Value</span>
@@ -35,7 +35,7 @@ const affiliateguide = () => {
                 <span className="stat-number">15%</span>
                 <span className="stat-label">Avg. Commission</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 

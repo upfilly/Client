@@ -134,22 +134,18 @@ export default function BillingForm() {
     getData();
   }, []);
 
-  // Fixed username validation function
   const checkUsernameExists = async (username) => {
     try {
       const response = await ApiClient.post("userName/check", {
         userName: username,
       });
-      // Adjust this based on your actual API response structure
-      // Typically, it should return { exists: true } if username is taken
-      return !response.exists; // Return true if available, false if taken
+      return !response.exists;
     } catch (error) {
       console.error("Error checking username:", error);
-      return false; // On error, assume not available
+      return false;
     }
   };
 
-  // Username availability check effect
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (
@@ -169,7 +165,6 @@ export default function BillingForm() {
     return () => clearTimeout(timer);
   }, [formData.userName]);
 
-  // Validation functions
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return re.test(String(email).toLowerCase());
@@ -243,7 +238,6 @@ export default function BillingForm() {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Field length restrictions
     if (name === "cardNumber" && value.length > 16) return;
     if (name === "cardCvc" && value.length > 4) return;
 
@@ -254,7 +248,6 @@ export default function BillingForm() {
       [name]: newValue,
     }));
 
-    // Real-time validation for firstName and lastName
     if (name === "firstName" || name === "lastName") {
       if (newValue.length >= 3) {
         setErrors((prev) => ({
@@ -264,7 +257,6 @@ export default function BillingForm() {
       }
     }
 
-    // Validate on change for immediate feedback
     if (name in errors) {
       setErrors((prev) => ({
         ...prev,
@@ -272,7 +264,6 @@ export default function BillingForm() {
       }));
     }
 
-    // Reset username availability when username changes
     if (name === "userName") {
       const cleanedValue = value.replace(/\s/g, "");
       setFormData((prev) => ({
@@ -289,7 +280,6 @@ export default function BillingForm() {
       [field]: value,
     }));
 
-    // Validate location fields
     if (field in errors) {
       setErrors((prev) => ({
         ...prev,
@@ -302,7 +292,6 @@ export default function BillingForm() {
     let isValid = true;
     const newErrors = { ...errors };
 
-    // Validate form fields
     newErrors.firstName = validateField("firstName", formData.firstName);
     newErrors.lastName = validateField("lastName", formData.lastName);
     newErrors.email = validateField("email", formData.email);
@@ -321,7 +310,6 @@ export default function BillingForm() {
       : "You must agree to the terms and conditions";
     newErrors.plan = selectedId ? "" : "Please select a plan";
 
-    // Check if any errors exist
     for (const key in newErrors) {
       if (newErrors[key]) {
         isValid = false;
@@ -368,7 +356,6 @@ export default function BillingForm() {
       setSelectedLocation(location);
       setAddress(selectedAddress);
 
-      // Clear address errors after selection
       setErrors((prev) => ({
         ...prev,
         address: "",
@@ -397,7 +384,6 @@ export default function BillingForm() {
       return;
     }
 
-    // Check username availability if not already checked
     if (usernameAvailable === null && formData.userName) {
       console.log("Checking username availability...");
       setCheckingUsername(true);
@@ -468,7 +454,6 @@ export default function BillingForm() {
       console.log("Registration response:", res);
 
       if (res.success === true) {
-        // Reset form
         setFormData({
           status: "Active",
           currency: "USD",
@@ -543,12 +528,13 @@ export default function BillingForm() {
         name={undefined}
         filters={undefined}
       >
-        <div className="main-affiliate mt-3 mb-0 pt-0">
+        <div className="billing-page">
           <div className="container">
-            <div>
+            {/* Logo Section */}
+            <div className="billing-header">
               <img
                 src="/assets/img/logo.png"
-                className="mx-auto mb-4 pointer logo"
+                className="billing-logo"
                 onClick={
                   !user
                     ? () => history.push("/")
@@ -556,705 +542,480 @@ export default function BillingForm() {
                 }
                 alt="Logo"
               />
-              <h2 className="text-center mb-0 select_plans">Select a plan</h2>
+              <h1 className="billing-title">Select Your Plan</h1>
+              <p className="billing-subtitle">Choose the perfect plan for your business needs</p>
             </div>
+
+            {showPopup && (
+              <div className="modal d-block">
+                <div
+                  className="modal-dialog modal-dialog-centered dateModal"
+                  role="document"
+                >
+                  <div className="modal-content text-center">
+                    <div className="modal-body">
+                      <div>
+                        <img
+                          src="../../../assets/img/logo.png"
+                          className="greentik"
+                          alt="Success"
+                        />
+                      </div>
+                      <h5 className="tital mt-5">Plan Purchased Successfully.</h5>
+                      <div>
+                        <button
+                          type="button"
+                          className="btn-ok"
+                          onClick={handleClick}
+                        >
+                          Ok
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          {showPopup && (
-            <div className="modal d-block">
-              <div
-                className="modal-dialog modal-dialog-centered dateModal"
-                role="document"
-              >
-                <div className="modal-content text-center">
-                  <div className="modal-body">
-                    <div>
-                      <img
-                        src="../../../assets/img/logo.png"
-                        className="greentik"
-                        alt="Success"
-                      />
+          <div className="billing-content">
+            <div className="container">
+              <div className="billing-layout">
+                {/* Plans Section - Top on mobile, flexible width */}
+                <div className="plans-section">
+                  <div className="form-card">
+                    <div className="form-card-header">
+                      <h3>Available Plans</h3>
+                      <span>{FilterData.length} plans available for you</span>
                     </div>
-                    <h5 className="tital mt-5">Plan Purchased Successfully.</h5>
-                    <div>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={handleClick}
-                      >
-                        Ok
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+                    <div className="form-card-body">
+                      <div className="plans-container">
+                        <div className="plans-scroll-wrapper">
+                          <div className="plans-flex-grid">
+                            {FilterData?.map((itm) => {
+                              const discountedAmount = calculateDiscountedAmount(
+                                itm.amount,
+                                itm.discount_details
+                              );
+                              const isSelected = selectedId === itm?._id;
 
-        <section className="common-padding">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-md-12 col-lg-12 col-xl-8">
-                <div className="card p-0 mb-4">
-                  <div className="card-header ">
-                    <h3 className="mb-0 card-title">
-                      Account <span className="subsmal">Select a plan</span>
-                    </h3>
-                  </div>
-                  <div className="card-body">
-                    <div className="row ">
-                      {FilterData?.map((itm) => {
-                        const discountedAmount = calculateDiscountedAmount(
-                          itm.amount,
-                          itm.discount_details
-                        );
-                        const cardClass =
-                          selectedId === itm?._id
-                            ? "checked_tbn"
-                            : `checked_tbn_after ${errors?.plan ? "border-red" : ""
-                            }`;
-
-                        return (
-                          <label
-                            key={itm._id}
-                            htmlFor={`exampleRadios${itm._id}`}
-                            className="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 mb-4"
-                          >
-                            <div className={cardClass}>
-                              <div className="sub-opt form-check pl-0">
-                                <label
-                                  className="form-check-label"
-                                  htmlFor={`exampleRadios${itm._id}`}
+                              return (
+                                <div
+                                  key={itm._id}
+                                  className={`plan-card ${isSelected ? 'selected' : ''} ${errors?.plan ? 'error' : ''}`}
+                                  onClick={() => handleRadioChange(itm._id)}
                                 >
-                                  {itm?.name}
-                                </label>
-                                <input
-                                  className="form-check-input custom-radio"
-                                  type="radio"
-                                  name="exampleRadios"
-                                  id={`exampleRadios${itm._id}`}
-                                  value={itm.name}
-                                  checked={selectedId === itm._id}
-                                  onChange={() => handleRadioChange(itm._id)}
-                                  required
-                                />
-                              </div>
-                              <div className="opt-main_cate">
-                                <ul className="opt-category plan-featuress pl-0">
-                                  <div className="additional-info">
-                                    <div className="info-item d-flex justify-content-between align-items-center">
-                                      <strong>Basket Value Charge:</strong>
-                                      <p className="mb-0">
-                                        {itm.basket_value_charge}%
-                                      </p>
-                                    </div>
-                                    <div className="info-item d-flex justify-content-between align-items-center">
-                                      <strong>Commission Override:</strong>
-                                      <p className="mb-0">
-                                        {itm.commission_override}%
-                                      </p>
-                                    </div>
-                                    <div className="info-item d-flex justify-content-between align-items-center">
-                                      <strong>Bonus Override:</strong>
-                                      <p className="mb-0">
-                                        {" "}
-                                        {itm.bonus_override}%
-                                      </p>
-                                    </div>
-                                    <div className="info-item d-flex justify-content-between align-items-center">
-                                      <strong>Allowed Total Revenue:</strong>
-                                      <p className="mb-0">
-                                        {itm.allowed_total_revenue}$
-                                      </p>
+                                  <div className="plan-card-header">
+                                    <div className="plan-radio">
+                                      <div className={`radio-custom ${isSelected ? 'checked' : ''}`}>
+                                        {isSelected && <div className="radio-dot"></div>}
+                                      </div>
+                                      <h4 className="plan-name">{itm?.name}</h4>
                                     </div>
                                   </div>
-                                  <div>
-                                    {itm?.features?.map((feature, index) => (
-                                      <li className="flexs" key={index}>
-                                        {feature.feature_name && (
-                                          <img
-                                            className="checkss !mr-0"
-                                            src="/assets/img/check.png"
-                                            alt=""
-                                          />
-                                        )}
-                                        <p className="ipsi mb-0">
-                                          {feature.feature_name}
-                                        </p>
-                                      </li>
-                                    ))}
+                                  <div className="plan-card-body">
+                                    <div className="plan-details">
+                                      <div className="detail-item">
+                                        <span className="detail-label">Basket Value:</span>
+                                        <span className="detail-value">{itm.basket_value_charge}%</span>
+                                      </div>
+                                      <div className="detail-item">
+                                        <span className="detail-label">Commission:</span>
+                                        <span className="detail-value">{itm.commission_override}%</span>
+                                      </div>
+                                      <div className="detail-item">
+                                        <span className="detail-label">Bonus:</span>
+                                        <span className="detail-value">{itm.bonus_override}%</span>
+                                      </div>
+                                      <div className="detail-item">
+                                        <span className="detail-label">Revenue Cap:</span>
+                                        <span className="detail-value">${itm.allowed_total_revenue}</span>
+                                      </div>
+                                    </div>
+                                    <div className="plan-features">
+                                      {itm?.features?.slice(0, 3)?.map((feature, index) => (
+                                        <div className="feature-item" key={index}>
+                                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                          </svg>
+                                          <span>{feature.feature_name}</span>
+                                        </div>
+                                      ))}
+                                      {itm?.features?.length > 3 && (
+                                        <div className="feature-more">
+                                          +{itm.features.length - 3} more features
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
-                                </ul>
-                                <div className="d-flex align-items-center amt-desc">
-                                  {itm?.discount_details && (
-                                    <p className="textWrong mr-2">
-                                      ${itm?.amount}
-                                    </p>
-                                  )}
-                                  <div className="d-flex align-items-center">
-                                    <p className="dollarf-sec">
-                                      ${discountedAmount}
-                                    </p>
-                                    <p className="montyh ms-1">
-                                      /{itm.billing_frequency} month
-                                    </p>
+                                  <div className="plan-card-footer">
+                                    <div className="plan-price">
+                                      {itm?.discount_details && (
+                                        <span className="price-original">${itm?.amount}</span>
+                                      )}
+                                      <span className="price-current">${discountedAmount}</span>
+                                      <span className="price-period">/{itm.billing_frequency}m</span>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                          </label>
-                        );
-                      })}
-                    </div>
-                    {errors.plan && (
-                      <div className="invalid-feedback d-block">
-                        {errors.plan}
+                              );
+                            })}
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-12 col-lg-12 col-xl-4">
-                <div className="card p-0 mb-4">
-                  <div className="card-header">
-                    <h4 className="card-title">Basic Information</h4>
-                  </div>
-
-                  <div className="card-body">
-                    <div className="form-row">
-                      {!user && (
-                        <>
-                          <div className="col-12 col-md-6 col-lg-6">
-                            <div className="form-group">
-                              <label className="label-set">First Name</label>
-                              <input
-                                type="text"
-                                className={`form-control quick-radius ${errors.firstName ? "is-invalid" : ""
-                                  }`}
-                                placeholder="Enter first name (min 3 characters)"
-                                id="firstName"
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleInputChange}
-                                maxLength={50}
-                                onBlur={() =>
-                                  setErrors((prev) => ({
-                                    ...prev,
-                                    firstName: validateField(
-                                      "firstName",
-                                      formData.firstName
-                                    ),
-                                  }))
-                                }
-                              />
-                              {errors.firstName && (
-                                <div className="invalid-feedback d-block">
-                                  {errors.firstName}
-                                </div>
-                              )}
-                              {!errors.firstName && formData.firstName && (
-                                <div className="small mt-1 text-muted">
-                                  {formData.firstName.length}/3 characters
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6 col-lg-6">
-                            <div className="form-group">
-                              <label className="label-set">Last Name </label>
-                              <input
-                                type="text"
-                                className={`form-control quick-radius ${errors.lastName ? "is-invalid" : ""
-                                  }`}
-                                placeholder="Enter last name (min 3 characters)"
-                                id="lastName"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleInputChange}
-                                maxLength={50}
-                                onBlur={() =>
-                                  setErrors((prev) => ({
-                                    ...prev,
-                                    lastName: validateField(
-                                      "lastName",
-                                      formData.lastName
-                                    ),
-                                  }))
-                                }
-                              />
-                              {errors.lastName && (
-                                <div className="invalid-feedback d-block">
-                                  {errors.lastName}
-                                </div>
-                              )}
-                              {!errors.lastName && formData.lastName && (
-                                <div className="small mt-1 text-muted">
-                                  {formData.lastName.length}/3 characters
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6 col-lg-12">
-                            <div className="form-group">
-                              <label className="label-set">Email </label>
-                              <input
-                                type="email"
-                                className={`form-control quick-radius ${errors.email ? "is-invalid" : ""
-                                  }`}
-                                placeholder="Enter email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                onBlur={() =>
-                                  setErrors((prev) => ({
-                                    ...prev,
-                                    email: validateField(
-                                      "email",
-                                      formData.email
-                                    ),
-                                  }))
-                                }
-                              />
-                              {errors.email && (
-                                <div className="invalid-feedback d-block">
-                                  {errors.email}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="col-12 col-md-6 col-lg-12">
-                            <div className="form-group">
-                              <label className="label-set">Username </label>
-                              <input
-                                type="text"
-                                className={`form-control quick-radius ${errors.userName ? "is-invalid" : ""
-                                  }`}
-                                placeholder="Enter username"
-                                id="userName"
-                                name="userName"
-                                value={formData.userName}
-                                onChange={handleInputChange}
-                                onBlur={() =>
-                                  setErrors((prev) => ({
-                                    ...prev,
-                                    userName: validateField(
-                                      "userName",
-                                      formData.userName
-                                    ),
-                                  }))
-                                }
-                              />
-                              {errors.userName && (
-                                <div className="invalid-feedback d-block">
-                                  {errors.userName}
-                                </div>
-                              )}
-                              {!errors.userName && formData.userName && (
-                                <div className="small mt-1">
-                                  {checkingUsername ? (
-                                    <span className="text-muted">
-                                      Checking username availability...
-                                    </span>
-                                  ) : usernameAvailable === true ? (
-                                    <span className="text-success">
-                                      ✓ Username is available!
-                                    </span>
-                                  ) : usernameAvailable === false ? (
-                                    <span className="text-danger">
-                                      ✗ Username is already taken
-                                    </span>
-                                  ) : null}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="col-12 col-md-6 col-lg-12">
-                            <div className="form-group">
-                              <label className="label-set">Password </label>
-                              <div className="input-group position-relative">
-                                <input
-                                  type={eyes.password ? "text" : "password"}
-                                  className={`form-control quick-radius password_space ${errors.password ? "is-invalid" : ""
-                                    }`}
-                                  placeholder="Enter password (min 8 characters)"
-                                  id="password"
-                                  name="password"
-                                  value={formData.password}
-                                  onChange={handleInputChange}
-                                  onBlur={() =>
-                                    setErrors((prev) => ({
-                                      ...prev,
-                                      password: validateField(
-                                        "password",
-                                        formData.password
-                                      ),
-                                    }))
-                                  }
-                                />
-                                <div className="eye-icon-m">
-                                  <i
-                                    className={
-                                      eyes.password
-                                        ? "fa fa-eye"
-                                        : "fa fa-eye-slash"
-                                    }
-                                    onClick={() =>
-                                      setEyes({
-                                        ...eyes,
-                                        password: !eyes.password,
-                                      })
-                                    }
-                                    style={{ cursor: "pointer" }}
-                                  ></i>
-                                </div>
-                              </div>
-                              {errors.password && (
-                                <div className="invalid-feedback d-block">
-                                  {errors.password}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6 col-lg-12">
-                            <div className="form-group">
-                              <label className="label-set">
-                                Confirm Password{" "}
-                              </label>
-                              <div className="input-group position-relative">
-                                <input
-                                  type={
-                                    eyes.confirmPassword ? "text" : "password"
-                                  }
-                                  className={`form-control quick-radius password_space ${errors.confirmPassword ? "is-invalid" : ""
-                                    }`}
-                                  placeholder="Confirm your password"
-                                  id="confirmPassword"
-                                  name="confirmPassword"
-                                  value={formData.confirmPassword}
-                                  onChange={handleInputChange}
-                                  onBlur={() =>
-                                    setErrors((prev) => ({
-                                      ...prev,
-                                      confirmPassword: validateField(
-                                        "confirmPassword",
-                                        formData.confirmPassword
-                                      ),
-                                    }))
-                                  }
-                                />
-                                <div className="eye-icon-m">
-                                  <i
-                                    className={
-                                      eyes.confirmPassword
-                                        ? "fa fa-eye"
-                                        : "fa fa-eye-slash"
-                                    }
-                                    onClick={() =>
-                                      setEyes({
-                                        ...eyes,
-                                        confirmPassword: !eyes.confirmPassword,
-                                      })
-                                    }
-                                    style={{ cursor: "pointer" }}
-                                  ></i>
-                                </div>
-                              </div>
-                              {errors.confirmPassword && (
-                                <div className="invalid-feedback d-block">
-                                  {errors.confirmPassword}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="col-12 col-md-6 col-lg-6 ">
-                            <div className="form-group">
-                              <label className="label-set">Website </label>
-                              <input
-                                type="text"
-                                className="form-control quick-radius"
-                                placeholder="Enter website"
-                                id="website"
-                                name="website"
-                                value={formData.website}
-                                onChange={handleInputChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6 col-lg-6">
-                            <div className="form-group">
-                              <label className="label-set">Currency </label>
-                              <input
-                                type="text"
-                                className="form-control quick-radius"
-                                placeholder="Enter currency"
-                                id="currency"
-                                name="currency"
-                                value={formData.currency}
-                                onChange={handleInputChange}
-                                disabled
-                              />
-                            </div>
-                          </div>
-                        </>
+                      {errors.plan && (
+                        <div className="error-message">{errors.plan}</div>
                       )}
                     </div>
                   </div>
                 </div>
 
-                <div className="card p-0 mb-4">
-                  <div className="card-header">
-                    <h4 className="card-title">Billing Address</h4>
+                {/* Form Section - Bottom on mobile */}
+                <div className="form-section">
+                  {/* Basic Information */}
+                  <div className="form-card">
+                    <div className="form-card-header">
+                      <h3>Basic Information</h3>
+                      <span>Tell us about yourself</span>
+                    </div>
+                    <div className="form-card-body">
+                      {!user && (
+                        <div className="form-grid">
+                          <div className="form-group">
+                            <label className="form-label">First Name *</label>
+                            <input
+                              type="text"
+                              className={`form-input ${errors.firstName ? 'error' : ''}`}
+                              placeholder="Enter first name"
+                              name="firstName"
+                              value={formData.firstName}
+                              onChange={handleInputChange}
+                              onBlur={() =>
+                                setErrors((prev) => ({
+                                  ...prev,
+                                  firstName: validateField("firstName", formData.firstName),
+                                }))
+                              }
+                            />
+                            {errors.firstName && <span className="form-error">{errors.firstName}</span>}
+                          </div>
+
+                          <div className="form-group">
+                            <label className="form-label">Last Name *</label>
+                            <input
+                              type="text"
+                              className={`form-input ${errors.lastName ? 'error' : ''}`}
+                              placeholder="Enter last name"
+                              name="lastName"
+                              value={formData.lastName}
+                              onChange={handleInputChange}
+                              onBlur={() =>
+                                setErrors((prev) => ({
+                                  ...prev,
+                                  lastName: validateField("lastName", formData.lastName),
+                                }))
+                              }
+                            />
+                            {errors.lastName && <span className="form-error">{errors.lastName}</span>}
+                          </div>
+
+                          <div className="form-group full-width">
+                            <label className="form-label">Email Address *</label>
+                            <input
+                              type="email"
+                              className={`form-input ${errors.email ? 'error' : ''}`}
+                              placeholder="Enter email address"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              onBlur={() =>
+                                setErrors((prev) => ({
+                                  ...prev,
+                                  email: validateField("email", formData.email),
+                                }))
+                              }
+                            />
+                            {errors.email && <span className="form-error">{errors.email}</span>}
+                          </div>
+
+                          <div className="form-group full-width">
+                            <label className="form-label">Username *</label>
+                            <input
+                              type="text"
+                              className={`form-input ${errors.userName ? 'error' : ''}`}
+                              placeholder="Choose a username"
+                              name="userName"
+                              value={formData.userName}
+                              onChange={handleInputChange}
+                              onBlur={() =>
+                                setErrors((prev) => ({
+                                  ...prev,
+                                  userName: validateField("userName", formData.userName),
+                                }))
+                              }
+                            />
+                            {errors.userName && <span className="form-error">{errors.userName}</span>}
+                            {!errors.userName && formData.userName && (
+                              <span className={`form-hint ${usernameAvailable === true ? 'success' : usernameAvailable === false ? 'error' : ''}`}>
+                                {checkingUsername ? (
+                                  "Checking availability..."
+                                ) : usernameAvailable === true ? (
+                                  "✓ Username is available"
+                                ) : usernameAvailable === false ? (
+                                  "✗ Username is already taken"
+                                ) : null}
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="form-group full-width">
+                            <label className="form-label">Password *</label>
+                            <div className="password-wrapper">
+                              <input
+                                type={eyes.password ? "text" : "password"}
+                                className={`form-input ${errors.password ? 'error' : ''}`}
+                                placeholder="Create a password (min 8 characters)"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                onBlur={() =>
+                                  setErrors((prev) => ({
+                                    ...prev,
+                                    password: validateField("password", formData.password),
+                                  }))
+                                }
+                              />
+                              <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setEyes({ ...eyes, password: !eyes.password })}
+                              >
+                                <i className={eyes.password ? "fa fa-eye" : "fa fa-eye-slash"}></i>
+                              </button>
+                            </div>
+                            {errors.password && <span className="form-error">{errors.password}</span>}
+                          </div>
+
+                          <div className="form-group full-width">
+                            <label className="form-label">Confirm Password *</label>
+                            <div className="password-wrapper">
+                              <input
+                                type={eyes.confirmPassword ? "text" : "password"}
+                                className={`form-input ${errors.confirmPassword ? 'error' : ''}`}
+                                placeholder="Confirm your password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleInputChange}
+                                onBlur={() =>
+                                  setErrors((prev) => ({
+                                    ...prev,
+                                    confirmPassword: validateField("confirmPassword", formData.confirmPassword),
+                                  }))
+                                }
+                              />
+                              <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setEyes({ ...eyes, confirmPassword: !eyes.confirmPassword })}
+                              >
+                                <i className={eyes.confirmPassword ? "fa fa-eye" : "fa fa-eye-slash"}></i>
+                              </button>
+                            </div>
+                            {errors.confirmPassword && <span className="form-error">{errors.confirmPassword}</span>}
+                          </div>
+
+                          <div className="form-group">
+                            <label className="form-label">Website</label>
+                            <input
+                              type="text"
+                              className="form-input"
+                              placeholder="Enter website URL"
+                              name="website"
+                              value={formData.website}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label className="form-label">Currency</label>
+                            <input
+                              type="text"
+                              className="form-input"
+                              value={formData.currency}
+                              disabled
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="card-body">
-                    <div className="form-row">
-                      <div className="col-12 col-md-12">
-                        <div className="form-group">
-                          <label className="label-set">Address </label>
-                          {!aloader ? (
-                            <PlacesAutocomplete
-                              value={address}
-                              onChange={handleChange}
-                              onSelect={handleSelect}
-                            >
-                              {({
-                                getInputProps,
-                                suggestions,
-                                getSuggestionItemProps,
-                                loading,
-                              }) => (
-                                <div>
-                                  <input
-                                    className={`form-control quick-radius ${errors.address ? "is-invalid" : ""
-                                      }`}
-                                    {...getInputProps({
-                                      placeholder: "Enter an address...",
-                                      onFocus: () => setInputFocused(true),
-                                      onBlur: () => {
-                                        setInputFocused(false);
-                                        setErrors((prev) => ({
-                                          ...prev,
-                                          address: validateField(
-                                            "address",
-                                            address
-                                          ),
-                                        }));
-                                      },
-                                    })}
-                                  />
-                                  {/* {loading && <div>Loading...</div>} */}
-                                  <div className="suggestions-container">
+
+                  {/* Billing Address */}
+                  <div className="form-card">
+                    <div className="form-card-header">
+                      <h3>Billing Address</h3>
+                      <span>Where should we send the invoice?</span>
+                    </div>
+                    <div className="form-card-body">
+                      <div className="form-group full-width">
+                        <label className="form-label">Address *</label>
+                        {!aloader ? (
+                          <PlacesAutocomplete
+                            value={address}
+                            onChange={handleChange}
+                            onSelect={handleSelect}
+                          >
+                            {({
+                              getInputProps,
+                              suggestions,
+                              getSuggestionItemProps,
+                              loading,
+                            }) => (
+                              <div className="autocomplete-wrapper">
+                                <input
+                                  className={`form-input ${errors.address ? 'error' : ''}`}
+                                  {...getInputProps({
+                                    placeholder: "Enter your address...",
+                                  })}
+                                />
+                                {suggestions.length > 0 && (
+                                  <div className="autocomplete-dropdown">
                                     {suggestions.map((suggestion) => (
                                       <div
-                                        className="suggestion-item"
+                                        className="autocomplete-item"
                                         {...getSuggestionItemProps(suggestion)}
                                         key={suggestion.placeId}
                                       >
-                                        <i className="fa-solid fa-location-dot mr-2"></i>
                                         {suggestion.description}
                                       </div>
                                     ))}
                                   </div>
-                                </div>
-                              )}
-                            </PlacesAutocomplete>
-                          ) : (
-                            <input
-                              type="text"
-                              className="form-control quick-radius"
-                              placeholder="Loading address autocomplete..."
-                              disabled
-                            />
-                          )}
-                          {errors.address && (
-                            <div className="invalid-feedback d-block">
-                              {errors.address}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-12 col-md-6">
-                        <div className="form-group">
-                          <label className="label-set">Country</label>
+                                )}
+                              </div>
+                            )}
+                          </PlacesAutocomplete>
+                        ) : (
                           <input
                             type="text"
+                            className="form-input"
+                            placeholder="Loading address autocomplete..."
+                            disabled
+                          />
+                        )}
+                        {errors.address && <span className="form-error">{errors.address}</span>}
+                      </div>
+
+                      <div className="form-grid">
+                        <div className="form-group">
+                          <label className="form-label">Country *</label>
+                          <input
+                            type="text"
+                            className={`form-input ${errors.country ? 'error' : ''}`}
                             value={selectedLocation.country}
-                            onChange={(e) =>
-                              handleLocationChange("country", e.target.value)
-                            }
-                            className={`form-control quick-radius ${errors.country ? "is-invalid" : ""
-                              }`}
+                            onChange={(e) => handleLocationChange("country", e.target.value)}
                             onBlur={() =>
                               setErrors((prev) => ({
                                 ...prev,
-                                country: validateField(
-                                  "country",
-                                  selectedLocation.country
-                                ),
+                                country: validateField("country", selectedLocation.country),
                               }))
                             }
                           />
-                          {errors.country && (
-                            <div className="invalid-feedback d-block">
-                              {errors.country}
-                            </div>
-                          )}
+                          {errors.country && <span className="form-error">{errors.country}</span>}
                         </div>
-                      </div>
 
-                      <div className="col-md-6">
                         <div className="form-group">
-                          <label className="label-set">City</label>
+                          <label className="form-label">City *</label>
                           <input
                             type="text"
+                            className={`form-input ${errors.city ? 'error' : ''}`}
                             value={selectedLocation.city}
-                            onChange={(e) =>
-                              handleLocationChange("city", e.target.value)
-                            }
-                            className={`form-control quick-radius ${errors.city ? "is-invalid" : ""
-                              }`}
+                            onChange={(e) => handleLocationChange("city", e.target.value)}
                             onBlur={() =>
                               setErrors((prev) => ({
                                 ...prev,
-                                city: validateField(
-                                  "city",
-                                  selectedLocation.city
-                                ),
+                                city: validateField("city", selectedLocation.city),
                               }))
                             }
                           />
-                          {errors.city && (
-                            <div className="invalid-feedback d-block">
-                              {errors.city}
-                            </div>
-                          )}
+                          {errors.city && <span className="form-error">{errors.city}</span>}
                         </div>
-                      </div>
 
-                      <div className="col-md-12">
-                        <div className="form-group">
-                          <label className="label-set">Postal Code</label>
+                        <div className="form-group full-width">
+                          <label className="form-label">Postal Code *</label>
                           <input
                             type="text"
+                            className={`form-input ${errors.pincode ? 'error' : ''}`}
                             value={selectedLocation.pincode}
-                            onChange={(e) =>
-                              handleLocationChange("pincode", e.target.value)
-                            }
-                            className={`form-control quick-radius ${errors.pincode ? "is-invalid" : ""
-                              }`}
+                            onChange={(e) => handleLocationChange("pincode", e.target.value)}
                             onBlur={() =>
                               setErrors((prev) => ({
                                 ...prev,
-                                pincode: validateField(
-                                  "pincode",
-                                  selectedLocation.pincode
-                                ),
+                                pincode: validateField("pincode", selectedLocation.pincode),
                               }))
                             }
                           />
-                          {errors.pincode && (
-                            <div className="invalid-feedback d-block">
-                              {errors.pincode}
-                            </div>
-                          )}
+                          {errors.pincode && <span className="form-error">{errors.pincode}</span>}
                         </div>
                       </div>
-                    </div>
 
-                    <div className="form-row">
-                      <div className="col-12">
-                        <div className="form-check">
+                      <div className="terms-section">
+                        <label className="checkbox-label">
                           <input
                             type="checkbox"
-                            className={`form-check-input ${errors.terms ? "is-invalid" : ""
-                              }`}
-                            id="termsCheck"
                             checked={isTermsAccepted}
                             onChange={(e) => {
                               setIsTermsAccepted(e.target.checked);
                               setErrors((prev) => ({
                                 ...prev,
-                                terms: e.target.checked
-                                  ? ""
-                                  : "You must agree to the terms and conditions",
+                                terms: e.target.checked ? "" : "You must agree to the terms",
                               }));
                             }}
                           />
-                          <label
-                            className="form-check-label"
-                            htmlFor="termsCheck"
-                          >
+                          <span className="checkbox-text">
                             I agree to the{" "}
-                            <a
-                              href="/termsconditions"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
+                            <a href="/termsconditions" target="_blank" rel="noopener noreferrer">
                               terms and conditions
                             </a>{" "}
-                            and
-                            <a
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleShowModal();
-                              }}
-                            >
-                              {" "}
+                            and{" "}
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleShowModal(); }}>
                               agreement
                             </a>
-                            .
-                          </label>
-                          {errors.terms && (
-                            <div className="invalid-feedback d-block">
-                              {errors.terms}
-                            </div>
-                          )}
-                        </div>
+                          </span>
+                        </label>
+                        {errors.terms && <span className="form-error">{errors.terms}</span>}
                       </div>
-                    </div>
 
-                    <div className="d-flex justify-content-center gap-3 justify-content-md-end justify-content-lg-center mt-4">
-                      <button
-                        className="btn btn-primary buy-btn"
-                        onClick={handleSave}
-                        disabled={checkingUsername}
-                      >
-                        {checkingUsername ? "Checking..." : "Buy"}
-                      </button>
-                      <button
-                        className="btn btn-secondary buy-btn"
-                        onClick={() => history.back()}
-                      >
-                        Cancel
-                      </button>
+                      <div className="form-actions">
+                        <button className="btn-cancel" onClick={() => history.back()}>
+                          Cancel
+                        </button>
+                        <button
+                          className="btn-submit"
+                          onClick={handleSave}
+                          disabled={checkingUsername}
+                        >
+                          {checkingUsername ? "Checking..." : "Proceed to Payment"}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
         <Modal show={showModal} onHide={handleCloseModal} size="lg">
           <Modal.Header closeButton>
             <Modal.Title>Upfilly Agreement</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div>
-              <iframe
-                src="/assets/img/AffiliateAgreemnet.pdf"
-                style={{ width: "100%", height: "500px" }}
-                frameBorder="0"
-                title="Upfilly Agreement"
-              ></iframe>
-            </div>
+            <iframe
+              src="/assets/img/AffiliateAgreemnet.pdf"
+              style={{ width: "100%", height: "500px" }}
+              frameBorder="0"
+              title="Upfilly Agreement"
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
@@ -1263,6 +1024,568 @@ export default function BillingForm() {
           </Modal.Footer>
         </Modal>
       </Layout>
+
+      <style jsx>{`
+        .billing-page {
+          min-height: 100vh;
+          background: #f8f9fc;
+          padding: 40px 0 60px;
+        }
+
+        .container {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        /* Header */
+        .billing-header {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+
+        .billing-logo {
+          height: 40px;
+          width: auto;
+          cursor: pointer;
+          margin-bottom: 24px;
+        }
+
+        .billing-title {
+          font-size: 32px;
+          font-weight: 700;
+          color: #1a1f36;
+          margin: 0 0 12px;
+        }
+
+        .billing-subtitle {
+          font-size: 16px;
+          color: #6c757d;
+          margin: 0;
+        }
+
+        /* Layout - Vertical Stack with flexible plans */
+        .billing-layout {
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+        }
+
+        /* Plans Section */
+        .plans-section {
+          width: 100%;
+        }
+
+        .plans-container {
+          width: 100%;
+        }
+
+        .plans-scroll-wrapper {
+          overflow-x: auto;
+          overflow-y: visible;
+          padding-bottom: 16px;
+          margin: -8px -8px 0 -8px;
+          padding: 8px;
+        }
+
+        .plans-scroll-wrapper::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        .plans-scroll-wrapper::-webkit-scrollbar-track {
+          background: #e5e7eb;
+          border-radius: 3px;
+        }
+
+        .plans-scroll-wrapper::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 3px;
+        }
+
+        .plans-flex-grid {
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 20px;
+          min-width: min-content;
+        }
+
+        /* Plan Card - Fixed width for consistency */
+        .plan-card {
+          flex: 0 0 300px;
+          border: 2px solid #e5e7eb;
+          border-radius: 12px;
+          padding: 20px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          background: #ffffff;
+        }
+
+        .plan-card:hover {
+          border-color: #4361ee;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(67, 97, 238, 0.12);
+        }
+
+        .plan-card.selected {
+          border-color: #4361ee;
+          background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+        }
+
+        .plan-card.error {
+          border-color: #dc2626;
+        }
+
+        .plan-card-header {
+          margin-bottom: 16px;
+        }
+
+        .plan-radio {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .radio-custom {
+          width: 20px;
+          height: 20px;
+          border: 2px solid #d1d5db;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .radio-custom.checked {
+          border-color: #4361ee;
+        }
+
+        .radio-dot {
+          width: 10px;
+          height: 10px;
+          background: #4361ee;
+          border-radius: 50%;
+        }
+
+        .plan-name {
+          font-size: 16px;
+          font-weight: 600;
+          color: #1a1f36;
+          margin: 0;
+        }
+
+        .plan-details {
+          background: #f8f9fc;
+          border-radius: 8px;
+          padding: 12px;
+          margin-bottom: 16px;
+        }
+
+        .detail-item {
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
+          padding: 4px 0;
+        }
+
+        .detail-label {
+          color: #6c757d;
+        }
+
+        .detail-value {
+          color: #1a1f36;
+          font-weight: 500;
+        }
+
+        .plan-features {
+          margin-bottom: 16px;
+          min-height: 100px;
+        }
+
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 12px;
+          color: #374151;
+          padding: 6px 0;
+        }
+
+        .feature-item svg {
+          flex-shrink: 0;
+          color: #10b981;
+        }
+
+        .feature-more {
+          font-size: 11px;
+          color: #6c757d;
+          padding-top: 6px;
+          font-style: italic;
+        }
+
+        .plan-price {
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+          flex-wrap: wrap;
+          padding-top: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        .price-original {
+          font-size: 13px;
+          color: #9ca3af;
+          text-decoration: line-through;
+        }
+
+        .price-current {
+          font-size: 22px;
+          font-weight: 700;
+          color: #1a1f36;
+        }
+
+        .price-period {
+          font-size: 12px;
+          color: #6c757d;
+        }
+
+        /* Form Section */
+        .form-section {
+          width: 100%;
+        }
+
+        /* Form Card */
+        .form-card {
+          background: #ffffff;
+          border-radius: 12px;
+          border: 1px solid #e5e7eb;
+          overflow: hidden;
+          margin-bottom: 24px;
+        }
+
+        .form-card:last-child {
+          margin-bottom: 0;
+        }
+
+        .form-card-header {
+          padding: 20px 24px;
+          border-bottom: 1px solid #e5e7eb;
+          background: #fafbfc;
+        }
+
+        .form-card-header h3 {
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a1f36;
+          margin: 0 0 4px;
+        }
+
+        .form-card-header span {
+          font-size: 13px;
+          color: #6c757d;
+        }
+
+        .form-card-body {
+          padding: 24px;
+        }
+
+        /* Form Elements */
+        .form-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+
+        .form-group {
+          margin-bottom: 0;
+        }
+
+        .form-group.full-width {
+          grid-column: span 2;
+        }
+
+        .form-label {
+          display: block;
+          font-size: 13px;
+          font-weight: 500;
+          color: #374151;
+          margin-bottom: 6px;
+        }
+
+        .form-input {
+          width: 100%;
+          padding: 10px 14px;
+          font-size: 14px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          background: #ffffff;
+        }
+
+        .form-input:focus {
+          outline: none;
+          border-color: #4361ee;
+          box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .form-input.error {
+          border-color: #dc2626;
+        }
+
+        .form-input:disabled {
+          background: #f3f4f6;
+          color: #6c757d;
+        }
+
+        .form-error {
+          display: block;
+          font-size: 12px;
+          color: #dc2626;
+          margin-top: 4px;
+        }
+
+        .form-hint {
+          display: block;
+          font-size: 12px;
+          margin-top: 4px;
+        }
+
+        .form-hint.success {
+          color: #10b981;
+        }
+
+        .form-hint.error {
+          color: #dc2626;
+        }
+
+        /* Password Wrapper */
+        .password-wrapper {
+          position: relative;
+        }
+
+        .password-wrapper .form-input {
+          padding-right: 40px;
+        }
+
+        .password-toggle {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #9ca3af;
+          font-size: 14px;
+        }
+
+        /* Autocomplete */
+        .autocomplete-wrapper {
+          position: relative;
+        }
+
+        .autocomplete-dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #ffffff;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          z-index: 100;
+          max-height: 200px;
+          overflow-y: auto;
+        }
+
+        .autocomplete-item {
+          padding: 10px 14px;
+          font-size: 13px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .autocomplete-item:hover {
+          background: #f3f4f6;
+        }
+
+        /* Terms Section */
+        .terms-section {
+          margin: 24px 0;
+        }
+
+        .checkbox-label {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+        }
+
+        .checkbox-label input {
+          width: 18px;
+          height: 18px;
+          cursor: pointer;
+          flex-shrink: 0;
+        }
+
+        .checkbox-text {
+          font-size: 13px;
+          color: #374151;
+        }
+
+        .checkbox-text a {
+          color: #4361ee;
+          text-decoration: none;
+        }
+
+        .checkbox-text a:hover {
+          text-decoration: underline;
+        }
+
+        /* Form Actions */
+        .form-actions {
+          display: flex;
+          justify-content: flex-end;
+          gap: 16px;
+          margin-top: 24px;
+          padding-top: 24px;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-cancel {
+          padding: 10px 24px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #6c757d;
+          background: #ffffff;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-cancel:hover {
+          background: #f9fafb;
+          border-color: #9ca3af;
+        }
+
+        .btn-submit {
+          padding: 10px 24px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #ffffff;
+          background: #4361ee;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+          background: #3a56d4;
+          transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .btn-ok {
+          padding: 10px 32px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #ffffff;
+          background: #4361ee;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+
+        /* Error Message */
+        .error-message {
+          margin-top: 16px;
+          padding: 12px;
+          background: #fef2f2;
+          border: 1px solid #fecaca;
+          border-radius: 8px;
+          color: #dc2626;
+          font-size: 13px;
+          text-align: center;
+        }
+
+        /* Responsive */
+        @media (min-width: 1024px) {
+          .plans-flex-grid {
+            flex-wrap: wrap;
+          }
+          
+          .plan-card {
+            flex: 1 1 calc(33.333% - 20px);
+            min-width: 280px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .billing-page {
+            padding: 20px 0 40px;
+          }
+
+          .container {
+            padding: 0 16px;
+          }
+
+          .billing-title {
+            font-size: 24px;
+          }
+
+          .billing-subtitle {
+            font-size: 14px;
+          }
+
+          .form-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
+          .form-group.full-width {
+            grid-column: span 1;
+          }
+
+          .form-card-header,
+          .form-card-body {
+            padding: 16px;
+          }
+
+          .plan-card {
+            flex: 0 0 280px;
+          }
+
+          .form-actions {
+            flex-direction: column-reverse;
+          }
+
+          .btn-cancel,
+          .btn-submit {
+            width: 100%;
+          }
+
+          .checkbox-text {
+            font-size: 12px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .plan-card {
+            flex: 0 0 260px;
+          }
+          
+          .price-current {
+            font-size: 18px;
+          }
+        }
+      `}</style>
     </>
   );
 }
