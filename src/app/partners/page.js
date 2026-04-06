@@ -156,7 +156,7 @@ export default function Partners() {
             <div className="container">
               <h2>Ready to Become a Partner?</h2>
               <p>Join our growing network of partners and start growing your business today</p>
-              <button className="cta-button-white" onClick={() => router.push('/partner-signup')}>
+              <button className="cta-button-white" onClick={() => router.push('/signupoptions')}>
                 Apply Now
               </button>
             </div>
