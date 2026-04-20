@@ -30,7 +30,7 @@ const CookiesPopup = () => {
             <p className='mt-3 bolding'>This website uses cookies to ensure you get the best experience on our website.</p>
             </div>
            <div className='d-flex justify-content-between align-items-center flex-column gap-2'>
-           <button className='cokkiebtns mr-10' onClick={handleAcceptCookies}>Accept Cookies</button>
+           <button className='cokkiebtns mr-10' onClick={handleAcceptCookies}>Allow</button>
             <button className='cokkiebtnsdeny ' onClick={handleClose}>Deny </button>
            </div>
         </div>

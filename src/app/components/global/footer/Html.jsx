@@ -13,7 +13,7 @@ const Html = ({ settingData, isOpen, toggle, isOpen2, toggle2, setIsOpen2, searc
           <div className="footer-cta">
             <h2>Start Your Growth Today</h2>
             <p>Here are more ways to discover how we can help you.</p>
-            <Link className="btn-gradient" href='/contact'>Contact Us</Link>
+            <Link className="btn-gradient" href='/faq'>Contact Us</Link>
             <Link className="btn-outline" href="/aboutus">About Us</Link>
           </div>
 
