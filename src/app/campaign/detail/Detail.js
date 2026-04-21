@@ -102,7 +102,7 @@ const Detail = (p) => {
 
     const back = () => {
         const searchParams = window.location.search;
-                
+
         window.location.href = '/campaign' + searchParams;
         // history.back()
     }
@@ -227,7 +227,7 @@ const Detail = (p) => {
                                             </div>
                                         </div>
                                     </div>
-                                      
+
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
@@ -241,7 +241,7 @@ const Detail = (p) => {
                                         </div>
                                     </div>
 
-                                      
+
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
@@ -282,21 +282,90 @@ const Detail = (p) => {
                                         </div>
                                     </div>
 
-                                    {/* Commission */}
+                                    {/* Commission Section */}
                                     <div className='row'>
-                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                            <div className='userdata'>
-                                                <p className='headmain'>Commission:</p>
-                                            </div>
-                                        </div>
-                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                            <div className='name-dtls'>
-                                                <p className='headsub'>
-                                                    {data?.commission} {data?.commission_type === "percentage" ? "%" : "$"}
-                                                </p>
-                                            </div>
+                                        <div className='col-12'>
+                                            <h4 className='mt-4 mb-3'>Commission Settings</h4>
                                         </div>
                                     </div>
+
+                                    {/* Check if tiered commission is enabled */}
+                                    {data?.tiered_commission_enabled ? (
+                                        <>
+                                            <div className='row'>
+                                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                    <div className='userdata'>
+                                                        <p className='headmain'>Commission Type:</p>
+                                                    </div>
+                                                </div>
+                                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                    <div className='name-dtls'>
+                                                        <p className='headsub'>Tiered Commission</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className='row'>
+                                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                    <div className='userdata'>
+                                                        <p className='headmain'>Calculation Type:</p>
+                                                    </div>
+                                                </div>
+                                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                    <div className='name-dtls'>
+                                                        <p className='headsub'>
+                                                            {data?.tier_calculation_type === "per_tier" ? "Per Tier" :
+                                                                data?.tier_calculation_type === "cumulative" ? "Cumulative" :
+                                                                    data?.tier_calculation_type || "N/A"}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className='row'>
+                                                <div className='col-12'>
+                                                    <div className='userdata'>
+                                                        <p className='headmain mb-2'>Tiers:</p>
+                                                    </div>
+                                                    <div className='table-responsive'>
+                                                        <table className='table table-bordered table-sm'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Min Amount</th>
+                                                                    <th>Max Amount</th>
+                                                                    <th>Rate (%)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {data?.tiers?.map((tier, index) => (
+                                                                    <tr key={index}>
+                                                                        <td>{tier.min}</td>
+                                                                        <td>{tier.max === 999999999 ? 'Unlimited' : tier.max}</td>
+                                                                        <td>{tier.rate}%</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className='row'>
+                                            <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                <div className='userdata'>
+                                                    <p className='headmain'>Commission:</p>
+                                                </div>
+                                            </div>
+                                            <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                <div className='name-dtls'>
+                                                    <p className='headsub'>
+                                                        {data?.commission} {data?.commission_type === "percentage" ? "%" : "$"}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -567,7 +636,6 @@ const Detail = (p) => {
                                                 <tr>
                                                     <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Name</th>
                                                     <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Email</th>
-                                                    {/* <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Website</th> */}
                                                     <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Joined Date</th>
                                                     <th style={{ position: 'sticky', top: 0, background: 'white', zIndex: 1 }}>Action</th>
                                                 </tr>
@@ -582,19 +650,6 @@ const Detail = (p) => {
                                                             </div>
                                                         </td>
                                                         <td>{affiliate.affiliate_id.email || 'N/A'}</td>
-                                                        {/* <td>
-                                                            {affiliate.affiliate_id.website ? (
-                                                                <a
-                                                                    href={affiliate.affiliate_id.website}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="text-primary"
-                                                                >
-                                                                    <i className="fa fa-external-link mr-1"></i>
-                                                                    {affiliate.affiliate_id.website}
-                                                                </a>
-                                                            ) : 'N/A'}
-                                                        </td> */}
                                                         <td>
                                                             {affiliate.affiliate_id.joinedDate ?
                                                                 new Date(affiliate.affiliate_id.joinedDate).toLocaleDateString() :
@@ -615,8 +670,6 @@ const Detail = (p) => {
                                                             {affiliate.status == "removed" && <button
                                                                 className="btn btn-sm btn-danger"
                                                                 disabled
-                                                            // onClick={() => removeAffiliate(affiliate.affiliate_id.id || affiliate.affiliate_id._id)}
-                                                            // title="Remove Affiliate"
                                                             >
                                                                 <i className="fa fa-trash mr-1"></i>
                                                                 Removed

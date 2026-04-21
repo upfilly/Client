@@ -207,8 +207,40 @@ const Html = ({
     setIsTermsAccepted(isAccepted);
   };
 
+  // Tier management functions
+  const addTier = () => {
+    const lastTier = form.tiers?.[form.tiers.length - 1];
+    const newMin = lastTier
+      ? (lastTier.max === Infinity ? lastTier.min + 1000 : lastTier.max + 1)
+      : 0;
+    const newMax = newMin + 1000;
+
+    setform({
+      ...form,
+      tiers: [
+        ...(form.tiers || []),
+        { min: newMin, max: newMax, rate: 0 }
+      ]
+    });
+  };
+
+  const updateTier = (index, field, value) => {
+    const newTiers = [...(form.tiers || [])];
+    newTiers[index][field] = field === 'max' && value === '' ? Infinity : parseFloat(value);
+    setform({ ...form, tiers: newTiers });
+  };
+
+  const removeTier = (index) => {
+    const newTiers = (form.tiers || []).filter((_, i) => i !== index);
+    setform({ ...form, tiers: newTiers });
+  };
+
   useEffect(() => {
     getCategory();
+    // Initialize tiers if not exists
+    if (!form.tiers) {
+      setform({ ...form, tiers: [] });
+    }
   }, []);
 
   return (
@@ -261,7 +293,7 @@ const Html = ({
                   )}
                 </div>
 
-              {/* Custom Parameter */}
+                {/* Custom Parameter */}
                 <div className="col-md-6 mb-3 custom-input">
                   <label>
                     Custom Parameter
@@ -368,11 +400,11 @@ const Html = ({
                   )}
                   {(!profileData?.currencies ||
                     profileData?.currencies?.length === 0) && (
-                    <div className="text-danger small mt-2">
-                      Note: You don't have any currencies. Please update your
-                      profile first.
-                    </div>
-                  )}
+                      <div className="text-danger small mt-2">
+                        Note: You don't have any currencies. Please update your
+                        profile first.
+                      </div>
+                    )}
                 </div>
 
                 {/* Affiliate (Private Campaign) */}
@@ -386,7 +418,6 @@ const Html = ({
                   >
                     <label>
                       Affiliate
-                      {/* <span className="star">*</span> */}
                     </label>
                     <div className="select_row">
                       <MultiSelectValue
@@ -396,18 +427,9 @@ const Html = ({
                         result={(e) =>
                           setform({ ...form, affiliate_id: e.value })
                         }
-                        // disabled={
-                        //   form?.status === "rejected" || !id ? false : true
-                        // }
                         options={affiliateData}
                       />
                     </div>
-
-                    {/* {submitted && !form?.affiliate_id && (
-                      <div className="invalid-feedback d-block">
-                        {errors?.affiliate_id}
-                      </div>
-                    )} */}
                   </div>
                 )}
 
@@ -586,6 +608,174 @@ const Html = ({
                     )}
                   </div>
                 )}
+
+                {/* ========== TIERED COMMISSIONS SECTION ========== */}
+                <div className="col-md-12 mb-3">
+                  <div className="card border-primary">
+                    <div className="card-header bg-primary text-white">
+                      <h5 className="mb-0">Tiered Commissions</h5>
+                    </div>
+                    <div className="card-body">
+                      {/* Toggle Switch */}
+                      <div className="form-group">
+                        <div className="custom-control custom-switch">
+                          <input
+                            type="checkbox"
+                            className="custom-control-input"
+                            id="tieredCommissionToggle"
+                            checked={form.tiered_commission_enabled || false}
+                            onChange={(e) => setform({
+                              ...form,
+                              tiered_commission_enabled: e.target.checked,
+                              tier_calculation_type: e.target.checked ? (form.tier_calculation_type || "retrospective") : null
+                            })}
+                          />
+                          <label className="custom-control-label font-weight-bold" htmlFor="tieredCommissionToggle">
+                            Enable Tiered Commissions
+                          </label>
+                        </div>
+                        <small className="form-text text-muted">
+                          Reward affiliates based on monthly performance tiers
+                        </small>
+                      </div>
+
+                      {/* Tier Configuration (only if enabled) */}
+                      {form.tiered_commission_enabled && (
+                        <>
+                          {/* Calculation Mode Selection */}
+                          <div className="form-row mt-3">
+                            <div className="col-md-6 mb-3">
+                              <label className="font-weight-bold">
+                                Calculation Mode <span className="star">*</span>
+                              </label>
+                              <div className="select_row">
+                                <SelectDropdown
+                                  theme="search"
+                                  displayValue="name"
+                                  placeholder="Select Calculation Mode"
+                                  intialValue={form.tier_calculation_type || "retrospective"}
+                                  result={(e) => setform({ ...form, tier_calculation_type: e.value })}
+                                  options={[
+                                    { id: "retrospective", name: "🎯 Retrospective - Highest rate applies to ALL sales" },
+                                    { id: "per_tier", name: "📊 Per Tier - Each bucket gets its own rate" }
+                                  ]}
+                                />
+                              </div>
+                              <small className="form-text text-muted">
+                                {form.tier_calculation_type === "retrospective"
+                                  ? "Affiliate reaches highest tier → ALL monthly sales get highest rate"
+                                  : "Each revenue bracket earns its specific rate (like tax brackets)"}
+                              </small>
+                            </div>
+                          </div>
+
+                          {/* Example Preview */}
+                          <div className="alert alert-info mt-2">
+                            <strong>Example:</strong><br />
+                            {form.tiers && form.tiers.length > 0 ? (
+                              <>
+                                {form.tiers.map((tier, idx) => (
+                                  <div key={idx}>
+                                    {tier.min === 0 ? "€0" : `€${tier.min}`}
+                                    {tier.max === Infinity ? "+" : ` - €${tier.max}`}
+                                    → {tier.rate}%
+                                  </div>
+                                ))}
+                                <div className="mt-2 text-muted small">
+                                  {form.tier_calculation_type === "retrospective"
+                                    ? "✓ If affiliate earns €7000 → All €7000 gets highest tier rate"
+                                    : "✓ If affiliate earns €7000 → Each bracket earns its own rate"}
+                                </div>
+                              </>
+                            ) : (
+                              <span className="text-muted">Add tiers below to see example</span>
+                            )}
+                          </div>
+
+                          {/* Tiers Table */}
+                          <label className="font-weight-bold mt-3">
+                            Commission Tiers
+                          </label>
+                          <div className="table-responsive">
+                            <table className="table table-bordered table-hover">
+                              <thead className="thead-light">
+                                <tr>
+                                  <th>Min Revenue (€)</th>
+                                  <th>Max Revenue (€)</th>
+                                  <th>Commission Rate (%)</th>
+                                  <th style={{ width: 50 }}>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {(form.tiers || []).map((tier, index) => (
+                                  <tr key={index}>
+                                    <td>
+                                      <input
+                                        type="number"
+                                        className="form-control form-control-sm"
+                                        value={tier.min}
+                                        onChange={(e) => updateTier(index, 'min', e.target.value)}
+                                        placeholder="Min"
+                                        step="0.01"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="number"
+                                        className="form-control form-control-sm"
+                                        value={tier.max === Infinity ? "" : tier.max}
+                                        onChange={(e) => updateTier(index, 'max', e.target.value)}
+                                        placeholder="Max (leave empty for ∞)"
+                                        step="0.01"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="number"
+                                        className="form-control form-control-sm"
+                                        value={tier.rate}
+                                        onChange={(e) => updateTier(index, 'rate', e.target.value)}
+                                        placeholder="Rate %"
+                                        step="0.01"
+                                        min="0"
+                                        max="100"
+                                      />
+                                    </td>
+                                    <td className="text-center">
+                                      <button
+                                        type="button"
+                                        className="btn btn-danger btn-sm"
+                                        onClick={() => removeTier(index)}
+                                        disabled={(form.tiers || []).length === 1}
+                                      >
+                                        <i className="fa fa-trash"></i>
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-secondary mt-2"
+                            onClick={addTier}
+                          >
+                            <i className="fa fa-plus"></i> Add Tier
+                          </button>
+
+                          <div className="alert alert-warning mt-3 small">
+                            <i className="fa fa-info-circle"></i>
+                            <strong>How it works:</strong> Tiers reset monthly. Only approved sales count.
+                            Refunds reduce total revenue. The final tier rate applies based on monthly total.
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {/* ========== END TIERED COMMISSIONS ========== */}
 
                 {/* Categories */}
                 <div
