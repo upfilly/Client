@@ -1706,7 +1706,7 @@ export default function affilate() {
                                     permission("affiliate_invite")) && (
                                     <button
                                       disabled={
-                                        itm?.association_status == "pending" ||
+                                        // itm?.association_status == "pending" ||
                                         itm?.association_status == "accepted"
                                           ? true
                                           : false
