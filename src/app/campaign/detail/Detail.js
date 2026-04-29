@@ -398,8 +398,8 @@ const Detail = (p) => {
                                             <div className='name-dtls'>
                                                 <p className='headsub'>
                                                     <span className="commission-badge">
-                                                        {data.commission} {data.commission_type === "percentage" ? "%" : "$"}
-                                                        {data.commission_type === "percentage" && " Commission"}
+                                                        {data?.commission} {data?.commission_type === "percentage" ? "%" : "$"}
+                                                        {data?.commission_type === "percentage" && " Commission"}
                                                     </span>
                                                 </p>
                                             </div>
@@ -416,7 +416,7 @@ const Detail = (p) => {
                                             <div className='name-dtls'>
                                                 <p className='headsub'>
                                                     <span className="commission-badge lead-rate">
-                                                        ${data.lead_amount} per lead
+                                                        ${data?.lead_amount} per lead
                                                     </span>
                                                 </p>
                                             </div>
@@ -437,9 +437,9 @@ const Detail = (p) => {
                                     {renderLeadCommissionInfo()}
 
                                     {/* Only show lead amount if not already shown in commission info */}
-                                    {data && (!data.lead_tiers || data.lead_tiers.length === 0) &&
+                                    {data && (!data?.lead_tiers || data?.lead_tiers?.length === 0) &&
                                         (!data.tiers || data.tiers.length === 0) &&
-                                        (data.commission === undefined || data.commission === null) &&
+                                        (data?.commission === undefined || data?.commission === null) &&
                                         data.lead_amount && (
                                             <div className='row'>
                                                 <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -449,7 +449,7 @@ const Detail = (p) => {
                                                 </div>
                                                 <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                                     <div className='name-dtls'>
-                                                        <p className='headsub'>{data.lead_amount}</p>
+                                                        <p className='headsub'>{data?.lead_amount}</p>
                                                     </div>
                                                 </div>
                                             </div>
