@@ -192,3 +192,105 @@ input.form-control-file.over_input {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 10px;
 }
+
+.commission-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.commission-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.calculation-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-retrospective {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge-per-tier {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.tier-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tier-table thead th {
+    background: #f1f3f5;
+    font-weight: 600;
+    border: none;
+    padding: 12px;
+}
+
+.amount-cell {
+    font-weight: 500;
+    color: #495057;
+}
+
+.rate-cell {
+    text-align: center;
+}
+
+.rate-badge {
+    background: #007bff;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.rate-badge.lead-rate {
+    background: #28a745;
+}
+
+.commission-badge {
+    background: #e7f3ff;
+    color: #0066cc;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.event-types {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.event-badge {
+    background: #e9ecef;
+    color: #495057;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.calculation-info {
+    padding: 8px 12px;
+    background: #e7f3ff;
+    border-radius: 6px;
+    font-size: 13px;
+}

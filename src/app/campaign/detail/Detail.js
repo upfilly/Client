@@ -55,7 +55,6 @@ const Detail = (p) => {
         });
 
         if (result.isConfirmed) {
-            // loader(true);
             try {
                 const res = await ApiClient.post(`campaign/remove`, {
                     affiliate_id: affiliateId,
@@ -70,7 +69,6 @@ const Detail = (p) => {
                         'Affiliate removed successfully',
                         'success'
                     );
-                    // loader(false);
                 } else {
                     await Swal.fire(
                         'Error!',
@@ -102,9 +100,7 @@ const Detail = (p) => {
 
     const back = () => {
         const searchParams = window.location.search;
-
         window.location.href = '/campaign' + searchParams;
-        // history.back()
     }
 
     const handleCopyLink = () => {
@@ -115,6 +111,117 @@ const Detail = (p) => {
         }).catch(err => {
             console.error('Failed to copy: ', err);
         });
+    };
+
+    const renderLeadCommissionInfo = () => {
+        if (!data) return null;
+        if (data.lead_tiers && data.lead_tiers.length > 0) {
+            return (
+                <div className='row'>
+                    <div className='col-12'>
+                        <div className='commission-section'>
+                            <div className='commission-header'>
+                                <i className="fa fa-users mr-2"></i>
+                                <h5 className="mb-0">Tiered Lead Commission Structure</h5>
+                            </div>
+                            <div className='table-responsive mt-3'>
+                                <table className='table tier-table'>
+                                    <thead>
+                                        <tr>
+                                            <th>Min Leads</th>
+                                            <th>Max Leads</th>
+                                            <th>Lead Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data.lead_tiers.map((tier, index) => (
+                                            <tr key={index}>
+                                                <td className="amount-cell">{tier.min?.toLocaleString() || 0}</td>
+                                                <td className="amount-cell">{tier.max ? tier.max.toLocaleString() : '∞ Unlimited'}</td>
+                                                <td className="rate-cell">
+                                                    <span className="rate-badge lead-rate">
+                                                        ${tier.rate} per lead
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    const renderCommissionInfo = () => {
+        if (!data) return null;
+
+        if (data.tiers && data.tiers.length > 0) {
+            return (
+                <div className='row'>
+                    <div className='col-12'>
+                        <div className='commission-section'>
+                            <div className='commission-header'>
+                                <i className="fa fa-line-chart mr-2"></i>
+                                <h5 className="mb-0">Tiered Commission Structure (Sales)</h5>
+                                {data.tier_calculation_type && (
+                                    <span className={`calculation-badge ${data.tier_calculation_type === 'retrospective' ? 'badge-retrospective' : 'badge-per-tier'}`}>
+                                        {data.tier_calculation_type === 'retrospective' ? 'Retrospective' : 'Per Tier'}
+                                    </span>
+                                )}
+                            </div>
+                            <div className='table-responsive mt-3'>
+                                <table className='table tier-table'>
+                                    <thead>
+                                        <tr>
+                                            <th>Min Amount</th>
+                                            <th>Max Amount</th>
+                                            <th>Commission Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data.tiers.map((tier, index) => (
+                                            <tr key={index}>
+                                                <td className="amount-cell">${tier.min?.toLocaleString() || 0}</td>
+                                                <td className="amount-cell">{tier.max ? `$${tier.max.toLocaleString()}` : '∞ Unlimited'}</td>
+                                                <td className="rate-cell">
+                                                    <span className="rate-badge">
+                                                        {tier.rate}% {tier.type === 'percentage' && 'Commission'}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="calculation-info mt-2">
+                                <small className="text-muted">
+                                    <i className="fa fa-info-circle mr-1"></i>
+                                    {data.tier_calculation_type === 'retrospective'
+                                        ? 'Commission calculated retrospectively based on total sales volume'
+                                        : 'Commission calculated per tier based on individual sale amount'}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Case 5: No commission data found
+
+        return (
+            <div className='row'>
+                <div className='col-12'>
+                    <div className="alert alert-info">
+                        <i className="fa fa-info-circle mr-2"></i>
+                        No commission information available
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     useEffect(() => {
@@ -241,7 +348,6 @@ const Detail = (p) => {
                                         </div>
                                     </div>
 
-
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
                                             <div className='userdata'>
@@ -282,90 +388,23 @@ const Detail = (p) => {
                                         </div>
                                     </div>
 
-                                    {/* Commission Section */}
                                     <div className='row'>
-                                        <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>Commission Settings</h4>
-                                        </div>
-                                    </div>
-
-                                    {/* Check if tiered commission is enabled */}
-                                    {data?.tiered_commission_enabled ? (
-                                        <>
-                                            <div className='row'>
-                                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                    <div className='userdata'>
-                                                        <p className='headmain'>Commission Type:</p>
-                                                    </div>
-                                                </div>
-                                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                    <div className='name-dtls'>
-                                                        <p className='headsub'>Tiered Commission</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='row'>
-                                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                    <div className='userdata'>
-                                                        <p className='headmain'>Calculation Type:</p>
-                                                    </div>
-                                                </div>
-                                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                    <div className='name-dtls'>
-                                                        <p className='headsub'>
-                                                            {data?.tier_calculation_type === "per_tier" ? "Per Tier" :
-                                                                data?.tier_calculation_type === "cumulative" ? "Cumulative" :
-                                                                    data?.tier_calculation_type || "N/A"}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className='row'>
-                                                <div className='col-12'>
-                                                    <div className='userdata'>
-                                                        <p className='headmain mb-2'>Tiers:</p>
-                                                    </div>
-                                                    <div className='table-responsive'>
-                                                        <table className='table table-bordered table-sm'>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Min Amount</th>
-                                                                    <th>Max Amount</th>
-                                                                    <th>Rate (%)</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {data?.tiers?.map((tier, index) => (
-                                                                    <tr key={index}>
-                                                                        <td>{tier.min}</td>
-                                                                        <td>{tier.max === 999999999 ? 'Unlimited' : tier.max}</td>
-                                                                        <td>{tier.rate}%</td>
-                                                                    </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <div className='row'>
-                                            <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                <div className='userdata'>
-                                                    <p className='headmain'>Commission:</p>
-                                                </div>
-                                            </div>
-                                            <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                <div className='name-dtls'>
-                                                    <p className='headsub'>
-                                                        {data?.commission} {data?.commission_type === "percentage" ? "%" : "$"}
-                                                    </p>
-                                                </div>
+                                        <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                            <div className='userdata'>
+                                                <p className='headmain'>Commission:</p>
                                             </div>
                                         </div>
-                                    )}
+                                        <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                            <div className='name-dtls'>
+                                                <p className='headsub'>
+                                                    <span className="commission-badge">
+                                                        {data.commission} {data.commission_type === "percentage" ? "%" : "$"}
+                                                        {data.commission_type === "percentage" && " Commission"}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                     </div>
 
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -375,10 +414,46 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data?.lead_amount}</p>
+                                                <p className='headsub'>
+                                                    <span className="commission-badge lead-rate">
+                                                        ${data.lead_amount} per lead
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Commission Section */}
+                                    <div className='row'>
+                                        <div className='col-12'>
+                                            <h4 className='mt-4 mb-3'>
+                                                <i className="fa fa-commission mr-2"></i>
+                                                Commission Settings
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    {renderCommissionInfo()}
+                                    {renderLeadCommissionInfo()}
+
+                                    {/* Only show lead amount if not already shown in commission info */}
+                                    {data && (!data.lead_tiers || data.lead_tiers.length === 0) &&
+                                        (!data.tiers || data.tiers.length === 0) &&
+                                        (data.commission === undefined || data.commission === null) &&
+                                        data.lead_amount && (
+                                            <div className='row'>
+                                                <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                    <div className='userdata'>
+                                                        <p className='headmain'>Lead Amount:</p>
+                                                    </div>
+                                                </div>
+                                                <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                    <div className='name-dtls'>
+                                                        <p className='headsub'>{data.lead_amount}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
 
                                     <div className='row'>
                                         <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
@@ -388,7 +463,13 @@ const Detail = (p) => {
                                         </div>
                                         <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
                                             <div className='name-dtls'>
-                                                <p className='headsub'>{data?.event_type?.join(", ")}</p>
+                                                <div className="event-types">
+                                                    {data?.event_type?.map((type, idx) => (
+                                                        <span key={idx} className="event-badge">
+                                                            {type}
+                                                        </span>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -510,92 +591,104 @@ const Detail = (p) => {
                                     </div>
 
                                     {/* De-duplication Settings */}
-                                    <div className='row'>
-                                        <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>De-duplication Settings</h4>
-                                        </div>
-                                    </div>
-
-                                    {data?.deDuplicate && Object.entries(data.deDuplicate).map(([key, value]) => (
-                                        <div className='row' key={key}>
-                                            <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                <div className='userdata'>
-                                                    <p className='headmain'>{key}:</p>
+                                    {data?.deDuplicate && Object.keys(data.deDuplicate).length > 0 && (
+                                        <>
+                                            <div className='row'>
+                                                <div className='col-12'>
+                                                    <h4 className='mt-4 mb-3'>De-duplication Settings</h4>
                                                 </div>
                                             </div>
-                                            <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                <div className='name-dtls'>
-                                                    <p className='headsub'>{value.value} {value.additionalInfo && `(${value.additionalInfo})`}</p>
+                                            {Object.entries(data.deDuplicate).map(([key, value]) => (
+                                                <div className='row' key={key}>
+                                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                        <div className='userdata'>
+                                                            <p className='headmain'>{key}:</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                        <div className='name-dtls'>
+                                                            <p className='headsub'>{value?.value} {value?.additionalInfo && `(${value.additionalInfo})`}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                            ))}
+                                        </>
+                                    )}
 
                                     {/* Publisher Restrictions */}
-                                    <div className='row'>
-                                        <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>Publisher Restrictions </h4>
-                                        </div>
-                                    </div>
-
-                                    {data?.publisher && Object.entries(data.publisher).map(([key, value]) => (
-                                        <div className='row' key={key}>
-                                            <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                <div className='userdata'>
-                                                    <p className='headmain'>{key}:</p>
+                                    {data?.publisher && Object.keys(data.publisher).length > 0 && (
+                                        <>
+                                            <div className='row'>
+                                                <div className='col-12'>
+                                                    <h4 className='mt-4 mb-3'>Publisher Restrictions</h4>
                                                 </div>
                                             </div>
-                                            <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                <div className='name-dtls'>
-                                                    <p className='headsub'>{value.value} {value.additionalInfo && `(${value.additionalInfo})`}</p>
+                                            {Object.entries(data.publisher).map(([key, value]) => (
+                                                <div className='row' key={key}>
+                                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                        <div className='userdata'>
+                                                            <p className='headmain'>{key}:</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                        <div className='name-dtls'>
+                                                            <p className='headsub'>{value?.value} {value?.additionalInfo && `(${value.additionalInfo})`}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                            ))}
+                                        </>
+                                    )}
 
                                     {/* PPC Settings */}
-                                    <div className='row'>
-                                        <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>PPC Settings</h4>
-                                        </div>
-                                    </div>
-
-                                    {data?.ppc && Object.entries(data.ppc).map(([key, value]) => (
-                                        <div className='row' key={key}>
-                                            <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                <div className='userdata'>
-                                                    <p className='headmain'>{key}:</p>
+                                    {data?.ppc && Object.keys(data.ppc).length > 0 && (
+                                        <>
+                                            <div className='row'>
+                                                <div className='col-12'>
+                                                    <h4 className='mt-4 mb-3'>PPC Settings</h4>
                                                 </div>
                                             </div>
-                                            <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                <div className='name-dtls'>
-                                                    <p className='headsub'>{value.value} {value.additionalInfo && `(${value.additionalInfo})`}</p>
+                                            {Object.entries(data.ppc).map(([key, value]) => (
+                                                <div className='row' key={key}>
+                                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                        <div className='userdata'>
+                                                            <p className='headmain'>{key}:</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                        <div className='name-dtls'>
+                                                            <p className='headsub'>{value?.value} {value?.additionalInfo && `(${value.additionalInfo})`}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                            ))}
+                                        </>
+                                    )}
 
                                     {/* Transaction Settings */}
-                                    <div className='row'>
-                                        <div className='col-12'>
-                                            <h4 className='mt-4 mb-3'>Transaction Settings</h4>
-                                        </div>
-                                    </div>
-
-                                    {data?.transaction && Object.entries(data.transaction).map(([key, value]) => (
-                                        <div className='row' key={key}>
-                                            <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
-                                                <div className='userdata'>
-                                                    <p className='headmain'>{key}:</p>
+                                    {data?.transaction && Object.keys(data.transaction).length > 0 && (
+                                        <>
+                                            <div className='row'>
+                                                <div className='col-12'>
+                                                    <h4 className='mt-4 mb-3'>Transaction Settings</h4>
                                                 </div>
                                             </div>
-                                            <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
-                                                <div className='name-dtls'>
-                                                    <p className='headsub'>{value.value} {value.additionalInfo && `(${value.additionalInfo})`}</p>
+                                            {Object.entries(data.transaction).map(([key, value]) => (
+                                                <div className='row' key={key}>
+                                                    <div className='col-12 col-sm-12 col-md-4 col-lg-3'>
+                                                        <div className='userdata'>
+                                                            <p className='headmain'>{key}:</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col-12 col-sm-12 col-md-8 col-lg-9'>
+                                                        <div className='name-dtls'>
+                                                            <p className='headsub'>{value?.value} {value?.additionalInfo && `(${value.additionalInfo})`}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                            ))}
+                                        </>
+                                    )}
 
                                 </div>
                             </div>
@@ -659,22 +752,25 @@ const Detail = (p) => {
                                                             }
                                                         </td>
                                                         <td>
-                                                            {affiliate.status != "removed" && <button
-                                                                className="btn btn-sm btn-outline-danger text-danger bg-light"
-                                                                onClick={() => removeAffiliate(affiliate.affiliate_id.id || affiliate.affiliate_id._id)}
-                                                                title="Remove Affiliate"
-                                                            >
-                                                                <i className="fa fa-trash mr-1"></i>
-                                                                Remove
-                                                            </button>}
-                                                            {affiliate.status == "removed" && <button
-                                                                className="btn btn-sm btn-danger"
-                                                                disabled
-                                                            >
-                                                                <i className="fa fa-trash mr-1"></i>
-                                                                Removed
-                                                            </button>}
-
+                                                            {affiliate.status != "removed" && (
+                                                                <button
+                                                                    className="btn btn-sm btn-outline-danger text-danger bg-light"
+                                                                    onClick={() => removeAffiliate(affiliate.affiliate_id.id || affiliate.affiliate_id._id)}
+                                                                    title="Remove Affiliate"
+                                                                >
+                                                                    <i className="fa fa-trash mr-1"></i>
+                                                                    Remove
+                                                                </button>
+                                                            )}
+                                                            {affiliate.status == "removed" && (
+                                                                <button
+                                                                    className="btn btn-sm btn-danger"
+                                                                    disabled
+                                                                >
+                                                                    <i className="fa fa-trash mr-1"></i>
+                                                                    Removed
+                                                                </button>
+                                                            )}
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -702,7 +798,6 @@ const Detail = (p) => {
                     </div>
                 </div>
             )}
-
         </Layout>
     );
 };
