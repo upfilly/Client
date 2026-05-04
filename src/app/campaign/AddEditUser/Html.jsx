@@ -44,7 +44,7 @@ const Html = ({
   formFields,
   formPpcFields,
   formTransactionFields,
-  formPublisherFields,
+  formPublisherFields,isTieredCommissionsEnabled, setIsTieredCommissionsEnabled
 }) => {
   const [loadDocerr, setDocLoader] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
@@ -59,9 +59,6 @@ const Html = ({
   ];
 
   const [isTypeDisabled, setIsTypeDisabled] = useState(false);
-
-  // Common tiered commissions toggle state
-  const [isTieredCommissionsEnabled, setIsTieredCommissionsEnabled] = useState(false);
 
   // Patch categories and regions when editing
   useEffect(() => {

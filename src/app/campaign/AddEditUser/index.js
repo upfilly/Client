@@ -183,6 +183,7 @@ const AddEditUser = () => {
       return acc;
     }, {})
   );
+  const [isTieredCommissionsEnabled, setIsTieredCommissionsEnabled] = useState(false);
 
   console.log(detail, "detail");
 
@@ -313,6 +314,7 @@ const AddEditUser = () => {
       ppc: formPpcData,
       publisher: formPublisherData,
       deDuplicate: formData,
+      tiered_commission:isTieredCommissionsEnabled
     };
     // return;
     if (!form.event_type?.includes("purchase")) {
@@ -441,6 +443,9 @@ const AddEditUser = () => {
             event_type: value?.event_type,
             region: value?.region,
             region_continents: value?.region_continents,
+            tiers:value?.tiers,
+            lead_tiers:value?.lead_tiers,
+            tier_calculation_type:value?.tier_calculation_type
           });
           setSelectedItems({
             categories: value?.category?.map((dat) => dat?.id),
@@ -451,6 +456,7 @@ const AddEditUser = () => {
             regions: value?.region,
             countries: value?.region_continents,
           });
+          setIsTieredCommissionsEnabled(value?.tiered_commission)
         }
         loader(false);
       });
@@ -534,6 +540,8 @@ const AddEditUser = () => {
         formPpcFields={formPpcFields}
         formTransactionFields={formTransactionFields}
         formPublisherFields={formPublisherFields}
+        isTieredCommissionsEnabled={isTieredCommissionsEnabled}
+        setIsTieredCommissionsEnabled={setIsTieredCommissionsEnabled}
       />
     </>
   );
