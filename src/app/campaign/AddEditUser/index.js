@@ -314,7 +314,7 @@ const AddEditUser = () => {
       ppc: formPpcData,
       publisher: formPublisherData,
       deDuplicate: formData,
-      tiered_commission:isTieredCommissionsEnabled
+      tiered_commission_enabled:isTieredCommissionsEnabled
     };
     // return;
     if (!form.event_type?.includes("purchase")) {
@@ -456,7 +456,7 @@ const AddEditUser = () => {
             regions: value?.region,
             countries: value?.region_continents,
           });
-          setIsTieredCommissionsEnabled(value?.tiered_commission)
+          setIsTieredCommissionsEnabled(value?.tiered_commission_enabled)
         }
         loader(false);
       });
