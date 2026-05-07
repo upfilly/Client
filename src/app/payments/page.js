@@ -13,13 +13,420 @@ import { useRouter, useSearchParams } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
 import methodModel from "../../methods/methods";
 import Modal from 'react-modal';
-import toast from 'react-toastify';
 import environment from "@/environment";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 if (typeof window !== 'undefined') {
   Modal.setAppElement('body');
 }
+
+// Update customModalStyles - remove overflow from modal content
+const customModalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '650px',
+    maxWidth: '90%',
+    maxHeight: '85vh',
+    overflow: 'hidden', // Changed from 'auto' to 'hidden'
+    borderRadius: '12px',
+    border: 'none',
+    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+    padding: '0',
+    zIndex: 9999,
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    zIndex: 9998,
+  }
+};
+
+// Helper functions for tiered commission calculation
+const calculateTieredCommission = (amount, tiers, calculationType = "per_tier") => {
+  if (!tiers || tiers.length === 0) return 0;
+
+  let totalCommission = 0;
+
+  if (calculationType === "retrospective") {
+    // Find the tier that applies to the full amount
+    const applicableTier = [...tiers].reverse().find(tier =>
+      (tier.min === null || amount >= tier.min) &&
+      (tier.max === null || amount <= tier.max)
+    );
+
+    if (applicableTier) {
+      if (applicableTier.type === "percentage") {
+        totalCommission = (amount * applicableTier.rate) / 100;
+      } else {
+        totalCommission = applicableTier.rate;
+      }
+    }
+  } else {
+    // per_tier calculation
+    let remainingAmount = amount;
+
+    for (const tier of tiers) {
+      const tierMin = tier.min || 0;
+      const tierMax = tier.max || Infinity;
+
+      if (remainingAmount <= 0) break;
+
+      let tierAmount = 0;
+
+      if (amount > tierMin) {
+        if (tierMax === Infinity) {
+          tierAmount = remainingAmount;
+        } else if (amount > tierMax) {
+          tierAmount = Math.min(remainingAmount, tierMax - tierMin);
+        } else {
+          tierAmount = remainingAmount;
+        }
+
+        if (tier.type === "percentage") {
+          totalCommission += (tierAmount * tier.rate) / 100;
+        } else {
+          totalCommission += tier.rate;
+        }
+
+        remainingAmount -= tierAmount;
+      }
+    }
+  }
+
+  return totalCommission;
+};
+
+const calculateLeadTieredCommission = (leadCount, leadTiers, calculationType = "per_tier") => {
+  if (!leadTiers || leadTiers.length === 0) return 0;
+
+  let totalCommission = 0;
+
+  if (calculationType === "retrospective") {
+    const applicableTier = [...leadTiers].reverse().find(tier =>
+      (tier.min === null || leadCount >= tier.min) &&
+      (tier.max === null || leadCount <= tier.max)
+    );
+
+    if (applicableTier) {
+      totalCommission = applicableTier.rate;
+    }
+  } else {
+    // per_tier calculation
+    let remainingLeads = leadCount;
+
+    for (const tier of leadTiers) {
+      const tierMin = tier.min || 0;
+      const tierMax = tier.max || Infinity;
+
+      if (remainingLeads <= 0) break;
+
+      let tierLeads = 0;
+
+      if (leadCount > tierMin) {
+        if (tierMax === Infinity) {
+          tierLeads = remainingLeads;
+        } else if (leadCount > tierMax) {
+          tierLeads = Math.min(remainingLeads, tierMax - tierMin);
+        } else {
+          tierLeads = remainingLeads;
+        }
+
+        totalCommission += tierLeads * tier.rate;
+        remainingLeads -= tierLeads;
+      }
+    }
+  }
+
+  return totalCommission;
+};
+
+const getCommissionBreakdown = (transaction, campaignDetails) => {
+  if (!campaignDetails) return null;
+
+  const isTiered = campaignDetails.tiered_commission_enabled;
+  const tierCalculationType = campaignDetails.tier_calculation_type || "per_tier";
+  const eventType = campaignDetails.event_type || [];
+
+  console.log(isTiered,"isTieredisTiered")
+
+  let commissionAmount = 0;
+  let commissionDetails = {
+    type: isTiered ? "tiered" : "standard",
+    calculationType: tierCalculationType,
+    breakdown: [],
+    totalCommission: 0
+  };
+
+  // Check if it's a purchase transaction
+  const isPurchase = true
+
+  // Check if it's a lead transaction
+  const isLead = true
+
+  if (isPurchase && eventType.includes("purchase")) {
+    const purchaseAmount = transaction.affiliate_link_data?.price ||
+      0;
+
+    if (isTiered && campaignDetails.tiers && campaignDetails.tiers.length > 0) {
+      commissionAmount = calculateTieredCommission(
+        purchaseAmount,
+        campaignDetails.tiers,
+        tierCalculationType
+      );
+
+      commissionDetails.breakdown.push({
+        type: "purchase",
+        amount: purchaseAmount,
+        commission: commissionAmount,
+        tierUsed: true,
+        calculationType: tierCalculationType,
+        tiers: campaignDetails.tiers
+      });
+    } else {
+      // Standard commission
+      if (campaignDetails.commission_type === "percentage") {
+        commissionAmount = (purchaseAmount * campaignDetails.commission) / 100;
+      } else {
+        commissionAmount = campaignDetails.commission;
+      }
+
+      commissionDetails.breakdown.push({
+        type: "purchase",
+        amount: purchaseAmount,
+        commission: commissionAmount,
+        tierUsed: false,
+        rate: campaignDetails.commission,
+        rateType: campaignDetails.commission_type
+      });
+    }
+  }
+
+  if (isLead && eventType.includes("lead")) {
+    const leadCount = 1;
+    let leadCommission = 0;
+
+    if (isTiered && campaignDetails.lead_tiers && campaignDetails.lead_tiers.length > 0) {
+      leadCommission = calculateLeadTieredCommission(
+        leadCount,
+        campaignDetails.lead_tiers,
+        tierCalculationType
+      );
+
+      commissionDetails.breakdown.push({
+        type: "lead",
+        count: leadCount,
+        commission: leadCommission,
+        tierUsed: true,
+        calculationType: tierCalculationType,
+        tiers: campaignDetails.lead_tiers
+      });
+    } else {
+      // Standard lead commission
+      leadCommission = campaignDetails.lead_amount || 0;
+
+      commissionDetails.breakdown.push({
+        type: "lead",
+        count: leadCount,
+        commission: leadCommission,
+        tierUsed: false,
+        amount: campaignDetails.lead_amount
+      });
+    }
+
+    commissionAmount += leadCommission;
+  }
+
+  commissionDetails.totalCommission = commissionAmount;
+
+  return commissionDetails;
+};
+
+// Commission Details Modal Component - Fixed scrolling
+const CommissionDetailsModal = ({ isOpen, onClose, transaction, campaignDetails }) => {
+  if (!isOpen || !campaignDetails) return null;
+
+  const commissionBreakdown = getCommissionBreakdown(transaction, campaignDetails);
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      style={customModalStyles}
+      contentLabel="Commission Details"
+    >
+      <div className="commission-details-modal" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <div className="modal-header" style={{
+          backgroundColor: '#f8f9fa',
+          borderBottom: '1px solid #dee2e6',
+          padding: '16px 20px',
+          flexShrink: 0
+        }}>
+          <h5 className="modal-title" style={{ fontSize: '18px', fontWeight: '600', margin: 0 }}>
+            <i className="fa fa-calculator me-2" aria-hidden="true"></i>
+            Commission Calculation Details
+          </h5>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={onClose}
+            aria-label="Close"
+            style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer' }}
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="modal-body" style={{
+          padding: '20px',
+          flex: 1,
+          overflowY: 'auto',
+          minHeight: 0
+        }}>
+          <div className="mb-4">
+            <h6>Campaign: {campaignDetails.name}</h6>
+            <p className="text-muted small">{campaignDetails.description?.replace(/<[^>]*>/g, '') || 'No description'}</p>
+          </div>
+
+          <div className="alert alert-info mb-3">
+            <strong>
+              {commissionBreakdown?.type === "tiered" ? "Tiered Commission" : "Standard Commission"}
+            </strong>
+            {commissionBreakdown?.type === "tiered" && (
+              <span className="badge bg-info ms-2">
+                {commissionBreakdown.calculationType === "per_tier" ? "Per Tier" : "Retrospective"}
+              </span>
+            )}
+          </div>
+
+          {commissionBreakdown?.breakdown.map((item, idx) => (
+            <div key={idx} className="card mb-3" style={{ border: '1px solid #dee2e6', borderRadius: '8px' }}>
+              <div className="card-header bg-light" style={{ padding: '12px 16px', borderBottom: '1px solid #dee2e6' }}>
+                <strong className="text-capitalize">{item.type}</strong> Commission
+              </div>
+              <div className="card-body" style={{ padding: '16px' }}>
+                {item.type === "purchase" && (
+                  <>
+                    <div className="mb-2">
+                      <strong>Purchase Amount:</strong> ${item.amount?.toFixed(2) || '0.00'}
+                    </div>
+                    {item.tierUsed ? (
+                      <div className="mb-2">
+                        <strong>Tier Structure:</strong>
+                        <div className="table-responsive mt-2">
+                          <table className="table table-sm table-bordered" style={{ fontSize: '14px', marginBottom: 0 }}>
+                            <thead>
+                              <tr>
+                                <th>Min Range</th>
+                                <th>Max Range</th>
+                                <th>Rate</th>
+                                <th>Type</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.tiers?.map((tier, tierIdx) => (
+                                <tr key={tierIdx}>
+                                  <td>${tier.min || 0}</td>
+                                  <td>{tier.max ? `$${tier.max}` : "∞"}</td>
+                                  <td>{tier.rate}%</td>
+                                  <td>{tier.type || "percentage"}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                        <div className="text-muted small mt-2">
+                          Calculation applied: {item.calculationType === "per_tier"
+                            ? "Commission calculated per tier range"
+                            : "Full amount qualifies for highest tier rate"}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mb-2">
+                        <strong>Commission Rate:</strong> {item.rate}% ({item.rateType})
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {item.type === "lead" && (
+                  <>
+                    <div className="mb-2">
+                      <strong>Lead Count:</strong> {item.count}
+                    </div>
+                    {item.tierUsed ? (
+                      <div className="mb-2">
+                        <strong>Lead Tier Structure:</strong>
+                        <div className="table-responsive mt-2">
+                          <table className="table table-sm table-bordered" style={{ fontSize: '14px', marginBottom: 0 }}>
+                            <thead>
+                              <tr>
+                                <th>Min Leads</th>
+                                <th>Max Leads</th>
+                                <th>Rate ($)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.tiers?.map((tier, tierIdx) => (
+                                <tr key={tierIdx}>
+                                  <td>{tier.min || 0}</td>
+                                  <td>{tier.max || "∞"}</td>
+                                  <td>${tier.rate}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mb-2">
+                        <strong>Lead Amount:</strong> ${item.amount || '0.00'}
+                      </div>
+                    )}
+                  </>
+                )}
+
+                <div className="mt-3 pt-2 border-top">
+                  <strong className="text-success">
+                    Calculated Commission: ${item.commission?.toFixed(2) || '0.00'}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="alert alert-success">
+            <h6 className="mb-0">
+              <i className="fa fa-money me-2" aria-hidden="true"></i>
+              Total Commission: ${commissionBreakdown?.totalCommission?.toFixed(2) || '0.00'}
+            </h6>
+          </div>
+
+          <div className="alert alert-warning mt-3">
+            <small>
+              <i className="fa fa-info-circle me-2" aria-hidden="true"></i>
+              <strong>Note:</strong> Final commission amount may be subject to platform fees and adjustments based on return/refund policies.
+            </small>
+          </div>
+        </div>
+
+        <div className="modal-footer" style={{
+          borderTop: '1px solid #dee2e6',
+          padding: '15px 20px',
+          flexShrink: 0
+        }}>
+          <button className="btn btn-secondary" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
 
 export default function Affilate() {
   const history = useRouter();
@@ -63,6 +470,10 @@ export default function Affilate() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const modalRef = useRef(null);
+
+  // State for commission details modal
+  const [selectedCommissionTransaction, setSelectedCommissionTransaction] = useState(null);
+  const [isCommissionModalOpen, setIsCommissionModalOpen] = useState(false);
 
   const downloadInvoice = (transaction) => {
     if (!transaction.invoice_url) {
@@ -130,7 +541,6 @@ export default function Affilate() {
         link.click();
       }
 
-      // Clean up
       setTimeout(() => {
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
@@ -181,7 +591,6 @@ export default function Affilate() {
         link.click();
       }
 
-      // Clean up
       setTimeout(() => {
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
@@ -220,7 +629,7 @@ export default function Affilate() {
       const response = await axios.get(invoiceUrl, {
         responseType: 'blob',
         headers: {
-          'Cache-Control': 'no-cache', // Prevent caching issues
+          'Cache-Control': 'no-cache',
           'Pragma': 'no-cache'
         }
       });
@@ -378,7 +787,6 @@ export default function Affilate() {
     ApiClient.get(`payableMonthlyTransactions`).then((res) => {
       if (res.success) {
         setPendingPaymentData(res?.data);
-        // Check if there are any pending payments
         const hasPayments = res?.data?.totalPayableAmount > 0 &&
           res?.data?.totalPendingTransactions > 0;
         setHasPendingPayments(hasPayments);
@@ -398,7 +806,6 @@ export default function Affilate() {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, user_id: user?.id, ...params });
       getPlanData();
-      // Check for pending payments when component mounts
       getPendingPaymentData();
     } else if (user.role != "brand") {
       setFilter({ ...filters, page: 1, ...params });
@@ -412,28 +819,31 @@ export default function Affilate() {
     }
   }, [activeTab, monthlyFilters.page, monthlyFilters.year, monthlyFilters.month, monthlyFilters.sortBy]);
 
-  // Refresh pending payments status when switching to transactions tab
   useEffect(() => {
     if (activeTab === "all" && user?.role === "brand") {
       getPendingPaymentData();
     }
   }, [activeTab]);
 
+  // Improved click outside handler
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      if (modalRef.current && !modalRef.current.contains(event.target) && !isProcessing) {
         handleClosePaymentModal();
       }
     };
 
     if (isPaymentModalOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = 'unset';
     };
-  }, [isPaymentModalOpen]);
+  }, [isPaymentModalOpen, isProcessing]);
 
   const pageChange = (e) => {
     if (activeTab === "all") {
@@ -541,6 +951,17 @@ export default function Affilate() {
     }
   };
 
+  // Function to view commission details
+  const viewCommissionDetails = (transaction) => {
+    console.log(transaction,"transactiontransaction")
+    if (transaction.campaign_details) {
+      setSelectedCommissionTransaction(transaction);
+      setIsCommissionModalOpen(true);
+    } else {
+      toast.error("No campaign details available for commission calculation");
+    }
+  };
+
   const calculateDistribution = () => {
     if (!pendingPaymentData || !pendingPaymentData.totalPayableAmount) {
       return {
@@ -601,7 +1022,6 @@ export default function Affilate() {
       if (response?.success) {
         window.open(response.data.url, "_self");
         getData();
-        // After payment, refresh the pending payments status
         setTimeout(() => {
           getPendingPaymentData();
         }, 2000);
@@ -679,7 +1099,6 @@ export default function Affilate() {
         <div className="row">
           <div className="col-md-12">
             <div className="d-flex flex-wrap gap-2 all_flexbx justify-content-md-end">
-              {/* Only show Pay Commission button if there are pending payments */}
               {user?.role === "brand" && hasPendingPayments && (
                 <button
                   className="btn btn-primary"
@@ -690,7 +1109,6 @@ export default function Affilate() {
                 </button>
               )}
 
-              {/* Optional: Show a message when there are no pending payments */}
               {user?.role === "brand" && !hasPendingPayments && !loading && (
                 <div className="text-muted small d-flex align-items-center">
                   <i className="fa fa-check-circle text-success me-2" aria-hidden="true"></i>
@@ -787,9 +1205,14 @@ export default function Affilate() {
                       <th onClick={(e) => sorting("createdAt")}>
                         Creation Date {filters?.sorder === "asc" ? "↑" : "↓"}
                       </th>
-                     {user?.role === "affiliate" && <th>
+                      {user?.role === "affiliate" && <th>
                         Action
                       </th>}
+                      {/* {user?.role === "affiliate" && ( */}
+                        <th scope="row">
+                          Commission Info
+                        </th>
+                      {/* )} */}
                     </tr>
                   </thead>
                   <tbody>
@@ -830,13 +1253,25 @@ export default function Affilate() {
                               className="btn btn-sm btn-outline-primary"
                               title="Download Report PDF"
                               style={{ padding: '4px 8px', fontSize: '12px' }}
-                            // disabled={!invoice.invoice_url}
                             >
                               <i className="fa fa-download me-1" aria-hidden="true"></i>
                               Download
                             </button>
                           </div>
                         </td>}
+                        {/* {user?.role === "affiliate" && ( */}
+                          <td className="name-person ml-2">
+                            <button
+                              onClick={() => viewCommissionDetails(itm)}
+                              className="btn btn-sm btn-info"
+                              title="View Commission Calculation Details"
+                              style={{ padding: '4px 8px', fontSize: '12px' }}
+                            >
+                              <i className="fa fa-calculator me-1" aria-hidden="true"></i>
+                              Calculate
+                            </button>
+                          </td>
+                        {/* )} */}
                       </tr>
                     ))}
                   </tbody>
@@ -874,62 +1309,6 @@ export default function Affilate() {
                   <h5 className="mb-0">Monthly Commission Invoices</h5>
                   <small className="text-muted">View and download your monthly commission invoices</small>
                 </div>
-
-                {/* <div className="d-flex gap-2 align-items-center">
-                  <div className="d-flex gap-2">
-                    <div>
-                      <label className="form-label small mb-1">Year</label>
-                      <select
-                        className="form-control"
-                        value={monthlyFilters.year}
-                        onChange={(e) => setMonthlyFilters({...monthlyFilters, year: parseInt(e.target.value), page: 0})}
-                        style={{ minWidth: '100px' }}
-                      >
-                        {[2023, 2024, 2025, 2026, 2027].map(year => (
-                          <option key={year} value={year}>{year}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="form-label small mb-1">Month</label>
-                      <select
-                        className="form-control"
-                        value={monthlyFilters.month}
-                        onChange={(e) => setMonthlyFilters({...monthlyFilters, month: parseInt(e.target.value), page: 0})}
-                        style={{ minWidth: '120px' }}
-                      >
-                        {[
-                          {value: 0, label: 'All Months'},
-                          {value: 1, label: 'January'},
-                          {value: 2, label: 'February'},
-                          {value: 3, label: 'March'},
-                          {value: 4, label: 'April'},
-                          {value: 5, label: 'May'},
-                          {value: 6, label: 'June'},
-                          {value: 7, label: 'July'},
-                          {value: 8, label: 'August'},
-                          {value: 9, label: 'September'},
-                          {value: 10, label: 'October'},
-                          {value: 11, label: 'November'},
-                          {value: 12, label: 'December'},
-                        ].map(month => (
-                          <option key={month.value} value={month.value}>{month.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="align-self-end">
-                    <button 
-                      className="btn btn-outline-secondary"
-                      onClick={() => getMonthlyInvoices()}
-                      disabled={monthlyLoading}
-                      title="Refresh"
-                    >
-                      <i className="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -1020,17 +1399,6 @@ export default function Affilate() {
                                   <i className="fa fa-download me-1" aria-hidden="true"></i>
                                   Download
                                 </button>
-
-                                {/* <button
-                                  onClick={() => viewMonthlyInvoice(invoice)}
-                                  className="btn btn-sm btn-outline-secondary"
-                                  title="View Invoice"
-                                  style={{ padding: '4px 8px', fontSize: '12px' }}
-                                  disabled={!invoice.invoice_url}
-                                >
-                                  <i className="fa fa-eye me-1" aria-hidden="true"></i>
-                                  View
-                                </button> */}
                               </div>
                             </td>
 
@@ -1046,17 +1414,6 @@ export default function Affilate() {
                                   <i className="fa fa-download me-1" aria-hidden="true"></i>
                                   Download
                                 </button>
-
-                                {/* <button
-                                  onClick={() => viewMonthlyReport(invoice)}
-                                  className="btn btn-sm btn-outline-secondary"
-                                  title="View Report"
-                                  style={{ padding: '4px 8px', fontSize: '12px' }}
-                                  disabled={!invoice.invoice_url}
-                                >
-                                  <i className="fa fa-eye me-1" aria-hidden="true"></i>
-                                  View
-                                </button> */}
                               </div>
                             </td>
                           </tr>
@@ -1097,29 +1454,6 @@ export default function Affilate() {
         </div>
       </div>
     );
-  };
-
-  const customModalStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      width: '650px',
-      maxWidth: '90%',
-      maxHeight: '90vh',
-      overflow: 'auto',
-      borderRadius: '8px',
-      border: '1px solid #ddd',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      padding: '0',
-    },
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: 1000,
-    }
   };
 
   return (
@@ -1219,15 +1553,20 @@ export default function Affilate() {
         </div>
       </Layout>
 
+      {/* Payment Modal */}
       <Modal
         isOpen={isPaymentModalOpen}
         onRequestClose={handleClosePaymentModal}
         style={customModalStyles}
         contentLabel="Pay Commission Modal"
+        portalClassName="payment-modal-portal"
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        overlayClassName="payment-modal-overlay"
       >
-        <div ref={modalRef}>
-          <div className="modal-header" style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #dee2e6' }}>
-            <h5 className="modal-title" style={{ fontSize: '18px', fontWeight: '600' }}>
+        <div ref={modalRef} className="payment-modal-content">
+          <div className="modal-header" style={{ backgroundColor: '#f8f9fa', borderBottom: '1px solid #dee2e6', padding: '16px 20px' }}>
+            <h5 className="modal-title" style={{ fontSize: '18px', fontWeight: '600', margin: 0 }}>
               <i className="fa fa-money me-2" aria-hidden="true"></i>
               Commission Payment Distribution
             </h5>
@@ -1236,7 +1575,11 @@ export default function Affilate() {
               className="btn-close"
               onClick={handleClosePaymentModal}
               disabled={isProcessing}
-            ></button>
+              aria-label="Close"
+              style={{ background: 'none', border: 'none', fontSize: '20px', cursor: isProcessing ? 'not-allowed' : 'pointer' }}
+            >
+              ×
+            </button>
           </div>
 
           <div className="modal-body" style={{ padding: '20px' }}>
@@ -1452,6 +1795,17 @@ export default function Affilate() {
           </div>
         </div>
       </Modal>
+
+      {/* Commission Details Modal */}
+      <CommissionDetailsModal
+        isOpen={isCommissionModalOpen}
+        onClose={() => {
+          setIsCommissionModalOpen(false);
+          setSelectedCommissionTransaction(null);
+        }}
+        transaction={selectedCommissionTransaction}
+        campaignDetails={selectedCommissionTransaction?.campaign_details}
+      />
     </>
   );
 }
