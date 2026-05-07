@@ -1208,11 +1208,11 @@ export default function Affilate() {
                       {user?.role === "affiliate" && <th>
                         Action
                       </th>}
-                      {/* {user?.role === "affiliate" && ( */}
+                      {user?.role === "brand" && (
                         <th scope="row">
                           Commission Info
                         </th>
-                      {/* )} */}
+                      )}
                     </tr>
                   </thead>
                   <tbody>
@@ -1259,7 +1259,7 @@ export default function Affilate() {
                             </button>
                           </div>
                         </td>}
-                        {/* {user?.role === "affiliate" && ( */}
+                        {user?.role === "brand" && (
                           <td className="name-person ml-2">
                             <button
                               onClick={() => viewCommissionDetails(itm)}
@@ -1271,7 +1271,7 @@ export default function Affilate() {
                               Calculate
                             </button>
                           </td>
-                        {/* )} */}
+                         )}
                       </tr>
                     ))}
                   </tbody>
