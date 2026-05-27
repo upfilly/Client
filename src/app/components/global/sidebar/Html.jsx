@@ -536,7 +536,7 @@ const Html = ({
 
 
 
-          {(user?.role == "brand" || addedUser?.role == "brand") && (
+          {/* {(user?.role == "brand" || addedUser?.role == "brand") && ( */}
             <>
               {urlAllow("commisionplan", "manualcommission") ? (
                 <>
@@ -586,13 +586,13 @@ const Html = ({
               </div>
               </ListItemLink>
             </> : <></>} */}
-                {user && user?.role == "brand" && (
+                {user && (user?.role == "brand" || user?.role == "affiliate") && (
                   <ListItemLink to="/trackingdata" title="Transactions">
                     <i class="material-icons svg_iconbx">compare_arrows</i>
                     <span className="side_head">Transactions</span>
                   </ListItemLink>
                 )}
-                {
+                {user && user?.role == "brand" &&
                   <ListItemLink to="/salestracking" title="Untracked Sales">
                     <i
                       className="material-icons  svg_iconbx"
@@ -603,26 +603,26 @@ const Html = ({
                     <span className="side_head">Untracked Sales</span>
                   </ListItemLink>
                 }
-                {permission("commission_add") ? (
-                  <>
-                    <ListItemLink
-                      to="/commission/manualcommission/view"
-                      title="Bonus/Commission"
-                    >
-                      <div className="d-flex align-items-center icns_center gap-0">
-                        <i class="material-icons svg_iconbx">monetization_on</i>
-                        <span className="side_head">Add Bonus/Commission</span>
-                      </div>
-                    </ListItemLink>
-                  </>
-                ) : (
-                  <></>
-                )}
+              {permission("commission_add") && user && (user?.role == "brand" || user?.role == "affiliate") ? (
+                <>
+                  <ListItemLink
+                    to="/commission/manualcommission/view"
+                    title="Bonus/Commission"
+                  >
+                    <div className="d-flex align-items-center icns_center gap-0">
+                      <i class="material-icons svg_iconbx">monetization_on</i>
+                      <span className="side_head">Add Bonus/Commission</span>
+                    </div>
+                  </ListItemLink>
+                </>
+              ) : (
+                <></>
+              )}
 
 
               </div>
             </>
-          )}
+          {/* )} */}
           {urlAllow("communication") ? (
             <>
               <div className="nav-item">

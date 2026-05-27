@@ -32,6 +32,9 @@ const Html = () => {
   const [inputValues, setInputValues] = useState({});
   const [DestinationUrl, setDestinationUrl] = useState("");
   const [shrtlnk, setshrtlnk] = useState("");
+  const [brandDomains, setBrandDomains] = useState({});
+  const [urlError, setUrlError] = useState("");
+  const [isLoadingBrands, setIsLoadingBrands] = useState(false);
 
   console.log(DestinationUrl, "DestinationUrl");
   console.log(user, "user.website");
@@ -68,15 +71,25 @@ const Html = () => {
     setSelectedValues(selectedOptions);
   };
 
-  const getData = () => {
+  // Initially fetch only brand routes/domains
+  const fetchBrands = () => {
+    setIsLoadingBrands(true);
     ApiClient.get("associated/brands").then((res) => {
       if (res.success) {
         const filteredData = res.data.filter((item) => item !== null);
         const manipulateData = filteredData.map((itm) => ({
           name: itm?.userName || itm?.firstName,
           id: itm?.id || itm?._id,
+          website: itm?.website || "", // Fetch the brand domain/route
         }));
         setBrandData(manipulateData);
+
+        // Create domain mapping for brands
+        const domainMap = {};
+        manipulateData.forEach((brand) => {
+          domainMap[brand.id] = brand.website;
+        });
+        setBrandDomains(domainMap);
 
         // Format data for react-select
         const options = manipulateData.map((brand) => ({
@@ -85,26 +98,23 @@ const Html = () => {
         }));
         setBrandOptions(options);
       }
+      setIsLoadingBrands(false);
+    }).catch(() => {
+      setIsLoadingBrands(false);
     });
   };
 
-  const brands = Array.from(
-    new Set(
-      brandData.map((item) => ({
-        id: item.id,
-        name: item.name,
-      }))
-    )
-  );
-
   const handleBrandChange = (selectedOption) => {
     setSelectedBrand(selectedOption ? selectedOption.value : "");
+    setUrlError("");
+    setDestinationUrl("");
   };
 
+  // Only fetch brands on component mount, no preview link fetch
   useEffect(() => {
-    getData();
-    generateShortLink(url);
-  }, [url]);
+    fetchBrands();
+    loader(false);
+  }, []);
 
   const isValidUrl = (url) => {
     if (!url) return false;
@@ -120,6 +130,56 @@ const Html = () => {
     } catch {
       return false;
     }
+  };
+
+  // Function to check if URL domain matches selected brand's website domain
+  const isDomainAllowed = (url, brandId) => {
+    if (!url || !brandId || !brandDomains[brandId]) return false;
+
+    try {
+      const urlObj = new URL(url);
+      const urlDomain = urlObj.hostname.toLowerCase();
+      let brandWebsite = brandDomains[brandId];
+
+      // Extract domain from brand website
+      let brandDomain = brandWebsite;
+      if (brandWebsite.match(/^https?:\/\//i)) {
+        brandDomain = new URL(brandWebsite).hostname;
+      }
+      brandDomain = brandDomain.toLowerCase().replace(/^www\./, '');
+
+      // Check if URL domain exactly matches brand domain or is a subdomain
+      return urlDomain === brandDomain || urlDomain.endsWith(`.${brandDomain}`);
+    } catch {
+      return false;
+    }
+  };
+
+  const validateDestinationUrl = () => {
+    if (!DestinationUrl) {
+      setUrlError("Destination URL is required");
+      return false;
+    }
+
+    if (!isValidUrl(DestinationUrl)) {
+      setUrlError("Please enter a valid URL (including http:// or https://)");
+      return false;
+    }
+
+    if (!selectedBrand) {
+      setUrlError("Please select a merchant first");
+      return false;
+    }
+
+    if (!isDomainAllowed(DestinationUrl, selectedBrand)) {
+      const brandDomain = brandDomains[selectedBrand];
+      const displayDomain = brandDomain ? brandDomain.replace(/^https?:\/\//i, '').replace(/^www\./, '') : 'the brand domain';
+      setUrlError(`Only domains registered with the selected brand are allowed. Please enter a URL matching: ${displayDomain}`);
+      return false;
+    }
+
+    setUrlError("");
+    return true;
   };
 
   const copyText = () => {
@@ -150,17 +210,6 @@ const Html = () => {
     }
   };
 
-  useEffect(() => {
-    ApiClient.get("get-affilaite-link").then((res) => {
-      if (res?.success) {
-        setUrl(res?.data?.link);
-        // Only set if user hasn't already typed something
-        setDestinationUrl((prev) => (prev ? prev : res?.data?.link));
-      }
-      loader(false);
-    });
-  }, []);
-
   const generateShortLink = async (urlData) => {
     if (!urlData && !url) return;
     const data = await axios.post(
@@ -180,6 +229,12 @@ const Html = () => {
 
   const handleSubmit = () => {
     setSubmited(true);
+
+    // Validate URL before submission
+    if (!validateDestinationUrl()) {
+      return;
+    }
+
     if (!DestinationUrl || !selectedBrand) return;
 
     const base_url = "https://api.upfilly.com/link/";
@@ -227,6 +282,20 @@ const Html = () => {
   // Find the selected option for react-select
   const selectedBrandOption = brandOptions.find(option => option.value === selectedBrand);
 
+  // Get display domain for the selected brand
+  const getDisplayDomain = () => {
+    if (!selectedBrand || !brandDomains[selectedBrand]) return '';
+    let domain = brandDomains[selectedBrand];
+    if (domain.match(/^https?:\/\//i)) {
+      try {
+        domain = new URL(domain).hostname;
+      } catch (e) {
+        domain = domain.replace(/^https?:\/\//i, '');
+      }
+    }
+    return domain.replace(/^www\./, '');
+  };
+
   return (
     <>
       <Layout name="Generate Link">
@@ -258,6 +327,7 @@ const Html = () => {
                       isSearchable={true}
                       isClearable={true}
                       noOptionsMessage={() => "No merchants found"}
+                      isLoading={isLoadingBrands}
                       styles={{
                         control: (base, state) => ({
                           ...base,
@@ -290,22 +360,36 @@ const Html = () => {
                       type="text"
                       className="form-control"
                       value={DestinationUrl}
-                      onChange={(e) => setDestinationUrl(e.target.value)}
+                      onChange={(e) => {
+                        setDestinationUrl(e.target.value);
+                        setUrlError("");
+                      }}
                       style={
-                        !isValidUrl(DestinationUrl) && DestinationUrl
-                          ? { borderColor: "red" }
-                          : {}
+                        urlError ? { borderColor: "red" } :
+                          !isValidUrl(DestinationUrl) && DestinationUrl ? { borderColor: "red" } : {}
                       }
+                      placeholder={selectedBrand ? `Enter URL matching ${getDisplayDomain()}` : "Select a merchant first"}
+                      disabled={!selectedBrand}
                     />
                   </div>
-                  {!DestinationUrl && isSubmited && (
+                  {urlError && (
+                    <div className="text-danger mt-1">
+                      {urlError}
+                    </div>
+                  )}
+                  {!urlError && !DestinationUrl && isSubmited && (
                     <div className="invalid-feedback d-block">
                       Destination url is Required
                     </div>
                   )}
-                  {!isValidUrl(DestinationUrl) && DestinationUrl && (
-                    <div className="text-danger">
-                      Please enter a valid URL (including http:// or https://)
+                  {selectedBrand && brandDomains[selectedBrand] && DestinationUrl && !urlError && isValidUrl(DestinationUrl) && (
+                    <div className="text-success mt-1 small">
+                      ✓ Domain validated successfully
+                    </div>
+                  )}
+                  {selectedBrand && brandDomains[selectedBrand] && (
+                    <div className="text-muted mt-1 small">
+                      <i className="fa fa-info-circle"></i> Allowed domain: {getDisplayDomain()}
                     </div>
                   )}
                 </div>
@@ -363,7 +447,6 @@ const Html = () => {
                         </div>
                       )}
 
-
                       <div className="row">
                         {selectedValues.map((selected, index) => (
                           <div className="col-12 col-md-4" key={index}>
@@ -393,7 +476,7 @@ const Html = () => {
                   type="button"
                   className="btn btn-primary"
                   onClick={handleSubmit}
-                  disabled={!isValidUrl(DestinationUrl)}
+                  disabled={!isValidUrl(DestinationUrl) || !selectedBrand || !!urlError}
                 >
                   Generate URL
                 </button>

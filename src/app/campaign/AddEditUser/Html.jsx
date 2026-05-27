@@ -44,7 +44,7 @@ const Html = ({
   formFields,
   formPpcFields,
   formTransactionFields,
-  formPublisherFields,isTieredCommissionsEnabled, setIsTieredCommissionsEnabled
+  formPublisherFields, isTieredCommissionsEnabled, setIsTieredCommissionsEnabled
 }) => {
   const [loadDocerr, setDocLoader] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
@@ -338,7 +338,7 @@ const Html = ({
   }, []);
 
   // Check if both event types are selected
-  const hasBothEventTypes = form?.event_type?.includes("lead") && form?.event_type?.includes("purchase");
+  const hasBothEventTypes = form?.event_type?.includes("lead") || form?.event_type?.includes("purchase");
 
   return (
     <Layout name={"Campaign"}>
@@ -354,7 +354,7 @@ const Html = ({
                 }}
               >
                 <h3 className="VieUser">
-                  <a to="/campaign" onClick={(e) => back()}>
+                  <a to="/campaign" onClick={(e) => back()} style={{ cursor: 'pointer' }}>
                     <i
                       className="fa fa-arrow-left mr-2"
                       title="Back"
@@ -366,7 +366,8 @@ const Html = ({
                 <hr />
               </div>
 
-              <div className="form-row">
+              <div className="row">
+                {/* Name Field - Fixed column structure */}
                 <div
                   className="col-md-6 mb-3 custom-input"
                   onClick={() => {
@@ -599,6 +600,7 @@ const Html = ({
                   )}
                 </div>
 
+                {/* Purchase Amount/Percentage Type */}
                 {form?.event_type?.includes("purchase") && (
                   <div className="col-md-6 mb-3 custom-type">
                     <label>
@@ -630,6 +632,7 @@ const Html = ({
                   </div>
                 )}
 
+                {/* Commission Percentage */}
                 {form?.commission_type === "percentage" &&
                   form?.event_type?.includes("purchase") && (
                     <div className="col-md-6 mb-3">
@@ -654,6 +657,7 @@ const Html = ({
                     </div>
                   )}
 
+                {/* Commission Amount */}
                 {form?.commission_type === "amount" &&
                   form?.event_type?.includes("purchase") && (
                     <div className="col-md-6 mb-3">
@@ -674,14 +678,14 @@ const Html = ({
                         </div>
                       )}
                       {id && (
-                        <div className="invalid-feedback d-block">
-                          Note: Commission can't be changed on a published
-                          campaign.
+                        <div className="text-muted small mt-1">
+                          Note: Commission can't be changed on a published campaign.
                         </div>
                       )}
                     </div>
                   )}
 
+                {/* Lead Amount */}
                 {form?.event_type?.includes("lead") && (
                   <div className="col-md-6 mb-3 custom-input">
                     <label>
@@ -701,9 +705,8 @@ const Html = ({
                       </div>
                     )}
                     {id && (
-                      <div className="invalid-feedback d-block">
-                        Note: Lead Amount can't be changed on a published
-                        campaign.
+                      <div className="text-muted small mt-1">
+                        Note: Lead Amount can't be changed on a published campaign.
                       </div>
                     )}
                   </div>
@@ -711,7 +714,7 @@ const Html = ({
 
                 {/* ========== COMMON TIERED COMMISSIONS TOGGLE ========== */}
                 {hasBothEventTypes && (
-                  <div className="col-md-12 mb-3">
+                  <div className="col-12 mb-3">
                     <div className="card border-info">
                       <div className="card-header bg-info text-white">
                         <h5 className="mb-0">Tiered Commissions</h5>
@@ -735,9 +738,9 @@ const Html = ({
                           </small>
                         </div>
 
-                        {/* Common Calculation Type for both Lead and Sales */}
+                        {/* Common Calculation Type */}
                         {isTieredCommissionsEnabled && (
-                          <div className="form-row mt-3">
+                          <div className="row mt-3">
                             <div className="col-md-6 mb-3">
                               <label className="font-weight-bold">
                                 Calculation Mode <span className="star">*</span>
@@ -768,15 +771,15 @@ const Html = ({
                   </div>
                 )}
 
-                {/* ========== TIERED COMMISSIONS SECTION FOR LEADS (lead_tiers) ========== */}
+                {/* ========== TIERED COMMISSIONS SECTION FOR LEADS ========== */}
                 {form?.event_type?.includes("lead") && isTieredCommissionsEnabled && (
-                  <div className="col-md-12 mb-3">
+                  <div className="col-12 mb-3">
                     <div className="card border-success">
                       <div className="card-header bg-success text-white">
                         <h5 className="mb-0">Tiered Commissions - Leads</h5>
                       </div>
                       <div className="card-body">
-                        {/* Example Preview for Leads */}
+                        {/* Example Preview */}
                         <div className="alert alert-info mt-2">
                           <strong>Example (Leads):</strong><br />
                           {form.lead_tiers && form.lead_tiers.length > 0 ? (
@@ -800,24 +803,24 @@ const Html = ({
                           )}
                         </div>
 
-                        {/* Lead Tiers Table */}
+                        {/* Lead Tiers Table - FIXED for responsive design */}
                         <label className="font-weight-bold mt-3">
                           Lead Commission Tiers (Lead Count)
                         </label>
-                        <div className="table-responsive">
-                          <table className="table table-bordered table-hover">
+                        <div className="table-responsive" style={{ overflowX: 'auto' }}>
+                          <table className="table table-bordered table-hover" style={{ minWidth: '500px' }}>
                             <thead className="thead-light">
                               <tr>
-                                <th>Min Leads</th>
-                                <th>Max Leads</th>
-                                <th>Commission Amount ({form?.currencies || "€"})</th>
-                                <th style={{ width: 50 }}>Action</th>
+                                <th style={{ width: '25%' }}>Min Leads</th>
+                                <th style={{ width: '25%' }}>Max Leads</th>
+                                <th style={{ width: '35%' }}>Commission Amount ({form?.currencies || "€"})</th>
+                                <th style={{ width: '15%' }}>Action</th>
                               </tr>
                             </thead>
                             <tbody>
                               {(form.lead_tiers || []).map((tier, index) => (
                                 <tr key={index}>
-                                  <td>
+                                  <tr>
                                     <input
                                       type="number"
                                       className="form-control form-control-sm"
@@ -827,7 +830,7 @@ const Html = ({
                                       step="1"
                                       min="0"
                                     />
-                                  </td>
+                                  </tr>
                                   <td>
                                     <input
                                       type="number"
@@ -889,15 +892,15 @@ const Html = ({
                   </div>
                 )}
 
-                {/* ========== TIERED COMMISSIONS SECTION FOR SALES (tiers) ========== */}
+                {/* ========== TIERED COMMISSIONS SECTION FOR SALES ========== */}
                 {form?.event_type?.includes("purchase") && isTieredCommissionsEnabled && (
-                  <div className="col-md-12 mb-3">
+                  <div className="col-12 mb-3">
                     <div className="card border-primary">
                       <div className="card-header bg-primary text-white">
                         <h5 className="mb-0">Tiered Commissions - Sales</h5>
                       </div>
                       <div className="card-body">
-                        {/* Example Preview for Sales */}
+                        {/* Example Preview */}
                         <div className="alert alert-info mt-2">
                           <strong>Example (Sales Revenue):</strong><br />
                           {form.tiers && form.tiers.length > 0 ? (
@@ -923,26 +926,26 @@ const Html = ({
                           )}
                         </div>
 
-                        {/* Sales Tiers Table */}
+                        {/* Sales Tiers Table - FIXED for responsive design */}
                         <label className="font-weight-bold mt-3">
                           Sales Commission Tiers (Revenue in {form?.currencies || "€"})
                         </label>
-                        <div className="table-responsive">
-                          <table className="table table-bordered table-hover">
+                        <div className="table-responsive" style={{ overflowX: 'auto' }}>
+                          <table className="table table-bordered table-hover" style={{ minWidth: '600px' }}>
                             <thead className="thead-light">
                               <tr>
-                                <th>Min Revenue ({form?.currencies || "€"})</th>
-                                <th>Max Revenue ({form?.currencies || "€"})</th>
-                                <th>
+                                <th style={{ width: '25%' }}>Min Revenue ({form?.currencies || "€"})</th>
+                                <th style={{ width: '25%' }}>Max Revenue ({form?.currencies || "€"})</th>
+                                <th style={{ width: '35%' }}>
                                   Commission {form.commission_type === "amount" ? `(${form?.currencies || "€"})` : "(%)"}
                                 </th>
-                                <th style={{ width: 50 }}>Action</th>
+                                <th style={{ width: '15%' }}>Action</th>
                               </tr>
                             </thead>
                             <tbody>
                               {(form.tiers || []).map((tier, index) => (
                                 <tr key={index}>
-                                  <td>
+                                  <tr>
                                     <input
                                       type="number"
                                       className="form-control form-control-sm"
@@ -952,7 +955,7 @@ const Html = ({
                                       step="0.01"
                                       min="0"
                                     />
-                                  </td>
+                                  </tr>
                                   <td>
                                     <input
                                       type="number"
@@ -1024,7 +1027,7 @@ const Html = ({
 
                 {/* Categories */}
                 <div
-                  className="col-md-12 mb-3 category-dropdown"
+                  className="col-12 mb-3 category-dropdown"
                   onClick={() => setRegionIsOpen(false)}
                 >
                   <label>
@@ -1048,7 +1051,7 @@ const Html = ({
 
                 {/* Regions */}
                 <div
-                  className="col-md-12 mb-3 category-dropdown"
+                  className="col-12 mb-3 category-dropdown"
                   onClick={() => setIsOpen(false)}
                 >
                   <label>
@@ -1071,7 +1074,7 @@ const Html = ({
 
                 {/* Description */}
                 <div
-                  className="col-md-12 mb-3 custom-description"
+                  className="col-12 mb-3 custom-description"
                   onClick={() => {
                     setIsOpen(false);
                     setRegionIsOpen(false);
@@ -1112,13 +1115,13 @@ const Html = ({
 
                 {/* Documents Upload */}
                 <div
-                  className="col-md-6"
+                  className="col-md-6 mb-3"
                   onClick={() => {
                     setIsOpen(false);
                     setRegionIsOpen(false);
                   }}
                 >
-                  <label>Document(Max. Limit 10)</label>
+                  <label>Document (Max. Limit 10)</label>
                   <div className="form-group drag_drop">
                     <div className="upload_file">
                       {form?.documents?.length <= 9 && (
@@ -1146,38 +1149,46 @@ const Html = ({
                           Uploading... <i className="fa fa-spinner fa-spin"></i>
                         </div>
                       )}
-                      <div className="imagesRow mt-4 img-wrappper">
+                      <div className="row mt-4 img-wrappper">
                         {form?.documents?.map((itm, i) => (
-                          <div className="imagethumbWrapper cover" key={i}>
-                            <img
-                              src="/assets/img/document.png"
-                              onClick={() =>
-                                window.open(methodModel.noImg(itm?.url))
-                              }
-                              alt="Document"
-                            />
-                            <i
-                              className="fa fa-times kliil"
-                              title="Remove"
-                              onClick={() => removeDocument(i)}
-                            ></i>
-                            <div>{itm?.name}</div>
+                          <div className="col-auto mb-2" key={i}>
+                            <div className="imagethumbWrapper cover position-relative">
+                              <img
+                                src="/assets/img/document.png"
+                                onClick={() =>
+                                  window.open(methodModel.noImg(itm?.url))
+                                }
+                                alt="Document"
+                                style={{ cursor: 'pointer', width: '80px', height: '80px', objectFit: 'cover' }}
+                              />
+                              <i
+                                className="fa fa-times kliil position-absolute"
+                                title="Remove"
+                                onClick={() => removeDocument(i)}
+                                style={{ top: '-8px', right: '-8px', cursor: 'pointer', background: 'white', borderRadius: '50%', padding: '2px' }}
+                              ></i>
+                              <div className="text-truncate" style={{ maxWidth: '80px' }}>{itm?.name}</div>
+                            </div>
                           </div>
                         ))}
                       </div>
-                      <div className="imagesRow mt-4">
+                      <div className="row mt-4">
                         {form?.images?.map((itm, i) => (
-                          <div className="imagethumbWrapper" key={i}>
-                            <img
-                              src={methodModel.noImg(itm?.url)}
-                              className="thumbnail"
-                              alt="Upload"
-                            />
-                            <i
-                              className="fa fa-times kliil"
-                              title="Remove"
-                              onClick={() => remove(i)}
-                            ></i>
+                          <div className="col-auto mb-2" key={i}>
+                            <div className="imagethumbWrapper position-relative">
+                              <img
+                                src={methodModel.noImg(itm?.url)}
+                                className="thumbnail"
+                                alt="Upload"
+                                style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                              />
+                              <i
+                                className="fa fa-times kliil position-absolute"
+                                title="Remove"
+                                onClick={() => remove(i)}
+                                style={{ top: '-8px', right: '-8px', cursor: 'pointer', background: 'white', borderRadius: '50%', padding: '2px' }}
+                              ></i>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -1187,7 +1198,7 @@ const Html = ({
 
                 {/* Affiliate Program Management */}
                 <div
-                  className="col-md-12 mb-3"
+                  className="col-12 mb-3"
                   onClick={() => {
                     setIsOpen(false);
                     setRegionIsOpen(false);

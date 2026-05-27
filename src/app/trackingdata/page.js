@@ -548,7 +548,9 @@ export default function Affiliate() {
                       <thead className="thead-clr">
                         <tr>
                           {isColumnVisible('subIds') && uniqueKeys?.map(key => (
-                            <th key={key} scope="col">{key}</th>
+                            <th key={key} scope="col">
+                              {key === 'affiliate' ? 'Affiliate ID' : key}
+                            </th>
                           ))}
                           {isColumnVisible('affiliate') && (
                             <th scope="col" onClick={e => sorting('affiliate_name')}>Affiliate{filters?.sorder === "asc" ? "↑" : "↓"}</th>

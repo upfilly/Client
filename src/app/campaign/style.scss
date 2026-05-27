@@ -347,3 +347,37 @@ i.material-icons.edit {
     right: -15px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .table-responsive {
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+  }
+  
+  .imagethumbWrapper {
+    margin-bottom: 1rem;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .input-group-sm .form-control {
+    font-size: 14px;
+  }
+}
+
+.drops.category-input {
+  width: 100%;
+  overflow: visible;
+}
+
+@media (max-width: 576px) {
+  .select_row .dropdown-menu {
+    max-width: 90vw;
+    position: fixed !important;
+    left: 5% !important;
+    right: 5% !important;
+    top: auto !important;
+  }
+}
