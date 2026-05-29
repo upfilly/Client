@@ -11,6 +11,7 @@ import crendentialModel from "../../models/credential.model";
 import { requestForToken } from '../firebase/function';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
+import { ConnectSocket } from '../chat/socket';
 
 export default function Login() {
   const history = useRouter()
@@ -163,6 +164,8 @@ export default function Login() {
         // toast.success(res.message)
         localStorage.setItem('token', res.data.access_token)
         crendentialModel.setUser(res.data)
+        console.log(res.data,"jkjkkjkj")
+        ConnectSocket.emit("join-room-shopify", { user_id:res.data?.id || res.data?._id , "type":"shopify"});
         localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
 
         let url = '/dashboard'

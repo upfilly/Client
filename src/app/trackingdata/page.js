@@ -16,6 +16,7 @@ import { CurencyData } from '../../methods/currency';
 import datepipeModel from '@/models/datepipemodel';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ConnectSocket } from '../chat/socket';
 
 export default function Affiliate() {
   const history = useRouter()
@@ -283,6 +284,10 @@ export default function Affiliate() {
     if (user.role == 'brand') {
       getData({ page: 1 })
     } else if (user.role != 'brand') {
+      ConnectSocket.on(`shopify-listing-update`, (data) => {
+        console.log(data,"shopify-listing-update")
+         getData({ page: 1 })
+      });
       getData({ page: 1 })
     }
   }, [])
