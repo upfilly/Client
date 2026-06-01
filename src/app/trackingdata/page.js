@@ -67,9 +67,9 @@ export default function Affiliate() {
     { key: 'orderId', label: 'Order Id', sortable: false, default: true },
     { key: 'transactionDate', label: 'Transaction Date', sortable: true, default: true },
     { key: 'commission', label: 'Commission', sortable: true, default: true },
-    // { key: 'commissionPaid', label: 'Commission paid', sortable: false, default: true },
+    { key: 'commissionPaid', label: 'Commission paid', sortable: false, default: true },
     { key: 'commissionStatus', label: 'Commission Status', sortable: true, default: true },
-    // { key: 'paymentStatus', label: 'Payment Status', sortable: true, default: true },
+    { key: 'paymentStatus', label: 'Payment Status', sortable: true, default: true },
     { key: 'actions', label: 'Actions', sortable: false, default: true, alwaysShow: true }
   ];
 
@@ -487,11 +487,11 @@ export default function Affiliate() {
                       options={CurencyData}
                     />
 
-                    {/* <div className='width80'>
+                    <div className='width80'>
                       <SelectDropdown theme='search'
                         id="statusDropdown"
                         displayValue="name"
-                        placeholder="Paid Status"
+                        placeholder="Brand Paid Status"
                         intialValue={filters.commission_paid}
                         result={e => { ChangeStatus(e.value, "commission_paid"); setShowColumnSelector(false) }}
                         options={[
@@ -500,7 +500,7 @@ export default function Affiliate() {
                           { id: 'unpaid', name: 'unpaid' },
                         ]}
                       />
-                    </div> */}
+                    </div>
 
                     <div class="date-picker-box">
                       <DatePicker
@@ -578,15 +578,15 @@ export default function Affiliate() {
                           {isColumnVisible('commission') && (
                             <th scope="col" onClick={e => sorting('commission')}>Commission{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           )}
-                          {/* {isColumnVisible('commissionPaid') && (
-                            <th scope="col" >Commission paid</th>
-                          )} */}
                           {isColumnVisible('commissionStatus') && (
                             <th scope="col" onClick={e => sorting('commission_status')}>Commission Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
                           )}
-                          {/* {isColumnVisible('paymentStatus') && (
-                            <th scope="col" onClick={e => sorting('commission_paid')}>Payment Status{filters?.sorder === "asc" ? "↑" : "↓"}</th>
-                          )} */}
+                          {(isColumnVisible('commissionPaid') && user?.role == "affiliate")&& (
+                            <th scope="col" >Brand paid</th>
+                          )}
+                          {(isColumnVisible('paymentStatus') && user?.role == "affiliate") && (
+                            <th scope="col" >Admin paid</th>
+                          )}
                           {isColumnVisible('actions') && (
                             <th>Action</th>
                           )}
@@ -639,6 +639,12 @@ export default function Affiliate() {
                             {/* )} */}
                             {isColumnVisible('commissionStatus') && (
                               <td className='name-person ml-2 text-capitalize' >{itm?.commission_status}</td>
+                            )}
+                            {(isColumnVisible('commissionPaid') && user?.role == "affiliate") && (
+                              <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
+                            )}
+                            {(isColumnVisible('paymentStatus') && user?.role == "affiliate") && (
+                              <td className='name-person ml-2 text-capitalize' >{itm?.admin_paid}</td>
                             )}
                             {/* {isColumnVisible('paymentStatus') && (
                               <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
