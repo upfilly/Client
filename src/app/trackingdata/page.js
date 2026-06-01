@@ -587,7 +587,7 @@ export default function Affiliate() {
                           {(isColumnVisible('paymentStatus') && user?.role == "affiliate") && (
                             <th scope="col" >Admin paid</th>
                           )}
-                          {isColumnVisible('actions') && (
+                          {isColumnVisible('actions') && user?.role == "brand" && (
                             <th>Action</th>
                           )}
                         </tr>
@@ -649,7 +649,7 @@ export default function Affiliate() {
                             {/* {isColumnVisible('paymentStatus') && (
                               <td className='name-person ml-2 text-capitalize' >{itm?.commission_paid}</td>
                             )} */}
-                            {isColumnVisible('actions') && (
+                            {isColumnVisible('actions') && user?.role == "brand" && (
                               <td className='table_dats d-flex align-items-center '>
                                 {itm?.commission_status == 'pending' ? (
                                   <div className='d-flex align-items-center'>
