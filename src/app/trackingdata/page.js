@@ -348,17 +348,18 @@ export default function Affiliate() {
 
   // Initial data load - only once
   useEffect(() => {
-    if (isInitialLoad && user?.id) {
+    if (user?.id || user?._id) {
       if (user.role === 'brand') {
         getData({ page: 1 });
       } else {
         // Setup socket listener only once
-        const handleUpdate = () => {
-          if (isMountedRef.current) {
-            getData({ page: filters.page });
+        const handleUpdate = (data) => {
+          console.log(data,"kjkjkj")
+          if (data) {
+            getData({ page: 1 });
           }
         };
-
+        ConnectSocket.emit("join-room-shopify", { user_id:user?.id || user?._id , "type":"shopify"});
         ConnectSocket.on(`shopify-listing-update`, handleUpdate);
         getData({ page: 1 });
 
@@ -367,7 +368,7 @@ export default function Affiliate() {
         };
       }
     }
-  }, [user, isInitialLoad, getData, filters.page]);
+  }, []);
 
   // Cleanup on unmount
   useEffect(() => {
