@@ -190,7 +190,8 @@ export default function Layout({
     pathname.includes("/allownotifications") ||
     pathname.includes("textlinks") ||
     pathname.includes("/overview")  ||
-    pathname.includes("/profile") || pathname.includes("/scriptguide");
+    pathname.includes("/profile") || 
+    pathname.includes("/scriptguide") || pathname.includes("/postbackurl");
 
   const isAuthenticate =
     pathname.includes("/reports") ||

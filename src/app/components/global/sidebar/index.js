@@ -41,6 +41,7 @@ const Sidebar = ({ activeSidebar, setActiveSidebar }) => {
       "textlinks",
       "coupons",
       "generatelink",
+      "postbackurl"
     ],
     api: ["bookingSystem", "pos", "reviews", "accounting-system"],
     geo: ["continents", "countries", "regions", "cities"],

@@ -15,7 +15,7 @@ const Html = ({
 }) => {
   const [addedUser, setaddedUser] = useState();
   const router = useRouter()
-  
+
   useEffect(() => {
     setaddedUser(JSON.parse(localStorage.getItem("addedUser")));
   }, []);
@@ -176,7 +176,7 @@ const Html = ({
             </>
           }
 
-                    {(user?.role == "affiliate" || addedUser?.role == "affiate") && (
+          {(user?.role == "affiliate" || addedUser?.role == "affiate") && (
             <>
               {urlAllow("partnermanagement") ? (
                 <>
@@ -249,7 +249,7 @@ const Html = ({
             </>
           )}
 
-                    {(user?.role == "brand" || addedUser?.role == "brand") && (
+          {(user?.role == "brand" || addedUser?.role == "brand") && (
             <>
               {urlAllow("affiliate", "group") ? (
                 <>
@@ -332,7 +332,7 @@ const Html = ({
                 ) : (
                   <></>
                 )}
-             
+
                 {/* {user && (user?.role == "brand" || addedUser?.role == "brand") && <ListItemLink to="/appliedjobs" title="Affiliate Request">
 
                 <div className="d-flex align-items-center icns_center">
@@ -403,6 +403,8 @@ const Html = ({
                 <></>
               )}
 
+             
+
               <div
                 className={`collapse dropdown-btm ${tabclass("creativeasset") || tab == "creativeasset"
                   ? "show"
@@ -449,6 +451,23 @@ const Html = ({
                       : "Coupons"}
                   </span>
                 </ListItemLink>
+
+                  {urlAllow("postbackurl") &&
+                  (user?.role == "affiliate" || addedUser?.role == "affiliate") ? (
+                  <>
+                    <ListItemLink to="/postbackurl" title="Postback URL">
+                      <div className="d-flex align-items-center icns_center gap-0">
+                        <i class="material-icons  svg_iconbx">
+                          add_link
+                        </i>
+                        <span className="side_head">Postback URL</span>
+                      </div>
+                    </ListItemLink>
+                  </>
+                ) : (
+                  <></>
+                )
+                }
 
                 {user?.role == "brand" || addedUser?.role == "brand" ? (
                   <>
@@ -537,40 +556,40 @@ const Html = ({
 
 
           {/* {(user?.role == "brand" || addedUser?.role == "brand") && ( */}
-            <>
-              {urlAllow("commisionplan", "manualcommission") ? (
-                <>
-                  <div className="nav-item">
-                    <CustomTooltip text="Commissions">
-                      <a
-                        className={` side_titles nav-link hoverclass affilate ${tabclass("commisions") || tab == "commisions"
-                          ? ""
-                          : "collapsed-m"
-                          }`}
-                        onClick={() => tabChange("commisions")}
-                      >
-                        <i class="material-icons  svg_iconbx">
-                          monetization_on
-                        </i>
-                        <span className="side_head">Commissions</span>
-                        <i
-                          className="fa fa-angle-down fontsize20"
-                          aria-hidden="true"
-                        ></i>
-                        <div></div>
-                      </a>
-                    </CustomTooltip>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
+          <>
+            {urlAllow("commisionplan", "manualcommission") ? (
+              <>
+                <div className="nav-item">
+                  <CustomTooltip text="Commissions">
+                    <a
+                      className={` side_titles nav-link hoverclass affilate ${tabclass("commisions") || tab == "commisions"
+                        ? ""
+                        : "collapsed-m"
+                        }`}
+                      onClick={() => tabChange("commisions")}
+                    >
+                      <i class="material-icons  svg_iconbx">
+                        monetization_on
+                      </i>
+                      <span className="side_head">Commissions</span>
+                      <i
+                        className="fa fa-angle-down fontsize20"
+                        aria-hidden="true"
+                      ></i>
+                      <div></div>
+                    </a>
+                  </CustomTooltip>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
 
-              <div
-                className={`collapse dropdown-btm ${tabclass("commisions") || tab == "commisions" ? "show" : ""
-                  }`}
-              >
-                {/* {urlAllow('commisionplan') ? <>
+            <div
+              className={`collapse dropdown-btm ${tabclass("commisions") || tab == "commisions" ? "show" : ""
+                }`}
+            >
+              {/* {urlAllow('commisionplan') ? <>
                 <ListItemLink to="/commission/commisionplan" title="Manage Commissions">
                   <div className="d-flex align-items-center icns_center">
                     <i class="material-icons  svg_iconbx" >manage_accounts</i>
@@ -578,7 +597,7 @@ const Html = ({
                   </div>
                 </ListItemLink>
               </> : <></>} */}
-                {/* {urlAllow('addcommision') ? <>
+              {/* {urlAllow('addcommision') ? <>
               <ListItemLink to="/commission/addcommision"  title="Commissions">
               <div className="d-flex align-items-center icns_center">
               <i  class="material-icons svg_iconbx">payments</i >
@@ -586,23 +605,23 @@ const Html = ({
               </div>
               </ListItemLink>
             </> : <></>} */}
-                {user && (user?.role == "brand" || user?.role == "affiliate") && (
-                  <ListItemLink to="/trackingdata" title="Transactions">
-                    <i class="material-icons svg_iconbx">compare_arrows</i>
-                    <span className="side_head">Transactions</span>
-                  </ListItemLink>
-                )}
-                {user && user?.role == "brand" &&
-                  <ListItemLink to="/salestracking" title="Untracked Sales">
-                    <i
-                      className="material-icons  svg_iconbx"
-                      title="untracked sales"
-                    >
-                      real_estate_agent
-                    </i>
-                    <span className="side_head">Untracked Sales</span>
-                  </ListItemLink>
-                }
+              {user && (user?.role == "brand" || user?.role == "affiliate") && (
+                <ListItemLink to="/trackingdata" title="Transactions">
+                  <i class="material-icons svg_iconbx">compare_arrows</i>
+                  <span className="side_head">Transactions</span>
+                </ListItemLink>
+              )}
+              {user && user?.role == "brand" &&
+                <ListItemLink to="/salestracking" title="Untracked Sales">
+                  <i
+                    className="material-icons  svg_iconbx"
+                    title="untracked sales"
+                  >
+                    real_estate_agent
+                  </i>
+                  <span className="side_head">Untracked Sales</span>
+                </ListItemLink>
+              }
               {permission("commission_add") && user && (user?.role == "brand" || user?.role == "affiliate") ? (
                 <>
                   <ListItemLink
@@ -620,8 +639,8 @@ const Html = ({
               )}
 
 
-              </div>
-            </>
+            </div>
+          </>
           {/* )} */}
           {urlAllow("communication") ? (
             <>
@@ -656,8 +675,8 @@ const Html = ({
               <>
                 <ListItemLink to="/emailmessages" title="Email Messages">
                   {/* <div className="d-flex align-items-center  icns_center"> */}
-                    <i class="material-icons svg_iconbx">note</i>
-                    <span className="side_head">Email Messages</span>
+                  <i class="material-icons svg_iconbx">note</i>
+                  <span className="side_head">Email Messages</span>
                   {/* </div> */}
                 </ListItemLink>
               </>
@@ -868,9 +887,9 @@ const Html = ({
             </>
           }
 
-              
 
-      
+
+
 
           {/* {
             <>
