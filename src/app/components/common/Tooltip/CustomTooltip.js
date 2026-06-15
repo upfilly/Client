@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './Tooltip.css';
+import './Tooltip.scss';
 
 const CustomTooltip = ({ children, text }) => {
     const [visible, setVisible] = useState(false);
 
   return (
     <span 
-      className="tooltip-container" 
+      className="tooltip-container tooltip-scoped-wrapper" 
       onMouseEnter={() => setVisible(true)} 
       onMouseLeave={() => setVisible(false)}
     >

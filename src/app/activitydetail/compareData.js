@@ -1,5 +1,5 @@
 import React from 'react';
-import './DataComparison.css'; // Import the CSS file
+import './DataComparison.scss'; // Import the CSS file
 
 const truncateText = (text, maxLength) => {
     const str = text != null ? String(text) : '';
@@ -65,6 +65,7 @@ const DataComparison = ({ oldData, newData, module, type }) => {
 
     return (
         <>
+            <div className='data-comparison-wrapper'>
             <div className='my-5'>
                 <div className='container'>
                     <div className='all_brder_div'>
@@ -121,6 +122,7 @@ const DataComparison = ({ oldData, newData, module, type }) => {
                     </div>
                 </div>
             </div>
+        </div>
         </>
     );
 };

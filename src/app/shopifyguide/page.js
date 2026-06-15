@@ -1,11 +1,11 @@
 import React from 'react';
-import './TrackingGuide.css';
+import './TrackingGuide.scss';
 import Layout from '../components/global/layout';
 
 const ShopifyGuide = () => {
     return (<>
         <Layout handleKeyPress={undefined} setFilter={undefined} reset={undefined} filter={undefined} name={undefined} filters={undefined}>
-            <div className="tracking-setup">
+            <div className="tracking-setup tracking-setup-wrapper">
                 <h1 className="heading">How to Set Up Tracking on Shopify</h1>
 
                 <div className="step">

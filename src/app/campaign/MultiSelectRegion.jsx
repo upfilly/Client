@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./MultiSelectDropdownData.css";
+import "./MultiSelectDropdownData.scss";
 import { regionData } from "./AddEditUser/regionCountries";
 
 const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOpen, setRegionIsOpen }) => {
@@ -270,7 +270,7 @@ const MultiSelectRegionDropdown = ({ selectedItems, setSelectedItems, isRegionOp
   };
 
   return (
-    <div className="dropdown-container show-drop">
+    <div className="dropdown-container show-drop multi-select-wrapper">
       <span onClick={toggleDropdown} className="dropdown-toggle">
         {getSelectedValuesText()}
         {selectedCount > 0 && (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./MultiSelectDropdownData.css";
+import "./MultiSelectDropdownData.scss";
 
 const MultiSelectDropdown = ({ isOpen, setIsOpen, data, selectedItems, setSelectedItems }) => {
   const [expandedCategories, setExpandedCategories] = useState({});
@@ -519,7 +519,7 @@ const MultiSelectDropdown = ({ isOpen, setIsOpen, data, selectedItems, setSelect
   }, [searchTerm, data]);
 
   return (
-    <div className="dropdown-container show-drop">
+    <div className="dropdown-container show-drop multi-select-wrapper">
       <div className="category-input">
         <span onClick={toggleDropdown} className="dropdown-toggle">
           {getSelectedCategoryNames() || "Select Categories"}{" "}

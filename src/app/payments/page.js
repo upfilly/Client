@@ -1236,7 +1236,7 @@ export default function Affilate() {
                           {itm?.amount}
                         </td>
                         <td className="name-person ml-2">
-                          {itm?.currency || "USD"}
+                          {itm?.affiliate_link_data?.currency || "USD"}
                         </td>
                         <td className="name-person ml-2">
                           <span className={`badge bg-${(itm?.transaction_status === 'successful' || itm?.transaction_status === 'paid') ? 'success' : 'danger'}`}>

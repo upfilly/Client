@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
-import "./CustomDatePicker.css";
+import "./CustomDatePicker.scss";
 
 const getDateRange = (option) => {
   const today = new Date();
@@ -217,6 +217,7 @@ const CustomDatePicker = ({
   }, [baseDates, comparisonPeriod]);
 
   return (
+    <div className="custom-date-picker-wrapper">
     <div className={comparisonPeriod == "none" ? "single-date-picker-container" : "date-picker-container"}>
       <div className="flex-container">
         <div className="flex-container">
@@ -337,6 +338,7 @@ const CustomDatePicker = ({
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

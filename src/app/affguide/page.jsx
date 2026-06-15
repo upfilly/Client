@@ -2,7 +2,7 @@
 
 import React from "react";
 import Layout from "../components/global/layout";
-import "./affiliateguide.css";
+import "./affiliateguide.scss";
 import { useRouter } from "next/navigation";
 
 const affiliateguide = () => {
