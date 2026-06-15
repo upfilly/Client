@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from "react";
 import Layout from "@/app/components/global/layout";
 import ReactPaginate from "react-paginate";
