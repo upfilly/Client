@@ -7,7 +7,7 @@ const Html = ({
   tabChange,
   tab,
   ListItemLink,
-  tabclass,
+  tabclass = () => false,
   urlAllow,
   setActiveSidebar,
   activeSidebar,

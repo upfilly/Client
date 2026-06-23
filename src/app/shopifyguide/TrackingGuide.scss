@@ -1,75 +1,70 @@
-.tracking-setup-wrapper {
 /* General Styles */
-.tracking-setup {
+.tracking-setup-wrapper {
     font-family: Arial, sans-serif;
     margin: 0 auto;
     max-width: 1200px;
     padding: 20px;
     background-color: #f9f9f9;
     color: #333;
-}
-
-.heading {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-/* Step Styles */
-.step {
-    background-color: white;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.step-title {
-    font-size: 1.75rem;
-    color: #1d3557;
-    margin-bottom: 15px;
-}
-
-.step-description {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-.step-image {
-    width: 100%;
-    max-width: 600px;
-    margin: 20px 0;
-    border-radius: 8px;
-}
-
-/* Media Query for responsiveness */
-@media (max-width: 768px) {
-    .tracking-setup {
-        padding: 15px;
-    }
 
     .heading {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
     }
 
+    /* Step Styles */
     .step {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        &-title {
+            font-size: 1.75rem;
+            color: #1d3557;
+            margin-bottom: 15px;
+        }
+
+        &-description {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        &-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    }
+
+    /* Media Query for responsiveness */
+    @media (max-width: 768px) {
         padding: 15px;
-    }
 
-    .step-title {
-        font-size: 1.5rem;
-    }
+        .heading {
+            font-size: 2rem;
+        }
 
-    .step-description {
-        font-size: 1rem;
-    }
+        .step {
+            padding: 15px;
 
-    .step-image {
-        max-width: 100%;
-    }
-}
+            &-title {
+                font-size: 1.5rem;
+            }
 
+            &-description {
+                font-size: 1rem;
+            }
+
+            &-image {
+                max-width: 100%;
+            }
+        }
+    }
 }
