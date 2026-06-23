@@ -284,7 +284,7 @@ export default function CampaignReport() {
         filters={filters}
         hasActiveFilters={hasActiveFilters}
       >
-        <div className='sidebar-left-content' onClick={() => { if (showDateSuggestions) { setShowDateSuggestions(false) } }}>
+        <div className='sidebar-left-content'>
           <div className='nmain-list  mb-3 main_box pt-0'>
 
 
@@ -373,6 +373,9 @@ export default function CampaignReport() {
                                     onChange={(update) => {
                                       setDateRange(update);
                                       setSelectedPeriod("Custom");
+                                      if (update[0] && update[1]) {
+                                        setShowDateSuggestions(false);
+                                      }
                                     }}
                                     startDate={start}
                                     endDate={end}

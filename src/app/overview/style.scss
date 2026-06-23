@@ -495,16 +495,74 @@ table {
   background: #89c2ff !important;
 }
 
+.date-range-container {
+  position: relative;
+}
+
 .date-suggestions-dropdown {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  z-index: 1050;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  gap: 20px;
+}
 
+.suggestion-list-container {
+  min-width: 160px;
+  border-right: 1px solid #e0e0e0;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .suggestion-item {
   display: flex;
-  gap: 2px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f7fa;
+}
+
+.suggestion-item.selected {
+  background-color: #eef6ff;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.suggestion-item .radio-input {
+  display: none;
+}
+
+.suggestion-item .radio-custom {
+  display: none;
+}
+
+.calendar-section {
+  display: flex;
+  align-items: flex-start;
+}
+
+.react-datepicker {
+  border: none !important;
 }
 
 .react-datepicker__month-container {
@@ -551,10 +609,14 @@ table {
 
 @media all and (min-width: 320px) and (max-width: 575px) {
   .date-suggestions-dropdown {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
     flex-direction: column !important;
-
+    gap: 15px;
+    padding: 12px;
+  }
+  .suggestion-list-container {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
   }
 }
