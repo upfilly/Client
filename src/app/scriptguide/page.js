@@ -176,7 +176,13 @@ const TrackingGuide = () => {
   const brandId = user?.id || user?._id || '{{BRAND_ID}}';
 
   return (
-    <Layout>
+    <Layout
+      handleKeyPress={handleKeyPress}
+      setFilter={setFilter}
+      reset={reset}
+      filter={filter}
+      name="Script"
+      filters={filters}>
       {/* Hero */}
       <section style={styles.hero}>
         <div style={styles.container}>
