@@ -177,12 +177,12 @@ const TrackingGuide = () => {
 
   return (
     <Layout
-      handleKeyPress={handleKeyPress}
-      setFilter={setFilter}
-      reset={reset}
-      filter={filter}
+      handleKeyPress={undefined}
+      setFilter={undefined}
+      reset={undefined}
+      filter={undefined}
       name="Script"
-      filters={filters}>
+      filters={undefined}>
       {/* Hero */}
       <section style={styles.hero}>
         <div style={styles.container}>
