@@ -112,7 +112,7 @@ const Html = ({
                           className="table_data"
                           onClick={(e) => sorting("name")}
                         >
-                          Affliate Group {filters?.sorder === "asc" ? "↑" : "↓"}
+                          AFFILIATE GROUP  {filters?.sorder === "asc" ? "↑" : "↓"}
                         </th>
                         <th scope="col" className="table_data">
                           Affiliates{" "}

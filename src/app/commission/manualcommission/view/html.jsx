@@ -110,7 +110,7 @@ const Html = ({
                             <thead className='table_head'>
                                 <tr className='heading_row'>
                                     {/* <th scope="col" className='table_data' onClick={e => sorting('title')}>Click Ref{filters?.sorder === "asc" ? "↑" : "↓"}</th> */}
-                                    <th scope="col" className='table_data' >Commisssion Type</th>
+                                    <th scope="col" className='table_data' >Commission Type</th>
                                     <th scope="col" className='table_data' >Affiliate</th>
                                     <th scope="col" className='table_data'>Order price</th>
                                     <th scope="col" className='table_data'>Commission</th>

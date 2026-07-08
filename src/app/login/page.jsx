@@ -243,7 +243,7 @@ export default function Login() {
                       Login
                     </button>
                     <div className='d-flex flex-wrap  justify-content-between  mt-2'>
-                      <label className='d-flex align-items-center mb-0'><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2" /><span className='forbx '>Keep me logged</span></label>
+                      <label className='d-flex align-items-center mb-0'><input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="mr-2" /><span className='forbx '>Keep Me Logged In</span></label>
 
                       <Link href="/forgotpassword" className="forbx text-black">Forgot Password ?</Link>
                     </div>

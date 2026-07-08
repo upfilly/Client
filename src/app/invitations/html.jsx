@@ -92,7 +92,7 @@ const Html = ({
                                 <table className="table table-striped  ">
                                     <thead className='table_head'>
                                         <tr className='heading_row'>
-                                            <th scope="col" class="table_data" >Merchnat Name</th>
+                                            <th scope="col" class="table_data" >Merchant Name</th>
                                             <th scope="col" class="table_data" >Message</th>
                                             <th scope="col" className='table_data' >Brand Name</th>
                                             <th scope="col" className='table_data' >Campaign Name</th>

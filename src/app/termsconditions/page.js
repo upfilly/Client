@@ -45,7 +45,7 @@ const TermConditions = () => {
                     <h2>Privacy by Design</h2>
                     <p>
                         Upfilly.com integrates privacy into all aspects of our business, including strategy, product development, and delivery.
-                        We do not collect, store, process, or allow in our systems any of your personally identifiable information (DII).
+                        We do not collect, store, process, or allow in our systems any of your personally identifiable information (PII).
                         We collect only pseudonymous information to maintain your privacy and ensure our services remain efficient.
                     </p>
                 </section>

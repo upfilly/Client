@@ -23,7 +23,7 @@ const formFields = [
 const formPpcFields = [
   {
     label:
-      "If the Publishers Promote you via PPC, will they entitled for Full Commision?",
+      "If the Publishers Promote you via PPC, will they entitled for Full Commission?",
     showInput: false,
   },
   {
@@ -38,22 +38,22 @@ const formPpcFields = [
   },
   {
     label:
-      "If publisher use your Brand name in their paid search title and Discription ,will they receive full commission?",
+      "If publisher use your Brand name in their paid search title and Description ,will they receive full commission?",
     showInput: false,
   },
   {
     label:
-      "If publisher adds your Brand name into their negetive Keyword list ,will they receive full commission?",
+      "If publisher adds your Brand name into their negative Keyword list ,will they receive full commission?",
     showInput: false,
   },
   {
     label:
-      "If publisher Display their adds when your brand name or variations of you brand name are entered as search Keywords ,will they receive full commission?(eg. vodafone ,voda fone)",
+      "If publisher Display their ads when your brand name or variations of your brand name are entered as search Keywords ,will they receive full commission?(eg. vodafone ,voda fone)",
     showInput: false,
   },
   {
     label:
-      "If publisher Display their adds when when misspelling of your brand name are entered as keywords ill they receive full commission ?(eg. vodofone)",
+      "If publisher Display their ads when misspelling of your brand name are entered as keywords will they receive full commission ?(eg. vodofone)",
     showInput: false,
   },
   {
@@ -77,17 +77,17 @@ const formPpcFields = [
   { label: "Other", showInput: true },
   {
     label:
-      "Are there any specific search terms(keyword) where sales from publisher PPC adds will not be eligible to earn commision",
+      "Are there any specific search terms(keyword) where sales from publisher PPC adds will not be eligible to earn commission",
     showInput: true,
   },
   {
     label:
-      "if publishers place shopping ads on a seacrh engine and link directly to your website ,are they eligble to receive full commission ?",
+      "if publishers place shopping ads on a search engine and link directly to your website ,are they eligible  to receive full commission ?",
     showInput: false,
   },
   {
     label:
-      "if publishers place shopping ads on a seacrh engine such as Comparison Shopping Service(CSS),does this activity needs to be tracked in a seprate specific publisher account ?",
+      "if publishers place shopping ads on a search engine such as Comparison Shopping Service(CSS),does this activity needs to be tracked in a separate specific publisher account ?",
     showInput: true,
   },
 ];

@@ -72,7 +72,7 @@ export default function AboutUs() {
           <div className="container">
             <div className="row">
               <div className="col-md-12 text-center">
-                <h2 className="customers">Frequent Asked Questions</h2>
+                <h2 className="customers">Frequently Asked Questions</h2>
               </div>
               <div className="accordion" id="accordionExample">
                 <div className="row">
