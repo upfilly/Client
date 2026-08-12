@@ -133,9 +133,15 @@ const Html = ({ settingData, Logout }) => {
                       <Link href="/affguide" className="dropdown-item">For Affiliates</Link>
                     </div>
                   </div>
-                  <Link href="/pricing" className={`nav-link ${pathname === "/pricing" ? 'active' : ''}`}>
-                    Pricing
-                  </Link>
+                  <div className="nav-dropdown">
+                    <span className={`nav-link dropdown-trigger ${pathname === "/pricing" || pathname === "/white-label-pricing" ? 'active' : ''}`}>
+                      Pricing
+                    </span>
+                    <div className="dropdown-menu-custom">
+                      <Link href="/pricing" className="dropdown-item">Network Pricing</Link>
+                      <Link href="/white-label-pricing" className="dropdown-item">White Label Pricing</Link>
+                    </div>
+                  </div>
                   <Link href="/resources" className={`nav-link ${pathname === "/resources" ? 'active' : ''}`}>
                     Resources
                   </Link>
@@ -212,7 +218,13 @@ const Html = ({ settingData, Logout }) => {
                     <Link href="/affguide" className="mobile-nav-link sub" onClick={() => setMobileMenuOpen(false)}>For Affiliates</Link>
                   </div>
                 </div>
-                <Link href="/pricing" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+                <div className="mobile-dropdown">
+                  <span className="mobile-dropdown-trigger">Pricing</span>
+                  <div className="mobile-dropdown-items">
+                    <Link href="/pricing" className="mobile-nav-link sub" onClick={() => setMobileMenuOpen(false)}>Network Pricing</Link>
+                    <Link href="/white-label-pricing" className="mobile-nav-link sub" onClick={() => setMobileMenuOpen(false)}>White Label Pricing</Link>
+                  </div>
+                </div>
                 <Link href="/resources" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
               </div>
             )}

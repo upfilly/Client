@@ -1,0 +1,997 @@
+/* ============================================
+   WHITE LABEL PRICING PAGE — Premium Dark Theme
+   ============================================ */
+
+// Design Tokens
+$wl-primary: #4353ff;
+$wl-primary-light: #6b78ff;
+$wl-primary-dark: #3043e5;
+$wl-accent: #ff6b35;
+$wl-accent-light: #ff8f6b;
+$wl-dark-900: #0e1225;
+$wl-dark-800: #1a1f36;
+$wl-dark-700: #252b47;
+$wl-dark-600: #303759;
+$wl-dark-500: #424a73;
+$wl-gray-100: #f8f9fa;
+$wl-gray-200: #eef2ff;
+$wl-gray-300: #cbd5e1;
+$wl-gray-400: #94a3b8;
+$wl-gray-500: #64748b;
+$wl-white: #ffffff;
+$wl-gradient-main: linear-gradient(135deg, #4353ff 0%, #6b78ff 50%, #909aff 100%);
+$wl-gradient-accent: linear-gradient(135deg, #ff6b35 0%, #ff8f6b 100%);
+$wl-gradient-dark: linear-gradient(180deg, $wl-dark-900 0%, $wl-dark-800 100%);
+$wl-gradient-card: linear-gradient(145deg, rgba(67, 83, 255, 0.08) 0%, rgba(107, 120, 255, 0.04) 100%);
+$wl-shadow-sm: 0 4px 12px rgba(67, 83, 255, 0.08);
+$wl-shadow-md: 0 8px 30px rgba(67, 83, 255, 0.15);
+$wl-shadow-lg: 0 20px 50px rgba(67, 83, 255, 0.25);
+$wl-shadow-glow: 0 0 40px rgba(67, 83, 255, 0.3);
+$wl-radius: 20px;
+$wl-radius-sm: 12px;
+$wl-radius-xs: 8px;
+$wl-transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Keyframes
+@keyframes wl-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+@keyframes wl-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes wl-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes wl-fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Global Page
+.wl-pricing-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: $wl-dark-900;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background: $wl-white;
+}
+
+.wl-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.wl-gradient-text {
+  background: $wl-gradient-main;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.wl-hero {
+  position: relative;
+  background: $wl-gradient-dark;
+  padding: 60px 24px 40px;
+  text-align: center;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(67, 83, 255, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(107, 120, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: $wl-white;
+    position: relative;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+
+    .wl-gradient-text {
+      background: linear-gradient(135deg, #6b78ff 0%, #909aff 40%, #c3c8ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+}
+
+.wl-hero-bg-orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.wl-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+
+  &.wl-orb-1 {
+    width: 400px;
+    height: 400px;
+    background: rgba(67, 83, 255, 0.03);
+    top: -100px;
+    left: -100px;
+    animation: wl-float 8s ease-in-out infinite;
+  }
+
+  &.wl-orb-2 {
+    width: 300px;
+    height: 300px;
+    background: rgba(107, 120, 255, 0.15);
+    top: 50%;
+    right: -80px;
+    animation: wl-float 10s ease-in-out infinite 2s;
+  }
+
+  &.wl-orb-3 {
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 107, 53, 0.1);
+    bottom: -60px;
+    left: 40%;
+    animation: wl-float 7s ease-in-out infinite 4s;
+  }
+}
+
+.wl-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(67, 83, 255, 0.25);
+  border: 1px solid rgba(107, 120, 255, 0.3);
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $wl-primary-light;
+  margin-bottom: 20px;
+  position: relative;
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.wl-hero-subtitle {
+  font-size: 16px;
+  color: $wl-gray-300;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Toggle Switch */
+.wl-plan-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0 0;
+  position: relative;
+
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: $wl-gray-400;
+    transition: $wl-transition;
+  }
+
+  .wl-toggle-active {
+    color: $wl-white;
+    font-weight: 600;
+  }
+}
+
+.wl-save-badge {
+  background: $wl-gradient-accent;
+  color: $wl-dark-900;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 40px;
+  margin-left: 8px;
+  letter-spacing: 0.2px;
+}
+
+.wl-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.wl-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $wl-dark-600;
+  transition: 0.4s;
+  border-radius: 30px;
+  border: 1px solid $wl-dark-500;
+
+  &::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: $wl-gradient-main;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 0 4px 14px rgba(67, 83, 255, 0.1);
+  }
+}
+
+input:checked + .wl-slider::before {
+  transform: translateX(22px);
+}
+
+/* ============================================
+   PRICING CARDS
+   ============================================ */
+.wl-cards-section {
+  padding: 40px 0 60px;
+  background: linear-gradient(180deg, $wl-dark-800 0%, $wl-gray-100 15%);
+}
+
+.wl-note-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 107, 53, 0.25);
+  padding: 10px 18px;
+  border-radius: $wl-radius-sm;
+  margin-bottom: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #c94c20;
+}
+
+.wl-loading {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.wl-empty-state {
+  text-align: center;
+  padding: 80px 0;
+  color: $wl-gray-500;
+
+  svg {
+    color: $wl-primary-light;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: $wl-dark-900;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $wl-gray-400;
+    margin-bottom: 24px;
+  }
+}
+
+.wl-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 0;
+  animation: wl-fadeUp 0.6s ease-out;
+}
+
+.wl-pricing-card {
+  background: $wl-white;
+  border-radius: $wl-radius;
+  padding: 0;
+  transition: $wl-transition;
+  border: 1px solid $wl-gray-200;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $wl-shadow-md;
+    border-color: $wl-primary-light;
+  }
+
+  // Tier-specific accent bars
+  &.wl-tier-starter .wl-card-header { background: linear-gradient(135deg, #6baeff 0%, #4392ff 100%); }
+  &.wl-tier-growth .wl-card-header { background: linear-gradient(135deg, #4353ff 0%, #6b78ff 100%); }
+  &.wl-tier-professional .wl-card-header { background: linear-gradient(135deg, #3043e5 0%, #4353ff 100%); }
+  &.wl-tier-enterprise .wl-card-header { background: linear-gradient(135deg, #1b2896 0%, #3043e5 100%); }
+
+  &.wl-popular {
+    border-color: $wl-primary;
+    box-shadow: $wl-shadow-md;
+    transform: scale(1.03);
+
+    &:hover {
+      transform: scale(1.03) translateY(-8px);
+      box-shadow: $wl-shadow-lg;
+    }
+  }
+}
+
+.wl-popular-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: $wl-gradient-accent;
+  color: $wl-dark-900;
+  padding: 5px 14px;
+  border-radius: 40px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 2;
+}
+
+.wl-upcoming-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: $wl-gray-400;
+  color: $wl-white;
+  padding: 5px 14px;
+  border-radius: 40px;
+  font-size: 11px;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.wl-card-header {
+  padding: 24px 20px 20px;
+  color: $wl-white;
+  text-align: center;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(180deg, transparent, $wl-white);
+  }
+}
+
+.wl-tier-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.wl-plan-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: $wl-white;
+}
+
+.wl-plan-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.wl-original-price {
+  text-decoration: line-through;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  margin-right: 4px;
+}
+
+.wl-price-main {
+  display: flex;
+  align-items: baseline;
+}
+
+.wl-currency {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.wl-amount {
+  font-size: 36px;
+  font-weight: 800;
+  color: $wl-white;
+  line-height: 1;
+}
+
+.wl-period {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 4px;
+}
+
+.wl-card-body {
+  padding: 20px;
+  flex: 1;
+}
+
+.wl-plan-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.wl-metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid $wl-gray-200;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.wl-metric-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: $wl-gray-500;
+}
+
+.wl-metric-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: $wl-dark-900;
+}
+
+.wl-feature-list {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed $wl-gray-200;
+
+  h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $wl-gray-400;
+    margin-bottom: 10px;
+  }
+}
+
+.wl-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: $wl-dark-900;
+
+  .wl-check {
+    color: $wl-primary;
+    flex-shrink: 0;
+  }
+}
+
+.wl-card-footer {
+  padding: 0 20px 24px;
+  margin-top: auto;
+}
+
+/* Buttons */
+.wl-btn-primary,
+.wl-btn-outline,
+.wl-btn-active,
+.wl-btn-white,
+.wl-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $wl-transition;
+  border: none;
+  text-decoration: none;
+}
+
+.wl-btn-primary {
+  background: $wl-gradient-main;
+  color: $wl-white;
+  width: 100%;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $wl-shadow-md;
+  }
+}
+
+.wl-btn-outline {
+  background: transparent;
+  border: 1px solid $wl-primary;
+  color: $wl-primary;
+  width: 100%;
+
+  &:hover {
+    background: $wl-primary;
+    color: $wl-white;
+    transform: translateY(-2px);
+  }
+}
+
+.wl-btn-active {
+  background: $wl-gray-200;
+  color: $wl-gray-500;
+  width: 100%;
+  cursor: default;
+}
+
+.wl-btn-white {
+  background: $wl-white;
+  color: $wl-primary;
+  padding: 12px 32px;
+  font-size: 14px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.wl-btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: $wl-white;
+  padding: 12px 32px;
+  font-size: 14px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* ============================================
+   WHY WHITE LABEL FEATURES
+   ============================================ */
+.wl-features-section {
+  padding: 60px 0;
+  background: $wl-white;
+}
+
+.wl-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: $wl-dark-900;
+    letter-spacing: -0.3px;
+  }
+
+  p {
+    font-size: 15px;
+    color: $wl-gray-400;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+.wl-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.wl-feature-card {
+  background: $wl-gray-100;
+  border: 1px solid $wl-gray-200;
+  border-radius: $wl-radius;
+  padding: 24px 20px;
+  transition: $wl-transition;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $wl-shadow-md;
+    border-color: $wl-primary-light;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: $wl-dark-900;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 13px;
+    color: $wl-gray-400;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.wl-feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: $wl-gradient-main;
+  border-radius: $wl-radius-sm;
+  margin-bottom: 16px;
+  color: $wl-white;
+}
+
+/* ============================================
+   COMPARISON TABLE
+   ============================================ */
+.wl-comparison-section {
+  padding: 60px 0;
+  background: $wl-gray-100;
+}
+
+.wl-table-wrapper {
+  background: $wl-white;
+  border-radius: $wl-radius;
+  overflow-x: auto;
+  box-shadow: $wl-shadow-md;
+  border: 1px solid $wl-gray-200;
+}
+
+.wl-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+
+  thead tr {
+    background: $wl-gradient-dark;
+  }
+
+  th {
+    padding: 16px 20px;
+    text-align: left;
+    color: $wl-white;
+    font-weight: 600;
+    font-size: 14px;
+
+    &:first-child {
+      border-top-left-radius: $wl-radius;
+    }
+
+    &:last-child {
+      border-top-right-radius: $wl-radius;
+    }
+  }
+
+  td {
+    padding: 12px 20px;
+    border-bottom: 1px solid $wl-gray-200;
+    color: $wl-gray-500;
+    font-size: 13px;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: rgba(67, 83, 255, 0.02);
+  }
+}
+
+.wl-feature-name {
+  font-weight: 600;
+  color: $wl-dark-900 !important;
+  background: $wl-gray-100;
+}
+
+.wl-check-icon {
+  color: $wl-primary;
+}
+
+.wl-cross-icon {
+  color: $wl-gray-300;
+}
+
+.wl-table-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(67, 83, 255, 0.1);
+  color: $wl-primary;
+  border-radius: 40px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+/* ============================================
+   FAQ SECTION
+   ============================================ */
+.wl-faq-section {
+  padding: 60px 0;
+  background: $wl-white;
+}
+
+.wl-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.wl-faq-card {
+  background: $wl-gray-100;
+  padding: 24px;
+  border-radius: $wl-radius;
+  transition: $wl-transition;
+  border: 1px solid $wl-gray-200;
+
+  &:hover {
+    box-shadow: $wl-shadow-md;
+    border-color: $wl-primary-light;
+    transform: translateY(-2px);
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: $wl-primary-dark;
+  }
+
+  p {
+    color: $wl-gray-400;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.wl-cta-section {
+  padding: 60px 0;
+  background: $wl-gray-100;
+}
+
+.wl-cta-card {
+  background: $wl-gradient-dark;
+  border-radius: $wl-radius;
+  padding: 48px 32px;
+  text-align: center;
+  color: $wl-white;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(67, 83, 255, 0.3) 0%, transparent 40%),
+      radial-gradient(circle at 70% 80%, rgba(107, 120, 255, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+  }
+}
+
+.wl-cta-content {
+  position: relative;
+  z-index: 1;
+
+  h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.wl-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.wl-cta-note {
+  font-size: 13px;
+  opacity: 0.6;
+  margin-top: 8px;
+}
+
+/* Modal */
+.wl-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 11, 30, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.wl-modal-content {
+  background: $wl-white;
+  border-radius: $wl-radius;
+  padding: 40px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+
+  img {
+    width: 80px;
+    margin-bottom: 24px;
+  }
+
+  h5 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: $wl-dark-900;
+  }
+
+  .wl-modal-text {
+    color: $wl-gray-400;
+    margin-bottom: 24px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .wl-hero {
+    padding: 60px 20px 40px;
+  }
+
+  .wl-hero h1 {
+    font-size: 32px;
+  }
+
+  .wl-hero-subtitle {
+    font-size: 14px;
+  }
+
+  .wl-cards-section,
+  .wl-features-section,
+  .wl-comparison-section,
+  .wl-faq-section,
+  .wl-cta-section {
+    padding: 40px 0;
+  }
+
+  .wl-pricing-grid {
+    gap: 20px;
+  }
+
+  .wl-section-header h2,
+  .wl-cta-content h2 {
+    font-size: 26px;
+  }
+
+  .wl-btn-primary,
+  .wl-btn-outline,
+  .wl-btn-white,
+  .wl-btn-ghost {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .wl-pricing-card.wl-popular {
+    transform: scale(1);
+
+    &:hover {
+      transform: translateY(-8px);
+    }
+  }
+
+  .wl-table th,
+  .wl-table td {
+    padding: 12px 16px;
+  }
+
+  .wl-features-section,
+  .wl-comparison-section,
+  .wl-faq-section,
+  .wl-cta-section {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .wl-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wl-amount {
+    font-size: 36px;
+  }
+
+  .wl-hero h1 {
+    font-size: 30px;
+  }
+
+  .wl-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wl-faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
