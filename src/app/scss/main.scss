@@ -3656,80 +3656,123 @@ p.checkbox-option-main {
   height: 100px !important;
 }
 
-.cookies-popup {
+.modern-cookie-banner {
   position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-  padding: 20px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  bottom: 30px;
+  left: 30px;
+  max-width: 450px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  z-index: 9999;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .cookie-content {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .cookie-icon-wrapper {
+    background: #f3f4f6;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    
+    .cookie-icon {
+      font-size: 24px;
+    }
+  }
+
+  .cookie-text {
+    h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 6px;
+      margin-top: 4px;
+    }
+
+    p {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+
+    button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .cookie-btn-decline {
+      background: transparent;
+      color: #6b7280;
+      border: 1px solid #e5e7eb;
+
+      &:hover {
+        background: #f9fafb;
+        color: #374151;
+      }
+    }
+
+    .cookie-btn-accept {
+      background: #4353ff; /* Brand primary */
+      color: white;
+      box-shadow: 0 4px 12px rgba(67, 83, 255, 0.25);
+
+      &:hover {
+        background: #3043e5;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(67, 83, 255, 0.35);
+      }
+    }
+  }
 }
 
-.cookies-popup p {
-  margin: 0;
-}
+@media (max-width: 576px) {
+  .modern-cookie-banner {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 
-.cookies-popup button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
+    .cookie-actions {
+      flex-direction: column;
 
-.cookies-popup button:hover {
-  background-color: #0056b3;
-}
-
-.cokkeimg {
-  width: auto;
-  height: 80px;
-}
-
-.cookies-popup {
-  z-index: 9;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-}
-
-.cokkiebtns {
-  background-color: #0056b3;
-  padding: 10px 20px;
-  border: 0px;
-  border-radius: 10px;
-  color: #fff;
-}
-
-.cokkiesmodal .modal-dialog {
-  position: absolute;
-  bottom: 0;
-  max-width: 100% !important;
-  width: 100%;
-  overflow: hidden;
-  left: 0;
-  margin: 0 auto;
-}
-
-.bolding {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.cokkiebtnsdeny {
-  background-color: rgb(241, 47, 47);
-  padding: 10px 20px;
-  border: 0px;
-  border-radius: 10px;
-  color: #fff;
-  width: 100%;
+      button {
+        width: 100%;
+      }
+    }
+  }
 }
 
 //gourav css start
