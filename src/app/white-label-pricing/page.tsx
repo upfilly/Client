@@ -80,7 +80,7 @@ export default function WhiteLabelPricing() {
 
   const getData = (p = {}) => {
     setLoader(true)
-    let filter = { ...filters, ...p, category: "white_label" }
+    let filter = { ...filters, ...p, category: "white_label", status: "active" }
     if (user) {
       filter = { ...filter, userId: user?.id } as any
     }
@@ -272,12 +272,17 @@ export default function WhiteLabelPricing() {
 
                       <div className="wl-card-footer">
                         {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && (
-                          <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
-                            Book a Demo
-                          </a>
+                          <div className="wl-btn-group">
+                            <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
+                              Get Started
+                            </a>
+                            <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
+                              Book a Demo
+                            </a>
+                          </div>
                         )}
                         {(!showCard && !itm.isUpcoming && !user?.isPayment && user) && (
-                          <a className="wl-btn-primary" onClick={() => ChangePlan(itm)}>
+                          <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
                             Get Started
                           </a>
                         )}
@@ -290,12 +295,17 @@ export default function WhiteLabelPricing() {
                           <span className="wl-btn-active">Current Plan</span>
                         )}
                         {(showCard && itm.isUpcoming && !user && !user?.isPayment) && (
-                          <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
-                            Book a Demo
-                          </a>
+                          <div className="wl-btn-group">
+                            <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
+                              Get Started
+                            </a>
+                            <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
+                              Book a Demo
+                            </a>
+                          </div>
                         )}
                         {(showCard && itm.isUpcoming && user && !user?.isPayment) && (
-                          <a className="wl-btn-primary" onClick={() => ChangePlan(itm)}>
+                          <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
                             Get Started
                           </a>
                         )}

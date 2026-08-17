@@ -1,14 +1,14 @@
 /* Modern Upfilly Homepage Styles */
 
 :root {
-  --primary: #4353ff;
-  --primary-light: #6b78ff;
-  --primary-dark: #3043e5;
-  --accent: #ff6b35;
-  --gradient-1: linear-gradient(135deg, #4353ff 0%, #6b78ff 100%);
-  --gradient-2: linear-gradient(135deg, #ff6b35 0%, #ff8f6b 100%);
-  --dark: #1a1f36;
-  --dark-light: #2a2f45;
+  --primary: #1c306d;
+  --primary-light: #2c4799;
+  --primary-dark: #122152;
+  --accent: #3eb0ff;
+  --gradient-1: linear-gradient(135deg, #1c306d 0%, #2c4799 100%);
+  --gradient-2: linear-gradient(135deg, #3eb0ff 0%, #73c8ff 100%);
+  --dark: #0f172a;
+  --dark-light: #1e293b;
   --gray-100: #f7f9fc;
   --gray-200: #e9ecf2;
   --gray-300: #d0d5e0;
@@ -109,6 +109,7 @@
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--gray-200);
+  height: 100%;
 }
 
 .feature-card:hover {
@@ -136,6 +137,7 @@
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--gray-200);
+  height: 100%;
 }
 
 .role-card:hover {
@@ -192,6 +194,7 @@
   text-align: center;
   transition: var(--transition);
   border: 1px solid var(--gray-200);
+  height: 100%;
 }
 
 .step-card:hover {

@@ -112,7 +112,7 @@ export default function Pricing() {
   const getData = (p = {}) => {
     setLoader(true)
     if (!user) {
-      let filter = { ...filters, ...p, category: "Network" }
+      let filter = { ...filters, ...p, category: "Network", status: "active" }
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
@@ -124,7 +124,7 @@ export default function Pricing() {
     }
 
     if (user) {
-      let filter = { ...filters, ...p, userId: user?.id, category: "Network" }
+      let filter = { ...filters, ...p, userId: user?.id, category: "Network", status: "active" }
       let url = 'subscription-plan/all'
       ApiClient.get(url, filter).then(res => {
         if (res) {
