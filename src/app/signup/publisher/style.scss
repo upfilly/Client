@@ -1,484 +1,55 @@
-// style.scss
-.signup-brand-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #26398f 100%);
-  padding: 20px;
-  
-  .right_side {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    margin: 20px 0;
-  }
-  
-  .brand-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    text-align: center;
-    color: white;
-    
-    .brand-logo {
-      max-width: 200px;
-      max-height: 80px;
-      object-fit: contain;
-      margin-bottom: 1rem;
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-    }
-    
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    
-    p {
-      opacity: 0.9;
-      font-size: 0.95rem;
-      margin-bottom: 0;
-    }
-  }
-  
-  .content-wrapper {
-    padding: 2.5rem;
-  }
-  
-  .apply-section {
-    margin-bottom: 2rem;
-    
-    .apply-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      padding: 1rem 3rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-      min-width: 200px;
-      
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-      }
-      
-      &:active {
-        transform: translateY(0);
-      }
-    }
-  }
-  
-  .benefits-section {
-    background: #f8f9fa;
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    
-    h3 {
-      color: #333;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      font-size: 1.25rem;
-    }
-    
-    p {
-      color: #666;
-      line-height: 1.6;
-      margin-bottom: 0;
-    }
-    
-    ul, ol {
-      color: #666;
-      line-height: 1.6;
-      padding-left: 1.5rem;
-      
-      li {
-        margin-bottom: 0.5rem;
-      }
-    }
-  }
-  
-  .login-prompt {
-    margin-bottom: 2rem;
-    
-    p {
-      color: #666;
-      margin-bottom: 0.5rem;
-      
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-    
-    .login-link {
-      color: #667eea;
-      text-decoration: none;
-      font-weight: 500;
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  
-  .footer {
-    text-align: center;
-    padding-top: 1rem;
-    border-top: 1px solid #e8e8e8;
-    
-    small {
-      color: #999;
-    }
-  }
-  
-  .signup-form {
-    .back-button {
-      color: #666;
-      text-decoration: none;
-      padding: 0;
-      border: none;
-      background: none;
-      margin-bottom: 1rem;
-      
-      &:hover {
-        color: #333;
-      }
-    }
-    
-    .form-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      
-      h2 {
-        color: #333;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        font-size: 1.5rem;
-      }
-      
-      p {
-        color: #666;
-        font-size: 0.95rem;
-        margin-bottom: 0;
-      }
-    }
-    
-    .form-group {
-      margin-bottom: 0;
-    }
-    
-    .form-control {
-      border: 2px solid #e8e8e8;
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      height: auto;
-      transition: all 0.3s ease;
-      
-      &:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        outline: none;
-      }
-      
-      &.is-invalid {
-        border-color: #dc3545;
-        
-        &:focus {
-          border-color: #dc3545;
-          box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-        }
-      }
-    }
-    
-    .invalid-feedback {
-      color: #dc3545;
-      font-size: 0.85rem;
-      margin-top: 0.25rem;
-      display: block;
-    }
-    
-    .password-group {
-      position: relative;
-      
-      .password-input-wrapper {
-        position: relative;
-      }
-      
-      .toggle-password {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: #666;
-        cursor: pointer;
-        padding: 5px;
-        font-size: 1.1rem;
-        
-        &:hover {
-          color: #333;
-        }
-        
-        &:focus {
-          outline: none;
-        }
-      }
-      
-      .form-text {
-        font-size: 0.85rem;
-        margin-top: 0.25rem;
-        color: #999;
-      }
-    }
-    
-    .username-status {
-      font-size: 0.85rem;
-      margin-top: 0.25rem;
-      
-      .checking {
-        color: #666;
-      }
-      
-      .available {
-        color: #28a745;
-      }
-      
-      .taken {
-        color: #dc3545;
-      }
-    }
-    
-    .submit-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      padding: 0.75rem;
-      font-weight: 600;
-      border-radius: 12px;
-      width: 100%;
-      transition: all 0.3s ease;
-      color: white;
-      
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-      }
-      
-      &:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-      }
-    }
-    
-    .terms-text {
-      font-size: 0.85rem;
-      color: #666;
-      text-align: center;
-      margin: 1.5rem 0;
-      
-      a {
-        color: #667eea;
-        text-decoration: none;
-        
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-    
-    .divider {
-      position: relative;
-      text-align: center;
-      margin: 1.5rem 0;
-      
-      &:before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: #e8e8e8;
-        z-index: 1;
-      }
-      
-      span {
-        position: relative;
-        background: white;
-        padding: 0 1rem;
-        color: #666;
-        font-size: 0.9rem;
-        z-index: 2;
-      }
-    }
-    
-    .social-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-      
-      .social-btn {
-        border: 2px solid #e8e8e8;
-        background: white;
-        padding: 0.75rem;
-        border-radius: 12px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        width: 100%;
-        
-        &:hover {
-          border-color: #667eea;
-          background: #f8f9ff;
-        }
-        
-        svg {
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-    
-    .login-link {
-      text-align: center;
-      color: #666;
-      
-      a {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 500;
-        
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-  
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1050;
-  }
-  
-  .modal-dialog {
-    width: 100%;
-    max-width: 400px;
-    margin: 1.75rem auto;
-  }
-  
-  .success-modal {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    
-    .modal-body {
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1.5rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      svg {
-        width: 40px;
-        height: 40px;
-      }
-    }
-    
-    .success-title {
-      color: #333;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-    
-    .success-message {
-      color: #666;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-    
-    .ok-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      font-weight: 500;
-      color: white;
-      transition: all 0.3s ease;
-      min-width: 120px;
-      
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-      }
-    }
-  }
+/* Enterprise SaaS Auth Styles - Publisher Signup */
+
+.loginimg { width: 100%; }
+form.p-3.rounded.shadow { border-top: none; }
+img.greentik { width: 160px; margin-bottom: 1rem; }
+button.close.verify { text-align: right; position: relative; right: 15px; top: 7px; color: #64748b; background: transparent; border: none; font-size: 24px; transition: color 0.2s; }
+button.close.verify:hover { color: #0f172a; }
+
+.modal.d-block { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); }
+.modal-dialog .modal-content { border-radius: 16px; border: none; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15); padding: 16px; }
+
+h3.tital, .lgtext { font-size: 28px; font-weight: 700; margin-top: 1rem; color: #0f172a; letter-spacing: -0.02em; }
+.paraclass { margin: 16px 0px 30px; color: #475569; font-size: 15px; line-height: 1.5; }
+
+.text-primary, a.text-primary { color: #1c306d !important; text-decoration: none; font-weight: 600; }
+a.text-primary:hover { color: #3eb0ff !important; }
+.text-black { color: #0f172a !important; text-decoration: none; font-weight: 500; }
+.text-black:hover { color: #1c306d !important; text-decoration: underline; }
+
+.mt-0.border-bottom p { font-size: 14px; color: #64748b; opacity: 1; }
+
+form.centerLogin {
+    display: block; margin: 3rem auto; background: #ffffff; width: 100%; max-width: 480px; padding: 40px 32px;
+    border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    border: 1px solid #e2e8f0; position: relative;
 }
 
-// Responsive styles
-@media (max-width: 768px) {
-  .signup-brand-page {
-    padding: 10px;
-    
-    .brand-header {
-      padding: 1.5rem 1rem;
-      
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      .brand-logo {
-        max-width: 150px;
-      }
-    }
-    
-    .content-wrapper {
-      padding: 1.5rem;
-    }
-    
-    .benefits-section {
-      padding: 1.5rem;
-    }
-    
-    .signup-form {
-      .form-header h2 {
-        font-size: 1.25rem;
-      }
-    }
-  }
+.bginput { border-radius: 8px !important; border: 1px solid #cbd5e1 !important; height: 44px !important; font-size: 15px !important; color: #0f172a !important; transition: all 0.2s ease; background: #f8fafc !important; padding: 0 16px !important; }
+.bginput:focus { background: #ffffff !important; border-color: #3eb0ff !important; box-shadow: 0 0 0 3px rgba(62, 176, 255, 0.15) !important; outline: none; }
+
+.btn-primary.submit_btn, .btn-primary.loginclass, .btn-primary {
+    background: linear-gradient(135deg, #1c306d 0%, #2c4799 100%); border: none; height: 44px; border-radius: 8px; font-weight: 600; font-size: 15px; width: 100%; color: #ffffff; transition: all 0.2s ease; box-shadow: 0 4px 6px -1px rgba(28, 48, 109, 0.15);
+}
+.btn-primary.submit_btn:hover, .btn-primary.loginclass:hover, .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -2px rgba(28, 48, 109, 0.25); background: linear-gradient(135deg, #122152 0%, #1c306d 100%); }
+
+.btn-outline-white { background: #ffffff; border: 1px solid #e2e8f0; color: #0f172a; border-radius: 8px; height: 44px; font-weight: 600; font-size: 14px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s ease; margin-bottom: 12px; }
+.btn-outline-white:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+.title-around-span, .or.orbx {
+    position: relative; text-align: center; color: #64748b; font-size: 13px; font-weight: 500; margin: 24px 0; text-transform: uppercase; letter-spacing: 0.5px;
+    &:before { content: ""; display: block; height: 1px; width: 40%; position: absolute; left: 0; top: 50%; background-color: #e2e8f0; }
+    &:after { content: ""; display: block; height: 1px; width: 40%; position: absolute; right: 0; top: 50%; background-color: #e2e8f0; }
+    span { position: relative; z-index: 1; padding: 0 16px; background: #ffffff; text-transform: uppercase; letter-spacing: 0.5px; }
 }
 
-@media (max-width: 576px) {
-  .signup-brand-page {
-    .apply-btn {
-      width: 100%;
-    }
-    
-    .social-buttons .social-btn {
-      font-size: 0.9rem;
-    }
-  }
-}
+.back_button { color: #64748b !important; position: absolute; left: 24px; top: 24px; font-size: 20px !important; transition: color 0.2s ease; cursor: pointer; }
+.back_button:hover { color: #1c306d !important; }
+
+.inputWrapper { position: relative; }
+.inputWrapper i { position: absolute; right: 16px; top: 14px; color: #94a3b8; cursor: pointer; transition: color 0.2s ease; }
+.inputWrapper i:hover { color: #475569; }
+
+.account_bx, .account_ptag { font-size: 14px; color: #64748b; margin-top: 24px; margin-bottom: 12px; border-top: 1px solid #e2e8f0; padding-top: 24px; }
+
+svg.google_right, svg.facebook_right { position: relative; left: auto; top: auto; }

@@ -185,7 +185,7 @@ export default function Layout({
     pathname.includes("/affiliate") ||
     pathname.includes("/group") ||
     pathname.includes("/commission") ||
-    pathname.includes("/payments") ||
+    (pathname.includes("/payments") && !pathname.includes("/paymentsuccess")) ||
     pathname.includes("/chat") ||
     pathname.includes("/allownotifications") ||
     pathname.includes("textlinks") ||
@@ -201,7 +201,7 @@ export default function Layout({
     pathname.includes("/campaignmanagement") ||
     pathname.includes("/affiliate") ||
     pathname.includes("/profile") ||
-    pathname.includes("/payments") ||
+    (pathname.includes("/payments") && !pathname.includes("/paymentsuccess")) ||
     pathname.includes("/proposals") ||
     pathname.includes("/commission");
 

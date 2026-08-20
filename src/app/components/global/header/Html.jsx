@@ -179,6 +179,9 @@ const Html = ({ settingData, Logout }) => {
                         <Dropdown.Item onClick={() => history.push('/dashboard')} className="user-menu-item">
                           Dashboard
                         </Dropdown.Item>
+                        <Dropdown.Item onClick={() => history.push('/white-label-dashboard')} className="user-menu-item">
+                          White Label Dashboard
+                        </Dropdown.Item>
                         <Dropdown.Item onClick={() => history.push('/profile')} className="user-menu-item">
                           Profile
                         </Dropdown.Item>

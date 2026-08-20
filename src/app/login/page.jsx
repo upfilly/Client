@@ -87,6 +87,9 @@ export default function Login() {
           localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
+          if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
+            url = '/white-label-onboarding'
+          }
           history.push(url);
         }
       })
@@ -169,12 +172,10 @@ export default function Login() {
         localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
 
         let url = '/dashboard'
-        // if (res?.data?.tax_detail == '' && res?.data?.role == 'affiliate') {
-        //   history.push('/addaccount/detail')
-        // } else {
+        if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
+          url = '/white-label-onboarding'
+        }
         history.push(url)
-          // }
-          ;
       }
       // toast.error(res?.error?.message)
       loader(false)

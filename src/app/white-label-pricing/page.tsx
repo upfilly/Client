@@ -27,6 +27,7 @@ export default function WhiteLabelPricing() {
   const [total, setTotal] = useState(0)
   const [loaging, setLoader] = useState(true)
   const [selectedPlan, setSelectedPlan] = useState<any>(false)
+  const [activeWlType, setActiveWlType] = useState('merchant')
   const param = useSearchParams()
   const id = param.get("id")
   const [showPopup, setShowPopup] = useState(false)
@@ -62,7 +63,11 @@ export default function WhiteLabelPricing() {
         crendentialModel?.setUser(res?.data)
         localStorage.setItem('token', res.data.access_token)
         localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
-        window.location.reload();
+        if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
+          history.push('/white-label-onboarding')
+        } else {
+          window.location.reload();
+        }
       }
       loader(false)
     })
@@ -95,10 +100,11 @@ export default function WhiteLabelPricing() {
   }
 
   const filteredPlans = data?.filter((item: any) => {
+    const isCorrectWlType = item?.whitelabelType === activeWlType;
     if (!selectedPlan) {
-      return item?.interval_count === 1;
+      return item?.interval_count === 1 && isCorrectWlType;
     } else {
-      return item?.interval_count === 12;
+      return item?.interval_count === 12 && isCorrectWlType;
     }
   });
 
@@ -166,9 +172,25 @@ export default function WhiteLabelPricing() {
             </div>
             <h1>Launch <span className="wl-gradient-text">Your Own Brand</span></h1>
             <p className="wl-hero-subtitle">
-              Build and scale your affiliate platform under your own brand. 
+              Build and scale your affiliate platform under your own brand.
               Full customization, zero development required.
             </p>
+
+            {/* Whitelabel Type Segmented Control */}
+            <div className="wl-segmented-control mb-4">
+              <button
+                className={`wl-segment ${activeWlType === 'merchant' ? 'active' : ''}`}
+                onClick={() => setActiveWlType('merchant')}
+              >
+                Merchant Plans
+              </button>
+              <button
+                className={`wl-segment ${activeWlType === 'network' ? 'active' : ''}`}
+                onClick={() => setActiveWlType('network')}
+              >
+                Network Plans
+              </button>
+            </div>
 
             {/* Plan Toggle */}
             <div className="wl-plan-toggle">
@@ -273,19 +295,16 @@ export default function WhiteLabelPricing() {
                       <div className="wl-card-footer">
                         {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && (
                           <div className="wl-btn-group">
-                            <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
-                              Get Started
-                            </a>
-                            <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
+                            <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}&category=white_label&role=white_lable&whitelabelType=${itm.whitelabelType || activeWlType || 'merchant'}`)}>
                               Book a Demo
                             </a>
                           </div>
                         )}
-                        {(!showCard && !itm.isUpcoming && !user?.isPayment && user) && (
+                        {/* {(!showCard && !itm.isUpcoming && !user?.isPayment && user) && (
                           <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
                             Get Started
                           </a>
-                        )}
+                        )} */}
                         {(!showCard && !itm.isUpcoming && user && !itm.isActive && user?.isPayment) && (
                           <a className="wl-btn-primary" onClick={() => ChangePlan(itm)}>
                             {parseInt(itm.amount) <= parseInt(activePlans[0]?.amount) ? "Switch Plan" : "Upgrade"}
@@ -296,10 +315,7 @@ export default function WhiteLabelPricing() {
                         )}
                         {(showCard && itm.isUpcoming && !user && !user?.isPayment) && (
                           <div className="wl-btn-group">
-                            <a className="wl-btn-primary" onClick={() => history.push(`/white-label-onboarding?planId=${itm._id}`)}>
-                              Get Started
-                            </a>
-                            <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
+                            <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}&category=white_label&role=${itm.whitelabelType || activeWlType || 'merchant'}&whitelabelType=${itm.whitelabelType || activeWlType || 'merchant'}`)}>
                               Book a Demo
                             </a>
                           </div>

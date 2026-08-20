@@ -113,7 +113,13 @@ export default function BillingForm() {
   const getData = (p = {}) => {
     setLoader(true);
     if (!user) {
-      let filter = { ...filters, ...p, category: "Network" };
+      let filter = { ...filters, ...p, category: param.get("category") || "Network" };
+
+      const whitelabelType = param.get("whitelabelType");
+      if (whitelabelType) {
+        filter.whitelabelType = whitelabelType;
+      }
+
       let url = "subscription-plan/all";
       ApiClient.get(url, filter)
         .then((res) => {
@@ -419,7 +425,7 @@ export default function BillingForm() {
     loader(true);
 
     const registrationData = {
-      role: "brand",
+      role: param.get("role") || "brand",
       request_status: "accepted",
       email: formData.email,
       firstName: formData.firstName,

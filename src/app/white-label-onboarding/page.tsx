@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Layout from '../components/global/layout/index';
+import ApiClient from '@/methods/api/apiClient';
+import crendentialModel from '@/models/credential.model';
 import { toast } from 'react-toastify';
 import {
   LuCheck, LuChevronRight, LuChevronLeft, LuUser, LuBriefcase,
-  LuGlobe, LuCreditCard, LuBuilding2, LuMail, LuLock,
+  LuGlobe, LuBuilding2, LuMail, LuLock,
   LuPhone, LuShieldCheck, LuMapPin, LuInfo, LuCreditCard as LuStripe
 } from 'react-icons/lu';
 import './style.scss';
@@ -21,7 +23,6 @@ const STEPS = [
 export default function WhiteLabelOnboarding() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const planId = searchParams.get('planId');
   const planType = searchParams.get('planType') || 'merchant'; // 'merchant' or 'network'
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -63,6 +64,68 @@ export default function WhiteLabelOnboarding() {
     statementDescriptor: ''
   });
 
+  // Fetch and auto-fill existing user & tenant information
+  useEffect(() => {
+    const user = crendentialModel.getUser();
+    const savedTenantStr = typeof window !== 'undefined' ? localStorage.getItem('whiteLabelTenant') : null;
+    let savedTenant: any = {};
+    if (savedTenantStr) {
+      try {
+        savedTenant = JSON.parse(savedTenantStr);
+      } catch (e) {}
+    }
+
+    const populateFromUser = (userData: any) => {
+      if (!userData && !savedTenant) return;
+      const u = userData?.activeUser || userData || {};
+      const fullName = u?.fullName || u?.name || u?.userName || '';
+      const nameParts = fullName.split(' ');
+      const fName = u?.firstName || nameParts[0] || '';
+      const lName = u?.lastName || (nameParts.length > 1 ? nameParts.slice(1).join(' ') : '') || '';
+
+      setFormData(prev => ({
+        ...prev,
+        firstName: prev.firstName || fName || savedTenant.firstName || '',
+        lastName: prev.lastName || lName || savedTenant.lastName || '',
+        workEmail: prev.workEmail || u?.email || u?.workEmail || savedTenant.workEmail || '',
+        phone: prev.phone || u?.phone || u?.mobile || savedTenant.phone || '',
+        jobTitle: prev.jobTitle || u?.jobTitle || savedTenant.jobTitle || '',
+        legalCompanyName: prev.legalCompanyName || u?.companyName || u?.legalCompanyName || u?.company || savedTenant.legalCompanyName || '',
+        tradingName: prev.tradingName || u?.tradingName || u?.brandName || savedTenant.tradingName || '',
+        companyRegNumber: prev.companyRegNumber || u?.companyRegNumber || savedTenant.companyRegNumber || '',
+        vatId: prev.vatId || u?.vatId || u?.taxId || savedTenant.vatId || '',
+        addressLine1: prev.addressLine1 || u?.addressLine1 || u?.address || savedTenant.addressLine1 || '',
+        addressLine2: prev.addressLine2 || u?.addressLine2 || savedTenant.addressLine2 || '',
+        city: prev.city || u?.city || savedTenant.city || '',
+        postalCode: prev.postalCode || u?.postalCode || u?.zipCode || u?.zip || savedTenant.postalCode || '',
+        country: prev.country || u?.country || savedTenant.country || '',
+        billingEmail: prev.billingEmail || u?.billingEmail || u?.email || savedTenant.billingEmail || '',
+        companyWebsite: prev.companyWebsite || u?.companyWebsite || u?.website || savedTenant.companyWebsite || '',
+        industry: prev.industry || u?.industry || savedTenant.industry || '',
+        subdomainSlug: prev.subdomainSlug || u?.subdomainSlug || u?.subdomain || savedTenant.subdomainSlug || '',
+        trackingHostname: prev.trackingHostname || u?.trackingHostname || savedTenant.trackingHostname || '',
+        stripeKey: prev.stripeKey || u?.stripeKey || savedTenant.stripeKey || '',
+        environment: prev.environment || u?.environment || savedTenant.environment || 'test',
+        defaultCurrency: prev.defaultCurrency || u?.defaultCurrency || u?.currency || savedTenant.defaultCurrency || 'USD',
+        statementDescriptor: prev.statementDescriptor || u?.statementDescriptor || savedTenant.statementDescriptor || ''
+      }));
+    };
+
+    if (user) {
+      populateFromUser(user);
+      const uid = user?.id || user?._id;
+      if (uid) {
+        ApiClient.get('user/detail', { id: uid }).then((res: any) => {
+          if (res?.success && res?.data) {
+            populateFromUser(res.data);
+          }
+        }).catch(() => {});
+      }
+    } else if (savedTenantStr) {
+      populateFromUser(savedTenant);
+    }
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
@@ -85,15 +148,18 @@ export default function WhiteLabelOnboarding() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    // Simulate API call
+    // Save domain and setup configuration to local storage for white label dashboard
+    const tenantConfig = {
+      ...formData,
+      subdomainSlug: formData.subdomainSlug || 'mybrand',
+      completedAt: new Date().toISOString()
+    };
+    localStorage.setItem('whiteLabelTenant', JSON.stringify(tenantConfig));
+
     setTimeout(() => {
       setIsSubmitting(false);
-      toast.success('Onboarding complete!');
-      if (planType === 'network') {
-        router.push('/dashboard?onboarding=book-call');
-      } else {
-        router.push('/dashboard');
-      }
+      toast.success('White Label Onboarding complete! Welcome to your dashboard.');
+      router.push('/white-label-dashboard');
     }, 1500);
   };
 
@@ -341,7 +407,7 @@ export default function WhiteLabelOnboarding() {
         <div className="onboarding-container">
           <div className="onboarding-header">
             <h2>White Label Setup</h2>
-            <p>Complete these steps to provision your personalized platform.</p>
+            <p>Complete setup to provision your platform dashboard.</p>
           </div>
 
           {/* Stepper */}
@@ -388,7 +454,7 @@ export default function WhiteLabelOnboarding() {
               </button>
             ) : (
               <button type="button" className="btn-primary" onClick={handleSubmit} disabled={isSubmitting}>
-                {isSubmitting ? 'Provisioning...' : 'Complete Setup'} <LuCheck />
+                {isSubmitting ? 'Provisioning Dashboard...' : 'Complete Setup & Launch Dashboard'} <LuCheck />
               </button>
             )}
           </div>
@@ -398,3 +464,4 @@ export default function WhiteLabelOnboarding() {
     </Layout>
   );
 }
+

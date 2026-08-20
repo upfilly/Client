@@ -1,261 +1,48 @@
-.loginimg {
-    width: 100%;
-}
+/* Enterprise SaaS Auth Styles - Login */
+.loginimg { width: 100%; }
+form.p-3.rounded.shadow { border-top: none; }
+img.greentik { width: 160px; margin-bottom: 1rem; }
+a.closeIcon { text-align: right; padding: 3px 10px; border: 1px solid #e2e8f0; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; margin-left: auto; margin-top: 8px; margin-right: 8px; color: #64748b; transition: all 0.2s; text-decoration: none; }
+a.closeIcon:hover { color: #0f172a; background: #f1f5f9; }
 
-form.p-3.rounded.shadow {
-    border-top: none;
-}
-a.text-primary.ml-auto.text-black {
-    color: #000 !important;
-    font-size: 14px;
-}
-.btn.btn-outline-white:hover{
-    box-shadow: 0px 2px 3px rgb(218, 218, 218);
-}
+.modal.d-block.bgBlur { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); }
+.modal-dialog.dateModal .modal-content { border-radius: 16px; border: none; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15); padding: 16px; }
 
-svg.google_right {
-    position: absolute;
-    left: 11px;
-    top: 2px;
-    width: 19px;
-}
-svg.facebook_right{
-    position: absolute;
-    left: 14px;
-    top: 4px;
-    width: 13px;
-}
+.lgtext { font-size: 28px; font-weight: 700; margin-top: 1rem; color: #0f172a; letter-spacing: -0.02em; }
+.text-primary, a.text-primary { color: #1c306d !important; text-decoration: none; font-weight: 600; }
+a.text-primary:hover { color: #3eb0ff !important; }
+.text-black { color: #0f172a !important; text-decoration: none; font-weight: 500; }
+.text-black:hover { color: #1c306d !important; text-decoration: underline; }
 
-img.greentik {
-    width: 160px;
-}
-.modal.d-block.bgBlur {
-    background: #201f1f9e;
-}
-a.closeIcon {
-    text-align: right;
-    padding: 3px 10px;
-    border: 1px solid;
-    border-radius: 50px;
-    width: fit-content;
-    margin-left: auto;
-    display: block;
-    margin-top: 8px;
-    position: relative;
-    right: 8px;
-  }
-  a.closeIcon:hover {
-    color: #000 !important;
-}
-  .modal-dialog.dateModal div {
-    border-radius: 15px !important;
-  }
-img.loginimg.w-100 {
-    height: 100%;
-    object-fit: cover;
-}
-.text-black {
-    color: #000 !important;
-    text-decoration: underline;
-}
 form.centerLogin {
-    display: block;
-    margin: auto;
-    background: #fff;
-    width: 100%;
-    padding: 20px;
-    border-radius: 20px;
-}
-img.logimg {
-    width: 100%;
-    max-width: 167px;
-    max-height: 100px;
-    object-fit: cover;
+    display: block; margin: 3rem auto; background: #ffffff; width: 100%; max-width: 440px; padding: 40px 32px;
+    border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    border: 1px solid #e2e8f0; position: relative;
 }
 
+.bginput { border-radius: 8px !important; border: 1px solid #cbd5e1 !important; height: 44px !important; font-size: 15px !important; color: #0f172a !important; transition: all 0.2s ease; background: #f8fafc !important; padding: 0 16px !important; }
+.bginput:focus { background: #ffffff !important; border-color: #3eb0ff !important; box-shadow: 0 0 0 3px rgba(62, 176, 255, 0.15) !important; outline: none; }
 
-.login-wrapper {
-    .mainfromclss {
-        max-width: 900px;
-    }
+.btn-primary.loginclass {
+    background: linear-gradient(135deg, #1c306d 0%, #2c4799 100%); border: none; height: 44px; border-radius: 8px; font-weight: 600; font-size: 15px; width: 100%; color: #ffffff; transition: all 0.2s ease; box-shadow: 0 4px 6px -1px rgba(28, 48, 109, 0.15);
 }
-img.logo {
-    width: 300px;
-    height: auto;
- 
-}
-.logo_img{
-    padding: 0rem 3rem;
-}
-.banner_img{
-    background-image: url("/assets/img/loginimg.png");
-    height: 100vh;
-    width: 100%;
-    // background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 4rem 0rem;
-}
-.loginLeftImg h3 {
-    position: absolute;
-    bottom: 10px;
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 50px;
-    color: #fff;
-    padding: 4rem 2rem;
-}
+.btn-primary.loginclass:hover { transform: translateY(-1px); box-shadow: 0 6px 12px -2px rgba(28, 48, 109, 0.25); background: linear-gradient(135deg, #122152 0%, #1c306d 100%); }
 
-p.accopunt {
-    text-align: right;
-    position: absolute;
-    right: 55px;
-    padding: 4rem 1rem;
-    font-size: 16px;
-    font-weight: 400;
-}
-p.accopunts {
-    position: absolute;
-    padding: 0rem 1rem;
-    font-size: 13px;
-    font-weight: 400;
-    width: 100%;
-    text-align: left;
-    bottom: 0;
-    max-width: 454px;
-    color: #84818A;
-    word-spacing: 3px;
-}
-a.sign_up {
-    text-decoration: none;
-}
+.btn-outline-white { background: #ffffff; border: 1px solid #e2e8f0; color: #0f172a; border-radius: 8px; height: 44px; font-weight: 600; font-size: 14px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s ease; margin-bottom: 12px; }
+.btn-outline-white:hover { background: #f8fafc; border-color: #cbd5e1; }
 
-.bginput { 
-    border-radius: 6px !important;
-    border: 1px solid #E8E8E8 !important;
-    height: 38px !important;
-    font-size: 14px !important;
-}
+.or.orbx { position: relative; text-align: center; color: #64748b; font-size: 13px; font-weight: 500; margin: 24px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+.or.orbx::before { content: ""; display: block; height: 1px; width: 40%; position: absolute; left: 0; top: 50%; background-color: #e2e8f0; }
+.or.orbx::after { content: ""; display: block; height: 1px; width: 40%; position: absolute; right: 0; top: 50%; background-color: #e2e8f0; }
 
-a.text-primary:hover, a.text-primary:focus {
-    color: #ff3d22 !important;
-    text-decoration: none;
-}
-.text-primary {
-    color: #ff3d22 !important;
-}
-.forget{
-    text-align: left;
-    margin: 1rem 0px;
-}
+.back_button { color: #64748b !important; position: absolute; left: 24px; top: 24px; font-size: 20px !important; transition: color 0.2s ease; cursor: pointer; }
+.back_button:hover { color: #1c306d !important; }
 
-.title-around-span {
-    position: relative;
-    text-align: center;
-    color: #484848;
-    font-size: 14px;
-  
-    &:before {
-      content: "";
-      display: block;
-      height: 1px;
-      width: 100%;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      background-color:#E8E8E8;
-    }
-  
-    span {
-      position: relative;
-      z-index: 1;
-      padding: 0 15px;
-      background: #ffff;
-    }
-  }
+.inputWrapper { position: relative; }
+.inputWrapper i { position: absolute; right: 16px; top: 14px; color: #94a3b8; cursor: pointer; transition: color 0.2s ease; }
+.inputWrapper i:hover { color: #475569; }
 
+.account_ptag { font-size: 14px; color: #64748b; margin-top: 24px; margin-bottom: 12px; border-top: 1px solid #e2e8f0; padding-top: 24px; }
+.forbx { font-size: 13px; font-weight: 500; color: #475569; }
 
-  .google_logo {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-}
-img.gogle_img {
-    width: 30px;
-    height: 30px;
-    margin: 0px 5px;
-}
-img.gogle_imgs {
-    width: 25px;
-    height: 24px;
-    margin: 0px 5px;
-}
-.google_id {
-    border: 1px solid #E8E8E8;
-    width: 173px;
-    height: 48px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-}
-a.google_heading {
-    font-size: 16px;
-    font-weight: 600;
-    color: #202020;
-
-}
-.google_id {
-    width: 178px;
-    border: 1px solid #E8E8E8;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-}
-
-@media only screen and (min-width:768px) and (max-width:1000px) {
-    img.logo {
-        width: 200px !important;
-        height: auto;
-    }
-    .logo_img {
-        padding: 0rem 2rem;
-    }
-    .loginLeftImg h3 {
-        position: absolute;
-        bottom: 10px;
-        font-size: 29px;
-        line-height: 35px;
-        color: #fff;
-        padding: 2rem 2rem;
-    }
-
-
-}
-
-
-
-@media only screen and (min-width:320px) and (max-width:767px)  {
-    .banner_img{
-        display: none;
-    }
-    
-}
-
-.centerLogin {
-    position: relative;
-}
-.back_button {
-    color: #388cd2 !important;
-    position: absolute;
-    left: 25px;
-    top: 18px;
-    font-size: 18px !important;
-}
-.account_ptag {
-    font-size: 14px;
-}
+svg.google_right, svg.facebook_right { position: relative; left: auto; top: auto; }

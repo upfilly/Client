@@ -15,10 +15,10 @@
   .onboarding-container {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 800px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+    max-width: 1140px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -164,6 +164,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
+
+    .full-width,
+    & > .full-width {
+      grid-column: span 2;
+      width: 100%;
+    }
 
     .form-group {
       display: flex;
@@ -416,10 +422,150 @@
       background: #e2e8f0;
       margin: 16px 0;
     }
+
+    &.mandatory-plan-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      svg {
+        color: #2563eb;
+      }
+    }
+  }
+
+  /* Plan Selection Grid */
+  .plan-selection-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    margin-top: 24px;
+    width: 100%;
+
+    .plan-selection-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+
+      &:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 16px 36px rgba(59, 130, 246, 0.14);
+        transform: translateY(-4px);
+      }
+
+      &.selected {
+        border-color: #1c306d;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        box-shadow: 0 12px 36px rgba(28, 48, 109, 0.14);
+      }
+
+      .plan-selected-badge {
+        position: absolute;
+        top: -14px;
+        right: 24px;
+        background: #1c306d;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 12px rgba(28, 48, 109, 0.3);
+      }
+
+      .plan-card-header {
+        h4 {
+          font-size: 20px;
+          font-weight: 700;
+          color: #0f172a;
+          margin-bottom: 10px;
+        }
+
+        .plan-card-price {
+          display: flex;
+          align-items: baseline;
+          gap: 6px;
+          margin-bottom: 20px;
+
+          .price-val {
+            font-size: 36px;
+            font-weight: 800;
+            color: #1c306d;
+            letter-spacing: -0.5px;
+          }
+
+          .price-period {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+          }
+        }
+      }
+
+      .plan-feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 24px 0;
+
+        li {
+          font-size: 13.5px;
+          color: #475569;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 10px;
+
+          .check-icon {
+            color: #10b981;
+            font-size: 16px;
+            flex-shrink: 0;
+          }
+        }
+      }
+
+      .btn-plan-action {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        border: 1px solid #1c306d;
+        background: #1c306d;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #122152;
+          border-color: #122152;
+          transform: translateY(-1px);
+        }
+
+        &.confirmed {
+          background: #10b981;
+          border-color: #10b981;
+          color: #ffffff;
+
+          &:hover {
+            background: #059669;
+          }
+        }
+      }
+    }
   }
 
   /* Footer Actions */
   .onboarding-footer {
+
     padding: 24px 48px;
     background: #f8fafc;
     border-top: 1px solid #e2e8f0;
