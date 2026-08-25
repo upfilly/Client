@@ -664,3 +664,23 @@
     }
   }
 }
+
+.form-group.has-error {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  select {
+    border-color: #ef4444 !important;
+  }
+  .checkbox-text {
+    color: #ef4444;
+  }
+}
+.error-msg {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}

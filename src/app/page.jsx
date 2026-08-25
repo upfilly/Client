@@ -53,6 +53,17 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    const uid = user?.id || user?._id;
+    if (uid) {
+      ApiClient.get('user/detail', { id: uid }).then((res) => {
+        console.log("Listing API Data on / route:", res?.data || res);
+      }).catch((err) => {
+        console.error("Error fetching detail API on / route:", err);
+      });
+    }
+  }, [user?.id, user?._id]);
+
+  useEffect(() => {
     const subIds = new URLSearchParams(window.location.search);
     const params = {};
     for (const [key, value] of subIds.entries()) {

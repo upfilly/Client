@@ -9,12 +9,15 @@ import {
   LuGlobe, LuMail, LuShieldCheck, LuSparkles, LuCircleCheck,
   LuRefreshCw, LuCopy, LuExternalLink, LuSearch, LuPlus,
   LuEye, LuMessageSquare, LuTrash2, LuSettings, LuLayers,
-  LuCreditCard, LuUserCheck, LuAlertTriangle, LuArrowUpRight,
-  LuActivity, LuChartColumn
+  LuCreditCard, LuUserCheck, LuArrowUpRight,
+  LuActivity, LuChartColumn, LuInfo, LuEyeOff, LuLock, LuPencil
 } from 'react-icons/lu';
+import { useRouter } from 'next/navigation';
 import './style.scss';
+import AdminChatWidget from './AdminChatWidget';
 
 export default function WhiteLabelDashboard() {
+  const router = useRouter();
   const user = crendentialModel.getUser();
   const [activeTab, setActiveTab] = useState<'subdomain' | 'contact' | 'overview' | 'settings'>('subdomain');
   
@@ -34,23 +37,63 @@ export default function WhiteLabelDashboard() {
     defaultCurrency: 'USD'
   });
 
-  // Load stored tenant config if available
+  // Dashboard Protection Flow & Data Hydration
   useEffect(() => {
-    const stored = localStorage.getItem('whiteLabelTenant');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setTenantConfig((prev: any) => ({
-          ...prev,
-          ...parsed,
-          subdomainSlug: parsed.subdomainSlug || prev.subdomainSlug,
-          tradingName: parsed.tradingName || parsed.legalCompanyName || prev.tradingName
-        }));
-      } catch (e) {
-        console.error("Error reading stored white label config", e);
-      }
+    const uid = user?.id || user?._id;
+    if (!uid) {
+      router.push('/login');
+      return;
     }
-  }, []);
+
+    ApiClient.get('user/detail', { id: uid }).then((res: any) => {
+      if (res?.success && res?.data) {
+        const userData = res.data;
+        
+        if (userData?.plan_id?.plan_type !== "paid" && userData?.plan_id?.plan_type !== "free") {
+          router.push('/white-label-pricing');
+        } else if (!userData.white_label_progress.a && !userData.white_label_progress.b && !userData.white_label_progress.c && !userData.white_label_progress.d) {
+          // Plan exists but no subdomain or stripe key, meaning onboarding is not filled
+          router.push('/white-label-onboarding');
+        } else {
+          // Hydrate dashboard fields from API
+          setTenantConfig((prev: any) => ({
+            ...prev,
+            subdomainSlug: userData.sub_domain || prev.subdomainSlug,
+            trackingHostname: userData.tracking_hostname || prev.trackingHostname,
+            legalCompanyName: userData.company_name || prev.legalCompanyName,
+            tradingName: userData.brand_name || userData.company_name || prev.tradingName,
+            billingEmail: userData.billing_email || userData.email || prev.billingEmail,
+            stripeKey: userData.stripe_key || prev.stripeKey,
+            environment: userData.stripe_environment || prev.environment,
+            defaultCurrency: userData.stripe_currency || prev.defaultCurrency,
+            planName: userData.plan_id?.name || prev.planName,
+          }));
+        }
+      }
+    }).catch(err => {
+      console.error("Failed to fetch user details for protection", err);
+    });
+  }, [user?.id, user?._id, router]);
+
+  // --- OLD LOGIC ---
+  // // Load stored tenant config if available
+  // useEffect(() => {
+  //   const stored = localStorage.getItem('whiteLabelTenant');
+  //   if (stored) {
+  //     try {
+  //       const parsed = JSON.parse(stored);
+  //       setTenantConfig((prev: any) => ({
+  //         ...prev,
+  //         ...parsed,
+  //         subdomainSlug: parsed.subdomainSlug || prev.subdomainSlug,
+  //         tradingName: parsed.tradingName || parsed.legalCompanyName || prev.tradingName
+  //       }));
+  //     } catch (e) {
+  //       console.error("Error reading stored white label config", e);
+  //     }
+  //   }
+  // }, []);
+  // -----------------
 
   // Sub-domain configuration state
   const [subdomainInput, setSubdomainInput] = useState(tenantConfig.subdomainSlug);
@@ -58,9 +101,23 @@ export default function WhiteLabelDashboard() {
   const [isVerifyingDNS, setIsVerifyingDNS] = useState(false);
   const [isSavingSubdomain, setIsSavingSubdomain] = useState(false);
 
+  // Stripe configuration state
+  const [stripeInput, setStripeInput] = useState(tenantConfig.stripeKey);
+  const [stripeEnvInput, setStripeEnvInput] = useState(tenantConfig.environment);
+  const [stripeCurrencyInput, setStripeCurrencyInput] = useState(tenantConfig.defaultCurrency);
+  const [isSavingStripe, setIsSavingStripe] = useState(false);
+  const [showStripeKey, setShowStripeKey] = useState(false);
+
+  // Edit states
+  const [isEditingSubdomain, setIsEditingSubdomain] = useState(false);
+  const [isEditingStripe, setIsEditingStripe] = useState(false);
+
   useEffect(() => {
     setSubdomainInput(tenantConfig.subdomainSlug || 'mybrand');
     setCustomDomainInput(tenantConfig.trackingHostname || 'affiliates.mybrand.com');
+    setStripeInput(tenantConfig.stripeKey || '');
+    setStripeEnvInput(tenantConfig.environment || 'test');
+    setStripeCurrencyInput(tenantConfig.defaultCurrency || 'USD');
   }, [tenantConfig]);
 
   // Contact Module State
@@ -135,20 +192,76 @@ export default function WhiteLabelDashboard() {
   };
 
   // Save Subdomain update
-  const handleSaveSubdomain = (e: React.FormEvent) => {
+  const handleSaveSubdomain = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSavingSubdomain(true);
-    setTimeout(() => {
-      setIsSavingSubdomain(false);
-      const updated = {
-        ...tenantConfig,
-        subdomainSlug: subdomainInput.toLowerCase().replace(/[^a-z0-9-]/g, ''),
-        trackingHostname: customDomainInput
+    
+    try {
+      const uid = user?.id || user?._id;
+      const cleanSubDomain = subdomainInput.toLowerCase().replace(/[^a-z0-9-]/g, '');
+      const payload = {
+        id: uid,
+        sub_domain: cleanSubDomain,
+        tracking_hostname: customDomainInput
       };
-      setTenantConfig(updated);
-      localStorage.setItem('whiteLabelTenant', JSON.stringify(updated));
-      toast.success('Sub-domain configuration updated successfully!');
-    }, 1000);
+      
+      const res: any = await ApiClient.put('edit/profile', payload);
+      if (res?.success) {
+         setTenantConfig((prev: any) => ({
+           ...prev,
+           subdomainSlug: cleanSubDomain,
+           trackingHostname: customDomainInput
+         }));
+         const updated = {
+           ...tenantConfig,
+           subdomainSlug: cleanSubDomain,
+           trackingHostname: customDomainInput
+         };
+         localStorage.setItem('whiteLabelTenant', JSON.stringify(updated));
+         toast.success(res?.message || 'Sub-domain configuration updated successfully!');
+         setIsEditingSubdomain(false);
+      } else {
+         toast.error(res?.message || 'Error saving configuration');
+      }
+    } catch (err) {
+      toast.error('An error occurred');
+    } finally {
+      setIsSavingSubdomain(false);
+    }
+  };
+
+  // Save Stripe update
+  const handleSaveStripe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingStripe(true);
+    
+    try {
+      const uid = user?.id || user?._id;
+      const payload = {
+        id: uid,
+        stripe_key: stripeInput,
+        stripe_environment: stripeEnvInput,
+        stripe_currency: stripeCurrencyInput
+      };
+      
+      const res: any = await ApiClient.put('edit/profile', payload);
+      if (res?.success) {
+         setTenantConfig((prev: any) => ({
+           ...prev,
+           stripeKey: stripeInput,
+           environment: stripeEnvInput,
+           defaultCurrency: stripeCurrencyInput
+         }));
+         toast.success(res?.message || 'Stripe configuration updated successfully!');
+         setIsEditingStripe(false);
+      } else {
+         toast.error(res?.message || 'Error saving Stripe configuration');
+      }
+    } catch (err) {
+      toast.error('An error occurred while saving Stripe settings');
+    } finally {
+      setIsSavingStripe(false);
+    }
   };
 
   // Contact Module Handlers
@@ -256,9 +369,9 @@ export default function WhiteLabelDashboard() {
             >
               <LuMail size={18} />
               <span>Contact Module</span>
-              {contacts.filter(c => c.status === 'New').length > 0 && (
+              {/* {contacts.filter(c => c.status === 'New').length > 0 && (
                 <span className="tab-badge">{contacts.filter(c => c.status === 'New').length}</span>
-              )}
+              )} */}
             </button>
             <button
               className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
@@ -295,219 +408,253 @@ export default function WhiteLabelDashboard() {
                 </button>
               </div>
 
-              {/* Status Summary Banner */}
-              <div className="dns-status-banner">
-                <div className="status-item">
-                  <span className="lbl">Subdomain Slug:</span>
-                  <span className="val font-mono">{tenantConfig.subdomainSlug}.upfilly.io</span>
-                </div>
-                <div className="status-item">
-                  <span className="lbl">Custom Domain:</span>
-                  <span className="val font-mono">{tenantConfig.trackingHostname || 'Not Configured'}</span>
-                </div>
-                <div className="status-item">
-                  <span className="lbl">DNS Propagation:</span>
-                  <span className="val status-green"><LuCircleCheck size={14} /> Verified</span>
-                </div>
-                <div className="status-item">
-                  <span className="lbl">SSL Certificate:</span>
-                  <span className="val status-green"><LuShieldCheck size={14} /> Active (Auto-renewed)</span>
-                </div>
-              </div>
+              {/* Status Summary Banner / Static UI */}
+              {!isEditingSubdomain ? (
+                <>
+                  <div className="dns-status-banner">
+                    <div className="status-item">
+                      <span className="lbl">Subdomain Slug:</span>
+                      <span className="val font-mono">{tenantConfig.subdomainSlug}.upfilly.io</span>
+                    </div>
+                    <div className="status-item">
+                      <span className="lbl">Custom Domain:</span>
+                      <span className="val font-mono">{tenantConfig.trackingHostname || 'Not Configured'}</span>
+                    </div>
+                    <div className="status-item">
+                      <span className="lbl">DNS Propagation:</span>
+                      <span className="val status-green"><LuCircleCheck size={14} /> Verified</span>
+                    </div>
+                    <div className="status-item">
+                      <span className="lbl">SSL Certificate:</span>
+                      <span className="val status-green"><LuShieldCheck size={14} /> Active (Auto-renewed)</span>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <button className="btn-wl-primary" onClick={() => setIsEditingSubdomain(true)}>
+                      <LuPencil /> Edit Sub-Domain Configuration
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <form onSubmit={handleSaveSubdomain} className="onboarding-form-grid" style={{ marginTop: '20px' }}>
+                  <div className="form-group full-width info-banner">
+                    <LuInfo className="banner-icon" />
+                    <p>Configure the domain where your white-label platform will be hosted.</p>
+                  </div>
 
-              {/* Configuration Form */}
-              <form onSubmit={handleSaveSubdomain} className="subdomain-form-grid">
-                <div className="form-section">
-                  <h4>1. Tenant Sub-domain</h4>
-                  <p className="section-desc">This is your primary platform address hosted on Upfilly infrastructure.</p>
-                  
-                  <div className="form-group">
-                    <label>Subdomain Slug</label>
-                    <div className="input-group-domain">
+                  <div className="form-group full-width">
+                    <label>Subdomain Slug <span className="req">*</span></label>
+                    <div className="domain-input-group">
                       <input
                         type="text"
+                        name="subdomainInput"
                         value={subdomainInput}
                         onChange={(e) => setSubdomainInput(e.target.value)}
-                        placeholder="yourbrand"
                         required
+                        placeholder="yourbrand"
+                        pattern="[a-z0-9-]+"
                       />
                       <span className="domain-suffix">.upfilly.io</span>
                     </div>
-                    <small className="form-text text-muted">Lowercase letters, numbers, and hyphens allowed.</small>
+                    <small className="field-hint">Lowercase a-z, 0-9, hyphen. 3-30 chars.</small>
                   </div>
-                </div>
 
-                <div className="form-section">
-                  <h4>2. Custom Branded Domain (CNAME Routing)</h4>
-                  <p className="section-desc">Host your white label portal on your own company domain.</p>
-
-                  <div className="form-group">
-                    <label>Custom Hostname / Domain</label>
-                    <div className="input-with-icon">
-                      <LuGlobe className="icon" />
+                  <div className="form-group full-width separator-line"></div>
+                  
+                  <div className="form-group full-width">
+                    <label>Tracking Hostname</label>
+                    <p className="field-desc">Parent domain must be customer-owned. We will generate a CNAME target for you.</p>
+                    <div className="input-with-icon" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center' }}>
+                      <LuGlobe className="input-icon" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#64748b', zIndex: 2, pointerEvents: 'none' }} />
                       <input
                         type="text"
+                        name="customDomainInput"
                         value={customDomainInput}
                         onChange={(e) => setCustomDomainInput(e.target.value)}
-                        placeholder="affiliates.yourcompany.com"
+                        placeholder="track.clientbrand.com"
+                        style={{ paddingLeft: '40px', width: '100%', height: '42px', borderRadius: '8px', border: '1px solid #cbd5e1' }}
                       />
                     </div>
                   </div>
 
                   {/* CNAME Target Box */}
-                  <div className="cname-instruction-box">
-                    <div className="box-header">
-                      <strong>DNS CNAME Target Record</strong>
-                      <button
-                        type="button"
-                        className="btn-copy-sm"
-                        onClick={() => copyToClipboard('cname.upfilly.io', 'CNAME Target')}
-                      >
-                        <LuCopy size={12} /> Copy Target
-                      </button>
+                  {customDomainInput && (
+                    <div className="form-group full-width">
+                      <div className="cname-instruction-box" style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '10px', padding: '16px', marginTop: '16px' }}>
+                        <div className="box-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', fontSize: '13px', color: '#1e3a8a' }}>
+                          <strong>DNS CNAME Target Record</strong>
+                          <button
+                            type="button"
+                            className="btn-copy-sm"
+                            onClick={() => copyToClipboard('cname.upfilly.io', 'CNAME Target')}
+                            style={{ background: '#ffffff', border: '1px solid #93c5fd', color: '#1d4ed8', fontSize: '12px', padding: '4px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            <LuCopy size={12} /> Copy Target
+                          </button>
+                        </div>
+                        <div className="dns-record-table" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '8px' }}>
+                          <div className="dns-row" style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', fontSize: '13px' }}>
+                            <span className="col-lbl" style={{ color: '#64748b', fontWeight: 600 }}>Type</span>
+                            <span className="col-val font-mono" style={{ fontFamily: 'monospace', color: '#0f172a' }}>CNAME</span>
+                          </div>
+                          <div className="dns-row" style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', fontSize: '13px' }}>
+                            <span className="col-lbl" style={{ color: '#64748b', fontWeight: 600 }}>Host / Name</span>
+                            <span className="col-val font-mono" style={{ fontFamily: 'monospace', color: '#0f172a' }}>{customDomainInput ? customDomainInput.split('.')[0] : 'affiliates'}</span>
+                          </div>
+                          <div className="dns-row" style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', fontSize: '13px' }}>
+                            <span className="col-lbl" style={{ color: '#64748b', fontWeight: 600 }}>Points To / Value</span>
+                            <span className="col-val font-mono" style={{ fontFamily: 'monospace', color: '#0f172a' }}>cname.upfilly.io</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="dns-record-table">
-                      <div className="dns-row">
-                        <span className="col-lbl">Type</span>
-                        <span className="col-val font-mono">CNAME</span>
-                      </div>
-                      <div className="dns-row">
-                        <span className="col-lbl">Host / Name</span>
-                        <span className="col-val font-mono">{customDomainInput ? customDomainInput.split('.')[0] : 'affiliates'}</span>
-                      </div>
-                      <div className="dns-row">
-                        <span className="col-lbl">Points To / Value</span>
-                        <span className="col-val font-mono">cname.upfilly.io</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  )}
 
-                <div className="form-actions-full">
-                  <button
-                    type="submit"
-                    className="btn-wl-primary"
-                    disabled={isSavingSubdomain}
-                  >
-                    {isSavingSubdomain ? 'Saving Configuration...' : 'Save Sub-domain Configuration'}
-                  </button>
-                </div>
-              </form>
+                  <div className="form-group full-width" style={{ flexDirection: 'row', gap: '12px' }}>
+                    <button
+                      type="submit"
+                      className="btn-wl-primary"
+                      disabled={isSavingSubdomain}
+                    >
+                      {isSavingSubdomain ? 'Saving Configuration...' : 'Confirm Edit'}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-wl-outline"
+                      onClick={() => {
+                        setIsEditingSubdomain(false);
+                        setSubdomainInput(tenantConfig.subdomainSlug || '');
+                        setCustomDomainInput(tenantConfig.trackingHostname || '');
+                      }}
+                      disabled={isSavingSubdomain}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           )}
 
           {/* TAB 2: Contact Module */}
           {activeTab === 'contact' && (
-            <div className="module-content-card">
-              <div className="card-header-row">
-                <div>
-                  <h3><LuMail className="text-primary" /> White Label Contact Module</h3>
-                  <p>View, manage, and respond to incoming lead and affiliate inquiries submitted through your tenant portal.</p>
-                </div>
-                <button
-                  type="button"
-                  className="btn-wl-primary"
-                  onClick={() => setShowAddContactModal(true)}
-                >
-                  <LuPlus /> Add Contact Inquiry
-                </button>
-              </div>
+            <div className="module-content-card" style={{ padding: 0, background: 'transparent', border: 'none', boxShadow: 'none' }}>
+              <AdminChatWidget />
+              
+              {/* ORIGINAL CONTACT MODULE UI - COMMENTED OUT */}
+              {/* 
+                <>
+                  <div className="card-header-row">
+                    <div>
+                      <h3><LuMail className="text-primary" /> White Label Contact Module</h3>
+                      <p>View, manage, and respond to incoming lead and affiliate inquiries submitted through your tenant portal.</p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                      <AdminChatWidget />
+                      <button
+                        type="button"
+                        className="btn-wl-primary"
+                        onClick={() => setShowAddContactModal(true)}
+                      >
+                        <LuPlus /> Add Contact Inquiry
+                      </button>
+                    </div>
+                  </div>
 
-              {/* Contact Counter Cards */}
-              <div className="contact-stats-grid">
-                <div className="contact-stat-card">
-                  <span className="stat-num">{contacts.length}</span>
-                  <span className="stat-lbl">Total Inquiries</span>
-                </div>
-                <div className="contact-stat-card unread">
-                  <span className="stat-num">{contacts.filter(c => c.status === 'New').length}</span>
-                  <span className="stat-lbl">New / Unread</span>
-                </div>
-                <div className="contact-stat-card pending">
-                  <span className="stat-num">{contacts.filter(c => c.status === 'In Progress').length}</span>
-                  <span className="stat-lbl">In Progress</span>
-                </div>
-                <div className="contact-stat-card resolved">
-                  <span className="stat-num">{contacts.filter(c => c.status === 'Resolved').length}</span>
-                  <span className="stat-lbl">Resolved</span>
-                </div>
-              </div>
+                  <div className="contact-stats-grid">
+                    <div className="contact-stat-card">
+                      <span className="stat-num">{contacts.length}</span>
+                      <span className="stat-lbl">Total Inquiries</span>
+                    </div>
+                    <div className="contact-stat-card unread">
+                      <span className="stat-num">{contacts.filter(c => c.status === 'New').length}</span>
+                      <span className="stat-lbl">New / Unread</span>
+                    </div>
+                    <div className="contact-stat-card pending">
+                      <span className="stat-num">{contacts.filter(c => c.status === 'In Progress').length}</span>
+                      <span className="stat-lbl">In Progress</span>
+                    </div>
+                    <div className="contact-stat-card resolved">
+                      <span className="stat-num">{contacts.filter(c => c.status === 'Resolved').length}</span>
+                      <span className="stat-lbl">Resolved</span>
+                    </div>
+                  </div>
 
-              {/* Search & Filter Bar */}
-              <div className="filter-actions-bar">
-                <div className="search-input-box">
-                  <LuSearch className="search-icon" />
-                  <input
-                    type="text"
-                    placeholder="Search contacts by name, email, company, subject..."
-                    value={contactSearch}
-                    onChange={(e) => setContactSearch(e.target.value)}
-                  />
-                </div>
+                  <div className="filter-actions-bar">
+                    <div className="search-input-box">
+                      <LuSearch className="search-icon" />
+                      <input
+                        type="text"
+                        placeholder="Search contacts by name, email, company, subject..."
+                        value={contactSearch}
+                        onChange={(e) => setContactSearch(e.target.value)}
+                      />
+                    </div>
 
-                <div className="status-filter-pills">
-                  {['All', 'New', 'In Progress', 'Resolved'].map((st) => (
-                    <button
-                      key={st}
-                      className={`filter-pill ${statusFilter === st ? 'active' : ''}`}
-                      onClick={() => setStatusFilter(st)}
-                    >
-                      {st}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                    <div className="status-filter-pills">
+                      {['All', 'New', 'In Progress', 'Resolved'].map((st) => (
+                        <button
+                          key={st}
+                          className={`filter-pill ${statusFilter === st ? 'active' : ''}`}
+                          onClick={() => setStatusFilter(st)}
+                        >
+                          {st}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Contacts Table */}
-              <div className="table-responsive">
-                <table className="wl-table">
-                  <thead>
-                    <tr>
-                      <th>Contact Details</th>
-                      <th>Company</th>
-                      <th>Subject / Topic</th>
-                      <th>Date Received</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredContacts.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="text-center py-4 text-muted">
-                          No contact inquiries found matching criteria.
-                        </td>
-                      </tr>
-                    ) : (
-                      filteredContacts.map((c) => (
-                        <tr key={c.id}>
-                          <td>
-                            <div className="contact-name">{c.name}</div>
-                            <div className="contact-email">{c.email}</div>
-                          </td>
-                          <td>{c.company || 'N/A'}</td>
-                          <td className="subject-cell">{c.subject}</td>
-                          <td>{c.date}</td>
-                          <td>
-                            <span className={`badge-status ${c.status.toLowerCase().replace(' ', '-')}`}>
-                              {c.status}
-                            </span>
-                          </td>
-                          <td>
-                            <button
-                              className="btn-action-view"
-                              onClick={() => setSelectedContact(c)}
-                              title="View and respond"
-                            >
-                              <LuEye size={14} /> View Inquiry
-                            </button>
-                          </td>
+                  <div className="table-responsive">
+                    <table className="wl-table">
+                      <thead>
+                        <tr>
+                          <th>Contact Details</th>
+                          <th>Company</th>
+                          <th>Subject / Topic</th>
+                          <th>Date Received</th>
+                          <th>Status</th>
+                          <th>Action</th>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                      </thead>
+                      <tbody>
+                        {filteredContacts.length === 0 ? (
+                          <tr>
+                            <td colSpan={6} className="text-center py-4 text-muted">
+                              No contact inquiries found matching criteria.
+                            </td>
+                          </tr>
+                        ) : (
+                          filteredContacts.map((c) => (
+                            <tr key={c.id}>
+                              <td>
+                                <div className="contact-name">{c.name}</div>
+                                <div className="contact-email">{c.email}</div>
+                              </td>
+                              <td>{c.company || 'N/A'}</td>
+                              <td className="subject-cell">{c.subject}</td>
+                              <td>{c.date}</td>
+                              <td>
+                                <span className={`badge-status ${c.status.toLowerCase().replace(' ', '-')}`}>
+                                  {c.status}
+                                </span>
+                              </td>
+                              <td>
+                                <button
+                                  className="btn-action-view"
+                                  onClick={() => setSelectedContact(c)}
+                                  title="View and respond"
+                                >
+                                  <LuEye size={14} /> View Inquiry
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+           */}
             </div>
           )}
 
@@ -606,29 +753,105 @@ export default function WhiteLabelDashboard() {
                 </div>
               </div>
 
-              <div className="settings-grid">
-                <div className="settings-section">
-                  <h4>Stripe Integration</h4>
-                  <div className="form-group">
-                    <label>Stripe Publishable / API Key</label>
-                    <input
-                      type="password"
-                      value={tenantConfig.stripeKey}
-                      readOnly
-                      className="font-mono"
-                    />
+              <div className="settings-grid" style={{ gridTemplateColumns: '1fr', gap: '30px' }}>
+                {!isEditingStripe ? (
+                  <div className="static-ui-container" style={{ padding: '24px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ marginBottom: '16px' }}>
+                      <span style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Stripe API Key</span>
+                      <div style={{ fontSize: '14px', fontWeight: 600, color: '#0f172a', fontFamily: 'monospace' }}>
+                        {tenantConfig.stripeKey ? `${tenantConfig.stripeKey.substring(0, 8)}...` : 'Not Configured'}
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: '16px' }}>
+                      <span style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Payment Environment</span>
+                      <div>
+                        <span className="badge badge-info">{tenantConfig.environment.toUpperCase()} MODE</span>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: '24px' }}>
+                      <span style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Default Currency</span>
+                      <div style={{ fontSize: '14px', fontWeight: 600, color: '#0f172a' }}>{tenantConfig.defaultCurrency}</div>
+                    </div>
+                    <button className="btn-wl-primary" onClick={() => setIsEditingStripe(true)}>
+                      <LuPencil /> Edit Stripe Settings
+                    </button>
                   </div>
-                  <div className="form-group">
-                    <label>Payment Environment</label>
-                    <span className="badge badge-info">{tenantConfig.environment.toUpperCase()} MODE</span>
-                  </div>
-                  <div className="form-group">
-                    <label>Default Currency</label>
-                    <input type="text" value={tenantConfig.defaultCurrency} readOnly />
-                  </div>
-                </div>
+                ) : (
+                  <form onSubmit={handleSaveStripe} className="onboarding-form-grid" style={{ marginTop: '0' }}>
+                    <div className="form-group full-width info-banner stripe-banner">
+                      <LuCreditCard className="banner-icon" />
+                      <p>Connect your own Stripe account. All payment activity in your tenant will run through your Stripe account.</p>
+                    </div>
 
-                <div className="settings-section">
+                    <div className="form-group full-width">
+                      <label>Stripe API Key <span className="req">*</span></label>
+                      <div className="input-with-icon position-relative" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center' }}>
+                        <LuLock className="input-icon" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#64748b', zIndex: 2, pointerEvents: 'none' }} />
+                        <input 
+                          type={showStripeKey ? "text" : "password"} 
+                          value={stripeInput} 
+                          onChange={(e) => setStripeInput(e.target.value)} 
+                          required 
+                          placeholder="sk_test_..." 
+                          style={{ paddingRight: '40px', paddingLeft: '40px', width: '100%', height: '42px', borderRadius: '8px', border: '1px solid #cbd5e1' }} 
+                        />
+                        <button type="button" onClick={() => setShowStripeKey(!showStripeKey)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}>
+                          {showStripeKey ? <LuEyeOff size={18} /> : <LuEye size={18} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="form-group full-width">
+                      <label>Environment <span className="req">*</span></label>
+                      <div className="wl-toggle-group" style={{ display: 'inline-flex', gap: '4px', background: '#f1f5f9', padding: '6px', borderRadius: '8px', width: 'max-content' }}>
+                        <label className={`wl-toggle-btn ${stripeEnvInput === 'test' ? 'active' : ''}`} style={{ padding: '8px 20px', cursor: 'pointer', borderRadius: '6px', fontWeight: 600, fontSize: '13px', background: stripeEnvInput === 'test' ? '#ffffff' : 'transparent', color: stripeEnvInput === 'test' ? '#1c306d' : '#64748b', border: stripeEnvInput === 'test' ? '1px solid #cbd5e1' : '1px solid transparent', boxShadow: stripeEnvInput === 'test' ? '0 1px 3px rgba(0,0,0,0.05)' : 'none', transition: 'all 0.2s ease', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <input type="radio" name="stripe_environment" value="test" checked={stripeEnvInput === 'test'} onChange={() => setStripeEnvInput('test')} style={{ display: 'none' }} />
+                          Test Mode
+                        </label>
+                        <label className={`wl-toggle-btn ${stripeEnvInput === 'live' ? 'active' : ''}`} style={{ padding: '8px 20px', cursor: 'pointer', borderRadius: '6px', fontWeight: 600, fontSize: '13px', background: stripeEnvInput === 'live' ? '#ffffff' : 'transparent', color: stripeEnvInput === 'live' ? '#1c306d' : '#64748b', border: stripeEnvInput === 'live' ? '1px solid #cbd5e1' : '1px solid transparent', boxShadow: stripeEnvInput === 'live' ? '0 1px 3px rgba(0,0,0,0.05)' : 'none', transition: 'all 0.2s ease', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <input type="radio" name="stripe_environment" value="live" checked={stripeEnvInput === 'live'} onChange={() => setStripeEnvInput('live')} style={{ display: 'none' }} />
+                          Live Mode
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="form-group full-width">
+                      <label>Default Currency <span className="req">*</span></label>
+                      <select value={stripeCurrencyInput} onChange={(e) => setStripeCurrencyInput(e.target.value)} required>
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="AUD">AUD ($)</option>
+                        <option value="CAD">CAD ($)</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group full-width" style={{ flexDirection: 'row', gap: '12px' }}>
+                      <button
+                        type="submit"
+                        className="btn-wl-primary"
+                        disabled={isSavingStripe}
+                      >
+                        {isSavingStripe ? 'Saving Configuration...' : 'Confirm Edit'}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-wl-outline"
+                        onClick={() => {
+                          setIsEditingStripe(false);
+                          setStripeInput(tenantConfig.stripeKey || '');
+                          setStripeEnvInput(tenantConfig.environment || 'test');
+                          setStripeCurrencyInput(tenantConfig.defaultCurrency || 'USD');
+                        }}
+                        disabled={isSavingStripe}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                <div className="settings-section" style={{ borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
                   <h4>Subscription Plan Details</h4>
                   <div className="plan-summary-box">
                     <h5>{tenantConfig.planName}</h5>

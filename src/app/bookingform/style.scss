@@ -120,6 +120,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+input, .form-input, .form-control {
+  color: #000 !important;
+}
+
 .eye-icon-m {
   z-index: 9;
   position: absolute;

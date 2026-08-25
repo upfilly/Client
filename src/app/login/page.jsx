@@ -55,9 +55,32 @@ export default function Login() {
           localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
+          if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
+            ApiClient.get('user/detail', { id: res.data.id || res.data._id }).then((listingRes) => {
+              const plan = listingRes?.data?.plan_id;
+              const progress = listingRes?.data?.white_label_progress;
+              if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
+                if (progress && progress.a && progress.b && progress.c && progress.d) {
+                  url = '/white-label-dashboard';
+                } else {
+                  url = '/white-label-onboarding';
+                }
+              } else {
+                url = '/white-label-pricing';
+              }
+              history.push(url);
+              loader(false);
+            }).catch(() => {
+              history.push('/white-label-pricing');
+              loader(false);
+            });
+            return;
+          }
           history.push(url);
         }
-        loader(false)
+        if (res?.data?.role !== 'white_lable' && res?.data?.role !== 'white_label') {
+          loader(false)
+        }
       })
     }
   }, [])
@@ -88,7 +111,25 @@ export default function Login() {
           crendentialModel.setUser(res.data)
           let url = '/dashboard'
           if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
-            url = '/white-label-onboarding'
+            ApiClient.get('user/detail', { id: res.data.id || res.data._id }).then((listingRes) => {
+              const plan = listingRes?.data?.plan_id;
+              const progress = listingRes?.data?.white_label_progress;
+              if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
+                if (progress && progress.a && progress.b && progress.c && progress.d) {
+                  url = '/white-label-dashboard';
+                } else {
+                  url = '/white-label-onboarding';
+                }
+              } else {
+                url = '/white-label-pricing';
+              }
+              history.push(url);
+              loader(false);
+            }).catch(() => {
+              history.push('/white-label-pricing');
+              loader(false);
+            });
+            return;
           }
           history.push(url);
         }
@@ -171,14 +212,34 @@ export default function Login() {
         ConnectSocket.emit("join-room-shopify", { user_id:res.data?.id || res.data?._id , "type":"shopify"});
         localStorage.setItem('addedUser', JSON.stringify(res?.data?.addedBy))
 
-        let url = '/dashboard'
+        let url = '/dashboard';
         if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
-          url = '/white-label-onboarding'
+          ApiClient.get('user/detail', { id: res.data.id || res.data._id }).then((listingRes) => {
+            const plan = listingRes?.data?.plan_id;
+            const progress = listingRes?.data?.white_label_progress;
+            if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
+              if (progress && progress.a && progress.b && progress.c && progress.d) {
+                url = '/white-label-dashboard';
+              } else {
+                url = '/white-label-onboarding';
+              }
+            } else {
+              url = '/white-label-pricing';
+            }
+            history.push(url);
+            loader(false);
+          }).catch(() => {
+            history.push('/white-label-pricing');
+            loader(false);
+          });
+          return;
         }
-        history.push(url)
+        history.push(url);
       }
       // toast.error(res?.error?.message)
-      loader(false)
+      if (res?.data?.role !== 'white_lable' && res?.data?.role !== 'white_label') {
+        loader(false);
+      }
     })
   };
 
