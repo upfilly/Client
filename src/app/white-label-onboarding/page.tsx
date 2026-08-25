@@ -30,7 +30,6 @@ export default function WhiteLabelOnboarding() {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [showStripeKey, setShowStripeKey] = useState(false);
   const [phoneString, setPhoneString] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -71,12 +70,6 @@ export default function WhiteLabelOnboarding() {
       requireField('email', formData.email, 'Work Email is required');
       if (formData.email && !validateEmail(formData.email)) {
         newErrors.email = 'Please enter a valid email address';
-        isValid = false;
-      }
-
-      requireField('password', formData.password, 'Password is required');
-      if (formData.password && formData.password.length < 8) {
-        newErrors.password = 'Password must be at least 8 characters';
         isValid = false;
       }
 
@@ -151,11 +144,9 @@ export default function WhiteLabelOnboarding() {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
     dialCode: '+1',
     mobileNo: '',
     role: 'white_lable',
-    jobTitle: '',
     tnc: false,
 
     // Step B
@@ -209,7 +200,10 @@ export default function WhiteLabelOnboarding() {
       const fName = u?.firstName || nameParts[0] || '';
       const lName = u?.lastName || (nameParts.length > 1 ? nameParts.slice(1).join(' ') : '') || '';
 
-      const initialPhoneStr = u?.phone || u?.mobile || savedTenant.phoneString || '';
+      const dialCodeStr = u?.dialCode || savedTenant?.dialCode || '';
+      const mobileNoStr = u?.mobileNo || savedTenant?.mobileNo || '';
+      const combinedPhone = (dialCodeStr && mobileNoStr) ? `${dialCodeStr.replace('+', '')}${mobileNoStr}` : '';
+      const initialPhoneStr = u?.phone || u?.mobile || savedTenant?.phoneString || combinedPhone;
       setPhoneString(prev => prev || initialPhoneStr);
 
       setFormData(prev => ({
@@ -220,7 +214,6 @@ export default function WhiteLabelOnboarding() {
         dialCode: prev.dialCode || u?.dialCode || savedTenant.dialCode || '+1',
         mobileNo: prev.mobileNo || u?.mobileNo || savedTenant.mobileNo || '',
         role: prev.role || u?.role || savedTenant.role || 'white_lable',
-        jobTitle: prev.jobTitle || u?.job_title || u?.jobTitle || savedTenant.jobTitle || '',
         company_name: prev.company_name || u?.company_name || u?.companyName || u?.legalCompanyName || u?.company || savedTenant.company_name || '',
         brand_name: prev.brand_name || u?.brand_name || u?.tradingName || u?.brandName || savedTenant.brand_name || '',
         company_registration_number: prev.company_registration_number || u?.company_registration_number || u?.companyRegNumber || savedTenant.company_registration_number || '',
@@ -320,10 +313,9 @@ export default function WhiteLabelOnboarding() {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        password: formData.password,
         dialCode: formData.dialCode,
         mobileNo: formData.mobileNo,
-        role: formData.role,
+        role: 'white_lable',
         termandconditon: formData.tnc,
       };
     } else if (stepIndex === 1) {
@@ -484,24 +476,13 @@ export default function WhiteLabelOnboarding() {
               </div>
               {renderError('lastName')}
             </div>
-            <div className="form-group full-width">
+            <div className="form-group">
               <label>Work Email <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuMail className="input-icon" />
                 <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="john@company.com"  />
               </div>
               {renderError('email')}
-            </div>
-            <div className="form-group full-width">
-              <label>Password <span className="req">*</span></label>
-              <div className="input-with-icon position-relative">
-                <LuLock className="input-icon" />
-                <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} required placeholder="Min 10 characters" style={{  paddingRight: '40px' }} />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0 }}>
-                  {showPassword ? <LuEyeOff size={18} /> : <LuEye size={18} />}
-                </button>
-              </div>
-              {renderError('password')}
             </div>
             <div className="form-group">
               <label>Phone {planType === 'network' && <span className="req">*</span>}</label>
@@ -545,13 +526,6 @@ export default function WhiteLabelOnboarding() {
                 />
               </div>
               {renderError('phone')}
-            </div>
-            <div className="form-group">
-              <label>Job Title</label>
-              <div className="input-with-icon">
-                <LuBriefcase className="input-icon" />
-                <input type="text" name="jobTitle" value={formData.jobTitle} onChange={handleChange} placeholder="e.g. CEO"  />
-              </div>
             </div>
             <div className="form-group full-width checkbox-group">
               <label className="checkbox-label">
