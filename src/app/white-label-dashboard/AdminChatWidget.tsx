@@ -49,7 +49,7 @@ export default function AdminChatWidget() {
       ConnectSocket.emit("user-online", { user_id: currentUser?.id });
       
       const addedUserStr = typeof window !== 'undefined' ? localStorage.getItem('addedUser') : null;
-      let adminId = null;
+      let adminId: string | null = null;
       if (addedUserStr) {
         try {
           const addedUser = JSON.parse(addedUserStr);
