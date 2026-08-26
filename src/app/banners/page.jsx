@@ -11,7 +11,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 import methodModel from "@/methods/methods";
 
-const banneres = () => {
+const Banners = () => {
   const user = crendentialModel.getUser();
   const { role } = useParams();
   const [filters, setFilter] = useState({
@@ -275,4 +275,4 @@ const banneres = () => {
   );
 };
 
-export default banneres;
+export default Banners;

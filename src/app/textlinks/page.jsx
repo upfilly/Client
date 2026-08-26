@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 import methodModel from '@/methods/methods';
 
 
-const banneres = () => {
+const Banners = () => {
     const user = crendentialModel.getUser()
     const {role} =useParams()
     const [filters, setFilter] = useState({ page: 0, count: 10, search: '', role:role||'', isDeleted: false,status:''})
@@ -245,4 +245,4 @@ const banneres = () => {
     </>;
 };
 
-export default banneres;
+export default Banners;

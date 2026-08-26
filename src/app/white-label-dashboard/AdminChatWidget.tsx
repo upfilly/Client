@@ -6,8 +6,22 @@ import axios from 'axios';
 import crendentialModel from '@/models/credential.model';
 import { ConnectSocket, SocketURL } from '../chat/socket';
 
+export interface Message {
+  id: number | string;
+  text: string;
+  sender: 'admin' | 'user';
+  time: string;
+}
+
+export interface User {
+  id?: string;
+  _id?: string;
+  addedBy?: string;
+  [key: string]: unknown;
+}
+
 export default function AdminChatWidget() {
-  const [messages, setMessages] = useState<any[]>([
+  const [messages, setMessages] = useState<Message[]>([
 
     {      
       id: 1,
@@ -19,7 +33,7 @@ export default function AdminChatWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -73,7 +87,7 @@ export default function AdminChatWidget() {
             const data = res.data;
             setRoomId(data.data.room_id);
             joinRoom(data.data.room_id, currentUser.id);
-            fetchMessages(data.data.room_id, adminId, currentUser.id);
+            fetchMessages(data.data.room_id, adminId as string, currentUser.id);
           }
         });
       }
@@ -93,7 +107,7 @@ export default function AdminChatWidget() {
       .get(`${SocketURL}chat/user/message/all?room_id=${rId}&user_id=${aId}&login_user_id=${uId}`)
       .then((res) => {
         if (res?.data?.success) {
-          const fetchedMessages = res.data.data.data.map((msg: any) => ({
+          const fetchedMessages = res.data.data.data.map((msg: { _id: string; content: string; sender: string; createdAt: string | Date }) => ({
             id: msg._id,
             text: msg.content,
             sender: msg.sender === uId ? 'user' : 'admin',
@@ -113,11 +127,11 @@ export default function AdminChatWidget() {
   };
 
   useEffect(() => {
-    const handleReceiveMessage = (newdata: any) => {
+    const handleReceiveMessage = (newdata: { data?: { _doc?: { room_id?: string; _id?: string; content?: string; sender?: string; createdAt?: string | Date } } }) => {
       const data = newdata.data;
       if (data?._doc?.room_id === roomId) {
         setIsTyping(false); // Stop typing animation when message received
-        const payload = {
+        const payload: Message = {
           id: data?._doc?._id || Date.now(),
           text: data?._doc?.content || '',
           sender: data?._doc?.sender === user?.id ? 'user' : 'admin',
@@ -136,7 +150,7 @@ export default function AdminChatWidget() {
     };
 
     let typingTimer: NodeJS.Timeout;
-    const handleTyping = (data: any) => {
+    const handleTyping = (data: { data?: { typing?: boolean; room_id?: string } }) => {
       if (data?.data?.typing && data?.data?.room_id === roomId) {
         setIsTyping(true);
         clearTimeout(typingTimer);
@@ -183,7 +197,7 @@ export default function AdminChatWidget() {
       ConnectSocket.emit(`send-message`, payload);
     } else {
       // Fallback local update if socket not ready
-      const newMsg = {
+      const newMsg: Message = {
         id: Date.now(),
         text: messageText,
         sender: 'user',
@@ -206,7 +220,7 @@ export default function AdminChatWidget() {
             text: "Thanks for reaching out! An admin has been notified and will join the chat shortly to assist you.",
             sender: 'admin',
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          }
+          } as Message
         ]);
       }, 2000);
     }
