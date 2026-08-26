@@ -117,7 +117,7 @@ export default function Layout({
   filter,
   name,
   filters,
-}: LayoutProps) {
+}: LayoutProps): React.ReactElement {
   const [user, setUser] = useState<User | null>(crendentialModel.getUser());
   const history = useRouter();
   const pathname = usePathname();
