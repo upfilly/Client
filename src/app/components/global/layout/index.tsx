@@ -1384,10 +1384,13 @@ export default function Layout({
           ) : (
             <span>{children}</span>
           )}
-
-          <ChatButton />
-          <ChatbotWindow />
-          <EmailModal />
+          {user?.role !== 'white_lable' && (
+            <>
+              <ChatButton />
+              <ChatbotWindow />
+              <EmailModal />
+            </>
+          )}
 
           {!isDashboard && <Footer settingData={settingData} />}
         </div>

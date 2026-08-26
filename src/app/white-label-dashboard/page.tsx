@@ -368,7 +368,7 @@ export default function WhiteLabelDashboard() {
               onClick={() => setActiveTab('contact')}
             >
               <LuMail size={18} />
-              <span>Contact Module</span>
+              <span>Contact Support</span>
               {/* {contacts.filter(c => c.status === 'New').length > 0 && (
                 <span className="tab-badge">{contacts.filter(c => c.status === 'New').length}</span>
               )} */}

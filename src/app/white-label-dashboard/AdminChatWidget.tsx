@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+'use client'
+
+import React, { useState, useEffect, useRef } from 'react';
 import { LuMessageSquare, LuSend } from 'react-icons/lu';
+import axios from 'axios';
+import crendentialModel from '@/models/credential.model';
+import { ConnectSocket, SocketURL } from '../chat/socket';
 
 export default function AdminChatWidget() {
   const [messages, setMessages] = useState<any[]>([
-    {
+
+    {      
       id: 1,
       text: "Hi there! 👋 Welcome to UpFilly Support. How can we help you today?",
       sender: 'admin',
@@ -12,6 +18,10 @@ export default function AdminChatWidget() {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [roomId, setRoomId] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const quickReplies = [
     "How to set up custom domain?",
@@ -20,21 +30,171 @@ export default function AdminChatWidget() {
     "Other"
   ];
 
+  useEffect(() => {
+    // Initial static message
+    setMessages([
+      {
+        id: 1,
+        text: "Hi there! 👋 Welcome to UpFilly Support. How can we help you today?",
+        sender: 'admin',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ]);
+
+    const currentUser = crendentialModel.getUser();
+    setUser(currentUser);
+    ConnectSocket.connect();
+
+    if (currentUser) {
+      ConnectSocket.emit("user-online", { user_id: currentUser?.id });
+      
+      const addedUserStr = typeof window !== 'undefined' ? localStorage.getItem('addedUser') : null;
+      let adminId = null;
+      if (addedUserStr) {
+        try {
+          const addedUser = JSON.parse(addedUserStr);
+          adminId = addedUser?.id || addedUser?._id;
+        } catch(e) {}
+      }
+      
+      if (!adminId) {
+        adminId = currentUser?.addedBy || currentUser?.id; // fallback to addedBy or self
+      }
+
+      if (adminId) {
+        const payload = {
+          chat_by: currentUser.id,
+          chat_with: adminId,
+          support: true,
+        };
+
+        axios.post(`${SocketURL}chat/user/join-group`, payload).then((res) => {
+          if (res?.data?.success) {
+            const data = res.data;
+            setRoomId(data.data.room_id);
+            joinRoom(data.data.room_id, currentUser.id);
+            fetchMessages(data.data.room_id, adminId, currentUser.id);
+          }
+        });
+      }
+    };
+  }, []);
+
+  const joinRoom = (rId: string, uId: string) => {
+    const payload = {
+      room_id: rId,
+      user_id: uId,
+    };
+    ConnectSocket.emit("join-room", payload);
+  };
+
+  const fetchMessages = (rId: string, aId: string, uId: string) => {
+    axios
+      .get(`${SocketURL}chat/user/message/all?room_id=${rId}&user_id=${aId}&login_user_id=${uId}`)
+      .then((res) => {
+        if (res?.data?.success) {
+          const fetchedMessages = res.data.data.data.map((msg: any) => ({
+            id: msg._id,
+            text: msg.content,
+            sender: msg.sender === uId ? 'user' : 'admin',
+            time: new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }));
+          
+          if (fetchedMessages.length > 0) {
+            setMessages(fetchedMessages);
+            setTimeout(() => {
+              if (chatContainerRef.current) {
+                chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+              }
+            }, 100);
+          }
+        }
+      });
+  };
+
+  useEffect(() => {
+    const handleReceiveMessage = (newdata: any) => {
+      const data = newdata.data;
+      if (data?._doc?.room_id === roomId) {
+        setIsTyping(false); // Stop typing animation when message received
+        const payload = {
+          id: data?._doc?._id || Date.now(),
+          text: data?._doc?.content || '',
+          sender: data?._doc?.sender === user?.id ? 'user' : 'admin',
+          time: new Date(data?._doc?.createdAt || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        
+        // Check if message is a duplicate before adding
+        setMessages((prevChat) => {
+          const isDuplicate = prevChat.some(msg => msg.text === payload.text && msg.sender === payload.sender && Math.abs(new Date(`1970/01/01 ${msg.time}`).getTime() - new Date(`1970/01/01 ${payload.time}`).getTime()) < 60000);
+          if (!isDuplicate) {
+            return [...prevChat, payload];
+          }
+          return prevChat;
+        });
+      }
+    };
+
+    let typingTimer: NodeJS.Timeout;
+    const handleTyping = (data: any) => {
+      if (data?.data?.typing && data?.data?.room_id === roomId) {
+        setIsTyping(true);
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+          setIsTyping(false);
+        }, 3000);
+      }
+    };
+
+    ConnectSocket.on("receive-message", handleReceiveMessage);
+    ConnectSocket.on("typing", handleTyping);
+    return () => {
+      ConnectSocket.off("receive-message", handleReceiveMessage);
+      ConnectSocket.off("typing", handleTyping);
+      clearTimeout(typingTimer);
+    };
+  }, [roomId, user]);
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
   const handleSendMessage = (text?: string) => {
     const messageText = typeof text === 'string' ? text : inputValue;
     if (!messageText.trim()) return;
 
-    const newMsg = {
-      id: Date.now(),
-      text: messageText,
-      sender: 'user',
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-
-    setMessages([...messages, newMsg]);
+    // Send to backend if connected
+    if (roomId && user) {
+      const payload = {
+        room_id: roomId,
+        type: "TEXT",
+        sender: user.id,
+        content: messageText,
+      };
+      ConnectSocket.emit(`send-message`, payload);
+    } else {
+      // Fallback local update if socket not ready
+      const newMsg = {
+        id: Date.now(),
+        text: messageText,
+        sender: 'user',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages([...messages, newMsg]);
+    }
+    
     setInputValue('');
 
-    // If it's their first message (or they clicked a quick reply chip), simulate an admin auto-reply
+    // If it's their first actual message, simulate the admin auto-reply locally (doesn't go to DB)
     if (messages.length === 1) {
       setIsTyping(true);
       setTimeout(() => {
@@ -48,7 +208,7 @@ export default function AdminChatWidget() {
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }
         ]);
-      }, 2000); // 2 second delay for realistic typing
+      }, 2000);
     }
   };
 
@@ -110,7 +270,9 @@ export default function AdminChatWidget() {
       </div>
 
       {/* Chat Area */}
-      <div style={{
+      <div 
+        ref={chatContainerRef}
+        style={{
         flex: 1,
         background: '#f1f5f9',
         padding: '24px',
@@ -231,7 +393,7 @@ export default function AdminChatWidget() {
             </div>
           </div>
         )}
-
+        
       </div>
 
       {/* Input Area */}
