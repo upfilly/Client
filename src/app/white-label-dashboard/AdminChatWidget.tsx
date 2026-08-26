@@ -23,7 +23,7 @@ export interface User {
 export default function AdminChatWidget() {
   const [messages, setMessages] = useState<Message[]>([
 
-    {      
+    {
       id: 1,
       text: "Hi there! 👋 Welcome to UpFilly Support. How can we help you today?",
       sender: 'admin',
@@ -34,7 +34,8 @@ export default function AdminChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  
+  const [targetAdminId, setTargetAdminId] = useState<string | null>(null);
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const quickReplies = [
@@ -61,36 +62,45 @@ export default function AdminChatWidget() {
 
     if (currentUser) {
       ConnectSocket.emit("user-online", { user_id: currentUser?.id });
-      
+
+      // Dynamically resolve the admin ID
       const addedUserStr = typeof window !== 'undefined' ? localStorage.getItem('addedUser') : null;
-      let adminId: string | null = null;
+      let computedAdminId: string | null = null;
       if (addedUserStr) {
         try {
           const addedUser = JSON.parse(addedUserStr);
-          adminId = addedUser?.id || addedUser?._id;
-        } catch(e) {}
+          computedAdminId = addedUser?.id || addedUser?._id;
+        } catch (e) { }
+      }
+
+      if (!computedAdminId) {
+        computedAdminId = currentUser?.addedBy || currentUser?.id; // fallback to addedBy or self
       }
       
-      if (!adminId) {
-        adminId = currentUser?.addedBy || currentUser?.id; // fallback to addedBy or self
+      // Fallback to super admin if all else fails
+      if (!computedAdminId) {
+        computedAdminId = "654227e78fd3b1018600710d";
       }
 
-      if (adminId) {
-        const payload = {
-          chat_by: currentUser.id,
-          chat_with: adminId,
-          support: true,
-        };
+      setTargetAdminId(computedAdminId);
 
-        axios.post(`${SocketURL}chat/user/join-group`, payload).then((res) => {
-          if (res?.data?.success) {
-            const data = res.data;
-            setRoomId(data.data.room_id);
-            joinRoom(data.data.room_id, currentUser.id);
-            fetchMessages(data.data.room_id, adminId as string, currentUser.id);
-          }
-        });
-      }
+      // Match the exact same logic as the chatbot module to persist old chats
+      const payload = {
+        chat_by: currentUser?.email||  currentUser.id,
+      };
+
+      axios.post(`${SocketURL}chat/user/join-group-bot`, payload).then((res) => {
+        if (res?.data?.success) {
+          const data = res.data;
+          setRoomId(data.data.room_id);
+          
+          const userId = currentUser.id || data.data.user_id;
+          joinRoom(data.data.room_id, userId);
+          
+          // Use the dynamic admin ID
+          fetchMessages(data.data.room_id, computedAdminId as string, userId);
+        }
+      });
     };
   }, []);
 
@@ -113,7 +123,7 @@ export default function AdminChatWidget() {
             sender: msg.sender === uId ? 'user' : 'admin',
             time: new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }));
-          
+
           if (fetchedMessages.length > 0) {
             setMessages(fetchedMessages);
             setTimeout(() => {
@@ -137,7 +147,7 @@ export default function AdminChatWidget() {
           sender: data?._doc?.sender === user?.id ? 'user' : 'admin',
           time: new Date(data?._doc?.createdAt || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
-        
+
         // Check if message is a duplicate before adding
         setMessages((prevChat) => {
           const isDuplicate = prevChat.some(msg => msg.text === payload.text && msg.sender === payload.sender && Math.abs(new Date(`1970/01/01 ${msg.time}`).getTime() - new Date(`1970/01/01 ${payload.time}`).getTime()) < 60000);
@@ -189,12 +199,22 @@ export default function AdminChatWidget() {
     // Send to backend if connected
     if (roomId && user) {
       const payload = {
-        room_id: roomId,
-        type: "TEXT",
-        sender: user.id,
         content: messageText,
+        room_id: roomId,
+        user_id: user.id,
+        reciver_id: targetAdminId || "654227e78fd3b1018600710d", // dynamic admin ID
+        type: "TEXT"
       };
-      ConnectSocket.emit(`send-message`, payload);
+      ConnectSocket.emit("send-message", payload);
+
+      // Add user message locally immediately to mirror chatbot UX
+      const newMsg: Message = {
+        id: Date.now(),
+        text: messageText,
+        sender: 'user',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, newMsg]);
     } else {
       // Fallback local update if socket not ready
       const newMsg: Message = {
@@ -205,7 +225,7 @@ export default function AdminChatWidget() {
       };
       setMessages([...messages, newMsg]);
     }
-    
+
     setInputValue('');
 
     // If it's their first actual message, simulate the admin auto-reply locally (doesn't go to DB)
@@ -284,17 +304,17 @@ export default function AdminChatWidget() {
       </div>
 
       {/* Chat Area */}
-      <div 
+      <div
         ref={chatContainerRef}
         style={{
-        flex: 1,
-        background: '#f1f5f9',
-        padding: '24px',
-        overflowY: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '24px'
-      }}>
+          flex: 1,
+          background: '#f1f5f9',
+          padding: '24px',
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px'
+        }}>
 
         {messages.map((msg) => (
           <div key={msg.id} style={{ display: 'flex', gap: '12px', maxWidth: '80%', alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start', flexDirection: msg.sender === 'user' ? 'row-reverse' : 'row' }}>
@@ -407,7 +427,7 @@ export default function AdminChatWidget() {
             </div>
           </div>
         )}
-        
+
       </div>
 
       {/* Input Area */}
