@@ -32,6 +32,24 @@ export const message = (history) => {
     // console.log(payload,"messaging===12345")
     const notificationTitle = payload?.notification?.body;
     // let rout = payload?.data['gcm.notification.type'] == "proposal" ? '/proposallisting' : '/mycontract'
+    const title = payload?.notification?.title?.toLowerCase() || '';
+    
+    // Check if the notification is a chat/admin message. If it is, do not show a toast.
+    const notifType = payload?.data?.['gcm.notification.type'] || payload?.data?.type;
+    if (
+      notifType === 'chat' || 
+      notifType === 'message' || 
+      notifType === 'TEXT' || 
+      payload?.data?.room_id ||
+      title.includes('admin') ||
+      title.includes('message') ||
+      title.includes('chat')
+    ) {
+      return;
+    }
+
+    let rout = payload?.data?.['gcm.notification.type'] == "proposal" ? '/proposallisting' : '/mycontract'
+    
     toast.success(notificationTitle, { onClick: function () { history.push(rout) }, })
     document.getElementById('unreadnoti')?.click()
   })
