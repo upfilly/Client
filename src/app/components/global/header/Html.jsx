@@ -176,12 +176,15 @@ const Html = ({ settingData, Logout }) => {
                         <span className="user-name">{user?.firstName}</span>
                       </Dropdown.Toggle>
                       <Dropdown.Menu className="user-dropdown-menu">
-                        <Dropdown.Item onClick={() => history.push('/dashboard')} className="user-menu-item">
-                          Dashboard
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={() => history.push('/white-label-dashboard')} className="user-menu-item">
-                          White Label Dashboard
-                        </Dropdown.Item>
+                        {(user?.role === 'white_label' || user?.role === 'white_lable') ? (
+                          <Dropdown.Item onClick={() => history.push('/white-label-dashboard')} className="user-menu-item">
+                            White Label Dashboard
+                          </Dropdown.Item>
+                        ) : (
+                          <Dropdown.Item onClick={() => history.push('/dashboard')} className="user-menu-item">
+                            Dashboard
+                          </Dropdown.Item>
+                        )}
                         <Dropdown.Item onClick={() => history.push('/profile')} className="user-menu-item">
                           Profile
                         </Dropdown.Item>
