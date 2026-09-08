@@ -105,9 +105,11 @@ export default function Pricing() {
     }
   }, [id])
 
-  if (user?.role == "affiliate") {
-    history.push('/')
-  }
+  useEffect(() => {
+    if (user?.role == "affiliate") {
+      history.push('/')
+    }
+  }, [user?.role])
 
   const getData = (p = {}) => {
     setLoader(true)

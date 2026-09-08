@@ -12,9 +12,11 @@ let crendentialModel:any={
 
     },
     logout:()=>{
-    localStorage.removeItem("crendentials")
-    localStorage.removeItem("addedUser")
-    localStorage.removeItem("token")
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem("crendentials")
+        localStorage.removeItem("addedUser")
+        localStorage.removeItem("token")
+      }
     }
 }
 

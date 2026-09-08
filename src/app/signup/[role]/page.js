@@ -30,9 +30,11 @@ export default function Login() {
   const history = useRouter()
   const user = crendentialModel.getUser()
 
-  if (user) {
-    history.push('/')
-  }
+  useEffect(() => {
+    if (user && (user.id || user._id)) {
+      history.push('/')
+    }
+  }, [user])
 
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org?format=json");
