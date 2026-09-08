@@ -1,20 +1,22 @@
+import React from "react";
 import environment from "@/environment";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Script from "next/script";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+
 type Props = {
   description?: string;
-  children: any;
+  children: React.ReactNode;
   title?: string;
   settingData: any;
 };
 
-const PageContainer = ({
+const PageContainer: React.FC<Props> = ({
   title,
   description,
   children,
   settingData,
-}: Props) => (
+}) => (
   <>
     <HelmetProvider>
       <div>
