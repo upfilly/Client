@@ -20,7 +20,7 @@ export default function WhiteLabelDashboard() {
   const router = useRouter();
   const user = crendentialModel.getUser();
   const [activeTab, setActiveTab] = useState<'subdomain' | 'contact' | 'overview' | 'settings'>('subdomain');
-  
+
   // Local tenant config state initialized from onboarding
   const [tenantConfig, setTenantConfig] = useState<any>({
     subdomainSlug: 'mybrand',
@@ -28,7 +28,7 @@ export default function WhiteLabelDashboard() {
     legalCompanyName: 'My Brand Enterprise',
     tradingName: 'MyBrand',
     billingEmail: 'admin@mybrand.com',
-    cnameTarget: 'cname.upfilly.io',
+    cnameTarget: 'cname.upfilly.com',
     sslStatus: 'active',
     dnsStatus: 'verified',
     planName: 'White Label Growth Plan',
@@ -48,7 +48,7 @@ export default function WhiteLabelDashboard() {
     ApiClient.get('user/detail', { id: uid }).then((res: any) => {
       if (res?.success && res?.data) {
         const userData = res.data;
-        
+
         if (userData?.plan_id?.plan_type !== "paid" && userData?.plan_id?.plan_type !== "free") {
           router.push('/white-label-pricing');
         } else if (!userData.white_label_progress.a && !userData.white_label_progress.b && !userData.white_label_progress.c && !userData.white_label_progress.d) {
@@ -67,6 +67,8 @@ export default function WhiteLabelDashboard() {
             environment: userData.stripe_environment || prev.environment,
             defaultCurrency: userData.stripe_currency || prev.defaultCurrency,
             planName: userData.plan_id?.name || prev.planName,
+            tenantDbName: userData.tenant_db_name || (userData.sub_domain ? `db_tenant_${userData.sub_domain.replace(/[^a-z0-9-]/g, '').replace(/-/g, '_')}` : ''),
+            tenantDbStatus: userData.tenant_db_status || 'ready',
           }));
         }
       }
@@ -195,33 +197,49 @@ export default function WhiteLabelDashboard() {
   const handleSaveSubdomain = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSavingSubdomain(true);
-    
+
     try {
       const uid = user?.id || user?._id;
       const cleanSubDomain = subdomainInput.toLowerCase().replace(/[^a-z0-9-]/g, '');
+
+      // Verify availability if subdomain changed
+      if (cleanSubDomain !== tenantConfig.subdomainSlug) {
+        const checkRes: any = await ApiClient.post('check-subdomain', {
+          sub_domain: cleanSubDomain
+        });
+        if (!checkRes?.success) {
+          toast.error(checkRes?.error?.message || checkRes?.message || 'Subdomain is not available');
+          setIsSavingSubdomain(false);
+          return;
+        }
+      }
+
       const payload = {
         id: uid,
         sub_domain: cleanSubDomain,
         tracking_hostname: customDomainInput
       };
-      
+
       const res: any = await ApiClient.put('edit/profile', payload);
       if (res?.success) {
-         setTenantConfig((prev: any) => ({
-           ...prev,
-           subdomainSlug: cleanSubDomain,
-           trackingHostname: customDomainInput
-         }));
-         const updated = {
-           ...tenantConfig,
-           subdomainSlug: cleanSubDomain,
-           trackingHostname: customDomainInput
-         };
-         localStorage.setItem('whiteLabelTenant', JSON.stringify(updated));
-         toast.success(res?.message || 'Sub-domain configuration updated successfully!');
-         setIsEditingSubdomain(false);
+        const cleanDbSuffix = cleanSubDomain.replace(/[^a-z0-9-]/g, '').replace(/-/g, '_');
+        setTenantConfig((prev: any) => ({
+          ...prev,
+          subdomainSlug: cleanSubDomain,
+          trackingHostname: customDomainInput,
+          tenantDbName: `db_tenant_${cleanDbSuffix}`,
+          tenantDbStatus: 'ready'
+        }));
+        const updated = {
+          ...tenantConfig,
+          subdomainSlug: cleanSubDomain,
+          trackingHostname: customDomainInput
+        };
+        localStorage.setItem('whiteLabelTenant', JSON.stringify(updated));
+        toast.success(res?.message || 'Sub-domain configuration updated successfully!');
+        setIsEditingSubdomain(false);
       } else {
-         toast.error(res?.message || 'Error saving configuration');
+        toast.error(res?.message || 'Error saving configuration');
       }
     } catch (err) {
       toast.error('An error occurred');
@@ -234,7 +252,7 @@ export default function WhiteLabelDashboard() {
   const handleSaveStripe = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSavingStripe(true);
-    
+
     try {
       const uid = user?.id || user?._id;
       const payload = {
@@ -243,19 +261,19 @@ export default function WhiteLabelDashboard() {
         stripe_environment: stripeEnvInput,
         stripe_currency: stripeCurrencyInput
       };
-      
+
       const res: any = await ApiClient.put('edit/profile', payload);
       if (res?.success) {
-         setTenantConfig((prev: any) => ({
-           ...prev,
-           stripeKey: stripeInput,
-           environment: stripeEnvInput,
-           defaultCurrency: stripeCurrencyInput
-         }));
-         toast.success(res?.message || 'Stripe configuration updated successfully!');
-         setIsEditingStripe(false);
+        setTenantConfig((prev: any) => ({
+          ...prev,
+          stripeKey: stripeInput,
+          environment: stripeEnvInput,
+          defaultCurrency: stripeCurrencyInput
+        }));
+        toast.success(res?.message || 'Stripe configuration updated successfully!');
+        setIsEditingStripe(false);
       } else {
-         toast.error(res?.message || 'Error saving Stripe configuration');
+        toast.error(res?.message || 'Error saving Stripe configuration');
       }
     } catch (err) {
       toast.error('An error occurred while saving Stripe settings');
@@ -300,9 +318,9 @@ export default function WhiteLabelDashboard() {
 
   const filteredContacts = contacts.filter(c => {
     const matchesSearch = c.name.toLowerCase().includes(contactSearch.toLowerCase()) ||
-                          c.email.toLowerCase().includes(contactSearch.toLowerCase()) ||
-                          c.company.toLowerCase().includes(contactSearch.toLowerCase()) ||
-                          c.subject.toLowerCase().includes(contactSearch.toLowerCase());
+      c.email.toLowerCase().includes(contactSearch.toLowerCase()) ||
+      c.company.toLowerCase().includes(contactSearch.toLowerCase()) ||
+      c.subject.toLowerCase().includes(contactSearch.toLowerCase());
     const matchesStatus = statusFilter === 'All' || c.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -323,7 +341,7 @@ export default function WhiteLabelDashboard() {
               <div className="tenant-meta">
                 <span className="domain-pill">
                   <LuGlobe size={14} />
-                  https://{tenantConfig.subdomainSlug || 'mybrand'}.upfilly.io
+                  https://{tenantConfig.subdomainSlug || 'mybrand'}.upfilly.com
                 </span>
                 <span className="status-pill active">
                   <LuShieldCheck size={14} />
@@ -338,7 +356,7 @@ export default function WhiteLabelDashboard() {
 
             <div className="banner-actions">
               <a
-                href={`https://${tenantConfig.subdomainSlug || 'mybrand'}.upfilly.io`}
+                href={`https://${tenantConfig.subdomainSlug || 'mybrand'}.upfilly.com`}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-wl-primary"
@@ -347,7 +365,7 @@ export default function WhiteLabelDashboard() {
               </a>
               <button
                 className="btn-wl-outline"
-                onClick={() => copyToClipboard(`https://${tenantConfig.subdomainSlug || 'mybrand'}.upfilly.io`, 'Subdomain URL')}
+                onClick={() => copyToClipboard(`https://${tenantConfig.subdomainSlug || 'mybrand'}.upfilly.com`, 'Subdomain URL')}
               >
                 <LuCopy /> Copy Link
               </button>
@@ -414,7 +432,7 @@ export default function WhiteLabelDashboard() {
                   <div className="dns-status-banner">
                     <div className="status-item">
                       <span className="lbl">Subdomain Slug:</span>
-                      <span className="val font-mono">{tenantConfig.subdomainSlug}.upfilly.io</span>
+                      <span className="val font-mono">{tenantConfig.subdomainSlug}.upfilly.com</span>
                     </div>
                     <div className="status-item">
                       <span className="lbl">Custom Domain:</span>
@@ -427,6 +445,12 @@ export default function WhiteLabelDashboard() {
                     <div className="status-item">
                       <span className="lbl">SSL Certificate:</span>
                       <span className="val status-green"><LuShieldCheck size={14} /> Active (Auto-renewed)</span>
+                    </div>
+                    <div className="status-item">
+                      <span className="lbl">Isolated Database:</span>
+                      <span className="val status-green font-mono">
+                        <LuCircleCheck size={14} /> {tenantConfig.tenantDbName || (tenantConfig.subdomainSlug ? `db_tenant_${tenantConfig.subdomainSlug.replace(/[^a-z0-9-]/g, '').replace(/-/g, '_')}` : 'Provisioned')} (Ready)
+                      </span>
                     </div>
                   </div>
                   <div className="mt-4">
@@ -454,13 +478,13 @@ export default function WhiteLabelDashboard() {
                         placeholder="yourbrand"
                         pattern="[a-z0-9-]+"
                       />
-                      <span className="domain-suffix">.upfilly.io</span>
+                      <span className="domain-suffix">.upfilly.com</span>
                     </div>
                     <small className="field-hint">Lowercase a-z, 0-9, hyphen. 3-30 chars.</small>
                   </div>
 
                   <div className="form-group full-width separator-line"></div>
-                  
+
                   <div className="form-group full-width">
                     <label>Tracking Hostname</label>
                     <p className="field-desc">Parent domain must be customer-owned. We will generate a CNAME target for you.</p>
@@ -486,7 +510,7 @@ export default function WhiteLabelDashboard() {
                           <button
                             type="button"
                             className="btn-copy-sm"
-                            onClick={() => copyToClipboard('cname.upfilly.io', 'CNAME Target')}
+                            onClick={() => copyToClipboard('cname.upfilly.com', 'CNAME Target')}
                             style={{ background: '#ffffff', border: '1px solid #93c5fd', color: '#1d4ed8', fontSize: '12px', padding: '4px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                           >
                             <LuCopy size={12} /> Copy Target
@@ -503,7 +527,7 @@ export default function WhiteLabelDashboard() {
                           </div>
                           <div className="dns-row" style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', fontSize: '13px' }}>
                             <span className="col-lbl" style={{ color: '#64748b', fontWeight: 600 }}>Points To / Value</span>
-                            <span className="col-val font-mono" style={{ fontFamily: 'monospace', color: '#0f172a' }}>cname.upfilly.io</span>
+                            <span className="col-val font-mono" style={{ fontFamily: 'monospace', color: '#0f172a' }}>cname.upfilly.com</span>
                           </div>
                         </div>
                       </div>
@@ -540,7 +564,7 @@ export default function WhiteLabelDashboard() {
           {activeTab === 'contact' && (
             <div className="module-content-card" style={{ padding: 0, background: 'transparent', border: 'none', boxShadow: 'none' }}>
               <AdminChatWidget />
-              
+
               {/* ORIGINAL CONTACT MODULE UI - COMMENTED OUT */}
               {/* 
                 <>
@@ -720,7 +744,7 @@ export default function WhiteLabelDashboard() {
                   <li>
                     <span className="dot green"></span>
                     <div className="activity-detail">
-                      <strong>Custom Sub-domain Provisioned:</strong> https://{tenantConfig.subdomainSlug}.upfilly.io is live and active.
+                      <strong>Custom Sub-domain Provisioned:</strong> https://{tenantConfig.subdomainSlug}.upfilly.com is live and active.
                       <small>2 hours ago</small>
                     </div>
                   </li>
@@ -787,13 +811,13 @@ export default function WhiteLabelDashboard() {
                       <label>Stripe API Key <span className="req">*</span></label>
                       <div className="input-with-icon position-relative" style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center' }}>
                         <LuLock className="input-icon" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#64748b', zIndex: 2, pointerEvents: 'none' }} />
-                        <input 
-                          type={showStripeKey ? "text" : "password"} 
-                          value={stripeInput} 
-                          onChange={(e) => setStripeInput(e.target.value)} 
-                          required 
-                          placeholder="sk_test_..." 
-                          style={{ paddingRight: '40px', paddingLeft: '40px', width: '100%', height: '42px', borderRadius: '8px', border: '1px solid #cbd5e1' }} 
+                        <input
+                          type={showStripeKey ? "text" : "password"}
+                          value={stripeInput}
+                          onChange={(e) => setStripeInput(e.target.value)}
+                          required
+                          placeholder="sk_test_..."
+                          style={{ paddingRight: '40px', paddingLeft: '40px', width: '100%', height: '42px', borderRadius: '8px', border: '1px solid #cbd5e1' }}
                         />
                         <button type="button" onClick={() => setShowStripeKey(!showStripeKey)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }}>
                           {showStripeKey ? <LuEyeOff size={18} /> : <LuEye size={18} />}

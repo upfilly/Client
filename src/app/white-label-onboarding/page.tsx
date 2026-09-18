@@ -66,7 +66,7 @@ export default function WhiteLabelOnboarding() {
     if (step === 0) {
       requireField('firstName', formData.firstName, 'First Name is required');
       requireField('lastName', formData.lastName, 'Last Name is required');
-      
+
       requireField('email', formData.email, 'Work Email is required');
       if (formData.email && !validateEmail(formData.email)) {
         newErrors.email = 'Please enter a valid email address';
@@ -91,7 +91,7 @@ export default function WhiteLabelOnboarding() {
       requireField('city', formData.white_label_address.city, 'City is required');
       requireField('zip', formData.white_label_address.zip, 'Postal Code is required');
       requireField('country', formData.white_label_address.country, 'Country is required');
-      
+
       requireField('billing_email', formData.billing_email, 'Billing Email is required');
       if (formData.billing_email && !validateEmail(formData.billing_email)) {
         newErrors.billing_email = 'Please enter a valid billing email address';
@@ -245,7 +245,7 @@ export default function WhiteLabelOnboarding() {
         ApiClient.get('user/detail', { id: uid }).then((res: any) => {
           if (res?.success && res?.data) {
             populateFromUser(res.data);
-            
+
             // --- NEW LOGIC: Resume progress ---
             const progress = res?.data?.white_label_progress;
             if (progress) {
@@ -261,7 +261,7 @@ export default function WhiteLabelOnboarding() {
               }
             }
             // ----------------------------------
-            
+
             // --- OLD LOGIC ---
             // // Only populate form user, no routing logic
             // populateFromUser(res.data);
@@ -364,6 +364,20 @@ export default function WhiteLabelOnboarding() {
     if (validateStep(currentStep)) {
       setIsSubmitting(true);
       try {
+        if (currentStep === 2 && formData.sub_domain) {
+          const checkRes: any = await ApiClient.post('check-subdomain', {
+            sub_domain: formData.sub_domain
+          });
+          if (!checkRes?.success) {
+            setErrors((prev: any) => ({
+              ...prev,
+              sub_domain: checkRes?.error?.message || checkRes?.message || 'Subdomain is already taken or reserved'
+            }));
+            setIsSubmitting(false);
+            return;
+          }
+        }
+
         const response: any = await saveProgress(currentStep);
         if (response?.success) {
           if (currentStep < STEPS.length - 1) {
@@ -391,7 +405,7 @@ export default function WhiteLabelOnboarding() {
   const handleSubmit = async () => {
     if (!validateStep(3)) return;
     setIsSubmitting(true);
-    
+
     // --- OLD LOGIC ---
     // // Save domain and setup configuration to local storage for white label dashboard
     // const tenantConfig = {
@@ -464,7 +478,7 @@ export default function WhiteLabelOnboarding() {
               <label>First Name <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuUser className="input-icon" />
-                <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required placeholder="John"  />
+                <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required placeholder="John" />
               </div>
               {renderError('firstName')}
             </div>
@@ -472,7 +486,7 @@ export default function WhiteLabelOnboarding() {
               <label>Last Name <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuUser className="input-icon" />
-                <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required placeholder="Doe"  />
+                <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required placeholder="Doe" />
               </div>
               {renderError('lastName')}
             </div>
@@ -480,7 +494,7 @@ export default function WhiteLabelOnboarding() {
               <label>Work Email <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuMail className="input-icon" />
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="john@company.com"  />
+                <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="john@company.com" />
               </div>
               {renderError('email')}
             </div>
@@ -507,7 +521,8 @@ export default function WhiteLabelOnboarding() {
                   }}
                   placeholder="+1 234 567 8900"
                   containerStyle={{ width: '100%' }}
-                  inputStyle={{ borderColor: errors.phone ? '#ef4444' : undefined, 
+                  inputStyle={{
+                    borderColor: errors.phone ? '#ef4444' : undefined,
                     width: '100%',
                     paddingLeft: '48px',
                     height: '45px',
@@ -516,7 +531,8 @@ export default function WhiteLabelOnboarding() {
                     fontSize: '14px',
                     color: '#0f172a'
                   }}
-                  buttonStyle={{ borderColor: errors.phone ? '#ef4444' : undefined, 
+                  buttonStyle={{
+                    borderColor: errors.phone ? '#ef4444' : undefined,
                     background: 'transparent',
                     border: 'none',
                     borderRight: '1px solid #cbd5e1',
@@ -543,7 +559,7 @@ export default function WhiteLabelOnboarding() {
               <label>Legal Company Name <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuBuilding2 className="input-icon" />
-                <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} required placeholder="Company Inc."  />
+                <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} required placeholder="Company Inc." />
               </div>
               {renderError('company_name')}
             </div>
@@ -551,40 +567,40 @@ export default function WhiteLabelOnboarding() {
               <label>Trading / Brand Name</label>
               <div className="input-with-icon">
                 <LuShieldCheck className="input-icon" />
-                <input type="text" name="brand_name" value={formData.brand_name} onChange={handleChange} placeholder="Defaults to Legal Name if empty"  />
+                <input type="text" name="brand_name" value={formData.brand_name} onChange={handleChange} placeholder="Defaults to Legal Name if empty" />
               </div>
             </div>
             <div className="form-group">
               <label>Company Reg. Number</label>
-              <input type="text" name="company_registration_number" value={formData.company_registration_number} onChange={handleChange} placeholder="e.g. 12345678"  />
+              <input type="text" name="company_registration_number" value={formData.company_registration_number} onChange={handleChange} placeholder="e.g. 12345678" />
             </div>
             <div className="form-group">
               <label>VAT / Tax ID</label>
-              <input type="text" name="taxId" value={formData.taxId} onChange={handleChange} placeholder="Required for EU/UK/NO"  />
+              <input type="text" name="taxId" value={formData.taxId} onChange={handleChange} placeholder="Required for EU/UK/NO" />
             </div>
 
             <h4 className="form-section-title full-width"><LuMapPin /> Registered Address</h4>
             <div className="form-group full-width">
               <label>Address Line 1 <span className="req">*</span></label>
-              <input type="text" name="line1" value={formData.white_label_address.line1} onChange={handleAddressChange} required placeholder="Street address"  />
+              <input type="text" name="line1" value={formData.white_label_address.line1} onChange={handleAddressChange} required placeholder="Street address" />
               {renderError('line1')}
             </div>
             <div className="form-group full-width">
               <label>Address Line 2</label>
-              <input type="text" name="line2" value={formData.white_label_address.line2} onChange={handleAddressChange} placeholder="Apt, suite, etc."  />
+              <input type="text" name="line2" value={formData.white_label_address.line2} onChange={handleAddressChange} placeholder="Apt, suite, etc." />
             </div>
             <div className="form-group">
               <label>City <span className="req">*</span></label>
-              <input type="text" name="city" value={formData.white_label_address.city} onChange={handleAddressChange} required placeholder="City"  />
+              <input type="text" name="city" value={formData.white_label_address.city} onChange={handleAddressChange} required placeholder="City" />
               {renderError('city')}
             </div>
             <div className="form-group">
               <label>State / Province</label>
-              <input type="text" name="state" value={formData.white_label_address.state} onChange={handleAddressChange} placeholder="State"  />
+              <input type="text" name="state" value={formData.white_label_address.state} onChange={handleAddressChange} placeholder="State" />
             </div>
             <div className="form-group">
               <label>Postal Code <span className="req">*</span></label>
-              <input type="text" name="zip" value={formData.white_label_address.zip} onChange={handleAddressChange} required placeholder="Postal Code"  />
+              <input type="text" name="zip" value={formData.white_label_address.zip} onChange={handleAddressChange} required placeholder="Postal Code" />
               {renderError('zip')}
             </div>
             <div className="form-group full-width">
@@ -605,7 +621,7 @@ export default function WhiteLabelOnboarding() {
               <label>Billing Email <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuMail className="input-icon" />
-                <input type="email" name="billing_email" value={formData.billing_email} onChange={handleChange} required placeholder="finance@company.com"  />
+                <input type="email" name="billing_email" value={formData.billing_email} onChange={handleChange} required placeholder="finance@company.com" />
               </div>
               {renderError('billing_email')}
             </div>
@@ -613,7 +629,7 @@ export default function WhiteLabelOnboarding() {
               <label>Company Website <span className="req">*</span></label>
               <div className="input-with-icon">
                 <LuGlobe className="input-icon" />
-                <input type="url" name="company_url" value={formData.company_url} onChange={handleChange} required placeholder="https://company.com"  />
+                <input type="url" name="company_url" value={formData.company_url} onChange={handleChange} required placeholder="https://company.com" />
               </div>
               {renderError('company_url')}
             </div>
@@ -649,8 +665,8 @@ export default function WhiteLabelOnboarding() {
                   required
                   placeholder="yourbrand"
                   pattern="[a-z0-9-]+"
-                 />
-                <span className="domain-suffix">.upfilly.io</span>
+                />
+                <span className="domain-suffix">.upfilly.com</span>
               </div>
               <small className="field-hint">Lowercase a-z, 0-9, hyphen. 3-30 chars.</small>
               {renderError('sub_domain')}
@@ -671,7 +687,7 @@ export default function WhiteLabelOnboarding() {
                       onChange={handleChange}
                       required
                       placeholder="track.clientbrand.com"
-                     />
+                    />
                   </div>
                   {renderError('tracking_hostname')}
                 </div>
@@ -691,7 +707,7 @@ export default function WhiteLabelOnboarding() {
               <label>Stripe API Key <span className="req">*</span></label>
               <div className="input-with-icon position-relative">
                 <LuLock className="input-icon" />
-                <input type={showStripeKey ? "text" : "password"} name="stripe_key" value={formData.stripe_key} onChange={handleChange} required placeholder="sk_test_..." style={{  paddingRight: '40px' }} />
+                <input type={showStripeKey ? "text" : "password"} name="stripe_key" value={formData.stripe_key} onChange={handleChange} required placeholder="sk_test_..." style={{ paddingRight: '40px' }} />
                 <button type="button" onClick={() => setShowStripeKey(!showStripeKey)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0 }}>
                   {showStripeKey ? <LuEyeOff size={18} /> : <LuEye size={18} />}
                 </button>
@@ -726,7 +742,7 @@ export default function WhiteLabelOnboarding() {
 
             <div className="form-group">
               <label>Statement Descriptor</label>
-              <input type="text" name="stripe_statement_descriptor" value={formData.stripe_statement_descriptor} onChange={handleChange} placeholder="e.g. MY BRAND"  />
+              <input type="text" name="stripe_statement_descriptor" value={formData.stripe_statement_descriptor} onChange={handleChange} placeholder="e.g. MY BRAND" />
               <small className="field-hint">Defaults to trading name</small>
             </div>
           </div>
