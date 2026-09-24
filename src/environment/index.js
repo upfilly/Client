@@ -1,8 +1,8 @@
 
 // let apiUrl ='http://195.35.8.196:6043/'
 // const url = window.location.protocol
-// let apiUrl ='https://api.upfilly.com/'
-let apiUrl = "http://localhost:6042/"
+let apiUrl = 'https://api.upfilly.com/'
+// let apiUrl = "http://localhost:6042/"
 
 // if (url != "https:") {
 // apiUrl="http://endpoint.jcsoftwaresolution.com:6043/"
