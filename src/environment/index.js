@@ -9,7 +9,6 @@ let apiUrl = 'https://api.upfilly.com/'
 
 // }
 
-
 const environment = {
   api: apiUrl,
   map_api_key: 'AIzaSyCbRhC6h9Pp43-5t_Knyrd_ewAdLMIJtCg',
