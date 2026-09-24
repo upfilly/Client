@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 import { useEffect, useState } from 'react';
 import "./style.scss";
 import Layout from '../components/global/layout/index';
@@ -286,7 +285,7 @@ export default function Pricing() {
                   <div className="plan-cta">
                     {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && (
                       <a className="btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
-                        Book a Demo
+                        Buy Plan
                       </a>
                     )}
                     {(!showCard && !itm.isUpcoming && !user?.isPayment && user) && (
@@ -304,7 +303,7 @@ export default function Pricing() {
                     )}
                     {(showCard && itm.isUpcoming && !user && !user?.isPayment) && (
                       <a className="btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}`)}>
-                        Book a Demo
+                        Buy Plan
                       </a>
                     )}
                     {(showCard && itm.isUpcoming && user && !user?.isPayment) && (
