@@ -207,7 +207,7 @@ export default function WhiteLabelPricing() {
               </label>
               <span className={selectedPlan ? 'wl-toggle-active' : ''}>
                 Annually
-                <span className="wl-save-badge">Save 20%</span>
+                {/* <span className="wl-save-badge">Save 20%</span> */}
               </span>
             </div>
           </div>
@@ -268,14 +268,16 @@ export default function WhiteLabelPricing() {
                         <div className="wl-tier-icon">{tierConfig.icon}</div>
                         <h3 className="wl-plan-name">{methodModel.capitalizeFirstLetter(itm.name)}</h3>
                         <div className="wl-plan-price">
-                          {itm?.discount_details && <span className="wl-original-price">${itm?.amount}</span>}
+                          {itm?.discount_details && <span className="wl-original-price">{itm?.amount === 0 ? "Free Plan" :`$${itm?.amount}`}</span>}
                           <div className="wl-price-main">
-                            <span className="wl-currency">$</span>
-                            <span className="wl-amount">{discountedAmount}</span>
+                            <span className="wl-currency"></span>
+                            <span className="wl-amount">{discountedAmount === 0 ? "Free Plan" : `$${discountedAmount}`}</span>
                           </div>
+                          {itm.amount !==0  && (
                           <span className="wl-period">
                             / {itm?.interval_count === 1 ? 'month' : 'year'}
                           </span>
+                          )}
                         </div>
                       </div>
 
@@ -298,7 +300,7 @@ export default function WhiteLabelPricing() {
                         {(!showCard && !itm.isUpcoming && !user && !user?.isPayment) && (
                           <div className="wl-btn-group">
                             <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}&category=white_label&role=white_lable&whitelabelType=${itm.whitelabelType || activeWlType || 'merchant'}`)}>
-                              Book a Demo
+                             Buy Plan
                             </a>
                           </div>
                         )}
@@ -318,7 +320,7 @@ export default function WhiteLabelPricing() {
                         {(showCard && itm.isUpcoming && !user && !user?.isPayment) && (
                           <div className="wl-btn-group">
                             <a className="wl-btn-outline" onClick={() => history.push(`/bookingform?planId=${itm._id}&category=white_label&role=${itm.whitelabelType || activeWlType || 'merchant'}&whitelabelType=${itm.whitelabelType || activeWlType || 'merchant'}`)}>
-                              Book a Demo
+                            Buy Plan
                             </a>
                           </div>
                         )}
@@ -499,7 +501,7 @@ export default function WhiteLabelPricing() {
                 <p>Launch your own affiliate platform with zero development. Get started in minutes.</p>
                 <div className="wl-cta-buttons">
                   <button className="wl-btn-white" onClick={() => history.push('/bookingform')}>
-                    Book a Demo
+                    Buy Plan
                   </button>
                   <button className="wl-btn-ghost" onClick={() => history.push('/contact')}>
                     Talk to Sales
