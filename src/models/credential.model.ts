@@ -6,7 +6,7 @@ let ls:any=''
 
 let crendentialModel:any={
     getUser:()=>{
-        return userType
+        return null
     },
     setUser:()=>{
 
@@ -32,10 +32,18 @@ if (typeof window !== 'undefined') {
     }
     
     const getUser = () => {
-        let value = ''
-        let user:any = ls?.getItem(KEY)
-        if (user) value = JSON.parse(user)
-        return value
+        try {
+            let user: any = ls?.getItem(KEY)
+            if (user) {
+                const parsed = JSON.parse(user)
+                if (parsed && (parsed.id || parsed._id)) {
+                    return parsed
+                }
+            }
+        } catch (e) {
+            console.error('Failed to parse user credentials', e)
+        }
+        return null
     }
     
     const logout=()=>{

@@ -25,29 +25,46 @@ export function middleware(req: NextRequest) {
 
   let tenantSubdomain: string | null = null;
 
-  // Case 1: Local development with subdomain (e.g. "brand.localhost")
-  if (currentHost.endsWith('.localhost')) {
-    tenantSubdomain = currentHost.replace('.localhost', '');
-  }
-  // Case 2: Production subdomain (e.g. "brand.upfilly.com" or "brand.upfilly.com")
-  else if (currentHost.includes('.')) {
-    const parts = currentHost.split('.');
-    if (parts.length > 2) {
-      const candidate = parts[0];
-      if (!['www', 'api', 'admin', 'app', 'mail', 'cname', 'staging'].includes(candidate)) {
-        tenantSubdomain = candidate;
+  // Never treat reserved hosts or raw IP addresses as tenant subdomains
+  const isIpAddress = /^(\d{1,3}\.){3}\d{1,3}$/.test(currentHost);
+  const isReserved = RESERVED_HOSTS.includes(currentHost) || isIpAddress;
+
+  if (!isReserved) {
+    // Case 1: Local development with subdomain (e.g. "brand.localhost")
+    if (currentHost.endsWith('.localhost')) {
+      const sub = currentHost.replace('.localhost', '');
+      if (sub && sub !== 'localhost') {
+        tenantSubdomain = sub;
       }
     }
-  }
-  // Case 3: Custom domain (e.g. "affiliates.clientbrand.com")
-  else if (!RESERVED_HOSTS.includes(currentHost)) {
-    tenantSubdomain = currentHost;
+    // Case 2: Production subdomain (e.g. "brand.upfilly.com")
+    else if (currentHost.endsWith(`.${ROOT_DOMAIN}`)) {
+      const sub = currentHost.replace(`.${ROOT_DOMAIN}`, '');
+      if (sub && !['www', 'api', 'admin', 'app', 'mail', 'cname', 'staging', 'chat', 'script', 'store'].includes(sub)) {
+        tenantSubdomain = sub;
+      }
+    }
+    // Case 3: Custom domain (e.g. "affiliates.clientbrand.com")
+    else if (!currentHost.includes(ROOT_DOMAIN)) {
+      tenantSubdomain = currentHost;
+    }
   }
 
   // Set request headers for downstream Server Components / API handlers
   const requestHeaders = new Headers(req.headers);
   if (tenantSubdomain) {
     requestHeaders.set('x-tenant-subdomain', tenantSubdomain);
+  }
+
+  // When accessing a tenant subdomain on root '/', rewrite to the tenant white-label portal
+  if (tenantSubdomain && url.pathname === '/') {
+    const rewriteResponse = NextResponse.rewrite(new URL('/white-label-dashboard', req.url), {
+      request: {
+        headers: requestHeaders,
+      },
+    });
+    rewriteResponse.headers.set('x-tenant-subdomain', tenantSubdomain);
+    return rewriteResponse;
   }
 
   const response = NextResponse.next({

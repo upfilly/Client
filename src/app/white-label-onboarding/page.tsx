@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Layout from '../components/global/layout/index';
 import ApiClient from '@/methods/api/apiClient';
 import crendentialModel from '@/models/credential.model';
+import { buildTenantSubdomainUrl } from '@/methods/auth';
 import { toast } from 'react-toastify';
 import {
   LuCheck, LuChevronRight, LuChevronLeft, LuUser, LuBriefcase,
@@ -339,6 +340,8 @@ export default function WhiteLabelOnboarding() {
     } else if (stepIndex === 3) {
       payload = {
         ...payload,
+        sub_domain: formData.sub_domain || 'mybrand',
+        tracking_hostname: formData.tracking_hostname,
         stripe_key: formData.stripe_key,
         stripe_environment: formData.stripe_environment,
         stripe_currency: formData.stripe_currency,
@@ -452,12 +455,27 @@ export default function WhiteLabelOnboarding() {
     // }
     // ------------------------------
 
-    // --- NEW LOGIC: Use saveProgress ---
+    // --- NEW LOGIC: Use saveProgress and redirect to new white-label subdomain URL ---
     try {
       const response: any = await saveProgress(3);
       if (response?.success) {
-        toast.success(response?.message || 'Registration successful!');
-        router.push('/white-label-dashboard');
+        toast.success(response?.message || 'Registration successful! Redirecting to your white-label portal...');
+
+        const user = crendentialModel.getUser();
+        const subdomain = (formData.sub_domain || 'mybrand').trim().toLowerCase();
+
+        if (user) {
+          crendentialModel.setUser({ ...user, sub_domain: subdomain });
+        }
+
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') || '' : '';
+        const targetUrl = buildTenantSubdomainUrl(subdomain, '/white-label-dashboard', { token, user });
+
+        if (typeof window !== 'undefined') {
+          window.location.href = targetUrl;
+        } else {
+          router.push('/white-label-dashboard');
+        }
       } else {
         toast.error(response?.message || 'Error occurred');
       }

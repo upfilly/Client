@@ -18,10 +18,12 @@ const Resetpassword = () => {
     const [settingData, setSettingData] = useState([])
 
     useEffect(() => {
-        if (user) {
-            history.push('/dashboard')
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+        const uid = user?.id || user?._id;
+        if (token && uid) {
+            history.push('/dashboard');
         }
-    }, [])
+    }, [user]);
 
     const formValidation = [
         { key: 'confirmPassword', minLength: 8, confirmMatch: ['confirmPassword', 'newPassword'] },

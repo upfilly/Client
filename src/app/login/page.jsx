@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import ApiClient from "../../methods/api/apiClient";
 import loader from '@/methods/loader';
 import crendentialModel from "../../models/credential.model";
+import { getTenantDomain, buildTenantSubdomainUrl } from '@/methods/auth';
 import { requestForToken } from '../firebase/function';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import axios from 'axios';
@@ -15,6 +16,37 @@ import { ConnectSocket } from '../chat/socket';
 
 export default function Login() {
   const history = useRouter()
+  const routeWhiteLabelUser = (userData, listingRes, fallbackUrl = '/white-label-pricing') => {
+    const plan = listingRes?.data?.plan_id;
+    const progress = listingRes?.data?.white_label_progress;
+    const subDomain = listingRes?.data?.sub_domain || userData?.sub_domain;
+
+    let targetPath = '/dashboard';
+    if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
+      if (progress && progress.a && progress.b && progress.c && progress.d) {
+        targetPath = '/white-label-dashboard';
+      } else {
+        targetPath = '/white-label-onboarding';
+      }
+    } else {
+      targetPath = fallbackUrl;
+    }
+
+    // If completed onboarding with an active subdomain and currently on root domain, route to subdomain URL
+    if (targetPath === '/white-label-dashboard' && subDomain && typeof window !== 'undefined') {
+      const currentSub = getTenantDomain();
+      if (!currentSub || currentSub !== subDomain.toLowerCase()) {
+        const token = userData.access_token || localStorage.getItem('token') || '';
+        const targetUrl = buildTenantSubdomainUrl(subDomain, targetPath, { token, user: userData });
+        window.location.href = targetUrl;
+        return;
+      }
+    }
+
+    history.push(targetPath);
+    loader(false);
+  };
+
   const param = useSearchParams()
   const id = param.get("code")
   const user = crendentialModel.getUser()
@@ -57,19 +89,7 @@ export default function Login() {
           let url = '/dashboard'
           if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
             ApiClient.get('user/detail', { id: res.data.id || res.data._id }).then((listingRes) => {
-              const plan = listingRes?.data?.plan_id;
-              const progress = listingRes?.data?.white_label_progress;
-              if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
-                if (progress && progress.a && progress.b && progress.c && progress.d) {
-                  url = '/white-label-dashboard';
-                } else {
-                  url = '/white-label-onboarding';
-                }
-              } else {
-                url = '/white-label-pricing';
-              }
-              history.push(url);
-              loader(false);
+              routeWhiteLabelUser(res.data, listingRes);
             }).catch(() => {
               history.push('/white-label-pricing');
               loader(false);
@@ -112,19 +132,7 @@ export default function Login() {
           let url = '/dashboard'
           if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
             ApiClient.get('user/detail', { id: res.data.id || res.data._id }).then((listingRes) => {
-              const plan = listingRes?.data?.plan_id;
-              const progress = listingRes?.data?.white_label_progress;
-              if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
-                if (progress && progress.a && progress.b && progress.c && progress.d) {
-                  url = '/white-label-dashboard';
-                } else {
-                  url = '/white-label-onboarding';
-                }
-              } else {
-                url = '/white-label-pricing';
-              }
-              history.push(url);
-              loader(false);
+              routeWhiteLabelUser(res.data, listingRes);
             }).catch(() => {
               history.push('/white-label-pricing');
               loader(false);
@@ -142,10 +150,12 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (user) {
-      history.push('/')
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const uid = user?.id || user?._id;
+    if (token && uid) {
+      history.push('/');
     }
-  }, [])
+  }, [user]);
 
   useEffect(() => {
     let r = localStorage.getItem('remember')
@@ -215,19 +225,7 @@ export default function Login() {
         let url = '/dashboard';
         if (res?.data?.role === 'white_lable' || res?.data?.role === 'white_label') {
           ApiClient.get('user/detail', { id: res.data.id || res.data._id }).then((listingRes) => {
-            const plan = listingRes?.data?.plan_id;
-            const progress = listingRes?.data?.white_label_progress;
-            if ((plan?.plan_type === 'paid' && plan?.status === 'active') || plan?.plan_type === 'free') {
-              if (progress && progress.a && progress.b && progress.c && progress.d) {
-                url = '/white-label-dashboard';
-              } else {
-                url = '/white-label-onboarding';
-              }
-            } else {
-              url = '/white-label-pricing';
-            }
-            history.push(url);
-            loader(false);
+            routeWhiteLabelUser(res.data, listingRes);
           }).catch(() => {
             history.push('/white-label-pricing');
             loader(false);

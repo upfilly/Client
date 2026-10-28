@@ -14,10 +14,12 @@ const Forgotpassword = () => {
     const [settingData, setSettingData] = useState([])
     const user = crendentialModel.getUser()
     useEffect(() => {
-        if (user) {
-            history.push('/dashboard')
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+        const uid = user?.id || user?._id;
+        if (token && uid) {
+            history.push('/dashboard');
         }
-    }, [])
+    }, [user]);
 
     const [form, setForm] = useState({ email: '' });
 

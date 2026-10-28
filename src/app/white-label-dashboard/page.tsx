@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/global/layout/index';
 import crendentialModel from '@/models/credential.model';
+import { syncTenantSessionFromUrl } from '@/methods/auth';
 import ApiClient from '@/methods/api/apiClient';
 import { toast } from 'react-toastify';
 import {
@@ -39,7 +40,11 @@ export default function WhiteLabelDashboard() {
 
   // Dashboard Protection Flow & Data Hydration
   useEffect(() => {
-    const uid = user?.id || user?._id;
+    // Hydrate token and credentials across subdomains from URL handoff if arriving from signup or main domain
+    syncTenantSessionFromUrl();
+
+    const currentUser = crendentialModel.getUser();
+    const uid = currentUser?.id || currentUser?._id;
     if (!uid) {
       router.push('/login');
       return;
