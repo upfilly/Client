@@ -15,19 +15,18 @@ export const config = {
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  const hostname = req.headers.get('host') || '';
-
-  // Clean host (remove port in development e.g. "brand.localhost:3000" -> "brand.localhost")
-  const currentHost = hostname.split(':')[0].toLowerCase();
+  const rawHostname = req.nextUrl.hostname || req.headers.get('host') || '';
+  const currentHost = rawHostname.replace(/:\d+$/, '').replace(/^\[|\]$/g, '').toLowerCase();
 
   const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'upfilly.com';
-  const RESERVED_HOSTS = ['upfilly.com', 'www.upfilly.com', 'localhost', '127.0.0.1'];
+  const RESERVED_HOSTS = ['upfilly.com', 'www.upfilly.com', 'localhost', '127.0.0.1', '::1', '0.0.0.0'];
 
   let tenantSubdomain: string | null = null;
 
   // Never treat reserved hosts or raw IP addresses as tenant subdomains
-  const isIpAddress = /^(\d{1,3}\.){3}\d{1,3}$/.test(currentHost);
-  const isReserved = RESERVED_HOSTS.includes(currentHost) || isIpAddress;
+  const isIpv4 = /^(\d{1,3}\.){3}\d{1,3}$/.test(currentHost);
+  const isIpv6 = /^([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$/.test(currentHost) || currentHost === '::1';
+  const isReserved = RESERVED_HOSTS.includes(currentHost) || isIpv4 || isIpv6 || !currentHost;
 
   if (!isReserved) {
     // Case 1: Local development with subdomain (e.g. "brand.localhost")
@@ -45,7 +44,7 @@ export function middleware(req: NextRequest) {
       }
     }
     // Case 3: Custom domain (e.g. "affiliates.clientbrand.com")
-    else if (!currentHost.includes(ROOT_DOMAIN)) {
+    else if (!currentHost.includes(ROOT_DOMAIN) && currentHost.includes('.')) {
       tenantSubdomain = currentHost;
     }
   }

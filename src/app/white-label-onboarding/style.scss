@@ -684,3 +684,165 @@
   margin-top: 4px;
   display: block;
 }
+
+/* Selected Plan Banner */
+.selected-plan-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+
+  .plan-info-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .plan-icon-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #dcfce7;
+      color: #16a34a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .plan-title-area {
+      .plan-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #15803d;
+        font-weight: 700;
+      }
+      .plan-name-price {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f172a;
+
+        .plan-price-tag {
+          color: #16a34a;
+          margin-left: 6px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .change-plan-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c306d;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: #2563eb;
+    }
+  }
+}
+
+/* Payment Success Banner */
+.payment-success-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 4px rgba(22, 163, 74, 0.06);
+
+  .success-banner-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #22c55e;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .success-banner-content {
+    h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #14532d;
+      margin: 0 0 4px 0;
+    }
+    p {
+      font-size: 13.5px;
+      color: #166534;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+/* Subdomain Live Check Status */
+.subdomain-status-wrapper {
+  margin-top: 6px;
+  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &.available {
+    color: #16a34a;
+    font-weight: 600;
+  }
+  &.taken {
+    color: #ef4444;
+    font-weight: 500;
+  }
+  &.checking {
+    color: #64748b;
+    font-weight: 500;
+  }
+}
+
+/* Password Toggle Wrapper */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .input-icon {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    pointer-events: none;
+  }
+
+  input {
+    padding-left: 42px !important;
+    padding-right: 42px !important;
+  }
+
+  .toggle-pwd-btn {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #0f172a;
+    }
+  }
+}
