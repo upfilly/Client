@@ -1,32 +1,24 @@
-// Get dependencies
 const express = require('express');
-const path = require('path');
-const http = require('http');
+const next = require('next');
 
+const dev = process.env.NODE_ENV !== 'production';
+const port = parseInt(process.env.PORT || '8042', 10);
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-const app = express();
+app.prepare().then(() => {
+  const server = express();
 
-// Point static path to dist
-app.use(express.static(path.join(__dirname, '.next/server/app/')));
+  // Next.js handles all static assets (/_next/static/...), pages, and API routes
+  server.all('*', (req, res) => {
+    return handle(req, res);
+  });
 
-// Catch all other routes and return the index file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '.next/server/app/index.html'));
-
+  server.listen(port, (err) => {
+    if (err) throw err;
+    console.log(`API running on http://localhost:${port}`);
+  });
+}).catch((err) => {
+  console.error('Error starting server:', err);
+  process.exit(1);
 });
-
-/**
- * Get port from environment and store in Express.
- */
-const port = '8042';
-app.set('port', port);
-
-/**git
- * Create HTTP server.
- */
-const server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-server.listen(port, () =>  console.log(` running on http://localhost:${port}`));
