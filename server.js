@@ -1,23 +1,31 @@
-const express = require('express');
+const { createServer } = require('http');
+const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
+const hostname = '0.0.0.0';
 const port = parseInt(process.env.PORT || '8042', 10);
-const app = next({ dev });
+const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  const server = express();
-
-  // Next.js handles all static assets (/_next/static/...), pages, and API routes
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
-
-  server.listen(port, (err) => {
-    if (err) throw err;
-    console.log(`API running on http://localhost:${port}`);
-  });
+  createServer(async (req, res) => {
+    try {
+      const parsedUrl = parse(req.url, true);
+      await handle(req, res, parsedUrl);
+    } catch (err) {
+      console.error('Error occurred handling', req.url, err);
+      res.statusCode = 500;
+      res.end('internal server error');
+    }
+  })
+    .once('error', (err) => {
+      console.error(err);
+      process.exit(1);
+    })
+    .listen(port, () => {
+      console.log(`> Ready on http://${hostname}:${port}`);
+    });
 }).catch((err) => {
   console.error('Error starting server:', err);
   process.exit(1);
