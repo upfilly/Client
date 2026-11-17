@@ -112,7 +112,7 @@ const Html = ({ settingData, Logout }) => {
               {/* Logo */}
               <Link href={(user?.id || user?._id) ? "/dashboard" : "/"} className="brand-logo">
                 <img
-                  src={`${environment?.api}${settingData?.logo}`}
+                  src={settingData?.logo ? `${environment?.api}${settingData.logo}` : "/assets/img/logo.png"}
                   className="brand-logo-img"
                   alt="Upfilly"
                 />

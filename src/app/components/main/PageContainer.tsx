@@ -22,10 +22,12 @@ const PageContainer: React.FC<Props> = ({
       <div>
         <Helmet>
           <title>{settingData?.company_name}</title>
-          <link
-            rel="icon"
-            href={`${environment?.api}${settingData?.fav_icon}`}
-          />
+          {settingData?.fav_icon && (
+            <link
+              rel="icon"
+              href={`${environment?.api}${settingData.fav_icon}`}
+            />
+          )}
           <meta name="description" content={description} />
           {/* <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" /> */}
           <link
