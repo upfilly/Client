@@ -120,7 +120,7 @@ const Html = ({
                 <td className='table_dats'>{datepipeModel.date(itm.createdAt)}</td>
                 <td className='table_dats'>{datepipeModel.date(itm.updatedAt)}</td>
 
-                {user.role == "brand" && <td className='table_dats'>
+                {user?.role == "brand" && <td className='table_dats'>
                     {itm?.status == 'pending' ? <div >
                         <button onClick={() => statusChange("accepted", itm?.id)} className="btn btn-primary">
                             Accept

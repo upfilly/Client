@@ -1,16 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { ToastContainer, toast } from 'react-toastify';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import 'react-toastify/dist/ReactToastify.css';
 import "./scss/main.scss";
 import "./scss/deepmain.scss";
 import "./scss/responsive.scss";
-
-import Head from 'next/head';
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Upfilly',
@@ -24,13 +19,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <body className={inter.className} >
-        {/* <script src="assets/js/setcookies.js"/> */}
-        <script src="https://www.dwin1.com/1001.js" type="text/javascript"></script>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+      </head>
+      <body>
+        <script src="https://www.dwin1.com/1001.js" type="text/javascript"></script>
         <GoogleOAuthProvider clientId="817638365394-413bppqmd901dl9u6ml6na7an7f02r9s.apps.googleusercontent.com">
-          {children}</GoogleOAuthProvider>
+          {children}
+        </GoogleOAuthProvider>
         <div id="loader" className="loaderDiv d-none">
           <div>
             <img src="/assets/img/loader.gif" alt="logo" className="loaderlogo" />

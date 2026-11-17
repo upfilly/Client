@@ -349,7 +349,7 @@ export default function Affiliate() {
   // Initial data load - only once
   useEffect(() => {
     if (user?.id || user?._id) {
-      if (user.role === 'brand') {
+      if (user?.role === 'brand') {
         getData({ page: 1 });
       } else {
         // Setup socket listener only once

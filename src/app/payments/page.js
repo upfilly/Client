@@ -802,12 +802,12 @@ export default function Affilate() {
   };
 
   useEffect(() => {
-    if (user.role == "brand") {
+    if (user?.role == "brand") {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, user_id: user?.id, ...params });
       getPlanData();
       getPendingPaymentData();
-    } else if (user.role != "brand") {
+    } else if (user?.role != "brand") {
       setFilter({ ...filters, page: 1, ...params });
       getData({ page: 1, paid_to: user?.id, ...params });
     }

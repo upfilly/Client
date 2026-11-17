@@ -411,16 +411,16 @@ const Html = ({
                   : ""
                   }`}
               >
-                {(user.role == "affiliate" ||
+                {(user?.role == "affiliate" ||
                   addedUser?.role == "affiliate" ||
-                  user.role == "brand" ||
+                  user?.role == "brand" ||
                   addedUser?.role == "brand") && (
                     <ListItemLink to="/banners" title="Banners">
                       <i className="material-icons  svg_iconbx" title="Banners">
                         collections
                       </i>
                       <span className="side_head">
-                        {user.role == "brand" || addedUser?.role == "brand"
+                        {user?.role == "brand" || addedUser?.role == "brand"
                           ? "Banners/Text Link"
                           : "Banners/Text Link"}
                       </span>
@@ -432,7 +432,7 @@ const Html = ({
                     timeline
                   </i>
                   <span className="side_head">
-                    {user.role == "brand" || addedUser?.role == "brand"
+                    {user?.role == "brand" || addedUser?.role == "brand"
                       ? "Add Text Link"
                       : "Text Links"}
                   </span>
@@ -446,7 +446,7 @@ const Html = ({
                     confirmation_number
                   </i>
                   <span className="side_head">
-                    {user.role == "brand" || addedUser?.role == "brand"
+                    {user?.role == "brand" || addedUser?.role == "brand"
                       ? "Coupons/Offers"
                       : "Coupons"}
                   </span>
@@ -762,16 +762,16 @@ const Html = ({
                   : ""
                   }`}
               >
-                {(user.role == "affiliate" ||
+                {(user?.role == "affiliate" ||
                   addedUser?.role == "affiliate" ||
-                  user.role == "brand" ||
+                  user?.role == "brand" ||
                   addedUser?.role == "brand") && (
                     <ListItemLink to="/banners" title="Banners">
                       <i className="material-icons  svg_iconbx" title="Banners">
                         collections
                       </i>
                       <span className="side_head">
-                        {user.role == "brand" || addedUser?.role == "brand"
+                        {user?.role == "brand" || addedUser?.role == "brand"
                           ? "Banners/Text Link"
                           : "Banners/Text Link"}
                       </span>
@@ -783,7 +783,7 @@ const Html = ({
                     timeline
                   </i>
                   <span className="side_head">
-                    {user.role == "brand" || addedUser?.role == "brand"
+                    {user?.role == "brand" || addedUser?.role == "brand"
                       ? "Add Text Link"
                       : "Text Links"}
                   </span>
@@ -797,7 +797,7 @@ const Html = ({
                     confirmation_number
                   </i>
                   <span className="side_head">
-                    {user.role == "brand" || addedUser?.role == "brand"
+                    {user?.role == "brand" || addedUser?.role == "brand"
                       ? "Coupons/Offers"
                       : "Coupons"}
                   </span>
@@ -1090,9 +1090,9 @@ const Html = ({
                     <span className="side_head">User Management</span>
                   </ListItemLink>
                 )}
-                {(user.role == "affiliate" ||
+                {(user?.role == "affiliate" ||
                   addedUser?.role == "affiliate" ||
-                  user.role == "brand" ||
+                  user?.role == "brand" ||
                   addedUser?.role == "brand") && (
                     <ListItemLink
                       to="/allownotifications"
@@ -1211,7 +1211,7 @@ const Html = ({
 
           {/* <ListItemLink to="/coupons" title="Coupons">
             <i className="material-icons  svg_iconbx" title="campaignmanagement">confirmation_number</i>
-            <span className="side_head">{(user.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
+            <span className="side_head">{(user?.role == "brand" || addedUser?.role == "brand") ? "Add Coupon" : "Coupons"}</span>
           </ListItemLink> */}
 
           {/* {user && (user?.role == "affiliate" || addedUser?.role == "affiliate") && (permission('generate_link_add')) && <ListItemLink to="/generateLink" title="Generate Link" >

@@ -31,9 +31,9 @@ import methodModel from '../../methods/methods';
 
   useEffect(() => {
 
-    if (user.role == 'brand') {
+    if (user?.role == 'brand') {
       // getData({ page: 1 })
-    } else if (user.role != 'brand') {
+    } else if (user?.role != 'brand') {
       // getData({ page: 1 })
     }
 

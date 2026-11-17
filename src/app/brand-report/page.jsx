@@ -68,9 +68,9 @@ export default function BrandReport() {
 
   useEffect(() => {
     getAffiliateData({ page: 1 })
-    if (user.role == 'brand') {
+    if (user?.role == 'brand') {
       getData({ page: 1 })
-    } else if (user.role != 'brand') {
+    } else if (user?.role != 'brand') {
       getData({ page: 1 })
     }
   }, [AffiliateDataId])

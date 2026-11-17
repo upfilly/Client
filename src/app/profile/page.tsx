@@ -576,7 +576,7 @@ const Profile = () => {
                             </Tab>
                           )} */}
 
-                          {user.role == "affiliate" && (
+                          {user?.role == "affiliate" && (
                             <Tab eventKey="accounts" title="Accounts">
                               {renderAccountsTab()}
                             </Tab>

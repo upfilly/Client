@@ -601,7 +601,7 @@ export default function AnalyticsDashboard() {
             </div>
 
             <div className="dropdown-item mc-campaign-dropdown">
-              {user.role != "brand" ? (
+              {user?.role != "brand" ? (
                 <MultiSelectValue
                   id="statusDropdown"
                   displayValue="name"
