@@ -1,32 +1,33 @@
-const { createServer } = require('http');
-const { parse } = require('url');
-const next = require('next');
+// Get dependencies
+const express = require('express');
+const path = require('path');
+const http = require('http');
 
-const dev = process.env.NODE_ENV !== 'production';
-const hostname = '0.0.0.0';
-const port = parseInt(process.env.PORT || '8042', 10);
-const app = next({ dev, hostname, port });
-const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
-  createServer(async (req, res) => {
-    try {
-      const parsedUrl = parse(req.url, true);
-      await handle(req, res, parsedUrl);
-    } catch (err) {
-      console.error('Error occurred handling', req.url, err);
-      res.statusCode = 500;
-      res.end('internal server error');
-    }
-  })
-    .once('error', (err) => {
-      console.error(err);
-      process.exit(1);
-    })
-    .listen(port, () => {
-      console.log(`> Ready on http://${hostname}:${port}`);
-    });
-}).catch((err) => {
-  console.error('Error starting server:', err);
-  process.exit(1);
+const app = express();
+
+// Point static path to dist
+app.use(express.static(path.join(__dirname, '.next/server/app/')));
+
+// Catch all other routes and return the index file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '.next/server/app/index.html'));
+
 });
+
+/**
+* Get port from environment and store in Express.
+*/
+const port = '8042';
+app.set('port', port);
+
+/**git
+* Create HTTP server.
+*/
+const server = http.createServer(app);
+
+/**
+* Listen on provided port, on all network interfaces.
+*/
+server.listen(port, () => console.log(` running on http://localhost:${port}`));
+
