@@ -171,7 +171,7 @@ export default function Home() {
             });
           },
           (error) => {
-            console.error(error);
+            console.warn("Geolocation skipped:", error?.message || error);
           }
         );
       }

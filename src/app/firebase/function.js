@@ -1,63 +1,60 @@
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-//....
-import { firebaseApp } from './firebase'
+import { getMessaging, getToken, onMessage, isSupported } from 'firebase/messaging';
+import { firebaseApp } from './firebase';
 import { toast } from 'react-toastify';
 
-
 export const requestForToken = async () => {
+  try {
+    if (typeof window === 'undefined') return;
+    const supported = await isSupported().catch(() => false);
+    if (!supported) return;
 
-  let messaging = getMessaging(firebaseApp)
+    const messaging = getMessaging(firebaseApp);
+    if (!messaging) return;
 
-  return await getToken(messaging, { vapidKey: 'BOwK9E1ZDaiGlKDTGOMLnDJdwL1vdxARmePqtC14ebpoQL-GlEErQzkrG3Z7grB-BgyyfTIfkqLbyai5e9rIrR8' })
-    .then((currentToken) => {
-      if (currentToken) {
-        localStorage.setItem('device_token', currentToken);
-
-        // console.log('current token for client: ', currentToken);
-      } else {
-        // console.log('No registration token available. Request permission to generate one.');
-      }
-    })
-    .catch((err) => {
-      // console.log('An error occurred while retrieving token. ', err);
+    const currentToken = await getToken(messaging, { 
+      vapidKey: 'BOwK9E1ZDaiGlKDTGOMLnDJdwL1vdxARmePqtC14ebpoQL-GlEErQzkrG3Z7grB-BgyyfTIfkqLbyai5e9rIrR8' 
     });
-};
-
-
-export const message = (history) => {
-
-  let messaging = getMessaging(firebaseApp)
-   // console.log(messaging,"messaging===")
-  return onMessage(messaging, (payload) => {
-    // console.log(payload,"messaging===12345")
-    const notificationTitle = payload?.notification?.body;
-    // let rout = payload?.data['gcm.notification.type'] == "proposal" ? '/proposallisting' : '/mycontract'
-    const title = payload?.notification?.title?.toLowerCase() || '';
-    
-    // Check if the notification is a chat/admin message. If it is, do not show a toast.
-    const notifType = payload?.data?.['gcm.notification.type'] || payload?.data?.type;
-    if (
-      notifType === 'chat' || 
-      notifType === 'message' || 
-      notifType === 'TEXT' || 
-      payload?.data?.room_id ||
-      title.includes('admin') ||
-      title.includes('message') ||
-      title.includes('chat')
-    ) {
-      return;
+    if (currentToken) {
+      localStorage.setItem('device_token', currentToken);
     }
-
-    let rout = payload?.data?.['gcm.notification.type'] == "proposal" ? '/proposallisting' : '/mycontract'
-    
-    toast.success(notificationTitle, { onClick: function () { history.push(rout) }, })
-    document.getElementById('unreadnoti')?.click()
-  })
+  } catch (err) {
+    console.warn('Firebase Messaging token request skipped:', err?.message || err);
+  }
 };
 
+export const message = async (history) => {
+  try {
+    if (typeof window === 'undefined') return () => {};
+    const supported = await isSupported().catch(() => false);
+    if (!supported) return () => {};
 
+    const messaging = getMessaging(firebaseApp);
+    if (!messaging) return () => {};
 
+    return onMessage(messaging, (payload) => {
+      const notificationTitle = payload?.notification?.body;
+      const title = payload?.notification?.title?.toLowerCase() || '';
+      
+      const notifType = payload?.data?.['gcm.notification.type'] || payload?.data?.type;
+      if (
+        notifType === 'chat' || 
+        notifType === 'message' || 
+        notifType === 'TEXT' || 
+        payload?.data?.room_id ||
+        title.includes('admin') ||
+        title.includes('message') ||
+        title.includes('chat')
+      ) {
+        return;
+      }
 
-
-
-
+      let rout = payload?.data?.['gcm.notification.type'] == "proposal" ? '/proposallisting' : '/mycontract';
+      
+      toast.success(notificationTitle, { onClick: function () { history?.push(rout); }, });
+      document.getElementById('unreadnoti')?.click();
+    });
+  } catch (err) {
+    console.warn('Firebase onMessage registration skipped:', err?.message || err);
+    return () => {};
+  }
+};

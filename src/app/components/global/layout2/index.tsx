@@ -441,6 +441,8 @@ export default function Layout({
       if (res.success) {
         setSettingData(res?.data);
       }
+    }).catch((err) => {
+      console.warn("Could not load settings:", err);
     });
   }, []);
 
