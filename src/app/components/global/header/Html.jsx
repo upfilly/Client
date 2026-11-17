@@ -238,7 +238,7 @@ const Html = ({ settingData, Logout }) => {
         </div>
       </header>
 
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .professional-header {
           position: sticky;
           top: 0;
@@ -669,7 +669,7 @@ const Html = ({ settingData, Logout }) => {
             font-size: 13px;
           }
         }
-      `}</style>
+      ` }} />
     </>
   );
 }

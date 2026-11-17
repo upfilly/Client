@@ -156,7 +156,7 @@ const ShopifyGuide = () => {
                 </div>
             </main>
 
-            <style>{`
+            <style dangerouslySetInnerHTML={{ __html: `
         .sg-root {
           font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
           background: #f7f8fa;
@@ -443,7 +443,7 @@ const ShopifyGuide = () => {
           .sg-step-body-inner { padding: 0 16px 18px; padding-top: 16px; }
           .sg-hero-stats { gap: 16px; }
         }
-      `}</style>
+      ` }} />
         </div>
         </Layout>
     );
